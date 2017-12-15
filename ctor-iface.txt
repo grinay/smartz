@@ -1,0 +1,17 @@
+
+class CtorInterface(object):
+
+    def get_params(self):
+        returns {
+            hard_cap: {
+                type: 'int' | 'address' | 'string' | 'datetime',
+                desc: 'this is hard cap'
+            },
+            ...
+        } or 'error'
+
+    def construct(self, fields={
+                hard_cap: 1000,
+                ...}):
+        returns [source, name_of_smart_contract] or 'error'
+

@@ -1,0 +1,19 @@
+
+class EngineInterface(object):
+
+    def __init__(self, data_dir)
+
+    def register_new_ctor(self, ctor_id, filename)
+
+    def get_ctor_params(self, ctor_id)
+        returns {
+            hard_cap: {
+                type: 'int' | 'address' | 'string' | 'datetime',
+                desc: 'this is hard cap'
+            },
+            ...
+        } or 'error'
+
+    def construct(self, ctor_id, {field1: value1, ...})
+        returns [bin, source, abi] or 'error'
+
