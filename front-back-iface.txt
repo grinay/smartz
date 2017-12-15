@@ -1,0 +1,59 @@
+REST, GET|POST
+входная структура: json-сериализована в параметр request
+выходная: тело документа - json
+
+- /register_user
+    input:
+        {name: 'bob', mail: '...', pass: 'xx'}
+    output:
+        {id: 5} || {error: 'foo'}
+
+- /login
+    input:
+        {mail: '...', pass: 'xx'}
+    output:
+        {ok: true} || {error: 'foo'}
+
+- /list_ctors
+    input: -
+    output: [
+        {ctor_id: 4,
+            ctor_name: 'my ctor'
+        },
+        ...
+    ]
+
+- /get_ctor_params
+    input:
+        {ctor_id: 4}
+    output:
+    {
+        hard_cap: {
+            type: 'int' | 'address' | 'string' | 'datetime',
+            desc: 'this is hard cap'
+        },
+        ...
+    } || {error: 'foo'}
+
+- /construct
+    input:
+        {
+            ctor_id: 4,
+            fields: {
+                hard_cap: 1000,
+                ...
+            }
+        }
+    output:
+        {
+            bin: '0xddd',
+            source: 'pragma ...'
+        }
+        || {error: 'foo'}
+
+- /get_abi
+    input:
+        {ctor_id: 4}
+    output:
+        [...] || {error: 'foo'}
+
