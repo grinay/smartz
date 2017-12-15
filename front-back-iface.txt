@@ -47,10 +47,17 @@ REST, GET|POST
         }
     output:
         {
+            result: 'success',
             bin: '0xddd',
             source: 'pragma ...'
         }
-        || {error: 'foo'}
+        ||
+        {
+            result: 'error',
+            errors: {
+                hard_cap: 'Hard cap can not be empty'
+            }
+        }
 
 - /get_abi
     input:
