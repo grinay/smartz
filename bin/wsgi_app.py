@@ -162,7 +162,7 @@ def get_abi():
 
 
 def _get_input():
-    return json.loads(request.args['request'])
+    return json.loads(request.data)
 
 
 def _send_error(string):
