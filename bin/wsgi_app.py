@@ -4,6 +4,7 @@ import sys
 import os
 import json
 import tempfile
+from shutil import copy2
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -12,6 +13,7 @@ from flask import Flask, abort, request
 
 ROOT_DIR=os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 DATA_DIR=os.path.join(ROOT_DIR, 'data')
+os.makedirs(DATA_DIR, exist_ok=True)
 
 sys.path.append(os.path.join(ROOT_DIR, 'lib'))
 sys.path.append(os.path.join(ROOT_DIR, 'constructor_engine'))
@@ -55,7 +57,11 @@ def upload_ctor():
 
     name = nonempty(args_string(args, 'ctor_name'))
     filename = tempfile.mktemp('ctor')
-    request.files['ctor_file'].save(filename)
+
+    if 'ctor_file_name' in args:
+        copy2(os.path.join(ROOT_DIR, 'constructors', args['ctor_file_name']), filename)
+    else:
+        request.files['ctor_file'].save(filename)
 
     if ctors.find_one({'ctor_name': name}) is not None:
         return _send_error('ctor with this name already exists')
