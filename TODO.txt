@@ -2,6 +2,19 @@
 
 
 =============================
+- новый тип в настройках - масив
+    owners:
+        type: array
+        name: Owners
+        elements:
+            address:
+                type: address
+            fullname:
+                type: string
+            share:
+                type: int
+
+=============================
 менее приоритетно
 
 - деплой нескольких единиц деплоя и связывание их
