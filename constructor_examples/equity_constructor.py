@@ -95,10 +95,24 @@ class Constructor(object):
                 "errors": errors
             }
 
+        shareholders_code = ''
+        total_shares = 0
+        for addr, fullname, shares in shareholders:
+            total_shares += shares
+            shareholders_code += """
+                shareholders.push({addr});
+                shareholders_names[{addr}] = "{fullname}";
+            """.format(
+                addr=addr,
+                fullname=fullname
+            )
+
+
         source = self.template\
             .replace('%name%', name) \
             .replace('%abbr%', abbr) \
-            .replace('%total%', "1")
+            .replace('%total%', str(total_shares))\
+            .replace('%shareholders_code%', shareholders_code)
 
         return source, "EquityToken"
 
@@ -290,12 +304,12 @@ contract EquityToken is StandardToken
     uint8 public constant decimals = 18;
     
     mapping (address => string) public shareholders_names;
-    address public shareholders;
+    address[] public shareholders;
 
     function EquityToken() public {
         totalSupply = totalSupply.add(%total% * 10**18);
    
-        
+        %shareholders_code%
         
     }
 
