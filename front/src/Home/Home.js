@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
-import {API_URL} from 'constants';
+import {API_URL} from '../constants';
 
 class Home extends Component {
   constructor(props) {
@@ -15,11 +15,13 @@ class Home extends Component {
     this.props.auth.login();
   }
   getCtors() {
-    /*
     axios.get(`${API_URL}/list_ctors`)
-      .then(response => this.setState({ctors: response.data.message}))
+      .then(response => {
+        this.setState({ctors: response.data});
+        console.log(response.data);
+      })
       .catch(error => this.setState({message: error.message}));
-    */
+    /*
     this.setState({ctors: [
       {
         ctor_id: 1,
@@ -34,6 +36,7 @@ class Home extends Component {
         ctor_name: 'Token with Crowdsale'
       },
     ]});
+    */
   }
   render() {
     const {isAuthenticated} = this.props.auth;
@@ -50,7 +53,7 @@ class Home extends Component {
                 </li>
               ))
             }
-            <br /><a class="btn btn-primary" href="/ctor-add" role="button">Create constructor</a>
+            <br /><a className="btn btn-primary" href="/ctor-add" role="button">Create constructor</a>
           </div>
         }
         {!isAuthenticated() &&

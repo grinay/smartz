@@ -14,13 +14,15 @@ class Ctor extends Component {
     this.props.auth.isAuthenticated() && this.getCtorParams();
   }
   getCtorParams() {
-    /*
     axios.post(`${API_URL}/get_ctor_params`, {
       'ctor_id': this.props.match.params.id
     })
-      .then(response => this.setState({ctors: response.data.message}))
+      .then(response => {
+        this.setState({ctor: response.data});
+        console.log(response.data);
+      })
       .catch(error => this.setState({message: error.message}));
-    */
+    /*
     this.setState({ctor: {
       ctor_name: 'Token smart contract constructor',
       ctor_params: [
@@ -50,6 +52,7 @@ class Ctor extends Component {
         }
       ]
     }});
+    */
   }
   submit() {
     const {ctor} = this.state;
@@ -78,7 +81,7 @@ class Ctor extends Component {
     const {ctor, mode} = this.state;
     return (
       <div>
-        {mode != "mode" &&
+        {mode != "mode" && this.state.ctor &&
           <div className="container">
             <h1>{ctor.ctor_name}</h1>
             <Panel header="Construct your contract">
