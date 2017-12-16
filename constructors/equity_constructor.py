@@ -64,8 +64,8 @@ class Constructor(object):
         #     if not isinstance(abbr, str) or len(abbr) < 3 or len(abbr) > 5 or not re.findall('^[A-Z]+$', abbr):
         #         errors["name"] = 'Abbr must be string with length from 3 to 5 symbols. Only UPPERCASE letters are allowed'
         #
-        # shareholders = []
-        # for i in range(7):
+        shareholders = []
+        for i in range(7):
         #     addr_field = "address_{}".format(i)
         #     if addr_field not in fields:
         #         continue
@@ -87,7 +87,7 @@ class Constructor(object):
         #     if not isinstance(shares, int) or shares < 1 or shares > 2000000000:
         #         errors[shares_field] = 'Shares must be int from 1 to 2000000000'
         #
-        #     shareholders.append([addr, fullname, shares])
+            shareholders.append([addr, fullname, shares])
 
         if errors != {}:
             return {
