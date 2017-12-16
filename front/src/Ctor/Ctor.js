@@ -56,8 +56,10 @@ class Ctor extends Component {
     axios.post(`${API_URL}/construct`, {
       ctor_id: ctor.ctor_id,
       fields
-    }})
-      .then(response => console.log(response.data.message))
+    })
+      .then(response => {
+        console.log(response.data.message)
+      })
       .catch(error => console.log(error));
   }
   setValue(name, value) {
