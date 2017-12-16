@@ -3,11 +3,18 @@
 import sys
 import os
 import json
+import tempfile
 
 from pymongo import MongoClient
 from flask import Flask, abort, request
 
-sys.path.append(os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'lib')))
+ROOT_DIR=os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+DATA_DIR=os.path.join(ROOT_DIR, 'data')
+
+sys.path.append(os.path.join(ROOT_DIR, 'lib'))
+sys.path.append(os.path.join(ROOT_DIR, 'constructor_engine'))
+
+from engine import SimpleStorageEngine
 
 
 app = Flask(__name__)
@@ -15,15 +22,11 @@ app = Flask(__name__)
 mongoc = MongoClient()
 db = mongoc.sc_ctors_db
 
+ctor_engine = SimpleStorageEngine({'datadir': DATA_DIR})
+
 
 @app.route('/register_user')
 def register_user():
-    """
-    input:
-        {name: 'bob', mail: '...', pass: 'xx'}
-    output:
-        {id: '...'} || {error: 'foo'}
-    """
     args = _get_input()
     users = db.users
 
@@ -32,6 +35,25 @@ def register_user():
 
     user_record = dict((key, nonempty(args_string(args, key))) for key in ['name', 'mail', 'pass'])
     users.insert_one(user_record)
+
+    return _send_output({'ok': True})
+
+
+@app.route('/upload_ctor')
+def upload_ctor():
+    args = _get_input()
+    ctors = db.ctors
+
+    name = nonempty(args_string(args, 'ctor_name'))
+    filename = tempfile.mktemp('ctor')
+    request.files['ctor_file'].save(filename)
+
+    if ctors.find_one({'ctor_name': name}) is not None:
+        return _send_error('ctor with this name already exists')
+
+    ctor_id = ctors.insert_one({'ctor_name': name}).inserted_id.binary.hex()
+
+    ctor_engine.register_new_ctor(ctor_id, filename)
 
     return _send_output({'ok': True})
 

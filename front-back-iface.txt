@@ -14,6 +14,13 @@ REST, GET|POST
     output:
         {ok: true} || {error: 'foo'}
 
+- /upload_ctor
+    input:
+        {ctor_name: 'my ctor'}
+    дополнительное поле запроса - файл ctor_file
+    output:
+        {ok: true} || {error: 'foo'}
+
 - /list_ctors
     input: -
     output: [
