@@ -33,7 +33,7 @@ class CtorParam extends Component {
   handleChange(e) {
     const value = e.target ? e.target.value : e;
     this.setState({value});
-    this.props.callback(this.props.params.name, value);
+    this.props.callback(this.props.params.name, e.target ? value : value.unix());
   }
   render() {
     const {name, human_name, type, desc} = this.props.params;

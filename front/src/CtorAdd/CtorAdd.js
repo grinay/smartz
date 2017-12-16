@@ -23,10 +23,10 @@ class CtorAdd extends Component {
     };
   }
   submit() {
-    const formData = new FormData();
-    formData.append('ctor_name', this.state.name);
-    formData.append('ctor_file', this.state.file, this.state.file.name);
-    axios.post(`${API_URL}/upload_ctor`, formData)
+    axios.post(`${API_URL}/upload_ctor`, {
+      'ctor_name': this.state.name,
+      'ctor_file_name': '1'
+    })
       .then(response => console.log(response.data.message))
       .catch(error => console.log(error));
 
@@ -38,7 +38,7 @@ class CtorAdd extends Component {
     return (
       <div className="container">
         <h1>Create contract</h1>
-        <form enctype="multipart/form-data">
+        <form encType="multipart/form-data">
           <FormGroup
             controlId="formBasicText"
           >
