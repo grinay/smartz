@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Glyphicon, Button} from 'react-bootstrap';
+import axios from 'axios';
 
-import {API_URL} from 'constants';
+import {API_URL} from '../constants';
 import CtorParam from './CtorParam';
 
 class Ctor extends Component {
@@ -47,7 +48,21 @@ class Ctor extends Component {
     }});
   }
   submit() {
-
+    const {ctor} = this.state;
+    const fileds = {};
+    axios.post(`${API_URL}/construct`, {
+      ctor_id: ctor.ctor_id,
+      fields: {
+          hard_cap: 1000,
+      }
+    })
+      .then(response => console.log(response.data.message))
+      .catch(error => console.log(error));
+  }
+  setValue(name, value) {
+    this.setState({
+      [name]: value
+    });
   }
   render() {
     const {ctor} = this.state;
@@ -57,7 +72,7 @@ class Ctor extends Component {
         <Panel header="Profile">
           <form>
             {ctor.ctor_params.map((el, i) => (
-              <CtorParam params={el} key={i} />
+              <CtorParam params={el} key={i} callback={this.setValue.bind(this)} />
             ))}
             <Button
               bsStyle="primary"

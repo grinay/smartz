@@ -1099,6 +1099,12 @@ brorand@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
 
+browser-require@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/browser-require/-/browser-require-0.1.6.tgz#c10f12de992f2316174227532f98ba047bd30bed"
+  dependencies:
+    dependency-promise ">=0.2.0"
+
 browser-resolve@^1.11.2:
   version "1.11.2"
   resolved "https://registry.yarnpkg.com/browser-resolve/-/browser-resolve-1.11.2.tgz#8ff09b0a2c421718a1051c260b32e48f442938ce"
@@ -1868,6 +1874,10 @@ depd@1.1.1, depd@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.1.tgz#5783b4e1c459f06fa5ca27f991f3d06e7a310359"
 
+dependency-promise@>=0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/dependency-promise/-/dependency-promise-0.2.1.tgz#e67f0a7c7d016b1b9fd71440e1cf3ebef9d2a1d0"
+
 des.js@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/des.js/-/des.js-1.0.0.tgz#c074d2e2aa6a8a9a07dbd61f9a15c2cd83ec8ecc"
@@ -2358,7 +2368,7 @@ ethjs-abi@0.2.0:
     js-sha3 "0.5.5"
     number-to-bn "1.7.0"
 
-ethjs-contract@^0.1.9:
+ethjs-contract@0.1.9, ethjs-contract@^0.1.9:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/ethjs-contract/-/ethjs-contract-0.1.9.tgz#1c2766896a56d47ec1d6d661829c49cc38a5520a"
   dependencies:
@@ -2382,7 +2392,13 @@ ethjs-format@0.2.4:
     number-to-bn "1.7.0"
     strip-hex-prefix "1.0.0"
 
-ethjs-query@^0.3.2:
+ethjs-provider-http@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/ethjs-provider-http/-/ethjs-provider-http-0.1.6.tgz#1ec5d9b4be257ef1d56a500b22a741985e889420"
+  dependencies:
+    xhr2 "0.1.3"
+
+ethjs-query@0.3.2, ethjs-query@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/ethjs-query/-/ethjs-query-0.3.2.tgz#f488a48ce1994cd4c77eccb7b52902c6f29cfd85"
   dependencies:
@@ -2397,12 +2413,34 @@ ethjs-schema@^0.1.9:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/ethjs-schema/-/ethjs-schema-0.1.9.tgz#858c2a5da706ae04812b4ce8b1eb4b4921e33092"
 
+ethjs-unit@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/ethjs-unit/-/ethjs-unit-0.1.6.tgz#c665921e476e87bce2a9d588a6fe0405b2c41699"
+  dependencies:
+    bn.js "4.11.6"
+    number-to-bn "1.7.0"
+
 ethjs-util@0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/ethjs-util/-/ethjs-util-0.1.3.tgz#dfd5ea4a400dc5e421a889caf47e081ada78bb55"
   dependencies:
     is-hex-prefixed "1.0.0"
     strip-hex-prefix "1.0.0"
+
+ethjs@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/ethjs/-/ethjs-0.3.1.tgz#038589bb9118218f70b9c38711c3d0d45873d185"
+  dependencies:
+    bn.js "4.11.6"
+    ethjs-abi "0.2.0"
+    ethjs-contract "0.1.9"
+    ethjs-filter "0.1.5"
+    ethjs-provider-http "0.1.6"
+    ethjs-query "0.3.2"
+    ethjs-unit "0.1.6"
+    ethjs-util "0.1.3"
+    js-sha3 "0.5.5"
+    number-to-bn "1.7.0"
 
 event-emitter@~0.3.5:
   version "0.3.5"
@@ -6747,6 +6785,10 @@ xdg-basedir@^2.0.0:
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-2.0.0.tgz#edbc903cc385fc04523d966a335504b5504d1bd2"
   dependencies:
     os-homedir "^1.0.0"
+
+xhr2@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/xhr2/-/xhr2-0.1.3.tgz#cbfc4759a69b4a888e78cf4f20b051038757bd11"
 
 xml-char-classes@^1.0.0:
   version "1.0.0"
