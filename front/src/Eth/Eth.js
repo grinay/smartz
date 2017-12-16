@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+const Eth2 = require('ethjs-query');
+
 class Eth extends Component {
   render() {
     const bar = 'foo';

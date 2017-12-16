@@ -7,6 +7,7 @@ import Callback from 'Callback/Callback';
 import Auth from 'Auth/Auth';
 import Profile from 'Profile/Profile';
 import Ctor from 'Ctor/Ctor';
+import CtorAdd from 'CtorAdd/CtorAdd';
 import Eth from 'Eth/Eth';
 import history from './history';
 
@@ -41,6 +42,13 @@ export const makeMainRoutes = () => {
             <Redirect to="/home"/>
           ) : (
             <Ctor auth={auth} {...props} />
+          )
+        )} />
+        <Route path="/ctor-add" render={(props) => (
+          !auth.isAuthenticated() ? (
+            <Redirect to="/home"/>
+          ) : (
+            <CtorAdd auth={auth} {...props} />
           )
         )} />
       </div>

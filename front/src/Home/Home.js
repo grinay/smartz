@@ -50,6 +50,7 @@ class Home extends Component {
                 </li>
               ))
             }
+            <br /><a class="btn btn-primary" href="/ctor-add" role="button">Create constructor</a>
           </div>
         }
         {!isAuthenticated() &&
