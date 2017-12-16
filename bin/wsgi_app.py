@@ -62,7 +62,6 @@ def upload_ctor():
 
 @app.route('/list_ctors')
 def list_ctors():
-    args = _get_input()
     ctors = db.ctors
 
     def format_ctor(ctor):
