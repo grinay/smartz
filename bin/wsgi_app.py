@@ -103,7 +103,7 @@ def get_ctor_params():
 
 
 @app.route('/construct')
-def get_ctor_params():
+def construct():
     args = _get_input()
     ctors = db.ctors
     instances = db.instances
