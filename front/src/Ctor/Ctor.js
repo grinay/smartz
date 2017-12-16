@@ -5,6 +5,26 @@ import axios from 'axios';
 import {API_URL} from '../constants';
 import CtorParam from './CtorParam';
 
+// ==== Deploy code BEGIN =======================
+const w3 = new window.Web3(window.web3.currentProvider);
+
+function getContractAddress(tx_hash) {
+  w3.eth.getTransactionReceipt(tx_hash, function(err, receipt) {
+    if (null == receipt)
+      window.setTimeout(function(){ getContractAddress(tx_hash) }, 500);
+    else
+      alert('contractAddress:', receipt.contractAddress);
+  });
+}
+
+function deployContract(bin) {
+  w3.eth.sendTransaction({data: bin}, function(err, tx_hash) {
+    // console.log('tx_hash:', tx_hash);
+    getContractAddress(tx_hash);
+  });
+}
+// ==== Deploy code END =======================
+
 class Ctor extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +39,7 @@ class Ctor extends Component {
     })
       .then(response => {
         this.setState({ctor: response.data});
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => this.setState({message: error.message}));
     /*
@@ -61,13 +81,14 @@ class Ctor extends Component {
       fields[obj.name] = this.state[obj.name];
     });
     axios.post(`${API_URL}/construct`, {
-      ctor_id: ctor.ctor_id,
+      'ctor_id': this.props.match.params.id,
       fields
     })
       .then(response => {
-        console.log(response.data.message);
+        // console.log(response.data);
         this.setState({
-          mode: 'source'
+          mode: 'source',
+          data: response.data
         });
       })
       .catch(error => console.log(error));
@@ -77,11 +98,15 @@ class Ctor extends Component {
       [name]: value
     });
   }
+  deploy() {
+    const bin = this.state.data.bin;
+    deployContract(bin);
+  }
   render() {
     const {ctor, mode} = this.state;
     return (
       <div>
-        {mode != "mode" && this.state.ctor &&
+        {mode != "source" && this.state.ctor &&
           <div className="container">
             <h1>{ctor.ctor_name}</h1>
             <Panel header="Construct your contract">
@@ -100,21 +125,26 @@ class Ctor extends Component {
             </Panel>
           </div>
         }
-        {mode === "mode" &&
+        {mode === "source" &&
           <div className="container">
             <h1>{ctor.ctor_name}</h1>
             <Panel header="Final check before deploy">
               <form>
                 <FormGroup controlId="formControlsTextarea">
-                  <ControlLabel>Textarea</ControlLabel>
-                  <FormControl componentClass="textarea" placeholder="textarea" />
+                  <ControlLabel>Contract source</ControlLabel>
+                  <FormControl
+                    componentClass="textarea"
+                    rows="20"
+                    placeholder="If you don't see source code here, perhaps something gone wrong"
+                    defaultValue={this.state.data.source}
+                  />
                 </FormGroup>
                 <Button
-                  bsStyle="primary"
+                  bsStyle="warning"
                   className="btn-margin"
-                  onClick={this.submit.bind(this)}
+                  onClick={this.deploy.bind(this)}
                 >
-                  Submit parameters
+                  Deploy
                 </Button>
               </form>
             </Panel>
