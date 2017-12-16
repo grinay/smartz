@@ -34,7 +34,6 @@ class Home extends Component {
         ctor_name: 'Token with Crowdsale'
       },
     ]});
-    this.forceUpdate();
   }
   render() {
     const {isAuthenticated} = this.props.auth;
