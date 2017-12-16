@@ -37,8 +37,8 @@ class Constructor(object):
                 'desc': ''
             }
 
-            res["share_{}".format(i)] = {
-                'type': 'int',
+            res["shares_{}".format(i)] = {
+                'type': 'string',
                 'name': "Fullname of founder #{}".format(i+1),
                 'desc': ''
             }
