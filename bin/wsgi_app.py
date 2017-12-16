@@ -27,6 +27,12 @@ db = mongoc.sc_ctors_db
 ctor_engine = SimpleStorageEngine({'datadir': DATA_DIR})
 
 
+@app.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
+
+
 @app.route('/register_user')
 def register_user():
     args = _get_input()
