@@ -5,30 +5,26 @@ import axios from 'axios';
 import {API_URL} from '../constants';
 import CtorParam from './CtorParam';
 
-// ==== Deploy code BEGIN =======================
 const w3 = new window.Web3(window.web3.currentProvider);
-
-function getContractAddress(tx_hash) {
-  w3.eth.getTransactionReceipt(tx_hash, function(err, receipt) {
-    if (null == receipt)
-      window.setTimeout(function(){ getContractAddress(tx_hash) }, 500);
-    else
-      alert('contractAddress:', receipt.contractAddress);
-  });
-}
-
-function deployContract(bin) {
-  w3.eth.sendTransaction({data: bin}, function(err, tx_hash) {
-    // console.log('tx_hash:', tx_hash);
-    getContractAddress(tx_hash);
-  });
-}
-// ==== Deploy code END =======================
 
 class Ctor extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+  getContractAddress(tx_hash) {
+    w3.eth.getTransactionReceipt(tx_hash, (err, receipt) => {
+      if (null == receipt)
+        window.setTimeout(() => { this.getContractAddress(tx_hash) }, 500);
+      else
+        alert('contractAddress:' + receipt.contractAddress);
+    });
+  }
+  deployContract(bin) {
+    w3.eth.sendTransaction({data: bin}, (err, tx_hash) => {
+      console.log('tx_hash:', tx_hash);
+      this.getContractAddress(tx_hash);
+    });
   }
   componentWillMount() {
     this.props.auth.isAuthenticated() && this.getCtorParams();
@@ -100,7 +96,7 @@ class Ctor extends Component {
   }
   deploy() {
     const bin = this.state.data.bin;
-    deployContract(bin);
+    this.deployContract(bin);
   }
   render() {
     const {ctor, mode} = this.state;
