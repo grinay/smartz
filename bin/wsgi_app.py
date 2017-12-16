@@ -6,6 +6,8 @@ import json
 import tempfile
 
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+
 from flask import Flask, abort, request
 
 ROOT_DIR=os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
@@ -56,6 +58,48 @@ def upload_ctor():
     ctor_engine.register_new_ctor(ctor_id, filename)
 
     return _send_output({'ok': True})
+
+
+@app.route('/list_ctors')
+def list_ctors():
+    args = _get_input()
+    ctors = db.ctors
+
+    def format_ctor(ctor):
+        return {
+            'ctor_id': ctor['_id'].binary.hex(),
+            'ctor_name': ctor['ctor_name']
+         }
+
+    return _send_output(list(map(format_ctor, ctors.find())))
+
+
+@app.route('/get_ctor_params')
+def get_ctor_params():
+    args = _get_input()
+    ctors = db.ctors
+
+    ctor_id = nonempty(args_string(args, 'ctor_id'))
+    ctor_info = ctors.find_one({'_id': ObjectId(ctor_id)})
+    if ctor_info is None:
+        return _send_error('ctor is not found')
+
+    params = ctor_engine.get_ctor_params(ctor_id)
+    if isinstance(params, str):
+        return _send_error(params)
+
+    def reformat_param(p_name, p_info):
+        return {
+            'name': p_name,
+            'human_name': p_name,
+            'type': p_info['type'],
+            'desc': p_info['desc']
+        }
+
+    return _send_output({
+        'ctor_name': ctor_info['ctor_name'],
+        'ctor_params': [reformat_param(n, i) for (n, i) in params.items()]
+    })
 
 
 def _get_input():

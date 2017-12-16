@@ -1,3 +1,4 @@
+import re
 from unittest import TestCase
 
 import os
@@ -28,3 +29,21 @@ class TestSimpleStorageEngine(TestCase):
 
         bin, source, abi = engine.construct('123', {})
         self.assertTrue('contract A' in source)
+        self.assertTrue('"name":"logthis"' in abi, "simple tests for existing method definition")
+        self.assertTrue('"name":"Log"' in abi, "simple tests for existing event definition")
+
+        self.assertNotEqual("", bin, "bytecode is not empty")
+        self.assertFalse(re.findall('[^[0-9]]', bin), 'only hex in bytecode')
+
+    def test__invalid_name(self):
+
+        engine = SimpleStorageEngine({'datadir': '/tmp'})
+        engine.register_new_ctor(
+            '123',
+            os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                'test_cases/invalid_name.py'
+            )
+        )
+
+        self.assertEqual('error', engine.construct('123', {}))
