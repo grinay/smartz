@@ -36,16 +36,40 @@ class BaseEngine(object):
 
     def construct(self, id, fields):
         try:
-            source, contract_name = self._get_instance(id).construct(fields)
+            res = self._get_instance(id).construct(fields)
+            if isinstance(res, dict):#todo this code smells
+                if 'result' not in res:
+                    raise Exception
+                if len(res) > 1:
+                    if 'errors' not in res:
+                        raise Exception
+                    if not isinstance(res['errors'], dict):
+                        raise Exception
 
-            if re.findall('[^a-zA-Z0-9]', contract_name):
-                return 'error'
+                    #todo more checks of fields in errors
+                    #params = self.get_ctor_params(id)
 
-            bin, abi = self._compile(source, contract_name)
+                return res
+            elif type(res) in [list, tuple]:
+                if len(res) != 2:
+                    raise Exception
+
+                source, contract_name = res
+
+                if re.findall('[^a-zA-Z0-9]', contract_name):
+                    raise Exception
+
+                bin, abi = self._compile(source, contract_name)
+                return [bin, source, abi]
+            else:
+                raise Exception
+
         except BaseException:
-            return 'error'
+            return {
+                'result': 'error'
+            }
 
-        return [bin, source, abi]
+
 
     @abc.abstractmethod
     def _save_constructor(self, id, filename):
@@ -79,6 +103,7 @@ class BaseEngine(object):
             popen = subprocess.Popen(args, stdout=subprocess.PIPE)
             popen.wait()
 
+            #solc stores bin and abi in two files with the same names
             out_file = os.path.join(tmpdir, '{}_{}'.format(tmpfilename.replace('/', '_'), contract_name))
             with open('{}.bin'.format(out_file)) as f:
                 bin = f.read()
@@ -86,7 +111,6 @@ class BaseEngine(object):
             with open('{}.abi'.format(out_file)) as f:
                 abi = f.read()
 
-            #_.close()
             return bin, abi
 
 
@@ -96,8 +120,6 @@ class SimpleStorageEngine(BaseEngine):
 
     settings:
         datadir - dir where constructors files will be stored. One constructor - one file with name = constructor id
-
-    todo id is not validated for correct filename
     """
 
     _datadir = "/tmp"
@@ -125,4 +147,7 @@ class SimpleStorageEngine(BaseEngine):
 
     def _get_filename(self, id):
         """returns filename of constructor by id"""
+        if re.findall('[^a-zA-Z0-9]', id):
+            raise Exception
+
         return os.path.join(self._datadir, str(id))
