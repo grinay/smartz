@@ -6,7 +6,7 @@ REST, GET|POST
     input:
         {name: 'bob', mail: '...', pass: 'xx'}
     output:
-        {id: 5} || {error: 'foo'}
+        {ok: true} || {error: 'foo'}
 
 - /login
     input:
