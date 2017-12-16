@@ -5,7 +5,9 @@ import axios from 'axios';
 import {API_URL} from '../constants';
 import CtorParam from './CtorParam';
 
-const w3 = new window.Web3(window.web3.currentProvider);
+if (window.Web3) {
+  var w3 = new window.Web3(window.web3.currentProvider);
+}
 
 class Ctor extends Component {
   constructor(props) {
@@ -97,12 +99,15 @@ class Ctor extends Component {
   deploy() {
     const bin = this.state.data.bin;
     this.deployContract(bin);
+    this.setState({
+      mode: 'deploying'
+    })
   }
   render() {
     const {ctor, mode} = this.state;
     return (
       <div>
-        {mode != "source" && this.state.ctor &&
+        {!mode && this.state.ctor &&
           <div className="container">
             <h1>{ctor.ctor_name}</h1>
             <Panel header="Construct your contract">
