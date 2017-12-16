@@ -179,7 +179,7 @@ class Ctor extends Component {
               <p>
                 Contract address:<br />
                 <a href={'https://rinkeby.etherscan.io/address/' + this.state.contractAddress}>
-                  {this.state.contractAddress}}
+                  {this.state.contractAddress}
                 </a>
               </p>
             </Panel>
