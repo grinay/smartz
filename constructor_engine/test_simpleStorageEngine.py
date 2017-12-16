@@ -27,7 +27,16 @@ class TestSimpleStorageEngine(TestCase):
         )
 
 
-        bin, source, abi = engine.construct('123', {})
+        #check errors
+        res = engine.construct('123', {})
+        self.assertEqual(dict, type(res), "error")
+        self.assertEqual('Hard cap error 1', res['errors']["hard_cap"])
+
+
+        #successful
+        res = engine.construct('123', {"hard_cap":123})
+        self.assertNotEqual(dict, type(res), "not error")
+        bin, source, abi = res
         self.assertTrue('contract A' in source)
         self.assertTrue('"name":"logthis"' in abi, "simple tests for existing method definition")
         self.assertTrue('"name":"Log"' in abi, "simple tests for existing event definition")
@@ -46,4 +55,6 @@ class TestSimpleStorageEngine(TestCase):
             )
         )
 
-        self.assertEqual('error', engine.construct('123', {}))
+        res = engine.construct('123', {})
+        self.assertEqual(dict, type(res))
+        self.assertEqual({"result":"error"}, res)
