@@ -7,6 +7,7 @@ import Callback from 'Callback/Callback';
 import Auth from 'Auth/Auth';
 import Profile from 'Profile/Profile';
 import Ctor from 'Ctor/Ctor';
+import Eth from 'Eth/Eth';
 import history from './history';
 
 const auth = new Auth();
@@ -23,6 +24,7 @@ export const makeMainRoutes = () => {
       <div>
         <Route path="/" render={(props) => <App auth={auth} {...props} />} />
         <Route path="/home" render={(props) => <Home auth={auth} {...props} />} />
+        <Route path="/eth" render={(props) => <Eth auth={auth} {...props} />} />
         <Route path="/callback" render={(props) => {
           handleAuthentication(props);
           return <Callback {...props} />

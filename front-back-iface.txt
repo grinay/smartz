@@ -38,7 +38,7 @@ REST, GET|POST
         ctor_name: 'my ctor',
         ctor_params: [
             {
-                name: 'hard_cap'
+                name: 'hard_cap',
                 human_name: 'human name',
                 type: 'int' | 'address' | 'string' | 'datetime',
                 desc: 'this is hard cap, blablabla, long description'
