@@ -23,7 +23,7 @@ class App extends Component {
         <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">Auth0 - React</a>
+              <a href="#">SC C-tors Market</a>
             </Navbar.Brand>
             <Button
               bsStyle="primary"
@@ -40,6 +40,17 @@ class App extends Component {
                     onClick={this.login.bind(this)}
                   >
                     Log In
+                  </Button>
+                )
+            }
+            {
+              isAuthenticated() && (
+                  <Button
+                    bsStyle="primary"
+                    className="btn-margin"
+                    onClick={this.goTo.bind(this, 'profile')}
+                  >
+                    Profile
                   </Button>
                 )
             }

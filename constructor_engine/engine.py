@@ -21,7 +21,7 @@ class BaseEngine(object):
 
     def get_ctor_params(self, id):
         try:
-            self._get_instance(id).get_params()
+            return self._get_instance(id).get_params()
         except BaseException:
             return 'error'
 
@@ -83,10 +83,10 @@ class SimpleStorageEngine(BaseEngine):
         mod = types.ModuleType(loader.name)
         loader.exec_module(mod)
 
-        return getattr(mod, self.CONSTRUCTOR_CLASS)
+        return getattr(mod, self.CONSTRUCTOR_CLASS)()
 
 
 
     def _get_filename(self, id):
         """returns filename of constructor by id"""
-        return os.path.join(self._datadir, id)
+        return os.path.join(self._datadir, str(id))
