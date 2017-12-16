@@ -21,7 +21,7 @@ class Eth extends Component {
 									 abi: [{"constant":false,"inputs":[{"name":"msg","type":"string"}],"name":"logthis","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"msg","type":"string"}],"name":"Log","type":"event"}]
 								  } ] };
 	}
-	
+
 	function deployContract(contractData) {
 		var cData = contractData['txs_to_send'][0];
 

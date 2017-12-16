@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Panel, ControlLabel, Glyphicon} from 'react-bootstrap';
+import {Panel, ControlLabel, Glyphicon, Button} from 'react-bootstrap';
 
 import {API_URL} from 'constants';
 import CtorParam from './CtorParam';
@@ -46,7 +46,9 @@ class Ctor extends Component {
       ]
     }});
   }
+  submit() {
 
+  }
   render() {
     const {ctor} = this.state;
     return (
@@ -55,8 +57,15 @@ class Ctor extends Component {
         <Panel header="Profile">
           <form>
             {ctor.ctor_params.map((el, i) => (
-              <CtorParam params={el} />
+              <CtorParam params={el} key={i} />
             ))}
+            <Button
+              bsStyle="primary"
+              className="btn-margin"
+              onClick={this.submit.bind(this)}
+            >
+              Submit parameters
+            </Button>
           </form>
         </Panel>
       </div>
