@@ -16,17 +16,11 @@ class Constructor(object):
                 pragma solidity ^0.4.18;
                 
                 contract A {
-                    event Log(string msg);
-                
                     function A() public {
                     
                     }
-                    
-                    function logthis(string msg) {
-                        Log(msg);
-                    }
                 }
             """,
-            'A'
+            'A/'
         ]
 

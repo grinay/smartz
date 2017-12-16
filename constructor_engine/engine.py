@@ -1,15 +1,24 @@
 import abc
+import re
 import shutil
 import os.path
+import tempfile
 
 import types
 import importlib.machinery
+
+import subprocess
 
 
 class BaseEngine(object):
 
     #todo hardcoded
     CONSTRUCTOR_CLASS = 'Constructor'
+
+    SOLC_BINARY = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        '../node_modules/.bin/solcjs'
+    )
 
 
     def __init__(self, settings):
@@ -28,11 +37,15 @@ class BaseEngine(object):
     def construct(self, id, fields):
         try:
             source, contract_name = self._get_instance(id).construct(fields)
+
+            if re.findall('[^a-zA-Z0-9]', contract_name):
+                return 'error'
+
+            bin, abi = self._compile(source, contract_name)
         except BaseException:
             return 'error'
 
-        #todo compilation
-        return ["bin", source, "abi"]# or 'error'
+        return [bin, source, abi]
 
     @abc.abstractmethod
     def _save_constructor(self, id, filename):
@@ -51,7 +64,30 @@ class BaseEngine(object):
 
         return self._instances[id]
 
+    def _compile(self, source, contract_name):
+        """compiles source fi"""
 
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmpfile, tmpfilename = tempfile.mkstemp(dir=tmpdir)
+            outsock = os.fdopen(tmpfile, 'w')
+            outsock.close() #closing resource
+
+            with open(tmpfilename, "w") as f:
+                print(source, file=f)
+
+            args = (self.SOLC_BINARY, "--bin", "--abi", "--optimize", "-o", tmpdir, tmpfilename)
+            popen = subprocess.Popen(args, stdout=subprocess.PIPE)
+            popen.wait()
+
+            out_file = os.path.join(tmpdir, '{}_{}'.format(tmpfilename.replace('/', '_'), contract_name))
+            with open('{}.bin'.format(out_file)) as f:
+                bin = f.read()
+
+            with open('{}.abi'.format(out_file)) as f:
+                abi = f.read()
+
+            #_.close()
+            return bin, abi
 
 
 class SimpleStorageEngine(BaseEngine):
