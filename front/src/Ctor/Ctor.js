@@ -49,13 +49,14 @@ class Ctor extends Component {
   }
   submit() {
     const {ctor} = this.state;
-    const fileds = {};
+    const fields = {};
+    ctor.ctor_params.forEach((obj, i) => {
+      fields[obj.name] = this.state[obj.name];
+    });
     axios.post(`${API_URL}/construct`, {
       ctor_id: ctor.ctor_id,
-      fields: {
-          hard_cap: 1000,
-      }
-    })
+      fields
+    }})
       .then(response => console.log(response.data.message))
       .catch(error => console.log(error));
   }
