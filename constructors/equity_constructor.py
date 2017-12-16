@@ -100,10 +100,7 @@ class Constructor(object):
         for addr, fullname, shares in shareholders:
             total_shares += shares
             shareholders_code += """
-                shareholders.push({addr});
-                shareholders_names[{addr}] = "{fullname}";
-                balances[{addr}] = {shares} * 10**18;
-                Transfer(address(0), {addr}, {shares} * 10**18);
+        addShareholder({addr}, "{fullname}", {shares});
             """.format(
                 addr=addr,
                 fullname=fullname,
@@ -312,8 +309,15 @@ contract EquityToken is StandardToken
     function EquityToken() public {
         totalSupply = totalSupply.add(%total% * 10**18);
    
-        %shareholders_code%
+%shareholders_code%
         
+    }
+    
+    function addShareholder(address addr, string fullname, uint256 shares) public {
+        shareholders.push(addr);
+        shareholders_names[addr] = fullname;
+        balances[addr] = shares * 10**18;
+        Transfer(address(0), addr, shares * 10**18);
     }
 
 }
