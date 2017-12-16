@@ -67,11 +67,11 @@ class Constructor(object):
         shareholders = []
         for i in range(7):
             addr_field = "address_{}".format(i)
-        #     if addr_field not in fields:
-        #         continue
+            if addr_field not in fields:
+                continue
             addr = fields[addr_field]
-        #     if addr == "":
-        #         continue
+            if addr == "":
+                continue
         #
         #     if not re.findall('^0x[0-9a-fA-F]{40}$', addr):
         #         errors[addr_field] = 'Address is invalid'
