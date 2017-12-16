@@ -59,6 +59,7 @@ REST, GET|POST
     output:
         {
             result: 'success',
+            instance_id: 'dd353',
             bin: '0xddd',
             source: 'pragma ...'
         }
@@ -72,6 +73,6 @@ REST, GET|POST
 
 - /get_abi
     input:
-        {ctor_id: 4}
+        {instance_id: 'dd4'}
     output:
         [...] || {error: 'foo'}
