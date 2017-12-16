@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Glyphicon} from 'react-bootstrap';
-import './Profile.css';
 
 class Profile extends Component {
   componentWillMount() {
@@ -15,11 +14,12 @@ class Profile extends Component {
     }
   }
   render() {
-    const { profile } = this.state;
+    const {profile} = this.state;
+    const {id} = props.match.params;
     return (
       <div className="container">
         <div className="profile-area">
-          <h1>{profile.name}</h1>
+          <h1>{id}</h1>
           <Panel header="Profile">
             <img src={profile.picture} alt="profile" />
             <div>
