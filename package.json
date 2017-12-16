@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "ethjs-contract": "^0.1.9",
-    "ethjs-query": "^0.3.2"
-  }
-}
