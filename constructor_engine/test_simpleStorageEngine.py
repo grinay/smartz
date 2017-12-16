@@ -42,7 +42,7 @@ class TestSimpleStorageEngine(TestCase):
         self.assertTrue('"name":"Log"' in abi, "simple tests for existing event definition")
 
         self.assertNotEqual("", bin, "bytecode is not empty")
-        self.assertFalse(re.findall('[^[0-9]]', bin), 'only hex in bytecode')
+        self.assertFalse(re.findall('[^0-9a-f]', bin), 'only hex in bytecode')
 
     def test__invalid_name(self):
 

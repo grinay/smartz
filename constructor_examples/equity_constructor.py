@@ -102,9 +102,12 @@ class Constructor(object):
             shareholders_code += """
                 shareholders.push({addr});
                 shareholders_names[{addr}] = "{fullname}";
+                balances[{addr}] = {shares} * 10**18;
+                Transfer(address(0), {addr}, {shares} * 10**18);
             """.format(
                 addr=addr,
-                fullname=fullname
+                fullname=fullname,
+                shares=shares
             )
 
 
