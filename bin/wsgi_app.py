@@ -102,6 +102,53 @@ def get_ctor_params():
     })
 
 
+@app.route('/construct')
+def construct():
+    args = _get_input()
+    ctors = db.ctors
+    instances = db.instances
+
+    ctor_id = nonempty(args_string(args, 'ctor_id'))
+    ctor_info = ctors.find_one({'_id': ObjectId(ctor_id)})
+    if ctor_info is None:
+        return _send_error('ctor is not found')
+
+    fields = args['fields']
+    if not isinstance(fields, dict):
+        raise TypeError()
+
+    result = ctor_engine.construct(ctor_id, fields)
+
+    if isinstance(result, dict):
+        # error
+        return _send_output(result)
+
+    # success
+    [bin, source, abi] = result
+    instance_id = instances.insert_one({'abi': abi}).inserted_id.binary.hex()
+
+    return _send_output({
+        'result': 'success',
+        'instance_id': instance_id,
+        'bin': bin,
+        'source': source
+    })
+
+
+@app.route('/get_abi')
+def get_abi():
+    args = _get_input()
+    ctors = db.ctors
+    instances = db.instances
+
+    instance_id = nonempty(args_string(args, 'instance_id'))
+    instance_info = instances.find_one({'_id': ObjectId(instance_id)})
+    if instance_info is None:
+        return _send_error('instance is not found')
+
+    _send_output(instance_info['abi'])
+
+
 def _get_input():
     return json.loads(request.args['request'])
 

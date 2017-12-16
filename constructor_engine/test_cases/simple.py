@@ -11,6 +11,15 @@ class Constructor(object):
         }
 
     def construct(self, fields):
+        if 'hard_cap' not in fields:
+            return {
+                "result": "error",
+                "errors": {
+                    'hard_cap': 'Hard cap error 1'
+                }
+            }
+
+
         return [
             """
                 pragma solidity ^0.4.18;
