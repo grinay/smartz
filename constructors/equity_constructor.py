@@ -54,22 +54,22 @@ class Constructor(object):
         #     if not param in fields:
         #         errors[param] = 'Field is required'
         #
-        # if "name" in fields:
-        #     name = fields["name"]
+        if "name" in fields:
+            name = fields["name"]
         #     if not isinstance(name, str) or len(name) < 3 or len(name) > 100 or not re.findall('^[a-zA-Z ]+$', name):
         #         errors["name"] = 'Name must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
         #
-        # if "abbr" in fields:
-        #     abbr = fields["abbr"]
+        if "abbr" in fields:
+            abbr = fields["abbr"]
         #     if not isinstance(abbr, str) or len(abbr) < 3 or len(abbr) > 5 or not re.findall('^[A-Z]+$', abbr):
         #         errors["name"] = 'Abbr must be string with length from 3 to 5 symbols. Only UPPERCASE letters are allowed'
         #
         shareholders = []
         for i in range(7):
-        #     addr_field = "address_{}".format(i)
+            addr_field = "address_{}".format(i)
         #     if addr_field not in fields:
         #         continue
-        #     addr = fields[addr_field]
+            addr = fields[addr_field]
         #     if addr == "":
         #         continue
         #
@@ -77,13 +77,13 @@ class Constructor(object):
         #         errors[addr_field] = 'Address is invalid'
         #
         #
-        #     fullname_field = "fullname_{}".format(i)
-        #     fullname = fields[fullname_field]
+            fullname_field = "fullname_{}".format(i)
+            fullname = fields[fullname_field]
         #     if not isinstance(fullname, str) or len(fullname) < 3 or len(fullname) > 100 or not re.findall('^[a-zA-Z ]+$', fullname):
         #         errors[fullname_field] = 'Fullname must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
         #
-        #     shares_field = "shares_{}".format(i)
-        #     shares = fields[shares_field]
+            shares_field = "shares_{}".format(i)
+            shares = fields[shares_field]
         #     if not isinstance(shares, int) or shares < 1 or shares > 2000000000:
         #         errors[shares_field] = 'Shares must be int from 1 to 2000000000'
         #
