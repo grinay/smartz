@@ -161,6 +161,11 @@ def get_abi():
     _send_output(instance_info['abi'])
 
 
+def l(v):
+    print(repr(v), file=sys.stderr)
+    return v
+
+
 def _get_input():
     return json.loads(request.data)
 
