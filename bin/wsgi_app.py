@@ -27,7 +27,14 @@ db = mongoc.sc_ctors_db
 ctor_engine = SimpleStorageEngine({'datadir': DATA_DIR})
 
 
-@app.route('/register_user')
+@app.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    return response
+
+
+@app.route('/register_user', methods=['GET', 'POST'])
 def register_user():
     args = _get_input()
     users = db.users
@@ -41,7 +48,7 @@ def register_user():
     return _send_output({'ok': True})
 
 
-@app.route('/upload_ctor')
+@app.route('/upload_ctor', methods=['GET', 'POST'])
 def upload_ctor():
     args = _get_input()
     ctors = db.ctors
@@ -60,7 +67,7 @@ def upload_ctor():
     return _send_output({'ok': True})
 
 
-@app.route('/list_ctors')
+@app.route('/list_ctors', methods=['GET', 'POST'])
 def list_ctors():
     ctors = db.ctors
 
@@ -73,7 +80,7 @@ def list_ctors():
     return _send_output(list(map(format_ctor, ctors.find())))
 
 
-@app.route('/get_ctor_params')
+@app.route('/get_ctor_params', methods=['GET', 'POST'])
 def get_ctor_params():
     args = _get_input()
     ctors = db.ctors
@@ -101,7 +108,7 @@ def get_ctor_params():
     })
 
 
-@app.route('/construct')
+@app.route('/construct', methods=['GET', 'POST'])
 def construct():
     args = _get_input()
     ctors = db.ctors
@@ -134,7 +141,7 @@ def construct():
     })
 
 
-@app.route('/get_abi')
+@app.route('/get_abi', methods=['GET', 'POST'])
 def get_abi():
     args = _get_input()
     ctors = db.ctors
