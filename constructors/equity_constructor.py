@@ -87,7 +87,7 @@ class Constructor(object):
         #     if not isinstance(shares, int) or shares < 1 or shares > 2000000000:
         #         errors[shares_field] = 'Shares must be int from 1 to 2000000000'
         #
-            shareholders.append([addr, fullname, shares])
+            shareholders.append([addr, fullname, int(shares)])
 
         if errors != {}:
             return {
