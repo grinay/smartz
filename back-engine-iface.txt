@@ -15,5 +15,13 @@ class EngineInterface(object):
         } or 'error'
 
     def construct(self, ctor_id, {field1: value1, ...})
-        returns [bin, source, abi] or 'error'
+        returns [bin, source, abi]
+        or
+        {
+            result: 'error',
+            errors: {
+                hard_cap: 'Hard cap can not be empty',
+                ...
+            }
+        }
 
