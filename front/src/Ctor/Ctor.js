@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
-import {Panel, ControlLabel, Glyphicon, Button} from 'react-bootstrap';
+import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
 
 import {API_URL} from '../constants';
 import CtorParam from './CtorParam';
 
 class Ctor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   componentWillMount() {
     this.props.auth.isAuthenticated() && this.getCtorParams();
   }
@@ -58,7 +62,10 @@ class Ctor extends Component {
       fields
     })
       .then(response => {
-        console.log(response.data.message)
+        console.log(response.data.message);
+        this.setState({
+          mode: 'source'
+        });
       })
       .catch(error => console.log(error));
   }
@@ -68,24 +75,48 @@ class Ctor extends Component {
     });
   }
   render() {
-    const {ctor} = this.state;
+    const {ctor, mode} = this.state;
     return (
-      <div className="container">
-        <h1>{ctor.ctor_name}</h1>
-        <Panel header="Profile">
-          <form>
-            {ctor.ctor_params.map((el, i) => (
-              <CtorParam params={el} key={i} callback={this.setValue.bind(this)} />
-            ))}
-            <Button
-              bsStyle="primary"
-              className="btn-margin"
-              onClick={this.submit.bind(this)}
-            >
-              Submit parameters
-            </Button>
-          </form>
-        </Panel>
+      <div>
+        {mode != "mode" &&
+          <div className="container">
+            <h1>{ctor.ctor_name}</h1>
+            <Panel header="Construct your contract">
+              <form>
+                {ctor.ctor_params.map((el, i) => (
+                  <CtorParam params={el} key={i} callback={this.setValue.bind(this)} />
+                ))}
+                <Button
+                  bsStyle="primary"
+                  className="btn-margin"
+                  onClick={this.submit.bind(this)}
+                >
+                  Submit parameters
+                </Button>
+              </form>
+            </Panel>
+          </div>
+        }
+        {mode === "mode" &&
+          <div className="container">
+            <h1>{ctor.ctor_name}</h1>
+            <Panel header="Final check before deploy">
+              <form>
+                <FormGroup controlId="formControlsTextarea">
+                  <ControlLabel>Textarea</ControlLabel>
+                  <FormControl componentClass="textarea" placeholder="textarea" />
+                </FormGroup>
+                <Button
+                  bsStyle="primary"
+                  className="btn-margin"
+                  onClick={this.submit.bind(this)}
+                >
+                  Submit parameters
+                </Button>
+              </form>
+            </Panel>
+          </div>
+        }
       </div>
     );
   }

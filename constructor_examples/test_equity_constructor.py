@@ -40,9 +40,9 @@ class TestEquityConstructor(TestCase):
         res = c.construct({
             "name": "Shares",
             "abbr": "SHR",
-            "address_0": "/0x71e82d98f04e06345677858b31d47934224b157f",
+            "address_0": "0x71e82d98f04e06345677858b31d47934224b157f",
             "fullname_0": "Ivan Petrov",
             "shares_0": 4
         })
 
-        self.assertTrue(isinstance(res, list))
+        self.assertTrue(isinstance(res, tuple))

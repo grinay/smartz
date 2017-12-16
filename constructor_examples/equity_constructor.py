@@ -95,10 +95,10 @@ class Constructor(object):
                 "errors": errors
             }
 
-        source = self.template.format(
-            name=name,
-            abbr=abbr
-        )
+        source = self.template\
+            .replace('%name%', name) \
+            .replace('%abbr%', abbr) \
+            .replace('%total%', "1")
 
         return source, "EquityToken"
 
@@ -285,17 +285,16 @@ contract StandardToken is ERC20, BasicToken {
 
 contract EquityToken is StandardToken
 {
-    string public constant name = '{name}';
-    string public constant symbol = '{abbr}';
+    string public constant name = '%name%';
+    string public constant symbol = '%abbr%';
     uint8 public constant decimals = 18;
     
     mapping (address => string) public shareholders_names;
     address public shareholders;
 
     function EquityToken() public {
-        totalSupply = totalSupply.add({total} * 10**18);
-        balances[_to] = balances[_to].add({total} * 10**18);
-        
+        totalSupply = totalSupply.add(%total% * 10**18);
+   
         
         
     }
