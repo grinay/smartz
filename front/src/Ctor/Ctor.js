@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
+import loading from 'Callback/loading.svg';
 
 import {API_URL} from '../constants';
 import CtorParam from './CtorParam';
@@ -19,12 +20,19 @@ class Ctor extends Component {
       if (null == receipt)
         window.setTimeout(() => { this.getContractAddress(tx_hash) }, 500);
       else
-        alert('contractAddress:' + receipt.contractAddress);
+        this.setState({
+          mode: 'done',
+          contractAddress: receipt.contractAddress
+        })
     });
   }
   deployContract(bin) {
     w3.eth.sendTransaction({data: bin}, (err, tx_hash) => {
       console.log('tx_hash:', tx_hash);
+      this.setState({
+        mode: 'deploying',
+        tx: tx_hash
+      })
       this.getContractAddress(tx_hash);
     });
   }
@@ -99,9 +107,6 @@ class Ctor extends Component {
   deploy() {
     const bin = this.state.data.bin;
     this.deployContract(bin);
-    this.setState({
-      mode: 'deploying'
-    })
   }
   render() {
     const {ctor, mode} = this.state;
@@ -148,6 +153,35 @@ class Ctor extends Component {
                   Deploy
                 </Button>
               </form>
+            </Panel>
+          </div>
+        }
+        {mode === "deploying" &&
+          <div className="container">
+            <h1>{ctor.ctor_name}</h1>
+            <Panel header="Deploy in progress">
+              <p>
+                Deploy transaction hash:<br />
+                {this.state.tx}
+              </p>
+              <img src={loading} alt="loading"/>
+            </Panel>
+          </div>
+        }
+        {mode === "done" &&
+          <div className="container">
+            <h1>{ctor.ctor_name}</h1>
+            <Panel header="Contract deployed!">
+              <p>
+                Deploy transaction hash:<br />
+                {this.state.tx}
+              </p>
+              <p>
+                Contract address:<br />
+                <a href={'https://rinkeby.etherscan.io/address/' + this.state.contractAddress}>
+                  {this.state.contractAddress}}
+                </a>
+              </p>
             </Panel>
           </div>
         }
