@@ -1,0 +1,8 @@
+{
+  "name": "Smart-contract-constructors-marketplace",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "solc": "0.4.19"
+  }
+}
