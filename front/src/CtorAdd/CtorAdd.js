@@ -27,7 +27,7 @@ class CtorAdd extends Component {
   render() {
     return (
       <div className="container">
-        <h1>Create contract</h1>
+        <h1>Create constructor</h1>
         <form encType="multipart/form-data">
           <FormGroup
             controlId="formBasicText"
