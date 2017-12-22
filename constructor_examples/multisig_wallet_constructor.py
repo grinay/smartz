@@ -10,7 +10,7 @@ class Constructor(object):
             "signs_count": {
                 "type": "int",
                 "title": "Signs count",
-                "desc": "",
+                "desc": "Signs count to send ether from wallet (2 or 3)",
             }
         }
         for i in range(self.MAX_OWNERS):
@@ -167,9 +167,9 @@ contract multiowned {
 
     // constructor is given number of sigs required to do protected "onlymanyowners" transactions
     // as well as the selection of addresses capable of confirming them (msg.sender is not added to the owners!).
+    address[] _owners;
     function multiowned() public
     {
-        address[] storage _owners = new address[](3);
         uint _required = %signs_count%;
         
         %owners%
