@@ -7,9 +7,9 @@ class Footer extends Component {
     const { isAuthenticated } = this.props.auth;
 
     return (
-      <footer class="footer">
-        <div class="container">
-          <p class="text-muted">
+      <footer className="footer">
+        <div className="container">
+          <p className="text-muted">
             Contact us:<br />
             <a href="https://t.me/LoungerX">@LoungerX</a><br />
             <a href="mailto:hello@mixbytes.io">hello@mixbytes.io</a><br /><br />
