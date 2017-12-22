@@ -1,0 +1,25 @@
+.contracts-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contracts-cards .card {
+  width: 40%;
+  margin: 1rem 2rem 1rem 0;
+}
+
+.card h3 {
+  margin-top: 1rem;
+}
+
+.card .card-text {
+  margin-top: 1rem;
+}
+
+.card .desc {
+  color: #555;
+}
+
+.card .btn-deploy {
+  margin-top: 1rem;
+}

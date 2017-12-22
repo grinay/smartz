@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import {API_URL} from '../constants';
 
+import './Home.css';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -45,15 +47,30 @@ class Home extends Component {
       <div className="container">
         {isAuthenticated() &&
           <div>
-            <h4>Choose smart contract:</h4>
+            <h4>Available smart contracts:</h4>
             {ctors &&
-              ctors.map((el, i) => (
-                <li key={i}>
-                  <a href={`/ctor/${el.ctor_id}`}>{el.ctor_name}</a>
-                </li>
-              ))
+              <div className="contracts-cards">
+                {ctors.map((el, i) => (
+                  <div className="card" key={i}>
+                    <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="Card image cap" />
+                    <div className="card-body">
+                      <h3 className="card-title">{el.ctor_name}</h3>
+                      <p className="card-text desc">Contract description. Lorem ipsum vestibulum sed turpis curabitur magna, consequat aliquet bibendum in amet aliquet, leo nam iaculis posuere vitae.</p>
+                      <a href={`/ctor/${el.ctor_id}`} className="btn btn-success btn-deploy">
+                        Deploy free
+                      </a>
+                      <p className="card-text"><small class="text-muted">Uploaded 21 dec 2017</small></p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             }
-            <br /><a className="btn btn-primary" href="/ctor-add" role="button">Create constructor</a>
+            {!ctors &&
+              <p>Contracts loading</p>
+            }
+            <br /><br />
+            <h4>If you are developer</h4>
+            <p>You can <a href="/ctor-add">add smart contract</a> to our platform.</p>
           </div>
         }
         {!isAuthenticated() &&
