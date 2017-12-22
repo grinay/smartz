@@ -45,6 +45,13 @@ class Home extends Component {
     const {ctors} = this.state;
     return (
       <div className="container">
+      <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Attention!</h4>
+        <p>
+          <b>Don't use our service with real ETH in Ethereum Mainnet!</b><br />
+          We are in very early stage of development. Use it only for test and informational purposes with Rinkeby network chosen in your MetaMask client. Authors are not responsible for any possible loses in result of using our service.
+        </p>
+      </div>
         {isAuthenticated() &&
           <div>
             <h4>Available smart contracts:</h4>

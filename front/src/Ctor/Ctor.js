@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
-import loading from 'Callback/loading.svg';
+import spinner from 'Callback/loading.svg';
 
 import {API_URL} from '../constants';
 import CtorParam from './CtorParam';
+
+import './Ctor.css';
 
 if (window.Web3) {
   var w3 = new window.Web3(window.web3.currentProvider);
@@ -91,16 +93,19 @@ class Ctor extends Component {
     ctor.ctor_params.forEach((obj, i) => {
       fields[obj.name] = this.state[obj.name];
     });
+    this.setState({
+      spinner: true
+    });
     axios.post(`${API_URL}/construct`, {
       'ctor_id': this.props.match.params.id,
       fields
     })
       .then(response => {
         // console.log(response.data);
-        debugger;
         this.setState({
           mode: 'source',
-          data: response.data
+          data: response.data,
+          spinner: false
         });
       })
       .catch(error => console.log(error));
@@ -121,79 +126,84 @@ class Ctor extends Component {
     const {ctor, mode} = this.state;
     return (
       <div>
-        {!mode && this.state.ctor &&
           <div className="container">
-            <h1>{ctor.ctor_name}</h1>
-            <Panel header="Construct your contract">
-              <form>
-                {ctor.ctor_params.map((el, i) => (
-                  <CtorParam params={el} key={i} callback={this.setValue.bind(this)} />
-                ))}
-                <Button
-                  bsStyle="primary"
-                  className="btn-margin"
-                  onClick={this.submit.bind(this)}
-                >
-                  Submit parameters
-                </Button>
-              </form>
-            </Panel>
-          </div>
-        }
-        {mode === "source" &&
-          <div className="container">
-            <h1>{ctor.ctor_name}</h1>
-            <Panel header="Final check before deploy">
-              <form>
-                <FormGroup controlId="formControlsTextarea">
-                  <ControlLabel>Contract source</ControlLabel>
-                  <FormControl
-                    componentClass="textarea"
-                    rows="20"
-                    placeholder="If you don't see source code here, perhaps something gone wrong"
-                    defaultValue={this.state.data.source}
-                  />
-                </FormGroup>
-                <Button
-                  bsStyle="warning"
-                  className="btn-margin"
-                  onClick={this.deploy.bind(this)}
-                >
-                  Deploy
-                </Button>
-              </form>
-            </Panel>
-          </div>
-        }
-        {mode === "deploying" &&
-          <div className="container">
-            <h1>{ctor.ctor_name}</h1>
-            <Panel header="Deploy in progress">
-              <p>
-                Deploy transaction hash:<br />
-                {this.state.tx}
-              </p>
-              <img src={loading} alt="loading"/>
-            </Panel>
-          </div>
-        }
-        {mode === "done" &&
-          <div className="container">
-            <h1>{ctor.ctor_name}</h1>
-            <Panel header="Contract deployed!">
-              <p>
-                Deploy transaction hash:<br />
-                {this.state.tx}
-              </p>
-              <p>
-                Contract address:<br />
-                <a href={'https://rinkeby.etherscan.io/address/' + this.state.contractAddress}>
-                  {this.state.contractAddress}
-                </a>
-              </p>
-            </Panel>
-          </div>
-        }
+            {this.state.ctor &&
+              <div>
+                <h1>{ctor.ctor_name}</h1>
+                <p className="desc">Contract description. Lorem ipsum vestibulum sed turpis curabitur magna, consequat aliquet bibendum in amet aliquet, leo nam iaculis posuere vitae.</p>
+              </div>
+            }
+            {!mode && this.state.ctor &&
+              <Panel header="Deploy step 1 of 2: customize your contract">
+                <form>
+                  {ctor.ctor_params.map((el, i) => (
+                    <CtorParam params={el} key={i} callback={this.setValue.bind(this)} />
+                  ))}
+                  <Button
+                    bsStyle="success"
+                    className="btn-margin"
+                    onClick={this.submit.bind(this)}
+                  >
+                    Proceed to step 2
+                  </Button>
+                  {this.state.spinner &&
+                    <div className="spinner">
+                      <p>Preparing your contract, this can take up to 30-40 seconds...</p>
+                      <img src={spinner} alt="Preparing contract..."/>
+                    </div>
+                  }
+                </form>
+              </Panel>
+            }
+            {mode === "source" &&
+              <Panel header="Deploy step 2 of 2: check the code">
+                <form>
+                  <FormGroup controlId="formControlsTextarea">
+                    <ControlLabel>Contract source</ControlLabel>
+                    <FormControl
+                      componentClass="textarea"
+                      rows="20"
+                      placeholder="If you don't see source code here, perhaps something gone wrong"
+                      defaultValue={this.state.data.source}
+                    />
+                  </FormGroup>
+                  <Button
+                    bsStyle="success"
+                    className="btn-margin"
+                    onClick={this.deploy.bind(this)}
+                  >
+                    Deploy it!
+                  </Button>
+                </form>
+              </Panel>
+            }
+            {mode === "deploying" &&
+              <Panel header="Deploy in progress">
+                <p>
+                  Deploy transaction hash:<br />
+                  {this.state.tx}
+                </p>
+                <div className="spinner">
+                  <p>Awaiting for contract to be placed in block by miners to get it address...</p>
+                  <img src={spinner} alt="Waiting for miners..."/>
+                </div>
+              </Panel>
+            }
+            {mode === "done" &&
+              <Panel header="Contract deployed!">
+                <p>
+                  Deploy transaction hash:<br />
+                  {this.state.tx}
+                </p>
+                <p>
+                  Your contract address:<br />
+                  <a href={'https://rinkeby.etherscan.io/address/' + this.state.contractAddress}>
+                    {this.state.contractAddress}
+                  </a>
+                </p>
+              </Panel>
+            }
+        </div>
       </div>
     );
   }
