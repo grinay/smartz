@@ -27,7 +27,14 @@ class CtorAdd extends Component {
   render() {
     return (
       <div className="container">
-        <h1>Create constructor</h1>
+        <h1>Add a smart contract</h1>
+        <div class="alert alert-success" role="alert">
+          <h4 class="alert-heading">Welcome!</h4>
+          <p>
+            <b>Unfortunately, independent smart contracts upload function is not ready yet!</b><br />
+            But if you are interested in contributing our project, feel free to <a href="https://t.me/LoungerX">get in touch with us</a>.
+          </p>
+        </div>
         <form encType="multipart/form-data">
           <FormGroup
             controlId="formBasicText"
@@ -56,7 +63,7 @@ class CtorAdd extends Component {
             className="btn-margin"
             onClick={this.submit.bind(this)}
           >
-            Submit contract
+            Submit a contract
           </Button>
         </form>
       </div>

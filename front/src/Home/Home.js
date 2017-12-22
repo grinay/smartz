@@ -77,7 +77,7 @@ class Home extends Component {
             }
             <br /><br />
             <h4>If you are developer</h4>
-            <p>You can <a href="/ctor-add">add smart contract</a> to our platform.</p>
+            <p>You can <a href="/ctor-add">add a smart contract</a> to our platform.</p>
           </div>
         }
         {!isAuthenticated() &&
