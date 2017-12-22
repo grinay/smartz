@@ -29,13 +29,6 @@ class App extends Component {
               </Navbar.Brand>
             </div>
             <div className="nav-buttons">
-              <Button
-                bsStyle="primary"
-                className="btn-margin"
-                onClick={this.goTo.bind(this, 'home')}
-              >
-                Home
-              </Button>
               {!isAuthenticated() && (
                 <Button
                   bsStyle="primary"
