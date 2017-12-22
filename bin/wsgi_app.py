@@ -103,7 +103,7 @@ def get_ctor_params():
     def reformat_param(p_name, p_info):
         return {
             'name': p_name,
-            'human_name': p_name,
+            'human_name': p_info['title'],
             'type': p_info['type'],
             'desc': p_info['desc']
         }

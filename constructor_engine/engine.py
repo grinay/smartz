@@ -103,6 +103,9 @@ class BaseEngine(object):
             popen = subprocess.Popen(args, stdout=subprocess.PIPE)
             popen.wait()
 
+            #out, err = popen.communicate()
+            #errcode = popen.returncode
+
             #solc stores bin and abi in two files with the same names
             out_file = os.path.join(tmpdir, '{}_{}'.format(tmpfilename.replace('/', '_'), contract_name))
             with open('{}.bin'.format(out_file)) as f:

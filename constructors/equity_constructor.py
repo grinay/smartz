@@ -8,18 +8,18 @@ class Constructor(object):
         res = {
             "name": {
                 'type': 'string',
-                'name': "Name",
+                'title': "Name",
                 'desc': 'Name of share (since shares is ERC20 compatible tokens)'
             },
             "abbr": {
                 'type': 'string',
-                'name': "Decimal",
+                'title': "Symbol",
                 'desc': 'Ticker of share (since shares is ERC20 compatible tokens)'
             },
             #todo
             # "allow_third_party_users": {
             #     'type': 'int',
-            #     'name': "Allow third-party users",
+            #     'title': "Allow third-party users",
             #     'desc': 'Is transfer of shares is allowed to non-founders'
             # }
         }
@@ -27,19 +27,19 @@ class Constructor(object):
         for i in range(7):
             res["address_{}".format(i)] = {
                 'type': 'address',
-                'name': "Address of founder #{}".format(i+1),
+                'title': "Address of founder #{}".format(i+1),
                 'desc': ''
             }
 
             res["fullname_{}".format(i)] = {
                 'type': 'string',
-                'name': "Fullname of founder #{}".format(i+1),
+                'title': "Fullname of founder #{}".format(i+1),
                 'desc': ''
             }
 
             res["shares_{}".format(i)] = {
                 'type': 'int',
-                'name': "Fullname of founder #{}".format(i+1),
+                'title': "Shares of founder #{}".format(i+1),
                 'desc': ''
             }
 
