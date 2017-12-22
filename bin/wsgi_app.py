@@ -103,7 +103,7 @@ def get_ctor_params():
     def reformat_param(p_name, p_info):
         return {
             'name': p_name,
-            'human_name': p_name,
+            'human_name': p_info['title'],
             'type': p_info['type'],
             'desc': p_info['desc']
         }
@@ -167,10 +167,12 @@ def l(v):
 
 
 def _get_input():
+    print('[DEBUG]: got input: {}'.format(request.data))
     return json.loads(request.data)
 
 
 def _send_error(string):
+    print('[ERROR]: {}'.format(string))
     return _send_output({'error': string})
 
 

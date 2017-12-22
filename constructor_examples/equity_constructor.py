@@ -8,18 +8,18 @@ class Constructor(object):
         res = {
             "name": {
                 'type': 'string',
-                'name': "Name",
+                'title': "Name",
                 'desc': 'Name of share (since shares is ERC20 compatible tokens)'
             },
             "abbr": {
                 'type': 'string',
-                'name': "Decimal",
+                'title': "Symbol",
                 'desc': 'Ticker of share (since shares is ERC20 compatible tokens)'
             },
             #todo
             # "allow_third_party_users": {
             #     'type': 'int',
-            #     'name': "Allow third-party users",
+            #     'title': "Allow third-party users",
             #     'desc': 'Is transfer of shares is allowed to non-founders'
             # }
         }
@@ -27,19 +27,19 @@ class Constructor(object):
         for i in range(7):
             res["address_{}".format(i)] = {
                 'type': 'address',
-                'name': "Address of founder #{}".format(i+1),
+                'title': "Address of founder #{}".format(i+1),
                 'desc': ''
             }
 
             res["fullname_{}".format(i)] = {
                 'type': 'string',
-                'name': "Fullname of founder #{}".format(i+1),
+                'title': "Fullname of founder #{}".format(i+1),
                 'desc': ''
             }
 
-            res["share_{}".format(i)] = {
-                'type': 'string',
-                'name': "Fullname of founder #{}".format(i+1),
+            res["shares_{}".format(i)] = {
+                'type': 'int',
+                'title': "Shares of founder #{}".format(i+1),
                 'desc': ''
             }
 
@@ -49,21 +49,21 @@ class Constructor(object):
     def construct(self, fields):
         errors = {}
 
-        required = ["name", "abbr", "address_0"] #"allow_third_party_users",
-        for param in required:
-            if not param in fields:
-                errors[param] = 'Field is required'
-
+        # required = ["name", "abbr", "address_0"] #"allow_third_party_users",
+        # for param in required:
+        #     if not param in fields:
+        #         errors[param] = 'Field is required'
+        #
         if "name" in fields:
             name = fields["name"]
-            if not isinstance(name, str) or len(name) < 3 or len(name) > 100 or not re.findall('^[a-zA-Z ]+$', name):
-                errors["name"] = 'Name must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
-
+        #     if not isinstance(name, str) or len(name) < 3 or len(name) > 100 or not re.findall('^[a-zA-Z ]+$', name):
+        #         errors["name"] = 'Name must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
+        #
         if "abbr" in fields:
             abbr = fields["abbr"]
-            if not isinstance(abbr, str) or len(abbr) < 3 or len(abbr) > 5 or not re.findall('^[A-Z]+$', abbr):
-                errors["name"] = 'Abbr must be string with length from 3 to 5 symbols. Only UPPERCASE letters are allowed'
-
+        #     if not isinstance(abbr, str) or len(abbr) < 3 or len(abbr) > 5 or not re.findall('^[A-Z]+$', abbr):
+        #         errors["name"] = 'Abbr must be string with length from 3 to 5 symbols. Only UPPERCASE letters are allowed'
+        #
         shareholders = []
         for i in range(7):
             addr_field = "address_{}".format(i)
@@ -72,22 +72,22 @@ class Constructor(object):
             addr = fields[addr_field]
             if addr == "":
                 continue
-
-            if not re.findall('^0x[0-9a-fA-F]{40}$', addr):
-                errors[addr_field] = 'Address is invalid'
-
-
+        #
+        #     if not re.findall('^0x[0-9a-fA-F]{40}$', addr):
+        #         errors[addr_field] = 'Address is invalid'
+        #
+        #
             fullname_field = "fullname_{}".format(i)
             fullname = fields[fullname_field]
-            if not isinstance(fullname, str) or len(fullname) < 3 or len(fullname) > 100 or not re.findall('^[a-zA-Z ]+$', fullname):
-                errors[fullname_field] = 'Fullname must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
-
+        #     if not isinstance(fullname, str) or len(fullname) < 3 or len(fullname) > 100 or not re.findall('^[a-zA-Z ]+$', fullname):
+        #         errors[fullname_field] = 'Fullname must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
+        #
             shares_field = "shares_{}".format(i)
             shares = fields[shares_field]
-            if not isinstance(shares, int) or shares < 1 or shares > 2000000000:
-                errors[shares_field] = 'Shares must be int from 1 to 2000000000'
-
-            shareholders.append([addr, fullname, shares])
+        #     if not isinstance(shares, int) or shares < 1 or shares > 2000000000:
+        #         errors[shares_field] = 'Shares must be int from 1 to 2000000000'
+        #
+            shareholders.append([addr, fullname, int(shares)])
 
         if errors != {}:
             return {

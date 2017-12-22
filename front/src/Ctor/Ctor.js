@@ -1,34 +1,40 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
+import loading from 'Callback/loading.svg';
 
 import {API_URL} from '../constants';
 import CtorParam from './CtorParam';
 
-// ==== Deploy code BEGIN =======================
-const w3 = new window.Web3(window.web3.currentProvider);
-
-function getContractAddress(tx_hash) {
-  w3.eth.getTransactionReceipt(tx_hash, function(err, receipt) {
-    if (null == receipt)
-      window.setTimeout(function(){ getContractAddress(tx_hash) }, 500);
-    else
-      alert('contractAddress:', receipt.contractAddress);
-  });
+if (window.Web3) {
+  var w3 = new window.Web3(window.web3.currentProvider);
 }
-
-function deployContract(bin) {
-  w3.eth.sendTransaction({data: bin}, function(err, tx_hash) {
-    // console.log('tx_hash:', tx_hash);
-    getContractAddress(tx_hash);
-  });
-}
-// ==== Deploy code END =======================
 
 class Ctor extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+  getContractAddress(tx_hash) {
+    w3.eth.getTransactionReceipt(tx_hash, (err, receipt) => {
+      if (null == receipt)
+        window.setTimeout(() => { this.getContractAddress(tx_hash) }, 500);
+      else
+        this.setState({
+          mode: 'done',
+          contractAddress: receipt.contractAddress
+        })
+    });
+  }
+  deployContract(bin) {
+    w3.eth.sendTransaction({data: bin}, (err, tx_hash) => {
+      console.log('tx_hash:', tx_hash);
+      this.setState({
+        mode: 'deploying',
+        tx: tx_hash
+      })
+      this.getContractAddress(tx_hash);
+    });
   }
   componentWillMount() {
     this.props.auth.isAuthenticated() && this.getCtorParams();
@@ -100,13 +106,13 @@ class Ctor extends Component {
   }
   deploy() {
     const bin = this.state.data.bin;
-    deployContract(bin);
+    this.deployContract(bin);
   }
   render() {
     const {ctor, mode} = this.state;
     return (
       <div>
-        {mode != "source" && this.state.ctor &&
+        {!mode && this.state.ctor &&
           <div className="container">
             <h1>{ctor.ctor_name}</h1>
             <Panel header="Construct your contract">
@@ -147,6 +153,35 @@ class Ctor extends Component {
                   Deploy
                 </Button>
               </form>
+            </Panel>
+          </div>
+        }
+        {mode === "deploying" &&
+          <div className="container">
+            <h1>{ctor.ctor_name}</h1>
+            <Panel header="Deploy in progress">
+              <p>
+                Deploy transaction hash:<br />
+                {this.state.tx}
+              </p>
+              <img src={loading} alt="loading"/>
+            </Panel>
+          </div>
+        }
+        {mode === "done" &&
+          <div className="container">
+            <h1>{ctor.ctor_name}</h1>
+            <Panel header="Contract deployed!">
+              <p>
+                Deploy transaction hash:<br />
+                {this.state.tx}
+              </p>
+              <p>
+                Contract address:<br />
+                <a href={'https://rinkeby.etherscan.io/address/' + this.state.contractAddress}>
+                  {this.state.contractAddress}}
+                </a>
+              </p>
             </Panel>
           </div>
         }
