@@ -5,6 +5,7 @@ class CtorInterface(object):
         returns {
             hard_cap: {
                 type: 'int' | 'address' | 'string' | 'datetime',
+                title: 'Hard cap',
                 desc: 'this is hard cap'
             },
             ...

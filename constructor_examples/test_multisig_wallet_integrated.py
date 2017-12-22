@@ -6,7 +6,7 @@ import os
 from constructor_engine.engine import SimpleStorageEngine
 
 
-class TestEquityConstructorIntegrated(TestCase):
+class TestMultisigWalletIntegrated(TestCase):
     def test__complex(self):
 
         engine = SimpleStorageEngine({'datadir': '/tmp'})
@@ -14,26 +14,21 @@ class TestEquityConstructorIntegrated(TestCase):
             '123',
             os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
-                'simple_ico_constructor.py'
+                'multisig_wallet_constructor.py'
             )
         )
 
         #successful
         res = engine.construct('123', {
-            "name": "Shares",
-            "symbol": "SHR",
-            "is_burnable": 1,
-
-            "hard_cap": 100,
-            "date_start": 1513438915,
-            "date_end": 1513738915,
-            "rate": 100,
-            "funds_address": "0x71e82d98f04e06345677858b31d47934224b157f"
+            "signs_count": 2,
+            "owner_0": "0xF52Ba004f139A1B9f9d88c9799A20B3cd355de2D",
+            "owner_1": "0xD8a2F05D2Be95Ddd2A8fb1c89cf4Ad266A9bCe1a",
+            "owner_2": "0xE0b47A3eB256984150A707187fC04eDaD0A2f75f",
         })
         self.assertNotEqual(dict, type(res), "not error")
         bin, source, abi = res
-        self.assertTrue('contract ICO' in source)
-        self.assertTrue('"name":"collected"' in abi, "simple tests for existing method definition")
+        self.assertTrue('contract SimpleMultiSigWallet' in source)
+        self.assertTrue('"name":"Deposit"' in abi, "simple tests for existing method definition")
 
         self.assertNotEqual("", bin, "bytecode is not empty")
         self.assertFalse(re.findall('[^0-9a-f]', bin), 'only hex in bytecode')
