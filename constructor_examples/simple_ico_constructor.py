@@ -20,7 +20,7 @@ class Constructor(object):
             "is_burnable": {
                 'type': 'int',
                 'title': "Is burnable",
-                'desc': 'is token holders can burn their tokens'
+                'desc': 'is token holders can burn their tokens (0 or 1)'
             },
 
 
