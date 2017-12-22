@@ -15,6 +15,7 @@ class Ctor extends Component {
     super(props);
     this.state = {};
   }
+
   getContractAddress(tx_hash) {
     w3.eth.getTransactionReceipt(tx_hash, (err, receipt) => {
       if (null == receipt)
@@ -26,6 +27,7 @@ class Ctor extends Component {
         })
     });
   }
+
   deployContract(bin) {
     w3.eth.sendTransaction({data: bin}, (err, tx_hash) => {
       console.log('tx_hash:', tx_hash);
@@ -36,9 +38,11 @@ class Ctor extends Component {
       this.getContractAddress(tx_hash);
     });
   }
+
   componentWillMount() {
     this.props.auth.isAuthenticated() && this.getCtorParams();
   }
+
   getCtorParams() {
     axios.post(`${API_URL}/get_ctor_params`, {
       'ctor_id': this.props.match.params.id
@@ -80,6 +84,7 @@ class Ctor extends Component {
     }});
     */
   }
+
   submit() {
     const {ctor} = this.state;
     const fields = {};
@@ -92,6 +97,7 @@ class Ctor extends Component {
     })
       .then(response => {
         // console.log(response.data);
+        debugger;
         this.setState({
           mode: 'source',
           data: response.data
@@ -99,15 +105,18 @@ class Ctor extends Component {
       })
       .catch(error => console.log(error));
   }
+
   setValue(name, value) {
     this.setState({
       [name]: value
     });
   }
+
   deploy() {
     const bin = this.state.data.bin;
     this.deployContract(bin);
   }
+
   render() {
     const {ctor, mode} = this.state;
     return (
