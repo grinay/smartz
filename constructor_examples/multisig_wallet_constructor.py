@@ -16,8 +16,8 @@ class Constructor(object):
         for i in range(self.MAX_OWNERS):
             res["owner_{}".format(i)] = {
                 'type': 'address',
-                'title': "Address #{}".format(i),
-                'desc': "Address of owner #{}".format(i)
+                'title': "Address #{}".format(i+1),
+                'desc': "Address of owner #{}".format(i+1)
             }
 
         return res
@@ -169,7 +169,7 @@ contract multiowned {
     // as well as the selection of addresses capable of confirming them (msg.sender is not added to the owners!).
     function multiowned() public
     {
-        address[] storage _owners;
+        address[] storage _owners = new address[](3);
         uint _required = %signs_count%;
         
         %owners%
