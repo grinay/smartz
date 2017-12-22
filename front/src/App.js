@@ -24,7 +24,8 @@ class App extends Component {
           <Navbar.Header>
             <div className="logo">
               <Navbar.Brand>
-                <a href="#">SMARTZ</a>
+                <a href="/">SMARTZ</a>
+                <span className="version">v0.1 pre-alpha</span>
               </Navbar.Brand>
             </div>
             <div className="nav-buttons">
