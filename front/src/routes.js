@@ -7,7 +7,7 @@ import Home from 'Home/Home';
 import Callback from 'Callback/Callback';
 import Auth from 'Auth/Auth';
 import Profile from 'Profile/Profile';
-import Ctor from 'Ctor/Ctor';
+import Deploy from 'Deploy/Deploy';
 import CtorAdd from 'CtorAdd/CtorAdd';
 import Eth from 'Eth/Eth';
 import history from './history';
@@ -32,25 +32,13 @@ export const makeMainRoutes = () => {
           return <Callback {...props} />
         }}/>
         <Route path="/profile" render={(props) => (
-          !auth.isAuthenticated() ? (
-            <Redirect to="/home"/>
-          ) : (
-            <Profile auth={auth} {...props} />
-          )
+          auth.isAuthenticated() ? <Profile auth={auth} {...props} /> : <Redirect to="/"/>
         )} />
-        <Route path="/ctor/:id" render={(props) => (
-          !auth.isAuthenticated() ? (
-            <Redirect to="/home"/>
-          ) : (
-            <Ctor auth={auth} {...props} />
-          )
+        <Route path="/deploy/:id" render={(props) => (
+          auth.isAuthenticated() ? <Deploy auth={auth} {...props} /> : <Redirect to="/"/>
         )} />
         <Route path="/ctor-add" render={(props) => (
-          !auth.isAuthenticated() ? (
-            <Redirect to="/home"/>
-          ) : (
-            <CtorAdd auth={auth} {...props} />
-          )
+          auth.isAuthenticated() ? <CtorAdd auth={auth} {...props} /> : <Redirect to="/"/>
         )} />
         <Route path="/" render={(props) => <Footer auth={auth} {...props} />} />
       </div>

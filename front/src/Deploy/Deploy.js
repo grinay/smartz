@@ -1,21 +1,39 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
-import spinner from 'Callback/loading.svg';
 
 import {API_URL} from '../constants';
-import CtorParam from './CtorParam';
+import ContractParameter from './ContractParameter';
+import Spinner from './Spinner';
 
-import './Ctor.css';
+import './Deploy.css';
 
 if (window.Web3) {
   var w3 = new window.Web3(window.web3.currentProvider);
 }
 
-class Ctor extends Component {
+class Deploy extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      auth: props.auth.isAuthenticated(),
+      spinner: false
+    };
+  }
+
+  componentWillMount() {
+    this.state.auth && this.getCtorParams();
+  }
+
+  getCtorParams() {
+    axios.post(`${API_URL}/get_ctor_params`, {
+      'ctor_id': this.props.match.params.id
+    })
+      .then(response => {
+        this.setState({ctor: response.data});
+        console.log(response.data);
+      })
+      .catch(error => this.setState({message: error.message}));
   }
 
   getContractAddress(tx_hash) {
@@ -39,52 +57,6 @@ class Ctor extends Component {
       })
       this.getContractAddress(tx_hash);
     });
-  }
-
-  componentWillMount() {
-    this.props.auth.isAuthenticated() && this.getCtorParams();
-  }
-
-  getCtorParams() {
-    axios.post(`${API_URL}/get_ctor_params`, {
-      'ctor_id': this.props.match.params.id
-    })
-      .then(response => {
-        this.setState({ctor: response.data});
-        // console.log(response.data);
-      })
-      .catch(error => this.setState({message: error.message}));
-    /*
-    this.setState({ctor: {
-      ctor_name: 'Token smart contract constructor',
-      ctor_params: [
-        {
-            name: 'contract_name',
-            human_name: 'Contract name',
-            type: 'string',
-            desc: 'this is hard cap, blablabla, long description'
-        },
-        {
-            name: 'hard_cap',
-            human_name: 'Hard cap',
-            type: 'int',
-            desc: 'this is hard cap, blablabla, long description'
-        },
-        {
-            name: 'owner_address',
-            human_name: 'Owner address',
-            type: 'address',
-            desc: 'this is hard cap, blablabla, long description'
-        },
-        {
-            name: 'start_time',
-            human_name: 'Start time',
-            type: 'datetime',
-            desc: 'this is hard cap, blablabla, long description'
-        }
-      ]
-    }});
-    */
   }
 
   submit() {
@@ -137,20 +109,21 @@ class Ctor extends Component {
               <Panel header="Deploy step 1 of 2: customize your contract">
                 <form>
                   {ctor.ctor_params.map((el, i) => (
-                    <CtorParam params={el} key={i} callback={this.setValue.bind(this)} />
+                    <ContractParameter params={el} key={i} callback={this.setValue.bind(this)} />
                   ))}
                   <Button
                     bsStyle="success"
                     className="btn-margin"
                     onClick={this.submit.bind(this)}
+                    disabled={this.state.spinner}
                   >
                     Proceed to step 2
                   </Button>
                   {this.state.spinner &&
-                    <div className="spinner">
-                      <p>Preparing your contract, this can take up to 30-40 seconds...</p>
-                      <img src={spinner} alt="Preparing contract..."/>
-                    </div>
+                    <Spinner
+                      text="Preparing your contract, this can take up to 30-40 seconds..."
+                      alt="Preparing contract..."
+                    />
                   }
                 </form>
               </Panel>
@@ -177,30 +150,28 @@ class Ctor extends Component {
                 </form>
               </Panel>
             }
-            {mode === "deploying" &&
-              <Panel header="Deploy in progress">
+            {(mode === "deploying" || mode === "done") &&
+              <Panel header={mode === "deploying" ? "Deploy in progress" : "Contract deployed!"}>
                 <p>
                   Deploy transaction hash:<br />
-                  {this.state.tx}
-                </p>
-                <div className="spinner">
-                  <p>Awaiting for contract to be placed in block by miners to get it address...</p>
-                  <img src={spinner} alt="Waiting for miners..."/>
-                </div>
-              </Panel>
-            }
-            {mode === "done" &&
-              <Panel header="Contract deployed!">
-                <p>
-                  Deploy transaction hash:<br />
-                  {this.state.tx}
-                </p>
-                <p>
-                  Your contract address:<br />
-                  <a href={'https://rinkeby.etherscan.io/address/' + this.state.contractAddress}>
-                    {this.state.contractAddress}
+                  <a href={'https://rinkeby.etherscan.io/tx/' + this.state.tx}>
+                    {this.state.tx}
                   </a>
                 </p>
+                {mode === "deploying" &&
+                  <Spinner
+                    text="Awaiting for contract to be placed in block by miners to get it address..."
+                    alt="Waiting for miners..."
+                  />
+                }
+                {mode === "done" &&
+                  <p>
+                    Your contract address:<br />
+                    <a href={'https://rinkeby.etherscan.io/address/' + this.state.contractAddress}>
+                      {this.state.contractAddress}
+                    </a>
+                  </p>
+                }
               </Panel>
             }
         </div>
@@ -209,4 +180,4 @@ class Ctor extends Component {
   }
 }
 
-export default Ctor;
+export default Deploy;

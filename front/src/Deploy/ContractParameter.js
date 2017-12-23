@@ -3,7 +3,7 @@ import {FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 
-class CtorParam extends Component {
+class ContractParameter extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,4 +84,4 @@ class CtorParam extends Component {
   }
 }
 
-export default CtorParam;
+export default ContractParameter;

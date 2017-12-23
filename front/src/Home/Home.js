@@ -63,7 +63,7 @@ class Home extends Component {
                     <div className="card-body">
                       <h3 className="card-title">{el.ctor_name}</h3>
                       <p className="card-text desc">Contract description. Lorem ipsum vestibulum sed turpis curabitur magna, consequat aliquet bibendum in amet aliquet, leo nam iaculis posuere vitae.</p>
-                      <a href={`/ctor/${el.ctor_id}`} className="btn btn-success btn-deploy">
+                      <a href={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
                         Deploy free
                       </a>
                       <p className="card-text"><small className="text-muted">Uploaded 21 dec 2017</small></p>
