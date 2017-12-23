@@ -20,7 +20,7 @@ class Constructor(object):
             "is_burnable": {
                 'type': 'int',
                 'title': "Is burnable",
-                'desc': 'is token holders can burn their tokens'
+                'desc': 'is token holders can burn their tokens (0 or 1)'
             },
 
 
@@ -74,7 +74,7 @@ class Constructor(object):
 
         if "symbol" in fields:
             try:
-                symbol = str(fields["symbol"])
+                symbol = str(fields["symbol"]).upper()
             except Exception:
                 symbol = ''
             if len(symbol) < 3 or len(symbol) > 10 or not re.findall('^[A-Z]+$', symbol):
@@ -465,15 +465,16 @@ contract ICO is Ownable
     uint256 public date_end = %date_end%;
     uint256 public hard_cap = %hard_cap% ether;
     uint256 public rate = %rate%;
+    address public funds_address = %funds_address%;
     
     function ICO() public {
         token = new Token();
     }
     
     function () public payable {
-        require(now >= date_start || now <= date_end || collected.add(msg.value)<hard_cap);
+        require(now >= date_start && now <= date_end && collected.add(msg.value)<hard_cap);
         token.mint(msg.sender, msg.value.mul(rate));
-        owner.transfer(msg.value);
+        funds_address.transfer(msg.value);
         collected = collected.add(msg.value);
     
     }
@@ -482,5 +483,3 @@ contract ICO is Ownable
     
     
     """
-
- #   {shareholders_code}

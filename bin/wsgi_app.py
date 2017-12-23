@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import re
 import sys
 import os
 import json
@@ -23,7 +23,7 @@ from engine import SimpleStorageEngine
 
 app = Flask(__name__)
 
-mongoc = MongoClient()
+mongoc = MongoClient(connect=False)
 db = mongoc.sc_ctors_db
 
 ctor_engine = SimpleStorageEngine({'datadir': DATA_DIR})
@@ -56,17 +56,24 @@ def upload_ctor():
     ctors = db.ctors
 
     name = nonempty(args_string(args, 'ctor_name'))
+    descr = nonempty(args_string(args, 'ctor_descr')) if 'ctor_descr' in args else ''
     filename = tempfile.mktemp('ctor')
 
+    uploaded_filename = args['ctor_file_name']
+    if not re.findall('^[a-zA-Z_]+$', uploaded_filename):
+        raise ValueError()
+    uploaded_filename = "{}.py".format(uploaded_filename)
+
+
     if 'ctor_file_name' in args:
-        copy2(os.path.join(ROOT_DIR, 'constructors', args['ctor_file_name']), filename)
+        copy2(os.path.join(ROOT_DIR, 'constructor_examples', uploaded_filename), filename)
     else:
         request.files['ctor_file'].save(filename)
 
     if ctors.find_one({'ctor_name': name}) is not None:
         return _send_error('ctor with this name already exists')
 
-    ctor_id = ctors.insert_one({'ctor_name': name}).inserted_id.binary.hex()
+    ctor_id = ctors.insert_one({'ctor_name': name, 'ctor_descr': descr}).inserted_id.binary.hex()
 
     ctor_engine.register_new_ctor(ctor_id, filename)
 
@@ -80,7 +87,8 @@ def list_ctors():
     def format_ctor(ctor):
         return {
             'ctor_id': ctor['_id'].binary.hex(),
-            'ctor_name': ctor['ctor_name']
+            'ctor_name': ctor['ctor_name'],
+            'ctor_descr': ctor['ctor_descr'] if 'ctor_descr' in ctor else ''
          }
 
     return _send_output(list(map(format_ctor, ctors.find())))
@@ -110,6 +118,7 @@ def get_ctor_params():
 
     return _send_output({
         'ctor_name': ctor_info['ctor_name'],
+        'ctor_descr': ctor_info['ctor_descr'] if 'ctor_descr' in ctor_info else '',
         'ctor_params': [reformat_param(n, i) for (n, i) in params.items()]
     })
 
