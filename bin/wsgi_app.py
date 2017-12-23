@@ -23,7 +23,7 @@ from engine import SimpleStorageEngine
 
 app = Flask(__name__)
 
-mongoc = MongoClient()
+mongoc = MongoClient(connect=False)
 db = mongoc.sc_ctors_db
 
 ctor_engine = SimpleStorageEngine({'datadir': DATA_DIR})
