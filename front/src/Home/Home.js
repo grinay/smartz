@@ -66,7 +66,12 @@ class Home extends Component {
                       <a href={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
                         Deploy free
                       </a>
-                      <p className="card-text"><small className="text-muted">Uploaded 21 dec 2017</small></p>
+                      <p className="card-text">
+                        <small className="text-muted">
+                          Author: Vladimir Khramov<br />
+                          Uploaded 21 dec 2017
+                        </small>
+                      </p>
                     </div>
                   </div>
                 ))}
