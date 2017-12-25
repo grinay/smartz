@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - "/data:/data/db"
+    ports: 
+      - "27017:27017"
+
+  smartz:
+    build:
+      context: .
+    depends_on:
+      - mongo
+    ports:
+      - "8000:8000"
+    volumes:
+      - "/home/mikhail/dev/mixbytes/hackathon-sc-ctor-marketplace:/app"
