@@ -12,7 +12,6 @@ RUN ./.virtualenv/bin/pip3 install -r requirements.txt --no-cache-dir
 
 FROM alpine:latest
 ARG UWSGI_UID
-ARG UWSGI_GID
 WORKDIR /app
 VOLUME [ "/app/sock" ]
 RUN apk --no-cache --update upgrade \
