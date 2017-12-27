@@ -18,7 +18,7 @@ services:
       - backend
       - mongo
     volumes:
-      - "smartz_socket:/app/sock"
+      - "backendsocket:/app/sock"
     ports:
       - "8000:80"
 
@@ -30,12 +30,12 @@ services:
         UWSGI_UID: "100"
     restart: always
     volumes:
-      - "smartz_socket:/app/sock"
+      - "backendsocket:/app/sock"
     networks:
       - backendnet
 
 volumes:
-  smartz_socket:
+  backendsocket:
   mongodb:
 
 networks:
