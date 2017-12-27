@@ -5,16 +5,31 @@ services:
     image: mongo:latest
     restart: always
     volumes:
-      - "/data:/data/db"
-    ports: 
-      - "27017:27017"
+      - "mongodb:/data/db"
 
-  smartz:
+  frontend:
     build:
+      dockerfile: docker/frontend/Dockerfile
       context: .
+    restart: always
     depends_on:
+      - backend
       - mongo
-    ports:
-      - "8000:8000"
     volumes:
-      - "/home/mikhail/dev/mixbytes/hackathon-sc-ctor-marketplace:/app"
+      - "smartz_socket:/app/sock"
+    ports:
+      - "8000:80"
+
+  backend:
+    build:
+      dockerfile: docker/backend/Dockerfile
+      context: .
+      args:
+        UWSGI_UID: "100"
+    restart: always
+    volumes:
+      - "smartz_socket:/app/sock"
+
+volumes:
+  smartz_socket:
+  mongodb:
