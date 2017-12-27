@@ -6,6 +6,8 @@ services:
     restart: always
     volumes:
       - "mongodb:/data/db"
+    networks:
+      - backendnet
 
   frontend:
     build:
@@ -29,7 +31,12 @@ services:
     restart: always
     volumes:
       - "smartz_socket:/app/sock"
+    networks:
+      - backendnet
 
 volumes:
   smartz_socket:
   mongodb:
+
+networks:
+  backendnet:
