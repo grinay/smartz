@@ -2,7 +2,7 @@
 set -ex
 
 SOCKET_UID="10000"
-GOSS_SLEEP=5
+GOSS_SLEEP=10
 
 # frontend tests
 sudo docker build -f docker/frontend/Dockerfile -t frontend:testing --build-arg NGINX_UID="$SOCKET_UID" .
