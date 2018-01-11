@@ -1,0 +1,27 @@
+file:
+  /app:
+    exists: true
+    mode: "0755"
+    owner: uwsgi
+    group: uwsgi
+    filetype: directory
+    contains: []
+  /app/sock/backend:
+    exists: true
+    mode: "0755"
+    size: 0
+    owner: uwsgi
+    group: uwsgi
+    filetype: file
+    contains: []
+user:
+  uwsgi:
+    exists: true
+    uid: 10000
+    gid: 65533
+    groups:
+    - nogroup
+    shell: /bin/false
+process:
+  uwsgi:
+    running: true

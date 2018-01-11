@@ -6,8 +6,7 @@ services:
   - docker
 
 install:
-  - sudo apt-get update
-  - sudo apt-get install docker-ce docker-compose
+  - curl -L https://goss.rocks/install | sudo sh
 
 script:
   - bash ./test/tests.sh

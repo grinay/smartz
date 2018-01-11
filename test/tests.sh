@@ -1,9 +1,22 @@
 #!/bin/sh
 set -ex
-#sudo docker build -t bitcoind:testing .
-#sudo docker run -d -p 8332:8332 -p 8333:8333 -e RPCALLOWIP="0.0.0.0/0" -e RPCUSER=user -e RPCPASS=pass bitcoind:testing
+
+SOCKET_UID="10000"
+GOSS_SLEEP=5
+
+# frontend tests
+sudo docker build -f docker/frontend/Dockerfile -t frontend:testing --build-arg NGINX_UID="$SOCKET_UID" .
+sed -i "s/uid:\s.*$/uid: $SOCKET_UID/" docker/frontend/goss.yaml
+GOSS_FILES_PATH=docker/frontend dgoss run frontend:testing
+
+# backend tests
+sudo docker build -f docker/backend/Dockerfile -t backend:testing --build-arg UWSGI_UID="$SOCKET_UID" .
+sed -i "s/uid:\s.*$/uid: $SOCKET_UID/" docker/backend/goss.yaml
+GOSS_FILES_PATH=docker/backend dgoss run backend:testing
+
+# integration tests
 sudo docker-compose build
 sudo docker-compose up -d
 sleep 60
 curl http://127.0.0.1:8000
-
+sudo docker-compose down

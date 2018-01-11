@@ -2,8 +2,6 @@
 
 chown -R uwsgi:uwsgi /app
 
-ls -lad /app/sock
-
 /usr/sbin/uwsgi \
 --uid uwsgi --gid uwsgi \
 --socket /app/sock/backend \
