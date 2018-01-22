@@ -16,6 +16,6 @@ GOSS_SLEEP=30 GOSS_FILES_PATH=docker/backend dgoss run backend:testing
 # integration tests
 sudo docker-compose build
 sudo docker-compose up -d
-sleep 60
+sleep 10
 curl http://127.0.0.1:8000
-sudo docker-compose down
+#sudo docker-compose down
