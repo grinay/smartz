@@ -27,8 +27,12 @@ script:
 - sudo chmod +x /usr/local/bin/ecs-cli
 - ecs-cli configure profile --profile-name travis --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY
 - ecs-cli configure --cluster default --default-launch-type EC2 --region $AWS_REGION --config-name travis
+- docker tag $AWS_REGISTRY/smartz_frontend:latest $AWS_REGISTRY/smartz_frontend:$TRAVIS_BUILD_NUMBER
 - ecs-cli push --region $AWS_REGION  --ecs-profile travis  $AWS_REGISTRY/smartz_frontend:latest
+- ecs-cli push --region $AWS_REGION  --ecs-profile travis  $AWS_REGISTRY/smartz_frontend:$TRAVIS_BUILD_NUMBER
+- docker tag $AWS_REGISTRY/smartz_backend:latest $AWS_REGISTRY/smartz_backend:$TRAVIS_BUILD_NUMBER
 - ecs-cli push --region $AWS_REGION  --ecs-profile travis  $AWS_REGISTRY/smartz_backend:latest
+- ecs-cli push --region $AWS_REGION  --ecs-profile travis  $AWS_REGISTRY/smartz_backend:$TRAVIS_BUILD_NUMBER
 #- ecs-cli compose --ecs-profile travis --project-name staging --cluster-config travis --verbose service stop
 #- ecs-cli compose --ecs-profile travis --project-name staging --cluster-config travis --verbose service start
 
