@@ -4,6 +4,7 @@ WORKDIR /static
 COPY front .
 RUN npm install --only=production
 RUN npm run build --production
+RUN if [[ -f buildinfo ]]; then cp buildinfo static/build; fi
 
 FROM nginx:alpine
 ARG NGINX_UID
@@ -16,5 +17,4 @@ COPY docker/frontend/entrypoint.sh .
 RUN apk --no-cache --update upgrade \
 && apk add shadow \
 && usermod -u $NGINX_UID nginx
-#CMD [ "nginx-debug", "-g", "daemon off;" ]
 CMD [ "./entrypoint.sh" ]
