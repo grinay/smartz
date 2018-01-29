@@ -4,7 +4,7 @@ WORKDIR /static
 COPY front .
 RUN npm install --only=production
 RUN npm run build --production
-RUN if [[ -f buildinfo ]]; then cp buildinfo static/build; fi
+RUN if [[ -f front/buildinfo ]]; then cp front/buildinfo static/build; fi
 
 FROM nginx:alpine
 ARG NGINX_UID
