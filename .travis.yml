@@ -1,4 +1,4 @@
-language: bash
+language: generic
 dist: trusty
 sudo: required
 services:
