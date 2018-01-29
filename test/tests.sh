@@ -1,20 +1,21 @@
 #!/bin/sh
 set -ex
 
-SOCKET_UID="10000"
+DELAY=30
 
-# frontend tests
-sudo docker build -f docker/frontend/Dockerfile -t frontend:testing --build-arg NGINX_UID="$SOCKET_UID" .
-sed -i "s/uid:\s.*$/uid: $SOCKET_UID/" docker/frontend/goss.yaml
-GOSS_SLEEP=30 GOSS_FILES_PATH=docker/frontend dgoss run frontend:testing
+# goss tests
+GOSS_SLEEP=$DELAY GOSS_FILES_PATH=docker/frontend dgoss run smartz_frontend:latest
+GOSS_SLEEP=$DELAY GOSS_FILES_PATH=docker/backend dgoss run smartz_backend:latest
 
-# backend tests
-sudo docker build -f docker/backend/Dockerfile -t backend:testing --build-arg UWSGI_UID="$SOCKET_UID" .
-sed -i "s/uid:\s.*$/uid: $SOCKET_UID/" docker/backend/goss.yaml
-GOSS_SLEEP=30 GOSS_FILES_PATH=docker/backend dgoss run backend:testing
+# basic auth test
+sudo docker run --rm -d -e 'BASIC_AUTH=testuser:$apr1$hsM7a2Sc$DtK6ldBKcOEAela2huaQq0' --name frontend  -p "3000:80" smartz_frontend:latest
+sleep $DELAY
+curl -s -o /dev/null -w "%{http_code}" --user testuser:testpassword http://127.0.0.1:3000 | grep -v 401
+sudo docker stop frontend
 
 # integration tests
-sudo docker-compose build
 sudo docker-compose up -d
-sleep 30
+sleep $DELAY
 curl http://127.0.0.1:3000
+curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000 | grep 200
+docker-compose down
