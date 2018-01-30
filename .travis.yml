@@ -38,10 +38,6 @@ script:
 - ecs-cli push --region $AWS_REGION  --ecs-profile travis  $AWS_REGISTRY/smartz_backend:latest
 - docker tag smartz_backend:latest $AWS_REGISTRY/smartz_backend:$TRAVIS_BUILD_NUMBER
 - ecs-cli push --region $AWS_REGION  --ecs-profile travis  $AWS_REGISTRY/smartz_backend:$TRAVIS_BUILD_NUMBER
-#- ecs-cli compose --ecs-profile travis --project-name staging --cluster-config travis --verbose service stop
-#- ecs-cli compose --ecs-profile travis --project-name staging --cluster-config travis --verbose service start
-
-after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
   ecs-cli compose --ecs-profile travis --project-name smartz-staging --file docker/esc/staging-service.yml --cluster-config travis  --verbose service up;
   fi
