@@ -18,7 +18,7 @@ before_install:
 - docker --version
 - docker-compose --version
 - /bin/sh ./docker/buildinfo.sh
-- cat front/buildinfo
+- cat front/buildinfo.txt
 
 install:
 - curl -L https://goss.rocks/install | sudo sh
