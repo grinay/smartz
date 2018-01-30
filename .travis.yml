@@ -42,10 +42,9 @@ script:
 #- ecs-cli compose --ecs-profile travis --project-name staging --cluster-config travis --verbose service start
 
 after_success:
-#- if [ "$TRAVIS_BRANCH" == "master" ]; then
-#  docker login -u "$DOCKER_USERNAME" -p
-#  "$DOCKER_PASSWORD"; docker push USER/REPO;
-#  fi
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+  ecs-cli compose --ecs-profile travis --project-name smartz-staging --file docker/esc/staging-service.yml --cluster-config travis  --verbose service up;
+  fi
 
 notifications:
   email:
