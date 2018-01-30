@@ -4,7 +4,10 @@ WORKDIR /static
 COPY front .
 RUN npm install --only=production
 RUN npm run build --production
-RUN if [[ -f buildinfo.txt ]]; then mkdir build/buildinfo; cp buildinfo.txt build/buildinfo/index.html; fi
+RUN mkdir build/buildinfo \
+	&& if [[ -f buildinfo.txt ]]; then cp buildinfo.txt build/buildinfo/index.html; \
+				      else echo "Local build" > build/buildinfo/index.html; \
+	fi
 
 FROM nginx:alpine
 ARG NGINX_UID
