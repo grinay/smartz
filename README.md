@@ -13,3 +13,19 @@ DO NOT use it in production!
     docker-compose up [-d]
 
     docker-compose down
+
+## Staging
+
+Travis CI builds staging version automatically from master branch after tests passed
+
+### URL
+
+https://staging.smartz.io
+
+### Basic auth
+
+mixbytes/cKdw9bD63YcHXbRrzfwk
+
+### Build information
+
+https://staging.smartz.io/buildinfo
