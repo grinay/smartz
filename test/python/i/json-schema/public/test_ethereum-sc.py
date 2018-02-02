@@ -67,6 +67,156 @@ class TestSchemaDefinitions(unittest.TestCase):
         self.assertRaises(ValidationError, validate, ['0x1111111111111111111111111111111111111111', ''], address_array_schema)
         self.assertRaises(ValidationError, validate, ['', '0x1111111111111111111111111111111111111111', ''], address_array_schema)
 
+    def test_unix_time(self):
+        ts_schema = definition_validator('unixTime')
+
+        validate(0, ts_schema)
+        validate(1, ts_schema)
+        validate(1517558298, ts_schema)
+        validate(2000000000, ts_schema)
+
+        self.assertRaises(ValidationError, validate, '0', ts_schema)
+        self.assertRaises(ValidationError, validate, '1517558298', ts_schema)
+        self.assertRaises(ValidationError, validate, [], ts_schema)
+        self.assertRaises(ValidationError, validate, ['0'], ts_schema)
+        self.assertRaises(ValidationError, validate, [4, 6], ts_schema)
+        self.assertRaises(ValidationError, validate, '1517558298.12', ts_schema)
+        self.assertRaises(ValidationError, validate, 1517558298.12, ts_schema)
+        self.assertRaises(ValidationError, validate, True, ts_schema)
+        self.assertRaises(ValidationError, validate, None, ts_schema)
+        self.assertRaises(ValidationError, validate, -2, ts_schema)
+        self.assertRaises(ValidationError, validate, 1e12, ts_schema)
+
+    def test_address_mapping(self):
+        # Массив пар ключ-значение
+        # Ключ - адрес
+        # Значение - любое
+        mapping_schema = definition_validator('addressMapping')
+
+        validate([], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', 100]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', 1e18]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', []]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', dict()]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', 1.1]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', 'foo']], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', True]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', False]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', None]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', [{'foo': 4}]]], mapping_schema)
+        # в данный момент дубли допустимы
+        validate([['0x1111111111111111111111111111111111111111', 100],
+                  ['0x1111111111111111111111111111111111111111', 200]], mapping_schema)
+
+        validate([['0x1111111111111111111111111111111111111111', 100],
+                  ['0x1111111111111111111111111111111111111112', 200]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', 1e18],
+                  ['0x1111111111111111111111111111111111111112', 2e18]], mapping_schema)
+        validate([['0x1111111111111111111111111111111111111111', 100],
+                  ['0x1111111111111111111111111111111111111112', 200],
+                  ['0x1111111111111111111111111111111111111113', 300]], mapping_schema)
+
+        self.assertRaises(ValidationError, validate,
+                          [[11111111, 100]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111', 100]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100, 200]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111']], mapping_schema)
+
+        self.assertRaises(ValidationError, validate, 0, mapping_schema)
+        self.assertRaises(ValidationError, validate, '', mapping_schema)
+        self.assertRaises(ValidationError, validate, '0', mapping_schema)
+        self.assertRaises(ValidationError, validate, dict(), mapping_schema)
+        self.assertRaises(ValidationError, validate, True, mapping_schema)
+        self.assertRaises(ValidationError, validate, False, mapping_schema)
+        self.assertRaises(ValidationError, validate, None, mapping_schema)
+
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], 0], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], ''], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], '0'], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], dict()], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], True], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], False], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], None], mapping_schema)
+
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [0]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], ['']], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], ['0']], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [dict()]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [True]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [False]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [None]], mapping_schema)
+
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [0, 150]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], ['', 150]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], ['0', 150]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [dict(), 150]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [True, 150]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [False, 150]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100], [None, 150]], mapping_schema)
+
+    def test_uint_mapping(self):
+        # Массив пар ключ-значение
+        # Ключ - uint
+        # Значение - любое
+        mapping_schema = definition_validator('uintMapping')
+
+        validate([], mapping_schema)
+        validate([[500, 100]], mapping_schema)
+        validate([[500, 1e18]], mapping_schema)
+        validate([[500, []]], mapping_schema)
+        validate([[500, dict()]], mapping_schema)
+        validate([[500, 1.1]], mapping_schema)
+        validate([[500, 'foo']], mapping_schema)
+        validate([[500, True]], mapping_schema)
+        validate([[500, False]], mapping_schema)
+        validate([[500, None]], mapping_schema)
+        validate([[500, [{'foo': 4}]]], mapping_schema)
+        # в данный момент дубли допустимы
+        validate([[500, 100],
+                  [500, 200]], mapping_schema)
+
+        validate([[500, 100],
+                  [502, 200]], mapping_schema)
+        validate([[500, 1e18],
+                  [502, 2e18]], mapping_schema)
+        validate([[500, 100],
+                  [502, 200],
+                  [503, 300]], mapping_schema)
+
+        self.assertRaises(ValidationError, validate,
+                          [[-10, 100]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [['0x1111111111111111111111111111111111111111', 100]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [[500, 100, 200]], mapping_schema)
+        self.assertRaises(ValidationError, validate,
+                          [[500]], mapping_schema)
+
+
 
 if __name__ == '__main__':
     unittest.main()
