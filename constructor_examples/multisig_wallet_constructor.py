@@ -2,61 +2,56 @@ import re
 
 
 class Constructor(object):
-    MAX_OWNERS = 3
 
+    MAX_OWNERS = 250
 
     def get_params(self):
-        res = {
-            "signs_count": {
-                "type": "int",
-                "title": "Signs count",
-                "desc": "Signs count to send ether from wallet (2 or 3)",
+        json_schema = {
+            "type": "object",
+            "required": ["signs_count", "owners"],
+            "additionalProperties": False,
+
+            "properties": {
+                "signs_count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": self.__class__.MAX_OWNERS,
+                    "title": "Signatures quorum",
+                    "description": "Number of signatures required to withdraw funds or modify signatures"
+                },
+
+                "owners": {
+                    "title": "Addresses of owners",
+                    "description": "Addresses (signatures) of owners of a new wallet",
+                    "type": "array",
+                    "items": {"$ref": "https://platform.smartz.io/json-schema/public/ethereum-sc.json#/definitions/address"},
+                    "minItems": 1,
+                    "maxItems": self.__class__.MAX_OWNERS
+                }
             }
         }
-        for i in range(self.MAX_OWNERS):
-            res["owner_{}".format(i)] = {
-                'type': 'address',
-                'title': "Address #{}".format(i+1),
-                'desc': "Address of owner #{}".format(i+1)
-            }
 
-        return res
+        return {
+            'schema': json_schema
+        }
 
     def construct(self, fields):
         errors = {}
 
-        if "signs_count" in fields:
-            try:
-                signs_count = int(fields["signs_count"])
-            except Exception:
-                signs_count = -1
-            if signs_count not in [2, 3]:
-                errors["signs_count"] = 'Signs count must be 2 or 3'
+        if fields['signs_count'] > len(fields['owners']):
+            errors["signs_count"] = 'Signatures quorum is greater than total number of owners'
 
-        owners = []
-
-        for i in range(self.MAX_OWNERS):
-            field = "owner_{}".format(i)
-            if (field not in fields):
-                errors[field] = 'Empty owner #{}'.format(i)
-                continue
-            if not re.findall('^0x[0-9a-fA-F]{40}$', fields[field]):
-                errors[field] = 'Owner #{} address is invalid'.format(i)
-                continue
-            owners.append(fields[field])
-
-
-        if errors != {}:
+        if errors:
             return {
                 "result": "error",
                 "errors": errors
             }
 
-        signers_txt = '_owners.push(address({}));'.format('));_owners.push(address('.join(owners))
+        signers_txt = '\n'.join('_owners.push(address({}));'.format(owner) for owner in fields['owners'])
 
         source = self.template\
                      .replace('%owners%', signers_txt) \
-                     .replace('%signs_count%', str(signs_count))
+                     .replace('%signs_count%', str(fields['signs_count']))
 
 
         return source, "SimpleMultiSigWallet"

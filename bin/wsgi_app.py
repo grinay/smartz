@@ -108,18 +108,10 @@ def get_ctor_params():
     if isinstance(params, str):
         return _send_error(params)
 
-    def reformat_param(p_name, p_info):
-        return {
-            'name': p_name,
-            'human_name': p_info['title'],
-            'type': p_info['type'],
-            'desc': p_info['desc']
-        }
-
     return _send_output({
         'ctor_name': ctor_info['ctor_name'],
         'ctor_descr': ctor_info['ctor_descr'] if 'ctor_descr' in ctor_info else '',
-        'ctor_params': [reformat_param(n, i) for (n, i) in params.items()]
+        'schema': params['schema']
     })
 
 

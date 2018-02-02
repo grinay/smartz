@@ -6,6 +6,10 @@ Smart contract constructors marketplace.
 
 ## Development
 
+### Install deps
+
+    pip3 install -r requirements-dev.txt
+
 ### Test
 
     # Backend tests
