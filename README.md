@@ -1,10 +1,15 @@
-# hackathon-sc-ctor-marketplace
+# Smartz
 
 ![](https://travis-ci.com/mixbytes/smartz.svg?token=npMVUXhKXPw1Mau9yKyL&branch=master)
 
-Hackathon: smart contract constructors marketplace
+Smart contract constructors marketplace.
 
-DO NOT use it in production!
+## Development
+
+### Test
+
+    # Backend tests
+    pytest
 
 ## Docker-compose commands
 

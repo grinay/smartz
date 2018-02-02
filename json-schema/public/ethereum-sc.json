@@ -1,0 +1,13 @@
+{
+    "definitions": {
+        "address": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+        },
+
+        "addressArray": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/address" }
+        }
+    }
+}
