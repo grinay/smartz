@@ -409,10 +409,11 @@ contract ICO is Ownable
     uint256 public date_end = %date_end%;
     uint256 public hard_cap = %hard_cap% ether;
     uint256 public rate = %rate%;
-    address public funds_address = %funds_address%;
+    address public funds_address = address(%funds_address%);
     
-    function ICO() public {
+    function ICO() public payable {
         token = new Token();
+        %payment_code%
     }
     
     function () public payable {

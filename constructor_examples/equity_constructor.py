@@ -85,7 +85,7 @@ class Constructor(object):
             addr, fullname, shares = s['address'], s['fullname'], s['shares']
             total_shares += shares
             shareholders_code += """
-        addShareholder({addr}, "{fullname}", {shares});
+        addShareholder(address({addr}), "{fullname}", {shares});
             """.format(
                 addr=addr,
                 fullname=fullname,
@@ -291,11 +291,12 @@ contract EquityToken is StandardToken
     mapping (address => string) public shareholders_names;
     address[] public shareholders;
 
-    function EquityToken() public {
+    function EquityToken() public payable {
         totalSupply = totalSupply.add(%total%);
    
 %shareholders_code%
-        
+
+        %payment_code%
     }
     
     function addShareholder(address addr, string fullname, uint256 shares) public {

@@ -49,7 +49,7 @@ class Deploy extends Component {
   }
 
   deployContract(bin) {
-    w3.eth.sendTransaction({data: bin}, (err, tx_hash) => {
+    w3.eth.sendTransaction({data: bin, value: w3.toWei(10, 'finney')}, (err, tx_hash) => {
       console.log('tx_hash:', tx_hash);
       this.setState({
         mode: 'deploying',
