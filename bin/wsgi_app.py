@@ -134,6 +134,10 @@ def construct():
     if ctor_info is None:
         return _send_error('ctor is not found')
 
+    ctor_params = ctor_engine.get_ctor_params(ctor_id)
+    if isinstance(ctor_params, str):
+        return _send_error(ctor_params)
+
     fields = args['fields']
     if not isinstance(fields, dict):
         raise TypeError()

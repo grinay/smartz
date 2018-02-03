@@ -216,6 +216,92 @@ class TestSchemaDefinitions(unittest.TestCase):
         self.assertRaises(ValidationError, validate,
                           [[500]], mapping_schema)
 
+    def test_dbg(self):
+        json_schema = {
+            "definitions": {
+                "address": {
+                    "type": "string",
+                    "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                },
+
+                "addressArray": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/address"}
+                },
+
+                "unixTime": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2147483647
+                },
+
+                "addressMappingEntry": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address"
+                        },
+                        {}
+                    ]
+                },
+
+                "addressMapping": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/addressMappingEntry"}
+                },
+
+                "uintMappingEntry": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "type": "integer",
+                            "minimum": 0
+                        },
+                        {}
+                    ]
+                },
+
+                "uintMapping": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/uintMappingEntry"}
+                }
+            },
+
+            "type": "object",
+            "required": ["signs_count", "owners"],
+            "additionalProperties": False,
+
+            "properties": {
+                "signs_count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10,
+                    "title": "Signatures quorum",
+                    "description": "Number of signatures required to withdraw funds or modify signatures"
+                },
+
+                "owners": {
+                    "title": "Addresses of owners",
+                    "description": "Addresses (signatures) of owners of a new wallet",
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/address"},
+                    "minItems": 1,
+                    "maxItems": 10
+                }
+            }
+        }
+
+        from jsonschema.validators import validator_for
+
+        validator_cls = validator_for(json_schema)
+        validator_cls.check_schema(json_schema)
+        validator = validator_cls(json_schema)
+
+        validate(5, json_schema)
 
 
 if __name__ == '__main__':
