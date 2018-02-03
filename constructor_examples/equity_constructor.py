@@ -1,103 +1,88 @@
-import re
-
 
 class Constructor(object):
 
     def get_params(self):
+        json_schema = {
+            "type": "object",
+            "required": ["name", "symbol", "shareholders"],
+            "additionalProperties": False,
 
-        res = {
-            "name": {
-                'type': 'string',
-                'title': "Name",
-                'desc': 'Name of share (since shares is ERC20 compatible tokens)'
-            },
-            "abbr": {
-                'type': 'string',
-                'title': "Symbol",
-                'desc': 'Ticker of share (since shares is ERC20 compatible tokens)'
-            },
-            #todo
-            # "allow_third_party_users": {
-            #     'type': 'int',
-            #     'title': "Allow third-party users",
-            #     'desc': 'Is transfer of shares is allowed to non-founders'
-            # }
+            "properties": {
+                "name": {
+                    "title": "Name of token",
+                    "description": "Name of shares token (shares token is ERC20 compatible): "
+                                   "3..100 characters, letters and spaces only",
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 100,
+                    "pattern": "^[a-zA-Z ]+$"
+                },
+
+                "symbol": {
+                    "title": "Token Symbol",
+                    "description": "Ticker of shares token (shares token is ERC20 compatible): "
+                                   "2..10 characters, capital letters only",
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 10,
+                    "pattern": "^[A-Z]+$"
+                },
+
+                #todo
+                # "allow_third_party_users": {
+                #     'type': 'int',
+                #     'title': "Allow third-party users",
+                #     'desc': 'Is transfer of shares is allowed to non-founders'
+                # }
+
+                "shareholders": {
+                    "title": "Shareholders",
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 100,
+                    "items": {
+                        "title": "Shareholder information",
+                        "type": "object",
+                        "required": ["address", "fullname", "shares"],
+                        "additionalProperties": False,
+
+                        "properties": {
+                            "address": {
+                                "title": "Address",
+                                "description": "Ethereum address which holds shares",
+                                "$ref": "#/definitions/address"
+                            },
+
+                            "fullname": {
+                                "title": "Full name",
+                                "description": "Latin letters, 3..100 symbols",
+                                "type": "string",
+                                "minLength": 3,
+                                "maxLength": 100,
+                                "pattern": "^[a-zA-Z ]+$"
+                            },
+
+                            "shares": {
+                                "title": "Shares in possession",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 1000000000
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        for i in range(7):
-            res["address_{}".format(i)] = {
-                'type': 'address',
-                'title': "Address of founder #{}".format(i+1),
-                'desc': ''
-            }
-
-            res["fullname_{}".format(i)] = {
-                'type': 'string',
-                'title': "Fullname of founder #{}".format(i+1),
-                'desc': ''
-            }
-
-            res["shares_{}".format(i)] = {
-                'type': 'int',
-                'title': "Shares of founder #{}".format(i+1),
-                'desc': ''
-            }
-
-
-        return res
+        return {
+            "schema": json_schema
+        }
 
     def construct(self, fields):
-        errors = {}
-
-        # required = ["name", "abbr", "address_0"] #"allow_third_party_users",
-        # for param in required:
-        #     if not param in fields:
-        #         errors[param] = 'Field is required'
-        #
-        if "name" in fields:
-            name = fields["name"]
-        #     if not isinstance(name, str) or len(name) < 3 or len(name) > 100 or not re.findall('^[a-zA-Z ]+$', name):
-        #         errors["name"] = 'Name must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
-        #
-        if "abbr" in fields:
-            abbr = fields["abbr"]
-        #     if not isinstance(abbr, str) or len(abbr) < 3 or len(abbr) > 5 or not re.findall('^[A-Z]+$', abbr):
-        #         errors["name"] = 'Abbr must be string with length from 3 to 5 symbols. Only UPPERCASE letters are allowed'
-        #
-        shareholders = []
-        for i in range(7):
-            addr_field = "address_{}".format(i)
-            if addr_field not in fields:
-                continue
-            addr = fields[addr_field]
-            if addr == "":
-                continue
-        #
-        #     if not re.findall('^0x[0-9a-fA-F]{40}$', addr):
-        #         errors[addr_field] = 'Address is invalid'
-        #
-        #
-            fullname_field = "fullname_{}".format(i)
-            fullname = fields[fullname_field]
-        #     if not isinstance(fullname, str) or len(fullname) < 3 or len(fullname) > 100 or not re.findall('^[a-zA-Z ]+$', fullname):
-        #         errors[fullname_field] = 'Fullname must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
-        #
-            shares_field = "shares_{}".format(i)
-            shares = fields[shares_field]
-        #     if not isinstance(shares, int) or shares < 1 or shares > 2000000000:
-        #         errors[shares_field] = 'Shares must be int from 1 to 2000000000'
-        #
-            shareholders.append([addr, fullname, int(shares)])
-
-        if errors != {}:
-            return {
-                "result": "error",
-                "errors": errors
-            }
-
         shareholders_code = ''
         total_shares = 0
-        for addr, fullname, shares in shareholders:
+        for s in fields['shareholders']:
+            addr, fullname, shares = s['address'], s['fullname'], s['shares']
             total_shares += shares
             shareholders_code += """
         addShareholder({addr}, "{fullname}", {shares});
@@ -108,9 +93,9 @@ class Constructor(object):
             )
 
 
-        source = self.template\
-            .replace('%name%', name) \
-            .replace('%abbr%', abbr) \
+        source = self.__class__._TEMPLATE\
+            .replace('%name%', fields['name']) \
+            .replace('%symbol%', fields['symbol']) \
             .replace('%total%', str(total_shares))\
             .replace('%shareholders_code%', shareholders_code)
 
@@ -119,7 +104,7 @@ class Constructor(object):
 
 
 
-    template = """
+    _TEMPLATE = """
 pragma solidity ^0.4.18;
 
 
@@ -300,14 +285,14 @@ contract StandardToken is ERC20, BasicToken {
 contract EquityToken is StandardToken
 {
     string public constant name = '%name%';
-    string public constant symbol = '%abbr%';
-    uint8 public constant decimals = 18;
+    string public constant symbol = '%symbol%';
+    uint8 public constant decimals = 0;
     
     mapping (address => string) public shareholders_names;
     address[] public shareholders;
 
     function EquityToken() public {
-        totalSupply = totalSupply.add(%total% * 10**18);
+        totalSupply = totalSupply.add(%total%);
    
 %shareholders_code%
         
@@ -316,8 +301,8 @@ contract EquityToken is StandardToken
     function addShareholder(address addr, string fullname, uint256 shares) public {
         shareholders.push(addr);
         shareholders_names[addr] = fullname;
-        balances[addr] = shares * 10**18;
-        Transfer(address(0), addr, shares * 10**18);
+        balances[addr] = shares;
+        Transfer(address(0), addr, shares);
     }
 
 }
