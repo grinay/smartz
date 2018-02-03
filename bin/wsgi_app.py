@@ -5,17 +5,18 @@ import os
 import json
 import tempfile
 from shutil import copy2
+from functools import lru_cache
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 from flask import Flask, abort, request
 
-ROOT_DIR=os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
-DATA_DIR=os.path.join(ROOT_DIR, 'data')
+ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+DATA_DIR = os.path.join(ROOT_DIR, 'data')
 os.makedirs(DATA_DIR, exist_ok=True)
 
-sys.path.append(os.path.join(ROOT_DIR, 'lib'))
+sys.path.append(os.path.join(ROOT_DIR, 'pythonlib'))
 sys.path.append(os.path.join(ROOT_DIR, 'constructor_engine'))
 
 from engine import SimpleStorageEngine
@@ -23,7 +24,7 @@ from engine import SimpleStorageEngine
 
 app = Flask(__name__)
 
-mongoc = MongoClient(connect=False)
+mongoc = MongoClient(host=os.environ.get('SMARTZ_MONGO_HOST', 'mongo'), connect=False)
 db = mongoc.sc_ctors_db
 
 ctor_engine = SimpleStorageEngine({'datadir': DATA_DIR})
@@ -108,18 +109,17 @@ def get_ctor_params():
     if isinstance(params, str):
         return _send_error(params)
 
-    def reformat_param(p_name, p_info):
-        return {
-            'name': p_name,
-            'human_name': p_info['title'],
-            'type': p_info['type'],
-            'desc': p_info['desc']
-        }
+    predefined_schema = json_schema('public/ethereum-sc.json')
+
+    if 'definitions' not in params['schema']:
+        params['schema']['definitions'] = dict()
+    params['schema']['definitions'].update(predefined_schema['definitions'])
 
     return _send_output({
         'ctor_name': ctor_info['ctor_name'],
         'ctor_descr': ctor_info['ctor_descr'] if 'ctor_descr' in ctor_info else '',
-        'ctor_params': [reformat_param(n, i) for (n, i) in params.items()]
+        'schema': params['schema'],
+        'ui_schema': params.get('ui_schema', dict())
     })
 
 
@@ -133,6 +133,10 @@ def construct():
     ctor_info = ctors.find_one({'_id': ObjectId(ctor_id)})
     if ctor_info is None:
         return _send_error('ctor is not found')
+
+    ctor_params = ctor_engine.get_ctor_params(ctor_id)
+    if isinstance(ctor_params, str):
+        return _send_error(ctor_params)
 
     fields = args['fields']
     if not isinstance(fields, dict):
@@ -204,6 +208,13 @@ def nonempty(v):
     if not v:
         raise ValueError()
     return v
+
+
+@lru_cache(256)
+def json_schema(rel_path):
+    assert '..' not in rel_path
+    with open(os.path.join(ROOT_DIR, 'json-schema', rel_path)) as fh:
+        return json.load(fh)
 
 
 if __name__ == '__main__':
