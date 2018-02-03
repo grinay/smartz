@@ -39,7 +39,8 @@ REST, GET|POST
     {
         ctor_name: 'my ctor',
         ctor_descr: 'my ctor',
-        schema: json schema
+        schema: json schema,
+        ui_schema: UI json schema
     } || {error: 'foo'}
 
 - /construct

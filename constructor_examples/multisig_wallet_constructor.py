@@ -1,5 +1,3 @@
-import re
-
 
 class Constructor(object):
 
@@ -24,7 +22,7 @@ class Constructor(object):
                     "title": "Addresses of owners",
                     "description": "Addresses (signatures) of owners of a new wallet",
                     "type": "array",
-                    "items": {"$ref": "https://platform.smartz.io/json-schema/public/ethereum-sc.json#/definitions/address"},
+                    "items": {"$ref": "#/definitions/address"},
                     "minItems": 1,
                     "maxItems": self.__class__.MAX_OWNERS
                 }
@@ -49,7 +47,7 @@ class Constructor(object):
 
         signers_txt = '\n'.join('_owners.push(address({}));'.format(owner) for owner in fields['owners'])
 
-        source = self.template\
+        source = self.__class__._TEMPLATE \
                      .replace('%owners%', signers_txt) \
                      .replace('%signs_count%', str(fields['signs_count']))
 
@@ -57,7 +55,7 @@ class Constructor(object):
         return source, "SimpleMultiSigWallet"
 
     # language=Solidity
-    template = """
+    _TEMPLATE = """
 // Copyright (C) 2017  MixBytes, LLC
 
 // Licensed under the Apache License, Version 2.0 (the "License").
