@@ -9,6 +9,7 @@ from functools import lru_cache
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from jsonschema.validators import validator_for
 
 from flask import Flask, abort, request
 
@@ -138,11 +139,25 @@ def construct():
     if isinstance(ctor_params, str):
         return _send_error(ctor_params)
 
-    fields = args['fields']
-    if not isinstance(fields, dict):
-        raise TypeError()
+    validator_cls = validator_for(json_schema)
+    validator_cls.check_schema(json_schema)
+    validator = validator_cls(json_schema)
 
-    result = ctor_engine.construct(ctor_id, fields)
+    # field -> error string
+    errors = dict()
+    for error in validator.iter_errors(args['fields']):
+        if not error.path:
+            return _send_error(error.message)   # global error
+
+        errors[error.path[0]] = error.message
+
+    if errors:
+        return _send_output({
+            "result": "error",
+            "errors": errors
+        })
+
+    result = ctor_engine.construct(ctor_id, args['fields'])
 
     if isinstance(result, dict):
         # error
