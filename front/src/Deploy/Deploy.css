@@ -1,3 +1,20 @@
 .spinner img {
   width: 50px;
 }
+
+.array-item {
+  width: 100%;
+  display: flex;
+}
+
+.array-item .col-xs-9 {
+  flex-grow: 1;
+}
+
+.array-item-toolbox {
+  width: auto;
+}
+
+.array-item-remove {
+  width: 34px;
+}

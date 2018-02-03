@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
+import Form from "react-jsonschema-form";
 
 import {API_URL} from '../constants';
 import ContractParameter from './ContractParameter';
@@ -30,8 +31,52 @@ class Deploy extends Component {
       'ctor_id': this.props.match.params.id
     })
       .then(response => {
-        this.setState({ctor: response.data});
-        console.log(response.data);
+        this.setState({
+          ctor: response.data,
+          json_schema: {
+            "type": "object",
+            "required": ["signs_count", "owners"],
+            "additionalProperties": false,
+            "properties": {
+              "signs_count": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 250,
+                "default": 2,
+                "title": "Signatures quorum",
+                "description": "Number of signatures required to withdraw funds or modify signatures"
+              },
+              "owners": {
+                "title": "Addresses of owners",
+                "description": "Addresses (signatures) of owners of a new wallet",
+                "type": "array",
+                "items": {"$ref": "#/definitions/address"},
+                "minItems": 2,
+                "maxItems": 250
+              }
+            },
+            "definitions": {
+              "address": {
+                  "type": "string",
+                  "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+              }
+            }
+          },
+          ui_schema: {
+            "signs_count": {
+              "ui:widget": "updown",
+            },
+            "owners": {
+              items: {
+                "ui:placeholder": "Valid Ethereum address"
+              },
+              "ui:options": {
+                orderable: false
+              }
+            }
+          }
+        });
+        // console.log(response.data);
       })
       .catch(error => this.setState({message: error.message}));
   }
@@ -50,7 +95,7 @@ class Deploy extends Component {
 
   deployContract(bin) {
     w3.eth.sendTransaction({data: bin}, (err, tx_hash) => {
-      console.log('tx_hash:', tx_hash);
+      // console.log('tx_hash:', tx_hash);
       this.setState({
         mode: 'deploying',
         tx: tx_hash
@@ -95,7 +140,7 @@ class Deploy extends Component {
   }
 
   render() {
-    const {ctor, mode} = this.state;
+    const {ctor, mode, json_schema, ui_schema} = this.state;
     return (
       <div>
           <div className="container">
@@ -107,6 +152,21 @@ class Deploy extends Component {
             }
             {!mode && this.state.ctor &&
               <Panel header="Deploy step 1 of 2: customize your contract">
+                <Form schema={json_schema}
+                  uiSchema={ui_schema}
+                  onChange={console.log("changed")}
+                  onSubmit={this.submit.bind(this)}
+                  onError={console.log("errors")}>
+                  <div>
+                    <Button bsStyle="success"
+                      className="btn-margin"
+                      onClick={this.submit.bind(this)}
+                      disabled={this.state.spinner}>
+                      Proceed to step 2
+                    </Button>
+                  </div>
+                </Form>
+                {/*
                 <form>
                   {ctor.ctor_params.map((el, i) => (
                     <ContractParameter params={el} key={i} callback={this.setValue.bind(this)} />
@@ -126,6 +186,7 @@ class Deploy extends Component {
                     />
                   }
                 </form>
+                */}
               </Panel>
             }
             {mode === "source" &&

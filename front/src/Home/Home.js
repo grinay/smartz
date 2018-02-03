@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Button} from 'react-bootstrap';
 
 import {API_URL} from '../constants';
 
@@ -11,92 +12,74 @@ class Home extends Component {
     this.state = {};
   }
   componentWillMount() {
-    this.props.auth.isAuthenticated() && this.getCtors();
+    this.getCtors();
   }
   login() {
     this.props.auth.login();
   }
   getCtors() {
+    console.log(API_URL);
     axios.get(`${API_URL}/list_ctors`)
       .then(response => {
         this.setState({ctors: response.data});
         console.log(response.data);
       })
       .catch(error => this.setState({message: error.message}));
-    /*
-    this.setState({ctors: [
-      {
-        ctor_id: 1,
-        ctor_name: 'Simple Equity Token'
-      },
-      {
-        ctor_id: 2,
-        ctor_name: 'Equity Token with Dividends Distribution'
-      },
-      {
-        ctor_id: 3,
-        ctor_name: 'Token with Crowdsale'
-      },
-    ]});
-    */
   }
   render() {
     const {isAuthenticated} = this.props.auth;
     const {ctors} = this.state;
     return (
       <div className="container">
-        <div class="alert alert-danger" role="alert">
-          <h4 class="alert-heading">Attention!</h4>
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Attention!</h4>
           <p>
             <b>Don't use our service with real ETH in Ethereum Mainnet!</b><br />
             We are in very early stage of development. Use it only for test and informational purposes with Rinkeby network chosen in your MetaMask client. Authors are not responsible for any possible loses in result of using our service.
           </p>
         </div>
-        {isAuthenticated() &&
-          <div>
-            <h4>Available smart contracts:</h4>
-            {ctors &&
-              <div className="contracts-cards">
-                {ctors.map((el, i) => (
-                  <div className="card" key={i}>
-                    <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="Card image cap" />
-                    <div className="card-body">
-                      <h3 className="card-title">{el.ctor_name}</h3>
-                      <p className="card-text desc">Contract description. Lorem ipsum vestibulum sed turpis curabitur magna, consequat aliquet bibendum in amet aliquet, leo nam iaculis posuere vitae.</p>
+        <div>
+          <h4>Available smart contracts:</h4>
+          {ctors &&
+            <div className="contracts-cards">
+              {ctors.map((el, i) => (
+                <div className="card" key={i}>
+                  <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="Card image cap" />
+                  <div className="card-body">
+                    <h3 className="card-title">{el.ctor_name}</h3>
+                    <p className="card-text desc">Contract description. Lorem ipsum vestibulum sed turpis curabitur magna, consequat aliquet bibendum in amet aliquet, leo nam iaculis posuere vitae.</p>
+                    {!isAuthenticated() &&
+                      <Button
+                        bsStyle="primary"
+                        className="btn-margin"
+                        onClick={this.login.bind(this)}
+                      >
+                        Login to deploy
+                      </Button>
+                    }
+                    {isAuthenticated() &&
                       <a href={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
                         Deploy free
                       </a>
-                      <p className="card-text">
-                        <small className="text-muted">
-                          Author: Vladimir Khramov<br />
-                          Uploaded 21 dec 2017
-                        </small>
-                      </p>
-                    </div>
+                    }
+                    <p className="card-text">
+                      <small className="text-muted">
+                        Author: Vladimir Khramov<br />
+                        Uploaded 21 dec 2017
+                      </small>
+                    </p>
                   </div>
-                ))}
-              </div>
-            }
-            {!ctors &&
-              <p>Contracts loading</p>
-            }
-            <br /><br />
-            <h4>If you are developer</h4>
-            <p>You can <a href="/ctor-add">add a smart contract</a> to our platform.</p>
-          </div>
-        }
-        {!isAuthenticated() &&
-          <h4>
-            You are not logged in! Please{' '}
-            <a
-              style={{ cursor: 'pointer' }}
-              onClick={this.login.bind(this)}
-            >
-              Log In
-            </a>
-            {' '}to continue.
-          </h4>
-        }
+                </div>
+              ))}
+            </div>
+          }
+          {!ctors &&
+            <p>Contracts are loading</p>
+          }
+          <br /><br />
+          <h4>If you are developer</h4>
+          <p>You can <a href="/ctor-add">add a smart contract</a> to our platform.</p>
+        </div>
       </div>
     );
   }
