@@ -1,11 +1,14 @@
 {
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {
         "address": {
+            "description": "Ethereum address",
             "type": "string",
             "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
         },
 
         "ObjectIdHex": {
+            "description": "MongoDB ObjectId",
             "type": "string",
             "pattern": "^[0-9a-fA-F]+$"
         },
@@ -31,6 +34,38 @@
                 { "$ref": "#/definitions/resultError" },
                 { "$ref": "#/definitions/resultSuccess" }
             ]
+        },
+
+        "controlFunctionSpec": {
+            "description": "Specification of a function which controls a contract",
+            "type": "object",
+            "required": ["name", "title", "constant", "payable", "inputs", "outputs"],
+            "additionalProperties": false,
+
+            "properties": {
+                "title": {
+                    "description": "Human-friendly name of the function",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Human-friendly description",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "ABI name (dont show to user)",
+                    "type": "string"
+                },
+                "constant": { "type": "boolean" },
+                "payable": { "type": "boolean" },
+                "inputs": {
+                    "type": "array",
+                    "items": { "$ref": "http://json-schema.org/draft-04/schema#" }
+                },
+                "outputs": {
+                    "type": "array",
+                    "items": { "$ref": "http://json-schema.org/draft-04/schema#" }
+                }
+            }
         }
     },
 
@@ -67,6 +102,42 @@
                 "oneOf": [
                     { "$ref": "#/definitions/resultError" },
                     { "type": "array", "items": { "$ref": "#/definitions/ObjectIdHex" } }
+                ]
+            }
+        },
+
+        "prepare_instance_control_interface": {
+            "description": "Returns data and metadata necessary to control deployed contract",
+
+            "input": {
+                "type": "object",
+                "required": ["instance_id"],
+                "additionalProperties": false,
+                "properties": {
+                    "instance_id": { "$ref": "#/definitions/ObjectIdHex" }
+                }
+            },
+            "output": {
+                "oneOf": [
+                    { "$ref": "#/definitions/resultError" },
+                    {
+                        "type": "object",
+                        "required": ["address", "functions", "dashboard_functions"],
+                        "additionalProperties": false,
+
+                        "properties": {
+                            "address": { "$ref": "#/definitions/address" },
+                            "functions": {
+                                "type": "array",
+                                "items": { "$ref": "#/definitions/controlFunctionSpec" }
+                            },
+                            "dashboard_functions": {
+                                "description": "List of names of functions (which are parameter-less and constant) which results(!) along with name and description should be included in contract dashboard",
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
+                        }
+                    }
                 ]
             }
         }
