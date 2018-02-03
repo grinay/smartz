@@ -7,11 +7,8 @@ class EngineInterface(object):
 
     def get_ctor_params(self, ctor_id)
         returns {
-            hard_cap: {
-                type: 'int' | 'address' | 'string' | 'datetime',
-                desc: 'this is hard cap'
-            },
-            ...
+            schema: json schema,
+            ui_schema: optional react-jsonschema-form UI schema
         } or 'error'
 
     def construct(self, ctor_id, {field1: value1, ...})

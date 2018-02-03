@@ -39,21 +39,15 @@ REST, GET|POST
     {
         ctor_name: 'my ctor',
         ctor_descr: 'my ctor',
-        ctor_params: [
-            {
-                name: 'hard_cap',
-                human_name: 'human name',
-                type: 'int' | 'address' | 'string' | 'datetime',
-                desc: 'this is hard cap, blablabla, long description'
-            },
-            ...
-        ]
+        schema: json schema,
+        ui_schema: UI json schema
     } || {error: 'foo'}
 
 - /construct
     input:
         {
             ctor_id: 4,
+            # valid fields according to ctor's json-schema
             fields: {
                 hard_cap: 1000,
                 ...
@@ -66,6 +60,8 @@ REST, GET|POST
             bin: '0xddd',
             source: 'pragma ...'
         }
+        ||
+        {error: 'foo'}
         ||
         {
             result: 'error',
