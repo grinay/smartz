@@ -24,7 +24,7 @@ from engine import SimpleStorageEngine
 
 app = Flask(__name__)
 
-mongoc = MongoClient(connect=False)
+mongoc = MongoClient(host=os.environ.get('SMARTZ_MONGO_HOST', 'mongo'), connect=False)
 db = mongoc.sc_ctors_db
 
 ctor_engine = SimpleStorageEngine({'datadir': DATA_DIR})
