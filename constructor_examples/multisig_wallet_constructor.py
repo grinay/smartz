@@ -481,7 +481,9 @@ contract SimpleMultiSigWallet is multiowned {
     function SimpleMultiSigWallet()
         multiowned()
         public
+        payable
     {
+        %payment_code%
     }
 
     /// @dev Fallback function allows to deposit ether.

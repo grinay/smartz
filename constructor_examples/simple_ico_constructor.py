@@ -1,159 +1,103 @@
-import re
-
 
 class Constructor(object):
 
     def get_params(self):
+        json_schema = {
+            "type": "object",
+            "required": ["name", "symbol", "is_burnable", "date_start", "date_end", "rate", "hard_cap",
+                         "funds_address"],
+            "additionalProperties": False,
 
-        res = {
-            "name": {
-                'type': 'string',
-                'title': "Name",
-                'desc': 'Token name (3..100 characters, letters and space only)'
-            },
-            "symbol": {
-                'type': 'string',
-                'title': "Symbol",
-                'desc': 'Token ticker (3..10 characters, letters only)'
-            },
+            "properties": {
+                "name": {
+                    "title": "Name of a token",
+                    "description": "Token human-friendly name (3..100 characters, letters and spaces only)",
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 100,
+                    "pattern": "^[a-zA-Z ]+$"
+                },
 
-            "is_burnable": {
-                'type': 'int',
-                'title': "Is burnable",
-                'desc': 'is token holders can burn their tokens (0 or 1)'
-            },
+                "symbol": {
+                    "title": "Token Symbol",
+                    "description": "Token ticker (2..10 characters, capital letters only)",
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 10,
+                    "pattern": "^[A-Z]+$"
+                },
 
+                "is_burnable": {
+                    "type": "boolean",
+                    "title": "Is token burnable?",
+                    "description": "Can token holders burn their tokens?"
+                },
 
-            "date_start": {
-                'type': 'datetime',
-                'title': "Date start",
-                'desc': 'Ico date start'
-            },
-            "date_end": {
-                'type': 'datetime',
-                'title': "Date end",
-                'desc': 'Ico end date'
-            },
-            "rate": {
-                'type': 'int',
-                'title': "Rate",
-                'desc': 'Tokens for 1 ether'
-            },
-            "hard_cap": {
-                'type': 'int',
-                'title': "Hard cap",
-                'desc': 'Hard cap in ether (1..1000000)'
-            },
-            "funds_address": {
-                'type': 'address',
-                'title': "Funds address",
-                'desc': 'All collected funds will be transferred to this address'
-            },
+                "date_start": {
+                    "title": "Start date",
+                    "description": "ICO start date",
+                    "$ref": "#/definitions/unixTime"
+                },
+                "date_end": {
+                    "title": "End date",
+                    "description": "ICO end date",
+                    "$ref": "#/definitions/unixTime"
+                },
+
+                "rate": {
+                    "title": "Exchange rate",
+                    "description": "Tokens to issue per 1 Ether",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000000
+                },
+
+                "hard_cap": {
+                    "title": "Hard cap",
+                    "description": "Hard cap in Ether",
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000000000
+                },
+
+                "funds_address": {
+                    "title": "Funds address",
+                    "description": "All collected funds will be transferred to this address",
+                    "$ref": "#/definitions/address"
+                }
+            }
         }
 
-
-        return res
+        return {
+            "schema": json_schema
+        }
 
     def construct(self, fields):
         errors = {}
-        #todo universal validation
-        required = ["name", "symbol", "is_burnable", "date_start", "date_end", "rate", "hard_cap", "funds_address"]
-        for param in required:
-            if not param in fields:
-                errors[param] = 'Field is required'
 
+        if fields["date_start"] >= fields["date_end"]:
+            errors["date_start"] = 'Start date is greater or equal to end date'
 
-
-        if "name" in fields:
-            try:
-                name = str(fields["name"])
-            except Exception:
-                name = ''
-            if len(name) < 3 or len(name) > 100 or not re.findall('^[a-zA-Z ]+$', name):
-                errors["name"] = 'Name must be string with length from 3 to 100 symbols. Only letters and spaces are allowed'
-
-        if "symbol" in fields:
-            try:
-                symbol = str(fields["symbol"]).upper()
-            except Exception:
-                symbol = ''
-            if len(symbol) < 3 or len(symbol) > 10 or not re.findall('^[A-Z]+$', symbol):
-                errors["symbol"] = 'Symbol must be string with length from 3 to 10 symbols. Only letters are allowed'
-
-        if "is_burnable" in fields:
-            try:
-                is_burnable = int(fields["is_burnable"])
-            except Exception:
-                is_burnable = -1
-            if is_burnable not in [0, 1]:
-                errors["is_burnable"] = 'Is burnable must be 1 or 0'
-
-        #timestamp from front
-        if "date_start" in fields:
-            try:
-                date_start = int(fields["date_start"])
-            except Exception:
-                date_start = -1
-            if date_start < 1000 or date_start > 1913437946:
-                errors["date_start"] = 'Insert correct date'
-        if "date_end" in fields:
-            try:
-                date_end = int(fields["date_end"])
-            except Exception:
-                date_end = -1
-            if date_end < 1000 or date_end > 1913437946:
-                errors["date_end"] = 'Insert correct date'
-
-
-        if "rate" in fields:
-            try:
-                rate = int(fields["rate"])
-            except:
-                rate = -1
-            if rate < 1 or rate > 100000:
-                errors["rate"] = 'Rate must be int from 1 to 100000'
-
-        if "hard_cap" in fields:
-            try:
-                hard_cap = int(fields["hard_cap"])
-            except:
-                hard_cap = -1
-            if hard_cap < 1 or hard_cap > 1000000:
-                errors["hard_cap"] = 'Hard cap  must be int from 1 to 1000000'
-
-        if "funds_address" in fields:
-            try:
-                funds_address = str(fields["funds_address"])
-            except Exception:
-                funds_address = ''
-            if not re.findall('^0x[0-9a-fA-F]{40}$', funds_address):
-                errors["funds_address"] = 'Address is invalid'
-
-
-        if errors != {}:
+        if errors:
             return {
                 "result": "error",
                 "errors": errors
             }
 
-        code_is_burnable = ", BurnableToken"
-
-        source = self.template\
-            .replace('%name%', name) \
-            .replace('%symbol%', symbol) \
-            .replace('%code_is_burnable%', str(code_is_burnable))\
-            .replace('%date_start%', str(date_start))\
-            .replace('%date_end%', str(date_end))\
-            .replace('%hard_cap%', str(hard_cap))\
-            .replace('%rate%', str(rate))\
-            .replace('%funds_address%', str(funds_address))
-
-
+        source = self.__class__._TEMPLATE \
+            .replace('%name%', fields['name']) \
+            .replace('%symbol%', fields['symbol']) \
+            .replace('%code_is_burnable%', ", BurnableToken" if fields['is_burnable'] else '') \
+            .replace('%date_start%', str(fields['date_start'])) \
+            .replace('%date_end%', str(fields['date_end'])) \
+            .replace('%hard_cap%', str(fields['hard_cap'])) \
+            .replace('%rate%', str(fields['rate'])) \
+            .replace('%funds_address%', fields['funds_address'])
 
         return source, "ICO"
 
     # language=Solidity
-    template = """
+    _TEMPLATE = """
 pragma solidity ^0.4.18;
 
 
@@ -465,10 +409,11 @@ contract ICO is Ownable
     uint256 public date_end = %date_end%;
     uint256 public hard_cap = %hard_cap% ether;
     uint256 public rate = %rate%;
-    address public funds_address = %funds_address%;
+    address public funds_address = address(%funds_address%);
     
-    function ICO() public {
+    function ICO() public payable {
         token = new Token();
+        %payment_code%
     }
     
     function () public payable {

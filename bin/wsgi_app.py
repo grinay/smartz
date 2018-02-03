@@ -9,6 +9,7 @@ from functools import lru_cache
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from jsonschema.validators import validator_for
 
 from flask import Flask, abort, request
 
@@ -61,7 +62,7 @@ def upload_ctor():
     filename = tempfile.mktemp('ctor')
 
     uploaded_filename = args['ctor_file_name']
-    if not re.findall('^[a-zA-Z_]+$', uploaded_filename):
+    if not re.findall('^[a-zA-Z][a-zA-Z_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
         raise ValueError()
     uploaded_filename = "{}.py".format(uploaded_filename)
 
@@ -138,11 +139,25 @@ def construct():
     if isinstance(ctor_params, str):
         return _send_error(ctor_params)
 
-    fields = args['fields']
-    if not isinstance(fields, dict):
-        raise TypeError()
+    validator_cls = validator_for(json_schema)
+    validator_cls.check_schema(json_schema)
+    validator = validator_cls(json_schema)
 
-    result = ctor_engine.construct(ctor_id, fields)
+    # field -> error string
+    errors = dict()
+    for error in validator.iter_errors(args['fields']):
+        if not error.path:
+            return _send_error(error.message)   # global error
+
+        errors[error.path[0]] = error.message
+
+    if errors:
+        return _send_output({
+            "result": "error",
+            "errors": errors
+        })
+
+    result = ctor_engine.construct(ctor_id, args['fields'])
 
     if isinstance(result, dict):
         # error
@@ -150,7 +165,8 @@ def construct():
 
     # success
     [bin, source, abi] = result
-    instance_id = instances.insert_one({'abi': abi, 'source': source, 'bin': bin}).inserted_id.binary.hex()
+    instance_id = instances.insert_one({'abi': abi, 'source': source, 'bin': bin, 'ctor_id': ctor_id}
+                                       ).inserted_id.binary.hex()
 
     return _send_output({
         'result': 'success',
