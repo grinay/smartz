@@ -165,7 +165,8 @@ def construct():
 
     # success
     [bin, source, abi] = result
-    instance_id = instances.insert_one({'abi': abi, 'source': source, 'bin': bin}).inserted_id.binary.hex()
+    instance_id = instances.insert_one({'abi': abi, 'source': source, 'bin': bin, 'ctor_id': ctor_id}
+                                       ).inserted_id.binary.hex()
 
     return _send_output({
         'result': 'success',

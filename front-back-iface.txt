@@ -75,3 +75,6 @@ REST, GET|POST
         {instance_id: 'dd4'}
     output:
         [...] || {error: 'foo'}
+
+- /set_instance_address see json-schema/internal/front-back.json
+- /list_instances see json-schema/internal/front-back.json
