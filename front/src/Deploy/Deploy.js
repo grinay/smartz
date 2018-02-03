@@ -104,18 +104,15 @@ class Deploy extends Component {
     });
   }
 
-  submit() {
-    const {ctor} = this.state;
-    const fields = {};
-    ctor.ctor_params.forEach((obj, i) => {
-      fields[obj.name] = this.state[obj.name];
-    });
+  submit({formData}) {
+    // if Validation ok
+    console.log(formData);
     this.setState({
       spinner: true
     });
     axios.post(`${API_URL}/construct`, {
       'ctor_id': this.props.match.params.id,
-      fields
+      fields: formData
     })
       .then(response => {
         // console.log(response.data);
@@ -141,6 +138,7 @@ class Deploy extends Component {
 
   render() {
     const {ctor, mode, json_schema, ui_schema} = this.state;
+    const onError = (errors) => console.log("I have", errors.length, "errors to fix");
     return (
       <div>
           <div className="container">
@@ -154,13 +152,13 @@ class Deploy extends Component {
               <Panel header="Deploy step 1 of 2: customize your contract">
                 <Form schema={json_schema}
                   uiSchema={ui_schema}
-                  onChange={console.log("changed")}
                   onSubmit={this.submit.bind(this)}
-                  onError={console.log("errors")}>
+                  onError={onError}
+                  showErrorList={false}>
                   <div>
                     <Button bsStyle="success"
                       className="btn-margin"
-                      onClick={this.submit.bind(this)}
+                      type="submit"
                       disabled={this.state.spinner}>
                       Proceed to step 2
                     </Button>
