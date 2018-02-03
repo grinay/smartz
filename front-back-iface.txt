@@ -63,6 +63,7 @@ REST, GET|POST
         ||
         {
             result: 'error',
+            опционально: error: 'общая ошибка',
             errors: {
                 hard_cap: 'Hard cap can not be empty'
             }
