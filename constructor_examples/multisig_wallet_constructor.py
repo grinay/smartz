@@ -13,6 +13,7 @@ class Constructor(object):
                 "signs_count": {
                     "type": "integer",
                     "minimum": 1,
+                    "default": 2,
                     "maximum": self.__class__.MAX_OWNERS,
                     "title": "Signatures quorum",
                     "description": "Number of signatures required to withdraw funds or modify signatures"
@@ -23,7 +24,7 @@ class Constructor(object):
                     "description": "Addresses (signatures) of owners of a new wallet",
                     "type": "array",
                     "items": {"$ref": "#/definitions/address"},
-                    "minItems": 1,
+                    "minItems": 2,
                     "maxItems": self.__class__.MAX_OWNERS
                 }
             }

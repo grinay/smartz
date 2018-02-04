@@ -65,7 +65,6 @@ class Deploy extends Component {
 
   submit({formData}) {
     // if Validation ok
-    console.log(formData);
     this.setState({
       spinner: true
     });
@@ -74,7 +73,6 @@ class Deploy extends Component {
       fields: formData
     })
       .then(response => {
-        // console.log(response.data);
         this.setState({
           mode: 'source',
           data: response.data,
@@ -144,27 +142,12 @@ class Deploy extends Component {
                     </Button>
                   </div>
                 </Form>
-                {/*
-                <form>
-                  {ctor.ctor_params.map((el, i) => (
-                    <ContractParameter params={el} key={i} callback={this.setValue.bind(this)} />
-                  ))}
-                  <Button
-                    bsStyle="success"
-                    className="btn-margin"
-                    onClick={this.submit.bind(this)}
-                    disabled={this.state.spinner}
-                  >
-                    Proceed to step 2
-                  </Button>
-                  {this.state.spinner &&
-                    <Spinner
-                      text="Preparing your contract, this can take up to 30-40 seconds..."
-                      alt="Preparing contract..."
-                    />
-                  }
-                </form>
-                */}
+                {this.state.spinner &&
+                  <Spinner
+                    text="Preparing your contract, this can take up to 30-40 seconds..."
+                    alt="Preparing contract..."
+                  />
+                }
               </Panel>
             }
             {mode === "source" &&
