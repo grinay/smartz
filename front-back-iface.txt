@@ -78,3 +78,4 @@ REST, GET|POST
 
 - /set_instance_address see json-schema/internal/front-back.json
 - /list_instances see json-schema/internal/front-back.json
+- /prepare_instance_control_interface see json-schema/internal/front-back.json

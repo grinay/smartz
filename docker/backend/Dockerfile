@@ -16,6 +16,7 @@ FROM alpine:latest
 ARG UWSGI_UID
 WORKDIR /app
 VOLUME [ "/app/sock" ]
+VOLUME [ "/app/data" ]
 RUN adduser -u $UWSGI_UID -S -H uwsgi \
 && apk --no-cache --update upgrade \
 && apk --no-cache add python3 uwsgi uwsgi-python3
