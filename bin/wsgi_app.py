@@ -190,6 +190,13 @@ def get_abi():
     _send_output(instance_info['abi'])
 
 
+@app.route('/clearz', methods=['GET'])
+def clearz():
+    db.ctors.delete_many({})
+    db.instances.delete_many({})
+    return _send_output({'ok': True})
+
+
 def l(v):
     print(repr(v), file=sys.stderr)
     return v
