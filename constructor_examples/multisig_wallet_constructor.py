@@ -164,12 +164,12 @@ contract multiowned {
     function multiowned() public
     {
         uint _required = %signs_count%;
-        
+
         %owners%
-        
+
         require(_owners.length > 0 && _owners.length <= c_maxOwners);
         require(_required > 0 && _required <= _owners.length);
-    
+
         assert(c_maxOwners <= 255);
 
         m_numOwners = _owners.length;
@@ -508,6 +508,5 @@ contract SimpleMultiSigWallet is multiowned {
         EtherSent(to, value);
     }
 }
-    
-    """
 
+    """

@@ -18,7 +18,8 @@ class Deploy extends Component {
     super(props);
     this.state = {
       auth: props.auth.isAuthenticated(),
-      spinner: false
+      spinner: false,
+      ctorId: this.props.match.params.id
     };
   }
 
@@ -28,55 +29,13 @@ class Deploy extends Component {
 
   getCtorParams() {
     axios.post(`${API_URL}/get_ctor_params`, {
-      'ctor_id': this.props.match.params.id
+      'ctor_id': this.state.ctorId
     })
       .then(response => {
         this.setState({
-          ctor: response.data,
-          json_schema: {
-            "type": "object",
-            "required": ["signs_count", "owners"],
-            "additionalProperties": false,
-            "properties": {
-              "signs_count": {
-                "type": "integer",
-                "minimum": 1,
-                "maximum": 250,
-                "default": 2,
-                "title": "Signatures quorum",
-                "description": "Number of signatures required to withdraw funds or modify signatures"
-              },
-              "owners": {
-                "title": "Addresses of owners",
-                "description": "Addresses (signatures) of owners of a new wallet",
-                "type": "array",
-                "items": {"$ref": "#/definitions/address"},
-                "minItems": 2,
-                "maxItems": 250
-              }
-            },
-            "definitions": {
-              "address": {
-                  "type": "string",
-                  "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
-              }
-            }
-          },
-          ui_schema: {
-            "signs_count": {
-              "ui:widget": "updown",
-            },
-            "owners": {
-              items: {
-                "ui:placeholder": "Valid Ethereum address"
-              },
-              "ui:options": {
-                orderable: false
-              }
-            }
-          }
+          ctor: response.data
         });
-        // console.log(response.data);
+        console.log(response.data);
       })
       .catch(error => this.setState({message: error.message}));
   }
@@ -111,7 +70,7 @@ class Deploy extends Component {
       spinner: true
     });
     axios.post(`${API_URL}/construct`, {
-      'ctor_id': this.props.match.params.id,
+      'ctor_id': this.state.ctorId,
       fields: formData
     })
       .then(response => {
@@ -136,22 +95,43 @@ class Deploy extends Component {
     this.deployContract(bin);
   }
 
+  getUiSchema() {
+    switch (this.state.ctor.ctor_name) {
+      case 'Multisig Wallet':
+        return {
+          "signs_count": {
+            "ui:widget": "updown",
+          },
+          "owners": {
+            items: {
+              "ui:placeholder": "Valid Ethereum address"
+            },
+            "ui:options": {
+              orderable: false
+            }
+          }
+        };
+      default:
+        return {};
+    }
+  }
+
   render() {
-    const {ctor, mode, json_schema, ui_schema} = this.state;
+    const {ctor, mode, ui_schema} = this.state;
     const onError = (errors) => console.log("I have", errors.length, "errors to fix");
     return (
       <div>
           <div className="container">
-            {this.state.ctor &&
+            {ctor &&
               <div>
                 <h1>{ctor.ctor_name}</h1>
                 <p className="desc">Contract description. Lorem ipsum vestibulum sed turpis curabitur magna, consequat aliquet bibendum in amet aliquet, leo nam iaculis posuere vitae.</p>
               </div>
             }
-            {!mode && this.state.ctor &&
+            {!mode && ctor &&
               <Panel header="Deploy step 1 of 2: customize your contract">
-                <Form schema={json_schema}
-                  uiSchema={ui_schema}
+                <Form schema={ctor.schema}
+                  uiSchema={this.getUiSchema()}
                   onSubmit={this.submit.bind(this)}
                   onError={onError}
                   showErrorList={false}>
