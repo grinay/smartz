@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
+import {Panel, ControlLabel, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
 import Form from 'react-jsonschema-form';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 
 import {API_URL} from '../constants';
-import ContractParameter from './ContractParameter';
 import Spinner from './Spinner';
 
 import './Deploy.css';
@@ -72,7 +71,7 @@ class Deploy extends Component {
       fields: formData
     })
       .then(response => {
-        if (response.data.result == 'error') {
+        if (response.data.result === 'error') {
           this.setState({
             spinner: false,
             errors: response.data.errors

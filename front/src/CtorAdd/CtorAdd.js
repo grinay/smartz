@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap';
+import {FormGroup, FormControl, Button} from 'react-bootstrap';
 import axios from 'axios';
 
 import {API_URL} from '../constants';
@@ -30,8 +30,8 @@ class CtorAdd extends Component {
     return (
       <div className="container">
         <h1>Add a smart contract</h1>
-        <div class="alert alert-success" role="alert">
-          <h4 class="alert-heading">Welcome!</h4>
+        <div className="alert alert-success" role="alert">
+          <h4 className="alert-heading">Welcome!</h4>
           <p>
             <b>Unfortunately, independent smart contracts upload function is not ready yet!</b><br />
             But if you are interested in contributing our project, feel free to <a href="https://t.me/LoungerX">get in touch with us</a>.

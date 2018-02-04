@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-import {Navbar, Button} from 'react-bootstrap';
 import './Footer.css';
 
 class Footer extends Component {
   render() {
-    const { isAuthenticated } = this.props.auth;
-
     return (
       <footer className="footer">
         <div className="container">

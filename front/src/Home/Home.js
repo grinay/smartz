@@ -18,7 +18,7 @@ class Home extends Component {
     this.props.auth.login();
   }
   getCtors() {
-    console.log(API_URL);
+    // console.log(API_URL);
     axios.get(`${API_URL}/list_ctors`)
       .then(response => {
         this.setState({ctors: response.data});
@@ -44,7 +44,7 @@ class Home extends Component {
             <div className="contracts-cards">
               {ctors.map((el, i) => (
                 <div className="card" key={i}>
-                  <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="Card image cap" />
+                  <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="" />
                   <div className="card-body">
                     <h3 className="card-title">{el.ctor_name}</h3>
                     <p className="card-text desc">{el.ctor_descr}</p>
