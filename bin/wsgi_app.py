@@ -75,7 +75,9 @@ def upload_ctor():
     if ctors.find_one({'ctor_name': name}) is not None:
         return _send_error('ctor with this name already exists')
 
-    ctor_id = ctors.insert_one({'ctor_name': name, 'ctor_descr': descr}).inserted_id.binary.hex()
+    ctor_id = ctors.insert_one({'ctor_name': name, 'ctor_descr': descr,
+                                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0}
+                               ).inserted_id.binary.hex()
 
     ctor_engine.register_new_ctor(ctor_id, filename)
 
@@ -90,6 +92,7 @@ def list_ctors():
         return {
             'ctor_id': ctor['_id'].binary.hex(),
             'ctor_name': ctor['ctor_name'],
+            'price_eth': ctor.get('price_eth', .0),
             'ctor_descr': ctor['ctor_descr'] if 'ctor_descr' in ctor else ''
          }
 
@@ -129,6 +132,8 @@ def construct():
     if ctor_info is None:
         return _send_error('ctor is not found')
 
+    price_eth = ctor_info.get('price_eth', .0)
+
     ctor_params = ctor_engine.get_ctor_params(ctor_id)
     if isinstance(ctor_params, str):
         return _send_error(ctor_params)
@@ -153,7 +158,7 @@ def construct():
             "errors": errors
         })
 
-    result = ctor_engine.construct(ctor_id, args['fields'])
+    result = ctor_engine.construct(ctor_id, price_eth, args['fields'])
 
     if isinstance(result, dict):
         # error
@@ -168,7 +173,8 @@ def construct():
         'result': 'success',
         'instance_id': instance_id,
         'bin': bin,
-        'source': source
+        'source': source,
+        'price_eth': price_eth
     })
 
 
