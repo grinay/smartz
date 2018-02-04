@@ -30,8 +30,23 @@ class Constructor(object):
             }
         }
 
+        ui_schema = {
+            "signs_count": {
+                "ui:widget": "updown",
+            },
+            "owners": {
+                "items": {
+                    "ui:placeholder": "Valid Ethereum address"
+                },
+                "ui:options": {
+                    "orderable": False
+                }
+            }
+        }
+
         return {
-            'schema': json_schema
+            'schema': json_schema,
+            'ui_schema': ui_schema
         }
 
     def construct(self, fields):

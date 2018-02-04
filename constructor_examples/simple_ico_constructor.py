@@ -4,7 +4,7 @@ class Constructor(object):
     def get_params(self):
         json_schema = {
             "type": "object",
-            "required": ["name", "symbol", "is_burnable", "date_start", "date_end", "rate", "hard_cap",
+            "required": ["name", "symbol", "date_start", "date_end", "rate", "hard_cap",
                          "funds_address"],
             "additionalProperties": False,
 
@@ -29,6 +29,7 @@ class Constructor(object):
 
                 "is_burnable": {
                     "type": "boolean",
+                    "default": False,
                     "title": "Is token burnable?",
                     "description": "Can token holders burn their tokens?"
                 },
@@ -68,8 +69,18 @@ class Constructor(object):
             }
         }
 
+        ui_schema = {
+            "date_start": {
+                "ui:widget": "unixDateTime"
+            },
+            "date_end": {
+                "ui:widget": "unixDateTime"
+            }
+        }
+
         return {
-            "schema": json_schema
+            "schema": json_schema,
+            "ui_schema": ui_schema
         }
 
     def construct(self, fields):
@@ -393,9 +404,9 @@ contract Token is MintableToken %code_is_burnable%
     uint8 public constant decimals = 18;
 
     function Token() public {
-  
+
     }
-    
+
 
 }
 
@@ -410,21 +421,21 @@ contract ICO is Ownable
     uint256 public hard_cap = %hard_cap% ether;
     uint256 public rate = %rate%;
     address public funds_address = address(%funds_address%);
-    
+
     function ICO() public payable {
         token = new Token();
         %payment_code%
     }
-    
+
     function () public payable {
         require(now >= date_start && now <= date_end && collected.add(msg.value)<hard_cap);
         token.mint(msg.sender, msg.value.mul(rate));
         funds_address.transfer(msg.value);
         collected = collected.add(msg.value);
-    
+
     }
 
 }
-    
-    
+
+
     """

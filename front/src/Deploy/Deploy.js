@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
-import Form from "react-jsonschema-form";
+import Form from 'react-jsonschema-form';
+import Datetime from 'react-datetime';
+import moment from 'moment';
 
 import {API_URL} from '../constants';
 import ContractParameter from './ContractParameter';
@@ -35,7 +37,7 @@ class Deploy extends Component {
         this.setState({
           ctor: response.data
         });
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => this.setState({message: error.message}));
   }
@@ -73,19 +75,21 @@ class Deploy extends Component {
       fields: formData
     })
       .then(response => {
-        this.setState({
-          mode: 'source',
-          data: response.data,
-          spinner: false
-        });
+        if (response.data.result == 'error') {
+          this.setState({
+            spinner: false,
+            errors: response.data.errors
+          });
+        } else {
+          this.setState({
+            mode: 'source',
+            data: response.data,
+            spinner: false,
+            errors: null
+          });
+        }
       })
       .catch(error => console.log(error));
-  }
-
-  setValue(name, value) {
-    this.setState({
-      [name]: value
-    });
   }
 
   deploy() {
@@ -93,30 +97,20 @@ class Deploy extends Component {
     this.deployContract(bin);
   }
 
-  getUiSchema() {
-    switch (this.state.ctor.ctor_name) {
-      case 'Multisig Wallet':
-        return {
-          "signs_count": {
-            "ui:widget": "updown",
-          },
-          "owners": {
-            items: {
-              "ui:placeholder": "Valid Ethereum address"
-            },
-            "ui:options": {
-              orderable: false
-            }
-          }
-        };
-      default:
-        return {};
+  getWidgets() {
+    return {
+      unixDateTime: (props) => {
+        return (
+          <Datetime value={moment.unix(props.value)}
+            required={props.required}
+            onChange={(valMoment) => props.onChange(valMoment.format('X'))} />
+        );
+      }
     }
   }
 
   render() {
-    const {ctor, mode, ui_schema} = this.state;
-    const onError = (errors) => console.log("I have", errors.length, "errors to fix");
+    const {ctor, mode, ui_schema, errors, spinner} = this.state;
     return (
       <div>
           <div className="container">
@@ -129,9 +123,10 @@ class Deploy extends Component {
             {!mode && ctor &&
               <Panel header="Deploy step 1 of 2: customize your contract">
                 <Form schema={ctor.schema}
-                  uiSchema={this.getUiSchema()}
+                  uiSchema={ctor.ui_schema}
+                  widgets={this.getWidgets()}
                   onSubmit={this.submit.bind(this)}
-                  onError={onError}
+                  onError={(e) => console.log("I have", e.length, "errors to fix")}
                   showErrorList={false}>
                   <div>
                     <Button bsStyle="success"
@@ -142,7 +137,15 @@ class Deploy extends Component {
                     </Button>
                   </div>
                 </Form>
-                {this.state.spinner &&
+                {errors &&
+                  // TODO: нормальная обработка ошибок с бека
+                  <div className="alert alert-danger" role="alert">
+                    {Object.keys(errors).forEach((errName) => (
+                      <p key={errName}>{errors[errName]}</p>
+                    ))}
+                  </div>
+                }
+                {spinner &&
                   <Spinner
                     text="Preparing your contract, this can take up to 30-40 seconds..."
                     alt="Preparing contract..."
