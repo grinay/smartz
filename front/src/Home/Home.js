@@ -29,6 +29,7 @@ class Home extends Component {
   render() {
     const {isAuthenticated} = this.props.auth;
     const {ctors} = this.state;
+    console.log(ctors);
     return (
       <div className="container">
         <div className="alert alert-danger" role="alert">
@@ -57,9 +58,10 @@ class Home extends Component {
                         Login to deploy
                       </Button>
                     }
-                    {isAuthenticated() &&
+                    {
+                      isAuthenticated() &&
                       <a href={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
-                        Deploy free
+                        {el.price_eth ? <span>Deploy for {el.price_eth} ETH</span> : <span>Deploy free</span>}
                       </a>
                     }
                     <p className="card-text">

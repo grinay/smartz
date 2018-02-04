@@ -8,6 +8,7 @@ import moment from 'moment';
 import {API_URL} from '../constants';
 import Spinner from './Spinner';
 
+import 'react-datetime/css/react-datetime.css';
 import './Deploy.css';
 
 // TODO: refactor this file totally
@@ -103,11 +104,12 @@ class Deploy extends Component {
 
   getWidgets() {
     return {
-      unixDateTime: (props) => {
+      unixTime: (props) => {
         return (
           <Datetime value={moment.unix(props.value)}
             required={props.required}
-            onChange={(valMoment) => props.onChange(valMoment.format('X'))} />
+            onChange={(valueMoment) => props.onChange(valueMoment.format('X'))}
+            closeOnSelect={true} />
         );
       }
     }
@@ -115,6 +117,7 @@ class Deploy extends Component {
 
   render() {
     const {ctor, mode, errors, spinner, instance} = this.state;
+    if (ctor) ctor.price_eth = 0.01;
     return (
       <div>
           <div className="container">
@@ -151,8 +154,8 @@ class Deploy extends Component {
                 }
                 {spinner &&
                   <Spinner
-                    text="Preparing your contract, this can take up to 30-40 seconds..."
-                    alt="Preparing contract..."
+                    text="Preparing code, this can take up to 30-40 seconds..."
+                    alt="Spinner"
                   />
                 }
               </Panel>
@@ -166,15 +169,13 @@ class Deploy extends Component {
                       componentClass="textarea"
                       rows="20"
                       placeholder="If you don't see source code here, perhaps something gone wrong"
-                      defaultValue={instance.source}
-                    />
+                      defaultValue={instance.source} />
                   </FormGroup>
                   <Button
                     bsStyle="success"
                     className="btn-margin"
-                    onClick={this.deploy.bind(this)}
-                  >
-                    Deploy it!
+                    onClick={this.deploy.bind(this)}>
+                    {ctor.price_eth ? <span>Deploy now for {ctor.price_eth} ETH</span> : <span>Deploy now for free</span>}
                   </Button>
                 </form>
               </Panel>

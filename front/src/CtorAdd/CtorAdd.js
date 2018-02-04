@@ -1,32 +1,69 @@
 import React, {Component} from 'react';
-import {FormGroup, FormControl, Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import axios from 'axios';
+import Form from 'react-jsonschema-form';
 
 import {API_URL} from '../constants';
 
+// TODO: success/error message after submit
+
 class CtorAdd extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      file: '',
-      descr: ''
-    };
-  }
-  submit() {
-    axios.post(`${API_URL}/upload_ctor`, {
-      'ctor_name': this.state.name,
-      'ctor_file_name': this.state.file,
-      'ctor_descr': this.state.descr
-    })
+  submit({formData}) {
+    axios.post(`${API_URL}/upload_ctor`, formData)
       .then(response => console.log(response.data.message))
       .catch(error => console.log(error));
-
   }
   handleChange(e) {
     this.setState({[e.target.name]: e.target.files ? e.target.files[0] : e.target.value});
   }
   render() {
+    const formSchema = {
+      "type": "object",
+      "required": ["ctor_name", "ctor_file_name", "ctor_descr", "price_eth"],
+      "additionalProperties": false,
+      "properties": {
+        "ctor_name": {
+          "title": "Public name of the smart contract",
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100,
+          "pattern": "^[a-zA-Z0-9/- ]+$"
+        },
+        "ctor_file_name": {
+          "title": "Name of smart contract .py file",
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100,
+          "pattern": "^[a-zA-Z0-9/-_]+$"
+        },
+        "ctor_descr": {
+          "title": "Description of the smart contract",
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100
+        },
+        "price_eth": {
+          "title": "Price of deploy in ETH",
+          "description": "0 = free contract",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000,
+          "default": 0.1
+        }
+      }
+    };
+    const uiSchema = {
+      "ctor_name": {
+        "ui:placeholder": "My ever best contract"
+      },
+      "ctor_file_name": {
+        "ui:placeholder": "without_extension"
+      },
+      "ctor_descr": {
+        "ui:widget": "textarea",
+        "ui:placeholder": "Some sentences about contract purposes and functions"
+      }
+    };
     return (
       <div className="container">
         <h1>Add a smart contract</h1>
@@ -37,33 +74,16 @@ class CtorAdd extends Component {
             But if you are interested in contributing our project, feel free to <a href="https://t.me/LoungerX">get in touch with us</a>.
           </p>
         </div>
-        <form encType="multipart/form-data">
-          <FormGroup controlId="formBasicText">
-            <FormControl name="name"
-              type="text"
-              value={this.state.name}
-              placeholder="Contract name"
-              onChange={this.handleChange.bind(this)} />
-          </FormGroup>
-          <FormGroup controlId="formBasicText">
-            <FormControl name="file"
-              type="text"
-              value={this.state.file}
-              placeholder="File name"
-              onChange={this.handleChange.bind(this)} />
-          </FormGroup>
-          <FormGroup controlId="formControlsTextarea">
-            <FormControl name="descr"
-              componentClass="textarea"
-              placeholder="Contract description"
-              onChange={this.handleChange.bind(this)} />
-          </FormGroup>
+        <Form schema={formSchema}
+          uiSchema={uiSchema}
+          onSubmit={this.submit.bind(this)}
+          showErrorList={false}>
           <Button bsStyle="primary"
             className="btn-margin"
-            onClick={this.submit.bind(this)}>
+            type="submit">
             Submit a contract
           </Button>
-        </form>
+        </Form>
       </div>
     );
   }
