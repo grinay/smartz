@@ -110,16 +110,10 @@ def get_ctor_params():
     if isinstance(params, str):
         return _send_error(params)
 
-    predefined_schema = json_schema('public/ethereum-sc.json')
-
-    if 'definitions' not in params['schema']:
-        params['schema']['definitions'] = dict()
-    params['schema']['definitions'].update(predefined_schema['definitions'])
-
     return _send_output({
         'ctor_name': ctor_info['ctor_name'],
         'ctor_descr': ctor_info['ctor_descr'] if 'ctor_descr' in ctor_info else '',
-        'schema': params['schema'],
+        'schema': process_ctor_schema(params['schema']),
         'ui_schema': params.get('ui_schema', dict())
     })
 
@@ -139,9 +133,11 @@ def construct():
     if isinstance(ctor_params, str):
         return _send_error(ctor_params)
 
-    validator_cls = validator_for(json_schema)
-    validator_cls.check_schema(json_schema)
-    validator = validator_cls(json_schema)
+    ctor_schema = process_ctor_schema(ctor_params['schema'])
+
+    validator_cls = validator_for(ctor_schema)
+    validator_cls.check_schema(ctor_schema)
+    validator = validator_cls(ctor_schema)
 
     # field -> error string
     errors = dict()
@@ -188,6 +184,40 @@ def get_abi():
         return _send_error('instance is not found')
 
     _send_output(instance_info['abi'])
+
+
+@app.route('/set_instance_address', methods=['GET', 'POST'])
+def set_instance_address():
+    args = _get_input()
+    ctors = db.ctors
+    instances = db.instances
+
+    instance_id = nonempty(args_string(args, 'instance_id'))
+    instance_info = instances.find_one({'_id': ObjectId(instance_id)})
+    if instance_info is None:
+        return _send_error('instance is not found')
+
+    instances.update({'_id': ObjectId(instance_id)}, {
+        '$set': {
+            'address': nonempty(args_string(args, 'address'))
+        }
+    })
+
+    return _send_output({'ok': True})
+
+
+@app.route('/list_instances', methods=['GET', 'POST'])
+def list_instances():
+    args = _get_input()
+    ctors = db.ctors
+    instances = db.instances
+
+    ctor_id = nonempty(args_string(args, 'ctor_id'))
+    ctor_info = ctors.find_one({'_id': ObjectId(ctor_id)})
+    if ctor_info is None:
+        return _send_error('ctor is not found')
+
+    return _send_output([i['_id'].binary.hex() for i in instances.find({'ctor_id': ctor_id})])
 
 
 @app.route('/clearz', methods=['GET'])
@@ -238,6 +268,16 @@ def json_schema(rel_path):
     assert '..' not in rel_path
     with open(os.path.join(ROOT_DIR, 'json-schema', rel_path)) as fh:
         return json.load(fh)
+
+
+def process_ctor_schema(schema):
+    predefined_schema = json_schema('public/ethereum-sc.json')
+
+    if 'definitions' not in schema:
+        schema['definitions'] = dict()
+    schema['definitions'].update(predefined_schema['definitions'])
+
+    return schema
 
 
 if __name__ == '__main__':
