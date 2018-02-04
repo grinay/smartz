@@ -31,8 +31,8 @@ class BaseEngine(object):
     def get_ctor_params(self, id):
         try:
             return self._get_instance(id).get_params()
-        except BaseException:
-            return 'error'
+        except BaseException as exc:
+            return str(exc)
 
     def construct(self, id, fields):
         try:
