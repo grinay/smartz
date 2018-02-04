@@ -33,11 +33,13 @@ services:
     restart: always
     volumes:
       - "backendsocket:/app/sock"
+      - "backenddata:/app/data"
     networks:
       - backendnet
 
 volumes:
   backendsocket:
+  backenddata:
   mongodb:
 
 networks:
