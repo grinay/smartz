@@ -19,7 +19,7 @@ VOLUME [ "/app/sock" ]
 VOLUME [ "/app/data" ]
 RUN adduser -u $UWSGI_UID -S -H uwsgi \
 && apk --no-cache --update upgrade \
-&& apk --no-cache add python3 uwsgi uwsgi-python3
+&& apk --no-cache add nodejs python3 uwsgi uwsgi-python3
 COPY --from=node_stage /build/node_modules node_modules
 COPY --from=python_stage /build/.virtualenv .virtualenv
 COPY docker/backend/entrypoint.sh .
