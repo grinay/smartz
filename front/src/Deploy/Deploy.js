@@ -11,6 +11,8 @@ import Spinner from './Spinner';
 
 import './Deploy.css';
 
+// TODO: refactor this file totally
+
 if (window.Web3) {
   var w3 = new window.Web3(window.web3.currentProvider);
 }
@@ -45,23 +47,18 @@ class Deploy extends Component {
   getContractAddress(tx_hash) {
     w3.eth.getTransactionReceipt(tx_hash, (err, receipt) => {
       if (null == receipt)
-        window.setTimeout(() => { this.getContractAddress(tx_hash) }, 500);
-      else
+        window.setTimeout(() => {this.getContractAddress(tx_hash)}, 500);
+      else {
         this.setState({
           mode: 'done',
           contractAddress: receipt.contractAddress
+        });
+        axios.post(`${API_URL}/set_instance_address`, {
+          'instance_id': this.state.instance.instance_id,
+          'address': receipt.contractAddress
         })
-    });
-  }
-
-  deployContract(bin) {
-    w3.eth.sendTransaction({data: bin}, (err, tx_hash) => {
-      // console.log('tx_hash:', tx_hash);
-      this.setState({
-        mode: 'deploying',
-        tx: tx_hash
-      })
-      this.getContractAddress(tx_hash);
+        .catch(error => console.log(error));
+      }
     });
   }
 
@@ -83,7 +80,7 @@ class Deploy extends Component {
         } else {
           this.setState({
             mode: 'source',
-            data: response.data,
+            instance: response.data,
             spinner: false,
             errors: null
           });
@@ -93,8 +90,16 @@ class Deploy extends Component {
   }
 
   deploy() {
-    const bin = this.state.data.bin;
-    this.deployContract(bin);
+    const {bin} = this.state.instance;
+    const {price_eth} = this.state.ctor;
+    w3.eth.sendTransaction({data: bin, value: w3.toWei(price_eth, 'ether'), gas: 3e6, gasPrice: 10e9}, (err, tx_hash) => {
+      // console.log('tx_hash:', tx_hash);
+      this.setState({
+        mode: 'deploying',
+        tx: tx_hash
+      })
+      this.getContractAddress(tx_hash);
+    });
   }
 
   getWidgets() {
@@ -110,7 +115,7 @@ class Deploy extends Component {
   }
 
   render() {
-    const {ctor, mode, ui_schema, errors, spinner} = this.state;
+    const {ctor, mode, errors, spinner, instance} = this.state;
     return (
       <div>
           <div className="container">
@@ -162,7 +167,7 @@ class Deploy extends Component {
                       componentClass="textarea"
                       rows="20"
                       placeholder="If you don't see source code here, perhaps something gone wrong"
-                      defaultValue={this.state.data.source}
+                      defaultValue={instance.source}
                     />
                   </FormGroup>
                   <Button
