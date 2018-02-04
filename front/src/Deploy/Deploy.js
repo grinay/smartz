@@ -117,7 +117,7 @@ class Deploy extends Component {
             {ctor &&
               <div>
                 <h1>{ctor.ctor_name}</h1>
-                <p className="desc">Contract description. Lorem ipsum vestibulum sed turpis curabitur magna, consequat aliquet bibendum in amet aliquet, leo nam iaculis posuere vitae.</p>
+                <p className="desc">{ctor.ctor_descr}</p>
               </div>
             }
             {!mode && ctor &&

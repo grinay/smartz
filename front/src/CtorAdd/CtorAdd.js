@@ -9,13 +9,15 @@ class CtorAdd extends Component {
     super(props);
     this.state = {
       name: '',
-      file: ''
+      file: '',
+      descr: ''
     };
   }
   submit() {
     axios.post(`${API_URL}/upload_ctor`, {
       'ctor_name': this.state.name,
-      'ctor_file_name': this.state.file
+      'ctor_file_name': this.state.file,
+      'ctor_descr': this.state.descr
     })
       .then(response => console.log(response.data.message))
       .catch(error => console.log(error));
@@ -36,33 +38,29 @@ class CtorAdd extends Component {
           </p>
         </div>
         <form encType="multipart/form-data">
-          <FormGroup
-            controlId="formBasicText"
-          >
-            <FormControl
-              name="name"
+          <FormGroup controlId="formBasicText">
+            <FormControl name="name"
               type="text"
               value={this.state.name}
-              placeholder="Enter contract name"
-              onChange={this.handleChange.bind(this)}
-            />
+              placeholder="Contract name"
+              onChange={this.handleChange.bind(this)} />
           </FormGroup>
-          <FormGroup
-            controlId="formBasicText"
-          >
-            <FormControl
-              name="file"
+          <FormGroup controlId="formBasicText">
+            <FormControl name="file"
               type="text"
               value={this.state.file}
-              placeholder="Enter file name (or what?)"
-              onChange={this.handleChange.bind(this)}
-            />
+              placeholder="File name"
+              onChange={this.handleChange.bind(this)} />
           </FormGroup>
-          <Button
-            bsStyle="primary"
+          <FormGroup controlId="formControlsTextarea">
+            <FormControl name="descr"
+              componentClass="textarea"
+              placeholder="Contract description"
+              onChange={this.handleChange.bind(this)} />
+          </FormGroup>
+          <Button bsStyle="primary"
             className="btn-margin"
-            onClick={this.submit.bind(this)}
-          >
+            onClick={this.submit.bind(this)}>
             Submit a contract
           </Button>
         </form>

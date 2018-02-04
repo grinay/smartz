@@ -47,7 +47,7 @@ class Home extends Component {
                   <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="Card image cap" />
                   <div className="card-body">
                     <h3 className="card-title">{el.ctor_name}</h3>
-                    <p className="card-text desc">Contract description. Lorem ipsum vestibulum sed turpis curabitur magna, consequat aliquet bibendum in amet aliquet, leo nam iaculis posuere vitae.</p>
+                    <p className="card-text desc">{el.ctor_descr}</p>
                     {!isAuthenticated() &&
                       <Button
                         bsStyle="primary"
