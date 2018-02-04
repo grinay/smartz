@@ -34,7 +34,7 @@ class BaseEngine(object):
         except BaseException as exc:
             return str(exc)
 
-    def construct(self, id, fields):
+    def construct(self, id, price_eth, fields):
         try:
             res = self._get_instance(id).construct(fields)
             if isinstance(res, dict):#todo this code smells
@@ -55,8 +55,12 @@ class BaseEngine(object):
                     raise Exception
 
                 source, contract_name = res
-                source = source.replace('%payment_code%',
-                               'address(0xaacf78f8e1fbdcf7d941e80ff8b817be1f054af4).transfer(10 finney);')
+                if price_eth:
+                    wei = int(price_eth * 1e18)
+                    source = source.replace('%payment_code%',
+                                'address(0xaacf78f8e1fbdcf7d941e80ff8b817be1f054af4).transfer({} wei);'.format(wei))
+                else:
+                    source = source.replace('%payment_code%', '')
 
                 if re.findall('[^a-zA-Z0-9]', contract_name):
                     raise Exception

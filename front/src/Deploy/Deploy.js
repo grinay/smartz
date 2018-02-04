@@ -54,8 +54,8 @@ class Deploy extends Component {
     });
   }
 
-  deployContract(bin) {
-    w3.eth.sendTransaction({data: bin}, (err, tx_hash) => {
+  deployContract(bin, price_eth) {
+    w3.eth.sendTransaction({data: bin, value: w3.toWei(price_eth, 'ether')}, (err, tx_hash) => {
       // console.log('tx_hash:', tx_hash);
       this.setState({
         mode: 'deploying',
@@ -94,7 +94,7 @@ class Deploy extends Component {
 
   deploy() {
     const bin = this.state.data.bin;
-    this.deployContract(bin);
+    this.deployContract(bin, this.state.data.price_eth);
   }
 
   getWidgets() {
