@@ -117,7 +117,6 @@ class Deploy extends Component {
 
   render() {
     const {ctor, mode, errors, spinner, instance} = this.state;
-    if (ctor) ctor.price_eth = 0.01;
     return (
       <div>
           <div className="container">

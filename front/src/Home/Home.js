@@ -18,18 +18,15 @@ class Home extends Component {
     this.props.auth.login();
   }
   getCtors() {
-    // console.log(API_URL);
     axios.get(`${API_URL}/list_ctors`)
       .then(response => {
         this.setState({ctors: response.data});
-        console.log(response.data);
       })
       .catch(error => this.setState({message: error.message}));
   }
   render() {
     const {isAuthenticated} = this.props.auth;
     const {ctors} = this.state;
-    console.log(ctors);
     return (
       <div className="container">
         <div className="alert alert-danger" role="alert">

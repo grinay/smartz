@@ -9,6 +9,7 @@ import Auth from 'Auth/Auth';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/Deploy';
 import CtorAdd from 'CtorAdd/CtorAdd';
+import Dashboard from 'Dashboard/Dashboard';
 import history from './history';
 
 const auth = new Auth();
@@ -37,6 +38,9 @@ export const makeMainRoutes = () => {
         )} />
         <Route path="/ctor-add" render={(props) => (
           auth.isAuthenticated() ? <CtorAdd auth={auth} {...props} /> : <Redirect to="/"/>
+        )} />
+        <Route path="/dashboard" render={(props) => (
+          auth.isAuthenticated() ? <Dashboard auth={auth} {...props} /> : <Redirect to="/"/>
         )} />
         <Route path="/" render={(props) => <Footer auth={auth} {...props} />} />
       </div>
