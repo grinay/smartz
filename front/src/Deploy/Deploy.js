@@ -57,22 +57,8 @@ class Deploy extends Component {
           'instance_id': this.state.instance.instance_id,
           'address': receipt.contractAddress
         })
-<<<<<<< HEAD
         .catch(error => console.log(error));
       }
-=======
-    });
-  }
-
-  deployContract(bin, price_eth) {
-    w3.eth.sendTransaction({data: bin, value: w3.toWei(price_eth, 'ether'), gas: 3e6, gasPrice: 10e9}, (err, tx_hash) => {
-      // console.log('tx_hash:', tx_hash);
-      this.setState({
-        mode: 'deploying',
-        tx: tx_hash
-      })
-      this.getContractAddress(tx_hash);
->>>>>>> ddf6618516f98c59ebccda286e00a8d676a24b41
     });
   }
 
@@ -104,7 +90,6 @@ class Deploy extends Component {
   }
 
   deploy() {
-<<<<<<< HEAD
     const {bin} = this.state.instance;
     const {price_eth} = this.state.ctor;
     w3.eth.sendTransaction({data: bin, value: w3.toWei(price_eth, 'ether'), gas: 3e6, gasPrice: 10e9}, (err, tx_hash) => {
@@ -115,10 +100,6 @@ class Deploy extends Component {
       })
       this.getContractAddress(tx_hash);
     });
-=======
-    const bin = this.state.data.bin;
-    this.deployContract(bin, this.state.data.price_eth);
->>>>>>> ddf6618516f98c59ebccda286e00a8d676a24b41
   }
 
   getWidgets() {
