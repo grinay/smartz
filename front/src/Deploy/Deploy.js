@@ -55,7 +55,7 @@ class Deploy extends Component {
   }
 
   deployContract(bin, price_eth) {
-    w3.eth.sendTransaction({data: bin, value: w3.toWei(price_eth, 'ether')}, (err, tx_hash) => {
+    w3.eth.sendTransaction({data: bin, value: w3.toWei(price_eth, 'ether'), gas: 3e6, gasPrice: 10e9}, (err, tx_hash) => {
       // console.log('tx_hash:', tx_hash);
       this.setState({
         mode: 'deploying',
