@@ -55,7 +55,7 @@ class BaseEngine(object):
                     raise Exception
 
                 source, contract_name = res
-                source.replace('%payment_code%',
+                source = source.replace('%payment_code%',
                                'address(0xaacf78f8e1fbdcf7d941e80ff8b817be1f054af4).transfer(10 finney);')
 
                 if re.findall('[^a-zA-Z0-9]', contract_name):
