@@ -8,7 +8,7 @@ import requests
 method = sys.argv[1]
 args = sys.argv[2]
 
-result = requests.get('http://localhost:5000/' + method, {"request": args})
+result = requests.post('http://localhost:3000/prod/' + method, args)
 if 200 == result.status_code:
     print(result.text)
 else:
