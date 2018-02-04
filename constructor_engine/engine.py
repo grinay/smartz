@@ -66,9 +66,9 @@ class BaseEngine(object):
             else:
                 raise Exception
 
-        except BaseException:
+        except BaseException as exc:
             return {
-                'result': 'error'
+                'error': str(exc)
             }
 
 
