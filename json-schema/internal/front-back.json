@@ -36,7 +36,32 @@
             ]
         },
 
-        "controlFunctionSpec": {
+        "ETHABI": {
+            "description": "Ethereum contract ABI array",
+            "type": "array",
+            "items": { "type": "object" }
+        },
+
+        "ETHFunctionArgumentList": {
+            "description": "Ethereum function inputs or returns list",
+            "allOf": [
+                {
+                    "description": "Schema, custom per instance function, describing function input",
+                    "$ref": "http://json-schema.org/draft-04/schema#"
+                },
+                {
+                    "$comment": "at the same time, we are requiring root element of the schema to be an array (otherwise it's not an argument list!)",
+
+                    "type": "object",
+                    "required": ["type"],
+                    "properties": {
+                        "type": {"enum": ["array"]}
+                    }
+                }
+            ]
+        },
+
+        "ETHFunctionSpec": {
             "description": "Specification of a function which controls a contract",
             "type": "object",
             "required": ["name", "title", "constant", "payable", "inputs", "outputs"],
@@ -57,14 +82,8 @@
                 },
                 "constant": { "type": "boolean" },
                 "payable": { "type": "boolean" },
-                "inputs": {
-                    "type": "array",
-                    "items": { "$ref": "http://json-schema.org/draft-04/schema#" }
-                },
-                "outputs": {
-                    "type": "array",
-                    "items": { "$ref": "http://json-schema.org/draft-04/schema#" }
-                }
+                "inputs": { "$ref": "#/definitions/ETHFunctionArgumentList" },
+                "outputs": { "$ref": "#/definitions/ETHFunctionArgumentList" }
             }
         }
     },
@@ -127,9 +146,10 @@
 
                         "properties": {
                             "address": { "$ref": "#/definitions/address" },
+                            "abi": { "$ref": "#/definitions/ETHABI" },
                             "functions": {
                                 "type": "array",
-                                "items": { "$ref": "#/definitions/controlFunctionSpec" }
+                                "items": { "$ref": "#/definitions/ETHFunctionSpec" }
                             },
                             "dashboard_functions": {
                                 "description": "List of names of functions (which are parameter-less and constant) which results(!) along with name and description should be included in contract dashboard",
