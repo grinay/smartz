@@ -40,9 +40,9 @@ script:
 - ecs-cli push --region $AWS_REGION  --ecs-profile travis  $AWS_REGISTRY/smartz_backend:$TRAVIS_BUILD_NUMBER
 
 after_success:
-- if [ "$TRAVIS_BRANCH" == "master" ]; then
-  ecs-cli compose --ecs-profile travis --project-name smartz-staging --file docker/esc/staging-service.yml --cluster-config travis  --verbose service up;
-  fi
+#- if [ "$TRAVIS_BRANCH" == "master" ]; then
+- ecs-cli compose --ecs-profile travis --project-name smartz-staging --file docker/esc/staging-service.yml --cluster-config travis  --verbose service up;
+#  fi
 
 notifications:
   email:
