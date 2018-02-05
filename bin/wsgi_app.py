@@ -116,6 +116,7 @@ def get_ctor_params():
     return _send_output({
         'ctor_name': ctor_info['ctor_name'],
         'ctor_descr': ctor_info['ctor_descr'] if 'ctor_descr' in ctor_info else '',
+        'price_eth': ctor_info.get('price_eth', .0),
         'schema': process_ctor_schema(params['schema']),
         'ui_schema': params.get('ui_schema', dict())
     })
