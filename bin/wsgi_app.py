@@ -62,7 +62,7 @@ def upload_ctor():
     filename = tempfile.mktemp('ctor')
 
     uploaded_filename = args['ctor_file_name']
-    if not re.findall('^[a-zA-Z][a-zA-Z_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
+    if not re.findall('^[a-zA-Z][a-zA-Z0-9_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
         raise ValueError()
     uploaded_filename = "{}.py".format(uploaded_filename)
 
