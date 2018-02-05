@@ -33,7 +33,7 @@ class Constructor(object):
 
                 "decimals": {
                     "title": "Decimals",
-                    "description": "Token decimals",
+                    "description": "Token decimals (0..18)",
                     "type": "integer",
                     "minimum": 0,
                     "maximum": 18
@@ -118,7 +118,7 @@ class Constructor(object):
                 totalSupply_ = totalSupply_.add(premintAmount);
                 balances[msg.sender] = balances[msg.sender].add(premintAmount);
                 Transfer(address(0), msg.sender, premintAmount);
-            
+
             """.format(fields['premint'])
 
 
@@ -559,8 +559,8 @@ contract Token is StandardToken %parents_code% {
     string public constant symbol = '%symbol%';
     uint8 public constant decimals = %decimals%;
 
-    function Token() 
-        public 
+    function Token()
+        public
         %constructors_code%
     {
         %constructor_inner_code%

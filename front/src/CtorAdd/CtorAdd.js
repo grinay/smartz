@@ -23,24 +23,24 @@ class CtorAdd extends Component {
       "additionalProperties": false,
       "properties": {
         "ctor_name": {
-          "title": "Public name of the smart contract",
+          "title": "Public name of the smart contract (3..100 chars)",
           "type": "string",
           "minLength": 3,
           "maxLength": 100,
-          "pattern": "^[a-zA-Z0-9/- ]+$"
+          "pattern": "^[a-zA-Z0-9_ -]+$"
         },
         "ctor_file_name": {
-          "title": "Name of smart contract .py file",
+          "title": "Name of smart contract .py file (3..100 chars)",
           "type": "string",
           "minLength": 3,
           "maxLength": 100,
-          "pattern": "^[a-zA-Z0-9/-_]+$"
+          "pattern": "^[a-zA-Z0-9_-]+$"
         },
         "ctor_descr": {
-          "title": "Description of the smart contract",
+          "title": "Description of the smart contract (3..300 chars)",
           "type": "string",
           "minLength": 3,
-          "maxLength": 100
+          "maxLength": 300
         },
         "price_eth": {
           "title": "Price of deploy in ETH",

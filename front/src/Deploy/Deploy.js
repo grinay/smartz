@@ -128,28 +128,30 @@ class Deploy extends Component {
             }
             {!mode && ctor &&
               <Panel header="Deploy step 1 of 2: customize your contract">
-                <Form schema={ctor.schema}
-                  uiSchema={ctor.ui_schema}
-                  widgets={this.getWidgets()}
-                  onSubmit={this.submit.bind(this)}
-                  onError={(e) => console.log("I have", e.length, "errors to fix")}
-                  showErrorList={false}>
-                  <div>
-                    <Button bsStyle="success"
-                      className="btn-margin"
-                      type="submit"
-                      disabled={this.state.spinner}>
-                      Proceed to step 2
-                    </Button>
-                  </div>
-                </Form>
-                {errors &&
-                  // TODO: нормальная обработка ошибок с бека
-                  <div className="alert alert-danger" role="alert">
-                    {Object.keys(errors).forEach((errName) => (
-                      <p key={errName}>{errors[errName]}</p>
-                    ))}
-                  </div>
+                {!spinner &&
+                  <Form schema={ctor.schema}
+                    uiSchema={ctor.ui_schema}
+                    widgets={this.getWidgets()}
+                    onSubmit={this.submit.bind(this)}
+                    onError={(e) => console.log("I have", e.length, "errors to fix")}
+                    showErrorList={false}>
+                    <div>
+                      <Button bsStyle="success"
+                        className="btn-margin"
+                        type="submit"
+                        disabled={this.state.spinner}>
+                        Proceed to step 2
+                      </Button>
+                      {errors &&
+                        // TODO: нормальная обработка ошибок с бека
+                        <div className="alert alert-danger" role="alert">
+                          {Object.keys(errors).forEach((errName) => (
+                            <p key={errName}>{errors[errName]}</p>
+                          ))}
+                        </div>
+                      }
+                    </div>
+                  </Form>
                 }
                 {spinner &&
                   <Spinner
