@@ -36,12 +36,12 @@ class Constructor(object):
 
                 "date_start": {
                     "title": "Start date",
-                    "description": "ICO start date",
+                    "description": "ICO start date and time (UTC)",
                     "$ref": "#/definitions/unixTime"
                 },
                 "date_end": {
                     "title": "End date",
-                    "description": "ICO end date",
+                    "description": "ICO end date and time (UTC)",
                     "$ref": "#/definitions/unixTime"
                 },
 
@@ -71,10 +71,10 @@ class Constructor(object):
 
         ui_schema = {
             "date_start": {
-                "ui:widget": "unixDateTime"
+                "ui:widget": "unixTime"
             },
             "date_end": {
-                "ui:widget": "unixDateTime"
+                "ui:widget": "unixTime"
             }
         }
 

@@ -18,11 +18,9 @@ class Home extends Component {
     this.props.auth.login();
   }
   getCtors() {
-    console.log(API_URL);
     axios.get(`${API_URL}/list_ctors`)
       .then(response => {
         this.setState({ctors: response.data});
-        console.log(response.data);
       })
       .catch(error => this.setState({message: error.message}));
   }
@@ -44,7 +42,7 @@ class Home extends Component {
             <div className="contracts-cards">
               {ctors.map((el, i) => (
                 <div className="card" key={i}>
-                  <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="Card image cap" />
+                  <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="" />
                   <div className="card-body">
                     <h3 className="card-title">{el.ctor_name}</h3>
                     <p className="card-text desc">{el.ctor_descr}</p>
@@ -57,9 +55,10 @@ class Home extends Component {
                         Login to deploy
                       </Button>
                     }
-                    {isAuthenticated() &&
+                    {
+                      isAuthenticated() &&
                       <a href={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
-                        Deploy free
+                        {el.price_eth ? <span>Deploy for {el.price_eth} ETH</span> : <span>Deploy free</span>}
                       </a>
                     }
                     <p className="card-text">

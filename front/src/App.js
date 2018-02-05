@@ -16,8 +16,7 @@ class App extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props.auth;
-
+    const {isAuthenticated} = this.props.auth;
     return (
       <div>
         <Navbar fluid>
@@ -40,18 +39,16 @@ class App extends Component {
               )}
               {isAuthenticated() && (
                 <span>
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.goTo.bind(this, 'profile')}
-                  >
+                  <Button bsStyle="primary" className="btn-margin"
+                    onClick={this.goTo.bind(this, 'dashboard')}>
+                    My contracts
+                  </Button>
+                  <Button bsStyle="primary" className="btn-margin"
+                    onClick={this.goTo.bind(this, 'profile')}>
                     Profile
                   </Button>
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.logout.bind(this)}
-                  >
+                  <Button bsStyle="primary" className="btn-margin"
+                    onClick={this.logout.bind(this)}>
                     Log Out
                   </Button>
                 </span>

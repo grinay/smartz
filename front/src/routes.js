@@ -9,7 +9,7 @@ import Auth from 'Auth/Auth';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/Deploy';
 import CtorAdd from 'CtorAdd/CtorAdd';
-import Eth from 'Eth/Eth';
+import Dashboard from 'Dashboard/Dashboard';
 import history from './history';
 
 const auth = new Auth();
@@ -26,7 +26,6 @@ export const makeMainRoutes = () => {
       <div>
         <Route path="/" render={(props) => <App auth={auth} {...props} />} />
         <Route exact path="/" render={(props) => <Home auth={auth} {...props} />} />
-        <Route path="/eth" render={(props) => <Eth auth={auth} {...props} />} />
         <Route path="/callback" render={(props) => {
           handleAuthentication(props);
           return <Callback {...props} />
@@ -39,6 +38,9 @@ export const makeMainRoutes = () => {
         )} />
         <Route path="/ctor-add" render={(props) => (
           auth.isAuthenticated() ? <CtorAdd auth={auth} {...props} /> : <Redirect to="/"/>
+        )} />
+        <Route path="/dashboard" render={(props) => (
+          auth.isAuthenticated() ? <Dashboard auth={auth} {...props} /> : <Redirect to="/"/>
         )} />
         <Route path="/" render={(props) => <Footer auth={auth} {...props} />} />
       </div>

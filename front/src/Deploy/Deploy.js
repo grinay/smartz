@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
-import {Panel, ControlLabel, Glyphicon, Button, FormGroup, FormControl} from 'react-bootstrap';
+import {Panel, ControlLabel, Button, FormGroup, FormControl} from 'react-bootstrap';
 import axios from 'axios';
 import Form from 'react-jsonschema-form';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 
 import {API_URL} from '../constants';
-import ContractParameter from './ContractParameter';
 import Spinner from './Spinner';
 
+import 'react-datetime/css/react-datetime.css';
 import './Deploy.css';
+
+// TODO: refactor this file totally
 
 if (window.Web3) {
   var w3 = new window.Web3(window.web3.currentProvider);
@@ -45,23 +47,18 @@ class Deploy extends Component {
   getContractAddress(tx_hash) {
     w3.eth.getTransactionReceipt(tx_hash, (err, receipt) => {
       if (null == receipt)
-        window.setTimeout(() => { this.getContractAddress(tx_hash) }, 500);
-      else
+        window.setTimeout(() => {this.getContractAddress(tx_hash)}, 500);
+      else {
         this.setState({
           mode: 'done',
           contractAddress: receipt.contractAddress
+        });
+        axios.post(`${API_URL}/set_instance_address`, {
+          'instance_id': this.state.instance.instance_id,
+          'address': receipt.contractAddress
         })
-    });
-  }
-
-  deployContract(bin, price_eth) {
-    w3.eth.sendTransaction({data: bin, value: w3.toWei(price_eth, 'ether'), gas: 3e6, gasPrice: 10e9}, (err, tx_hash) => {
-      // console.log('tx_hash:', tx_hash);
-      this.setState({
-        mode: 'deploying',
-        tx: tx_hash
-      })
-      this.getContractAddress(tx_hash);
+        .catch(error => console.log(error));
+      }
     });
   }
 
@@ -75,7 +72,7 @@ class Deploy extends Component {
       fields: formData
     })
       .then(response => {
-        if (response.data.result == 'error') {
+        if (response.data.result === 'error') {
           this.setState({
             spinner: false,
             errors: response.data.errors
@@ -83,7 +80,7 @@ class Deploy extends Component {
         } else {
           this.setState({
             mode: 'source',
-            data: response.data,
+            instance: response.data,
             spinner: false,
             errors: null
           });
@@ -93,24 +90,33 @@ class Deploy extends Component {
   }
 
   deploy() {
-    const bin = this.state.data.bin;
-    this.deployContract(bin, this.state.data.price_eth);
+    const {bin} = this.state.instance;
+    const {price_eth} = this.state.ctor;
+    w3.eth.sendTransaction({data: bin, value: w3.toWei(price_eth, 'ether'), gas: 3e6, gasPrice: 10e9}, (err, tx_hash) => {
+      // console.log('tx_hash:', tx_hash);
+      this.setState({
+        mode: 'deploying',
+        tx: tx_hash
+      })
+      this.getContractAddress(tx_hash);
+    });
   }
 
   getWidgets() {
     return {
-      unixDateTime: (props) => {
+      unixTime: (props) => {
         return (
           <Datetime value={moment.unix(props.value)}
             required={props.required}
-            onChange={(valMoment) => props.onChange(valMoment.format('X'))} />
+            onChange={(valueMoment) => props.onChange(valueMoment.format('X'))}
+            closeOnSelect={true} />
         );
       }
     }
   }
 
   render() {
-    const {ctor, mode, ui_schema, errors, spinner} = this.state;
+    const {ctor, mode, errors, spinner, instance} = this.state;
     return (
       <div>
           <div className="container">
@@ -147,8 +153,8 @@ class Deploy extends Component {
                 }
                 {spinner &&
                   <Spinner
-                    text="Preparing your contract, this can take up to 30-40 seconds..."
-                    alt="Preparing contract..."
+                    text="Preparing code, this can take up to 30-40 seconds..."
+                    alt="Spinner"
                   />
                 }
               </Panel>
@@ -162,15 +168,13 @@ class Deploy extends Component {
                       componentClass="textarea"
                       rows="20"
                       placeholder="If you don't see source code here, perhaps something gone wrong"
-                      defaultValue={this.state.data.source}
-                    />
+                      defaultValue={instance.source} />
                   </FormGroup>
                   <Button
                     bsStyle="success"
                     className="btn-margin"
-                    onClick={this.deploy.bind(this)}
-                  >
-                    Deploy it!
+                    onClick={this.deploy.bind(this)}>
+                    {ctor.price_eth ? <span>Deploy now for {ctor.price_eth} ETH</span> : <span>Deploy now for free</span>}
                   </Button>
                 </form>
               </Panel>
