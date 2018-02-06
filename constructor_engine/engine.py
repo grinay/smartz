@@ -3,11 +3,15 @@ import re
 import shutil
 import os.path
 import tempfile
+import json
 
 import types
 import importlib.machinery
 
 import subprocess
+
+from smartz.eth.contracts import abi_arguments2schema
+from smartz.json_schema import assert_conforms2definition, load_schema
 
 
 class BaseEngine(object):
@@ -35,7 +39,6 @@ class BaseEngine(object):
             return str(exc)
 
     def construct(self, id, price_eth, fields):
-        try:
             res = self._get_instance(id).construct(fields)
             if isinstance(res, dict):#todo this code smells
                 if 'result' not in res:
@@ -66,15 +69,16 @@ class BaseEngine(object):
                     raise Exception
 
                 bin, abi = self._compile(source, contract_name)
-                return [bin, source, abi]
+                abi = json.loads(abi)
+                return {
+                    'bin': bin,
+                    'source': source,
+                    'abi': abi,
+                    'function_specs': self.__class__._create_function_specs(abi)
+                }
+
             else:
                 raise Exception
-
-        except BaseException as exc:
-            return {
-                'error': str(exc)
-            }
-
 
 
     @abc.abstractmethod
@@ -121,6 +125,23 @@ class BaseEngine(object):
                 abi = f.read()
 
             return bin, abi
+
+    @staticmethod
+    def _create_function_specs(abi):
+        def fn2spec(fn):
+            spec = dict()
+            for attr in ("name", "constant", "payable"):
+                spec[attr] = fn[attr]
+
+            spec['title'] = fn['name']    # to be extended by contract author
+            spec['inputs'] = abi_arguments2schema(fn['inputs'])
+            spec['outputs'] = abi_arguments2schema(fn['outputs'])
+
+            assert_conforms2definition(spec, load_schema('internal/front-back.json'), 'ETHFunctionSpec')
+
+            return spec
+
+        return [fn2spec(fn) for fn in abi if fn['type'] == 'function']
 
 
 class SimpleStorageEngine(BaseEngine):

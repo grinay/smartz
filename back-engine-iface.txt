@@ -12,7 +12,13 @@ class EngineInterface(object):
         } or 'error'
 
     def construct(self, ctor_id, {field1: value1, ...})
-        returns [bin, source, abi]
+        returns
+        {
+            bin: ...,
+            source: ...,
+            abi: ...,
+            function_specs: ...
+        }
         or
         {
             result: 'error',

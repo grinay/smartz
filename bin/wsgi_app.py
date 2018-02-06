@@ -5,7 +5,6 @@ import os
 import json
 import tempfile
 from shutil import copy2
-from functools import lru_cache
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -20,6 +19,7 @@ os.makedirs(DATA_DIR, exist_ok=True)
 sys.path.append(os.path.join(ROOT_DIR, 'pythonlib'))
 sys.path.append(os.path.join(ROOT_DIR, 'constructor_engine'))
 
+from smartz.json_schema import load_schema, add_definitions, assert_conforms2schema_part
 from engine import SimpleStorageEngine
 
 
@@ -161,36 +161,49 @@ def construct():
 
     result = ctor_engine.construct(ctor_id, price_eth, args['fields'])
 
-    if isinstance(result, dict):
+    assert isinstance(result, dict)
+    if 'error' in result:
         # error
         return _send_output(result)
 
     # success
-    [bin, source, abi] = result
-    instance_id = instances.insert_one({'abi': abi, 'source': source, 'bin': bin, 'ctor_id': ctor_id}
+    instance_id = instances.insert_one({'abi': json.dumps(result['abi']), 'source': result['source'], 'bin': result['bin'],
+                                        'function_specs': json.dumps(result['function_specs']),
+                                        'ctor_id': ctor_id}
                                        ).inserted_id.binary.hex()
 
     return _send_output({
         'result': 'success',
         'instance_id': instance_id,
-        'bin': bin,
-        'source': source,
+        'bin': result['bin'],
+        'source': result['source'],
         'price_eth': price_eth
     })
 
 
-@app.route('/get_abi', methods=['GET', 'POST'])
-def get_abi():
+@app.route('/prepare_instance_control_interface', methods=['GET', 'POST'])
+def prepare_instance_control_interface():
     args = _get_input()
-    ctors = db.ctors
     instances = db.instances
 
     instance_id = nonempty(args_string(args, 'instance_id'))
     instance_info = instances.find_one({'_id': ObjectId(instance_id)})
     if instance_info is None:
         return _send_error('instance is not found')
+    if 'address' not in instance_info:
+        return _send_error('instance is not yet deployed')
 
-    _send_output(instance_info['abi'])
+    output = {
+        "address": instance_info['address'],
+        "abi": json.loads(instance_info['abi']),
+        "functions": json.loads(instance_info['function_specs']),
+        # FIXME
+        "dashboard_functions": []
+    }
+    assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
+                                'rpc_calls/prepare_instance_control_interface/output')
+
+    return _send_output(output)
 
 
 @app.route('/set_instance_address', methods=['GET', 'POST'])
@@ -270,21 +283,8 @@ def nonempty(v):
     return v
 
 
-@lru_cache(256)
-def json_schema(rel_path):
-    assert '..' not in rel_path
-    with open(os.path.join(ROOT_DIR, 'json-schema', rel_path)) as fh:
-        return json.load(fh)
-
-
 def process_ctor_schema(schema):
-    predefined_schema = json_schema('public/ethereum-sc.json')
-
-    if 'definitions' not in schema:
-        schema['definitions'] = dict()
-    schema['definitions'].update(predefined_schema['definitions'])
-
-    return schema
+    return add_definitions(schema, load_schema('public/ethereum-sc.json'))
 
 
 if __name__ == '__main__':

@@ -141,7 +141,7 @@
                     { "$ref": "#/definitions/resultError" },
                     {
                         "type": "object",
-                        "required": ["address", "functions", "dashboard_functions"],
+                        "required": ["address", "abi", "functions", "dashboard_functions"],
                         "additionalProperties": false,
 
                         "properties": {
