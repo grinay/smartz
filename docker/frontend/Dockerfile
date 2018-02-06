@@ -15,6 +15,7 @@ WORKDIR /app
 VOLUME [ "/app/sock" ]
 EXPOSE 80
 COPY --from=node_stage /static/build .
+COPY docker/frontend/robots-staging.txt robots.txt
 COPY docker/frontend/nginx.conf /etc/nginx/nginx.conf
 COPY docker/frontend/entrypoint.sh .
 RUN apk --no-cache --update upgrade \
