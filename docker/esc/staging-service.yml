@@ -2,7 +2,7 @@ version: '2'
 services:
 
   mongo:
-    mem_limit: 0.5GB
+    mem_limit: 0.4GB
     image: docker.io/mongo:latest
     restart: always
     volumes:

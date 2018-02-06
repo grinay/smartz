@@ -11,4 +11,4 @@ chown -R uwsgi:uwsgi /app
 --pythonpath /app/bin \
 --mount /backend=wsgi_app:app \
 --die-on-term \
---processes 1
+--processes 2

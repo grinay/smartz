@@ -1,0 +1,21 @@
+version: '2'
+services:
+
+  mongo_dump:
+    image: mongo:latest
+    networks:
+      - backendnet
+    command: su -c 'mongodump --host mongo --out /backup/$$(date +\%y-\%m-\%d_\%H:\%M:\%S)'
+    volumes:
+      - "./backupdb:/backup"
+
+  mongo_restore:
+    image: mongo:latest
+    networks:
+      - backendnet
+    command: su -c 'mongorestore --host mongo /restore'
+    volumes:
+      - "./restoredb:/restore"
+
+networks:
+  backendnet:
