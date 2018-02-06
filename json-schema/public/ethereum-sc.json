@@ -39,10 +39,7 @@
             "minItems": 2,
             "maxItems": 2,
             "items": [
-                {
-                    "type": "integer",
-                    "minimum": 0
-                },
+                { "$ref": "#/definitions/uint" },
                 {}
             ]
         },
@@ -50,6 +47,22 @@
         "uintMapping": {
             "type": "array",
             "items": { "$ref": "#/definitions/uintMappingEntry" }
+        },
+
+        "uint256": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 78,
+            "pattern": "^[0-9]+$"
+        },
+
+        "uint": {
+            "$ref": "#/definitions/uint256"
+        },
+
+        "bytes32": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
         }
     }
 }
