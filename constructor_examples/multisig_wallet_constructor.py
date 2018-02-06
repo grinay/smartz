@@ -24,7 +24,7 @@ class Constructor(object):
                     "description": "Addresses (signatures) of owners of a new wallet",
                     "type": "array",
                     "items": {"$ref": "#/definitions/address"},
-                    "minItems": 2,
+                    "minItems": 1,
                     "maxItems": self.__class__.MAX_OWNERS
                 }
             }
@@ -68,7 +68,13 @@ class Constructor(object):
                      .replace('%signs_count%', str(fields['signs_count']))
 
 
-        return source, "SimpleMultiSigWallet"
+        return {
+            'result': "success",
+            'source': source,
+            'contract_name': "SimpleMultiSigWallet",
+            'dashboard_functions': ['m_numOwners', 'm_multiOwnedRequired']
+        }
+
 
     # language=Solidity
     _TEMPLATE = """

@@ -167,8 +167,10 @@ def construct():
         return _send_output(result)
 
     # success
-    instance_id = instances.insert_one({'abi': json.dumps(result['abi']), 'source': result['source'], 'bin': result['bin'],
+    instance_id = instances.insert_one({'abi': json.dumps(result['abi']), 'source': result['source'],
+                                        'bin': result['bin'],
                                         'function_specs': json.dumps(result['function_specs']),
+                                        'dashboard_functions': result['dashboard_functions'],
                                         'ctor_id': ctor_id}
                                        ).inserted_id.binary.hex()
 
@@ -197,8 +199,7 @@ def prepare_instance_control_interface():
         "address": instance_info['address'],
         "abi": json.loads(instance_info['abi']),
         "functions": json.loads(instance_info['function_specs']),
-        # FIXME
-        "dashboard_functions": []
+        "dashboard_functions": instance_info['dashboard_functions']
     }
     assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
                                 'rpc_calls/prepare_instance_control_interface/output')

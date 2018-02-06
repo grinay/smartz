@@ -39,46 +39,34 @@ class BaseEngine(object):
             return str(exc)
 
     def construct(self, id, price_eth, fields):
-            res = self._get_instance(id).construct(fields)
-            if isinstance(res, dict):#todo this code smells
-                if 'result' not in res:
-                    raise Exception
-                if len(res) > 1:
-                    if 'errors' not in res:
-                        raise Exception
-                    if not isinstance(res['errors'], dict):
-                        raise Exception
+        res = self._get_instance(id).construct(fields)
 
-                    #todo more checks of fields in errors
-                    #params = self.get_ctor_params(id)
+        assert res['result'] in ('success', 'error')
+        if 'error' == res['result']:
+            return res
 
-                return res
-            elif type(res) in [list, tuple]:
-                if len(res) != 2:
-                    raise Exception
+        source, contract_name = res['source'], res['contract_name']
 
-                source, contract_name = res
-                if price_eth:
-                    wei = int(price_eth * 1e18)
-                    source = source.replace('%payment_code%',
-                                'address(0xaacf78f8e1fbdcf7d941e80ff8b817be1f054af4).transfer({} wei);'.format(wei))
-                else:
-                    source = source.replace('%payment_code%', '')
+        if price_eth:
+            wei = int(price_eth * 1e18)
+            source = source.replace('%payment_code%',
+                        'address(0xaacf78f8e1fbdcf7d941e80ff8b817be1f054af4).transfer({} wei);'.format(wei))
+        else:
+            source = source.replace('%payment_code%', '')
 
-                if re.findall('[^a-zA-Z0-9]', contract_name):
-                    raise Exception
+        if re.findall('[^a-zA-Z0-9]', contract_name):
+            raise Exception
 
-                bin, abi = self._compile(source, contract_name)
-                abi = json.loads(abi)
-                return {
-                    'bin': bin,
-                    'source': source,
-                    'abi': abi,
-                    'function_specs': self.__class__._create_function_specs(abi)
-                }
+        bin, abi = self._compile(source, contract_name)
+        abi = json.loads(abi)
 
-            else:
-                raise Exception
+        return {
+            'bin': bin,
+            'source': source,
+            'abi': abi,
+            'function_specs': self.__class__._create_function_specs(abi),
+            'dashboard_functions': res['dashboard_functions']
+        }
 
 
     @abc.abstractmethod

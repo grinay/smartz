@@ -136,7 +136,13 @@ class Constructor(object):
             .replace('%constructors_code%', constructors_code) \
             .replace('%constructor_inner_code%', constructor_inner_code)
 
-        return source, "Token"
+        return {
+            'result': "success",
+            'source': source,
+            'contract_name': "Token",
+            'dashboard_functions': ['symbol', 'totalSupply']
+        }
+
 
     # language=Solidity
     _TEMPLATE = """

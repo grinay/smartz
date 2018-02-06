@@ -99,9 +99,12 @@ class Constructor(object):
             .replace('%total%', str(total_shares))\
             .replace('%shareholders_code%', shareholders_code)
 
-        return source, "EquityToken"
-
-
+        return {
+            'result': "success",
+            'source': source,
+            'contract_name': "EquityToken",
+            'dashboard_functions': ['symbol', 'totalSupply']
+        }
 
 
     _TEMPLATE = """

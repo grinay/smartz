@@ -105,7 +105,13 @@ class Constructor(object):
             .replace('%rate%', str(fields['rate'])) \
             .replace('%funds_address%', fields['funds_address'])
 
-        return source, "ICO"
+        return {
+            'result': "success",
+            'source': source,
+            'contract_name': "ICO",
+            'dashboard_functions': ['collected', 'totalTokens', 'daysRemaining']
+        }
+
 
     # language=Solidity
     _TEMPLATE = """
@@ -432,9 +438,18 @@ contract ICO is Ownable
         token.mint(msg.sender, msg.value.mul(rate));
         funds_address.transfer(msg.value);
         collected = collected.add(msg.value);
-
     }
 
+    function totalTokens() public view returns (uint) {
+        return token.totalSupply();
+    }
+
+    function daysRemaining() public view returns (uint) {
+        if (now > date_end) {
+            return 0;
+        }
+        return date_end.sub(now).div(1 days);
+    }
 }
 
 
