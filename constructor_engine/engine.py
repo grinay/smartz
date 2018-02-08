@@ -10,8 +10,7 @@ import importlib.machinery
 
 import subprocess
 
-from smartz.eth.contracts import abi_arguments2schema
-from smartz.json_schema import assert_conforms2definition, load_schema
+from constructor_engine.api import ConstructorInstance
 
 
 class BaseEngine(object):
@@ -39,7 +38,9 @@ class BaseEngine(object):
             return str(exc)
 
     def construct(self, id, price_eth, fields):
-        res = self._get_instance(id).construct(fields)
+        instance = self._get_instance(id)
+
+        res = instance.construct(fields)
 
         assert res['result'] in ('success', 'error')
         if 'error' == res['result']:
@@ -60,12 +61,14 @@ class BaseEngine(object):
         bin, abi = self._compile(source, contract_name)
         abi = json.loads(abi)
 
+        post_construct_info = instance.post_construct(fields, abi)
+
         return {
             'bin': bin,
             'source': source,
             'abi': abi,
-            'function_specs': self.__class__._create_function_specs(abi),
-            'dashboard_functions': res['dashboard_functions']
+            'function_specs': post_construct_info['function_specs'],
+            'dashboard_functions': post_construct_info['dashboard_functions']
         }
 
 
@@ -114,23 +117,6 @@ class BaseEngine(object):
 
             return bin, abi
 
-    @staticmethod
-    def _create_function_specs(abi):
-        def fn2spec(fn):
-            spec = dict()
-            for attr in ("name", "constant", "payable"):
-                spec[attr] = fn[attr]
-
-            spec['title'] = fn['name']    # to be extended by contract author
-            spec['inputs'] = abi_arguments2schema(fn['inputs'])
-            spec['outputs'] = abi_arguments2schema(fn['outputs'])
-
-            assert_conforms2definition(spec, load_schema('internal/front-back.json'), 'ETHFunctionSpec')
-
-            return spec
-
-        return [fn2spec(fn) for fn in abi if fn['type'] == 'function']
-
 
 class SimpleStorageEngine(BaseEngine):
     """
@@ -159,9 +145,10 @@ class SimpleStorageEngine(BaseEngine):
         mod = types.ModuleType(loader.name)
         loader.exec_module(mod)
 
-        return getattr(mod, self.CONSTRUCTOR_CLASS)()
+        instance = getattr(mod, self.CONSTRUCTOR_CLASS)()
+        assert isinstance(instance, ConstructorInstance)
 
-
+        return instance
 
     def _get_filename(self, id):
         """returns filename of constructor by id"""

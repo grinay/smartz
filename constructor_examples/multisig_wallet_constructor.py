@@ -1,5 +1,9 @@
 
-class Constructor(object):
+from constructor_engine.api import ConstructorInstance
+from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
+
+
+class Constructor(ConstructorInstance):
 
     MAX_OWNERS = 250
 
@@ -67,11 +71,36 @@ class Constructor(object):
                      .replace('%owners%', signers_txt) \
                      .replace('%signs_count%', str(fields['signs_count']))
 
-
         return {
             'result': "success",
             'source': source,
-            'contract_name': "SimpleMultiSigWallet",
+            'contract_name': "SimpleMultiSigWallet"
+        }
+
+    def post_construct(self, fields, abi_array):
+
+        function_titles = {
+            'm_numOwners': {
+                'title': 'Number of owners',
+                'description': 'How many owners are added to the contract',
+            },
+
+            'changeRequirement': {
+                'title': 'Change quorum requirement',
+                'description': 'Change number of signatures required to perform actions on this wallet '
+                               '(withdraw money, change owners, etc)',
+                'inputs': [{
+                    'title': 'new requirement',
+                    'description': 'new number of signatures required to perform actions on this wallet'
+                }]
+            },
+
+            # TODO WRITE ME
+        }
+
+        return {
+            'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
+
             'dashboard_functions': ['m_numOwners', 'm_multiOwnedRequired']
         }
 

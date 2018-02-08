@@ -1,5 +1,9 @@
 
-class Constructor(object):
+from constructor_engine.api import ConstructorInstance
+from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
+
+
+class Constructor(ConstructorInstance):
 
     def get_params(self):
         json_schema = {
@@ -108,7 +112,18 @@ class Constructor(object):
         return {
             'result': "success",
             'source': source,
-            'contract_name': "ICO",
+            'contract_name': "ICO"
+        }
+
+    def post_construct(self, fields, abi_array):
+
+        function_titles = {
+            # TODO WRITE ME
+        }
+
+        return {
+            'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
+
             'dashboard_functions': ['collected', 'totalTokens', 'daysRemaining']
         }
 
