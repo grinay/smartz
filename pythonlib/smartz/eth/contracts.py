@@ -97,11 +97,13 @@ def merge_function_titles2specs(spec_array, titles_info):
         set_title(spec, fn_titles)
 
         for io in ('inputs', 'outputs'):
-            if io in fn_titles:
-                for (idx, arg_titles) in enumerate(fn_titles[io]):
-                    if idx >= len(spec[io]):
-                        break
+            if not (io in fn_titles and 'items' in spec[io]):
+                continue
 
-                    set_title(spec[io]["items"][idx], arg_titles)
+            for (idx, arg_titles) in enumerate(fn_titles[io]):
+                if idx >= len(spec[io]["items"]):
+                    break
+
+                set_title(spec[io]["items"][idx], arg_titles)
 
     return spec_array
