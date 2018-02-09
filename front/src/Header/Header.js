@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Navbar, Button} from 'react-bootstrap';
-import './App.css';
 
-class App extends Component {
+import './Header.css';
+
+class Header extends Component {
   goTo(route) {
     this.props.history.replace(`/${route}`)
   }
@@ -23,8 +24,10 @@ class App extends Component {
           <Navbar.Header>
             <div className="logo">
               <Navbar.Brand>
-                <a href="/">SMARTZ</a>
-                <span className="version">v0.1 pre-alpha</span>
+                <a href="/">
+                  <img src={require('./i/smartz-logo.jpg')} />
+                </a>
+                <span className="version">v0.3 alpha</span>
               </Navbar.Brand>
             </div>
             <div className="nav-buttons">
@@ -61,4 +64,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Header;
