@@ -29,6 +29,16 @@ class Home extends Component {
     const {ctors} = this.state;
     return (
       <div className="container">
+        {!window.Web3 &&
+          <div className="alert alert-success" role="alert">
+            <h4 className="alert-heading">Install MetaMask!</h4>
+            <p>
+              <b>You need MetaMask browser plugin to work with Smartz platform</b><br />
+              MetaMask is available for Chrome, Opera and Firefox browsers. <a href="https://metamask.io/">Get it here</a>, it's free!
+            </p>
+          </div>
+        }
+
         <div className="alert alert-danger" role="alert">
           <h4 className="alert-heading">Attention!</h4>
           <p>
@@ -36,13 +46,14 @@ class Home extends Component {
             We are in very early stage of development. Use it only for test and informational purposes with Rinkeby network chosen in your MetaMask client. Authors are not responsible for any possible loses in result of using our service.
           </p>
         </div>
+
         <div>
           <h4>Available smart contracts:</h4>
           {ctors &&
             <div className="contracts-cards">
               {ctors.map((el, i) => (
                 <div className="card" key={i}>
-                  <img className="card-img-top" src={`http://lorempixel.com/400/100/?${i}`} alt="" />
+                  <img className="card-img-top" src={`https://lorempixel.com/400/100/?${i}`} alt="" />
                   <div className="card-body">
                     <h3 className="card-title">{el.ctor_name}</h3>
                     <p className="card-text desc">{el.ctor_descr}</p>
@@ -64,7 +75,7 @@ class Home extends Component {
                     <p className="card-text">
                       <small className="text-muted">
                         Author: Vladimir Khramov<br />
-                        Uploaded 21 dec 2017
+                        Updated: 11 feb 2018
                       </small>
                     </p>
                   </div>
@@ -72,9 +83,11 @@ class Home extends Component {
               ))}
             </div>
           }
+
           {!ctors &&
             <p>Contracts are loading</p>
           }
+
           <br /><br />
           <h4>If you are developer</h4>
           <p>You can <a href="/ctor-add">add a smart contract</a> to our platform.</p>
