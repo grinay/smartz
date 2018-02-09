@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {find} from 'lodash';
 
-import {API_URL} from '../constants';
+import api from 'Api/Api';
+import {processControlForm, processResult} from 'Eth/Eth';
+
+import './Dashboard.css';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       auth: props.auth.isAuthenticated(),
       ctors: []
@@ -14,55 +17,150 @@ class Dashboard extends Component {
   }
 
   componentWillMount() {
-    if (this.state.auth) {
-      axios.get(`${API_URL}/list_ctors`)
-        .then(response => {
-          this.setState({
-            ctors: response.data
+    // Get contracts
+    api.get('/list_ctors')
+
+      .then(response => {
+        this.setState({ctors: response.data});
+        const getInstancesPromises = [];
+
+        response.data.forEach((ctor) => {
+          getInstancesPromises.push(
+            api.post('/list_instances', {'ctor_id': ctor.ctor_id})
+          );
+        });
+
+        return Promise.all(getInstancesPromises);
+      })
+
+      // Get instances of every contract
+      .then(rawInstances => {
+        const ctors = [...this.state.ctors];
+        const getInstDetailsPromises = [];
+
+        rawInstances.forEach((rawInst, i) => {
+          const instances = [];
+
+          rawInst.data.forEach(instId => {
+            instances.push({instance_id: instId});
+
+            getInstDetailsPromises.push(
+              api.post('/prepare_instance_control_interface', {'instance_id': instId})
+            );
+          })
+
+          ctors[i].instances = instances;
+        });
+
+        this.setState({ctors});
+        return Promise.all(getInstDetailsPromises);
+      })
+
+      // Get details of every instance
+      .then(instDetails => {
+        const ctors = [...this.state.ctors];
+
+        ctors.forEach(ctor => {
+          ctor.instances.forEach(inst => {
+            inst.details = instDetails.shift().data;
           });
-          response.data.forEach((ctor) => {
-            axios.post(`${API_URL}/list_instances`, {
-              'ctor_id': ctor.ctor_id
-            })
-              .then(res2 => {
-                const ctors = [...this.state.ctors];
-                find(ctors, (obj) => (
-                  obj.ctor_id === ctor.ctor_id
-                )).instances = res2.data;
-                this.setState({ctors});
-              })
-              .catch(error => this.setState({message: error.message}));
+        });
+
+        this.setState({ctors});
+        return ctors;
+      })
+
+      // Get data from blockchain
+      .then(ctors => {
+        ctors.forEach(ctor => {
+          ctor.instances.forEach(inst => {
+            const {abi, address, dashboard_functions, functions} = inst.details;
+
+            if (dashboard_functions) {
+              inst.dashboard_values = {};
+
+              dashboard_functions.forEach(dFunc => {
+                const fSpec = find(functions, {name: dFunc});
+                processControlForm(abi, fSpec, [], address,
+                                  (error, result) => {
+                  if(!error) {
+                    const res = processResult(result);
+                    inst.dashboard_values[dFunc] = res;
+                    this.setState({ctors});
+                  } else
+                    console.error(error);
+                });
+              });
+            }
           });
-        })
-        .catch(error => this.setState({message: error.message}));
-    }
+        });
+      })
+
+      .catch(error => this.setState({message: error.message}));
   }
 
   render() {
     const {message, ctors} = this.state;
-    console.log(ctors);
+
     return (
-      <div className="container">
+      <div className="container dashboard">
+
         <h1>My smart contracts</h1>
-        <h3>Deployed instances</h3>
         {message &&
           <div className="alert alert-danger" role="alert">
             <p>{message}</p>
           </div>
         }
-        {ctors &&
-          <ul>
-            {ctors.map((ctor, i) => (
-              ctor.instances && ctor.instances.map((inst, j) => (
-                <li key={i+j}>
-                  <a href={`./instance/${inst}`}>
-                    {`"${ctor.ctor_name}", instance ${inst}`}
-                  </a>
-                </li>
+
+        {ctors && ctors.map((ctor, i) => (
+          <div key={i}>
+            {(ctor.instances && ctor.instances.length > 0) &&
+              ctor.instances.map((inst, j) => (
+
+                <div className="card" key={j}>
+                  <div className="card-body">
+                    <h3 className="card-title">{ctor.ctor_name}</h3>
+
+                    {inst.details &&
+                      <p className="card-text desc">
+                        {inst.details.address || inst.details.error}
+                      </p>
+                    }
+
+                    {inst.details && inst.dashboard_values &&
+                      <div className="dashboard-functions">
+                        {inst.details.dashboard_functions.map((func, k) => (
+                          <div key={k}>
+                            <span>{func}</span><br />
+                            {inst.dashboard_values[func]}
+                          </div>
+                        ))}
+                      </div>
+                    }
+
+                    {inst.details && inst.details.address &&
+                      <div className="manage">
+                        <a href={`./instances/${inst.instance_id}`}>
+                          Manage contract
+                        </a>
+                      </div>
+                    }
+
+                    {inst.details && inst.details.error &&
+                      <div className="manage">
+                        <a href={`#`}>
+                          Deploy now
+                        </a> [in development]
+                      </div>
+                    }
+
+                  </div>
+                </div>
+
               ))
-            ))}
-          </ul>
-        }
+            }
+          </div>
+        ))}
       </div>
     );
   }

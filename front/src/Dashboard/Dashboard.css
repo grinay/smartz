@@ -1,0 +1,21 @@
+.dashboard .card {
+  margin-bottom: 15px;
+}
+
+.dashboard-functions {
+  display: flex;
+}
+
+.dashboard-functions div {
+  font-size: 160%;
+  color: #666;
+  flex-grow: 1;
+}
+
+.dashboard-functions div span {
+  font-size: 50%;
+}
+
+.dashboard .manage {
+  margin-top: 15px;
+}
