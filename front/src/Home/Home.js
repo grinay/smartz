@@ -29,7 +29,7 @@ class Home extends Component {
     const {ctors} = this.state;
     return (
       <div className="container">
-        {!window.Web3 &&
+        {window.Web3 &&
           <div className="alert alert-success" role="alert">
             <h4 className="alert-heading">Install MetaMask!</h4>
             <p>

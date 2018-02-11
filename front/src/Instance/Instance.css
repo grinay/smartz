@@ -1,0 +1,41 @@
+.instance-functions {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.instance-functions .card {
+  max-width: 30rem;
+  margin: 0 15px 15px 0;
+  padding-bottom: 35px;
+  position: relative;
+}
+
+.instance-functions.view-functions .card {
+  padding-bottom: 0;
+  position: inherit;
+}
+
+.instance-functions .card .submit-button {
+  position: absolute;
+  bottom: 15px;
+}
+
+.instance-functions .card .form-group {
+  margin-bottom: 5px;
+}
+
+.instance-functions .card .func-value {
+  font-size: 160%;
+}
+
+.instance-functions .desc {
+  color: #999;
+}
+
+.instance-functions .no-desc {
+  color: #eecccc;
+}
+
+.instance-functions button {
+  margin-bottom: 0;
+}

@@ -25,7 +25,7 @@ class Header extends Component {
             <div className="logo">
               <Navbar.Brand>
                 <a href="/">
-                  <img src={require('./i/smartz-logo.jpg')} />
+                  <img src={require('./i/smartz-logo.jpg')} alt="Smartz logo" />
                 </a>
                 <span className="version">v0.3 alpha</span>
               </Navbar.Brand>
