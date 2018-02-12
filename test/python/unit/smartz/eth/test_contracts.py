@@ -50,16 +50,26 @@ class TestABI2Schema(unittest.TestCase):
             {
               "name": "_y",
               "type": "bytes32"
+            },
+            {
+              "name": "_z",
+              "type": "bool"
+            },
+            {
+              "name": "_w",
+              "type": "string"
             }
         ]), {
             "type": "array",
-            "minItems": 4,
-            "maxItems": 4,
+            "minItems": 6,
+            "maxItems": 6,
             "items": [
                 {"$ref": "#/definitions/address", "title": "_to"},
                 {"$ref": "#/definitions/uint256", "title": "_amount"},
                 {"$ref": "#/definitions/uint", "title": "_x"},
                 {"$ref": "#/definitions/bytes32", "title": "_y"},
+                {"type": "boolean", "default": False, "title": "_z"},
+                {"type": "string", "title": "_w"},
             ]
         })
 

@@ -45,7 +45,7 @@ class Dashboard extends Component {
             instances.push({instance_id: instId});
 
             getInstDetailsPromises.push(
-              api(this.props.auth).post('/prepare_instance_control_interface', {'instance_id': instId})
+              api(this.props.auth).post('/get_instance_details', {'instance_id': instId})
             );
           })
 

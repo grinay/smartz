@@ -19,9 +19,14 @@ def abi_arguments2schema(abi_args_array):
                 "default": False
             }
 
-        elif abi_type in ('address', 'uint', 'uint256', 'bytes32'):
+        elif abi_type in ('address', 'uint', 'uint256', 'bytes32', 'uint8', 'uint16', 'uint32'):
             result = {
                 "$ref": "#/definitions/" + abi_type
+            }
+
+        elif 'string' == abi_type:
+            result = {
+                "type": "string"
             }
 
         elif abi_type.endswith('[]'):
@@ -31,7 +36,7 @@ def abi_arguments2schema(abi_args_array):
             }
 
         else:
-            raise NotImplementedError()
+            raise NotImplementedError('ABI type is not supported: {}'.format(abi_type))
 
         if abi_name is not None:
             result['title'] = abi_name

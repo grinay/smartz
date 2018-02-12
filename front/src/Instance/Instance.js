@@ -16,7 +16,7 @@ class Instance extends Component {
   }
 
   componentWillMount() {
-    api(this.props.auth).post('/prepare_instance_control_interface', {'instance_id': this.state.instanceId})
+    api(this.props.auth).post('/get_instance_details', {'instance_id': this.state.instanceId})
 
       .then(response => {
         this.setState({instance: response.data});
