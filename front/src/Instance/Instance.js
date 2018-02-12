@@ -16,7 +16,7 @@ class Instance extends Component {
   }
 
   componentWillMount() {
-    api.post('/prepare_instance_control_interface', {'instance_id': this.state.instanceId})
+    api(this.props.auth).post('/prepare_instance_control_interface', {'instance_id': this.state.instanceId})
 
       .then(response => {
         this.setState({instance: response.data});
@@ -29,6 +29,7 @@ class Instance extends Component {
             processControlForm(instance.abi, func, [], instance.address,
                               (error, result) => {
               if(!error) {
+                // console.log(result);
                 instance.functions[i].value = processResult(result);
                 this.setState({instance});
               } else

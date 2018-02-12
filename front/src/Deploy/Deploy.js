@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Button, FormGroup, FormControl} from 'react-bootstrap';
-import axios from 'axios';
 import Form from 'react-jsonschema-form';
 
-import {API_URL} from '../constants';
+import api from 'Api/Api';
 import Spinner from './Spinner';
 import FormWidgets from 'FormWidgets/FormWidgets';
 
@@ -30,7 +29,7 @@ class Deploy extends Component {
   }
 
   getCtorParams() {
-    axios.post(`${API_URL}/get_ctor_params`, {
+    api(this.props.auth).post(`/get_ctor_params`, {
       'ctor_id': this.state.ctorId
     })
       .then(response => {
@@ -51,7 +50,7 @@ class Deploy extends Component {
           mode: 'done',
           contractAddress: receipt.contractAddress
         });
-        axios.post(`${API_URL}/set_instance_address`, {
+        api(this.props.auth).post(`/set_instance_address`, {
           'instance_id': this.state.instance.instance_id,
           'address': receipt.contractAddress
         })
@@ -65,7 +64,7 @@ class Deploy extends Component {
     this.setState({
       spinner: true
     });
-    axios.post(`${API_URL}/construct`, {
+    api(this.props.auth).post(`/construct`, {
       'ctor_id': this.state.ctorId,
       fields: formData
     })

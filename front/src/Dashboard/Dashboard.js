@@ -18,7 +18,7 @@ class Dashboard extends Component {
 
   componentWillMount() {
     // Get contracts
-    api.get('/list_ctors')
+    api(this.props.auth).get('/list_ctors')
 
       .then(response => {
         this.setState({ctors: response.data});
@@ -26,7 +26,7 @@ class Dashboard extends Component {
 
         response.data.forEach((ctor) => {
           getInstancesPromises.push(
-            api.post('/list_instances', {'ctor_id': ctor.ctor_id})
+            api(this.props.auth).post('/list_instances', {'ctor_id': ctor.ctor_id})
           );
         });
 
@@ -45,7 +45,7 @@ class Dashboard extends Component {
             instances.push({instance_id: instId});
 
             getInstDetailsPromises.push(
-              api.post('/prepare_instance_control_interface', {'instance_id': instId})
+              api(this.props.auth).post('/prepare_instance_control_interface', {'instance_id': instId})
             );
           })
 

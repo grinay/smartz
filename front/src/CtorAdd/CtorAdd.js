@@ -1,21 +1,22 @@
 import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
-import axios from 'axios';
 import Form from 'react-jsonschema-form';
 
-import {API_URL} from '../constants';
+import api from 'Api/Api';
 
 // TODO: success/error message after submit
 
 class CtorAdd extends Component {
   submit({formData}) {
-    axios.post(`${API_URL}/upload_ctor`, formData)
+    api(this.props.auth).post(`/upload_ctor`, formData)
       .then(response => console.log(response.data.message))
       .catch(error => console.log(error));
   }
+
   handleChange(e) {
     this.setState({[e.target.name]: e.target.files ? e.target.files[0] : e.target.value});
   }
+
   render() {
     const formSchema = {
       "type": "object",

@@ -4,14 +4,10 @@ import './Profile.css';
 
 class Profile extends Component {
   componentWillMount() {
-    this.setState({profile: {}})
-    const {userProfile, getProfile} = this.props.auth;
-    if (userProfile)
-      this.setState({profile: userProfile});
-    else
-      getProfile((err, profile) => {
-        this.setState({profile});
-      });
+    this.setState({profile: {}});
+    this.props.auth.getProfile((err, profile) => {
+      this.setState({profile});
+    });
   }
   render() {
     const {profile} = this.state;
