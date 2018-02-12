@@ -10,6 +10,7 @@ import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/Deploy';
 import CtorAdd from 'CtorAdd/CtorAdd';
 import Dashboard from 'Dashboard/Dashboard';
+import Instance from 'Instance/Instance';
 import history from './history';
 
 const auth = new Auth();
@@ -41,6 +42,9 @@ export const makeMainRoutes = () => {
         )} />
         <Route path="/dashboard" render={(props) => (
           auth.isAuthenticated() ? <Dashboard auth={auth} {...props} /> : <Redirect to="/"/>
+        )} />
+        <Route path="/instance/:id" render={(props) => (
+          auth.isAuthenticated() ? <Instance auth={auth} {...props} /> : <Redirect to="/"/>
         )} />
         <Route path="/" render={(props) => <Footer auth={auth} {...props} />} />
       </div>

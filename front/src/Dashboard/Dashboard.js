@@ -72,10 +72,9 @@ class Dashboard extends Component {
 
       // Get data from blockchain
       .then(ctors => {
-        ctors.forEach(ctor => {
-          ctor.instances.forEach(inst => {
+        ctors.forEach((ctor, i) => {
+          ctor.instances.forEach((inst, j) => {
             const {abi, address, dashboard_functions, functions} = inst.details;
-
             if (dashboard_functions) {
               inst.dashboard_values = {};
 
@@ -140,7 +139,7 @@ class Dashboard extends Component {
 
                     {inst.details && inst.details.address &&
                       <div className="manage">
-                        <a href={`./instances/${inst.instance_id}`}>
+                        <a href={`./instance/${inst.instance_id}`}>
                           Manage contract
                         </a>
                       </div>
@@ -148,7 +147,7 @@ class Dashboard extends Component {
 
                     {inst.details && inst.details.error &&
                       <div className="manage">
-                        <a href={`#`}>
+                        <a href={`/deploy/${inst.instance_id}`}>
                           Deploy now
                         </a> [in development]
                       </div>
