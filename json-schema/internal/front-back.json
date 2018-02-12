@@ -125,7 +125,7 @@
             }
         },
 
-        "prepare_instance_control_interface": {
+        "get_instance_details": {
             "description": "Returns data and metadata necessary to control deployed contract",
 
             "input": {
@@ -141,10 +141,12 @@
                     { "$ref": "#/definitions/resultError" },
                     {
                         "type": "object",
-                        "required": ["address", "abi", "functions", "dashboard_functions"],
+                        "required": ["instance_id", "ctor_id", "address", "abi", "functions", "dashboard_functions"],
                         "additionalProperties": false,
 
                         "properties": {
+                            "instance_id": { "$ref": "#/definitions/ObjectIdHex" },
+                            "ctor_id": { "$ref": "#/definitions/ObjectIdHex" },
                             "address": { "$ref": "#/definitions/address" },
                             "abi": { "$ref": "#/definitions/ETHABI" },
                             "functions": {

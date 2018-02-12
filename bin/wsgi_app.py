@@ -183,8 +183,8 @@ def construct():
     })
 
 
-@app.route('/prepare_instance_control_interface', methods=['GET', 'POST'])
-def prepare_instance_control_interface():
+@app.route('/get_instance_details', methods=['GET', 'POST'])
+def get_instance_details():
     args = _get_input()
     instances = db.instances
 
@@ -196,13 +196,15 @@ def prepare_instance_control_interface():
         return _send_error('instance is not yet deployed')
 
     output = {
+        "instance_id": instance_id,
+        "ctor_id": instance_info['ctor_id'],
         "address": instance_info['address'],
         "abi": json.loads(instance_info['abi']),
         "functions": json.loads(instance_info['function_specs']),
         "dashboard_functions": instance_info['dashboard_functions']
     }
     assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
-                                'rpc_calls/prepare_instance_control_interface/output')
+                                'rpc_calls/get_instance_details/output')
 
     return _send_output(output)
 

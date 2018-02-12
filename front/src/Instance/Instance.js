@@ -16,7 +16,7 @@ class Instance extends Component {
   }
 
   componentWillMount() {
-    api.post('/prepare_instance_control_interface', {'instance_id': this.state.instanceId})
+    api.post('/get_instance_details', {'instance_id': this.state.instanceId})
 
       .then(response => {
         this.setState({instance: response.data});
