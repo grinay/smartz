@@ -94,12 +94,13 @@
 
             "input": {
                 "type": "object",
-                "required": ["instance_id", "address"],
+                "required": ["instance_id", "address", "network_id"],
                 "additionalProperties": false,
 
                 "properties": {
                     "instance_id": { "$ref": "#/definitions/ObjectIdHex" },
-                    "address": { "$ref": "#/definitions/address" }
+                    "address": { "$ref": "#/definitions/address" },
+                    "network_id": {"type": "integer", "minimum": 0}
                 }
             },
             "output": { "$ref": "#/definitions/simpleResult" }
@@ -141,13 +142,15 @@
                     { "$ref": "#/definitions/resultError" },
                     {
                         "type": "object",
-                        "required": ["instance_id", "ctor_id", "address", "abi", "functions", "dashboard_functions"],
+                        "required": ["instance_id", "instance_title", "ctor_id", "address", "network_id", "abi", "functions", "dashboard_functions"],
                         "additionalProperties": false,
 
                         "properties": {
                             "instance_id": { "$ref": "#/definitions/ObjectIdHex" },
+                            "instance_title": {"type": "string"},
                             "ctor_id": { "$ref": "#/definitions/ObjectIdHex" },
                             "address": { "$ref": "#/definitions/address" },
+                            "network_id": {"type": "integer", "minimum": 0},
                             "abi": { "$ref": "#/definitions/ETHABI" },
                             "functions": {
                                 "type": "array",

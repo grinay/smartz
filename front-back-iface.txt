@@ -48,6 +48,7 @@ REST, GET|POST
     input:
         {
             ctor_id: 4,
+            instance_title: 'бабушкина копилка',
             # valid fields according to ctor's json-schema
             fields: {
                 hard_cap: 1000,
