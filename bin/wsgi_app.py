@@ -133,6 +133,8 @@ def construct():
     if ctor_info is None:
         return _send_error('ctor is not found')
 
+    instance_title = nonempty(args_string(args, 'instance_title'))
+
     price_eth = ctor_info.get('price_eth', .0)
 
     ctor_params = ctor_engine.get_ctor_params(ctor_id)
@@ -171,7 +173,8 @@ def construct():
                                         'bin': result['bin'],
                                         'function_specs': json.dumps(result['function_specs']),
                                         'dashboard_functions': result['dashboard_functions'],
-                                        'ctor_id': ctor_id}
+                                        'ctor_id': ctor_id,
+                                        'instance_title': instance_title}
                                        ).inserted_id.binary.hex()
 
     return _send_output({
@@ -197,6 +200,8 @@ def get_instance_details():
 
     output = {
         "instance_id": instance_id,
+        "instance_title": instance_info['instance_title'],
+        "network_id": instance_info['network_id'],
         "ctor_id": instance_info['ctor_id'],
         "address": instance_info['address'],
         "abi": json.loads(instance_info['abi']),
@@ -222,7 +227,8 @@ def set_instance_address():
 
     instances.update({'_id': ObjectId(instance_id)}, {
         '$set': {
-            'address': nonempty(args_string(args, 'address'))
+            'address': nonempty(args_string(args, 'address')),
+            'network_id': args_int(args, 'network_id')
         }
     })
 
@@ -276,6 +282,15 @@ def args_string(args, key):
         raise TypeError()
     if len(v) > 32*1024:
         raise ValueError()
+
+    return v
+
+
+def args_int(args, key):
+    v = args[key]
+
+    if not isinstance(v, int):
+        raise TypeError()
 
     return v
 
