@@ -83,44 +83,37 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
 export const processResult = res => {
   if (res.isBigNumber) {
     return res.toNumber();
+
   } else {
     return res;
   }
 };
 
 export const getNetworkName = netId => {
-  switch (netId) {
+  switch (netId.toString()) {
     case "1":
       return "Mainnet";
-      break;
     case "3":
       return "Ropsten";
-      break;
     case "4":
       return "Rinkeby";
-      break;
     case "42":
       return "Kovan";
-      break;
     default:
       return "Error! Unknown or deprecated network";
   }
 };
 
 export const getNetworkEtherscanAddress = netId => {
-  switch (netId) {
+  switch (netId.toString()) {
     case "1":
       return "https://etherscan.io";
-      break;
     case "3":
       return "https://ropsten.etherscan.io";
-      break;
     case "4":
       return "https://rinkeby.etherscan.io";
-      break;
     case "42":
       return "https://kovan.etherscan.io";
-      break;
     default:
       return "Error! Unknown or deprecated network";
   }

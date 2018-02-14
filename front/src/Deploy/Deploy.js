@@ -3,7 +3,7 @@ import {Panel, ControlLabel, Button, FormGroup, FormControl} from 'react-bootstr
 import Form from 'react-jsonschema-form';
 
 import api from 'Api/Api';
-import Spinner from './Spinner';
+import Spinner from 'Spinner/Spinner';
 import FormWidgets from 'FormWidgets/FormWidgets';
 import {getNetworkEtherscanAddress} from 'Eth/Eth';
 

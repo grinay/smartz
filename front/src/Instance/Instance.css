@@ -47,3 +47,7 @@
 .instance-functions button {
   margin-bottom: 0;
 }
+
+.instance-functions .card .tx {
+  margin-bottom: 10px;
+}

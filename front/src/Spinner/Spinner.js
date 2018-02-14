@@ -3,12 +3,12 @@ import spinner from 'Callback/loading.svg';
 
 class Spinner extends Component {
   render() {
-    const {text, alt} = this.props;
+    const {text, alt, width} = this.props;
 
     return (
       <div className="spinner">
         <p>{text}</p>
-        <img src={spinner} alt={alt} />
+        <img src={spinner} alt={alt} width={width} />
       </div>
     );
   }

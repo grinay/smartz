@@ -19,37 +19,46 @@ class Instance extends Component {
   componentWillMount() {
     api(this.props.auth).post('/get_instance_details', {'instance_id': this.state.instanceId})
 
+      // Got instance details
       .then(response => {
         this.setState({instance: response.data});
         return response.data;
       })
 
       .then(instance => {
+        const nextInstance = Object.assign({}, instance);
         api(this.props.auth).post('/list_ctors')
           .then(response => {
-            instance.ctor = find(response.data, {ctor_id: instance.ctor_id});
+            nextInstance.ctor = find(response.data, {ctor_id: instance.ctor_id});
+            this.setState({instance: nextInstance});
+            this.getConstants();
           })
-        instance.functions.forEach((func, i) => {
-          if (func.constant && func.inputs.minItems === 0) {
-            processControlForm(instance.abi, func, [], instance.address,
-                              (error, result) => {
-              if(!error) {
-                // console.log(result);
-                instance.functions[i].value = processResult(result);
-                this.setState({instance});
-              } else
-                console.error(error);
-            });
-          }
-        });
       })
 
       .catch(error => this.setState({message: error.message}));
   }
 
+  getConstants() {
+    const instance = Object.assign({}, this.state.instance);
+    instance.functions.forEach((func, i) => {
+      if (func.constant && func.inputs.minItems === 0) {
+        processControlForm(instance.abi, func, [], instance.address,
+                          (error, result) => {
+          if (!error) {
+            instance.functions[i].value = processResult(result);
+          } else
+            console.error(i, error);
+
+            console.log(i, func);
+        });
+      }
+    });
+    window.setTimeout(() => {this.setState({instance})}, 500);
+  }
+
   render() {
     const {message, instance} = this.state;
-    console.log(instance);
+    // console.log(instance);
 
     return (
       <div>
@@ -92,7 +101,7 @@ class Instance extends Component {
               <div className="instance-functions">
                 {instance.functions.map((func, i) => {
                   if (func.constant && func.inputs.minItems !== 0)
-                    return <FunctionCard func={func} key={i} />;
+                    return <FunctionCard instance={instance} func={func} key={i} />;
                   else
                     return null;
                 })}
@@ -102,7 +111,8 @@ class Instance extends Component {
               <div className="instance-functions">
                 {instance.functions.map((func, i) => {
                   if (!func.constant)
-                    return <FunctionCard func={func} key={i} />;
+                    return <FunctionCard instance={instance} func={func} key={i}
+                      refresh={this.getConstants.bind(this)} />;
                   else
                     return null;
                 })}
