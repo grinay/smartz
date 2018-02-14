@@ -5,6 +5,7 @@ import os
 import json
 import tempfile
 from shutil import copy2
+from urllib.parse import urlparse
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -133,6 +134,10 @@ def construct():
     if ctor_info is None:
         return _send_error('ctor is not found')
 
+    user_id = auth()
+    if isinstance(user_id, dict):
+        return user_id  # error
+
     instance_title = nonempty(args_string(args, 'instance_title'))
 
     price_eth = ctor_info.get('price_eth', .0)
@@ -174,7 +179,8 @@ def construct():
                                         'function_specs': json.dumps(result['function_specs']),
                                         'dashboard_functions': result['dashboard_functions'],
                                         'ctor_id': ctor_id,
-                                        'instance_title': instance_title}
+                                        'instance_title': instance_title,
+                                        'user_id': user_id}
                                        ).inserted_id.binary.hex()
 
     return _send_output({
@@ -186,20 +192,9 @@ def construct():
     })
 
 
-@app.route('/get_instance_details', methods=['GET', 'POST'])
-def get_instance_details():
-    args = _get_input()
-    instances = db.instances
-
-    instance_id = nonempty(args_string(args, 'instance_id'))
-    instance_info = instances.find_one({'_id': ObjectId(instance_id)})
-    if instance_info is None:
-        return _send_error('instance is not found')
-    if 'address' not in instance_info:
-        return _send_error('instance is not yet deployed')
-
+def _prepare_instance_details(instance_info):
     output = {
-        "instance_id": instance_id,
+        "instance_id": instance_info['_id'].binary.hex(),
         "instance_title": instance_info['instance_title'],
         "network_id": instance_info['network_id'],
         "ctor_id": instance_info['ctor_id'],
@@ -211,7 +206,39 @@ def get_instance_details():
     assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
                                 'rpc_calls/get_instance_details/output')
 
-    return _send_output(output)
+    return output
+
+
+@app.route('/get_instance_details', methods=['GET', 'POST'])
+def get_instance_details():
+    args = _get_input()
+    instances = db.instances
+
+    user_id = auth()
+    if isinstance(user_id, dict):
+        return user_id  # error
+
+    instance_id = nonempty(args_string(args, 'instance_id'))
+    instance_info = instances.find_one({'_id': ObjectId(instance_id), 'user_id': user_id})
+    if instance_info is None:
+        return _send_error('instance is not found')
+    if 'address' not in instance_info:
+        return _send_error('instance is not yet deployed')
+
+    return _send_output(_prepare_instance_details(instance_info))
+
+
+@app.route('/get_all_instances', methods=['GET', 'POST'])
+def get_all_instances():
+    instances = db.instances
+
+    user_id = auth()
+    if isinstance(user_id, dict):
+        return user_id  # error
+
+    found = instances.find({'user_id': user_id, 'address': {'$exists': True}})
+
+    return _send_output([_prepare_instance_details(i) for i in found])
 
 
 @app.route('/set_instance_address', methods=['GET', 'POST'])
@@ -220,8 +247,12 @@ def set_instance_address():
     ctors = db.ctors
     instances = db.instances
 
+    user_id = auth()
+    if isinstance(user_id, dict):
+        return user_id  # error
+
     instance_id = nonempty(args_string(args, 'instance_id'))
-    instance_info = instances.find_one({'_id': ObjectId(instance_id)})
+    instance_info = instances.find_one({'_id': ObjectId(instance_id), 'user_id': user_id})
     if instance_info is None:
         return _send_error('instance is not found')
 
@@ -241,12 +272,16 @@ def list_instances():
     ctors = db.ctors
     instances = db.instances
 
+    user_id = auth()
+    if isinstance(user_id, dict):
+        return user_id  # error
+
     ctor_id = nonempty(args_string(args, 'ctor_id'))
     ctor_info = ctors.find_one({'_id': ObjectId(ctor_id)})
     if ctor_info is None:
         return _send_error('ctor is not found')
 
-    return _send_output([i['_id'].binary.hex() for i in instances.find({'ctor_id': ctor_id})])
+    return _send_output([i['_id'].binary.hex() for i in instances.find({'ctor_id': ctor_id, 'user_id': user_id})])
 
 
 @app.route('/clearz', methods=['GET'])
@@ -299,6 +334,15 @@ def nonempty(v):
     if not v:
         raise ValueError()
     return v
+
+
+def auth():
+    if urlparse(request.base_url).netloc.split(':')[0].lower() in ('localhost', '127.0.0.1'):
+        user_id = 'local'
+    else:
+        user_id = request.headers.get('X-AccessToken')
+
+    return user_id if user_id else _send_error('not authorized')
 
 
 def process_ctor_schema(schema):
