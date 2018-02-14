@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {find} from 'lodash';
 
 import api from 'Api/Api';
-import {processControlForm, processResult} from 'Eth/Eth';
+import {processControlForm, processResult, getNetworkName, getNetworkEtherscanAddress} from 'Eth/Eth';
 
 import './Dashboard.css';
 
@@ -100,6 +100,7 @@ class Dashboard extends Component {
 
   render() {
     const {message, ctors} = this.state;
+    // console.log(ctors);
 
     return (
       <div className="container dashboard">
@@ -118,12 +119,25 @@ class Dashboard extends Component {
 
                 <div className="card" key={j}>
                   <div className="card-body">
-                    <h3 className="card-title">{ctor.ctor_name}</h3>
+                    {inst.details && inst.details.address &&
+                      <div>
+                        <h3 className="card-title">
+                          <a href={`./instance/${inst.instance_id}`}>
+                            {inst.details.instance_title}
+                          </a>
+                          &nbsp;({ctor.ctor_name})
+                        </h3>
+                        <p className="card-text desc">
+                          {inst.details.address}&emsp;({getNetworkName(inst.details.network_id.toString())})&emsp;
+                          <a className="etherscan" href={getNetworkEtherscanAddress(inst.details.network_id.toString()) + `/address/${inst.details.address}`}>
+                            see on Etherscan
+                          </a>
+                        </p>
+                      </div>
+                    }
 
-                    {inst.details &&
-                      <p className="card-text desc">
-                        {inst.details.address || inst.details.error}
-                      </p>
+                    {(!inst.details || !inst.details.address) &&
+                      <h3>{ctor.ctor_name}</h3>
                     }
 
                     {inst.details && inst.dashboard_values &&
@@ -134,14 +148,6 @@ class Dashboard extends Component {
                             {inst.dashboard_values[func]}
                           </div>
                         ))}
-                      </div>
-                    }
-
-                    {inst.details && inst.details.address &&
-                      <div className="manage">
-                        <a href={`./instance/${inst.instance_id}`}>
-                          Manage contract
-                        </a>
                       </div>
                     }
 

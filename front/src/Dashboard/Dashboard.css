@@ -2,6 +2,14 @@
   margin-bottom: 15px;
 }
 
+.dashboard .card h3 a {
+  text-decoration: underline;
+}
+
+.dashboard .card a.etherscan {
+  font-size: 80%;
+}
+
 .dashboard-functions {
   display: flex;
 }
@@ -14,8 +22,4 @@
 
 .dashboard-functions div span {
   font-size: 50%;
-}
-
-.dashboard .manage {
-  margin-top: 15px;
 }

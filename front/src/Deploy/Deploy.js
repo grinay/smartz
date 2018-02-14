@@ -5,6 +5,7 @@ import Form from 'react-jsonschema-form';
 import api from 'Api/Api';
 import Spinner from './Spinner';
 import FormWidgets from 'FormWidgets/FormWidgets';
+import {getNetworkEtherscanAddress} from 'Eth/Eth';
 
 import './Deploy.css';
 
@@ -50,22 +51,39 @@ class Deploy extends Component {
           mode: 'done',
           contractAddress: receipt.contractAddress
         });
-        api(this.props.auth).post(`/set_instance_address`, {
-          'instance_id': this.state.instance.instance_id,
-          'address': receipt.contractAddress
-        })
-        .catch(error => console.log(error));
       }
     });
   }
 
+  getNetId() {
+    w3.version.getNetwork((err, netId) => {
+      netId && this.setState({netId});
+    });
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const {contractAddress, netId, instance} = nextState;
+
+    if (contractAddress && netId) {
+      api(this.props.auth).post(`/set_instance_address`, {
+        instance_id: instance.instance_id,
+        address: contractAddress,
+        network_id: Number.parseInt(netId, 10)
+      })
+
+      .catch(error => console.log(error));
+    }
+  }
+
   submit({formData}) {
     // if Validation ok
-    this.setState({
-      spinner: true
-    });
+    this.setState({spinner: true});
+
+    const instTitle = formData.instance_title;
+    delete formData.instance_title;
     api(this.props.auth).post(`/construct`, {
-      'ctor_id': this.state.ctorId,
+      ctor_id: this.state.ctorId,
+      instance_title: instTitle,
       fields: formData
     })
       .then(response => {
@@ -74,6 +92,7 @@ class Deploy extends Component {
             spinner: false,
             errors: response.data.errors
           });
+
         } else {
           this.setState({
             mode: 'source',
@@ -96,12 +115,36 @@ class Deploy extends Component {
         tx: tx_hash
       })
 
+      this.getNetId();
       this.getContractAddress(tx_hash);
     });
   }
 
   render() {
     const {ctor, mode, errors, spinner, instance} = this.state;
+
+    // Add instance name field in the form beginning
+    if (ctor) {
+      ctor.schema.properties.instance_title = {
+        title: "Instance name",
+        type: "string",
+        description: "Name of smart contract instance you are now configuring and deploying (any string of 3..100 chars)",
+        minLength: 3,
+        maxLength: 100
+      };
+      ctor.schema.required.push("instance_title");
+
+      if (ctor.ui_schema && ("ui:order" in ctor.ui_schema)) {
+        ctor.ui_schema["ui:order"].unshift("instance_title");
+
+      } else {
+        if (!ctor.ui_schema)
+          ctor.ui_schema = {};
+
+        ctor.ui_schema["ui:order"] = Object.keys(ctor.schema.properties);
+        ctor.ui_schema["ui:order"].unshift(ctor.ui_schema["ui:order"].pop())
+      }
+    }
 
     return (
       <div>
@@ -190,7 +233,7 @@ class Deploy extends Component {
               {mode === "done" &&
                 <p>
                   Your contract address:<br />
-                  <a href={'https://rinkeby.etherscan.io/address/' + this.state.contractAddress}>
+                  <a href={getNetworkEtherscanAddress(this.state.netId) + '/address/' + this.state.contractAddress}>
                     {this.state.contractAddress}
                   </a>
                 </p>

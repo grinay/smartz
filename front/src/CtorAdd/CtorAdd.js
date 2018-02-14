@@ -4,12 +4,12 @@ import Form from 'react-jsonschema-form';
 
 import api from 'Api/Api';
 
-// TODO: success/error message after submit
-
 class CtorAdd extends Component {
   submit({formData}) {
     api(this.props.auth).post(`/upload_ctor`, formData)
-      .then(response => console.log(response.data.message))
+      .then(response => {
+        // TODO: success/error message after submit
+      })
       .catch(error => console.log(error));
   }
 

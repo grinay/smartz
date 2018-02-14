@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import {find} from 'lodash';
 
 import api from 'Api/Api';
-import {processControlForm, processResult} from 'Eth/Eth';
+import {processControlForm, processResult, getNetworkName, getNetworkEtherscanAddress} from 'Eth/Eth';
 import FunctionCard from './FunctionCard';
 
 import './Instance.css';
@@ -24,6 +25,10 @@ class Instance extends Component {
       })
 
       .then(instance => {
+        api(this.props.auth).post('/list_ctors')
+          .then(response => {
+            instance.ctor = find(response.data, {ctor_id: instance.ctor_id});
+          })
         instance.functions.forEach((func, i) => {
           if (func.constant && func.inputs.minItems === 0) {
             processControlForm(instance.abi, func, [], instance.address,
@@ -44,21 +49,34 @@ class Instance extends Component {
 
   render() {
     const {message, instance} = this.state;
-    instance && console.log(instance.functions);
+    console.log(instance);
 
     return (
       <div>
         <div className="container">
-          <h1>TODO: name of contract</h1>
-
           {instance &&
             <div className="instance">
-              <h4>
-                Contract instance address:<br />
-                <a href={`https://etherscan.io/address/${instance.address}`}>
-                  {instance.address}
-                </a>
-              </h4>
+              <h1>
+                {instance.instance_title}
+                {instance.ctor &&
+                  <span>
+                    &emsp;(
+                    <a href={`/deploy/${instance.ctor.ctor_id}`}>
+                      {instance.ctor.ctor_name}
+                    </a>)
+                  </span>
+                }
+              </h1>
+
+              {instance.address &&
+                <p className="address">
+                  {instance.address + ` (${getNetworkName(instance.network_id.toString())})`}
+                  &emsp;
+                  <a className="etherscan" href={getNetworkEtherscanAddress(instance.network_id.toString()) + `/address/${instance.address}`}>
+                    see on Etherscan
+                  </a>
+                </p>
+              }
 
               <h3>View functions</h3>
               <div className="instance-functions view-functions">

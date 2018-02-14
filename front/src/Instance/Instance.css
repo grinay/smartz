@@ -1,3 +1,11 @@
+.instance .address {
+  font-size: 120%;
+}
+
+.instance .address .etherscan {
+  font-size: 80%;
+}
+
 .instance-functions {
   display: flex;
   flex-wrap: wrap;
