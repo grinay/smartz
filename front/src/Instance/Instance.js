@@ -49,7 +49,7 @@ class Instance extends Component {
           } else
             console.error(i, error);
 
-            console.log(i, func);
+            // console.log(i, func);
         });
       }
     });

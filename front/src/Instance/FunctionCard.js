@@ -23,15 +23,15 @@ class FunctionCard extends Component {
     processControlForm(abi, func, formData, address,
                       (error, result) => {
       if (!error) {
-        // console.log(result);
-        if (typeof result === 'string') { // String means transaction hash
+        console.log(result);
+        if (/^0x([A-Fa-f0-9]{64})$/.test(result)) { // Check if result is tx hash
           this.setState({
             tx: result,
             spinner: true
           });
           this.getReceipt(result);
 
-        } else { // Not string means array means some data
+        } else { // Not string means array -> means some data
           this.setState({value: processResult(result)});
         }
 
@@ -59,7 +59,11 @@ class FunctionCard extends Component {
   render() {
     const {func, instance} = this.props;
     const {tx, spinner} = this.state;
-    const value = this.state.value || func.value;
+    const value = ("value" in this.state) ? this.state.value : func.value;
+
+    if (!func.constant && func.inputs.minItems === 0) {
+      func.inputs.items = [];
+    }
 
     return (
       <div className="card">
@@ -107,7 +111,7 @@ class FunctionCard extends Component {
                 <Button bsStyle="success" bsSize="xsmall"
                   className="btn-margin"
                   type="submit">
-                  Send transaction
+                  {func.constant ? 'Get info' : 'Send transaction'}
                 </Button>
               </div>
             </Form>
