@@ -17,6 +17,11 @@ class FunctionCard extends Component {
   }
 
   submit({formData}) {
+
+    //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
+    if (typeof formData=="object" && !Object.keys(formData).length) {
+        formData = []
+    }
     const {func} = this.props;
     const {abi, address} = this.props.instance;
     // TODO: special processing of ask functions results
@@ -64,6 +69,16 @@ class FunctionCard extends Component {
     if (!func.constant && func.inputs.minItems === 0) {
       func.inputs.items = [];
     }
+
+    //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
+    if (!func.constant && func.inputs.minItems === 0) {
+      func.inputs = {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        type: "object",
+        properties: {}
+      };
+    }
+
 
     return (
       <div className="card">
