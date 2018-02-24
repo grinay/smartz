@@ -95,7 +95,86 @@ class Constructor(ConstructorInstance):
                 }]
             },
 
-            # TODO WRITE ME
+            'sendEther': {
+                'title': 'Send Ether',
+                'description': 'Send some amount of Ether from this wallet to specified address. Quorum of wallet owners must call this function with the same parameters for this action to happen.',
+                'inputs': [{
+                    'title': 'Destination address',
+                }, {
+                    'title': 'Amount in wei',
+                    'description': 'Amount must be specified in the smallest units: wei (1 Ether is 1000000000000000000 wei).'
+                }]
+            },
+
+            'm_multiOwnedRequired': {
+                'title': 'Quorum requirement',
+                'description': 'Number of signatures required to perform actions on this wallet',
+            },
+
+            'hasConfirmed': {
+                'title': 'Is operation confirmed?',
+                'description': 'Checks if operation confirmed by an owner.',
+            },
+
+            'revoke': {
+                'title': 'Revoke confirmation',
+                'description': 'Revoke confirmation of current owner (current account) from operation.',
+            },
+
+            'amIOwner': {
+                'title': 'Am I owner?',
+                'description': 'Checks if current account is one of the wallet owners.',
+            },
+
+            'isOwner': {
+                'title': 'Check owner',
+                'description': 'Checks if specified account is one of the wallet owners.',
+                'inputs': [{
+                    'title': 'Address to check',
+                }]
+            },
+
+            'getOwners': {
+                'title': 'Owners',
+                'description': 'Returns list of all current owners of the wallet.',
+            },
+
+            'getOwner': {
+                'title': 'Get n-th owner',
+                'description': 'Returns n-th owner',
+                'inputs': [{
+                    'title': 'Owner\'s number',
+                    'description': 'Owner\'s number, starting from zero.',
+                }]
+            },
+
+            'removeOwner': {
+                'title': 'Remove owner',
+                'description': 'Removes specified owner. Quorum of wallet owners must call this function with the same parameters for this action to happen.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address of the owner to remove.',
+                }]
+            },
+
+            'addOwner': {
+                'title': 'Add owner',
+                'description': 'Adds a new owner. Quorum of wallet owners must call this function with the same parameters for this action to happen.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address of the new (additional) owner.',
+                }]
+            },
+
+            'changeOwner': {
+                'title': 'Change owner',
+                'description': 'Changes address of existing owner from one to another. Quorum of wallet owners must call this function with the same parameters for this action to happen.',
+                'inputs': [{
+                    'title': 'Old address',
+                }, {
+                    'title': 'New address',
+                }]
+            },
         }
 
         return {
