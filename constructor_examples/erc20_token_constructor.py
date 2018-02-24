@@ -582,6 +582,7 @@ contract Token is StandardToken %parents_code% {
 
     function Token()
         public
+        payable
         %constructors_code%
     {
         %constructor_inner_code%
