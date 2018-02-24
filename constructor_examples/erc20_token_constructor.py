@@ -585,6 +585,7 @@ contract Token is StandardToken %parents_code% {
         %constructors_code%
     {
         %constructor_inner_code%
+        %payment_code%
     }
 
 }
