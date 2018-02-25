@@ -63,6 +63,7 @@ class Dashboard extends Component {
         ctors.forEach(ctor => {
           ctor.instances.forEach(inst => {
             inst.details = instDetails.shift().data;
+            console.log(inst.details);
           });
         });
 
@@ -122,7 +123,7 @@ class Dashboard extends Component {
                     {inst.details && inst.details.address &&
                       <div>
                         <h3 className="card-title">
-                          <a href={`./instance/${inst.instance_id}`}>
+                          <a href={`/instance/${inst.instance_id}`}>
                             {inst.details.instance_title}
                           </a>
                           &nbsp;({ctor.ctor_name})
@@ -144,7 +145,7 @@ class Dashboard extends Component {
                       <div className="dashboard-functions">
                         {inst.details.dashboard_functions.map((func, k) => (
                           <div key={k}>
-                            <span>{func}</span><br />
+                            <span>{find(inst.details.functions, {name: func}).title}</span><br />
                             {inst.dashboard_values[func]}
                           </div>
                         ))}

@@ -71,8 +71,8 @@ class CtorAdd extends Component {
         <div className="alert alert-success" role="alert">
           <h4 className="alert-heading">Welcome!</h4>
           <p>
-            <b>Unfortunately, independent smart contracts upload function is not ready yet!</b><br />
-            But if you are interested in contributing our project, feel free to <a href="https://t.me/LoungerX">get in touch with us</a>.
+            <b>Unfortunately, smart contracts upload function for independent developers is not ready yet!</b><br />
+            If you are interested in contributing our project, feel free to <a href="https://t.me/LoungerX">get in touch with us</a>.
           </p>
         </div>
         <Form schema={formSchema}

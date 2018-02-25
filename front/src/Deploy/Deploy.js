@@ -5,7 +5,7 @@ import Form from 'react-jsonschema-form';
 import api from 'Api/Api';
 import Spinner from 'Spinner/Spinner';
 import FormWidgets from 'FormWidgets/FormWidgets';
-import {getNetworkEtherscanAddress} from 'Eth/Eth';
+import {getNetworkEtherscanAddress, getNetworkName} from 'Eth/Eth';
 
 import './Deploy.css';
 
@@ -46,11 +46,20 @@ class Deploy extends Component {
     w3.eth.getTransactionReceipt(tx_hash, (err, receipt) => {
       if (null == receipt)
         window.setTimeout(() => {this.getContractAddress(tx_hash)}, 500);
+
       else {
-        this.setState({
-          mode: 'done',
-          contractAddress: receipt.contractAddress
-        });
+        // console.log(receipt);
+        if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
+          this.setState({
+            mode: 'failed'
+          });
+
+        } else {
+          this.setState({
+            mode: 'done',
+            contractAddress: receipt.contractAddress
+          });
+        }
       }
     });
   }
@@ -214,10 +223,10 @@ class Deploy extends Component {
             </Panel>
           }
 
-          {(mode === "deploying" || mode === "done") &&
-            <Panel header={mode === "deploying" ? "Deploy in progress" : "Contract deployed!"}>
+          {(mode === "deploying" || mode === "done" || mode === "failed") &&
+            <Panel header={mode === "deploying" ? "Deploy in progress" : "Finished!"}>
               <p>
-                Deploy transaction hash:<br />
+                Deploy transaction:<br />
                 <a href={'https://rinkeby.etherscan.io/tx/' + this.state.tx}>
                   {this.state.tx}
                 </a>
@@ -231,12 +240,18 @@ class Deploy extends Component {
               }
 
               {mode === "done" &&
-                <p>
-                  Your contract address:<br />
-                  <a href={getNetworkEtherscanAddress(this.state.netId) + '/address/' + this.state.contractAddress}>
-                    {this.state.contractAddress}
-                  </a>
-                </p>
+                <div className="alert alert-success">
+                  Congratulations! Your contract is deployed to {getNetworkName(this.state.netId)}!<br />
+                  Contract address is {this.state.contractAddress}.<br />
+                  Check it <a href={getNetworkEtherscanAddress(this.state.netId) + '/address/' + this.state.contractAddress}>on Etherscan</a> (it can take some time for Etherscan to see contract just deployed)<br />
+                  and <a href={`/instance/${instance.instance_id}`}>manage it on Smartz</a>.
+                </div>
+              }
+
+              {mode === "failed" &&
+                <div className="alert alert-danger">
+                  Ooops! Something went wrong and your contract deploy has failed. Try to add more gas or report problem to contract developers.
+                </div>
               }
             </Panel>
           }

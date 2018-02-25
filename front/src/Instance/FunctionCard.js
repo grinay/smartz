@@ -19,7 +19,7 @@ class FunctionCard extends Component {
   submit({formData}) {
 
     //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
-    if (typeof formData=="object" && !Object.keys(formData).length) {
+    if (typeof formData === "object" && !Object.keys(formData).length) {
         formData = []
     }
     const {func} = this.props;
@@ -63,6 +63,7 @@ class FunctionCard extends Component {
 
   render() {
     const {func, instance} = this.props;
+    console.log(func);
     const {tx, spinner} = this.state;
     const value = ("value" in this.state) ? this.state.value : func.value;
 
@@ -83,7 +84,11 @@ class FunctionCard extends Component {
     return (
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">{func.name}</h4>
+          <h4 className="card-title">{func.title || func.name}</h4>
+
+          {(func.title && (func.title !== func.name)) &&
+            <h6 className="card-subtitle mb-2 text-muted">({func.name})</h6>
+          }
 
           <p className="card-text">
             {func.description &&
