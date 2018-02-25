@@ -88,7 +88,7 @@ class Constructor(ConstructorInstance):
             'changeRequirement': {
                 'title': 'Change quorum requirement',
                 'description': 'Change number of signatures required to perform actions on this wallet '
-                               '(withdraw money, change owners, etc)',
+                               '(withdraw money, change owners, etc). Quorum of wallet owners must call this function with the same parameters for this action to happen.',
                 'inputs': [{
                     'title': 'new requirement',
                     'description': 'new number of signatures required to perform actions on this wallet'

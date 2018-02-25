@@ -149,7 +149,153 @@ class Constructor(ConstructorInstance):
     def post_construct(self, fields, abi_array):
 
         function_titles = {
-            # TODO WRITE ME
+            'pause': {
+                'title': 'Pause circulation',
+                'description': 'Disable any token transfers. Callable only by token owner.',
+            },
+
+            'unpause': {
+                'title': 'Enable circulation',
+                'description': 'Enables token transfers in case they were paused. Callable only by token owner.',
+            },
+
+            'burn': {
+                'title': 'Burn tokens',
+                'description': 'Burns specified amount of tokens owned by current account.',
+                'inputs': [{
+                    'title': 'Amount',
+                    'description': 'Amount must be specified in the smallest units of the token.'
+                }]
+            },
+
+            'mint': {
+                'title': 'Mint new tokens',
+                'description': 'Creates new tokens out-of-thin-air and gives them to specified address. Callable only by token owner.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Transfer tokens to this address.',
+                }, {
+                    'title': 'Amount',
+                    'description': 'Amount must be specified in the smallest units of the token.',
+                }]
+            },
+
+            'finishMinting': {
+                'title': 'Finish minting',
+                'description': 'Disables any further token creation via minting. Callable only by token owner.',
+            },
+
+            'decreaseApproval': {
+                'title': 'Decrease approval',
+                'description': 'Decreases amount of your tokens which are allowed to be spent by specified address.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address which was allowed to spend tokens.',
+                }, {
+                    'title': 'Amount',
+                    'description': 'Amount must be specified in the smallest units of the token.',
+                }]
+            },
+
+            'increaseApproval': {
+                'title': 'Increase approval',
+                'description': 'Increases amount of your tokens which are allowed to be spent by specified address.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address which was allowed to spend tokens.',
+                }, {
+                    'title': 'Amount',
+                    'description': 'Amount must be specified in the smallest units of the token.',
+                }]
+            },
+
+            'allowance': {
+                'title': 'View allowance',
+                'description': 'View amount of tokens which some token holder allowed to spend by another address.',
+                'inputs': [{
+                    'title': 'Address of owner',
+                    'description': 'Address which allowed to spend his tokens.',
+                }, {
+                    'title': 'Address of spender',
+                    'description': 'Address which was allowed to spend tokens.',
+                }]
+            },
+
+            'approve': {
+                'title': 'Approve spending',
+                'description': 'Allow some amount of your tokens to be spent by specified address.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address to allow to spend tokens.',
+                }, {
+                    'title': 'Amount',
+                    'description': 'Amount must be specified in the smallest units of the token.',
+                }]
+            },
+
+            'transferFrom': {
+                'title': 'Transfer from',
+                'description': 'Transfers from one account to another. Account which tokens are transferred has to approve this spending.',
+                'inputs': [{
+                    'title': 'From',
+                    'description': 'Subtract tokens from this account.',
+                }, {
+                    'title': 'To',
+                    'description': 'Transfer tokens to this account.',
+                }, {
+                    'title': 'Amount',
+                    'description': 'Amount must be specified in the smallest units of the token.',
+                }]
+            },
+
+            'name': {
+                'title': 'Token name',
+                'description': 'Human-friendly name of the token.',
+            },
+
+            'symbol': {
+                'title': 'Token ticker',
+                'description': 'Abbreviated name of the token used on exchanges etc.',
+            },
+
+            'decimals': {
+                'title': 'Decimal places',
+                'description': 'Allowed digits in fractional part of the token. E.g. decimal places of US dollar is 2.',
+            },
+
+            'balanceOf': {
+                'title': 'Get balance',
+                'description': 'Gets the token balance of any address. Return value is specified in the smallest units of the token.',
+                'inputs': [{
+                    'title': 'Address',
+                }]
+            },
+
+            'transfer': {
+                'title': 'Transfer tokens',
+                'description': 'Transfers some amount of your tokens to another address.',
+                'inputs': [{
+                    'title': 'To',
+                    'description': 'Recipient address.',
+                }, {
+                    'title': 'Amount',
+                    'description': 'Amount must be specified in the smallest units of the token.',
+                }]
+            },
+
+            'totalSupply': {
+                'title': 'Total supply',
+                'description': 'Current total amount of the token. Specified in the smallest units of the token.',
+            },
+
+            'transferOwnership': {
+                'title': 'Transfer ownership',
+                'description': 'Transfers ownership of the token to another address. Ownership rights are required to perform some administrative operations.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address which\'ll receive ownership rights.',
+                }]
+            },
         }
 
         return {

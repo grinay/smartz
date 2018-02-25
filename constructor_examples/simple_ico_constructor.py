@@ -118,13 +118,51 @@ class Constructor(ConstructorInstance):
     def post_construct(self, fields, abi_array):
 
         function_titles = {
-            # TODO WRITE ME
+            'daysRemaining': {
+                'title': 'Days remaining',
+                'description': 'Days before end of the ICO.',
+            },
+
+            'totalTokens': {
+                'title': 'Total tokens',
+                'description': 'Current total amount of the token. Specified in the smallest units of the token.',
+            },
+
+            'funds_address': {
+                'title': 'Funds address',
+                'description': 'Address to which the ICO forwards collected Ether.',
+            },
+
+            'rate': {
+                'title': 'Token rate',
+                'description': 'Token per Ether rate.',
+            },
+
+            'hard_cap': {
+                'title': 'Hard cap',
+                'description': 'Maximum Ether to be accepted by the ICO. Specified in the smallest units of Ether - wei.',
+            },
+
+            'collected': {
+                'title': 'Collected wei',
+                'description': 'Currently collected amount of Ether. Specified in the smallest units of Ether - wei.',
+            },
+
+            'collectedEther': {
+                'title': 'Collected Ether',
+                'description': 'Currently collected amount of Ether.',
+            },
+
+            'token': {
+                'title': 'Token address',
+                'description': 'Address of the ICO token. This address should be added to the wallets to see your tokens balance and manage them.',
+            },
         }
 
         return {
             'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
 
-            'dashboard_functions': ['collected', 'totalTokens', 'daysRemaining']
+            'dashboard_functions': ['collectedEther', 'totalTokens', 'daysRemaining']
         }
 
 
@@ -464,6 +502,10 @@ contract ICO is Ownable
             return 0;
         }
         return date_end.sub(now).div(1 days);
+    }
+
+    function collectedEther() public view returns (uint) {
+        return collected.div(1 ether);
     }
 }
 

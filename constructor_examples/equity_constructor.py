@@ -111,7 +111,104 @@ class Constructor(ConstructorInstance):
 
     def post_construct(self, fields, abi_array):
         function_titles = {
-            # TODO WRITE ME
+            'decreaseApproval': {
+                'title': 'Decrease approval',
+                'description': 'Decreases amount of your equity shares which are allowed to be spent by specified address.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address which was allowed to spend equity shares.',
+                }, {
+                    'title': 'Amount',
+                }]
+            },
+
+            'increaseApproval': {
+                'title': 'Increase approval',
+                'description': 'Increases amount of your equity shares which are allowed to be spent by specified address.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address which was allowed to spend equity shares.',
+                }, {
+                    'title': 'Amount',
+                }]
+            },
+
+            'allowance': {
+                'title': 'View allowance',
+                'description': 'View amount of equity shares which some shareholder allowed to spend by another address.',
+                'inputs': [{
+                    'title': 'Address of owner',
+                    'description': 'Address which allowed to spend his equity shares.',
+                }, {
+                    'title': 'Address of spender',
+                    'description': 'Address which was allowed to spend equity shares.',
+                }]
+            },
+
+            'approve': {
+                'title': 'Approve spending',
+                'description': 'Allow some amount of your equity shares to be spent by specified address.',
+                'inputs': [{
+                    'title': 'Address',
+                    'description': 'Address to allow to spend equity shares.',
+                }, {
+                    'title': 'Amount',
+                }]
+            },
+
+            'transferFrom': {
+                'title': 'Transfer from',
+                'description': 'Transfers equity shares from one account to another. Account which tokens are transferred has to approve this spending.',
+                'inputs': [{
+                    'title': 'From',
+                    'description': 'Subtract equity shares from this account.',
+                }, {
+                    'title': 'To',
+                    'description': 'Transfer equity shares to this account.',
+                }, {
+                    'title': 'Amount',
+                }]
+            },
+
+            'name': {
+                'title': 'Equity name',
+                'description': 'Human-friendly name of the equity.',
+            },
+
+            'symbol': {
+                'title': 'Equity ticker',
+                'description': 'Abbreviated name of equity shares used on exchanges etc.',
+            },
+
+            'decimals': {
+                'title': 'Decimal places',
+                'description': 'This is always 0 - equity shares are indivisible.',
+            },
+
+            'balanceOf': {
+                'title': 'Get balance',
+                'description': 'Gets equity shares balance of any address.',
+                'inputs': [{
+                    'title': 'Address',
+                }]
+            },
+
+            'transfer': {
+                'title': 'Transfer shares',
+                'description': 'Transfers some amount of your equity shares to another address.',
+                'inputs': [{
+                    'title': 'To',
+                    'description': 'Recipient address.',
+                }, {
+                    'title': 'Amount',
+                    'description': 'Amount of equity shares.',
+                }]
+            },
+
+            'totalSupply': {
+                'title': 'Total shares',
+                'description': 'Total amount of equity shares.',
+            }
         }
 
         return {
@@ -304,9 +401,10 @@ contract EquityToken is StandardToken
     string public constant name = '%name%';
     string public constant symbol = '%symbol%';
     uint8 public constant decimals = 0;
-    
-    mapping (address => string) public shareholders_names;
-    address[] public shareholders;
+
+    // It won't be updated during transfers, so private for now.
+    mapping (address => string) private shareholders_names;
+    address[] private shareholders;
 
     function EquityToken() public payable {
         totalSupply = totalSupply.add(%total%);
@@ -316,7 +414,7 @@ contract EquityToken is StandardToken
         %payment_code%
     }
     
-    function addShareholder(address addr, string fullname, uint256 shares) public {
+    function addShareholder(address addr, string fullname, uint256 shares) private {
         shareholders.push(addr);
         shareholders_names[addr] = fullname;
         balances[addr] = shares;
