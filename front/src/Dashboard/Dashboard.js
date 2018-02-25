@@ -63,7 +63,7 @@ class Dashboard extends Component {
         ctors.forEach(ctor => {
           ctor.instances.forEach(inst => {
             inst.details = instDetails.shift().data;
-            console.log(inst.details);
+            // console.log(inst.details);
           });
         });
 

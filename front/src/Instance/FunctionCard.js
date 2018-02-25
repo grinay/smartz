@@ -63,7 +63,6 @@ class FunctionCard extends Component {
 
   render() {
     const {func, instance} = this.props;
-    console.log(func);
     const {tx, spinner} = this.state;
     const value = ("value" in this.state) ? this.state.value : func.value;
 
