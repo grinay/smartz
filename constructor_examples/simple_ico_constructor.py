@@ -157,6 +157,16 @@ class Constructor(ConstructorInstance):
                 'title': 'Token address',
                 'description': 'Address of the ICO token. This address should be added to the wallets to see your tokens balance and manage them.',
             },
+
+            'date_start': {
+                'title': 'Start timestamp',
+                'description': 'Unix timestamp of the start of ICO',
+            },
+
+            'date_end': {
+                'title': 'End timestamp',
+                'description': 'Unix timestamp of the end of ICO',
+            }
         }
 
         return {
@@ -469,7 +479,7 @@ contract Token is MintableToken %code_is_burnable%
 
 }
 
-contract ICO is Ownable
+contract ICO
 {
     using SafeMath for uint256;
 
