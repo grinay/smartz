@@ -296,6 +296,26 @@ class Constructor(ConstructorInstance):
                     'description': 'Address which\'ll receive ownership rights.',
                 }]
             },
+
+            'mintingFinished': {
+                'title': 'Minting finished',
+                'description': 'If true no more tokens could be created.',
+            },
+
+            'cap': {
+                'title': 'Maximum tokens',
+                'description': 'Maximum number of tokens which could be created. Return value is specified in the smallest units of the token.',
+            },
+
+            'paused': {
+                'title': 'Paused',
+                'description': 'If true any token transfers are disabled.',
+            },
+
+            'owner': {
+                'title': 'Owner',
+                'description': 'Address of the token owner.',
+            }
         }
 
         return {
