@@ -88,6 +88,7 @@ class Instance extends Component {
               }
 
               <h3>View functions</h3>
+              <p>This functions just provide an information about contract states and values.</p>
               <div className="instance-functions view-functions">
                 {instance.functions.map((func, i) => {
                   if (func.constant && func.inputs.minItems === 0)
@@ -98,6 +99,7 @@ class Instance extends Component {
               </div>
 
               <h3>Ask functions</h3>
+              <p>This functions also provide an information about contract states and values, but related to some address or other conditions which you should provide. No any changes in blockchain are done by this functions.</p>
               <div className="instance-functions">
                 {instance.functions.map((func, i) => {
                   if (func.constant && func.inputs.minItems !== 0)
@@ -108,6 +110,7 @@ class Instance extends Component {
               </div>
 
               <h3>Write functions</h3>
+              <p>This functions are changing states and values of smart contract, placing new information to the blockchain. All this functions consume some amount of gas. Be careful, some of their actions can not be undone.</p>
               <div className="instance-functions">
                 {instance.functions.map((func, i) => {
                   if (!func.constant)
