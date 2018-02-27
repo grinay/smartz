@@ -58,7 +58,7 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
             // object with transaction parameters
             // value: ???,     // amount of ether to send with
             // gas: ???,       // amount of gas
-            // gasPrice: ???
+            gasPrice: 5e9
         });
     }
 
