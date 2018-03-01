@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Panel, ControlLabel, Button, FormGroup, FormControl} from 'react-bootstrap';
+import {Panel, ControlLabel, Button, FormGroup, FormControl, Checkbox} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import api from 'Api/Api';
@@ -71,13 +71,14 @@ class Deploy extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const {contractAddress, netId, instance} = nextState;
+    const {contractAddress, netId, instance, publicAccess} = nextState;
 
     if (contractAddress && netId) {
       api(this.props.auth).post(`/set_instance_address`, {
         instance_id: instance.instance_id,
         address: contractAddress,
-        network_id: Number.parseInt(netId, 10)
+        network_id: Number.parseInt(netId, 10),
+        public_access: publicAccess ? true : false
       })
 
       .catch(error => console.log(error));
@@ -211,6 +212,12 @@ class Deploy extends Component {
                     rows="20"
                     placeholder="If you don't see source code here, perhaps something gone wrong"
                     defaultValue={instance.source} />
+                </FormGroup>
+
+                <FormGroup controlId="formControlsPublicAccess">
+                  <Checkbox onChange={(e) => {
+                    this.setState({publicAccess: e.target.checked})
+                  }}>Public access to contract</Checkbox>
                 </FormGroup>
 
                 <Button
