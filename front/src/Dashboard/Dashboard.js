@@ -2,7 +2,12 @@ import React, {Component} from 'react';
 import {find} from 'lodash';
 
 import api from 'Api/Api';
-import {processControlForm, processResult, getNetworkName, getNetworkEtherscanAddress} from 'Eth/Eth';
+import {processControlForm,
+        processResult,
+        getNetworkName,
+        getNetworkEtherscanAddress,
+        checkMetaMask} from 'Eth/Eth';
+import Alert from 'Common/Alert';
 
 import './Dashboard.css';
 
@@ -55,7 +60,6 @@ class Dashboard extends Component {
         this.setState({ctors});
         return Promise.all(getInstDetailsPromises);
       })
-
       // Get details of every instance
       .then(instDetails => {
         const ctors = [...this.state.ctors];
@@ -76,11 +80,13 @@ class Dashboard extends Component {
         ctors.forEach((ctor, i) => {
           ctor.instances.forEach((inst, j) => {
             const {abi, address, dashboard_functions, functions} = inst.details;
+
             if (dashboard_functions) {
               inst.dashboard_values = {};
 
               dashboard_functions.forEach(dFunc => {
                 const fSpec = find(functions, {name: dFunc});
+
                 processControlForm(abi, fSpec, [], address,
                                   (error, result) => {
                   if(!error) {
@@ -92,16 +98,26 @@ class Dashboard extends Component {
                 });
               });
             }
+
           });
         });
       })
-
       .catch(error => this.setState({message: error.message}));
+
+    setInterval(() => {
+      if (checkMetaMask()) {
+        this.setState({noMetamask: checkMetaMask()});
+      } else {
+        this.setState({noMetamask: false});
+      }
+    }, 100);
+
   }
 
   render() {
-    const {message, ctors} = this.state;
-    // console.log(ctors);
+    const {noMetamask, message, ctors} = this.state;
+
+    if(noMetamask) return <Alert message={checkMetaMask()} />;
 
     return (
       <div className="container dashboard">

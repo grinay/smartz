@@ -5,7 +5,8 @@ import Form from 'react-jsonschema-form';
 import api from 'Api/Api';
 import Spinner from 'Spinner/Spinner';
 import FormWidgets from 'FormWidgets/FormWidgets';
-import {getNetworkEtherscanAddress, getNetworkName} from 'Eth/Eth';
+import {getNetworkEtherscanAddress, getNetworkName, checkMetaMask} from 'Eth/Eth';
+import Alert from 'Common/Alert';
 
 import './Deploy.css';
 
@@ -27,6 +28,13 @@ class Deploy extends Component {
 
   componentWillMount() {
     this.state.auth && this.getCtorParams();
+    setInterval(() => {
+      if (checkMetaMask()) {
+        this.setState({noMetamask: checkMetaMask()});
+      } else {
+        this.setState({noMetamask: false});
+      }
+    }, 100);
   }
 
   getCtorParams() {
@@ -131,7 +139,9 @@ class Deploy extends Component {
   }
 
   render() {
-    const {ctor, mode, errors, spinner, instance} = this.state;
+    const {noMetamask, ctor, mode, errors, spinner, instance} = this.state;
+
+    if(noMetamask) return <Alert message={checkMetaMask()} />;
 
     // Add instance name field in the form beginning
     if (ctor) {

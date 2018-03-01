@@ -2,8 +2,13 @@ import React, {Component} from 'react';
 import {find} from 'lodash';
 
 import api from 'Api/Api';
-import {processControlForm, processResult, getNetworkName, getNetworkEtherscanAddress} from 'Eth/Eth';
+import {processControlForm,
+        processResult,
+        getNetworkName,
+        getNetworkEtherscanAddress,
+        checkMetaMask} from 'Eth/Eth';
 import FunctionCard from './FunctionCard';
+import Alert from 'Common/Alert';
 
 import './Instance.css';
 
@@ -36,6 +41,14 @@ class Instance extends Component {
       })
 
       .catch(error => this.setState({message: error.message}));
+
+    setInterval(() => {
+      if (checkMetaMask()) {
+        this.setState({noMetamask: checkMetaMask()});
+      } else {
+        this.setState({noMetamask: false});
+      }
+    }, 100);
   }
 
   getConstants() {
@@ -57,8 +70,9 @@ class Instance extends Component {
   }
 
   render() {
-    const {message, instance} = this.state;
-    // console.log(instance);
+    const {noMetamask, message, instance} = this.state;
+
+    if(noMetamask) return <Alert message={checkMetaMask()} />;
 
     return (
       <div>

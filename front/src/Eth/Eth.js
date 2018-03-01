@@ -81,7 +81,7 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
 // ALSO: render box with processControlForm() for each dashboard function
 
 export const processResult = res => {
-  if (res.isBigNumber) {
+  if (res.isBigNumber || res.isInteger) {
     return res.toNumber();
 
   } else {
@@ -117,4 +117,14 @@ export const getNetworkEtherscanAddress = netId => {
     default:
       return "Error! Unknown or deprecated network";
   }
+};
+
+export const checkMetaMask = () => {
+  if (!window.Web3) {
+    return "Please, install MetaMask.";
+  }
+  if (!web3.eth.accounts[0]) {
+    return "Please, sign in MetaMask.";
+  }
+  return false;
 };

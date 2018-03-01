@@ -5,10 +5,17 @@ import Form from 'react-jsonschema-form';
 import api from 'Api/Api';
 
 class CtorAdd extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   submit({formData}) {
     api(this.props.auth).post(`/upload_ctor`, formData)
       .then(response => {
-        // TODO: success/error message after submit
+        this.setState({
+          message: "Contract uploaded."
+        })
       })
       .catch(error => console.log(error));
   }
@@ -53,6 +60,7 @@ class CtorAdd extends Component {
         }
       }
     };
+
     const uiSchema = {
       "ctor_name": {
         "ui:placeholder": "My ever best contract"
@@ -65,9 +73,13 @@ class CtorAdd extends Component {
         "ui:placeholder": "Some sentences about contract purposes and functions"
       }
     };
+
+    const {message} = this.state;
+
     return (
       <div className="container">
         <h1>Add a smart contract</h1>
+
         <div className="alert alert-success" role="alert">
           <h4 className="alert-heading">Welcome!</h4>
           <p>
@@ -75,6 +87,7 @@ class CtorAdd extends Component {
             If you are interested in contributing our project, feel free to <a href="https://t.me/LoungerX">get in touch with us</a>.
           </p>
         </div>
+
         <Form schema={formSchema}
           uiSchema={uiSchema}
           onSubmit={this.submit.bind(this)}
@@ -85,6 +98,14 @@ class CtorAdd extends Component {
             Submit a contract
           </Button>
         </Form>
+
+        <br />
+
+        {message &&
+          <div className="alert alert-success" role="alert">
+            <p>{message}</p>
+          </div>
+        }
       </div>
     );
   }
