@@ -81,9 +81,8 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
 // ALSO: render box with processControlForm() for each dashboard function
 
 export const processResult = res => {
-  if (res.isBigNumber || res.isInteger) {
+  if (typeof res === 'object' && res.s && res.e && res.c) {
     return res.toNumber();
-
   } else {
     return res;
   }
