@@ -18,7 +18,7 @@ class Constructor(ConstructorInstance):
                     "title": "Ballot name",
                     "type": "string",
                     "minLength": 3,
-                    "maxLength": 300,
+                    "maxLength": 200,
                     "pattern": "^[a-zA-Z0-9,\. ]+$"
                 },
 
@@ -36,8 +36,8 @@ class Constructor(ConstructorInstance):
                              "variant": {
                                 "title": "Variant",
                                 "type": "string",
-                                "minLength": 3,
-                                "maxLength": 100,
+                                "minLength": 1,
+                                "maxLength": 200,
                                 "pattern": "^[a-zA-Z0-9,\. ]+$"
                             },
                         }
