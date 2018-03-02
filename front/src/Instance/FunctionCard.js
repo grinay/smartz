@@ -93,9 +93,6 @@ class FunctionCard extends Component {
             {func.description &&
               <span className="desc">{func.description}</span>
             }
-            {!func.description &&
-              <span className="no-desc">No description provided by contract developer :(</span>
-            }
           </p>
 
           {typeof value !== 'undefined' &&
