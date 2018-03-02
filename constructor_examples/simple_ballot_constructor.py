@@ -81,7 +81,7 @@ class Constructor(ConstructorInstance):
 
         function_titles = {
             'ballotName': {
-                'title': 'Get ballot name',
+                'title': 'Ballot topic',
             },
 
             'variants': {
@@ -132,15 +132,15 @@ class Constructor(ConstructorInstance):
 
 
             'getWinningVariantId': {
-                'title': 'Get winning variant ID',
+                'title': 'Winning variant ID',
             },
 
             'getWinningVariantName': {
-                'title': 'Get winning variant name',
+                'title': 'Winning variant name',
             },
 
             'getWinningVariantVotesCount': {
-                'title': 'Get winning variant votes count',
+                'title': 'Winning variant votes count',
             },
         }
 
