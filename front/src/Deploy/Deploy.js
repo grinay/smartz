@@ -28,11 +28,12 @@ class Deploy extends Component {
 
   componentWillMount() {
     this.state.auth && this.getCtorParams();
+
+    let noMetamask = false;
     setInterval(() => {
-      if (checkMetaMask()) {
-        this.setState({noMetamask: checkMetaMask()});
-      } else {
-        this.setState({noMetamask: false});
+      if (noMetamask !== checkMetaMask()) {
+        noMetamask = checkMetaMask();
+        this.setState({noMetamask});
       }
     }, 100);
   }
@@ -144,7 +145,7 @@ class Deploy extends Component {
     if(noMetamask) return <Alert message={checkMetaMask()} />;
 
     // Add instance name field in the form beginning
-    if (ctor) {
+    if (ctor && !ctor.schema.properties.instance_title) {
       ctor.schema.properties.instance_title = {
         title: "Instance name",
         type: "string",
