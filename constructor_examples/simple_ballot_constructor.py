@@ -19,7 +19,7 @@ class Constructor(ConstructorInstance):
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 300,
-                    "pattern": "^[a-zA-Z,\. ]+$"
+                    "pattern": "^[a-zA-Z0-9,\. ]+$"
                 },
 
                 "variants": {
@@ -38,7 +38,7 @@ class Constructor(ConstructorInstance):
                                 "type": "string",
                                 "minLength": 3,
                                 "maxLength": 100,
-                                "pattern": "^[a-zA-Z,\. ]+$"
+                                "pattern": "^[a-zA-Z0-9,\. ]+$"
                             },
                         }
                     }
