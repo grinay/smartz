@@ -81,7 +81,7 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
 // ALSO: render box with processControlForm() for each dashboard function
 
 export const processResult = res => {
-  if (typeof res === 'object' && res.s && res.e && res.c) {
+  if (typeof res === 'object' && "s" in res && "e" in res && "c" in res) {
     return res.toNumber();
   } else {
     return res;
