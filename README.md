@@ -28,25 +28,28 @@ Smart contract constructors marketplace.
 mongo service should be up before backup/restore (docker-compose up)
 
 ### Dump all databases to ./backupdb/$currentdate folder:
-
-    docker-compose -f db-backup.yml run mongo_dump
-
+```
+docker-compose -f db-backup.yml run mongo_dump
+```
 ### Restore dump from ./restoredb folder:
-
-    docker-compose -f db-backup.yml run mongo_restore
-
+```
+docker-compose -f db-backup.yml run mongo_restore
+```
 ## Staging
-
-Travis CI builds staging version automatically from master branch after tests passed
-
-### URL
 
 https://staging.smartz.io
 
-### Basic auth
+## Update service
 
-mixbytes/cKdw9bD63YcHXbRrzfwk
-
-### Build information
-
-https://staging.smartz.io/buildinfo
+setup ECS profile in ~/.ecs directory
+```
+sudo cp -r /root/.ecs .
+sudo chown -R $USER .ecs/
+git clone https://github.com/mixbytes/smartz
+sh smartz/docker/deploy.sh
+```
+## Dump-restore DB on stage/prod server
+```
+docker-compose -f db-backup.yml -p smartzplatform run mongo_dump
+docker-compose -f db-backup.yml -p smartzplatform run mongo_restore
+```
