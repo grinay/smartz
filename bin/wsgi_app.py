@@ -214,14 +214,19 @@ def get_instance_details():
     args = _get_input()
     instances = db.instances
 
-    user_id = auth()
-    if isinstance(user_id, dict):
-        return user_id  # error
-
     instance_id = nonempty(args_string(args, 'instance_id'))
-    instance_info = instances.find_one({'_id': ObjectId(instance_id), 'user_id': user_id})
+    instance_info = instances.find_one({'_id': ObjectId(instance_id)})
     if instance_info is None:
         return _send_error('instance is not found')
+
+    if not instance_info.get('public_access'):
+        user_id = auth()
+        if isinstance(user_id, dict):
+            return user_id  # error
+
+        if instance_info['user_id'] != user_id:
+            return _send_error('instance is not found')
+
     if 'address' not in instance_info:
         return _send_error('instance is not yet deployed')
 
@@ -259,7 +264,8 @@ def set_instance_address():
     instances.update({'_id': ObjectId(instance_id)}, {
         '$set': {
             'address': nonempty(args_string(args, 'address')),
-            'network_id': args_int(args, 'network_id')
+            'network_id': args_int(args, 'network_id'),
+            'public_access': bool(args.get('public_access'))
         }
     })
 
