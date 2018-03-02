@@ -104,11 +104,11 @@ class Dashboard extends Component {
       })
       .catch(error => this.setState({message: error.message}));
 
+    let noMetamask = false;
     setInterval(() => {
-      if (checkMetaMask()) {
-        this.setState({noMetamask: checkMetaMask()});
-      } else {
-        this.setState({noMetamask: false});
+      if (noMetamask !== checkMetaMask()) {
+        noMetamask = checkMetaMask();
+        this.setState({noMetamask});
       }
     }, 100);
 
