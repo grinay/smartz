@@ -18,7 +18,7 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
         if (abi_type === 'uint256' || abi_type === 'uint')
             return new web3.BigNumber(input);
 
-        if (abi_type === 'address' || abi_type === 'bytes32')
+        if (abi_type === 'address' || abi_type === 'bytes32' || abi_type === 'string')
             return input;   // 0x...
 
         if (abi_type.endsWith('[]')) {
