@@ -3,8 +3,8 @@ import {Button} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import {processControlForm, processResult, getNetworkEtherscanAddress} from 'helpers/eth';
-import FormWidgets from 'FormWidgets/FormWidgets';
-import Spinner from 'Spinner/Spinner';
+import FormWidgets from 'common/FormWidgets';
+import Spinner from 'common/Spinner';
 
 if (window.Web3) {
   var w3 = new window.Web3(window.web3.currentProvider);

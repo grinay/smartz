@@ -8,7 +8,7 @@ import {processControlForm,
         getNetworkEtherscanAddress,
         checkMetaMask} from 'helpers/eth';
 import FunctionCard from './FunctionCard';
-import Alert from 'Common/Alert';
+import Alert from 'common/Alert';
 
 import './Instance.css';
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import spinner from 'Callback/loading.svg';
+import spinner from './i/loading.svg';
 
 class Spinner extends Component {
   render() {

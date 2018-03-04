@@ -3,10 +3,10 @@ import {Panel, ControlLabel, Button, FormGroup, FormControl, Checkbox} from 'rea
 import Form from 'react-jsonschema-form';
 
 import api from 'helpers/api';
-import Spinner from 'Spinner/Spinner';
-import FormWidgets from 'FormWidgets/FormWidgets';
+import Spinner from 'common/Spinner';
+import FormWidgets from 'common/FormWidgets';
 import {getNetworkEtherscanAddress, getNetworkName, checkMetaMask} from 'helpers/eth';
-import Alert from 'Common/Alert';
+import Alert from 'common/Alert';
 
 import './Deploy.css';
 

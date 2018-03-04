@@ -1,11 +1,11 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
-import Header from 'Header/Header';
-import Footer from 'Footer/Footer';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
 import Home from 'Home/Home';
-import Callback from 'Callback/Callback';
 import Auth from 'Auth/Auth';
+import Callback from 'Auth/Callback/Callback';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/Deploy';
 import CtorAdd from 'CtorAdd/CtorAdd';

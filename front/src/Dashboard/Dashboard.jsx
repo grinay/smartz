@@ -7,7 +7,7 @@ import {processControlForm,
         getNetworkName,
         getNetworkEtherscanAddress,
         checkMetaMask} from 'helpers/eth';
-import Alert from 'Common/Alert';
+import Alert from 'common/Alert';
 
 import './Dashboard.css';
 
