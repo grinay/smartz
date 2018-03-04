@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import {API_URL} from 'constants.js';
+const API_URL = /localhost/.test(window.location.origin)
+  ? 'http://localhost:3000/prod'
+  : window.location.origin + '/prod';
 
 const api = (auth) => {
   const accessToken = auth.getAccessToken();

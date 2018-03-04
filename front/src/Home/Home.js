@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {Button} from 'react-bootstrap';
 
-import {API_URL} from '../constants';
+import api from 'helpers/api';
 
 import './Home.css';
 
@@ -18,7 +17,7 @@ class Home extends Component {
     this.props.auth.login();
   }
   getCtors() {
-    axios.get(`${API_URL}/list_ctors`)
+    api(this.props.auth).get('/list_ctors')
       .then(response => {
         this.setState({ctors: response.data});
       })

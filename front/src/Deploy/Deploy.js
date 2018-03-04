@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {Panel, ControlLabel, Button, FormGroup, FormControl, Checkbox} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
-import api from 'Api/Api';
+import api from 'helpers/api';
 import Spinner from 'Spinner/Spinner';
 import FormWidgets from 'FormWidgets/FormWidgets';
-import {getNetworkEtherscanAddress, getNetworkName, checkMetaMask} from 'Eth/Eth';
+import {getNetworkEtherscanAddress, getNetworkName, checkMetaMask} from 'helpers/eth';
 import Alert from 'Common/Alert';
 
 import './Deploy.css';

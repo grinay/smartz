@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {find} from 'lodash';
 
-import api from 'Api/Api';
+import api from 'helpers/api';
 import {processControlForm,
         processResult,
         getNetworkName,
         getNetworkEtherscanAddress,
-        checkMetaMask} from 'Eth/Eth';
+        checkMetaMask} from 'helpers/eth';
 import FunctionCard from './FunctionCard';
 import Alert from 'Common/Alert';
 

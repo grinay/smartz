@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
-import {processControlForm, processResult, getNetworkEtherscanAddress} from 'Eth/Eth';
+import {processControlForm, processResult, getNetworkEtherscanAddress} from 'helpers/eth';
 import FormWidgets from 'FormWidgets/FormWidgets';
 import Spinner from 'Spinner/Spinner';
 
