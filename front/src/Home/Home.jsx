@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
 import api from 'helpers/api';
@@ -24,7 +25,6 @@ class Home extends Component {
   render() {
     const {isAuthenticated} = this.props.auth;
     const {ctors} = this.props;
-    console.log(this.props);
 
     return (
       <div className="container">
@@ -68,11 +68,10 @@ class Home extends Component {
                       </Button>
                     }
 
-                    {
-                      isAuthenticated() &&
-                      <a href={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
+                    {isAuthenticated() &&
+                      <Link to={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
                         {el.price_eth ? <span>Deploy for {el.price_eth} ETH</span> : <span>Deploy free</span>}
-                      </a>
+                      </Link>
                     }
                     <p className="card-text">
                       <small className="text-muted">
@@ -93,7 +92,7 @@ class Home extends Component {
 
           <br /><br />
           <h4>If you are developer</h4>
-          <p>You can <a href="/ctor-add">add a smart contract</a> to our platform.</p>
+          <p>You can <Link to="/ctor-add">add a smart contract</Link> to our platform.</p>
         </div>
       </div>
     );
