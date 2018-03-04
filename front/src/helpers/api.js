@@ -5,7 +5,7 @@ const API_URL = /localhost/.test(window.location.origin)
   : window.location.origin + '/prod';
 
 const api = (auth) => {
-  const accessToken = auth.getAccessToken();
+  const accessToken = auth.isAuthenticated() ? auth.getAccessToken() : null;
   return axios.create({
     baseURL: API_URL,
     headers: {
