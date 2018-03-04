@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
+import Alert from 'common/Alert';
 import api from 'helpers/api';
 
 import './Home.css';
@@ -24,27 +25,20 @@ class Home extends Component {
 
   render() {
     const {isAuthenticated} = this.props.auth;
-    const {ctors} = this.props;
+    const {ctors, metamaskStatus} = this.props;
 
     return (
       <div className="container">
-        {!window.Web3 &&
-          <div className="alert alert-success" role="alert">
-            <h4 className="alert-heading">Install MetaMask!</h4>
-            <p>
-              <b>You need MetaMask browser plugin to work with Smartz platform</b><br />
-              MetaMask is available for Chrome, Opera and Firefox browsers. <a href="https://metamask.io/">Get it here</a>, it's free!
-            </p>
-          </div>
+        {metamaskStatus &&
+          <Alert standardAlert={metamaskStatus} />
         }
 
-        <div className="alert alert-danger" role="alert">
-          <h4 className="alert-heading">Attention!</h4>
+        <Alert header="Attention!">
           <p>
             <b>Don't use our service with real ETH in Ethereum Mainnet!</b><br />
             We are in very early stage of development. Use it only for test and informational purposes with Rinkeby network chosen in your MetaMask client. Authors are not responsible for any possible loses in result of using our service.
           </p>
-        </div>
+        </Alert>
 
         <div>
           <h4>Available smart contracts:</h4>

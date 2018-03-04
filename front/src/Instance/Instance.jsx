@@ -41,14 +41,6 @@ class Instance extends Component {
       })
 
       .catch(error => this.setState({message: error.message}));
-
-    let noMetamask = false;
-    setInterval(() => {
-      if (noMetamask !== checkMetaMask()) {
-        noMetamask = checkMetaMask();
-        this.setState({noMetamask});
-      }
-    }, 100);
   }
 
   getConstants() {
@@ -59,10 +51,9 @@ class Instance extends Component {
                           (error, result) => {
           if (!error) {
             instance.functions[i].value = processResult(result);
-          } else
+          } else {
             console.error(i, error);
-
-            // console.log(i, func);
+          }
         });
       }
     });
@@ -70,9 +61,14 @@ class Instance extends Component {
   }
 
   render() {
-    const {noMetamask, message, instance} = this.state;
+    const {message, instance} = this.state;
+    const {metamaskStatus} = this.props;
 
-    if(noMetamask) return <Alert message={checkMetaMask()} />;
+    if (metamaskStatus) return (
+      <div className="container">
+        <Alert standardAlert={metamaskStatus} />
+      </div>
+    );
 
     return (
       <div>

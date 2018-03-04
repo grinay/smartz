@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
 import Header from './Header/Header';
@@ -11,6 +11,7 @@ import Deploy from 'Deploy/Deploy';
 import CtorAdd from 'CtorAdd/CtorAdd';
 import Dashboard from 'Dashboard/Dashboard';
 import Instance from 'Instance/Instance';
+import {checkMetaMask} from 'helpers/eth';
 
 const auth = new Auth();
 
@@ -20,31 +21,58 @@ const handleAuthentication = ({location}) => {
   }
 }
 
-export const App = () => {
-  return (
-    <div>
-      <Route render={(props) => <Header auth={auth} {...props} />} />
+class App extends Component {
+  componentWillMount() {
+    this.setState({});
 
-      <Switch>
-        <Route exact path="/" render={(props) => <Home auth={auth} {...props} />} />
-        <Route path="/callback" render={(props) => {
-          handleAuthentication(props);
-          return <Callback {...props} />
-        }}/>
+    let metamaskStatus = false;
+    setInterval(() => {
+      if (metamaskStatus !== checkMetaMask()) {
+        metamaskStatus = checkMetaMask();
+        this.setState({metamaskStatus});
+      }
+    }, 100);
+  }
 
-        {!auth.isAuthenticated() &&
-          <Redirect to="/" />
-        }
+  render() {
+    const {metamaskStatus} = this.state;
 
-        <Route path="/profile" render={props => (<Profile auth={auth} {...props} />)} />
-        <Route path="/deploy/:id" render={props => (<Deploy auth={auth} {...props} />)} />
-        <Route path="/ctor-add" render={props => (<CtorAdd auth={auth} {...props} />)} />
-        <Route path="/dashboard" render={props => (<Dashboard auth={auth} {...props} />)} />
-        <Route path="/instance/:id" render={props => (<Instance auth={auth} {...props} />)} />
-        {/* TODO: <Route component={Page404} />*/}
-      </Switch>
+    // if(noMetamask) return <Alert message={checkMetaMask()} />;
+    return (
+      <div>
+        <Route render={(props) => <Header auth={auth} {...props} />} />
 
-      <Route render={(props) => <Footer auth={auth} {...props} />} />
-    </div>
-  );
+        <Switch>
+          <Route exact path="/" render={(props) => (
+            <Home auth={auth} metamaskStatus={metamaskStatus} {...props} />
+          )} />
+          <Route path="/callback" render={(props) => {
+            handleAuthentication(props);
+            return <Callback {...props} />
+          }}/>
+
+          {!auth.isAuthenticated() &&
+            <Redirect to="/" />
+          }
+
+          <Route path="/profile" render={props => (<Profile auth={auth} {...props} />)} />
+          <Route path="/ctor-add" render={props => (<CtorAdd auth={auth} {...props} />)} />
+          <Route path="/deploy/:id" render={props => (
+            <Deploy auth={auth} metamaskStatus={metamaskStatus} {...props} />
+          )} />
+          <Route path="/dashboard" render={props => (
+            <Dashboard auth={auth} metamaskStatus={metamaskStatus} {...props} />
+          )} />
+          <Route path="/instance/:id" render={props => (
+            <Instance auth={auth} metamaskStatus={metamaskStatus} {...props} />
+          )} />
+          {/* TODO: <Route component={Page404} />*/}
+        </Switch>
+
+        <Route render={(props) => <Footer auth={auth} {...props} />} />
+      </div>
+    );
+  }
 }
+
+export default App;

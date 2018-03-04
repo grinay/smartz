@@ -5,8 +5,7 @@ import api from 'helpers/api';
 import {processControlForm,
         processResult,
         getNetworkName,
-        getNetworkEtherscanAddress,
-        checkMetaMask} from 'helpers/eth';
+        getNetworkEtherscanAddress} from 'helpers/eth';
 import Alert from 'common/Alert';
 
 import './Dashboard.css';
@@ -103,21 +102,17 @@ class Dashboard extends Component {
         });
       })
       .catch(error => this.setState({message: error.message}));
-
-    let noMetamask = false;
-    setInterval(() => {
-      if (noMetamask !== checkMetaMask()) {
-        noMetamask = checkMetaMask();
-        this.setState({noMetamask});
-      }
-    }, 100);
-
   }
 
   render() {
-    const {noMetamask, message, ctors} = this.state;
+    const {message, ctors} = this.state;
+    const {metamaskStatus} = this.props;
 
-    if(noMetamask) return <Alert message={checkMetaMask()} />;
+    if (metamaskStatus) return (
+      <div className="container">
+        <Alert standardAlert={metamaskStatus} />
+      </div>
+    );
 
     return (
       <div className="container dashboard">

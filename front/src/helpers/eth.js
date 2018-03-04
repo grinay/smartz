@@ -120,10 +120,10 @@ export const getNetworkEtherscanAddress = netId => {
 
 export const checkMetaMask = () => {
   if (!window.Web3) {
-    return "Please, install MetaMask.";
+    return 'noMetamask';
   }
   if (!web3.eth.accounts[0]) {
-    return "Please, sign in MetaMask.";
+    return 'unlockMetamask';
   }
   return false;
 };

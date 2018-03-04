@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import history from './history';
 import reducers from './reducers';
-import {App} from 'App/App';
+import App from 'App/App';
 
 import './index.css';
 

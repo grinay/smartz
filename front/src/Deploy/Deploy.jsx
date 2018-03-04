@@ -28,14 +28,6 @@ class Deploy extends Component {
 
   componentWillMount() {
     this.state.auth && this.getCtorParams();
-
-    let noMetamask = false;
-    setInterval(() => {
-      if (noMetamask !== checkMetaMask()) {
-        noMetamask = checkMetaMask();
-        this.setState({noMetamask});
-      }
-    }, 100);
   }
 
   getCtorParams() {
@@ -140,9 +132,14 @@ class Deploy extends Component {
   }
 
   render() {
-    const {noMetamask, ctor, mode, errors, spinner, instance} = this.state;
+    const {ctor, mode, errors, spinner, instance} = this.state;
+    const {metamaskStatus} = this.props;
 
-    if(noMetamask) return <Alert message={checkMetaMask()} />;
+    if (metamaskStatus) return (
+      <div className="container">
+        <Alert standardAlert={metamaskStatus} />
+      </div>
+    );
 
     // Add instance name field in the form beginning
     if (ctor && !ctor.schema.properties.instance_title) {
