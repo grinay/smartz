@@ -3,7 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import Home from 'Home/Home';
+import Home from 'Home/HomeContainer';
 import Auth from 'Auth/Auth';
 import Callback from 'Auth/Callback/Callback';
 import Profile from 'Profile/Profile';

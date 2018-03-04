@@ -6,26 +6,26 @@ import api from 'helpers/api';
 import './Home.css';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   componentWillMount() {
-    this.getCtors();
+    const {
+      auth, ctors,
+      fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess // actions
+    } = this.props;
+
+    if (!ctors.length) {
+      fetchCtorsRequest();
+
+      api(auth).get('/list_ctors')
+      .then(response => fetchCtorsSuccess(response.data))
+      .catch(error => fetchCtorsFailure(error.message));
+    }
   }
-  login() {
-    this.props.auth.login();
-  }
-  getCtors() {
-    api(this.props.auth).get('/list_ctors')
-      .then(response => {
-        this.setState({ctors: response.data});
-      })
-      .catch(error => this.setState({message: error.message}));
-  }
+
   render() {
     const {isAuthenticated} = this.props.auth;
-    const {ctors} = this.state;
+    const {ctors} = this.props;
+    console.log(this.props);
+
     return (
       <div className="container">
         {!window.Web3 &&
@@ -50,21 +50,24 @@ class Home extends Component {
           <h4>Available smart contracts:</h4>
           {ctors &&
             <div className="contracts-cards">
+
               {ctors.map((el, i) => (
                 <div className="card" key={i}>
                   <img className="card-img-top" src={`https://lorempixel.com/400/100/?${i}`} alt="" />
                   <div className="card-body">
                     <h3 className="card-title">{el.ctor_name}</h3>
                     <p className="card-text desc">{el.ctor_descr}</p>
+
                     {!isAuthenticated() &&
                       <Button
                         bsStyle="primary"
                         className="btn-margin"
-                        onClick={this.login.bind(this)}
+                        onClick={this.props.auth.login()}
                       >
                         Login to deploy
                       </Button>
                     }
+
                     {
                       isAuthenticated() &&
                       <a href={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
@@ -79,6 +82,7 @@ class Home extends Component {
                     </p>
                   </div>
                 </div>
+
               ))}
             </div>
           }
