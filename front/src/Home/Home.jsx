@@ -5,7 +5,7 @@ import {Button} from 'react-bootstrap';
 import Alert from 'common/Alert';
 import Spinner from 'common/Spinner';
 import api from 'helpers/api';
-import CtorCard from 'Ctor/CtorCard';
+import CtorCard from 'Ctors/CtorCard';
 
 import './Home.css';
 

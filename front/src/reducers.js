@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import home from './Home/HomeReducer';
+import ctor from 'Ctors/CtorsReducer';
 
 const reducers = combineReducers({
-  home
+  ctor
 });
 
 export default reducers;

@@ -2,11 +2,11 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import Home from './Home';
-import {fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess} from './HomeActions';
+import {fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess} from 'Ctors/CtorsActions';
  
 const mapStateToProps = state => ({
-  ctors: state.home.ctors,
-  fetchStatus: state.home.fetchStatus
+  ctors: state.ctor.ctors,
+  fetchStatus: state.ctor.fetchStatus
 });
  
 const mapDispatchToProps = dispatch => ({

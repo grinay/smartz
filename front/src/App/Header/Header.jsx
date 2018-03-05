@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Navbar, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 import './Header.css';
 
@@ -24,9 +25,9 @@ class Header extends Component {
           <Navbar.Header>
             <div className="logo">
               <Navbar.Brand>
-                <a href="/">
+                <Link to="/">
                   <img src={require('./i/smartz-logo.jpg')} alt="Smartz logo" />
-                </a>
+                </Link>
                 <span className="version">v0.4.1 alpha</span>
               </Navbar.Brand>
             </div>
