@@ -10,7 +10,8 @@ import './CtorCard.css';
 
 class CtorCard extends Component {
   render() {
-    const {ctor, isAuthenticated} = this.props;
+    const {ctor, auth} = this.props;
+    const isAuthenticated = auth.isAuthenticated();
 
     return (
       <div className="card ctor-card">
@@ -23,7 +24,7 @@ class CtorCard extends Component {
             <Button
               bsStyle="primary"
               className="btn-margin"
-              onClick={this.props.auth.login()}
+              onClick={auth.login}
             >
               Login to deploy
             </Button>

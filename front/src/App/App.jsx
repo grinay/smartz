@@ -3,9 +3,9 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
+import Auth from './Auth/Auth';
+import Callback from './Auth/Callback/Callback';
 import Home from 'Home/HomeContainer';
-import Auth from 'Auth/Auth';
-import Callback from 'Auth/Callback/Callback';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/Deploy';
 import CtorAdd from 'CtorAdd/CtorAdd';

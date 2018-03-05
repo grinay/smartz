@@ -26,8 +26,7 @@ class Home extends Component {
   }
 
   render() {
-    const isAuthenticated = this.props.auth.isAuthenticated();
-    const {ctors, metamaskStatus} = this.props;
+    const {ctors, metamaskStatus, auth} = this.props;
 
     return (
       <div className="container">
@@ -47,7 +46,7 @@ class Home extends Component {
           {ctors &&
             <div className="contracts-cards">
               {ctors.map((el, i) => (
-                <CtorCard key={i} ctor={el} isAuthenticated={isAuthenticated} />
+                <CtorCard key={i} ctor={el} auth={auth} />
               ))}
             </div>
           }
