@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import spinner from './i/loading.svg';
 
 class Spinner extends Component {
   render() {
@@ -8,7 +7,11 @@ class Spinner extends Component {
     return (
       <div className="spinner">
         <p>{text}</p>
-        <img src={spinner} alt={alt} width={width} />
+        <img
+          src={require('./i/loading.svg')}
+          alt={alt || 'Spinner'}
+          width={width}
+        />
       </div>
     );
   }

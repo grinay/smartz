@@ -3,7 +3,9 @@ import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
 import Alert from 'common/Alert';
+import Spinner from 'common/Spinner';
 import api from 'helpers/api';
+import CtorCard from 'Ctor/CtorCard';
 
 import './Home.css';
 
@@ -14,7 +16,7 @@ class Home extends Component {
       fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess // actions
     } = this.props;
 
-    if (!ctors.length) {
+    if (!ctors.length) { // get ctors from API
       fetchCtorsRequest();
 
       api(auth).get('/list_ctors')
@@ -24,7 +26,7 @@ class Home extends Component {
   }
 
   render() {
-    const {isAuthenticated} = this.props.auth;
+    const isAuthenticated = this.props.auth.isAuthenticated();
     const {ctors, metamaskStatus} = this.props;
 
     return (
@@ -44,44 +46,14 @@ class Home extends Component {
           <h4>Available smart contracts:</h4>
           {ctors &&
             <div className="contracts-cards">
-
               {ctors.map((el, i) => (
-                <div className="card" key={i}>
-                  <img className="card-img-top" src={`https://lorempixel.com/400/100/?${i}`} alt="" />
-                  <div className="card-body">
-                    <h3 className="card-title">{el.ctor_name}</h3>
-                    <p className="card-text desc">{el.ctor_descr}</p>
-
-                    {!isAuthenticated() &&
-                      <Button
-                        bsStyle="primary"
-                        className="btn-margin"
-                        onClick={this.props.auth.login()}
-                      >
-                        Login to deploy
-                      </Button>
-                    }
-
-                    {isAuthenticated() &&
-                      <Link to={`/deploy/${el.ctor_id}`} className="btn btn-success btn-deploy">
-                        {el.price_eth ? <span>Deploy for {el.price_eth} ETH</span> : <span>Deploy free</span>}
-                      </Link>
-                    }
-                    <p className="card-text">
-                      <small className="text-muted">
-                        Author: Vladimir Khramov<br />
-                        Updated: 11 feb 2018
-                      </small>
-                    </p>
-                  </div>
-                </div>
-
+                <CtorCard key={i} ctor={el} isAuthenticated={isAuthenticated} />
               ))}
             </div>
           }
 
           {!ctors &&
-            <p>Contracts are loading</p>
+            <Spinner text="Loading contracts" width="100" />
           }
 
           <br /><br />
