@@ -1,5 +1,5 @@
 
-from constructor_engine.api import ConstructorInstance
+from smartz.api.constructor_engine import ConstructorInstance
 from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
 
