@@ -217,7 +217,7 @@ class Constructor(ConstructorInstance):
             'dashboard_functions': ['symbol', 'totalSupply']
         }
 
-
+    # language=Solidity
     _TEMPLATE = """
 pragma solidity ^0.4.18;
 
