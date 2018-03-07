@@ -79,6 +79,7 @@ class Constructor(ConstructorInstance):
         }
 
         return {
+            "result": "success",
             "schema": json_schema
         }
 
@@ -104,7 +105,7 @@ class Constructor(ConstructorInstance):
             .replace('%shareholders_code%', shareholders_code)
 
         return {
-            'result': "success",
+            "result": "success",
             'source': source,
             'contract_name': "EquityToken"
         }
@@ -212,8 +213,8 @@ class Constructor(ConstructorInstance):
         }
 
         return {
+            "result": "success",
             'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
-
             'dashboard_functions': ['symbol', 'totalSupply']
         }
 
