@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
-import ctor from 'Ctors/CtorsReducer';
+import ctors from 'Ctors/CtorsReducer';
+import deploy from 'Deploy/DeployReducer';
 
 const reducers = combineReducers({
-  ctor
+  ctors,
+  deploy
 });
 
 export default reducers;

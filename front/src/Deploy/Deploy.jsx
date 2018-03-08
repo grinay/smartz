@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {Panel, ControlLabel, Button, FormGroup, FormControl, Checkbox} from 'react-bootstrap';
-import Form from 'react-jsonschema-form';
 
 import api from 'helpers/api';
 import Spinner from 'common/Spinner';
-import FormWidgets from 'common/FormWidgets';
-import {getNetworkEtherscanAddress, getNetworkName, checkMetaMask} from 'helpers/eth';
+import {getNetworkEtherscanAddress, getNetworkName} from 'helpers/eth';
 import Alert from 'common/Alert';
+import DeployStep1 from './DeployStep1';
 
 import './Deploy.css';
 
@@ -27,20 +26,20 @@ class Deploy extends Component {
   }
 
   componentWillMount() {
-    this.state.auth && this.getCtorParams();
-  }
+    const {fetchCtorParamsRequest,
+           fetchCtorParamsFailure,
+           fetchCtorParamsSuccess} = this.props;
+    const {ctorId} = this.state;
 
-  getCtorParams() {
-    api(this.props.auth).post(`/get_ctor_params`, {
-      'ctor_id': this.state.ctorId
-    })
-      .then(response => {
-        this.setState({
-          ctor: response.data
-        });
-        // console.log(response.data);
+    if (this.state.auth) {
+      fetchCtorParamsRequest(ctorId);
+
+      api(this.props.auth).post(`/get_ctor_params`, {
+        'ctor_id': ctorId
       })
-      .catch(error => this.setState({message: error.message}));
+      .then(response => fetchCtorParamsSuccess(ctorId, response.data))
+      .catch(error => fetchCtorParamsFailure(ctorId, error.message));
+    }
   }
 
   getContractAddress(tx_hash) {
@@ -81,39 +80,9 @@ class Deploy extends Component {
         network_id: Number.parseInt(netId, 10),
         public_access: publicAccess ? true : false
       })
-
+      // TODO .then данные записаны
       .catch(error => console.log(error));
     }
-  }
-
-  submit({formData}) {
-    // if Validation ok
-    this.setState({spinner: true});
-
-    const instTitle = formData.instance_title;
-    delete formData.instance_title;
-    api(this.props.auth).post(`/construct`, {
-      ctor_id: this.state.ctorId,
-      instance_title: instTitle,
-      fields: formData
-    })
-      .then(response => {
-        if (response.data.result === 'error') {
-          this.setState({
-            spinner: false,
-            errors: response.data.errors
-          });
-
-        } else {
-          this.setState({
-            mode: 'source',
-            instance: response.data,
-            spinner: false,
-            errors: null
-          });
-        }
-      })
-      .catch(error => console.log(error));
   }
 
   deploy() {
@@ -132,37 +101,26 @@ class Deploy extends Component {
   }
 
   render() {
-    const {ctor, mode, errors, spinner, instance} = this.state;
-    const {metamaskStatus} = this.props;
+    const {mode} = this.state;
 
+    const {metamaskStatus} = this.props;
     if (metamaskStatus) return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>
     );
 
-    // Add instance name field in the form beginning
-    if (ctor && !ctor.schema.properties.instance_title) {
-      ctor.schema.properties.instance_title = {
-        title: "Instance name",
-        type: "string",
-        description: "Name of smart contract instance you are now configuring and deploying (any string of 3..100 chars)",
-        minLength: 3,
-        maxLength: 100
-      };
-      ctor.schema.required.push("instance_title");
+    const {auth, ctor, status, errors, instance} = this.props;
+    const {constructRequest, constructError, constructSuccess} = this.props;
 
-      if (ctor.ui_schema && ("ui:order" in ctor.ui_schema)) {
-        ctor.ui_schema["ui:order"].unshift("instance_title");
-
-      } else {
-        if (!ctor.ui_schema)
-          ctor.ui_schema = {};
-
-        ctor.ui_schema["ui:order"] = Object.keys(ctor.schema.properties);
-        ctor.ui_schema["ui:order"].unshift(ctor.ui_schema["ui:order"].pop())
-      }
-    }
+    const step1Props = {
+      auth,
+      ctor,
+      errors,
+      constructRequest,
+      constructError,
+      constructSuccess
+    };
 
     return (
       <div>
@@ -174,44 +132,18 @@ class Deploy extends Component {
             </div>
           }
 
-          {!mode && ctor &&
-            <Panel header="Deploy step 1 of 2: customize your contract">
-              {!spinner &&
-                <Form schema={ctor.schema}
-                  uiSchema={ctor.ui_schema}
-                  widgets={FormWidgets}
-                  onSubmit={this.submit.bind(this)}
-                  onError={(e) => console.log("I have", e.length, "errors to fix")}
-                  showErrorList={false}>
-                  <div>
-                    <Button bsStyle="success"
-                      className="btn-margin"
-                      type="submit"
-                      disabled={this.state.spinner}>
-                      Proceed to step 2
-                    </Button>
-                    {errors &&
-                      // TODO: нормальная обработка ошибок с бека
-                      <div className="alert alert-danger" role="alert">
-                        {Object.keys(errors).forEach((errName) => (
-                          <p key={errName}>{errors[errName]}</p>
-                        ))}
-                      </div>
-                    }
-                  </div>
-                </Form>
-              }
-
-              {spinner &&
-                <Spinner
-                  text="Preparing code, this can take up to 30-40 seconds..."
-                  alt="Spinner"
-                />
-              }
-            </Panel>
+          {status === 'configure' && ctor && ctor.fetchStatus === 'success' &&
+            <DeployStep1 {...step1Props} />
           }
 
-          {mode === "source" &&
+          {status === "construct_request" &&
+            <Spinner
+              text="Preparing code, this can take up to 30-40 seconds..."
+              alt="Spinner"
+            />
+          }
+
+          {status === "construct_success" &&
             <Panel header="Deploy step 2 of 2: check the code">
               <form>
                 <FormGroup controlId="formControlsTextarea">

@@ -3,9 +3,6 @@ import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import moment from 'moment';
 
-import Alert from 'common/Alert';
-import api from 'helpers/api';
-
 import './CtorCard.css';
 
 class CtorCard extends Component {

@@ -7,7 +7,7 @@ import Auth from './Auth/Auth';
 import Callback from './Auth/Callback/Callback';
 import Home from 'Home/HomeContainer';
 import Profile from 'Profile/Profile';
-import Deploy from 'Deploy/Deploy';
+import Deploy from 'Deploy/DeployContainer';
 import CtorAdd from 'CtorAdd/CtorAdd';
 import Dashboard from 'Dashboard/Dashboard';
 import Instance from 'Instance/Instance';

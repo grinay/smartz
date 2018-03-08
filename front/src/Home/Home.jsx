@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Button} from 'react-bootstrap';
 
 import Alert from 'common/Alert';
 import Spinner from 'common/Spinner';
@@ -12,17 +11,17 @@ import './Home.css';
 class Home extends Component {
   componentWillMount() {
     const {
-      auth, ctors,
-      fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess // actions
+      auth,
+      fetchCtorsRequest,
+      fetchCtorsFailure,
+      fetchCtorsSuccess
     } = this.props;
 
-    if (!ctors.length) { // get ctors from API
-      fetchCtorsRequest();
+    fetchCtorsRequest();
 
-      api(auth).get('/list_ctors')
-      .then(response => fetchCtorsSuccess(response.data))
-      .catch(error => fetchCtorsFailure(error.message));
-    }
+    api(auth).get('/list_ctors')
+    .then(response => fetchCtorsSuccess(response.data))
+    .catch(error => fetchCtorsFailure(error.message));
   }
 
   render() {

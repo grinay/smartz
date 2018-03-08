@@ -5,8 +5,7 @@ import api from 'helpers/api';
 import {processControlForm,
         processResult,
         getNetworkName,
-        getNetworkEtherscanAddress,
-        checkMetaMask} from 'helpers/eth';
+        getNetworkEtherscanAddress} from 'helpers/eth';
 import FunctionCard from './FunctionCard';
 import Alert from 'common/Alert';
 

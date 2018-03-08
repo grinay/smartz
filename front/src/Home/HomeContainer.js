@@ -5,21 +5,13 @@ import Home from './Home';
 import {fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess} from 'Ctors/CtorsActions';
  
 const mapStateToProps = state => ({
-  ctors: state.ctor.ctors,
-  fetchStatus: state.ctor.fetchStatus
+  ctors: state.ctors.ctors,
+  fetchStatus: state.ctors.fetchStatus
 });
  
-const mapDispatchToProps = dispatch => ({
-  fetchCtorsRequest: () => {
-    dispatch(fetchCtorsRequest());
-  },
-  fetchCtorsFailure: error => {
-    dispatch(fetchCtorsFailure(error));
-  },
-  fetchCtorsSuccess: ctors => {
-    dispatch(fetchCtorsSuccess(ctors));
-  }
-});
+const mapDispatchToProps = {fetchCtorsRequest,
+                            fetchCtorsFailure,
+                            fetchCtorsSuccess};
  
 const HomeContainer = withRouter(connect(
   mapStateToProps,
