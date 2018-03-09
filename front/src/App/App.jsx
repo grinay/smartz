@@ -9,8 +9,8 @@ import Home from 'Home/HomeContainer';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/DeployContainer';
 import CtorAdd from 'CtorAdd/CtorAdd';
-import Dashboard from 'Dashboard/Dashboard';
-import Instance from 'Instance/Instance';
+import Dashboard from 'Dashboard/DashboardContainer';
+import Instance from 'Instances/Instance';
 import {checkMetaMask} from 'helpers/eth';
 
 const auth = new Auth();

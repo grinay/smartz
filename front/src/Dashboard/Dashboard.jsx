@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {find} from 'lodash';
 
+import {
+  processControlForm, processResult, getNetworkName,
+  getNetworkEtherscanAddress
+} from 'helpers/eth';
 import api from 'helpers/api';
-import {processControlForm,
-        processResult,
-        getNetworkName,
-        getNetworkEtherscanAddress} from 'helpers/eth';
 import Alert from 'common/Alert';
 
 import './Dashboard.css';
@@ -15,167 +15,114 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      auth: props.auth.isAuthenticated(),
-      ctors: []
+      updateCycleActive: false
     };
   }
 
   componentWillMount() {
-    // Get contracts
-    api(this.props.auth).get('/list_ctors')
+    const {
+      auth,
+      fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess,
+      fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess
+    } = this.props;
 
-      .then(response => {
-        this.setState({ctors: response.data});
-        const getInstancesPromises = [];
+    fetchCtorsRequest();
+    api(auth).get('/list_ctors')
+    .then(response => fetchCtorsSuccess(response.data))
+    .catch(error => fetchCtorsFailure(error));
 
-        response.data.forEach((ctor) => {
-          getInstancesPromises.push(
-            api(this.props.auth).post('/list_instances', {'ctor_id': ctor.ctor_id})
-          );
-        });
+    fetchInstancesRequest();
+    api(auth).get('/get_all_instances')
+    .then(response => fetchInstancesSuccess(response.data))
+    .catch(error => fetchInstancesFailure(error));
+  }
 
-        return Promise.all(getInstancesPromises);
-      })
+  componentDidUpdate() {
+    if (this.props.instances.length && !this.state.updateCycleActive) {
+      this.setState({
+        updateCycleActive: true
+      });
+      this.updateCycle();
+      setInterval(this.updateCycle.bind(this), 60000);
+    }
+  }
 
-      // Get instances of every contract
-      .then(rawInstances => {
-        const ctors = [...this.state.ctors];
-        const getInstDetailsPromises = [];
+  updateCycle() {
+    const {instances, instanceFuncResult} = this.props;
 
-        rawInstances.forEach((rawInst, i) => {
-          const instances = [];
+    instances.forEach((inst, j) => {
+      const {
+        instance_id, abi, address, dashboard_functions, functions
+      } = inst;
 
-          rawInst.data.forEach(instId => {
-            instances.push({instance_id: instId});
-
-            getInstDetailsPromises.push(
-              api(this.props.auth).post('/get_instance_details', {'instance_id': instId})
-            );
-          })
-
-          ctors[i].instances = instances;
-        });
-
-        this.setState({ctors});
-        return Promise.all(getInstDetailsPromises);
-      })
-      // Get details of every instance
-      .then(instDetails => {
-        const ctors = [...this.state.ctors];
-
-        ctors.forEach(ctor => {
-          ctor.instances.forEach(inst => {
-            inst.details = instDetails.shift().data;
-            // console.log(inst.details);
-          });
-        });
-
-        this.setState({ctors});
-        return ctors;
-      })
-
-      // Get data from blockchain
-      .then(ctors => {
-        ctors.forEach((ctor, i) => {
-          ctor.instances.forEach((inst, j) => {
-            const {abi, address, dashboard_functions, functions} = inst.details;
-
-            if (dashboard_functions) {
-              inst.dashboard_values = {};
-
-              dashboard_functions.forEach(dFunc => {
-                const fSpec = find(functions, {name: dFunc});
-
-                processControlForm(abi, fSpec, [], address,
-                                  (error, result) => {
-                  if(!error) {
-                    const res = processResult(result);
-                    inst.dashboard_values[dFunc] = res;
-                    this.setState({ctors});
-                  } else
-                    console.error(error);
-                });
-              });
+      if (dashboard_functions) {
+        dashboard_functions.forEach(dFunc => {
+          const fSpec = find(functions, {name: dFunc});
+          processControlForm(abi, fSpec, [], address, (error, result) => {
+            if(error) {
+              console.error(error);
+            } else {
+              instanceFuncResult(
+                instance_id,
+                dFunc,
+                processResult(result)
+              );
             }
-
           });
         });
-      })
-      .catch(error => this.setState({message: error.message}));
+      }
+    });
   }
 
   render() {
-    const {message, ctors} = this.state;
     const {metamaskStatus} = this.props;
-
     if (metamaskStatus) return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>
     );
 
+    const {ctors, ctorsError, instances, instancesError} = this.props;
     return (
       <div className="container dashboard">
-
         <h1>My smart contracts</h1>
-        {message &&
+
+        {(ctorsError || instancesError) &&
           <div className="alert alert-danger" role="alert">
-            <p>{message}</p>
+            {ctorsError && <p>{ctorsError}</p>}
+            {instancesError && <p>{instancesError}</p>}
           </div>
         }
 
-        {ctors && ctors.map((ctor, i) => (
-          <div key={i}>
-            {(ctor.instances && ctor.instances.length > 0) &&
-              ctor.instances.map((inst, j) => (
+        {instances && instances.map((inst, j) => (
+          <div className="card" key={j}>
+            <div className="card-body">
+              <div>
+                <h3 className="card-title">
+                  <a href={`/instance/${inst.instance_id}`}>
+                    {inst.instance_title}
+                  </a>
+                  &nbsp;({find(ctors, {ctor_id: inst.ctor_id}).ctor_name})
+                </h3>
+                <p className="card-text desc">
+                  {inst.address}&emsp;({getNetworkName(inst.network_id.toString())})&emsp;
+                  <a className="etherscan" href={getNetworkEtherscanAddress(inst.network_id.toString()) + `/address/${inst.address}`}>
+                    see on Etherscan
+                  </a>
+                </p>
+              </div>
 
-                <div className="card" key={j}>
-                  <div className="card-body">
-                    {inst.details && inst.details.address &&
-                      <div>
-                        <h3 className="card-title">
-                          <a href={`/instance/${inst.instance_id}`}>
-                            {inst.details.instance_title}
-                          </a>
-                          &nbsp;({ctor.ctor_name})
-                        </h3>
-                        <p className="card-text desc">
-                          {inst.details.address}&emsp;({getNetworkName(inst.details.network_id.toString())})&emsp;
-                          <a className="etherscan" href={getNetworkEtherscanAddress(inst.details.network_id.toString()) + `/address/${inst.details.address}`}>
-                            see on Etherscan
-                          </a>
-                        </p>
-                      </div>
-                    }
-
-                    {(!inst.details || !inst.details.address) &&
-                      <h3>{ctor.ctor_name}</h3>
-                    }
-
-                    {inst.details && inst.dashboard_values &&
-                      <div className="dashboard-functions">
-                        {inst.details.dashboard_functions.map((func, k) => (
-                          <div key={k}>
-                            <span>{find(inst.details.functions, {name: func}).title}</span><br />
-                            {inst.dashboard_values[func]}
-                          </div>
-                        ))}
-                      </div>
-                    }
-
-                    {inst.details && inst.details.error &&
-                      <div className="manage">
-                        <a href={`/deploy/${inst.instance_id}`}>
-                          Deploy now
-                        </a> [in development]
-                      </div>
-                    }
-
-                  </div>
+              {inst.funcResults &&
+                <div className="dashboard-functions">
+                  {inst.dashboard_functions.map((func, k) => (
+                    <div key={k}>
+                      <span>{find(inst.functions, {name: func}).title}</span><br />
+                      {inst.funcResults[func]}
+                    </div>
+                  ))}
                 </div>
-
-              ))
-            }
+              }
+            </div>
           </div>
         ))}
       </div>
