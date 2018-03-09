@@ -34,15 +34,32 @@ def assert_conforms2schema(data, full_schema):
     except ValidationError as exc:
         assert False, str(exc)
 
+def is_conforms2schema(data, full_schema):
+    try:
+        validate(data, full_schema)
+    except ValidationError:
+        return False
+
+    return True
+
 
 def assert_conforms2definition(data, full_schema, definition_name):
     assert_conforms2schema(data, _definition_validator(full_schema, definition_name))
 
 
 def assert_conforms2schema_part(data, full_schema, schema_pointer):
+    assert_conforms2schema(data, _get_fragment_schema(full_schema, schema_pointer))
+
+def is_conforms2schema_part(data, full_schema, schema_pointer):
+    return is_conforms2schema(data, _get_fragment_schema(full_schema, schema_pointer))
+
+def _get_fragment_schema(full_schema, schema_pointer):
     fragment_schema = deepcopy(_resolve_fragment(full_schema, schema_pointer))
-    fragment_schema['definitions'] = deepcopy(full_schema['definitions'])
-    assert_conforms2schema(data, fragment_schema)
+    if 'definitions' in full_schema:
+        fragment_schema['definitions'] = deepcopy(full_schema['definitions'])
+    else:
+        fragment_schema['definitions'] = {}
+    return fragment_schema
 
 
 def _definition_validator(schema, definition_name):

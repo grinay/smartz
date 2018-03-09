@@ -1,5 +1,5 @@
 
-from constructor_engine.api import ConstructorInstance
+from smartz.api.constructor_engine import ConstructorInstance
 from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
 
@@ -89,6 +89,7 @@ class Constructor(ConstructorInstance):
         ui_schema = {}
 
         return {
+            "result": "success",
             "schema": json_schema,
             "ui_schema": ui_schema
         }
@@ -141,9 +142,9 @@ class Constructor(ConstructorInstance):
             .replace('%constructor_inner_code%', constructor_inner_code)
 
         return {
-            'result': "success",
-            'source': source,
-            'contract_name': "Token"
+            "result": "success",
+            "source": source,
+            "contract_name": "Token"
         }
 
     def post_construct(self, fields, abi_array):
@@ -319,8 +320,8 @@ class Constructor(ConstructorInstance):
         }
 
         return {
+            "result": "success",
             'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
-
             'dashboard_functions': ['symbol', 'totalSupply']
         }
 

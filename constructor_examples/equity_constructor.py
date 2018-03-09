@@ -1,5 +1,5 @@
 
-from constructor_engine.api import ConstructorInstance
+from smartz.api.constructor_engine import ConstructorInstance
 from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
 
 
@@ -79,6 +79,7 @@ class Constructor(ConstructorInstance):
         }
 
         return {
+            "result": "success",
             "schema": json_schema
         }
 
@@ -104,7 +105,7 @@ class Constructor(ConstructorInstance):
             .replace('%shareholders_code%', shareholders_code)
 
         return {
-            'result': "success",
+            "result": "success",
             'source': source,
             'contract_name': "EquityToken"
         }
@@ -212,12 +213,12 @@ class Constructor(ConstructorInstance):
         }
 
         return {
+            "result": "success",
             'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
-
             'dashboard_functions': ['symbol', 'totalSupply']
         }
 
-
+    # language=Solidity
     _TEMPLATE = """
 pragma solidity ^0.4.18;
 
