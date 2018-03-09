@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {find} from 'lodash';
+import {Link} from 'react-router-dom';
 
 import {
   processControlForm, processResult, getNetworkName,
@@ -101,12 +102,12 @@ class Dashboard extends Component {
             <div className="card-body">
               <div>
                 <h3 className="card-title">
-                  <a href={`/instance/${inst.instance_id}`}>
+                  <Link to={`/instance/${inst.instance_id}`}>
                     {inst.instance_title}
-                  </a>
+                  </Link>
                   &nbsp;({find(ctors, {ctor_id: inst.ctor_id})
-                  ? find(ctors, {ctor_id: inst.ctor_id}).ctor_name
-                  : ''})
+                    ? find(ctors, {ctor_id: inst.ctor_id}).ctor_name
+                    : ''})
                 </h3>
                 <p className="card-text desc">
                   {inst.address}&emsp;({getNetworkName(inst.network_id.toString())})&emsp;

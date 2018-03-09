@@ -88,9 +88,9 @@ class Instance extends Component {
                 {ctor &&
                   <span>
                     &emsp;(
-                    <a href={`/deploy/${ctor.ctor_id}`}>
+                    <Link to={`/deploy/${ctor.ctor_id}`}>
                       {ctor.ctor_name}
-                    </a>)
+                    </Link>)
                   </span>
                 }
               </h1>

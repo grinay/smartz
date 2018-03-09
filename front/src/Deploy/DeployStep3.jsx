@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import {Panel} from 'react-bootstrap';
 
 import {getNetworkName, getNetworkEtherscanAddress} from 'helpers/eth';
@@ -27,7 +28,7 @@ class DeployStep3 extends Component {
             Congratulations! Your contract is deployed to {getNetworkName(netId)}!<br />
             Contract address is {contractAddress}.<br />
             Check it <a href={getNetworkEtherscanAddress(netId) + '/address/' + contractAddress}>on Etherscan</a> (it can take some time for Etherscan to see contract just deployed)<br />
-            and <a href={`/instance/${instance.instance_id}`}>manage it on Smartz</a>.
+            and <Link to={`/instance/${instance.instance_id}`}>manage it on Smartz</Link>.
           </div>
         }
       </Panel>
