@@ -3,12 +3,20 @@ import {connect} from 'react-redux';
 import {find} from 'lodash';
 
 import Deploy from './Deploy';
-import {fetchCtorParamsRequest,
-        fetchCtorParamsFailure,
-        fetchCtorParamsSuccess} from 'Ctors/CtorsActions';
-import {constructRequest,
-        constructError,
-        constructSuccess} from './DeployActions';
+import {
+  fetchCtorParamsRequest,
+  fetchCtorParamsFailure,
+  fetchCtorParamsSuccess
+} from 'Ctors/CtorsActions';
+import {
+  constructRequest,
+  constructError,
+  constructSuccess,
+  setPublicAccess,
+  deployTxSent,
+  deployTxError,
+  deployTxMined
+} from './DeployActions';
  
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -23,7 +31,11 @@ const mapDispatchToProps = {
   fetchCtorParamsSuccess,
   constructRequest,
   constructError,
-  constructSuccess
+  constructSuccess,
+  setPublicAccess,
+  deployTxSent,
+  deployTxError,
+  deployTxMined
 };
  
 const DeployContainer = withRouter(connect(

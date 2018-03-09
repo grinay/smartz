@@ -31,7 +31,7 @@ class App extends Component {
         metamaskStatus = checkMetaMask();
         this.setState({metamaskStatus});
       }
-    }, 100);
+    }, 250);
   }
 
   render() {

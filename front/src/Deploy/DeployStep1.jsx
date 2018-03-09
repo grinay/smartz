@@ -8,7 +8,7 @@ import FormWidgets from 'common/FormWidgets';
 class DeployStep1 extends Component {
   submit({formData}) {
     const {ctor, auth} = this.props;
-    const {constructRequest, constructErrors, constructSuccess} = this.props;
+    const {constructRequest, constructError, constructSuccess} = this.props;
 
     constructRequest();
 
@@ -22,17 +22,20 @@ class DeployStep1 extends Component {
 
     .then(response => {
       if (response.data.result === 'error') {
-        constructErrors(response.data.errors);
+        constructError(response.data.errors);
       } else {
         constructSuccess(response.data);
       }
     })
 
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error);
+      constructError(error);
+    });
   }
 
   render() {
-    const {ctor, errors} = this.props;
+    const {ctor} = this.props;
 
     // Add instance name field in the form beginning
     if (ctor && ctor.schema && !ctor.schema.properties.instance_title) {
@@ -58,7 +61,7 @@ class DeployStep1 extends Component {
     }
 
     return (
-      <Panel header="Deploy step 1 of 2: customize your contract">
+      <Panel header="Deploy step 1 of 3: customize your contract">
         <Form schema={ctor.schema}
           uiSchema={ctor.ui_schema}
           widgets={FormWidgets}
@@ -71,14 +74,6 @@ class DeployStep1 extends Component {
               type="submit">
               Proceed to step 2
             </Button>
-            {errors &&
-              // TODO: нормальная обработка ошибок с бека
-              <div className="alert alert-danger" role="alert">
-                {Object.keys(errors).forEach((errName) => (
-                  <p key={errName}>{errors[errName]}</p>
-                ))}
-              </div>
-            }
           </div>
         </Form>
       </Panel>
