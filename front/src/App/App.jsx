@@ -10,7 +10,7 @@ import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/DeployContainer';
 import CtorAdd from 'CtorAdd/CtorAdd';
 import Dashboard from 'Dashboard/DashboardContainer';
-import Instance from 'Instances/Instance';
+import Instance from 'Instances/InstanceContainer';
 import {checkMetaMask} from 'helpers/eth';
 
 const auth = new Auth();

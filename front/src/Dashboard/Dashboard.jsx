@@ -38,7 +38,9 @@ class Dashboard extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.instances.length && !this.state.updateCycleActive) {
+    const {ctors, instances} = this.props;
+
+    if (instances.length && ctors.length && !this.state.updateCycleActive) {
       this.setState({
         updateCycleActive: true
       });
@@ -102,7 +104,9 @@ class Dashboard extends Component {
                   <a href={`/instance/${inst.instance_id}`}>
                     {inst.instance_title}
                   </a>
-                  &nbsp;({find(ctors, {ctor_id: inst.ctor_id}).ctor_name})
+                  &nbsp;({find(ctors, {ctor_id: inst.ctor_id})
+                  ? find(ctors, {ctor_id: inst.ctor_id}).ctor_name
+                  : ''})
                 </h3>
                 <p className="card-text desc">
                   {inst.address}&emsp;({getNetworkName(inst.network_id.toString())})&emsp;
