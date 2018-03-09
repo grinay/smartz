@@ -1,0 +1,15 @@
+.ctor-card h3 {
+  margin-top: 1rem;
+}
+
+.ctor-card .card-text {
+  margin-top: 1rem;
+}
+
+.ctor-card .desc {
+  color: #555;
+}
+
+.ctor-card .btn-deploy {
+  margin-top: 1rem;
+}

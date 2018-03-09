@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Navbar, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 import './Header.css';
 
@@ -8,50 +9,47 @@ class Header extends Component {
     this.props.history.replace(`/${route}`)
   }
 
-  login() {
-    this.props.auth.login();
-  }
-
   logout() {
     this.props.auth.logout();
   }
 
   render() {
-    const {isAuthenticated} = this.props.auth;
+    const {auth} = this.props;
+    const isAuthenticated = auth.isAuthenticated();
+
     return (
       <div>
         <Navbar fluid>
           <Navbar.Header>
             <div className="logo">
               <Navbar.Brand>
-                <a href="/">
+                <Link to="/">
                   <img src={require('./i/smartz-logo.jpg')} alt="Smartz logo" />
-                </a>
+                </Link>
                 <span className="version">v0.4.1 alpha</span>
               </Navbar.Brand>
             </div>
+
             <div className="nav-buttons">
-              {!isAuthenticated() && (
+              {!isAuthenticated && (
                 <Button
                   bsStyle="primary"
                   className="btn-margin"
-                  onClick={this.login.bind(this)}
+                  onClick={auth.login}
                 >
                   Log In
                 </Button>
               )}
-              {isAuthenticated() && (
+
+              {isAuthenticated && (
                 <span>
-                  <Button bsStyle="primary" className="btn-margin"
-                    onClick={this.goTo.bind(this, 'dashboard')}>
+                  <Link to={'/dashboard'} className="btn btn-primary btn-margin">
                     My contracts
-                  </Button>
-                  <Button bsStyle="primary" className="btn-margin"
-                    onClick={this.goTo.bind(this, 'profile')}>
+                  </Link>
+                  <Link to={'/profile'} className="btn btn-primary btn-margin">
                     Profile
-                  </Button>
-                  <Button bsStyle="primary" className="btn-margin"
-                    onClick={this.logout.bind(this)}>
+                  </Link>
+                  <Button className="btn btn-primary btn-margin" onClick={auth.logout}>
                     Log Out
                   </Button>
                 </span>
