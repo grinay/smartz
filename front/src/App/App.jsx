@@ -36,11 +36,22 @@ class App extends Component {
 
   render() {
     const {metamaskStatus} = this.state;
+    const isAuthenticated = auth.isAuthenticated();
+    const {profile, setUserProfile} = this.props;
+
+    if (!isAuthenticated && profile) setUserProfile({});
+    if (isAuthenticated && !profile) {
+      auth.getProfile((err, newProfile) => {
+        setUserProfile(newProfile);
+      });
+    }
 
     // if(noMetamask) return <Alert message={checkMetaMask()} />;
     return (
       <div>
-        <Route render={(props) => <Header auth={auth} {...props} />} />
+        <Route render={(props) => (
+          <Header auth={auth} profile={profile} {...props} />
+        )} />
 
         <Switch>
           <Route exact path="/" render={(props) => (
@@ -55,7 +66,9 @@ class App extends Component {
             <Redirect to="/" />
           }
 
-          <Route path="/profile" render={props => (<Profile auth={auth} {...props} />)} />
+          <Route path="/profile" render={props => (
+            <Profile auth={auth} profile={profile} {...props} />)}
+          />
           <Route path="/ctor-add" render={props => (<CtorAdd auth={auth} {...props} />)} />
           <Route path="/deploy/:id" render={props => (
             <Deploy auth={auth} metamaskStatus={metamaskStatus} {...props} />
