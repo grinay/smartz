@@ -8,7 +8,7 @@ import subprocess
 
 import requests
 
-SERVICE_URL = 'http://ec2-18-197-125-190.eu-central-1.compute.amazonaws.com/construct'
+SERVICE_URL = 'http://ec2-18-197-125-190.eu-central-1.compute.amazonaws.com/call'
 
 class BaseEngine(object):
 
