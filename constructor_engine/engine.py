@@ -8,7 +8,7 @@ import subprocess
 
 import requests
 
-SERVICE_URL = 'http://192.168.0.11:5000/call'
+SERVICE_URL = 'http://ec2-18-197-125-190.eu-central-1.compute.amazonaws.com/construct'
 
 class BaseEngine(object):
 
@@ -42,8 +42,8 @@ class BaseEngine(object):
             return 'Something got wrong'
 
     def construct(self, id, price_eth, fields):
-        source = self._load_constructor(id)
-        res = self._call_constructor_method(source, self.METHOD_CONSTRUCT, [fields])
+        constructor_source = self._load_constructor(id)
+        res = self._call_constructor_method(constructor_source, self.METHOD_CONSTRUCT, [fields])
 
         if 'error' == res['result']:
             return res
@@ -63,11 +63,12 @@ class BaseEngine(object):
         bin, abi = self._compile(source, contract_name)
         abi = json.loads(abi)
 
-        post_construct_info = self._call_constructor_method(source, self.METHOD_POST_CONSTRUCT, [fields, abi])
+        post_construct_info = self._call_constructor_method(constructor_source, self.METHOD_POST_CONSTRUCT, [fields, abi])
         if 'error' == post_construct_info['result']:
-            return res
+            return post_construct_info
 
         return {
+            'result': 'success',
             'bin': bin,
             'source': source,
             'abi': abi,
@@ -93,7 +94,6 @@ class BaseEngine(object):
             "args": args if args is not None else []
         }
         try:
-            res = requests.get(SERVICE_URL)
             res = requests.post(SERVICE_URL, json=data)
             if res.status_code != requests.codes.ok:
                 return {

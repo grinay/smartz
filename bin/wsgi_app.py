@@ -169,7 +169,7 @@ def construct():
     result = ctor_engine.construct(ctor_id, price_eth, args['fields'])
 
     assert isinstance(result, dict)
-    if 'error' in result:
+    if 'error' == result['result']:
         # error
         return _send_output(result)
 
