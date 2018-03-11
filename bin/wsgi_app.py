@@ -15,7 +15,8 @@ from flask import Flask, abort, request
 
 ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
-os.makedirs(DATA_DIR, exist_ok=True)
+if not os.path.isdir(DATA_DIR):
+    raise RuntimeError('DATA_DIR is not found at {}'.format(DATA_DIR))
 
 sys.path.append(os.path.join(ROOT_DIR, 'pythonlib'))
 sys.path.append(os.path.join(ROOT_DIR, 'constructor_engine'))
