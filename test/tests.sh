@@ -4,8 +4,8 @@ set -ex
 DELAY=30
 
 # goss tests
-GOSS_SLEEP=$DELAY GOSS_FILES_PATH=docker/frontend dgoss run smartzplatform_frontend:latest
-GOSS_SLEEP=$DELAY GOSS_FILES_PATH=docker/backend dgoss run smartzplatform_backend:latest
+GOSS_SLEEP=$DELAY GOSS_FILES_PATH=docker/frontend dgoss run -e ENVIRONMENT=prod smartzplatform_frontend:latest
+GOSS_SLEEP=$DELAY GOSS_FILES_PATH=docker/backend dgoss run -e ENVIRONMENT=prod smartzplatform_backend:latest
 
 # integration tests
 sudo docker-compose up -d

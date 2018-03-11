@@ -21,18 +21,10 @@ port:
 user:
   nginx:
     exists: true
-    uid: 10000
     groups:
     - nginx
     home: /var/cache/nginx
     shell: /sbin/nologin
 process:
-#  nginx:
-#    running: false
   nginx-debug:
     running: true
-http:
-  http://localhost:80:
-    status: 200
-    timeout: 5000
-    body: []
