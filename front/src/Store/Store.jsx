@@ -27,11 +27,6 @@ class Store extends Component {
 
     return (
       <main className="page-main  page-main--store">
-        <div class="page-main__inner">
-          <p class="page-main__description">
-            Billions of deals in smart contracts.
-          </p>
-        </div>
         <div className="page-main__inner">
           {metamaskStatus &&
             <Alert standardAlert={metamaskStatus} />
@@ -59,7 +54,7 @@ class Store extends Component {
           </section>
 
           <Alert header="If you are developer"
-            style={{marginTop: '40px', background: '#88db88'}}
+            style={{marginTop: '80px', background: '#88db88'}}
           >
             <p>You can <Link to="/ctor-add">add a smart contract</Link> to our platform.</p>
           </Alert>

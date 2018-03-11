@@ -78,22 +78,61 @@ class Deploy extends Component {
     };
 
     return (
-      <div>
-        <div className="container">
-          {ctor &&
-            <div>
-              <h1>{ctor.ctor_name}</h1>
-              <p className="desc">{ctor.ctor_descr}</p>
+      <main className="page-main page-main--contracts">
+        <aside className="block-half">
+          <section className="contract-info">
+            <div className="contract-info__logo">
+              <img
+                className="contract-info__img"
+                src={ctor.image
+                  ? require(`../Ctors/i/${ctor.image}`)
+                  : `https://lorempixel.com/640/400/?${Math.random()}`
+                }
+                width="644" height="404"
+                alt={`${ctor.ctor_name} contract image`}
+              />
             </div>
-          }
+            <div className="contract-info__wrapper">
+              <p className="contract-info__info  contract-info__info--column">
+                <span className="contract-info__name">
+                  {ctor.ctor_name}
+                </span>
+              </p>
+              <p className="contract-info__description">
+                {ctor.ctor_descr}
+              </p>
+              <table className="table">
+                <tbody className="table__tbody">
+                  <tr className="table__tr">
+                    <td className="table__label">Running price</td>
+                    <td className="table_data">
+                      <div className="table__inner">
+                        <span id="raiting-price">
+                          {ctor.price_eth
+                            ? `${ctor.price_eth} ETH`
+                            : 'Free'
+                          }
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </aside>
+        <section className="block">
+          <h2 className="block__header">
+            {ctor.ctor_name}
+          </h2>
 
           {errors &&
-            <div className="alert alert-danger" role="alert">
+            <Alert>
               {typeof errors === 'object'
                 ? Object.keys(errors).forEach((err) => (<p key={err}>{errors[err]}</p>))
                 : <p>errors</p>
               }
-            </div>
+            </Alert>
           }
 
           {status === 'configure' && ctor && ctor.fetchStatus === 'success' &&
@@ -107,8 +146,8 @@ class Deploy extends Component {
           {(status === 'transaction_sent' || status === 'transaction_mined') &&
             <DeployStep3 {...step3Props} />
           }
-        </div>
-      </div>
+        </section>
+      </main>
     );
   }
 }

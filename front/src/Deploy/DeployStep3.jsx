@@ -10,13 +10,10 @@ class DeployStep3 extends Component {
     const {status, txHash, netId, instance, contractAddress} = this.props;
 
     return (
-      <Panel header={status === 'transaction_sent'
-        ? "Deploy step 3 of 3: contract is being mined"
-        : "Deploy step 3 of 3: finished!"
-      }>
-        <p>
-          Deploy transaction:<br />
-          <a href={'https://rinkeby.etherscan.io/tx/' + txHash}>{txHash}</a>
+      <div className="block__wrapper  block__wrapper--top">
+        <p className="support-block__paragraph">
+          Deploy transaction has been sent to network:<br />
+          <a href={getNetworkEtherscanAddress(netId) + '/tx/' + txHash}>{txHash}</a>
         </p>
 
         {status === 'transaction_sent' &&
@@ -24,14 +21,17 @@ class DeployStep3 extends Component {
         }
 
         {status === 'transaction_mined' &&
-          <div className="alert alert-success">
-            Congratulations! Your contract is deployed to {getNetworkName(netId)}!<br />
-            Contract address is {contractAddress}.<br />
-            Check it <a href={getNetworkEtherscanAddress(netId) + '/address/' + contractAddress}>on Etherscan</a> (it can take some time for Etherscan to see contract just deployed)<br />
-            and <Link to={`/instance/${instance.instance_id}`}>manage it on Smartz</Link>.
+          <div>
+            <p className="support-block__paragraph">
+              Congratulations! Your contract is deployed to {getNetworkName(netId)} blockchain!<br />
+              Contract address is <a href={getNetworkEtherscanAddress(netId) + '/address/' + contractAddress}>{contractAddress}</a>.
+            </p>
+            <p>
+              Now you can <Link to={`/instance/${instance.instance_id}`}>manage your contract</Link> with Smartz Platform!
+            </p>
           </div>
         }
-      </Panel>
+      </div>
     );
   }
 }
