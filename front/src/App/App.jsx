@@ -5,13 +5,15 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import Callback from './Auth/Callback/Callback';
-import Home from 'Home/HomeContainer';
+import Store from 'Store/StoreContainer';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/DeployContainer';
 import CtorAdd from 'CtorAdd/CtorAdd';
 import Dashboard from 'Dashboard/DashboardContainer';
 import Instance from 'Instances/InstanceContainer';
 import {checkMetaMask} from 'helpers/eth';
+
+import './App.css';
 
 const auth = new Auth();
 
@@ -55,7 +57,7 @@ class App extends Component {
 
         <Switch>
           <Route exact path="/" render={(props) => (
-            <Home auth={auth} metamaskStatus={metamaskStatus} {...props} />
+            <Store auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);

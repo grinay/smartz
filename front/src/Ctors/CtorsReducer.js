@@ -22,6 +22,24 @@ const ctors = (state = initState, action) => {
     case 'FETCH_CTORS_SUCCESS':
       nextState.fetchStatus = 'success';
       action.ctors.forEach(ctor => {
+        switch (ctor.ctor_name) { // Temporary block until image management implemented
+          case 'Simple ICO':
+            ctor.image = 'contract-ico.jpg';
+            break;
+          case 'ERC20 token':
+            ctor.image = 'contract-erc20.jpg';
+            break;
+          case 'Equity token':
+            ctor.image = 'contract-equity.jpg';
+            break;
+          case 'Multisignature wallet':
+            ctor.image = 'contract-multisig.jpg';
+            break;
+          case 'Simple voting':
+            ctor.image = 'contract-voting.jpg';
+            break;
+          default:
+        }
         const i = findIndex(nextState.ctors, {ctor_id: ctor.ctor_id});
         if (i >= 0) {
           nextState.ctors[i] = Object.assign(nextState.ctors[i], ctor);

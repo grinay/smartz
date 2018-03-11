@@ -8,20 +8,20 @@ class Alert extends Component {
       case 'noMetamask':
         header = 'Install MetaMask!';
         message = (
-          <p>
-            <b>You need MetaMask browser plugin to work with Smartz platform.</b><br />
-            MetaMask is available for Chrome, Opera and Firefox browsers. <a href="https://metamask.io/">Get it here</a>, it's free!
-          </p>
+          <span>
+            <p><b>You need MetaMask browser plugin to work with Smartz platform.</b></p>
+            <p>MetaMask is available for Chrome, Opera and Firefox browsers. <a href="https://metamask.io/">Get it here</a>, it's free!</p>
+          </span>
         );
         break;
 
       case 'unlockMetamask':
         header = 'Unlock MetaMask!';
         message = (
-          <p>
-            <b>Unlock MetaMask to avoid errors while working with Smartz platform.</b><br />
-            Click on MetaMask icon in your browser extensions panel, enter your password and unlock your MetaMask wallet.
-          </p>
+          <span>
+            <p><b>Unlock MetaMask to avoid errors while working with Smartz platform.</b></p>
+            <p>Click on MetaMask icon in your browser extensions panel, enter your password and unlock your MetaMask wallet.</p>
+          </span>
         );
         break;
 
@@ -29,9 +29,9 @@ class Alert extends Component {
     }
 
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert" {...this.props}>
         {header &&
-          <h4 className="alert-heading">{header}</h4>
+          <h2>{header}</h2>
         }
         {message || children}
       </div>

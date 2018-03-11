@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {Navbar, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
-import './Header.css';
-
 class Header extends Component {
   goTo(route) {
     this.props.history.replace(`/${route}`)
