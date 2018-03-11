@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
-import {processControlForm, processResult, getNetworkEtherscanAddress} from 'Eth/Eth';
-import FormWidgets from 'FormWidgets/FormWidgets';
-import Spinner from 'Spinner/Spinner';
-
-if (window.Web3) {
-  var w3 = new window.Web3(window.web3.currentProvider);
-}
+import {
+  web3 as w3,
+  processControlForm,
+  processResult,
+  getNetworkEtherscanAddress
+} from 'helpers/eth';
+import FormWidgets from 'common/FormWidgets';
+import Spinner from 'common/Spinner';
 
 class FunctionCard extends Component {
   constructor(props) {
@@ -17,18 +18,17 @@ class FunctionCard extends Component {
   }
 
   submit({formData}) {
-
     //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
     if (typeof formData === "object" && !Object.keys(formData).length) {
         formData = []
     }
-    const {func} = this.props;
+    const {func, instance, instanceFuncResult} = this.props;
     const {abi, address} = this.props.instance;
     // TODO: special processing of ask functions results
     processControlForm(abi, func, formData, address,
                       (error, result) => {
       if (!error) {
-        console.log(result);
+        // console.log(result);
         if (/^0x([A-Fa-f0-9]{64})$/.test(result)) { // Check if result is tx hash
           this.setState({
             tx: result,
@@ -37,7 +37,7 @@ class FunctionCard extends Component {
           this.getReceipt(result);
 
         } else { // Not string means array -> means some data
-          this.setState({value: processResult(result)});
+          instanceFuncResult(instance.instance_id, func.name, processResult(result));
         }
 
       } else {
@@ -64,7 +64,7 @@ class FunctionCard extends Component {
   render() {
     const {func, instance} = this.props;
     const {tx, spinner} = this.state;
-    const value = ("value" in this.state) ? this.state.value : func.value;
+    const value = instance.funcResults ? instance.funcResults[func.name] : '';
 
     if (!func.constant && func.inputs.minItems === 0) {
       func.inputs.items = [];
@@ -101,17 +101,15 @@ class FunctionCard extends Component {
 
           {tx &&
             <div className="tx">
-              {spinner &&
-                <span>Wait for transaction to be mined:&ensp;</span>
-              }
-              {!spinner &&
-                <span>Transaction mined:&ensp;</span>
+              {spinner
+                ? <span>Wait for transaction to be mined:&ensp;</span>
+                : <span>Transaction mined:&ensp;</span>
               }
               <a href={`${getNetworkEtherscanAddress(instance.network_id)}/tx/${tx}`}>
                 {tx}
               </a>
               {spinner &&
-                <Spinner text="This can take up to minute..." alt="Spinner" />
+                <Spinner text="This can take up to minute..." />
               }
             </div>
           }

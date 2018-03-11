@@ -1,8 +1,8 @@
 // const l = console.log;
 
-if (window.Web3) {
-  var web3 = new window.Web3(window.web3.currentProvider);
-}
+export var web3 = window.Web3
+  ? new window.Web3(window.web3.currentProvider)
+  : undefined;
 
 export const processControlForm = (contract_abi /* abi array */, function_spec /* ETHFunctionSpec */,
                             form_data /* data from react-jsonschema-form */,
@@ -88,6 +88,13 @@ export const processResult = res => {
   }
 };
 
+export const getNetworkId = cb => {
+  web3.version.getNetwork((err, netId) => {
+    err && console.log(err);
+    netId && cb(netId);
+  });
+}
+
 export const getNetworkName = netId => {
   switch (netId.toString()) {
     case "1":
@@ -120,10 +127,20 @@ export const getNetworkEtherscanAddress = netId => {
 
 export const checkMetaMask = () => {
   if (!window.Web3) {
-    return "Please, install MetaMask.";
+    return 'noMetamask';
   }
   if (!web3.eth.accounts[0]) {
-    return "Please, sign in MetaMask.";
+    return 'unlockMetamask';
   }
   return false;
 };
+
+export const getTxReceipt = (txHash, cb) => {
+  web3.eth.getTransactionReceipt(txHash, (err, receipt) => {
+    if (null == receipt)
+      window.setTimeout(() => getTxReceipt(txHash, cb), 500);
+    else {
+      cb(receipt);
+    }
+  });
+}
