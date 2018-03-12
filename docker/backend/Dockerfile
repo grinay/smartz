@@ -1,3 +1,15 @@
+FROM alpine:latest AS solc_stage
+# https://solidity.readthedocs.io/en/latest/installing-solidity.html#building-from-source
+RUN apk --no-cache --update upgrade && apk --no-cache add git bash
+WORKDIR /tmp
+RUN git clone --recursive https://github.com/ethereum/solidity.git
+WORKDIR /tmp/solidity
+RUN git checkout v0.4.20
+RUN git submodule update --init --recursive
+RUN ./scripts/install_deps.sh
+RUN ./scripts/build.sh
+RUN /usr/local/bin/solc --version
+
 FROM node:8-alpine AS node_stage
 WORKDIR /build
 COPY package.json .
