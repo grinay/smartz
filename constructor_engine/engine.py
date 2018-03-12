@@ -12,11 +12,7 @@ SERVICE_URL = 'http://ec2-18-197-125-190.eu-central-1.compute.amazonaws.com/call
 
 class BaseEngine(object):
 
-    #todo config
-    SOLC_BINARY = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        '../node_modules/.bin/solcjs'
-    )
+    SOLC_BINARY = 'solc'
 
     METHOD_GET_PARAMS     = 'get_params'
     METHOD_CONSTRUCT      = 'construct'
@@ -129,7 +125,7 @@ class BaseEngine(object):
             #errcode = popen.returncode
 
             #solc stores bin and abi in two files with the same names
-            out_file = os.path.join(tmpdir, '{}_{}'.format(tmpfilename.replace('/', '_'), contract_name))
+            out_file = os.path.join(tmpdir, contract_name)
             with open('{}.bin'.format(out_file)) as f:
                 bin = f.read()
 

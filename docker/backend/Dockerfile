@@ -1,3 +1,16 @@
+FROM alpine:latest AS solc_stage
+# https://solidity.readthedocs.io/en/latest/installing-solidity.html#building-from-source
+RUN apk --no-cache --update upgrade && apk --no-cache add git bash
+WORKDIR /tmp
+RUN git clone --recursive https://github.com/ethereum/solidity.git
+WORKDIR /tmp/solidity
+RUN git checkout v0.4.20
+RUN git submodule update --init --recursive
+RUN ./scripts/install_deps.sh
+RUN ./scripts/build.sh
+RUN /usr/local/bin/solc --version
+
+
 FROM node:8.10.0-alpine AS node_stage
 WORKDIR /build
 COPY package.json .
@@ -14,12 +27,14 @@ RUN .virtualenv/bin/pip3 install -r requirements.txt --no-cache-dir
 COPY bin/ bin/
 COPY pythonlib/ pythonlib/
 COPY constructor_engine/ constructor_engine/
+COPY json-schema/ json-schema/
 
 FROM alpine:3.7
 WORKDIR /app
 VOLUME [ "/app/sock", "/app/data" ]
 RUN apk --no-cache --update upgrade \
 && apk --no-cache add nodejs python3 uwsgi uwsgi-python3
+COPY --from=solc_stage /usr/local/bin/solc /usr/local/bin/solc
 COPY --from=node_stage /build/node_modules/ node_modules/
 COPY --from=python_stage /build/ .
 COPY docker/backend/entrypoint.sh .
