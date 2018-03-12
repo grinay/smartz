@@ -8,7 +8,7 @@ file:
     contains: []
   /app/sock/backend:
     exists: true
-    mode: "0755"
+    mode: "0666"
     size: 0
     owner: uwsgi
     group: uwsgi
@@ -17,11 +17,7 @@ file:
 user:
   uwsgi:
     exists: true
-    uid: 10000
-    gid: 65533
-    groups:
-    - nogroup
-    shell: /bin/false
+    shell: /sbin/nologin
 process:
   uwsgi:
     running: true

@@ -37,21 +37,19 @@ http {
 		listen	80 default_server;
 		listen	[::]:80 default_server;
 		server_name _;
-		root /app;
+		root /app/web_root;
 		index index.html index.htm;
 		location / {
-			if ($http_x_forwarded_proto != "https") { return 301 https://$host$request_uri; }
 			try_files $uri $uri/ /index.html;
 		}
 		location /prod {
-			if ($http_x_forwarded_proto != "https") { return 301 https://$host$request_uri; }
-			rewrite ^/prod(.*)$ $1 break;
+		    rewrite ^/prod(.*)$ $1 break;
 			include uwsgi_params;
 			uwsgi_pass unix:/app/sock/backend;
 		}
 		location ~* \.(?:css(\.map)?|js(\.map)?|jpe?g|png|gif|ico|cur|heic|webp|tiff?|mp3|m4a|aac|ogg|midi?|wav|mp4|mov|webm|mpe?g|avi|ogv|flv|wmv)$ {
-			if ($http_x_forwarded_proto != "https") { return 301 https://$host$request_uri; }
 			expires 7d;
+			access_log off;
 		}
 		location = /favicon.ico {
 			access_log off;
@@ -60,9 +58,9 @@ http {
 			allow all;
 			access_log off;
 		}
-		location = /health {
-			return 200;
-			access_log off;
-		}
+	        location = /health {
+        	        return 200;
+                	access_log off;
+	        }
 	}
 }
