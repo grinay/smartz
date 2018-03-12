@@ -79,61 +79,99 @@ class FunctionCard extends Component {
       };
     }
 
-
     return (
-      <div className="card">
-        <div className="card-body">
-          <h4 className="card-title">{func.title || func.name}</h4>
+      <Form className="contract-controls__form"
+        schema={func.inputs}
+        widgets={FormWidgets}
+        onSubmit={this.submit.bind(this)}
+        onError={(e) => console.log("I have", e.length, "errors to fix")}
+        showErrorList={false}>
 
+        <h3 className="form-block__header">
+          {func.title || func.name}
           {(func.title && (func.title !== func.name)) &&
-            <h6 className="card-subtitle mb-2 text-muted">({func.name})</h6>
+            <span> ({func.name})</span>
           }
+        </h3>
+        {func.description &&
+          <span className="form-block__description">{func.description}</span>
+        }
 
-          <p className="card-text">
-            {func.description &&
-              <span className="desc">{func.description}</span>
-            }
-          </p>
-
-          {typeof value !== 'undefined' &&
-            <div className="func-value">{value.toString()}</div>
-          }
-
-          {tx &&
-            <div className="tx">
-              {spinner
-                ? <span>Wait for transaction to be mined:&ensp;</span>
-                : <span>Transaction mined:&ensp;</span>
-              }
-              <a href={`${getNetworkEtherscanAddress(instance.network_id)}/tx/${tx}`}>
-                {tx}
-              </a>
-              {spinner &&
-                <Spinner text="This can take up to minute..." />
-              }
-            </div>
-          }
-
-          {(!func.constant || func.inputs.minItems !== 0) &&
-            <Form schema={func.inputs}
-              widgets={FormWidgets}
-              onSubmit={this.submit.bind(this)}
-              onError={(e) => console.log("I have", e.length, "errors to fix")}
-              showErrorList={false}>
-
-              <div className="submit-button">
-                <Button bsStyle="success" bsSize="xsmall"
-                  className="btn-margin"
-                  type="submit">
-                  {func.constant ? 'Get info' : 'Send transaction'}
-                </Button>
-              </div>
-            </Form>
-          }
+        <div className="contract-controls__inner">
+          <button className="button  contract-controls__form-button" type="submit" name="mint-form-submit">
+            Execute
+          </button>
         </div>
-      </div>
+      </Form>
     );
   }
 }
 
 export default FunctionCard;
+
+/*
+
+
+      <form id="mint-form" className="contract-controls__form" action="#" method="post">
+        <fieldset className="form-block  form-block--owner  form-block--contract-controls">
+          <div className="form-field  form-field--owner">
+            <label for="mint-id" className="form-field__label">
+              Mint id
+            </label>
+            <span className="form-block__description">
+              32 bytes
+            </span>
+            <div className="form-field__input-wrapper">
+              <input type="text" className="form-field__input" id="mint-id" />
+            </div>
+          </div>
+          <div className="form-field  form-field--owner">
+            <label for="mint-address" className="form-field__label">
+              To
+            </label>
+            <span className="form-block__description">
+              Address
+            </span>
+            <div className="form-field__input-wrapper">
+              <input type="text" className="form-field__input" id="mint-address" />
+            </div>
+          </div>
+          <div className="form-field  form-field--owner">
+            <label for="mint-amount" className="form-field__label">
+              Amount
+            </label>
+            <span className="form-block__description">
+              256 bit unsigned integer
+            </span>
+            <div className="form-field__input-wrapper">
+              <input type="email" className="form-field__input" id="mint-amount" />
+            </div>
+          </div>
+        </fieldset>
+
+        {/*
+            {typeof value !== 'undefined' &&
+              <div className="func-value">{value.toString()}</div>
+            }
+
+            {tx &&
+              <div className="tx">
+                {spinner
+                  ? <span>Wait for transaction to be mined:&ensp;</span>
+                  : <span>Transaction mined:&ensp;</span>
+                }
+                <a href={`${getNetworkEtherscanAddress(instance.network_id)}/tx/${tx}`}>
+                  {tx}
+                </a>
+                {spinner &&
+                  <Spinner text="This can take up to minute..." />
+                }
+              </div>
+            }
+
+          </div>
+        </div>
+        }
+
+      </form>
+*/

@@ -153,23 +153,6 @@ class Dashboard extends Component {
             ))}
           </ul>
         </section>
-        {/*
-
-                {inst.funcResults &&
-                  <div className="dashboard-functions">
-                    {inst.dashboard_functions.map((func, k) => (
-                      <div key={k}>
-                        <span></span><br />
-
-                      </div>
-                    ))}
-                  </div>
-                }
-              </div>
-            </div>
-          ))}
-        </div>
-        */}
       </main>
     );
   }
