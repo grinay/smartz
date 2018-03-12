@@ -32,8 +32,8 @@ class Store extends Component {
             <Alert standardAlert={metamaskStatus} />
           }
 
-          <Alert header="Attention!">
-            <p><b>Smartz platform is in early stage of development.</b></p>
+          <Alert>
+            <p><b>Attention! Smartz platform is in early stage of development.</b></p>
             <p>So we recommend to use it only in learning, testing and informational purposes with one of test networks (like Rinkeby or Kovan). Authors are not responsible for any possible loses in result of using our service. Please, address your questions and report any bugs to <a href="mailto:mailbox@smartz.io">mailbox@smartz.io</a>.</p>
           </Alert>
 
