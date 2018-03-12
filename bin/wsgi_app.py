@@ -111,8 +111,8 @@ def get_ctor_params():
         return _send_error('ctor is not found')
 
     params = ctor_engine.get_ctor_params(ctor_id)
-    if isinstance(params, str):
-        return _send_error(params)
+    if 'error' == params['result']:
+        return _send_engine_error(params)
 
     return _send_output({
         'ctor_name': ctor_info['ctor_name'],
@@ -170,8 +170,7 @@ def construct():
 
     assert isinstance(result, dict)
     if 'error' == result['result']:
-        # error
-        return _send_output(result)
+        return _send_engine_error(result)
 
     # success
     instance_id = instances.insert_one({'abi': json.dumps(result['abi']), 'source': result['source'],
@@ -310,6 +309,12 @@ def _get_input():
 def _send_error(string):
     print('[ERROR]: {}'.format(string))
     return _send_output({'error': string})
+
+def _send_engine_error(res):
+    if 'error_descr' in res:
+        return _send_output({'error': res['error_descr']})
+    else:
+        return _send_output(res)
 
 
 def _send_output(output):
