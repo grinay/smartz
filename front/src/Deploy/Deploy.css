@@ -58,12 +58,18 @@
   margin-top: 10px;
 }
 
+#deploy-form input.form-control:focus {
+  box-shadow: inset 0 0 0 2px rgba(79,108,255,1);
+}
+
 #deploy-form .field-error input {
-  background-color: #fff1f1;
+  box-shadow: inset 0 0 0 3px rgba(255,78,89,1);
 }
 
 #deploy-form .error-detail {
-  color: #ff0000;
+  color: rgba(255,78,89,1);
+  list-style-type: none;
+  padding-left: 0;
 }
 
 #deploy-form legend {

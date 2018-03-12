@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Panel, Button, FormGroup, ControlLabel, FormControl, Checkbox} from 'react-bootstrap';
 
 import {web3 as w3, getNetworkId, getTxReceipt} from 'helpers/eth';
 import Spinner from 'common/Spinner';
@@ -46,10 +45,7 @@ class DeployStep2 extends Component {
       <div>
         {status === 'construct_request' &&
           <div className="block__wrapper  block__wrapper--top">
-            <Spinner
-              text="Preparing code, this can take up to 30-40 seconds..."
-              alt="Spinner"
-            />
+            <Spinner text="Preparing code, this can take up to 30-40 seconds..." />
           </div>
         }
 

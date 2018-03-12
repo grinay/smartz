@@ -8,7 +8,7 @@ import {
 } from 'Ctors/CtorsActions';
 import {
   fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
-  instanceFuncResult
+  viewFuncResult
 } from './InstancesActions';
  
 const mapStateToProps = (state, ownProps) => {
@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = {
   fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess,
   fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
-  instanceFuncResult
+  viewFuncResult
 };
  
 const InstanceContainer = withRouter(connect(

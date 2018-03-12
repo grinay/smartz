@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Panel, Button} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import api from 'helpers/api';

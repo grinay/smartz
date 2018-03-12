@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {find} from 'lodash';
 
 import api from 'helpers/api';
 import {processControlForm,
         processResult,
         getNetworkName,
         getNetworkEtherscanAddress} from 'helpers/eth';
-import FunctionCard from './FunctionCard';
+import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from 'common/Alert';
+import Transaction from './Transaction/Transaction';
 
 import './Instance.css';
 
@@ -15,8 +17,14 @@ class Instance extends Component {
   constructor(props) {
     super(props);
 
+    const {instance} = this.props;
+    const funcActive = find(instance.functions, f => (
+      f.inputs.minItems !== 0 || !f.constant
+    ));
+
     this.state = {
-      updateCycleActive: false
+      updateCycleActive: false,
+      funcActive
     };
   }
 
@@ -51,7 +59,7 @@ class Instance extends Component {
   }
 
   getConstants() {
-    const {instance, instanceFuncResult} = this.props;
+    const {instance, viewFuncResult} = this.props;
 
     instance.functions.forEach(func => {
       if (func.constant && func.inputs.minItems === 0) {
@@ -59,7 +67,7 @@ class Instance extends Component {
           if(error) {
             console.error(error);
           } else {
-            instanceFuncResult(
+            viewFuncResult(
               instance.instance_id,
               func.name,
               processResult(result)
@@ -72,19 +80,20 @@ class Instance extends Component {
 
   printFunctions(instance, type, cb) {
     const result = [];
-    instance.functions && instance.functions.map((func, i) => {
+    instance.functions && instance.functions.forEach((func, i) => {
       switch (type) {
         case 'view':
           if (func.constant && func.inputs.minItems === 0)
-            result.push(cb(func));
+            result.push(cb(func, i));
           break;
         case 'ask':
           if (func.constant && func.inputs.minItems !== 0)
-            result.push(cb(func));
+            result.push(cb(func, i));
           break;
         case 'write':
           if (!func.constant)
-            result.push(cb(func));
+            result.push(cb(func, i));
+          break;
         default:
       }
     });
@@ -99,7 +108,7 @@ class Instance extends Component {
       </div>
     );
 
-    const {instance, ctor, instanceFuncResult} = this.props;
+    const {instance, ctor} = this.props;
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">
         <Link to="/dashboard" className="page-main__link">
@@ -120,7 +129,7 @@ class Instance extends Component {
                     : `https://lorempixel.com/640/400/?${Math.random()}`
                   }
                   width="644" height="404"
-                  alt={`${ctor.ctor_name} contract image`} />
+                  alt={`${ctor.ctor_name} contract`} />
               </div>
               <div className="contract-info__wrapper">
                 <p className="contract-info__info  contract-info__info--column">
@@ -134,43 +143,43 @@ class Instance extends Component {
               </div>
             </section>
 
-            <section class="contract-functions">
-              <h2 class="contract-functions__header">
+            <section className="contract-functions">
+              <h2 className="contract-functions__header">
                 View functions
               </h2>
-              <p class="contract-functions__description">
+              <p className="contract-functions__description">
                 This functions just provide an information about contract states and values. Results of this fuctions are alrewady shown left.
               </p>
-              {this.printFunctions(instance, 'view', (func) => (
-                <p class="contract-functions__description">
+              {this.printFunctions(instance, 'view', (func, i) => (
+                <p key={i} className="contract-functions__description">
                   <b>{func.title}</b> — {func.description}
                 </p>
               ))}
             </section>
 
-            <section class="contract-functions">
-              <h2 class="contract-functions__header">
+            <section className="contract-functions">
+              <h2 className="contract-functions__header">
                 Ask functions
               </h2>
-              <p class="contract-functions__description">
+              <p className="contract-functions__description">
                 This functions also provide an information about contract states and values, but related to some address or other conditions which you should provide. No any changes in blockchain are done by this functions.
               </p>
-              {this.printFunctions(instance, 'ask', (func) => (
-                <p class="contract-functions__description">
+              {this.printFunctions(instance, 'ask', (func, i) => (
+                <p key={i} className="contract-functions__description">
                   <b>{func.title}</b> — {func.description}
                 </p>
               ))}
             </section>
 
-            <section class="contract-functions">
-              <h2 class="contract-functions__header">
+            <section className="contract-functions">
+              <h2 className="contract-functions__header">
                 Write functions
               </h2>
-              <p class="contract-functions__description">
+              <p className="contract-functions__description">
                 This functions are changing states and values of smart contract, placing new information to the blockchain. All this functions consume some amount of gas. Be careful, their actions can not be undone.
               </p>
-              {this.printFunctions(instance, 'write', (func) => (
-                <p class="contract-functions__description">
+              {this.printFunctions(instance, 'write', (func, i) => (
+                <p key={i} className="contract-functions__description">
                   <b>{func.title}</b> — {func.description}
                 </p>
               ))}
@@ -202,7 +211,7 @@ class Instance extends Component {
                     {instance.functions && instance.functions.map((func, i) => {
                       if (func.constant && func.inputs.minItems === 0) {
                         return (
-                          <tr className="table__tr">
+                          <tr key={i} className="table__tr">
                             <td className="table__label">
                               {func.title}
                             </td>
@@ -218,6 +227,8 @@ class Instance extends Component {
                             </td>
                           </tr>
                         );
+                      } else {
+                        return null;
                       }
                     })}
                   </tbody>
@@ -229,9 +240,13 @@ class Instance extends Component {
                   Ask functions
                 </span>
                 <ul className="contract-controls__list">
-                  {this.printFunctions(instance, 'ask', (func) => (
-                    <li className="contract-controls__item">
-                      <button className="btn-contract  contract-controls__button" type="button">
+                  {this.printFunctions(instance, 'ask', (func, i) => (
+                    <li key={i} className="contract-controls__item">
+                      <button
+                        className="btn-contract contract-controls__button"
+                        type="button"
+                        onClick={() => this.setState({funcActive: func})}
+                      >
                         {func.title}
                       </button>
                     </li>
@@ -244,9 +259,13 @@ class Instance extends Component {
                   Write functions
                 </span>
                 <ul className="contract-controls__list">
-                  {this.printFunctions(instance, 'write', (func) => (
-                    <li className="contract-controls__item">
-                      <button className="btn-contract  contract-controls__button" type="button">
+                  {this.printFunctions(instance, 'write', (func, i) => (
+                    <li key={i} className="contract-controls__item">
+                      <button
+                        className="btn-contract contract-controls__button"
+                        type="button"
+                        onClick={() => this.setState({funcActive: func})}
+                      >
                         {func.title}
                       </button>
                     </li>
@@ -254,93 +273,26 @@ class Instance extends Component {
                 </ul>
               </div>
 
-              <FunctionCard instance={instance} func={instance.functions[8]} />
+              {this.state.funcActive &&
+                <FunctionCard
+                  instance={instance}
+                  func={this.state.funcActive}
+                  refresh={this.getConstants.bind(this)}
+                />
+              }
+
+              {instance.transactions &&
+                <div className="transactions">
+                  Transactions:
+                  {instance.transactions.reverse().map((transaction, i) => (
+                    <Transaction transaction={transaction} key={i}/>
+                  ))}
+                </div>
+              }
 
             </div>
           </section>
         }
-        {/*
-        <div>
-          <div className="container">
-            {instance &&
-              <div className="instance">
-                <h1>
-                  {instance.instance_title}
-                  {ctor &&
-                    <span>
-                      &emsp;(
-                      <Link to={`/deploy/${ctor.ctor_id}`}>
-                        {ctor.ctor_name}
-                      </Link>)
-                    </span>
-                  }
-                </h1>
-
-                {instance.address &&
-                  <p className="address">
-                    {instance.address + ` (${getNetworkName(instance.network_id.toString())})`}
-                    &emsp;
-                    <a className="etherscan" href={getNetworkEtherscanAddress(instance.network_id.toString()) + `/address/${instance.address}`}>
-                      see on Etherscan
-                    </a>
-                  </p>
-                }
-
-                <h3>View functions</h3>
-                <p>This functions just provide an information about contract states and values.</p>
-                <div className="instance-functions view-functions">
-                  {instance.functions && instance.functions.map((func, i) => {
-                    if (func.constant && func.inputs.minItems === 0)
-                      return (
-                        <FunctionCard
-                          func={func}
-                          instance={instance}
-                          key={i}
-                        />);
-                    else
-                      return null;
-                  })}
-                </div>
-
-                <h3>Ask functions</h3>
-                <p>This functions also provide an information about contract states and values, but related to some address or other conditions which you should provide. No any changes in blockchain are done by this functions.</p>
-                <div className="instance-functions">
-                  {instance.functions && instance.functions.map((func, i) => {
-                    if (func.constant && func.inputs.minItems !== 0)
-                      return (
-                        <FunctionCard
-                          instance={instance}
-                          func={func}
-                          key={i}
-                          instanceFuncResult={instanceFuncResult}
-                        />);
-                    else
-                      return null;
-                  })}
-                </div>
-
-                <h3>Write functions</h3>
-                <p>This functions are changing states and values of smart contract, placing new information to the blockchain. All this functions consume some amount of gas. Be careful, some of their actions can not be undone.</p>
-                <div className="instance-functions">
-                  {instance.functions && instance.functions.map((func, i) => {
-                    if (!func.constant)
-                      return (
-                        <FunctionCard
-                          instance={instance}
-                          func={func}
-                          key={i}
-                          refresh={this.getConstants.bind(this)}
-                          instanceFuncResult={instanceFuncResult}
-                        />);
-                    else
-                      return null;
-                  })}
-                </div>
-              </div>
-            }
-          </div>
-        </div>
-        */}
       </main>
     );
   }

@@ -3,8 +3,7 @@ import {find} from 'lodash';
 import {Link} from 'react-router-dom';
 
 import {
-  processControlForm, processResult, getNetworkName,
-  getNetworkEtherscanAddress
+  processControlForm, processResult
 } from 'helpers/eth';
 import api from 'helpers/api';
 import Alert from 'common/Alert';
@@ -51,7 +50,7 @@ class Dashboard extends Component {
   }
 
   updateCycle() {
-    const {instances, instanceFuncResult} = this.props;
+    const {instances, viewFuncResult} = this.props;
 
     instances.forEach((inst, j) => {
       const {
@@ -65,7 +64,7 @@ class Dashboard extends Component {
             if(error) {
               console.error(error);
             } else {
-              instanceFuncResult(
+              viewFuncResult(
                 instance_id,
                 dFunc,
                 processResult(result)
@@ -102,7 +101,7 @@ class Dashboard extends Component {
         <section className="my-contracts">
           <ul className="my-contracts__list">
             {instances && instances.map((inst, j) => (
-              <li className="my-contracts__item">
+              <li key={j} className="my-contracts__item">
                 <Link to={`/instance/${inst.instance_id}`} className="my-contracts__link">
                   <article className="my-contract">
                     <section className="contract-info  contract-info--contract-card">
@@ -115,7 +114,7 @@ class Dashboard extends Component {
                               : `https://lorempixel.com/640/400/?${Math.random()}`
                             }
                             width="644" height="404"
-                            alt="Contract image" />
+                            alt="Contract" />
                         </div>
                         <p className="contract-info__info">
                           <span className="contract-info__name">

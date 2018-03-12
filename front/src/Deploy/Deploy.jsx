@@ -89,7 +89,7 @@ class Deploy extends Component {
                   : `https://lorempixel.com/640/400/?${Math.random()}`
                 }
                 width="644" height="404"
-                alt={`${ctor.ctor_name} contract image`}
+                alt={`${ctor.ctor_name} contract`}
               />
             </div>
             <div className="contract-info__wrapper">
