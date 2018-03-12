@@ -15,21 +15,21 @@ class Constructor(ConstructorInstance):
                 "name": {
                     "title": "Name of token",
                     "description": "Name of shares token (shares token is ERC20 compatible): "
-                                   "3..100 characters, letters and spaces only",
+                                   "3..100 characters, letters, digits and spaces only",
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 100,
-                    "pattern": "^[a-zA-Z ]+$"
+                    "pattern": "^[a-zA-Z0-9 ]+$"
                 },
 
                 "symbol": {
                     "title": "Token Symbol",
                     "description": "Ticker of shares token (shares token is ERC20 compatible): "
-                                   "2..10 characters, capital letters only",
+                                   "2..10 characters, letters and digits only",
                     "type": "string",
                     "minLength": 2,
                     "maxLength": 10,
-                    "pattern": "^[A-Z]+$"
+                    "pattern": "^[a-zA-Z0-9]+$"
                 },
 
                 #todo
@@ -100,7 +100,7 @@ class Constructor(ConstructorInstance):
 
         source = self.__class__._TEMPLATE\
             .replace('%name%', fields['name']) \
-            .replace('%symbol%', fields['symbol']) \
+            .replace('%symbol%', fields['symbol'].upper()) \
             .replace('%total%', str(total_shares))\
             .replace('%shareholders_code%', shareholders_code)
 

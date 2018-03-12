@@ -15,20 +15,20 @@ class Constructor(ConstructorInstance):
             "properties": {
                 "name": {
                     "title": "Name of a token",
-                    "description": "Token human-friendly name (3..100 characters, letters and spaces only)",
+                    "description": "Token human-friendly name (3..100 characters, letters, digits and spaces only)",
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 100,
-                    "pattern": "^[a-zA-Z ]+$"
+                    "pattern": "^[a-zA-Z0-9 ]+$"
                 },
 
                 "symbol": {
                     "title": "Token Symbol",
-                    "description": "Token ticker (2..10 characters, capital letters only)",
+                    "description": "Token ticker (2..10 characters, letters and digits only)",
                     "type": "string",
                     "minLength": 2,
                     "maxLength": 10,
-                    "pattern": "^[A-Z]+$"
+                    "pattern": "^[a-zA-Z0-9]+$"
                 },
 
                 "is_burnable": {
@@ -102,7 +102,7 @@ class Constructor(ConstructorInstance):
 
         source = self.__class__._TEMPLATE \
             .replace('%name%', fields['name']) \
-            .replace('%symbol%', fields['symbol']) \
+            .replace('%symbol%', fields['symbol'].upper()) \
             .replace('%code_is_burnable%', ", BurnableToken" if fields['is_burnable'] else '') \
             .replace('%date_start%', str(fields['date_start'])) \
             .replace('%date_end%', str(fields['date_end'])) \
