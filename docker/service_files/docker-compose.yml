@@ -10,7 +10,7 @@ services:
   frontend:
     image: smartzplatform_frontend:latest
     env_file:
-      - smartzplatform.env
+      - /etc/smartzplatform.env
     restart: always
     depends_on:
       - backend
@@ -22,7 +22,7 @@ services:
   backend:
     image: smartzplatform_backend:latest
     env_file:
-      - smartzplatform.env
+      - /etc/smartzplatform.env
     restart: always
     depends_on:
       - mongo
