@@ -78,21 +78,21 @@ class Instance extends Component {
     });
   }
 
-  printFunctions(instance, type, cb) {
+  getFunctionsByType(instance, type) {
     const result = [];
-    instance.functions && instance.functions.forEach((func, i) => {
+    instance.functions && instance.functions.forEach(func => {
       switch (type) {
         case 'view':
           if (func.constant && func.inputs.minItems === 0)
-            result.push(cb(func, i));
+            result.push(func);
           break;
         case 'ask':
           if (func.constant && func.inputs.minItems !== 0)
-            result.push(cb(func, i));
+            result.push(func);
           break;
         case 'write':
           if (!func.constant)
-            result.push(cb(func, i));
+            result.push(func);
           break;
         default:
       }
@@ -150,7 +150,7 @@ class Instance extends Component {
               <p className="contract-functions__description">
                 This functions just provide an information about contract states and values. Results of this fuctions are alrewady shown left.
               </p>
-              {this.printFunctions(instance, 'view', (func, i) => (
+              {this.getFunctionsByType(instance, 'view').map((func, i) => (
                 <p key={i} className="contract-functions__description">
                   <b>{func.title}</b> — {func.description}
                 </p>
@@ -164,7 +164,7 @@ class Instance extends Component {
               <p className="contract-functions__description">
                 This functions also provide an information about contract states and values, but related to some address or other conditions which you should provide. No any changes in blockchain are done by this functions.
               </p>
-              {this.printFunctions(instance, 'ask', (func, i) => (
+              {this.getFunctionsByType(instance, 'ask').map((func, i) => (
                 <p key={i} className="contract-functions__description">
                   <b>{func.title}</b> — {func.description}
                 </p>
@@ -178,7 +178,7 @@ class Instance extends Component {
               <p className="contract-functions__description">
                 This functions are changing states and values of smart contract, placing new information to the blockchain. All this functions consume some amount of gas. Be careful, their actions can not be undone.
               </p>
-              {this.printFunctions(instance, 'write', (func, i) => (
+              {this.getFunctionsByType(instance, 'write').map((func, i) => (
                 <p key={i} className="contract-functions__description">
                   <b>{func.title}</b> — {func.description}
                 </p>
@@ -240,7 +240,7 @@ class Instance extends Component {
                   Ask functions
                 </span>
                 <ul className="contract-controls__list">
-                  {this.printFunctions(instance, 'ask', (func, i) => (
+                  {this.getFunctionsByType(instance, 'ask').map((func, i) => (
                     <li key={i} className="contract-controls__item">
                       <button
                         className="btn-contract contract-controls__button"
@@ -259,7 +259,7 @@ class Instance extends Component {
                   Write functions
                 </span>
                 <ul className="contract-controls__list">
-                  {this.printFunctions(instance, 'write', (func, i) => (
+                  {this.getFunctionsByType(instance, 'write').map((func, i) => (
                     <li key={i} className="contract-controls__item">
                       <button
                         className="btn-contract contract-controls__button"
@@ -273,13 +273,14 @@ class Instance extends Component {
                 </ul>
               </div>
 
-              {this.state.funcActive &&
-                <FunctionCard
-                  instance={instance}
-                  func={this.state.funcActive}
-                  refresh={this.getConstants.bind(this)}
-                />
-              }
+              <FunctionCard
+                instance={instance}
+                func={this.state.funcActive
+                  || this.getFunctionsByType(instance, 'ask')[0]
+                  || this.getFunctionsByType(instance, 'write')[0]
+                }
+                refresh={this.getConstants.bind(this)}
+              />
 
               {instance.transactions &&
                 <div className="transactions">
