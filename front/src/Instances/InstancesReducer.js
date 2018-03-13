@@ -1,4 +1,5 @@
 import {find, findIndex} from 'lodash';
+import moment from 'moment';
 
 const initState = {
   fetchStatus: 'init',
@@ -31,11 +32,35 @@ const instances = (state = initState, action) => {
       });
       return nextState;
 
-    case 'INSTANCE_FUNC_RESULT':
-      const instance = find(nextState.instances, {instance_id: action.instanceId});
+    case 'VIEW_FUNC_RESULT':
+      let instance = find(nextState.instances, {instance_id: action.instanceId});
       if (instance) {
         if (!instance.funcResults) instance.funcResults = {};
         instance.funcResults[action.funcName] = action.result;
+      }
+      return nextState;
+
+    case 'TRANSACTION_NEW':
+      instance = find(nextState.instances, {instance_id: action.instanceId});
+      if (instance) {
+        if (!instance.transactions) instance.transactions = [];
+        instance.transactions.push({
+          func: action.func,
+          time: moment(),
+          formData: action.formData,
+          [/^0x([A-Fa-f0-9]{64})$/.test(action.result) ? 'txHash' : 'result']: action.result
+        });
+      }
+      return nextState;
+
+    case 'TRANSACTION_RECEIPT':
+      instance = find(nextState.instances, {instance_id: action.instanceId});
+      if (instance) {
+        const transaction = find(instance.transactions, {txHash: action.txHash});
+        if (transaction) {
+          transaction.result = action.receipt;
+          transaction.timeMined = moment();
+        }
       }
       return nextState;
 

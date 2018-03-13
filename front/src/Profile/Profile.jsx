@@ -3,27 +3,30 @@ import {Panel, ControlLabel, Glyphicon} from 'react-bootstrap';
 import './Profile.css';
 
 class Profile extends Component {
-  componentWillMount() {
-    this.setState({profile: {}});
-    this.props.auth.getProfile((err, profile) => {
-      this.setState({profile});
-    });
-  }
   render() {
-    const {profile} = this.state;
+    const {profile} = this.props;
+
     return (
       <div className="container">
-        <div className="profile-area">
-          <h1>{profile.name}</h1>
-          <Panel header="Profile">
-            <img src={profile.picture} alt="profile" />
-            <div>
-              <ControlLabel><Glyphicon glyph="user" /> Nickname</ControlLabel>
-              <h3>{profile.nickname}</h3>
-            </div>
-            <pre>{JSON.stringify(profile, null, 2)}</pre>
-          </Panel>
-        </div>
+        {profile &&
+          <div className="profile-area">
+            <h1>{profile.name}</h1>
+            <Panel header="Profile">
+              <img src={profile.picture} alt="profile" />
+              <div>
+                <ControlLabel><Glyphicon glyph="user" /> Nickname</ControlLabel>
+                <h3>{profile.nickname}</h3>
+              </div>
+              <pre>{JSON.stringify(profile, null, 2)}</pre>
+              <button
+                className="btn btn-primary btn-margin"
+                onClick={this.props.auth.logout}
+              >
+                Log Out
+              </button>
+            </Panel>
+          </div>
+        }
       </div>
     );
   }

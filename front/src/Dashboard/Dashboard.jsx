@@ -3,8 +3,7 @@ import {find} from 'lodash';
 import {Link} from 'react-router-dom';
 
 import {
-  processControlForm, processResult, getNetworkName,
-  getNetworkEtherscanAddress
+  processControlForm, processResult
 } from 'helpers/eth';
 import api from 'helpers/api';
 import Alert from 'common/Alert';
@@ -51,7 +50,7 @@ class Dashboard extends Component {
   }
 
   updateCycle() {
-    const {instances, instanceFuncResult} = this.props;
+    const {instances, viewFuncResult} = this.props;
 
     instances.forEach((inst, j) => {
       const {
@@ -65,7 +64,7 @@ class Dashboard extends Component {
             if(error) {
               console.error(error);
             } else {
-              instanceFuncResult(
+              viewFuncResult(
                 instance_id,
                 dFunc,
                 processResult(result)
@@ -86,51 +85,74 @@ class Dashboard extends Component {
     );
 
     const {ctors, ctorsError, instances, instancesError} = this.props;
-    return (
-      <div className="container dashboard">
-        <h1>My smart contracts</h1>
+    instances.forEach(inst => {
+      inst.ctor = find(ctors, {ctor_id: inst.ctor_id}) || {};
+    });
 
+    return (
+      <main className="page-main  page-main--my-contracts">
         {(ctorsError || instancesError) &&
-          <div className="alert alert-danger" role="alert">
+          <Alert>
             {ctorsError && <p>{ctorsError}</p>}
             {instancesError && <p>{instancesError}</p>}
-          </div>
+          </Alert>
         }
 
-        {instances && instances.map((inst, j) => (
-          <div className="card" key={j}>
-            <div className="card-body">
-              <div>
-                <h3 className="card-title">
-                  <Link to={`/instance/${inst.instance_id}`}>
-                    {inst.instance_title}
-                  </Link>
-                  &nbsp;({find(ctors, {ctor_id: inst.ctor_id})
-                    ? find(ctors, {ctor_id: inst.ctor_id}).ctor_name
-                    : ''})
-                </h3>
-                <p className="card-text desc">
-                  {inst.address}&emsp;({getNetworkName(inst.network_id.toString())})&emsp;
-                  <a className="etherscan" href={getNetworkEtherscanAddress(inst.network_id.toString()) + `/address/${inst.address}`}>
-                    see on Etherscan
-                  </a>
-                </p>
-              </div>
-
-              {inst.funcResults &&
-                <div className="dashboard-functions">
-                  {inst.dashboard_functions.map((func, k) => (
-                    <div key={k}>
-                      <span>{find(inst.functions, {name: func}).title}</span><br />
-                      {inst.funcResults[func]}
-                    </div>
-                  ))}
-                </div>
-              }
-            </div>
-          </div>
-        ))}
-      </div>
+        <section className="my-contracts">
+          <ul className="my-contracts__list">
+            {instances && instances.map((inst, j) => (
+              <li key={j} className="my-contracts__item">
+                <Link to={`/instance/${inst.instance_id}`} className="my-contracts__link">
+                  <article className="my-contract">
+                    <section className="contract-info  contract-info--contract-card">
+                      <div className="contract-info__wrapper">
+                        <div className="contract-info__logo">
+                          <img
+                            className="contract-info__img"
+                            src={inst.ctor.image
+                              ? require(`../Ctors/i/${inst.ctor.image}`)
+                              : `https://lorempixel.com/640/400/?${Math.random()}`
+                            }
+                            width="644" height="404"
+                            alt="Contract" />
+                        </div>
+                        <p className="contract-info__info">
+                          <span className="contract-info__name">
+                            {inst.instance_title}
+                          </span>
+                          <span className="contract-info__description">
+                            {inst.ctor.ctor_name}
+                          </span>
+                        </p>
+                      </div>
+                      {inst.funcResults &&
+                        <table className="table  table--contract-card">
+                          <tbody className="table__tbody">
+                            {inst.dashboard_functions.map((func, k) => (
+                              <tr className="table__tr" key={k}>
+                                <td className="table__label">
+                                  {find(inst.functions, {name: func}).title}
+                                </td>
+                                <td className="table__data">
+                                  <div className="table__inner">
+                                    <span>
+                                      {inst.funcResults[func]}
+                                    </span>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      }
+                    </section>
+                  </article>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
     );
   }
 }

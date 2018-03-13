@@ -1,0 +1,22 @@
+.alert {
+  margin-bottom: 40px;
+  background-color: #f89797;
+  color: #fff;
+  padding: 15px 30px;
+}
+
+.alert h2 {
+  font-size: 30px;
+  font-family: "Cera Pro 500";
+}
+
+.alert p {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.alert p b {
+  font-family: "Cera Pro 700";
+  font-size: 20px;
+  line-height: 27px;
+}

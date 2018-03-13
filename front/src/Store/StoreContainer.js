@@ -1,7 +1,7 @@
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import Home from './Home';
+import Store from './Store';
 import {fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess} from 'Ctors/CtorsActions';
  
 const mapStateToProps = state => ({
@@ -13,9 +13,9 @@ const mapDispatchToProps = {fetchCtorsRequest,
                             fetchCtorsFailure,
                             fetchCtorsSuccess};
  
-const HomeContainer = withRouter(connect(
+const StoreContainer = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home));
+)(Store));
  
-export default HomeContainer;
+export default StoreContainer;
