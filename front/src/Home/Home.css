@@ -1,9 +1,0 @@
-.contracts-cards {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.contracts-cards .ctor-card {
-  width: 40%;
-  margin: 1rem 2rem 1rem 0;
-}

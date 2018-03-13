@@ -7,7 +7,7 @@ import {
 } from 'Ctors/CtorsActions';
 import {
   fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
-  instanceFuncResult
+  viewFuncResult
 } from 'Instances/InstancesActions';
  
 const mapStateToProps = state => ({
@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess,
   fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
-  instanceFuncResult
+  viewFuncResult
 };
  
 const DashboardContainer = withRouter(connect(

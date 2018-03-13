@@ -6,7 +6,7 @@ class Spinner extends Component {
 
     return (
       <div className="spinner">
-        <p>{text}</p>
+        <p className="support-block__paragraph">{text}</p>
         <img
           src={require('./i/loading.svg')}
           alt={alt}

@@ -1,19 +1,24 @@
 Simple ICO
 simple_ico_constructor
 Simple and reliable smart contracts system for ICO. You get ERC20 token with custom name and ticker and crowdsale with settable sale period, hardcap and token to Ether rate.
-Price: 0.05 ETH.
+Price: 0.3 ETH.
 
 ERC20 token
 erc20_token_constructor
 Standard ERC20 token with custom name, ticker and optional minting, burning, emission limit, premint and pause functions.
-Price: 0.05 ETH.
+Price: 0.1 ETH.
 
 Equity token
 equity_constructor
 Standard ERC20 token for representing your organisation shares.
-Price: 0.05 ETH.
+Price: 0.1 ETH.
 
 Multisignature wallet
 multisig_wallet_constructor
 Wallet contract to keep your funds under defence of more than one signature. Number of signatures and quorum are adjustable, for example 2/3 or 3/5.
+Price: 0.05 ETH
+
+Simple voting
+simple_ballot_constructor
+Just simple and robust ballot contract. Suitable for fast cooking crypto-protected voting in any organisation.
 Price: 0.05 ETH

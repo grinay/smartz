@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Panel, Button} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import api from 'helpers/api';
@@ -61,22 +60,20 @@ class DeployStep1 extends Component {
     }
 
     return (
-      <Panel header="Deploy step 1 of 3: customize your contract">
-        <Form schema={ctor.schema}
-          uiSchema={ctor.ui_schema}
-          widgets={FormWidgets}
-          onSubmit={this.submit.bind(this)}
-          onError={(e) => console.log("I have", e.length, "errors to fix")}
-          showErrorList={false}>
-          <div>
-            <Button bsStyle="success"
-              className="btn-margin"
-              type="submit">
-              Proceed to step 2
-            </Button>
-          </div>
-        </Form>
-      </Panel>
+      <Form schema={ctor.schema}
+        uiSchema={ctor.ui_schema}
+        widgets={FormWidgets}
+        onSubmit={this.submit.bind(this)}
+        onError={(e) => console.log("I have", e.length, "errors to fix")}
+        showErrorList={false}
+        id="deploy-form"
+        autocomplete="off">
+        <div className="block__wrapper" style={{marginBottom: '40px'}}>
+          <button className="button block__button" type="submit" name="form-submit">
+            Proceed
+          </button>
+        </div>
+      </Form>
     );
   }
 }

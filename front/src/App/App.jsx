@@ -5,13 +5,15 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import Callback from './Auth/Callback/Callback';
-import Home from 'Home/HomeContainer';
+import Store from 'Store/StoreContainer';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/DeployContainer';
 import CtorAdd from 'CtorAdd/CtorAdd';
 import Dashboard from 'Dashboard/DashboardContainer';
 import Instance from 'Instances/InstanceContainer';
 import {checkMetaMask} from 'helpers/eth';
+
+import './App.css';
 
 const auth = new Auth();
 
@@ -36,15 +38,26 @@ class App extends Component {
 
   render() {
     const {metamaskStatus} = this.state;
+    const isAuthenticated = auth.isAuthenticated();
+    const {profile, setUserProfile} = this.props;
+
+    if (!isAuthenticated && profile) setUserProfile({});
+    if (isAuthenticated && !profile) {
+      auth.getProfile((err, newProfile) => {
+        setUserProfile(newProfile);
+      });
+    }
 
     // if(noMetamask) return <Alert message={checkMetaMask()} />;
     return (
       <div>
-        <Route render={(props) => <Header auth={auth} {...props} />} />
+        <Route render={(props) => (
+          <Header auth={auth} profile={profile} {...props} />
+        )} />
 
         <Switch>
           <Route exact path="/" render={(props) => (
-            <Home auth={auth} metamaskStatus={metamaskStatus} {...props} />
+            <Store auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
@@ -55,7 +68,9 @@ class App extends Component {
             <Redirect to="/" />
           }
 
-          <Route path="/profile" render={props => (<Profile auth={auth} {...props} />)} />
+          <Route path="/profile" render={props => (
+            <Profile auth={auth} profile={profile} {...props} />)}
+          />
           <Route path="/ctor-add" render={props => (<CtorAdd auth={auth} {...props} />)} />
           <Route path="/deploy/:id" render={props => (
             <Deploy auth={auth} metamaskStatus={metamaskStatus} {...props} />
