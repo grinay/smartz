@@ -28,6 +28,7 @@ COPY bin/ bin/
 COPY pythonlib/ pythonlib/
 COPY constructor_engine/ constructor_engine/
 COPY json-schema/ json-schema/
+COPY constructor_examples/ constructor_examples/
 
 FROM alpine:3.7
 WORKDIR /app

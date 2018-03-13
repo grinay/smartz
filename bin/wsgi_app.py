@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import base64
 import re
 import sys
 import os
@@ -59,26 +60,45 @@ def upload_ctor():
     args = _get_input()
     ctors = db.ctors
 
+    user_id = auth()
+    if isinstance(user_id, dict):
+        return user_id  # error
+
     name = nonempty(args_string(args, 'ctor_name'))
     descr = nonempty(args_string(args, 'ctor_descr')) if 'ctor_descr' in args else ''
     filename = tempfile.mktemp('ctor')
 
-    uploaded_filename = args['ctor_file_name']
-    if not re.findall('^[a-zA-Z][a-zA-Z0-9_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
-        raise ValueError()
-    uploaded_filename = "{}.py".format(uploaded_filename)
-
-
     if 'ctor_file_name' in args:
+        uploaded_filename = args['ctor_file_name']
+        if not re.findall('^[a-zA-Z][a-zA-Z0-9_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
+            raise ValueError()
+        uploaded_filename = "{}.py".format(uploaded_filename)
+
         copy2(os.path.join(ROOT_DIR, 'constructor_examples', uploaded_filename), filename)
+
+        is_public = True
+    elif 'ctor_file' in args:
+        if not args['ctor_file'].startswith('data:text/x-python;'):
+            return _send_error("Only python files are accepted")
+
+        file_base64 = re.sub('^data:text/x-python.+;base64,', '', args['ctor_file'])
+        file_source = str(base64.b64decode(file_base64))
+
+        file = open(filename, "w")
+        file.write(file_source)
+        file.close()
+
+        is_public = False
     else:
-        request.files['ctor_file'].save(filename)
+        return _send_error("Invalid input")
 
     if ctors.find_one({'ctor_name': name}) is not None:
         return _send_error('ctor with this name already exists')
 
     ctor_id = ctors.insert_one({'ctor_name': name, 'ctor_descr': descr,
-                                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0}
+                                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
+                                'is_public': is_public,
+                                'user_id': user_id}
                                ).inserted_id.binary.hex()
 
     ctor_engine.register_new_ctor(ctor_id, filename)
