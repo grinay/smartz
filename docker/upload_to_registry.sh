@@ -9,7 +9,7 @@ TAGS=( "latest" "branch_${BRANCH}_commit_${COMMIT}" )
 # check if all images builded
 for NAME in "$@"
 do
-	if [ ! -z $(docker images -q "${NAME}:latest") ];
+	if [ -z $(docker images -q "${NAME}:latest") ];
 	then
 		echo "docker image ${NAME}:latest does not exists!"
 		exit 1
