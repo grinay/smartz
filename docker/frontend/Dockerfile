@@ -1,24 +1,17 @@
-FROM node:8-alpine AS node_stage
-
+FROM node:8.10.0-alpine AS node_stage
 WORKDIR /static
 COPY front .
 RUN npm install --only=production
 RUN npm run build --production
-RUN mkdir build/buildinfo \
-	&& if [[ -f buildinfo.txt ]]; then cp buildinfo.txt build/buildinfo/index.html; \
-				      else echo "Local build" > build/buildinfo/index.html; \
-	fi
+COPY json-schema/public/ build/json-schema/public/
 
-FROM nginx:alpine
+FROM nginx:1.12.2-alpine
 ARG NGINX_UID
 WORKDIR /app
 VOLUME [ "/app/sock" ]
 EXPOSE 80
-COPY --from=node_stage /static/build .
-COPY docker/frontend/robots-staging.txt robots.txt
-COPY docker/frontend/nginx.conf /etc/nginx/nginx.conf
+RUN apk --no-cache --update upgrade
+COPY --from=node_stage /static/build/ web_root/
 COPY docker/frontend/entrypoint.sh .
-RUN apk --no-cache --update upgrade \
-&& apk add shadow \
-&& usermod -u $NGINX_UID nginx
-CMD [ "./entrypoint.sh" ]
+COPY docker/frontend/conf/ conf/
+CMD [ "/bin/sh", "entrypoint.sh" ]

@@ -1,38 +1,40 @@
-version: '2'
+version: '3.2'
 services:
 
   mongo:
-    image: mongo:3.6.2
+    image: mongo:3.6.3
     restart: always
     volumes:
       - "mongodb:/data/db"
-    networks:
-      - backendnet
 
   frontend:
-    image: smartz_frontend:latest
+    image: smartzplatform_frontend:latest
+    env_file:
+      - /etc/smartzplatform.env
     restart: always
     depends_on:
       - backend
-      - mongo
     volumes:
       - "backendsocket:/app/sock"
     ports:
       - "80:80"
 
   backend:
-    image: smartz_backend:latest
+    image: smartzplatform_backend:latest
+    env_file:
+      - /etc/smartzplatform.env
     restart: always
+    depends_on:
+      - mongo
     volumes:
       - "backendsocket:/app/sock"
       - "backenddata:/app/data"
-    networks:
-      - backendnet
 
 volumes:
-  backendsocket:
   backenddata:
   mongodb:
-
-networks:
-  backendnet:
+  backendsocket:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs

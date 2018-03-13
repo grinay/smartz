@@ -1,11 +1,24 @@
 #!/bin/sh
 
-if [[ -n "$BASIC_AUTH" ]];
-	then
-		echo -e 'auth_basic "Mixbytes staging zone";\nauth_basic_user_file htpasswd;' > /etc/nginx/basic_auth.conf;
-		echo -e "$BASIC_AUTH" > /etc/nginx/htpasswd;
-	else
-		echo '' > /etc/nginx/basic_auth.conf;
-fi
+case "$ENVIRONMENT" in
+        dev)
+                echo "environment: DEVELOPMENT"
+                ln -sf /app/conf/nginx.conf-dev /etc/nginx/nginx.conf
+                ;;
+        stage)
+                echo "environment: STAGE"
+                ln -sf /app/conf/nginx.conf-prod /etc/nginx/nginx.conf
+                ln -sf /app/conf/robots.txt-stage /app/robots.txt
+                ;;
+        prod)
+                echo "  environment: PRODUCTION"
+                ln -sf /app/conf/nginx.conf-prod /etc/nginx/nginx.conf
+                ln -sf /app/conf/robots.txt-prod /app/robots.txt
+                ;;
+        *)
+                echo "Please define environment with ENVIRONMENT variable(dev, stage, prod)!"
+                exit 1
+                ;;
+esac
 
-nginx-debug -g "daemon off;"
+exec nginx-debug -g "daemon off;"

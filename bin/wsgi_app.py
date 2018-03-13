@@ -15,7 +15,8 @@ from flask import Flask, abort, request
 
 ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 DATA_DIR = os.path.join(ROOT_DIR, 'data')
-os.makedirs(DATA_DIR, exist_ok=True)
+if not os.path.isdir(DATA_DIR):
+    raise RuntimeError('DATA_DIR is not found at {}'.format(DATA_DIR))
 
 sys.path.append(os.path.join(ROOT_DIR, 'pythonlib'))
 sys.path.append(os.path.join(ROOT_DIR, 'constructor_engine'))
@@ -111,8 +112,8 @@ def get_ctor_params():
         return _send_error('ctor is not found')
 
     params = ctor_engine.get_ctor_params(ctor_id)
-    if isinstance(params, str):
-        return _send_error(params)
+    if 'error' == params['result']:
+        return _send_engine_error(params)
 
     return _send_output({
         'ctor_name': ctor_info['ctor_name'],
@@ -169,9 +170,8 @@ def construct():
     result = ctor_engine.construct(ctor_id, price_eth, args['fields'])
 
     assert isinstance(result, dict)
-    if 'error' in result:
-        # error
-        return _send_output(result)
+    if 'error' == result['result']:
+        return _send_engine_error(result)
 
     # success
     instance_id = instances.insert_one({'abi': json.dumps(result['abi']), 'source': result['source'],
@@ -310,6 +310,12 @@ def _get_input():
 def _send_error(string):
     print('[ERROR]: {}'.format(string))
     return _send_output({'error': string})
+
+def _send_engine_error(res):
+    if 'error_descr' in res:
+        return _send_output({'error': res['error_descr']})
+    else:
+        return _send_output(res)
 
 
 def _send_output(output):

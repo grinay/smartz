@@ -1,13 +1,11 @@
-version: '2'
+version: '3.2'
 services:
 
   mongo:
-    image: mongo:latest
-    restart: always
+    image: mongo:3.6.3
+    restart: "no"
     volumes:
       - "mongodb:/data/db"
-    networks:
-      - backendnet
 
   frontend:
     build:
@@ -15,10 +13,11 @@ services:
       context: .
       args:
         NGINX_UID: "10000"
-    restart: always
+    environment:
+      ENVIRONMENT: dev
+    restart: "no"
     depends_on:
       - backend
-      - mongo
     volumes:
       - "backendsocket:/app/sock"
     ports:
@@ -30,17 +29,20 @@ services:
       context: .
       args:
         UWSGI_UID: "10000"
-    restart: always
+    environment:
+      ENVIRONMENT: dev
+    restart: "no"
+    depends_on:
+      - mongo
     volumes:
       - "backendsocket:/app/sock"
       - "backenddata:/app/data"
-    networks:
-      - backendnet
 
 volumes:
-  backendsocket:
   backenddata:
   mongodb:
-
-networks:
-  backendnet:
+  backendsocket:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs

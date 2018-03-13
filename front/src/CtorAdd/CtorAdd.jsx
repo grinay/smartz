@@ -14,7 +14,7 @@ class CtorAdd extends Component {
     api(this.props.auth).post(`/upload_ctor`, formData)
       .then(response => {
         this.setState({
-          message: "Contract uploaded."
+          message: `Contract "${formData.ctor_name}" uploaded.`
         })
       })
       .catch(error => console.log(error));
@@ -27,7 +27,12 @@ class CtorAdd extends Component {
   render() {
     const formSchema = {
       "type": "object",
-      "required": ["ctor_name", "ctor_file_name", "ctor_descr", "price_eth"],
+      "required": ["ctor_name", "ctor_descr", "price_eth"],
+      "oneOf": [{
+        "required": ["ctor_file_name"]
+      }, {
+        "required": ["ctor_file"]
+      }],
       "additionalProperties": false,
       "properties": {
         "ctor_name": {
@@ -37,8 +42,13 @@ class CtorAdd extends Component {
           "maxLength": 100,
           "pattern": "^[a-zA-Z0-9_ -]+$"
         },
+        "ctor_file": {
+          "title": "Smart contract .py file",
+          "type": "string",
+          "format": "data-url"
+        },
         "ctor_file_name": {
-          "title": "Name of smart contract .py file (3..100 chars)",
+          "title": "Name of smart contract .py file (legacy)",
           "type": "string",
           "minLength": 3,
           "maxLength": 100,
