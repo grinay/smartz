@@ -82,7 +82,7 @@ def upload_ctor():
             return _send_error("Only python files are accepted")
 
         file_base64 = re.sub('^data:text/x-python.+;base64,', '', args['ctor_file'])
-        file_source = str(base64.b64decode(file_base64))
+        file_source = base64.b64decode(file_base64).decode('utf-8')
 
         file = open(filename, "w")
         file.write(file_source)

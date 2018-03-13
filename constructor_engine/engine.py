@@ -30,12 +30,7 @@ class BaseEngine(object):
         source = self._load_constructor(id)
         res = self._call_constructor_method(source, self.METHOD_GET_PARAMS)
 
-        if res['result'] == 'success':
-            return res
-        elif 'error_descr' in res:
-            return res['error_descr']
-        else:
-            return 'Something got wrong'
+        return res
 
     def construct(self, id, price_eth, fields):
         constructor_source = self._load_constructor(id)
@@ -97,7 +92,7 @@ class BaseEngine(object):
                     "error_descr": "Something got wrong/0"
                 }
 
-
+            #todo validate json
             return res.json()
         except Exception as e:
             print("[DEBUG] {}".format(str(e)))
