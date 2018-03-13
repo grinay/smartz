@@ -5,8 +5,9 @@
 
 AWS_REGISTRY=128894178443.dkr.ecr.eu-central-1.amazonaws.com
 AWS_REGION=eu-central-1
-VERSION="$TRAVIS_BUILD_NUMBER"
-TAGS=( latest "version_$VERSION" )
+BRANCH="$TRAVIS_BRANCH"
+COMMIT="$(git log -1  --pretty=format:'%h')"
+TAGS=( "latest" "branch_$BRANCH_commit_$COMMIT" )
 
 for NAME in "$@"
 do
