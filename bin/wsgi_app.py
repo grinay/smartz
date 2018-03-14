@@ -98,11 +98,12 @@ def upload_ctor():
 
         is_public = True
     elif 'ctor_file' in args:
-        if not args['ctor_file'].startswith('data:text/x-python;'):
-            return _send_error("Only python files are accepted")
+        file_base64 = re.sub('^data:.+;base64,', '', args['ctor_file'])
 
-        file_base64 = re.sub('^data:text/x-python.+;base64,', '', args['ctor_file'])
-        file_source = base64.b64decode(file_base64).decode('utf-8')
+        try:
+            file_source = base64.b64decode(file_base64).decode('utf-8')
+        except Exception:
+            return _send_error("Invalid input/0")
 
         file = open(filename, "w")
         file.write(file_source)
