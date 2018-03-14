@@ -14,8 +14,9 @@ class CtorAdd extends Component {
     formData['constructor_id'] = this.getId();
     api(this.props.auth).post(`/upload_ctor`, formData)
       .then(response => {
+        let message = response.data.error ? response.data.error : `Contract "${formData.ctor_name}" uploaded.`;
         this.setState({
-          message: `Contract "${formData.ctor_name}" uploaded.`
+          message: message
         })
       })
       .catch(error => console.log(error));

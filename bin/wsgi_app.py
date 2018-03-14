@@ -68,11 +68,25 @@ def upload_ctor():
     descr = nonempty(args_string(args, 'ctor_descr')) if 'ctor_descr' in args else ''
     filename = tempfile.mktemp('ctor')
 
-    # same_named_constructors = ctors.find({'ctor_name': name})
-    # if
-    #
-    # if ctors.find({'ctor_name': name}) is not None:
-    #     return _send_error('Constructor with this name already exists')
+    current_constructor = {}
+    #todo remake in pg
+    if 'constructor_id' in args:
+        res = [c for c in ctors.find() if _ctor_id(c['_id'])==args['constructor_id']]
+        if len(res):
+            current_constructor = res.pop()
+        else:
+            return _send_error('Constructor does not exists')
+
+        if current_constructor['user_id'] != user_id:
+            return _send_error('Access denied')
+
+    same_named_constructors = list(ctors.find({'ctor_name': name}))
+    if 'constructor_id' in args:
+        if len([c for c in same_named_constructors if _ctor_id(c['_id'])!=args['constructor_id']]):
+            return _send_error('Constructor with this name already exists')
+    else:
+        if len(same_named_constructors):
+            return _send_error('Constructor with this name already exists')
 
     if 'ctor_file_name' in args:
         uploaded_filename = args['ctor_file_name']
@@ -98,13 +112,30 @@ def upload_ctor():
     else:
         return _send_error("Invalid input")
 
-    ctor_id = ctors.insert_one({'ctor_name': name, 'ctor_descr': descr,
-                                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
-                                'is_public': is_public,
-                                'user_id': user_id}
-                               ).inserted_id.binary.hex()
+    if 'constructor_id' in args:
+        ctors.replace_one(
+            {'_id': current_constructor['_id']},
+            {
+                'ctor_name': name,
+                'ctor_descr': descr,
+                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
+                'is_public': is_public,
+                'user_id': user_id
+            }
+        )
+        ctor_engine.register_new_ctor(_ctor_id(current_constructor['_id']), filename)
+    else:
+        ctor_id = ctors.insert_one(
+            {
+                'ctor_name': name,
+                'ctor_descr': descr,
+                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
+                'is_public': is_public,
+                'user_id': user_id
+            }
+        ).inserted_id
 
-    ctor_engine.register_new_ctor(ctor_id, filename)
+        ctor_engine.register_new_ctor(_ctor_id(ctor_id), filename)
 
     return _send_output({'ok': True})
 
@@ -385,7 +416,7 @@ def process_ctor_schema(schema):
 
 def _format_ctor(ctor):
     return {
-        'ctor_id': ctor['_id'].binary.hex(),
+        'ctor_id': _ctor_id(ctor['_id']),
         'ctor_name': ctor['ctor_name'],
         'price_eth': ctor.get('price_eth', .0),
         'ctor_descr': ctor['ctor_descr'] if 'ctor_descr' in ctor else '',
@@ -393,6 +424,8 @@ def _format_ctor(ctor):
         'user_id': ctor['user_id'] if 'user_id' in ctor else '',
      }
 
+def _ctor_id(id):
+    return id.binary.hex()
 
 if __name__ == '__main__':
     app.run()
