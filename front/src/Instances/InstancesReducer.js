@@ -1,4 +1,4 @@
-import {find, findIndex} from 'lodash';
+import {find, findIndex, cloneDeep} from 'lodash';
 import moment from 'moment';
 
 const initState = {
@@ -8,7 +8,7 @@ const initState = {
 };
 
 const instances = (state = initState, action) => {
-  const nextState = {...state};
+  const nextState = cloneDeep(state);
 
   switch (action.type) {
     case 'FETCH_INSTANCES_REQUEST':

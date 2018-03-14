@@ -218,8 +218,8 @@ class Instance extends Component {
                             <td className="table__data">
                               <div className="table__inner">
                                 <span id="contract-stage">
-                                  {instance.funcResults
-                                    ? instance.funcResults[func.name]
+                                  {(instance.funcResults && instance.funcResults[func.name] !== undefined)
+                                    ? instance.funcResults[func.name].toString()
                                     : ''
                                   }
                                 </span>
