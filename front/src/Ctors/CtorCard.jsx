@@ -48,6 +48,7 @@ class CtorCard extends Component {
               </Link>
 
               {
+                isAuthenticated && ctor.user_id===userId &&
                   <Link to={`/constructors/${ctor.ctor_id}/update`} className="btn-square contract-card__price">
                     Update
                   </Link>
