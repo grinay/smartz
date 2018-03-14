@@ -24,6 +24,10 @@
   color: #0F1418;
 }
 
+.support-navigation__link.active {
+  color: #9013FE !important;
+}
+
 .markdown blockquote {
   font-style: italic;
   margin-top: 30px;

@@ -65,7 +65,7 @@ class App extends Component {
             handleAuthentication(props);
             return <Callback {...props} />
           }}/>
-          <Route path="/docs" component={Docs} />
+          <Route path="/docs/:docUri?" component={Docs} />
 
           {!auth.isAuthenticated() &&
             <Redirect to="/" />

@@ -24,3 +24,7 @@
 .alert.green {
   background-color: #88db88;
 }
+
+p b, p strong, li b, li strong {
+  font-family: "Cera Pro 700";
+}
