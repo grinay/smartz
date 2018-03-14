@@ -72,7 +72,6 @@ class App extends Component {
           <Route path="/profile" render={props => (
             <Profile auth={auth} profile={profile} {...props} />)}
           />
-          <Route path="/ctor-add" render={props => (<CtorAdd auth={auth} {...props} />)} />
           <Route path="/deploy/:id" render={props => (
             <Deploy auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />
@@ -82,9 +81,13 @@ class App extends Component {
           <Route path="/instance/:id" render={props => (
             <Instance auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />
+
+          <Route path="/ctor-add"                render={props => (<CtorAdd auth={auth} {...props} />)} />
+          <Route path="/constructors/:id/update" render={props => (<CtorAdd auth={auth} {...props} />)} />
           <Route path="/my_apps" render={(props) => (
             <MyApps auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />
+
           {/* TODO: <Route component={Page404} />*/}
         </Switch>
 

@@ -55,7 +55,7 @@ def register_user():
     return _send_output({'ok': True})
 
 
-@app.route('/upload_ctor', methods=['GET', 'POST'])
+@app.route('/upload_ctor', methods=['POST'])
 def upload_ctor():
     args = _get_input()
     ctors = db.ctors
@@ -67,6 +67,12 @@ def upload_ctor():
     name = nonempty(args_string(args, 'ctor_name'))
     descr = nonempty(args_string(args, 'ctor_descr')) if 'ctor_descr' in args else ''
     filename = tempfile.mktemp('ctor')
+
+    # same_named_constructors = ctors.find({'ctor_name': name})
+    # if
+    #
+    # if ctors.find({'ctor_name': name}) is not None:
+    #     return _send_error('Constructor with this name already exists')
 
     if 'ctor_file_name' in args:
         uploaded_filename = args['ctor_file_name']
@@ -91,9 +97,6 @@ def upload_ctor():
         is_public = False
     else:
         return _send_error("Invalid input")
-
-    if ctors.find_one({'ctor_name': name}) is not None:
-        return _send_error('ctor with this name already exists')
 
     ctor_id = ctors.insert_one({'ctor_name': name, 'ctor_descr': descr,
                                 'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,

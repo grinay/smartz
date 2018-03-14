@@ -11,6 +11,7 @@ class CtorAdd extends Component {
   }
 
   submit({formData}) {
+    formData['constructor_id'] = this.getId();
     api(this.props.auth).post(`/upload_ctor`, formData)
       .then(response => {
         this.setState({
@@ -24,7 +25,13 @@ class CtorAdd extends Component {
     this.setState({[e.target.name]: e.target.files ? e.target.files[0] : e.target.value});
   }
 
+  getId() {
+    return this.props.match && this.props.match.params ? this.props.match.params.id : null
+  }
+
   render() {
+    let constructorId = this.getId();
+
     const formSchema = {
       "type": "object",
       "required": ["ctor_name", "ctor_descr", "price_eth"],
@@ -88,15 +95,7 @@ class CtorAdd extends Component {
 
     return (
       <div className="container">
-        <h1>Add a smart contract</h1>
-
-        <div className="alert alert-success" role="alert">
-          <h4 className="alert-heading">Welcome!</h4>
-          <p>
-            <b>Unfortunately, smart contracts upload function for independent developers is not ready yet!</b><br />
-            If you are interested in contributing our project, feel free to <a href="https://t.me/LoungerX">get in touch with us</a>.
-          </p>
-        </div>
+        <h1>{constructorId? 'Update the' : 'Add a'} smart contract</h1>
 
         <Form schema={formSchema}
           uiSchema={uiSchema}
@@ -105,7 +104,7 @@ class CtorAdd extends Component {
           <Button bsStyle="primary"
             className="btn-margin"
             type="submit">
-            Submit a contract
+            {constructorId ? 'Update' : 'Submit'} the contract
           </Button>
         </Form>
 
