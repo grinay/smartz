@@ -9,6 +9,7 @@ import {
   fetchCtorParamsSuccess
 } from 'Ctors/CtorsActions';
 import {
+  initDeploy,
   constructRequest,
   constructError,
   constructSuccess,
@@ -19,13 +20,15 @@ import {
 } from './DeployActions';
  
 const mapStateToProps = (state, ownProps) => {
+  const {ctorId, deployId} = ownProps.match.params;
   return {
-    ctor: {...find(state.ctors.ctors, {ctor_id: ownProps.match.params.id})},
-    ...state.deploy
+    ctor: {...find(state.ctors.ctors, {ctor_id: ctorId})},
+    ...state.deploy[deployId]
   };
 };
  
 const mapDispatchToProps = {
+  initDeploy,
   fetchCtorParamsRequest,
   fetchCtorParamsFailure,
   fetchCtorParamsSuccess,

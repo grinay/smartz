@@ -6,10 +6,12 @@ import FormWidgets from 'common/FormWidgets';
 
 class DeployStep1 extends Component {
   submit({formData}) {
-    const {ctor, auth} = this.props;
-    const {constructRequest, constructError, constructSuccess} = this.props;
+    const {
+      deployId, ctor, auth,
+      constructRequest, constructError, constructSuccess
+    } = this.props;
 
-    constructRequest();
+    constructRequest(deployId);
 
     const instTitle = formData.instance_title;
     delete formData.instance_title;
@@ -20,16 +22,19 @@ class DeployStep1 extends Component {
     })
 
     .then(response => {
-      if (response.data.result === 'error') {
-        constructError(response.data.errors);
+      const {data} = response;
+
+      if (data.error || data.result === 'error') {
+        constructError(deployId, data.error || data.errors);
+
       } else {
-        constructSuccess(response.data);
+        constructSuccess(deployId, data);
       }
     })
 
     .catch(error => {
       console.log(error);
-      constructError(error);
+      constructError(deployId, error);
     });
   }
 

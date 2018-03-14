@@ -5,6 +5,7 @@ import Alert from 'common/Alert';
 import DeployStep1 from './DeployStep1';
 import DeployStep2 from './DeployStep2';
 import DeployStep3 from './DeployStep3';
+import Spinner from 'common/Spinner';
 
 import './Deploy.css';
 
@@ -13,19 +14,27 @@ import './Deploy.css';
 class Deploy extends Component {
   constructor(props) {
     super(props);
+
+    const {ctorId, deployId} = this.props.match.params;
     this.state = {
       auth: props.auth.isAuthenticated(),
-      ctorId: this.props.match.params.id
+      ctorId,
+      deployId
     };
   }
 
   componentWillMount() {
-    const {fetchCtorParamsRequest,
-           fetchCtorParamsFailure,
-           fetchCtorParamsSuccess} = this.props;
+    const {
+      status, initDeploy,
+      fetchCtorParamsRequest, fetchCtorParamsFailure, fetchCtorParamsSuccess,
+    } = this.props;
     const {ctorId, auth} = this.state;
 
     if (auth) {
+      if (!status) {
+        initDeploy(this.state.deployId);
+      }
+
       fetchCtorParamsRequest(ctorId);
 
       api(this.props.auth).post(`/get_ctor_params`, {
@@ -57,6 +66,7 @@ class Deploy extends Component {
       </div>
     );
 
+    const {deployId} = this.state;
     const {
       auth, ctor, status, errors, instance, netId, txHash, contractAddress,
       constructRequest, constructError, constructSuccess,
@@ -64,12 +74,12 @@ class Deploy extends Component {
     } = this.props;
 
     const step1Props = {
-      auth, ctor, errors,
+      deployId, auth, ctor,
       constructRequest, constructError, constructSuccess
     };
 
     const step2Props = {
-      auth, ctor, instance, errors, status,
+      deployId, auth, ctor, instance, status,
       setPublicAccess, deployTxSent, deployTxError, deployTxMined
     };
 
@@ -126,24 +136,39 @@ class Deploy extends Component {
             {ctor.ctor_name}
           </h2>
 
+          {ctor && ctor.fetchStatus === 'request' &&
+            <div className="block__wrapper  block__wrapper--top">
+              <Spinner text="Fetching contract details..." />
+            </div>
+          }
+
           {errors &&
             <Alert>
               {typeof errors === 'object'
-                ? Object.keys(errors).forEach((err) => (<p key={err}>{errors[err]}</p>))
-                : <p>errors</p>
+                ? Object.keys(errors).forEach((err) => (
+                    <p key={err}>{errors[err]}</p>)
+                  )
+                : <p>{errors}</p>
               }
             </Alert>
           }
 
-          {status === 'configure' && ctor && ctor.fetchStatus === 'success' &&
+          {((status === 'configure' && ctor && ctor.fetchStatus === 'success')
+            || status === 'construct_error'
+          ) &&
             <DeployStep1 {...step1Props} />
           }
 
-          {(status === 'construct_request' || status === 'construct_success') &&
+          {(status === 'construct_request'
+            || status === 'construct_success'
+          ) &&
             <DeployStep2 {...step2Props} />
           }
 
-          {(status === 'transaction_sent' || status === 'transaction_mined') &&
+          {(status === 'transaction_sent'
+            || status === 'transaction_mined'
+            || status === 'transaction_error'
+          ) &&
             <DeployStep3 {...step3Props} />
           }
         </section>

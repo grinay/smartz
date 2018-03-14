@@ -5,7 +5,8 @@ import App from './App';
 import {setUserProfile} from './AppActions';
  
 const mapStateToProps = state => ({
-  profile: state.app.profile
+  profile: state.app.profile,
+  nextDeploy: state.deploy.length
 });
  
 const mapDispatchToProps = {

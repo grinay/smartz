@@ -72,9 +72,14 @@ class App extends Component {
           <Route path="/profile" render={props => (
             <Profile auth={auth} profile={profile} {...props} />)}
           />
-          <Route path="/deploy/:id" render={props => (
+
+          <Route exact path="/deploy/:ctorId" render={props => (
+            <Redirect to={`/deploy/${props.match.params.ctorId}/${this.props.nextDeploy}`} />
+          )} />
+          <Route path="/deploy/:ctorId/:deployId" render={props => (
             <Deploy auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />
+
           <Route path="/dashboard" render={props => (
             <Dashboard auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />

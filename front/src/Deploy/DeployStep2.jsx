@@ -9,7 +9,7 @@ class DeployStep2 extends Component {
 
     const {bin} = this.props.instance;
     const {price_eth} = this.props.ctor;
-    const {deployTxSent, deployTxError, deployTxMined} = this.props;
+    const {deployId, deployTxSent, deployTxError, deployTxMined} = this.props;
 
     w3.eth.sendTransaction({
       data: bin,
@@ -22,13 +22,13 @@ class DeployStep2 extends Component {
         deployTxError(err);
 
       } else {
-        getNetworkId(netId => deployTxSent(netId, txHash));
+        getNetworkId(netId => deployTxSent(deployId, netId, txHash));
 
         getTxReceipt(txHash, receipt => {
           if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
-            deployTxError("Something went wrong and your contract deploy has failed. Try to add more gas or report problem to contract developers.");
+            deployTxError(deployId, "Something went wrong and your contract deploy has failed. Try to add more gas or report problem to contract developers.");
           } else {
-            deployTxMined(receipt.contractAddress);
+            deployTxMined(deployId, receipt.contractAddress);
           }
         });
       }
@@ -37,7 +37,7 @@ class DeployStep2 extends Component {
 
   render() {
     const {
-      ctor, instance, status,
+      deployId, ctor, instance, status,
       setPublicAccess
     } = this.props;
 
@@ -83,7 +83,7 @@ class DeployStep2 extends Component {
                       className="form-field__input  form-field__input--checkbox form-field__input--terms  visually-hidden"
                       id="public-access"
                       onChange={(e) => {
-                        setPublicAccess(e.target.checked)
+                        setPublicAccess(deployId, e.target.checked)
                       }}
                     />
                     <label className="form-field__label  form-field__label--checkbox  form-field__label--terms" htmlFor="public-access">

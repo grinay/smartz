@@ -1,36 +1,48 @@
+export const initDeploy = (deployId) => ({
+  type: 'INIT_DEPLOY',
+  deployId
+});
+
 // Step 1 - constructing
-export const constructRequest = () => ({
-  type: 'CONSTRUCT_REQUEST'
+export const constructRequest = (deployId) => ({
+  type: 'CONSTRUCT_REQUEST',
+  deployId
 });
 
-export const constructError = (errors) => ({
+export const constructError = (deployId, errors) => ({
   type: 'CONSTRUCT_ERROR',
-  errors
+  errors,
+  deployId
 });
 
-export const constructSuccess = (instance) => ({
+export const constructSuccess = (deployId, instance) => ({
   type: 'CONSTRUCT_SUCCESS',
-  instance
+  instance,
+  deployId
 });
 
 // Step 2 - deploy transaction
-export const setPublicAccess = (publicAccess) => ({
+export const setPublicAccess = (deployId, publicAccess) => ({
   type: 'SET_PUBLIC_ACCESS',
-  publicAccess
+  publicAccess,
+  deployId
 });
 
-export const deployTxSent = (netId, txHash) => ({
+export const deployTxSent = (deployId, netId, txHash) => ({
   type: 'DEPLOY_TX_SENT',
   netId,
-  txHash
+  txHash,
+  deployId
 });
 
-export const deployTxError = (errors) => ({
+export const deployTxError = (deployId, errors) => ({
   type: 'DEPLOY_TX_ERROR',
-  errors
+  errors,
+  deployId
 });
 
-export const deployTxMined = (contractAddress) => ({
+export const deployTxMined = (deployId, contractAddress) => ({
   type: 'DEPLOY_TX_MINED',
-  contractAddress
+  contractAddress,
+  deployId
 });

@@ -41,7 +41,7 @@ class Store extends Component {
             <div className="contracts-gallery__gallery  gallery">
               {ctors &&
                 <ul className="contracts-gallery__list  gallery__list">
-                  {ctors.filter(el=>el.is_public).map((el, i) => (
+                  {ctors.map((el, i) => (
                     <CtorCard key={i} ctor={el} auth={auth} />
                   ))}
                 </ul>

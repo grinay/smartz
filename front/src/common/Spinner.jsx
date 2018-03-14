@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class Spinner extends Component {
   render() {
-    const {text, alt = 'Spinner', width} = this.props;
+    const {text, alt = 'Spinner', width = '100px'} = this.props;
 
     return (
       <div className="spinner">
@@ -10,7 +10,7 @@ class Spinner extends Component {
         <img
           src={require('./i/loading.svg')}
           alt={alt}
-          width={width}
+          style={{maxWidth: width}}
         />
       </div>
     );
