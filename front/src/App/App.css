@@ -20,3 +20,7 @@
   font-size: 20px;
   line-height: 27px;
 }
+
+.alert.green {
+  background-color: #88db88;
+}

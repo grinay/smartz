@@ -22,6 +22,7 @@ export const fetchCtorParamsRequest = (ctorId) => ({
 
 export const fetchCtorParamsFailure = (ctorId, error) => ({
   type: 'FETCH_CTOR_PARAMS_FAILURE',
+  ctorId,
   error
 });
 

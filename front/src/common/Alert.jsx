@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import classNames from 'classnames';
 
 class Alert extends Component {
   render() {
@@ -29,7 +30,7 @@ class Alert extends Component {
     }
 
     return (
-      <div className="alert" {...this.props}>
+      <div className={classNames('alert', this.props.color)} {...this.props}>
         {header &&
           <h2>{header}</h2>
         }

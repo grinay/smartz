@@ -27,12 +27,13 @@ class Deploy extends Component {
     const {
       status, initDeploy,
       fetchCtorParamsRequest, fetchCtorParamsFailure, fetchCtorParamsSuccess,
+      constructError
     } = this.props;
-    const {ctorId, auth} = this.state;
+    const {ctorId, deployId, auth} = this.state;
 
     if (auth) {
       if (!status) {
-        initDeploy(this.state.deployId);
+        initDeploy(deployId);
       }
 
       fetchCtorParamsRequest(ctorId);
@@ -40,8 +41,20 @@ class Deploy extends Component {
       api(this.props.auth).post(`/get_ctor_params`, {
         'ctor_id': ctorId
       })
-      .then(response => fetchCtorParamsSuccess(ctorId, response.data))
-      .catch(error => fetchCtorParamsFailure(ctorId, error.message));
+
+      .then(response => {
+        const {data} = response;
+        if (data.error) {
+          constructError(deployId, data.error);
+          fetchCtorParamsFailure(ctorId, data.error);
+        } else {
+          fetchCtorParamsSuccess(ctorId, data);
+        }
+      })
+      .catch(error => {
+        constructError(deployId, error.message);
+        fetchCtorParamsFailure(ctorId, error.message)
+      });
     }
   }
 
@@ -154,7 +167,7 @@ class Deploy extends Component {
           }
 
           {((status === 'configure' && ctor && ctor.fetchStatus === 'success')
-            || status === 'construct_error'
+            || (status === 'construct_error' && ctor.fetchStatus === 'success')
           ) &&
             <DeployStep1 {...step1Props} />
           }

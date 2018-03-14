@@ -53,8 +53,8 @@ class Store extends Component {
             </div>
           </section>
 
-          <Alert header="If you are developer"
-            style={{marginTop: '80px', background: '#88db88'}}
+          <Alert header="If you are developer" color="green"
+            style={{marginTop: '80px'}}
           >
             <p>You can <Link to="/ctor-add">add a smart contract</Link> to our platform.</p>
           </Alert>

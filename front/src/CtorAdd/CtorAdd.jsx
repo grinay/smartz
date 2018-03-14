@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
+import Alert from 'common/Alert';
 
 import api from 'helpers/api';
 
@@ -12,14 +13,20 @@ class CtorAdd extends Component {
 
   submit({formData}) {
     formData['constructor_id'] = this.getId();
+
     api(this.props.auth).post(`/upload_ctor`, formData)
       .then(response => {
-        let message = response.data.error ? response.data.error : `Contract "${formData.ctor_name}" uploaded.`;
-        this.setState({
-          message: message
-        })
+        if (response.data.error) {
+          this.setState({error: response.data.error});
+
+        } else {
+          this.setState({message: `Contract "${formData.ctor_name}" uploaded.`});
+        }
       })
-      .catch(error => console.log(error));
+
+      .catch(error => {
+        this.setState({error});
+      });
   }
 
   handleChange(e) {
@@ -92,31 +99,43 @@ class CtorAdd extends Component {
       }
     };
 
-    const {message} = this.state;
+    const {message, error} = this.state;
 
     return (
-      <div className="container">
-        <h1>{constructorId? 'Update the' : 'Add a'} smart contract</h1>
+      <main className="page-main page-main--contracts">
+        <section className="block">
+          <h2 className="block__header">
+            {constructorId ? 'Update the' : 'Add a'} smart contract
+          </h2>
 
-        <Form schema={formSchema}
-          uiSchema={uiSchema}
-          onSubmit={this.submit.bind(this)}
-          showErrorList={false}>
-          <Button bsStyle="primary"
-            className="btn-margin"
-            type="submit">
-            {constructorId ? 'Update' : 'Submit'} the contract
-          </Button>
-        </Form>
+          <Form schema={formSchema}
+            uiSchema={uiSchema}
+            onSubmit={this.submit.bind(this)}
+            showErrorList={false}>
+            <div className="block__wrapper" style={{marginBottom: '40px'}}>
+              <Button bsStyle="primary"
+                className="button block__button"
+                type="submit">
+                {constructorId ? 'Update' : 'Submit'} the contract
+              </Button>
+            </div>
+          </Form>
 
-        <br />
+          <br />
 
-        {message &&
-          <div className="alert alert-success" role="alert">
-            <p>{message}</p>
-          </div>
-        }
-      </div>
+          {message &&
+            <Alert color="green">
+              <p>{message}</p>
+            </Alert>
+          }
+
+          {error &&
+            <Alert>
+              <p>{error}</p>
+            </Alert>
+          }
+        </section>
+      </main>
     );
   }
 }
