@@ -158,8 +158,8 @@ class Deploy extends Component {
           {errors &&
             <Alert>
               {typeof errors === 'object'
-                ? Object.keys(errors).forEach((err) => (
-                    <p key={err}>{errors[err]}</p>)
+                ? Object.keys(errors).map((err, i) => (
+                    <p key={i}>{errors[err]}</p>)
                   )
                 : <p>{errors}</p>
               }
