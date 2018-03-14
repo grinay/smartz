@@ -57,9 +57,9 @@ def abi_arguments2schema(abi_args_array):
 
 def make_generic_function_spec(abi_array):
     """
-    Генерация ETHFunctionSpec для всех функций из ABI.
-    :param abi_array: Ethereum ABI контракта
-    :return: массив элементов ETHFunctionSpec
+    Generates ETHFunctionSpec for each function found in ABI.
+    :param abi_array: contract Ethereum ABI
+    :return: list of ETHFunctionSpec
     """
     def fn2spec(fn):
         spec = dict()
@@ -79,13 +79,14 @@ def make_generic_function_spec(abi_array):
 
 def merge_function_titles2specs(spec_array, titles_info):
     """
-    Дополнение переданных ETHFunctionSpec human-friendly заголовками и описаниями.
+    Attach human-friendly titles and descriptions to passed ETHFunctionSpec list.
 
-    Дополняются названия и описания функций, названия и описания входных и выходных параметров.
+    Processed elements: function titles and descriptions, function input arguments titles and descriptions,
+    titles and descriptions of function outputs.
 
-    :param spec_array: массив элементов ETHFunctionSpec
-    :param titles_info: данные, соответствующие формату описаний
-    :return: модифицированный массив элементов ETHFunctionSpec
+    :param spec_array: list of ETHFunctionSpec
+    :param titles_info: data according to function_titles_info.json schema
+    :return: modified ETHFunctionSpec
     """
     assert_conforms2schema(titles_info, load_schema('internal/eth/contracts/function_titles_info.json'))
 
