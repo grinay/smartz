@@ -12,6 +12,7 @@ import Deploy from 'Deploy/DeployContainer';
 import CtorAdd from 'CtorAdd/CtorAdd';
 import Dashboard from 'Dashboard/DashboardContainer';
 import Instance from 'Instances/InstanceContainer';
+import Docs from 'Docs/Docs';
 import {checkMetaMask} from 'helpers/eth';
 
 import './App.css';
@@ -64,6 +65,7 @@ class App extends Component {
             handleAuthentication(props);
             return <Callback {...props} />
           }}/>
+          <Route path="/docs" component={Docs} />
 
           {!auth.isAuthenticated() &&
             <Redirect to="/" />

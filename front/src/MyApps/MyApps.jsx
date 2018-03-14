@@ -39,7 +39,7 @@ class MyApps extends Component {
             <div className="contracts-gallery__gallery  gallery">
               {ctors &&
                 <ul className="contracts-gallery__list  gallery__list">
-                  {ctors.filter(el=>isAuthenticated && el.user_id==userId).map((el, i) => (
+                  {ctors.filter(el=>isAuthenticated && el.user_id===userId).map((el, i) => (
                     <CtorCard key={i} ctor={el} auth={auth} />
                   ))}
                 </ul>
