@@ -6,7 +6,6 @@ RUN npm run build --production
 COPY json-schema/public/ build/json-schema/public/
 
 FROM nginx:1.12.2-alpine
-ARG NGINX_UID
 WORKDIR /app
 VOLUME [ "/app/sock" ]
 EXPOSE 80
