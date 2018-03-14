@@ -6,7 +6,7 @@ import Spinner from 'common/Spinner';
 import api from 'helpers/api';
 import CtorCard from 'Ctors/CtorCard';
 
-class MyApps extends Component {
+class MyDapps extends Component {
   componentWillMount() {
     const {
       auth,
@@ -62,4 +62,4 @@ class MyApps extends Component {
   }
 }
 
-export default MyApps;
+export default MyDapps;

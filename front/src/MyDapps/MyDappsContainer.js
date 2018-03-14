@@ -1,7 +1,7 @@
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import MyApps from './MyApps';
+import MyDapps from './MyDapps';
 import {fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess} from 'Ctors/CtorsActions';
  
 const mapStateToProps = state => ({
@@ -13,9 +13,9 @@ const mapDispatchToProps = {fetchCtorsRequest,
                             fetchCtorsFailure,
                             fetchCtorsSuccess};
  
-const MyAppsContainer = withRouter(connect(
+const MyDappsContainer = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(MyApps));
+)(MyDapps));
  
-export default MyAppsContainer;
+export default MyDappsContainer;

@@ -6,7 +6,7 @@ import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import Callback from './Auth/Callback/Callback';
 import Store from 'Store/StoreContainer';
-import MyApps from 'MyApps/MyAppsContainer';
+import MyDapps from 'MyDapps/MyDappsContainer';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/DeployContainer';
 import CtorAdd from 'CtorAdd/CtorAdd';
@@ -43,7 +43,7 @@ class App extends Component {
     const isAuthenticated = auth.isAuthenticated();
     const {profile, setUserProfile} = this.props;
 
-    if (!isAuthenticated && profile) setUserProfile({});
+    if (!isAuthenticated && profile) setUserProfile(null);
     if (isAuthenticated && !profile) {
       auth.getProfile((err, newProfile) => {
         setUserProfile(newProfile);
@@ -91,8 +91,8 @@ class App extends Component {
 
           <Route path="/ctor-add"                render={props => (<CtorAdd auth={auth} {...props} />)} />
           <Route path="/constructors/:id/update" render={props => (<CtorAdd auth={auth} {...props} />)} />
-          <Route path="/my_apps" render={(props) => (
-            <MyApps auth={auth} metamaskStatus={metamaskStatus} {...props} />
+          <Route path="/my-dapps" render={(props) => (
+            <MyDapps auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />
 
           {/* TODO: <Route component={Page404} />*/}

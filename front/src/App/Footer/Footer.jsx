@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
+import './Footer.css';
+
 class Footer extends Component {
   render() {
     return (
@@ -73,8 +75,8 @@ class Footer extends Component {
               </h3>
               <ul className="page-footer__list">
                 <li className="page-footer__item">
-                  <Link to="/my_apps" className="page-footer__link">
-                    My apps
+                  <Link to="/my-dapps" className="page-footer__link">
+                    My dapps
                   </Link>
                 </li>
               </ul>
