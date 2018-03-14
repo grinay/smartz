@@ -11,10 +11,8 @@ services:
     build:
       dockerfile: docker/frontend/Dockerfile
       context: .
-      args:
-        NGINX_UID: "10000"
-    environment:
-      ENVIRONMENT: dev
+    env_file:
+      - smartzplatform.env
     restart: "no"
     depends_on:
       - backend
@@ -27,10 +25,8 @@ services:
     build:
       dockerfile: docker/backend/Dockerfile
       context: .
-      args:
-        UWSGI_UID: "10000"
-    environment:
-      ENVIRONMENT: dev
+    env_file:
+      - smartzplatform.env
     restart: "no"
     depends_on:
       - mongo
