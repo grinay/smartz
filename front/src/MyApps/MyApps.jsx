@@ -26,7 +26,7 @@ class MyApps extends Component {
     const {ctors, metamaskStatus, auth} = this.props;
 
     const isAuthenticated = auth.isAuthenticated();
-    const userId = isAuthenticated ? auth.getAccessToken() : '-1';
+    const userId = isAuthenticated && auth.userProfile ? auth.userProfile['sub'] : '-1';
 
     return (
       <main className="page-main  page-main--store">

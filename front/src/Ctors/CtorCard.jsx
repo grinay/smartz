@@ -5,7 +5,7 @@ class CtorCard extends Component {
   render() {
     const {ctor, auth} = this.props;
     const isAuthenticated = auth.isAuthenticated();
-    const userId = isAuthenticated ? auth.getAccessToken() : '-1';
+    const userId = isAuthenticated && auth.userProfile ? auth.userProfile['sub'] : '-1';
 
     const buttonText = isAuthenticated
       ? (ctor.price_eth
