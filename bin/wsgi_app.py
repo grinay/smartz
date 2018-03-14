@@ -8,6 +8,7 @@ import tempfile
 from shutil import copy2
 from urllib.parse import urlparse
 
+import requests
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from jsonschema.validators import validator_for
@@ -406,9 +407,29 @@ def nonempty(v):
 
 
 def auth():
-    user_id = request.headers.get('X-AccessToken')
+    token = request.headers.get('X-AccessToken')
+    if not token:
+        return _send_error('not authorized')
 
-    return user_id if user_id else _send_error('not authorized')
+    user_info = db.auth_tokens.find_one({"token": token})
+    if user_info:
+       user_id =  user_info['user_id']
+    else:
+        url = 'https://mixbytes.eu.auth0.com/userinfo'
+        headers = {'authorization': 'Bearer {}'.format(token)}
+        try:
+            resp = requests.get(url, headers=headers)
+            user_info = resp.json()
+            print("[DEBUG][AUTH][USER] {}".format(str(user_info)))
+        except Exception:
+            return _send_error('authorization error')
+
+        user_id = user_info['sub']
+        db.auth_tokens.replace_one({"token": token}, {"token": token, 'user_id': user_id}, upsert=True)
+
+
+    print("[DEBUG][AUTH] {}".format(str(user_id)))
+    return user_id
 
 
 def process_ctor_schema(schema):
