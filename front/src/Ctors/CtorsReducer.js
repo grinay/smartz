@@ -64,7 +64,7 @@ const ctors = (state = initState, action) => {
     case 'FETCH_CTOR_PARAMS_FAILURE':
       ctor = find(nextState.ctors, {ctor_id: action.ctorId});
       ctor.fetchStatus = 'error';
-      ctor.error = action.error
+      ctor.error = action.error;
       return nextState;
 
     case 'FETCH_CTOR_PARAMS_SUCCESS':
@@ -84,6 +84,6 @@ const ctors = (state = initState, action) => {
     default:
       return state;
   }
-}
+};
 
 export default ctors;

@@ -5,6 +5,7 @@ class CtorCard extends Component {
   render() {
     const {ctor, auth} = this.props;
     const isAuthenticated = auth.isAuthenticated();
+    const userId = isAuthenticated ? auth.getAccessToken() : '-1';
 
     const buttonText = isAuthenticated
       ? (ctor.price_eth
@@ -45,6 +46,14 @@ class CtorCard extends Component {
               }} className="btn-square  contract-card__price">
                 {buttonText}
               </Link>
+
+              {
+                isAuthenticated && ctor.user_id==userId &&
+                  <Link to={`/constructors/${ctor.ctor_id}/update`} className="btn-square contract-card__price">
+                    Update
+                  </Link>
+              }
+
               {/*<span className="contract-card__quantity">2510</span>*/}
             </p>
           </div>

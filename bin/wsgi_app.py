@@ -110,16 +110,18 @@ def upload_ctor():
 def list_ctors():
     ctors = db.ctors
 
-    def format_ctor(ctor):
-        return {
-            'ctor_id': ctor['_id'].binary.hex(),
-            'ctor_name': ctor['ctor_name'],
-            'price_eth': ctor.get('price_eth', .0),
-            'ctor_descr': ctor['ctor_descr'] if 'ctor_descr' in ctor else ''
-         }
+    user_id = auth()
+    if isinstance(user_id, dict):
+        filter = {"is_public": True}
+    else:
+        filter = {
+            "$or": [
+                {"is_public": True},
+                {"user_id": user_id}
+            ]
+        }
 
-    return _send_output(list(map(format_ctor, ctors.find())))
-
+    return _send_output(list(map(_format_ctor, ctors.find(filter))))
 
 @app.route('/get_ctor_params', methods=['GET', 'POST'])
 def get_ctor_params():
@@ -369,16 +371,24 @@ def nonempty(v):
 
 
 def auth():
-    if urlparse(request.base_url).netloc.split(':')[0].lower() in ('localhost', '127.0.0.1'):
-        user_id = 'local'
-    else:
-        user_id = request.headers.get('X-AccessToken')
+    user_id = request.headers.get('X-AccessToken')
 
     return user_id if user_id else _send_error('not authorized')
 
 
 def process_ctor_schema(schema):
     return add_definitions(schema, load_schema('public/ethereum-sc.json'))
+
+
+def _format_ctor(ctor):
+    return {
+        'ctor_id': ctor['_id'].binary.hex(),
+        'ctor_name': ctor['ctor_name'],
+        'price_eth': ctor.get('price_eth', .0),
+        'ctor_descr': ctor['ctor_descr'] if 'ctor_descr' in ctor else '',
+        'is_public': ctor['is_public'] if 'is_public' in ctor else True,
+        'user_id': ctor['user_id'] if 'user_id' in ctor else '',
+     }
 
 
 if __name__ == '__main__':

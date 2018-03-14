@@ -6,6 +6,7 @@ import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import Callback from './Auth/Callback/Callback';
 import Store from 'Store/StoreContainer';
+import MyApps from 'MyApps/MyAppsContainer';
 import Profile from 'Profile/Profile';
 import Deploy from 'Deploy/DeployContainer';
 import CtorAdd from 'CtorAdd/CtorAdd';
@@ -21,7 +22,7 @@ const handleAuthentication = ({location}) => {
   if (/access_token|id_token|error/.test(location.hash)) {
     auth.handleAuthentication();
   }
-}
+};
 
 class App extends Component {
   componentWillMount() {
@@ -80,6 +81,9 @@ class App extends Component {
           )} />
           <Route path="/instance/:id" render={props => (
             <Instance auth={auth} metamaskStatus={metamaskStatus} {...props} />
+          )} />
+          <Route path="/my_apps" render={(props) => (
+            <MyApps auth={auth} metamaskStatus={metamaskStatus} {...props} />
           )} />
           {/* TODO: <Route component={Page404} />*/}
         </Switch>

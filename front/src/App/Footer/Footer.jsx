@@ -67,6 +67,18 @@ class Footer extends Component {
                 </li>
               </ul>
             </div>
+            <div className="page-footer__section  page-footer__section--contracts">
+              <h3 className="page-footer__header">
+                Developers
+              </h3>
+              <ul className="page-footer__list">
+                <li className="page-footer__item">
+                  <Link to="/my_apps" className="page-footer__link">
+                    My apps
+                  </Link>
+                </li>
+              </ul>
+            </div>
             <div className="page-footer__section  page-footer__section--support">
               <h3 className="page-footer__header">
                 Support

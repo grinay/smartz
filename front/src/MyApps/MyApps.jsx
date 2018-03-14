@@ -6,7 +6,7 @@ import Spinner from 'common/Spinner';
 import api from 'helpers/api';
 import CtorCard from 'Ctors/CtorCard';
 
-class Store extends Component {
+class MyApps extends Component {
   componentWillMount() {
     const {
       auth,
@@ -25,6 +25,9 @@ class Store extends Component {
   render() {
     const {ctors, metamaskStatus, auth} = this.props;
 
+    const isAuthenticated = auth.isAuthenticated();
+    const userId = isAuthenticated ? auth.getAccessToken() : '-1';
+
     return (
       <main className="page-main  page-main--store">
         <div className="page-main__inner">
@@ -32,16 +35,11 @@ class Store extends Component {
             <Alert standardAlert={metamaskStatus} />
           }
 
-          <Alert>
-            <p><b>Attention! Smartz platform is in early stage of development.</b></p>
-            <p>So we recommend to use it only in learning, testing and informational purposes with one of test networks (like Rinkeby or Kovan). Authors are not responsible for any possible loses in result of using our service. Please, address your questions and report any bugs to <a href="mailto:mailbox@smartz.io">mailbox@smartz.io</a>.</p>
-          </Alert>
-
           <section className="contracts-gallery">
             <div className="contracts-gallery__gallery  gallery">
               {ctors &&
                 <ul className="contracts-gallery__list  gallery__list">
-                  {ctors.filter(el=>el.is_public).map((el, i) => (
+                  {ctors.filter(el=>isAuthenticated && el.user_id==userId).map((el, i) => (
                     <CtorCard key={i} ctor={el} auth={auth} />
                   ))}
                 </ul>
@@ -64,4 +62,4 @@ class Store extends Component {
   }
 }
 
-export default Store;
+export default MyApps;
