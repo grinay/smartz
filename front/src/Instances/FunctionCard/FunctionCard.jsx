@@ -54,6 +54,7 @@ class FunctionCard extends Component {
 
   render() {
     const {func} = this.props;
+    if (!func) return null;
 
     if (!func.constant && func.inputs.minItems === 0) {
       func.inputs.items = [];
