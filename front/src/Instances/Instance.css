@@ -45,5 +45,5 @@
 .contract-controls__wrapper .table__inner {
   max-width: 500px;
   overflow-x: auto;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
