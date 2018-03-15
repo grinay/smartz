@@ -1,3 +1,7 @@
+form.rjsf {
+  padding-bottom: 1px;
+}
+
 form.rjsf > div.form-group.field.field-object {
   padding: 0 15px 0 15px;
   margin: 0;
