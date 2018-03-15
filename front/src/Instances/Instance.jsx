@@ -199,6 +199,7 @@ class Instance extends Component {
                   <a
                     href={getNetworkEtherscanAddress(instance.network_id.toString()) + `/address/${instance.address}`}
                     style={{textTransform: 'uppercase'}}
+                    target="_blank"
                   >
                     {instance.address}
                   </a> ({getNetworkName(instance.network_id.toString())})
