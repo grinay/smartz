@@ -101,51 +101,51 @@ class Footer extends Component {
                 <li className="page-footer__item">
                   <ul className="social">
                     <li className="social__item">
-                      <Link to="https://www.facebook.com/SmartzPlatform/" className="social__link  social__link--facebook" aria-label="Follow us on Facebook">
+                      <a href="https://www.facebook.com/SmartzPlatform/" className="social__link  social__link--facebook" aria-label="Follow us on Facebook">
                         <svg className="social__icon  social__icon--facebook" width="26" height="26">
                           <use href="#social-fb"></use>
                         </svg>
-                      </Link>
+                      </a>
                     </li>
                     <li className="social__item">
-                      <Link to="https://twitter.com/SmartzPlatform" className="social__link  social__link--twitter" aria-label="Follow us on Twitter">
+                      <a href="https://twitter.com/SmartzPlatform" className="social__link  social__link--twitter" aria-label="Follow us on Twitter">
                         <svg className="social__icon  social__icon--twitter" width="27" height="22">
                           <use href="#social-twitter"></use>
                         </svg>
-                      </Link>
+                      </a>
                     </li>
                     <li className="social__item">
-                      <Link to="https://github.com/mixbytes" className="social__link  social__link--github" aria-label="Follow us on Github">
+                      <a href="https://github.com/mixbytes" className="social__link  social__link--github" aria-label="Follow us on Github">
                         <svg className="social__icon  social__icon--github" width="26" height="26">
                           <use href="#social-github"></use>
                         </svg>
-                      </Link>
+                      </a>
                     </li>
                     <li className="social__item">
-                      <Link to="https://www.youtube.com/channel/UCn4kywh7NwNNHce2a2murSg" className="social__link  social__link--youtube" aria-label="Follow us on Youtube">
+                      <a href="https://www.youtube.com/channel/UCn4kywh7NwNNHce2a2murSg" className="social__link  social__link--youtube" aria-label="Follow us on Youtube">
                         <svg className="social__icon  social__icon--youtube" width="26" height="18">
                           <use href="#social-youtube"></use>
                         </svg>
-                      </Link>
+                      </a>
                     </li>
                     <li className="social__item">
-                      <Link to="https://t.me/smartz_en" className="social__link  social__link--telegram" aria-label="Follow us on Telegram">
+                      <a href="https://t.me/smartz_en" className="social__link  social__link--telegram" aria-label="Follow us on Telegram">
                         <svg className="social__icon  social__icon--telegram" width="23" height="20">
                           <use href="#social-telegram"></use>
                         </svg>
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </li>
                 <li className="page-footer__item">
-                  <Link to="mailto:mailbox@smartz.io" className="page-footer__link">
+                  <a href="mailto:mailbox@smartz.io" className="page-footer__link">
                     mailbox@smartz.io
-                  </Link>
+                  </a>
                 </li>
                 <li className="page-footer__item">
-                  <Link to="https://t.me/LoungerX" className="page-footer__link">
+                  <a href="https://t.me/LoungerX" className="page-footer__link">
                     t.me/LoungerX
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
