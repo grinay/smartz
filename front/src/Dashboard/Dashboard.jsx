@@ -39,6 +39,11 @@ class Dashboard extends Component {
 
   componentDidUpdate() {
     const {ctors, instances} = this.props;
+    if (instances.length && ctors.length && !this.state.updateCycleActive) {
+      this.updateCycle();
+    }
+    /*
+    const {ctors, instances} = this.props;
 
     if (instances.length && ctors.length && !this.state.updateCycleActive) {
       this.setState({
@@ -47,6 +52,7 @@ class Dashboard extends Component {
       this.updateCycle();
       setInterval(this.updateCycle.bind(this), 60000);
     }
+    */
   }
 
   updateCycle() {

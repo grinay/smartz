@@ -33,11 +33,19 @@ const instances = (state = initState, action) => {
       return nextState;
 
     case 'VIEW_FUNC_RESULT':
-      let instance = find(nextState.instances, {instance_id: action.instanceId});
+      const {instanceId, funcName, result} = action;
+
+      let instance = find(nextState.instances, {instance_id: instanceId});
       if (instance) {
-        if (!instance.funcResults) instance.funcResults = {};
-        instance.funcResults[action.funcName] = action.result;
+        if (instance.funcResults && (instance.funcResults[funcName] === result)) {
+          return state;
+
+        } else {
+          if (!instance.funcResults) instance.funcResults = {};
+          instance.funcResults[funcName] = result;
+        }
       }
+
       return nextState;
 
     case 'TRANSACTION_NEW':

@@ -48,6 +48,11 @@ class Instance extends Component {
 
   componentDidUpdate() {
     const {instance, ctor} = this.props;
+    if (instance && ctor && !this.state.updateCycleActive) {
+      this.getConstants();
+    }
+    /*
+    const {instance, ctor} = this.props;
 
     if (instance && ctor && !this.state.updateCycleActive) {
       this.setState({
@@ -56,6 +61,7 @@ class Instance extends Component {
       this.getConstants();
       setInterval(this.getConstants.bind(this), 60000);
     }
+    */
   }
 
   getConstants() {
