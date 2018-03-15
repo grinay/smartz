@@ -16,12 +16,16 @@ Smart contract constructors marketplace.
     pytest
 
 ## Docker-compose commands
+```
+docker-compose build
+docker-compose up [-d] [--build]
+docker-compose down
+```
+## Service variables (smartzplatform.env):
 
-    docker-compose build
+* ENVIRONMENT=dev
 
-    docker-compose up [-d]
-
-    docker-compose down
+**Container environment (dev, prod, stage)**
 
 ## containerized DB backup/restore
 
@@ -35,21 +39,21 @@ docker-compose -f db-backup.yml run mongo_dump
 ```
 docker-compose -f db-backup.yml run mongo_restore
 ```
-## Staging
+### Dump-restore DB on stage/prod server
+```
+docker-compose -f db-backup.yml -p smartzplatform run mongo_dump
+docker-compose -f db-backup.yml -p smartzplatform run mongo_restore
+```
+### [Stage URL](https://staging.smartz.io)
 
-https://staging.smartz.io
-
-## Update service
+## Update service (stage, prod)
 
 setup ECS profile in ~/.ecs directory
 ```
 sudo cp -r /root/.ecs .
 sudo chown -R $USER .ecs/
 git clone https://github.com/mixbytes/smartz
-sh smartz/docker/deploy.sh
 ```
-## Dump-restore DB on stage/prod server
 ```
-docker-compose -f db-backup.yml -p smartzplatform run mongo_dump
-docker-compose -f db-backup.yml -p smartzplatform run mongo_restore
+sh deploy.sh latest|branch_master_latest|branch_master_commit_xxxxxxx
 ```
