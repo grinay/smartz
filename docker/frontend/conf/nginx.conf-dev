@@ -50,6 +50,7 @@ http {
 		location /prod {
 		    rewrite ^/prod(.*)$ $1 break;
 			include uwsgi_params;
+			uwsgi_read_timeout 120;
 			uwsgi_pass unix:/app/sock/backend;
 		}
 		location ~* \.(?:css(\.map)?|js(\.map)?|jpe?g|png|gif|ico|cur|heic|webp|tiff?|mp3|m4a|aac|ogg|midi?|wav|mp4|mov|webm|mpe?g|avi|ogv|flv|wmv)$ {
