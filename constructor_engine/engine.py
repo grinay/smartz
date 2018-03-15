@@ -8,7 +8,7 @@ import subprocess
 
 import requests
 
-SERVICE_URL = 'http://ec2-18-197-125-190.eu-central-1.compute.amazonaws.com/call'
+SERVICE_URL = 'https://gaene9ieooj2roh0doh5bahv.smartz.io/call'
 
 class BaseEngine(object):
 
