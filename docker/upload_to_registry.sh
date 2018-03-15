@@ -4,7 +4,7 @@ AWS_REGISTRY=128894178443.dkr.ecr.eu-central-1.amazonaws.com
 AWS_REGION=eu-central-1
 BRANCH="$TRAVIS_BRANCH"
 COMMIT="$(git log -1  --pretty=format:'%h')"
-TAGS=( "latest" "branch_${BRANCH}_commit_${COMMIT}" )
+TAGS=( "latest" "branch_${BRANCH}_latest" "branch_${BRANCH}_commit_${COMMIT}" )
 
 # check if all images builded
 for NAME in "$@"
