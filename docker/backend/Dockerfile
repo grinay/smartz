@@ -21,14 +21,14 @@ FROM alpine:3.7 AS python_stage
 WORKDIR /build
 RUN apk --no-cache --update upgrade \
 && apk --no-cache add python3 python3-dev g++ make
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN python3 -m venv .virtualenv
 RUN .virtualenv/bin/pip3 install -r requirements.txt --no-cache-dir
-COPY bin/ bin/
-COPY pythonlib/ pythonlib/
-COPY constructor_engine/ constructor_engine/
+COPY backend/bin/ bin/
+COPY backend/pythonlib/ pythonlib/
+COPY backend/constructor_engine/ constructor_engine/
+COPY backend/constructor_examples/ constructor_examples/
 COPY json-schema/ json-schema/
-COPY constructor_examples/ constructor_examples/
 
 FROM alpine:3.7
 WORKDIR /app
