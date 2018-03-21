@@ -8,7 +8,7 @@ import subprocess
 
 import requests
 
-SERVICE_URL = 'https://gaene9ieooj2roh0doh5bahv.smartz.io/call'
+SERVICE_URL = 'http://constructor_call_service.default/call'
 
 class BaseEngine(object):
 
