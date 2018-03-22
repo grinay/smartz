@@ -23,7 +23,7 @@ install:
 
 script:
 - docker-compose -p smartzplatform build
-- /bin/sh ./test/tests.sh
+- /bin/sh ./tests/integration.sh
 - docker images
 - /bin/bash ./docker/upload_to_registry.sh smartzplatform_frontend smartzplatform_backend
 
