@@ -8,7 +8,9 @@ import subprocess
 
 import requests
 
-SERVICE_URL = 'http://constructor_call_service.default/call'
+SERVICE_URL = 'http://constructor_call_service.default/call' \
+    if os.environ.get('ENVIRONMENT') == 'prod' \
+    else 'http://constructor_call_service.dev/call'
 
 class BaseEngine(object):
 
@@ -51,12 +53,23 @@ class BaseEngine(object):
         if re.findall('[^a-zA-Z0-9]', contract_name):
             raise Exception
 
-        bin, abi = self._compile(source, contract_name)
-        abi = json.loads(abi)
+        try:
+            bin, abi = self._compile(source, contract_name)
+            abi = json.loads(abi)
+        except Exception:
+            return {
+                'result': 'error',
+                'error_descr': 'Compilation error'
+            }
 
         post_construct_info = self._call_constructor_method(constructor_source, self.METHOD_POST_CONSTRUCT, [fields, abi])
         if 'error' == post_construct_info['result']:
             return post_construct_info
+
+        post_construct_info['function_specs'] = sorted(
+            post_construct_info['function_specs'],
+            key=lambda x: x['sorting_order'] if 'sorting_order' in x else 0
+        )
 
         return {
             'result': 'success',
