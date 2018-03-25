@@ -66,6 +66,9 @@ class Dashboard extends Component {
       if (dashboard_functions) {
         dashboard_functions.forEach(dFunc => {
           const fSpec = find(functions, {name: dFunc});
+          if (!fSpec) {
+            return;
+          }
           processControlForm(abi, fSpec, [], address, (error, result) => {
             if(error) {
               console.error(error);
