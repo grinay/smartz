@@ -9,7 +9,7 @@ import subprocess
 import requests
 
 SERVICE_URL = 'http://constructor_call_service.default/call' \
-    if os.environ.get('ENVIRONMENT') == 'prod' \
+    if os.environ.get('ENVIRONMENT') in ['prod', 'stage'] \
     else 'http://constructor_call_service.dev/call'
 
 class BaseEngine(object):
