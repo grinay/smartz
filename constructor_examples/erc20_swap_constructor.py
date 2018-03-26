@@ -217,10 +217,16 @@ class Constructor(ConstructorInstance):
                 'sorting_order': 40
             },
 
+            "participant1SentTokensCount": {
+                "title": "Tokens count sent by participant #1",
+                "description": "Tokens count, which participant #1 has already sent (IMPORTANT: in token wei)",
+                'sorting_order': 50
+            },
+
             'participant2': {
                 'title': 'Participant #2',
                 'description': 'Address of participant #2',
-                'sorting_order': 50
+                'sorting_order': 60
             },
 
             'swap': {
@@ -240,18 +246,28 @@ class Constructor(ConstructorInstance):
             function_titles["participant2EtherCount"] = {
                 "title": "Ether count of participant #2",
                 "description": "Ether count, which participant #1 will swap for participant #2 tokens (IMPORTANT: in wei)",
-                'sorting_order': 60
+                'sorting_order': 70
+            }
+            function_titles["participant2SentEtherCount"] = {
+                "title": "Ether count sent by participant #2",
+                "description": "Ether count, which participant #2 has already sent (IMPORTANT: in wei)",
+                'sorting_order': 80
             }
         else:
             function_titles["participant2Token"] = {
                 "title": "Token address of participant #2",
                 "description": "Address of ERC20 token smart contract, which participant #2 will swap",
-                'sorting_order': 60
+                'sorting_order': 70
             }
             function_titles["participant2TokensCount"] = {
                 "title": "Tokens count of participant #2",
                 "description": "Tokens count, which participant #2 will swap for participant #1 tokens (IMPORTANT: in token wei)",
-                'sorting_order': 70
+                'sorting_order': 80
+            }
+            function_titles["participant2SentTokensCount"] = {
+                "title": "Tokens count sent by participant #2",
+                "description": "Tokens count, which participant #2 has already sent (IMPORTANT: in token wei)",
+                'sorting_order': 90
             }
 
         return {
@@ -424,6 +440,21 @@ contract Swap {
             revert();
         }
     }
+    
+
+    /**
+     * Tokens count sent by participant #1
+     */
+    function participant1SentTokensCount() public view returns (uint256) {
+        return participant1Token.balanceOf(this);
+    }
+
+    /**
+     * Ether count sent by participant #2
+     */
+    function participant2SentEtherCount() public view returns (uint256) {
+        return this.balance;
+    }
 }
     """
 
@@ -550,6 +581,20 @@ contract Swap {
         } else {
             revert();
         }
+    }
+    
+    /**
+     * Tokens count sent by participant #1
+     */
+    function participant1SentTokensCount() public view returns (uint256) {
+        return participant1Token.balanceOf(this);
+    }
+
+    /**
+     * Tokens count sent by participant #2
+     */
+    function participant2SentTokensCount() public view returns (uint256) {
+        return participant2Token.balanceOf(this);
     }
 }
     """
