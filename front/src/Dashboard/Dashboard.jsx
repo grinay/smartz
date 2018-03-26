@@ -66,6 +66,9 @@ class Dashboard extends Component {
       if (dashboard_functions) {
         dashboard_functions.forEach(dFunc => {
           const fSpec = find(functions, {name: dFunc});
+          if (!fSpec) {
+            return;
+          }
           processControlForm(abi, fSpec, [], address, (error, result) => {
             if(error) {
               console.error(error);
@@ -134,20 +137,26 @@ class Dashboard extends Component {
                       {inst.funcResults &&
                         <table className="table  table--contract-card">
                           <tbody className="table__tbody">
-                            {inst.dashboard_functions.map((func, k) => (
-                              <tr className="table__tr" key={k}>
-                                <td className="table__label">
-                                  {find(inst.functions, {name: func}).title}
-                                </td>
-                                <td className="table__data">
-                                  <div className="table__inner">
-                                    <span>
-                                      {inst.funcResults[func]}
-                                    </span>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
+                            {inst.dashboard_functions.map((func, k) => {
+                              const funcObj = find(inst.functions, {name: func});
+                              if (!funcObj) {
+                                return;
+                              }
+                              return (
+                                <tr className="table__tr" key={k}>
+                                  <td className="table__label">
+                                    {funcObj.title}
+                                  </td>
+                                  <td className="table__data">
+                                    <div className="table__inner">
+                                      <span>
+                                        {inst.funcResults[func]}
+                                      </span>
+                                    </div>
+                                  </td>
+                                </tr>
+                              )
+                            })}
                           </tbody>
                         </table>
                       }
