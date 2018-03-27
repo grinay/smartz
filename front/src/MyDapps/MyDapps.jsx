@@ -17,7 +17,7 @@ class MyDapps extends Component {
 
     fetchCtorsRequest();
 
-    api(auth).get('/list_ctors')
+    api(auth).get('/constructor/list')
     .then(response => fetchCtorsSuccess(response.data))
     .catch(error => fetchCtorsFailure(error.message));
   }

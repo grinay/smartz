@@ -27,7 +27,7 @@ class Dashboard extends Component {
     } = this.props;
 
     fetchCtorsRequest();
-    api(auth).get('/list_ctors')
+    api(auth).get('/constructor/list')
     .then(response => fetchCtorsSuccess(response.data))
     .catch(error => fetchCtorsFailure(error));
 

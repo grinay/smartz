@@ -38,10 +38,7 @@ class Deploy extends Component {
 
       fetchCtorParamsRequest(ctorId);
 
-      api(this.props.auth).post(`/get_ctor_params`, {
-        'ctor_id': ctorId
-      })
-
+      api(this.props.auth).get(`/constructor/${ctorId}/params`)
       .then(response => {
         const {data} = response;
         if (data.error) {

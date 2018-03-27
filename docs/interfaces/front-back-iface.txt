@@ -14,14 +14,14 @@ REST, GET|POST
     output:
         {ok: true} || {error: 'foo'}
 
-- /upload_ctor
+- /constructor/upload
     input:
         {ctor_name: 'my ctor', ctor_descr: 'my ctor', price_eth: 0.01}
     дополнительное поле запроса - файл ctor_file
     output:
         {ok: true} || {error: 'foo'}
 
-- /list_ctors
+- /constructor/list
     input: -
     output: [
         {
@@ -33,7 +33,7 @@ REST, GET|POST
         ...
     ]
 
-- /get_ctor_params
+- /constructor/:id/params
     input:
         {ctor_id: 4}
     output:
