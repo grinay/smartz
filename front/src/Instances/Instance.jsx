@@ -36,7 +36,7 @@ class Instance extends Component {
     } = this.props;
 
     fetchCtorsRequest();
-    api(auth).get('/constructor/list')
+    api(auth).get('/constructors')
     .then(response => fetchCtorsSuccess(response.data))
     .catch(error => fetchCtorsFailure(error));
 

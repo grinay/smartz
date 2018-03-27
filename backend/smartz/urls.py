@@ -2,9 +2,9 @@ from django.conf import settings
 from django.urls import include, path, re_path
 
 urlpatterns = [
-    path('api/constructor/', include('apps.constructor.urls')),
-    path('api/account/', include('apps.account.urls')),
-    path('api/instance/', include('apps.instance.urls')),
+    path('api/constructors', include('apps.constructor.urls')),
+    path('api/accounts', include('apps.account.urls')),
+    path('api/instances', include('apps.instance.urls')),
 ]
 
 if settings.DEBUG:
