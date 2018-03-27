@@ -1,11 +1,9 @@
-from django.conf import settings
 from django.urls import path
-from rest_framework import routers
 
 from apps.constructor.views import ListView, \
-                                  UploadView, \
-                                  GetParamsView, \
-                                  ConstructView
+    UploadView, \
+    GetParamsView, \
+    ConstructView
 
 urlpatterns = [
     path('list', ListView.as_view(), name='constructor-list'),
