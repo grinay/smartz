@@ -60,7 +60,7 @@ class ListView(View):
         constructors_table = db.ctors
 
         user_id = auth(request, db)
-        if isinstance(user_id, HttpResponse): #todo
+        if isinstance(user_id, HttpResponse):  # todo
             query_filter = {"is_public": True}
         else:
             query_filter = {
@@ -185,7 +185,7 @@ class GetParamsView(View):
         if constructor is None:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
-        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})                                                                                                                                                           
+        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
         constructor_params = constructor_engine_instance.get_ctor_params(constructor_id)
         if 'error' == constructor_params['result']:
             return engine_error_response(constructor_params)
@@ -226,7 +226,7 @@ class ConstructView(View):
 
         price_eth = constructor.get('price_eth', .0)
 
-        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})                                                                                                                                                           
+        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
         constructor_params = constructor_engine_instance.get_ctor_params(constructor_id)
         if 'error' == constructor_params['result']:
             return engine_error_response(constructor_params)
@@ -238,7 +238,7 @@ class ConstructView(View):
         validator = validator_cls(constructor_schema)
 
         # field -> error string
-        #TODO - rename to better name
+        # TODO - rename to better name
         fields = args.get('fields')
         if fields is None:
             return error_response("Constructor({}), empty fields passed to constructor".format(constructor_id))
@@ -278,7 +278,7 @@ class ConstructView(View):
                 'instance_title': instance_title,
                 'user_id': user_id
             }
-         ).inserted_id
+        ).inserted_id
 
         return JsonResponse({
             'instance_id': _ctor_id(instance_id),
