@@ -9,6 +9,7 @@ from collections import Sequence
 from functools import lru_cache
 from copy import deepcopy
 
+from django.conf import settings
 from jsonschema import validate, ValidationError, RefResolutionError
 from jsonschema.compat import unquote
 
@@ -16,7 +17,7 @@ from jsonschema.compat import unquote
 @lru_cache(256)
 def load_schema(rel_path):
     assert '..' not in rel_path
-    with open(os.path.join(_ROOT_DIR, 'json-schema', rel_path)) as fh:
+    with open(os.path.join(settings.SMARTZ_JSON_SCHEMA_ROOT_PATH, rel_path)) as fh:
         return json.load(fh)
 
 
@@ -105,6 +106,3 @@ def _resolve_fragment(document, fragment):
             )
 
     return document
-
-
-_ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))

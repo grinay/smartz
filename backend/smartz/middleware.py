@@ -18,23 +18,8 @@ class JSONMiddleware:
 
     def __call__(self, request):
         if 'CONTENT_TYPE' in request.META and 'application/json' in request.META['CONTENT_TYPE']:
-            data = json.loads(request.body)
-
-            q_data = QueryDict('', mutable=True)
-            for key, value in data.items():
-                if isinstance(value, list):
-                    # need to iterate through the list and update
-                    # so that the list does not get wrapped in an
-                    # additional list.
-                    for x in value:
-                        q_data.update({key: x})
-                else:
-                    q_data.update({key: value})
-
-            if request.method == 'GET':
-                request.GET = q_data
-
-            if request.method == 'POST':
-                request.POST = q_data
+            request.data = json.loads(request.body)
+        else:
+            request.data = {}
 
         return self.get_response(request)

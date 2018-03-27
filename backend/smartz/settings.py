@@ -121,10 +121,11 @@ class Common(Configuration):
     # SMARTZ settings 
     SMARTZ_MONGO_HOST = '127.0.0.1'
 
-    SMARTZ_JSON_SCHEMA_ROOT_PATH = '/data/cloud/projects/smartz' #todo
+
 
     ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
     SMARTZ_CONSTRUCTOR_DATA_DIR = os.path.join(ROOT_DIR, 'data')
+    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(ROOT_DIR, '..', 'json-schema')
 
 class Development(Common):
     """

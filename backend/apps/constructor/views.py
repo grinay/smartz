@@ -1,4 +1,3 @@
-#!/usr/bin/env python3                                                                                                                                                                                             import re
 import base64
 import os
 import re
@@ -12,9 +11,6 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import View
-from django_rester.views import BaseAPIView
-
-from rest_framework import generics, viewsets
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -33,8 +29,10 @@ def l(v):
     print('[DEBUG]: {}'.format(repr(v)), file=sys.stderr)
     return v
 
+
 def _ctor_id(id):
     return id.binary.hex()
+
 
 def _prepare_instance_details(instance_info):
     output = {
@@ -51,11 +49,11 @@ def _prepare_instance_details(instance_info):
                                 'rpc_calls/get_instance_details/output')
     return output
 
+
 def _process_ctor_schema(schema):
     return add_definitions(schema, load_schema('public/ethereum-sc.json'))
 
 
-#q
 class ListView(View):
 
     def get(self, request, *args, **kwargs):
@@ -88,14 +86,13 @@ class ListView(View):
         return JsonResponse(constructors, safe=False)
 
 
-#q
 @method_decorator(csrf_exempt, name='dispatch')
 class UploadView(View):
 
     def post(self, request: HttpRequest):
         ctors = db.ctors
         constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
-        args = request.POST
+        args = request.data
 
         user_id = auth(request, db)
         if isinstance(user_id, HttpResponse):
@@ -177,7 +174,7 @@ class UploadView(View):
 
         return JsonResponse({'ok': True})
 
-#q
+
 class GetParamsView(View):
 
     def get(self, request, constructor_id):
@@ -204,38 +201,23 @@ class GetParamsView(View):
         })
 
 
+@method_decorator(csrf_exempt, name='dispatch')
+class ConstructView(View):
 
-class ConstructorConstructView(generics.GenericAPIView):
-
-    def __init__(self, **kwargs):
-        super(ConstructorConstructView, self).__init__(**kwargs)
-
-    def post(self, request, *args, **kwargs):
-
+    def post(self, request, constructor_id):
         constructors_db = db.ctors
         instances_db = db.instances
 
-        # wget -q -O- --header=Content-Type:application/json \
-        # --post-data='{"ctor_id": "5a9a4d63f5ec65000b80d290", "instance_title": "erc20_token_constructor.py", "fields": {"decimals": 18, "is_burnable": false, "is_mintable": false, "is_pausable": false, "max_tokens_count": 100, "name": "fgshd", "premint":50, "symbol": "ASDQD"}}' \
-        # 'http://10.100.8.33/constructor/construct/'
-
         # parsed input data POST JSON payload
         args = request.data
-
-        # [TEMP] Token: 5a9a4d63f5ec65000b80d290
-        constructor_id = args.get('ctor_id')
 
         # [TODO]  - move to get_constructor()
         constructor = constructors_db.find_one({'_id': ObjectId(constructor_id)})
         if constructor is None:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
-        # [TODO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO]
-        user_id = args.get('user_id')
-        # [TEMP]
-        user_id = '5a9eaa1e70fb743d03b28bd7' # yoba@yoba.ru
-
-        if not isinstance(user_id, str):
+        user_id = auth(request, db)
+        if isinstance(user_id, HttpResponse):
             return error_response("Wrong 'user_id' param")
 
         instance_title = args.get('instance_title')
@@ -246,18 +228,17 @@ class ConstructorConstructView(generics.GenericAPIView):
 
         constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})                                                                                                                                                           
         constructor_params = constructor_engine_instance.get_ctor_params(constructor_id)
-        if constructor_params is None or isinstance(constructor_params, str):
-            return error_response("Constructor({}) returned wrong constructor_params: {}".format(constructor_id, constructor_params))
+        if 'error' == constructor_params['result']:
+            return engine_error_response(constructor_params)
 
-        constructor_schema = add_definitions(constructor_params['schema'], load_schema('public/ethereum-sc.json'))
+        constructor_schema = _process_ctor_schema(constructor_params['schema'])
 
         validator_cls = validator_for(constructor_schema)
         validator_cls.check_schema(constructor_schema)
         validator = validator_cls(constructor_schema)
 
-
         # field -> error string
-        # [TODO] - rename to better name
+        #TODO - rename to better name
         fields = args.get('fields')
         if fields is None:
             return error_response("Constructor({}), empty fields passed to constructor".format(constructor_id))
@@ -265,35 +246,42 @@ class ConstructorConstructView(generics.GenericAPIView):
         errors = dict()
         for error in validator.iter_errors(fields):
             if not error.path:
-                return error_response("Constructor({}), no error.path: {}".format(constructor_id, error.message))
+                return error_response(error.message)
 
             errors[error.path[0]] = error.message
 
-        # [NOTE] differs form previous verison, there was a JSON:  {result: 'error', errors: '........' }
         if errors:
-            return error_response("Constructor({}), validator errors: {}".format(constructor_id, repr(errors)))
+            return JsonResponse(
+                {
+                    "result": "error",
+                    "errors": errors
+                }
+            )
 
         result = constructor_engine_instance.construct(constructor_id, price_eth, fields)
 
         if not isinstance(result, dict):
             return error_response("Constructor({}), construct error, result is not dict".format(constructor_id))
-            
-        if 'error' in result:
-            return error_response("Constructor({}), construct error, result: {}".format(constructor_id, repr(result)))
+
+        if 'error' == result['result']:
+            return engine_error_response(constructor_params)
 
         # success
-        instance_id = instances_db.insert_one({ 'abi': json.dumps(result['abi']),
-                                                'source': result['source'],
-                                                'bin': result['bin'],
-                                                'function_specs': json.dumps(result['function_specs']),
-                                                'dashboard_functions': result['dashboard_functions'],
-                                                'ctor_id': constructor_id,
-                                                'instance_title': instance_title,
-                                                'user_id': user_id}
-                                           ).inserted_id.binary.hex()
+        instance_id = instances_db.insert_one(
+            {
+                'abi': json.dumps(result['abi']),
+                'source': result['source'],
+                'bin': result['bin'],
+                'function_specs': json.dumps(result['function_specs']),
+                'dashboard_functions': result['dashboard_functions'],
+                'ctor_id': constructor_id,
+                'instance_title': instance_title,
+                'user_id': user_id
+            }
+         ).inserted_id
 
-        return ok_response({
-            'instance_id': instance_id,
+        return JsonResponse({
+            'instance_id': _ctor_id(instance_id),
             'bin': result['bin'],
             'source': result['source'],
             'price_eth': price_eth

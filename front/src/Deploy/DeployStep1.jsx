@@ -15,8 +15,7 @@ class DeployStep1 extends Component {
 
     const instTitle = formData.instance_title;
     delete formData.instance_title;
-    api(auth).post(`/construct`, {
-      ctor_id: ctor.ctor_id,
+    api(auth).post(`/constructor/${ctor.ctor_id}/construct`, {
       instance_title: instTitle,
       fields: formData
     })
