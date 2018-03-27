@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 import classNames from 'classnames';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 import './Docs.css';
@@ -14,29 +14,55 @@ class Docs extends Component {
     this.state = {
       docUri: this.props.match.params.docUri,
       docs: [{
-          fileName: 'contract-deploy',
-          menuTitle: 'Contract deploy (ru)'
+          fileName: 'first-steps-en',
+          menuTitle: 'Fist steps'
         }, {
-          fileName: 'contract-upload',
-          menuTitle: 'Contract upload (ru)'
+          fileName: 'contract-uploading-en',
+          menuTitle: 'Contract uploading'
         }, {
-          menuTitle: 'Smart contracts manuals',
+          menuTitle: 'Smartz contracts',
           subsections: [{
-              fileName: 'equity-contract',
-              menuTitle: 'Simple equity (ru)'
+              fileName: 'simple-ico-contract-en',
+              menuTitle: 'Simple ICO'
             }, {
-              fileName: 'erc-20-token',
-              menuTitle: 'ERC20 token (ru)'
+              fileName: 'erc-20-token-en',
+              menuTitle: 'ERC20 token'
             }, {
-              fileName: 'multisignature-wallet',
-              menuTitle: 'Multisignature wallet (ru)'
+              fileName: 'equity-contract-en',
+              menuTitle: 'Simple equity'
             }, {
-              fileName: 'simple-voting',
-              menuTitle: 'Simple voting (ru)'
+              fileName: 'multisig-wallet-en',
+              menuTitle: 'Multisignature wallet'
+            }, {
+              fileName: 'simple-voting-en',
+              menuTitle: 'Simple voting'
+            }
+          ]
+        }, {
+          fileName: 'contract-deploy-ru',
+          menuTitle: 'Запуск контракта'
+        }, {
+          fileName: 'contract-upload-ru',
+          menuTitle: 'Загрузка контракта'
+        }, {
+          menuTitle: 'Контракты Smartz',
+          subsections: [{
+              fileName: 'equity-contract-ru',
+              menuTitle: 'Долевой контракт'
+            }, {
+              fileName: 'erc-20-token-ru',
+              menuTitle: 'Токен ERC20'
+            }, {
+              fileName: 'multisignature-wallet-ru',
+              menuTitle: 'Кошелек с мультиподписью'
+            }, {
+              fileName: 'simple-voting-ru',
+              menuTitle: 'Простое голосование'
             }
           ]
         }
-      ]
+      ],
+      docsLoaded: {}
     };
   }
 
@@ -46,14 +72,29 @@ class Docs extends Component {
   }
 
   setActiveDoc(fileName) {
-    this.setState({activeDocName: fileName});
+    const {docsLoaded, activeDocName} = this.state;
 
-    axios.get(require(`./md/${fileName}.md`))
-    .then((res) => {
-      this.setState({
-        activeDoc: res.data,
-      });
-    });
+    if (activeDocName !== fileName) {
+      if (fileName in docsLoaded) {
+        this.setState({
+          activeDocName: fileName,
+          activeDoc: docsLoaded[fileName]
+        });
+
+      } else {
+        axios.get(require(`./md/${fileName}.md`))
+        .then((res) => {
+          docsLoaded[fileName] = res.data;
+
+          this.setState({
+            activeDocName: fileName,
+            activeDoc: docsLoaded[fileName],
+            docsLoaded
+          });
+        })
+        .catch((err) => console.log(err));
+      }
+    }
   }
 
   renderNav(nav) {
@@ -99,7 +140,7 @@ class Docs extends Component {
     const {docUri, docs, activeDoc, activeDocName} = this.state;
 
     if (!docUri && !activeDocName)
-      return (<Redirect to={`/docs/${docs[0].fileName}`} />);
+      return null;
 
     return (
       <main className="page-main  page-main--support">
