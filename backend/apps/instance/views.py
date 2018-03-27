@@ -72,12 +72,9 @@ class InstanceDetailsView(generics.GenericAPIView):
         return ok_response(_prepare_instance_details(instance_info))
 
 
-class InstancesListView(generics.GenericAPIView):
+class ListView(View):
 
-    def __init__(self, **kwargs):
-        super(InstancesListView, self).__init__(**kwargs)
-
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         instances_db = db.instances
 
         user_id = auth(request)
