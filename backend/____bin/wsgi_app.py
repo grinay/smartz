@@ -91,24 +91,6 @@ def get_all_instances():
 
 
 
-@app.route('/list_instances', methods=['GET', 'POST'])
-def list_instances():
-    args = _get_input()
-    ctors = db.ctors
-    instances = db.instances
-
-    user_id = auth()
-    if isinstance(user_id, dict):
-        return user_id  # error
-
-    ctor_id = nonempty(args_string(args, 'ctor_id'))
-    ctor_info = ctors.find_one({'_id': ObjectId(ctor_id)})
-    if ctor_info is None:
-        return _send_error('ctor is not found')
-
-    return _send_output([i['_id'].binary.hex() for i in instances.find({'ctor_id': ctor_id, 'user_id': user_id})])
-
-
 @app.route('/clearz', methods=['GET'])
 def clearz():
     db.ctors.delete_many({})

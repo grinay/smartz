@@ -2,7 +2,7 @@
 import json
 
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -77,16 +77,14 @@ class ListView(View):
     def get(self, request):
         instances_db = db.instances
 
-        user_id = auth(request)
-        if user_id is None:
-            return error_response("Got empty 'user_id' after auth()")
-        if not isinstance(user_id, str):
-            return error_response("Got non-string 'user_id' after auth()")
+        user_id = auth(request, db)
+        if isinstance(user_id, HttpResponse):
+            return user_id  # error
 
         found_instances = instances_db.find({'user_id': user_id, 'address': {'$exists': True}})
         instances_list = [_prepare_instance_details(i) for i in found_instances]
 
-        return ok_response(instances_list)
+        return JsonResponse(instances_list, safe=False)
 
 
 #q

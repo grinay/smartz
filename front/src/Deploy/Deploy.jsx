@@ -58,7 +58,7 @@ class Deploy extends Component {
   componentWillReceiveProps(nextProps) {
     const {auth, netId, contractAddress, instance, publicAccess} = nextProps;
     if (netId && contractAddress) {
-      api(auth).post(`/instance/${instance.instance_id}/update`, {
+      api(auth).post(`/instances/${instance.instance_id}/update`, {
         address: contractAddress,
         network_id: Number.parseInt(netId, 10),
         public_access: publicAccess

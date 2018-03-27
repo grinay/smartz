@@ -41,7 +41,7 @@ class Instance extends Component {
     .catch(error => fetchCtorsFailure(error));
 
     fetchInstancesRequest();
-    api(auth).get('/get_all_instances')
+    api(auth).get('/instances')
     .then(response => fetchInstancesSuccess(response.data))
     .catch(error => fetchInstancesFailure(error));
   }

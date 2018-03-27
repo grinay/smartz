@@ -73,6 +73,5 @@ REST, GET|POST
         }
 
 - /set_instance_address see json-schema/internal/front-back.json
-- /list_instances see json-schema/internal/front-back.json
 - /get_instance_details see json-schema/internal/front-back.json
-- /get_all_instances returns array of instance_details
+- /instances returns array of instance_details
