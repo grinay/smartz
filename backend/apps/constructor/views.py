@@ -25,29 +25,8 @@ from pythonlib.smartz.json_schema import load_schema, add_definitions, assert_co
 db = MongoClient(settings.SMARTZ_MONGO_HOST).sc_ctors_db
 
 
-def l(v):
-    print('[DEBUG]: {}'.format(repr(v)), file=sys.stderr)
-    return v
-
-
 def _ctor_id(id):
     return id.binary.hex()
-
-
-def _prepare_instance_details(instance_info):
-    output = {
-        "instance_id": instance_info['_id'].binary.hex(),
-        "instance_title": instance_info['instance_title'],
-        "network_id": instance_info['network_id'],
-        "ctor_id": instance_info['ctor_id'],
-        "address": instance_info['address'],
-        "abi": json.loads(instance_info['abi']),
-        "functions": json.loads(instance_info['function_specs']),
-        "dashboard_functions": instance_info['dashboard_functions']
-    }
-    assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
-                                'rpc_calls/get_instance_details/output')
-    return output
 
 
 def _process_ctor_schema(schema):

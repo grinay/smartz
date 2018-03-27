@@ -1,13 +1,11 @@
-from django.conf import settings
-from django.conf.urls import include, url
-from rest_framework import routers
+from django.urls import path
 
 from apps.instance.views import InstanceDetailsView, \
-                                          InstancesListView, \
-                                          InstanceSetAddressView
+    InstancesListView, \
+    UpdateView
 
 urlpatterns = [
-    url(r'list/', InstancesListView.as_view(), name='instance-list'),
-    url(r'details/', InstanceDetailsView.as_view(), name='instance-details'),
-    url(r'set-address/', InstanceSetAddressView.as_view(), name='instance-set-address'),
+    path('list', InstancesListView.as_view(), name='instance-list'),
+    path('details', InstanceDetailsView.as_view(), name='instance-details'),
+    path('<slug:instance_id>/update', UpdateView.as_view(), name='instance-set-address'),
 ]

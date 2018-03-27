@@ -2,6 +2,10 @@
 import json
 
 from django.conf import settings
+from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import generics
 
@@ -88,36 +92,22 @@ class InstancesListView(generics.GenericAPIView):
         return ok_response(instances_list)
 
 
-class InstanceSetAddressView(generics.GenericAPIView):
+#q
+@method_decorator(csrf_exempt, name='dispatch')
+class UpdateView(View):
 
-    def __init__(self, **kwargs):
-        super(InstanceSetAddressView, self).__init__(**kwargs)
+    def post(self, request, instance_id):
 
-    def post(self, request, *args, **kwargs):
-
-        # wget -q -O- --header=X-AccessToken:uGVak2qORGvidgG3L982jdhyjQKDP4f9 \
-        # --header=Content-Type:application/json \
-        # --post-data='{"instance_id": "5a9aa93cf5ec65000b80d295", "address": "0x24d2cfe83a7b28b6321c328b4052d83a26df98dc", "network_id": "4"}' \
-        # 'http://10.100.8.33/instance/set-address/'
         instances_db = db.instances
-        ctors_db = db.ctors
 
-        user_id = auth(request)
-        if user_id is None:
-            return error_response("Got empty 'user_id' after auth()")
-        if not isinstance(user_id, str):
-            return error_response("Got non-string 'user_id' after auth()")
+        user_id = auth(request, db)
+        if isinstance(user_id, HttpResponse):
+            return user_id  # error
 
-        instance_id = request.data.get('instance_id')
-        if instance_id is None or not isinstance(instance_id, str):
-            return error_response("Param 'instance_id' is empty or not string")
-
-        # [TODO] - move all checks around instance and user to separate instance getter    
+        # [TODO] - move all checks around instance and user to separate instance getter
         instance_info = instances_db.find_one({'_id': ObjectId(instance_id), 'user_id': user_id})
         if instance_info is None:
             return error_response("Instance({}) not found".format(instance_id))
-        if instance_info['user_id'] != user_id:
-            return error_response('Instance({}), deployed by user({}) is not allowed for user({})'.format(instance_id, instance_info['user_id'], user_id))
 
         # [TODO] refactor all checks (address and network_id validation should be somewhere near Instance() class
         # Later validation of Ethereum address will differ from EOS address, so Instance() class will have some "blockchain_id" member to
@@ -128,8 +118,8 @@ class InstanceSetAddressView(generics.GenericAPIView):
             return error_response("Param 'address' is empty or not string")
 
         network_id = request.data.get('network_id')
-        if network_id is None or not isinstance(network_id, str):
-            return error_response("Param 'network_id' is empty or not string")
+        if network_id is None or not isinstance(network_id, int):
+            return error_response("Param 'network_id' is empty or not int")
 
         public_access = bool(request.data.get('public_access'))
 
