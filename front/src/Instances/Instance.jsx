@@ -5,8 +5,9 @@ import {find} from 'lodash';
 import api from 'helpers/api';
 import {processControlForm,
         processResult,
-        getNetworkName,
-        getNetworkEtherscanAddress} from 'helpers/eth';
+        isAddress,
+        isTransaction,
+        makeEtherscanLink} from 'helpers/eth';
 import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from 'common/Alert';
 import Transaction from './Transaction/Transaction';
@@ -201,14 +202,9 @@ class Instance extends Component {
 
             <div className="block__wrapper">
               {instance.address &&
+
                 <span className="contract-controls__section-header  contract-controls__wallet-key">
-                  <a
-                    href={getNetworkEtherscanAddress(instance.network_id.toString()) + `/address/${instance.address}`}
-                    style={{textTransform: 'uppercase'}}
-                    target="_blank"
-                  >
-                    {instance.address}
-                  </a> ({getNetworkName(instance.network_id.toString())})
+                  {makeEtherscanLink(instance.address, instance.network_id, true)}
                 </span>
               }
 
@@ -224,9 +220,9 @@ class Instance extends Component {
                             </td>
                             <td className="table__data">
                               <div className="table__inner">
-                                <span id="contract-stage">
+                                <span>
                                   {(instance.funcResults && instance.funcResults[func.name] !== undefined)
-                                    ? instance.funcResults[func.name].toString()
+                                    ? makeEtherscanLink(instance.funcResults[func.name], instance.network_id)
                                     : ''
                                   }
                                 </span>

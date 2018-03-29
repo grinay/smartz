@@ -43,7 +43,17 @@
 }
 
 .contract-controls__wrapper .table__inner {
-  max-width: 500px;
   overflow-x: auto;
   overflow-y: hidden;
+  max-width: 280px;
+}
+
+@media (min-width: 600px) {
+  .contract-controls__wrapper .table__inner {
+    max-width: 500px;
+  }
+}
+
+.contract-controls__wrapper .table__inner a {
+  font-size: 18px;
 }

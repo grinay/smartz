@@ -1,3 +1,5 @@
+import React from 'react';
+
 export var web3 = window.Web3
   ? new window.Web3(window.web3.currentProvider)
   : undefined;
@@ -146,4 +148,44 @@ export const getTxReceipt = (txHash, cb) => {
       cb(receipt);
     }
   });
+}
+
+export const isAddress = (hash) => {
+  if (typeof hash === 'string') {
+    return /^0x([A-Fa-f0-9]{40})$/.test(hash);
+  } else {
+    return false;
+  }
+}
+
+export const isTransaction = (hash) => {
+  if (typeof hash === 'string') {
+    return /^0x([A-Fa-f0-9]{64})$/.test(hash);
+  } else {
+    return false;
+  }
+}
+
+export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
+  if (!hash || !netId) return hash;
+
+  const explorerAddress = getNetworkEtherscanAddress(netId);
+  const networkName = getNetworkName(netId);
+  if (isAddress(hash)) {
+    return (
+      <span>
+        <a href={`${explorerAddress}/address/${hash}`} target="_blank">
+          {hash}
+        </a>{showNetworkName && ` (${networkName})`}
+      </span>
+    );
+  } else if (isTransaction(hash)) {
+    return (
+      <a href={`${explorerAddress}/tx/${hash}`} target="_blank">
+        {hash}
+      </a>
+    );
+  } else {
+    return hash;
+  }
 }
