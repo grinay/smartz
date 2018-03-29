@@ -40,8 +40,10 @@ class Instance extends Component {
     .catch(error => fetchCtorsFailure(error));
 
     fetchInstancesRequest();
-    api(auth).get('/get_all_instances')
-    .then(response => fetchInstancesSuccess(response.data))
+    api(auth).post('/get_instance_details', {
+      instance_id: this.props.match.params.id
+    })
+    .then(response => fetchInstancesSuccess([response.data]))
     .catch(error => fetchInstancesFailure(error));
   }
 
