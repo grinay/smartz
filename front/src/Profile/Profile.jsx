@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import {Panel, ControlLabel, Glyphicon} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
 import './Profile.css';
 
 class Profile extends Component {
   render() {
-    const {profile} = this.props;
+    const {auth, profile} = this.props;
+
+    if (!auth.isAuthenticated())
+      return (<Redirect to="/" />);
 
     return (
       <main className="page-main">

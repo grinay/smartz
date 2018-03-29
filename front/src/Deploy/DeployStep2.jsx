@@ -67,7 +67,8 @@ class DeployStep2 extends Component {
                         height: '500px',
                         overflowY: 'auto',
                         fontSize: '12px',
-                        whiteSpace: 'pre'
+                        whiteSpace: 'pre',
+                        fontFamily: 'monospace'
                       }}
                     >
                       {instance.source || "If you don't see source code here, perhaps something gone wrong"}

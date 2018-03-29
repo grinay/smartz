@@ -15,7 +15,7 @@ class Deploy extends Component {
   constructor(props) {
     super(props);
 
-    const {ctorId, deployId} = this.props.match.params;
+    const {ctorId, deployId} = props.match.params;
     this.state = {
       auth: props.auth.isAuthenticated(),
       ctorId,

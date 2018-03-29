@@ -83,6 +83,10 @@ form.rjsf legend {
 }
 
 form.rjsf .field-array-of-object > legend {
+  margin-bottom: 4px;
+}
+
+form.rjsf .field-array-of-object > p {
   margin-bottom: 20px;
 }
 
