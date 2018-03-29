@@ -139,9 +139,7 @@ class Dashboard extends Component {
                           <tbody className="table__tbody">
                             {inst.dashboard_functions.map((func, k) => {
                               const funcObj = find(inst.functions, {name: func});
-                              if (!funcObj) {
-                                return;
-                              }
+                              if (!funcObj) return null;
                               return (
                                 <tr className="table__tr" key={k}>
                                   <td className="table__label">

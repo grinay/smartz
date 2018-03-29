@@ -1,48 +1,60 @@
 import React, {Component} from 'react';
 
 import Spinner from 'common/Spinner';
-import {processResult} from 'helpers/eth';
+import {processResult, makeEtherscanLink} from 'helpers/eth';
 
 class Transaction extends Component {
   render() {
     const {time, func, formData, txHash, result, timeMined} = this.props.transaction;
-    console.log(this.props.transaction);
+    const {netId} = this.props;
+
     return (
       <div>
         <ul>
-          <li>Executed at: {time.format('llll')}</li>
-          <li>Function: {func.title} ({func.name})</li>
+          <li className="func-name">{func.title} ({func.name})</li>
+
           <li>
-            Parameters:
-            {formData.map((field, i) => (
-              <span key={i}>
-                <br />{func.inputs.items[i].title}: {field}
-              </span>
-            ))}
+            Executed at {time.format('HH:mm:ss')} on {time.format('ll')}
+            {txHash && result &&
+              `, mined at ${timeMined.format('HH:mm:ss')}`
+            }
           </li>
+
           {txHash &&
-            <li>
-              Hash: {txHash}
+            <li className="tx-link">
+              {makeEtherscanLink(txHash, netId)}
             </li>
           }
-          {txHash && result &&
-            <li>Mined at: {timeMined.format('llll')}</li>
+
+          {formData.length > 0 &&
+            <li className="tx-params">
+              Parameters: {formData.map((field, i) => (
+                <span key={i}>
+                  <br />{func.inputs.items[i].title} = {makeEtherscanLink(field, netId)}
+                </span>
+              ))}
+            </li>
           }
+
           {result &&
-            <li>
+            <li className="tx-result">
               Result:
-              {txHash &&
+              {txHash && // write function
                 (result.status === '0x1' ? ' done' : ' error')
               }
-              {!txHash &&
+
+              {!txHash && // ask function
                 ` ${processResult(result)}`
               }
             </li>
           }
+
+          {txHash && !result &&
+            <li>
+              <Spinner text="Waiting for miners..." width={'30px'} />
+            </li>
+          }
         </ul>
-        {txHash && !result &&
-          <Spinner text="Waiting for miners..." />
-        }
       </div>
     );
   }

@@ -18,6 +18,9 @@ const setPic = (ctorName) => { // Temporary until image management implemented
     case 'equity token':
       return 'contract-equity.jpg';
 
+    case 'smartz token':
+      return 'contract-smartz-erc20.jpg';
+
     case 'multisignature wallet':
       return 'contract-multisig.jpg';
 

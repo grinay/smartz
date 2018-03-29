@@ -5,8 +5,6 @@ import {find} from 'lodash';
 import api from 'helpers/api';
 import {processControlForm,
         processResult,
-        isAddress,
-        isTransaction,
         makeEtherscanLink} from 'helpers/eth';
 import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from 'common/Alert';
@@ -138,59 +136,32 @@ class Instance extends Component {
                   width="644" height="404"
                   alt={`${ctor.ctor_name} contract`} />
               </div>
+
               <div className="contract-info__wrapper">
                 <p className="contract-info__info  contract-info__info--column">
                   <span className="contract-info__name">
                     {ctor.ctor_name}
                   </span>
                 </p>
+
                 <p className="contract-info__description">
                   {ctor.ctor_descr}
                 </p>
               </div>
             </section>
 
-            <section className="contract-functions">
-              <h2 className="contract-functions__header">
-                View functions
-              </h2>
-              <p className="contract-functions__description">
-                This functions just provide an information about contract states and values. Results of this fuctions are alrewady shown left.
-              </p>
-              {this.getFunctionsByType(instance, 'view').map((func, i) => (
-                <p key={i} className="contract-functions__description">
-                  <b>{func.title}</b> — {func.description}
-                </p>
-              ))}
-            </section>
-
-            <section className="contract-functions">
-              <h2 className="contract-functions__header">
-                Ask functions
-              </h2>
-              <p className="contract-functions__description">
-                This functions also provide an information about contract states and values, but related to some address or other conditions which you should provide. No any changes in blockchain are done by this functions.
-              </p>
-              {this.getFunctionsByType(instance, 'ask').map((func, i) => (
-                <p key={i} className="contract-functions__description">
-                  <b>{func.title}</b> — {func.description}
-                </p>
-              ))}
-            </section>
-
-            <section className="contract-functions">
-              <h2 className="contract-functions__header">
-                Write functions
-              </h2>
-              <p className="contract-functions__description">
-                This functions are changing states and values of smart contract, placing new information to the blockchain. All this functions consume some amount of gas. Be careful, their actions can not be undone.
-              </p>
-              {this.getFunctionsByType(instance, 'write').map((func, i) => (
-                <p key={i} className="contract-functions__description">
-                  <b>{func.title}</b> — {func.description}
-                </p>
-              ))}
-            </section>
+            {instance.transactions &&
+              <section className="transactions">
+                <p className="transactions__header">Transactions:</p>
+                {instance.transactions.reverse().map((transaction, i) => (
+                  <Transaction
+                    transaction={transaction}
+                    netId={instance.network_id}
+                    key={i}
+                  />
+                ))}
+              </section>
+            }
           </aside>
         }
 
@@ -218,6 +189,7 @@ class Instance extends Component {
                             <td className="table__label">
                               {func.title}
                             </td>
+
                             <td className="table__data">
                               <div className="table__inner">
                                 <span>
@@ -230,6 +202,7 @@ class Instance extends Component {
                             </td>
                           </tr>
                         );
+
                       } else {
                         return null;
                       }
@@ -242,6 +215,7 @@ class Instance extends Component {
                 <span className="contract-controls__section-header">
                   Ask functions
                 </span>
+
                 <ul className="contract-controls__list">
                   {this.getFunctionsByType(instance, 'ask').map((func, i) => (
                     <li key={i} className="contract-controls__item">
@@ -261,6 +235,7 @@ class Instance extends Component {
                 <span className="contract-controls__section-header">
                   Write functions
                 </span>
+
                 <ul className="contract-controls__list">
                   {this.getFunctionsByType(instance, 'write').map((func, i) => (
                     <li key={i} className="contract-controls__item">
@@ -284,16 +259,6 @@ class Instance extends Component {
                 }
                 refresh={this.getConstants.bind(this)}
               />
-
-              {instance.transactions &&
-                <div className="transactions">
-                  Transactions:
-                  {instance.transactions.reverse().map((transaction, i) => (
-                    <Transaction transaction={transaction} key={i}/>
-                  ))}
-                </div>
-              }
-
             </div>
           </section>
         }
