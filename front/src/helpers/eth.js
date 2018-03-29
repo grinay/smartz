@@ -1,5 +1,3 @@
-// const l = console.log;
-
 export var web3 = window.Web3
   ? new window.Web3(window.web3.currentProvider)
   : undefined;
@@ -81,10 +79,15 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
 // ALSO: render box with processControlForm() for each dashboard function
 
 export const processResult = res => {
-  if (typeof res === 'object' && "s" in res && "e" in res && "c" in res) {
-    return res.toNumber();
-  } else {
-    return res;
+  switch (typeof res) {
+    case 'object':
+      return res.toString();
+
+    case 'boolean':
+      return res ? 'yes' : 'no';
+
+    default:
+      return res;
   }
 };
 

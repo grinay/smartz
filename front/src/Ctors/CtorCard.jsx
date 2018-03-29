@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
+import './CtorCard.css';
+
 class CtorCard extends Component {
   render() {
     const {ctor, auth} = this.props;

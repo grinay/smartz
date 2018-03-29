@@ -104,43 +104,48 @@ class Deploy extends Component {
       <main className="page-main page-main--contracts">
         <aside className="block-half">
           <section className="contract-info">
-            <div className="contract-info__logo">
-              <img
-                className="contract-info__img"
-                src={ctor.image
-                  ? require(`../Ctors/i/${ctor.image}`)
-                  : `https://lorempixel.com/640/400/?${Math.random()}`
-                }
-                width="644" height="404"
-                alt={`${ctor.ctor_name} contract`}
-              />
-            </div>
+            {ctor.image &&
+              <div className="contract-info__logo">
+                  <img
+                    className="contract-info__img"
+                    src={require(`../Ctors/i/${ctor.image}`)}
+                    width="644" height="404"
+                    alt={`${ctor.ctor_name} contract`}
+                  />
+              </div>
+            }
             <div className="contract-info__wrapper">
-              <p className="contract-info__info  contract-info__info--column">
-                <span className="contract-info__name">
-                  {ctor.ctor_name}
-                </span>
-              </p>
-              <p className="contract-info__description">
-                {ctor.ctor_descr}
-              </p>
-              <table className="table">
-                <tbody className="table__tbody">
-                  <tr className="table__tr">
-                    <td className="table__label">Running price</td>
-                    <td className="table_data">
-                      <div className="table__inner">
-                        <span id="raiting-price">
-                          {ctor.price_eth
-                            ? `${ctor.price_eth} ETH`
-                            : 'Free'
-                          }
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              {ctor.ctor_name &&
+                <p className="contract-info__info  contract-info__info--column">
+                  <span className="contract-info__name">
+                    {ctor.ctor_name}
+                  </span>
+                </p>
+              }
+              {ctor.ctor_descr &&
+                <p className="contract-info__description">
+                  {ctor.ctor_descr}
+                </p>
+              }
+              {'price_eth' in ctor &&
+                <table className="table">
+                  <tbody className="table__tbody">
+                    <tr className="table__tr">
+                      <td className="table__label">Running price</td>
+                      <td className="table_data">
+                        <div className="table__inner">
+                          <span id="raiting-price">
+                            {ctor.price_eth
+                              ? `${ctor.price_eth} ETH`
+                              : 'Free'
+                            }
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              }
             </div>
           </section>
         </aside>
