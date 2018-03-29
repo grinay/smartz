@@ -213,45 +213,49 @@ class Instance extends Component {
                 </table>
               </div>
 
-              <div className="contract-controls__wrapper">
-                <span className="contract-controls__section-header">
-                  Ask functions
-                </span>
+              {this.getFunctionsByType(instance, 'ask').length > 0 &&
+                <div className="contract-controls__wrapper">
+                  <span className="contract-controls__section-header">
+                    Ask functions
+                  </span>
 
-                <ul className="contract-controls__list">
-                  {this.getFunctionsByType(instance, 'ask').map((func, i) => (
-                    <li key={i} className="contract-controls__item">
-                      <button
-                        className="btn-contract contract-controls__button"
-                        type="button"
-                        onClick={() => this.setState({funcActive: func})}
-                      >
-                        {func.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <ul className="contract-controls__list">
+                    {this.getFunctionsByType(instance, 'ask').map((func, i) => (
+                      <li key={i} className="contract-controls__item">
+                        <button
+                          className="btn-contract contract-controls__button"
+                          type="button"
+                          onClick={() => this.setState({funcActive: func})}
+                        >
+                          {func.title}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              }
 
-              <div className="contract-controls__wrapper">
-                <span className="contract-controls__section-header">
-                  Write functions
-                </span>
+              {this.getFunctionsByType(instance, 'write').length > 0 &&
+                <div className="contract-controls__wrapper">
+                  <span className="contract-controls__section-header">
+                    Write functions
+                  </span>
 
-                <ul className="contract-controls__list">
-                  {this.getFunctionsByType(instance, 'write').map((func, i) => (
-                    <li key={i} className="contract-controls__item">
-                      <button
-                        className="btn-contract contract-controls__button"
-                        type="button"
-                        onClick={() => this.setState({funcActive: func})}
-                      >
-                        {func.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <ul className="contract-controls__list">
+                    {this.getFunctionsByType(instance, 'write').map((func, i) => (
+                      <li key={i} className="contract-controls__item">
+                        <button
+                          className="btn-contract contract-controls__button"
+                          type="button"
+                          onClick={() => this.setState({funcActive: func})}
+                        >
+                          {func.title}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              }
 
               <FunctionCard
                 instance={instance}
