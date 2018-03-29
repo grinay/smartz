@@ -81,6 +81,19 @@
             "type": "integer",
             "minimum": 0,
             "maximum": 4294967295
+        },
+
+        "uint64": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709552000
+        },
+
+        "uint128": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 39,
+            "pattern": "^[0-9]+$"
         }
     }
 }
