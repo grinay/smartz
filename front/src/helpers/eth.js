@@ -19,7 +19,7 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
         if (abi_type === 'uint8' || abi_type === 'uint16' || abi_type === 'uint32' || abi_type === 'uint64')
             return input * 1;
 
-        if (abi_type === 'address' || abi_type === 'bytes32' || abi_type === 'string')
+        if (abi_type === 'address' || abi_type === 'bytes32' || abi_type === 'bytes' || abi_type === 'string')
             return input;   // 0x...
 
         if (abi_type.endsWith('[]')) {
