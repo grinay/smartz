@@ -1,12 +1,24 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.css';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import {Router} from 'react-router-dom';
 
-import {makeMainRoutes} from './routes';
-import './index.css';
+import history from './history';
+import reducers from './reducers';
+import App from 'App/AppContainer';
 
-const routes = makeMainRoutes();
+const store = createStore(
+  reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
-  routes,
+  <Provider store={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </Provider>,
+
   document.getElementById('root')
 );

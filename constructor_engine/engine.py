@@ -4,24 +4,21 @@ import shutil
 import os.path
 import tempfile
 import json
-
-import types
-import importlib.machinery
-
 import subprocess
 
-from constructor_engine.api import ConstructorInstance
+import requests
 
+SERVICE_URL = 'http://constructor_call_service.default/call' \
+    if os.environ.get('ENVIRONMENT') in ['prod', 'stage'] \
+    else 'http://constructor_call_service.dev/call'
 
 class BaseEngine(object):
 
-    #todo hardcoded
-    CONSTRUCTOR_CLASS = 'Constructor'
+    SOLC_BINARY = 'solc'
 
-    SOLC_BINARY = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        '../node_modules/.bin/solcjs'
-    )
+    METHOD_GET_PARAMS     = 'get_params'
+    METHOD_CONSTRUCT      = 'construct'
+    METHOD_POST_CONSTRUCT = 'post_construct'
 
 
     def __init__(self, settings):
@@ -32,17 +29,15 @@ class BaseEngine(object):
         self._save_constructor(ctor_id, filename)
 
     def get_ctor_params(self, id):
-        try:
-            return self._get_instance(id).get_params()
-        except BaseException as exc:
-            return str(exc)
+        source = self._load_constructor(id)
+        res = self._call_constructor_method(source, self.METHOD_GET_PARAMS)
+
+        return res
 
     def construct(self, id, price_eth, fields):
-        instance = self._get_instance(id)
+        constructor_source = self._load_constructor(id)
+        res = self._call_constructor_method(constructor_source, self.METHOD_CONSTRUCT, [fields])
 
-        res = instance.construct(fields)
-
-        assert res['result'] in ('success', 'error')
         if 'error' == res['result']:
             return res
 
@@ -58,12 +53,26 @@ class BaseEngine(object):
         if re.findall('[^a-zA-Z0-9]', contract_name):
             raise Exception
 
-        bin, abi = self._compile(source, contract_name)
-        abi = json.loads(abi)
+        try:
+            bin, abi = self._compile(source, contract_name)
+            abi = json.loads(abi)
+        except Exception:
+            return {
+                'result': 'error',
+                'error_descr': 'Compilation error'
+            }
 
-        post_construct_info = instance.post_construct(fields, abi)
+        post_construct_info = self._call_constructor_method(constructor_source, self.METHOD_POST_CONSTRUCT, [fields, abi])
+        if 'error' == post_construct_info['result']:
+            return post_construct_info
+
+        post_construct_info['function_specs'] = sorted(
+            post_construct_info['function_specs'],
+            key=lambda x: x['sorting_order'] if 'sorting_order' in x else 0
+        )
 
         return {
+            'result': 'success',
             'bin': bin,
             'source': source,
             'abi': abi,
@@ -79,15 +88,31 @@ class BaseEngine(object):
 
     @abc.abstractmethod
     def _load_constructor(self, id):
-        """Loads constructor from some storage, return constructor instance"""
+        """Loads constructor from some storage, return constructor source"""
         pass
 
-    def _get_instance(self, id):
-        """Get constructor instance by constructor id"""
-        if id not in self._instances:
-            self._instances[id] = self._load_constructor(id)
+    def _call_constructor_method(self, source, method, args=None):
+        data = {
+            "constructor_file": source,
+            "method": method,
+            "args": args if args is not None else []
+        }
+        try:
+            res = requests.post(SERVICE_URL, json=data)
+            if res.status_code != requests.codes.ok:
+                return {
+                    "result": "error",
+                    "error_descr": "Something got wrong/0"
+                }
 
-        return self._instances[id]
+            #todo validate json
+            return res.json()
+        except Exception as e:
+            print("[DEBUG] {}".format(str(e)))
+            return {
+                "result": "error",
+                "error_descr": "Something got wrong/1"
+            }
 
     def _compile(self, source, contract_name):
         """compiles source fi"""
@@ -108,7 +133,7 @@ class BaseEngine(object):
             #errcode = popen.returncode
 
             #solc stores bin and abi in two files with the same names
-            out_file = os.path.join(tmpdir, '{}_{}'.format(tmpfilename.replace('/', '_'), contract_name))
+            out_file = os.path.join(tmpdir, contract_name)
             with open('{}.bin'.format(out_file)) as f:
                 bin = f.read()
 
@@ -141,14 +166,11 @@ class SimpleStorageEngine(BaseEngine):
         shutil.copy(filename, self._get_filename(id))
 
     def _load_constructor(self, id):
-        loader = importlib.machinery.SourceFileLoader('tempmod', self._get_filename(id))
-        mod = types.ModuleType(loader.name)
-        loader.exec_module(mod)
+        f = open(self._get_filename(id), 'r')
+        source = f.read()
+        f.close()
 
-        instance = getattr(mod, self.CONSTRUCTOR_CLASS)()
-        assert isinstance(instance, ConstructorInstance)
-
-        return instance
+        return source
 
     def _get_filename(self, id):
         """returns filename of constructor by id"""

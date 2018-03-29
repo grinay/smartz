@@ -1,5 +1,5 @@
 
-from constructor_engine.api import ConstructorInstance
+from smartz.api.constructor_engine import ConstructorInstance
 from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
 
@@ -15,7 +15,8 @@ class Constructor(ConstructorInstance):
 
             "properties": {
                 "name": {
-                    "title": "Ballot name",
+                    "title": "Ballot topic",
+                    "description": "Name or description of the vote (string of 200 chars max)",
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 200,
@@ -24,6 +25,7 @@ class Constructor(ConstructorInstance):
 
                 "variants": {
                     "title": "Variants",
+                    "description": "List of answer variants. One account can vote only for one variant",
                     "type": "array",
                     "minItems": 1,
                     "maxItems": 100,
@@ -50,6 +52,7 @@ class Constructor(ConstructorInstance):
         ui_schema = {}
 
         return {
+            "result": "success",
             "schema": json_schema,
             "ui_schema": ui_schema
         }
@@ -72,7 +75,7 @@ class Constructor(ConstructorInstance):
             .replace('%variants_code%', variants_code)
 
         return {
-            'result': "success",
+            "result": "success",
             'source': source,
             'contract_name': "SimpleBallot"
         }
@@ -82,10 +85,12 @@ class Constructor(ConstructorInstance):
         function_titles = {
             'ballotName': {
                 'title': 'Ballot topic',
+                'description': 'Name or description of the vote'
             },
 
             'variants': {
-                'title': 'Get variant name by ID',
+                'title': 'View variant',
+                'description': 'Get variant name by ID',
                 'inputs': [{
                     'title': 'Variant ID',
                 }]
@@ -93,13 +98,14 @@ class Constructor(ConstructorInstance):
 
             'isVoted': {
                 'title': 'Has address voted?',
+                'description': 'Check if given address has voted',
                 'inputs': [{
                     'title': 'Address to check',
                 }]
             },
 
             'vote': {
-                'title': 'Vote',
+                'title': 'Vote by ID',
                 'description': 'Vote by variant ID',
                 'inputs': [{
                     'title': 'Variant ID',
@@ -107,7 +113,7 @@ class Constructor(ConstructorInstance):
             },
 
             'voteByName': {
-                'title': 'Vote',
+                'title': 'Vote by name',
                 'description': 'Vote by variant name',
                 'inputs': [{
                     'title': 'Variant name',
@@ -133,20 +139,23 @@ class Constructor(ConstructorInstance):
 
             'getWinningVariantId': {
                 'title': 'Winning variant ID',
+                'description': 'ID of the variant with the most votes'
             },
 
             'getWinningVariantName': {
                 'title': 'Winning variant name',
+                'description': 'The name of the variant with the most votes'
             },
 
             'getWinningVariantVotesCount': {
                 'title': 'Winning variant votes count',
+                'description': 'Count of votes of the variant with the most votes'
             },
         }
 
         return {
+            "result": "success",
             'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
-
             'dashboard_functions': ['ballotName', 'getWinningVariantId', 'getWinningVariantName', 'getWinningVariantVotesCount']
         }
 
@@ -162,7 +171,7 @@ contract SimpleBallot {
 
     string public ballotName;
 
-    string[] variants;
+    string[] public variants;
 
     mapping(uint=>uint) votesCount;
     mapping(address=>bool) public isVoted;
@@ -177,6 +186,8 @@ contract SimpleBallot {
         %variants_code%
 
         assert(variants.length <= 100);
+        
+        %payment_code%
     }
 
     modifier hasNotVoted() {

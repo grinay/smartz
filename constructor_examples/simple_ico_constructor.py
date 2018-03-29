@@ -1,5 +1,5 @@
 
-from constructor_engine.api import ConstructorInstance
+from smartz.api.constructor_engine import ConstructorInstance
 from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
 
 
@@ -15,20 +15,20 @@ class Constructor(ConstructorInstance):
             "properties": {
                 "name": {
                     "title": "Name of a token",
-                    "description": "Token human-friendly name (3..100 characters, letters and spaces only)",
+                    "description": "Token human-friendly name (3..100 characters, letters, digits and spaces only)",
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 100,
-                    "pattern": "^[a-zA-Z ]+$"
+                    "pattern": "^[a-zA-Z0-9 ]+$"
                 },
 
                 "symbol": {
                     "title": "Token Symbol",
-                    "description": "Token ticker (2..10 characters, capital letters only)",
+                    "description": "Token ticker (2..10 characters, letters and digits only)",
                     "type": "string",
                     "minLength": 2,
                     "maxLength": 10,
-                    "pattern": "^[A-Z]+$"
+                    "pattern": "^[a-zA-Z0-9]+$"
                 },
 
                 "is_burnable": {
@@ -83,6 +83,7 @@ class Constructor(ConstructorInstance):
         }
 
         return {
+            "result": "success",
             "schema": json_schema,
             "ui_schema": ui_schema
         }
@@ -101,7 +102,7 @@ class Constructor(ConstructorInstance):
 
         source = self.__class__._TEMPLATE \
             .replace('%name%', fields['name']) \
-            .replace('%symbol%', fields['symbol']) \
+            .replace('%symbol%', fields['symbol'].upper()) \
             .replace('%code_is_burnable%', ", BurnableToken" if fields['is_burnable'] else '') \
             .replace('%date_start%', str(fields['date_start'])) \
             .replace('%date_end%', str(fields['date_end'])) \
@@ -170,8 +171,8 @@ class Constructor(ConstructorInstance):
         }
 
         return {
+            "result": "success",
             'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
-
             'dashboard_functions': ['collectedEther', 'totalTokens', 'daysRemaining']
         }
 

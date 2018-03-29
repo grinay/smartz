@@ -1,0 +1,49 @@
+.contract-controls__wallet-key::before {
+  background-image: url(./i/key.svg);
+}
+
+.block-half .contract-functions {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .block-half .contract-functions {
+    display: block;
+  }
+}
+
+.transactions {
+  margin-top: 40px;
+}
+
+.transactions > div {
+  display: flex;
+  margin-top: 15px;
+  padding: 0 10px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px #CCCCCC;
+}
+
+.transactions > div ul {
+  flex-grow: 1;
+}
+
+.transactions .spinner {
+  padding: 10px 0;
+}
+
+.transactions .spinner img {
+  height: 80px;
+}
+
+.transactions .support-block__paragraph {
+  font-size: 12px;
+  margin: 0;
+}
+
+.contract-controls__wrapper .table__inner {
+  max-width: 500px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}

@@ -1,0 +1,9 @@
+.page-footer__section {
+  flex-basis: 50%;
+}
+
+@media (min-width: 1000px) {
+  .page-footer__section {
+    flex-basis: auto;
+  }
+}

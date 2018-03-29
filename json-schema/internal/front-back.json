@@ -80,6 +80,10 @@
                     "description": "ABI name (dont show to user)",
                     "type": "string"
                 },
+                "sorting_order": {
+                    "description": "Sorting order in dashboard",
+                    "type": "integer"
+                },
                 "constant": { "type": "boolean" },
                 "payable": { "type": "boolean" },
                 "inputs": { "$ref": "#/definitions/ETHFunctionArgumentList" },

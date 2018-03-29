@@ -91,7 +91,7 @@ def merge_function_titles2specs(spec_array, titles_info):
     assert_conforms2schema(titles_info, load_schema('internal/eth/contracts/function_titles_info.json'))
 
     def set_title(to_spec, from_info):
-        for field in ('title', 'description'):
+        for field in ('title', 'description', 'sorting_order'):
             if field in from_info:
                 to_spec[field] = from_info[field]
 

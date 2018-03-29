@@ -8,7 +8,7 @@ AWS_REGION=eu-central-1
 
 if [[ -z "$1" ]] || [ "$1" == "-h" ] || [ "$1" == "--help" ];
 then
-	echo -e "\nusage: deploy.sh tag\nExample: \n\tdeploy.sh latest\n\tdeploy.sh branch_master_commit_xxxxxxx\n"
+	echo -e "\nusage: deploy.sh tag\nExample: \n\tdeploy.sh latest\n\tdeploy.sh branch_master_latest\n\tdeploy.sh branch_master_commit_xxxxxxx\n"
 	exit 1
 fi
 

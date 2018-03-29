@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import base64
 import re
 import sys
 import os
@@ -7,6 +8,7 @@ import tempfile
 from shutil import copy2
 from urllib.parse import urlparse
 
+import requests
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from jsonschema.validators import validator_for
@@ -54,34 +56,88 @@ def register_user():
     return _send_output({'ok': True})
 
 
-@app.route('/upload_ctor', methods=['GET', 'POST'])
+@app.route('/upload_ctor', methods=['POST'])
 def upload_ctor():
     args = _get_input()
     ctors = db.ctors
+
+    user_id = auth()
+    if isinstance(user_id, dict):
+        return user_id  # error
 
     name = nonempty(args_string(args, 'ctor_name'))
     descr = nonempty(args_string(args, 'ctor_descr')) if 'ctor_descr' in args else ''
     filename = tempfile.mktemp('ctor')
 
-    uploaded_filename = args['ctor_file_name']
-    if not re.findall('^[a-zA-Z][a-zA-Z0-9_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
-        raise ValueError()
-    uploaded_filename = "{}.py".format(uploaded_filename)
+    current_constructor = {}
+    #todo remake in pg
+    if 'constructor_id' in args:
+        res = [c for c in ctors.find() if _ctor_id(c['_id'])==args['constructor_id']]
+        if len(res):
+            current_constructor = res.pop()
+        else:
+            return _send_error('Constructor does not exists')
 
+        if current_constructor['user_id'] != user_id:
+            return _send_error('Access denied')
+
+    same_named_constructors = list(ctors.find({'ctor_name': name}))
+    if 'constructor_id' in args:
+        if len([c for c in same_named_constructors if _ctor_id(c['_id'])!=args['constructor_id']]):
+            return _send_error('Constructor with this name already exists')
+    else:
+        if len(same_named_constructors):
+            return _send_error('Constructor with this name already exists')
 
     if 'ctor_file_name' in args:
+        uploaded_filename = args['ctor_file_name']
+        if not re.findall('^[a-zA-Z][a-zA-Z0-9_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
+            raise ValueError()
+        uploaded_filename = "{}.py".format(uploaded_filename)
+
         copy2(os.path.join(ROOT_DIR, 'constructor_examples', uploaded_filename), filename)
+
+        is_public = True
+    elif 'ctor_file' in args:
+        file_base64 = re.sub('^data:.+;base64,', '', args['ctor_file'])
+
+        try:
+            file_source = base64.b64decode(file_base64).decode('utf-8')
+        except Exception:
+            return _send_error("Invalid input/0")
+
+        file = open(filename, "w")
+        file.write(file_source)
+        file.close()
+
+        is_public = False
     else:
-        request.files['ctor_file'].save(filename)
+        return _send_error("Invalid input")
 
-    if ctors.find_one({'ctor_name': name}) is not None:
-        return _send_error('ctor with this name already exists')
+    if 'constructor_id' in args:
+        ctors.replace_one(
+            {'_id': current_constructor['_id']},
+            {
+                'ctor_name': name,
+                'ctor_descr': descr,
+                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
+                'is_public': is_public,
+                'user_id': user_id
+            }
+        )
+        ctor_engine.register_new_ctor(_ctor_id(current_constructor['_id']), filename)
+    else:
+        ctor_id = ctors.insert_one(
+            {
+                'ctor_name': name,
+                'ctor_descr': descr,
+                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
+                'is_public': is_public,
+                'user_id': user_id
+            }
+        ).inserted_id
 
-    ctor_id = ctors.insert_one({'ctor_name': name, 'ctor_descr': descr,
-                                'price_eth': float(args['price_eth']) if 'price_eth' in args else .0}
-                               ).inserted_id.binary.hex()
-
-    ctor_engine.register_new_ctor(ctor_id, filename)
+        ctor_engine.register_new_ctor(_ctor_id(ctor_id), filename)
 
     return _send_output({'ok': True})
 
@@ -90,16 +146,18 @@ def upload_ctor():
 def list_ctors():
     ctors = db.ctors
 
-    def format_ctor(ctor):
-        return {
-            'ctor_id': ctor['_id'].binary.hex(),
-            'ctor_name': ctor['ctor_name'],
-            'price_eth': ctor.get('price_eth', .0),
-            'ctor_descr': ctor['ctor_descr'] if 'ctor_descr' in ctor else ''
-         }
+    user_id = auth()
+    if isinstance(user_id, dict):
+        filter = {"is_public": True}
+    else:
+        filter = {
+            "$or": [
+                {"is_public": True},
+                {"user_id": user_id}
+            ]
+        }
 
-    return _send_output(list(map(format_ctor, ctors.find())))
-
+    return _send_output(list(map(_format_ctor, ctors.find(filter))))
 
 @app.route('/get_ctor_params', methods=['GET', 'POST'])
 def get_ctor_params():
@@ -112,8 +170,8 @@ def get_ctor_params():
         return _send_error('ctor is not found')
 
     params = ctor_engine.get_ctor_params(ctor_id)
-    if isinstance(params, str):
-        return _send_error(params)
+    if 'error' == params['result']:
+        return _send_engine_error(params)
 
     return _send_output({
         'ctor_name': ctor_info['ctor_name'],
@@ -170,9 +228,8 @@ def construct():
     result = ctor_engine.construct(ctor_id, price_eth, args['fields'])
 
     assert isinstance(result, dict)
-    if 'error' in result:
-        # error
-        return _send_output(result)
+    if 'error' == result['result']:
+        return _send_engine_error(result)
 
     # success
     instance_id = instances.insert_one({'abi': json.dumps(result['abi']), 'source': result['source'],
@@ -312,6 +369,12 @@ def _send_error(string):
     print('[ERROR]: {}'.format(string))
     return _send_output({'error': string})
 
+def _send_engine_error(res):
+    if 'error_descr' in res:
+        return _send_output({'error': res['error_descr']})
+    else:
+        return _send_output(res)
+
 
 def _send_output(output):
     return json.dumps(output)
@@ -344,17 +407,47 @@ def nonempty(v):
 
 
 def auth():
-    if urlparse(request.base_url).netloc.split(':')[0].lower() in ('localhost', '127.0.0.1'):
-        user_id = 'local'
-    else:
-        user_id = request.headers.get('X-AccessToken')
+    token = request.headers.get('X-AccessToken')
+    if not token:
+        return _send_error('not authorized')
 
-    return user_id if user_id else _send_error('not authorized')
+    user_info = db.auth_tokens.find_one({"token": token})
+    if user_info:
+       user_id =  user_info['user_id']
+    else:
+        url = 'https://mixbytes.eu.auth0.com/userinfo'
+        headers = {'authorization': 'Bearer {}'.format(token)}
+        try:
+            resp = requests.get(url, headers=headers)
+            user_info = resp.json()
+            print("[DEBUG][AUTH][USER] {}".format(str(user_info)))
+        except Exception:
+            return _send_error('authorization error')
+
+        user_id = user_info['sub']
+        db.auth_tokens.replace_one({"token": token}, {"token": token, 'user_id': user_id}, upsert=True)
+
+
+    print("[DEBUG][AUTH] {}".format(str(user_id)))
+    return user_id
 
 
 def process_ctor_schema(schema):
     return add_definitions(schema, load_schema('public/ethereum-sc.json'))
 
+
+def _format_ctor(ctor):
+    return {
+        'ctor_id': _ctor_id(ctor['_id']),
+        'ctor_name': ctor['ctor_name'],
+        'price_eth': ctor.get('price_eth', .0),
+        'ctor_descr': ctor['ctor_descr'] if 'ctor_descr' in ctor else '',
+        'is_public': ctor['is_public'] if 'is_public' in ctor else True,
+        'user_id': ctor['user_id'] if 'user_id' in ctor else '',
+     }
+
+def _ctor_id(id):
+    return id.binary.hex()
 
 if __name__ == '__main__':
     app.run()

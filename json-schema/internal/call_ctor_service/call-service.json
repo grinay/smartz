@@ -1,0 +1,91 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "resultConstruct": {
+            "type": "object",
+            "required": ["result"],
+            "properties": {
+                "result": { "type": "string", "enum": ["success", "error"]},
+                "error_descr": { "type": "string" },
+                "errors": { "type": "object" },
+
+                "contract_name": { "type": "string" },
+                "source": { "type": "string" }
+            }
+        },
+
+        "resultGetParams": {
+            "type": "object",
+            "required": ["result"],
+            "properties": {
+                "result": { "type": "string", "enum": ["success", "error"]},
+                "error_descr": { "type": "string" },
+                "errors": { "type": "object" },
+
+                "schema": { "type": "object" },
+                "ui_schema": { "type": "object" }
+            }
+        },
+
+        "resultPostConstruct": {
+            "type": "object",
+            "required": ["result"],
+            "properties": {
+                "result": { "type": "string", "enum": ["success", "error"]},
+                "error_descr": { "type": "string" },
+                "errors": { "type": "object" },
+
+                "dashboard_functions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+                "function_specs": { "type": "array" }
+            }
+        }
+    },
+
+    "rpc_calls": {
+        "call_service": {
+            "description": "Call service for construct contract code",
+
+            "input": {
+                "type": "object",
+                "required": ["constructor_file", "method", "args"],
+                "additionalProperties": false,
+                "properties": {
+                    "constructor_file": {
+                        "type": "string"
+                    },
+                    "method": {
+                        "type": "string",
+                        "enum": ["construct", "get_params", "post_construct"]
+                    },
+                    "args": {
+                        "type": "array"
+                    }
+                }
+            },
+            "output_construct": { "$ref": "#/definitions/resultConstruct" },
+            "output_get_params": { "$ref": "#/definitions/resultGetParams" },
+            "output_post_construct": { "$ref": "#/definitions/resultPostConstruct" }
+        },
+        "call_service_worker": {
+            "description": "Call service worker for construct contract code",
+
+            "input": {
+                "type": "object",
+                "required": ["method", "args"],
+                "additionalProperties": false,
+                "properties": {
+                    "method": {
+                        "type": "string",
+                        "enum": ["construct", "get_params", "post_construct"]
+                    },
+                    "args": {
+                        "type": "array"
+                    }
+                }
+            },
+            "output_construct": { "$ref": "#/definitions/resultConstruct" },
+            "output_get_params": { "$ref": "#/definitions/resultGetParams" },
+            "output_post_construct": { "$ref": "#/definitions/resultPostConstruct" }
+        }
+    }
+}

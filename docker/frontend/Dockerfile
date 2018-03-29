@@ -1,12 +1,12 @@
 FROM node:8.10.0-alpine AS node_stage
 WORKDIR /static
 COPY front .
-RUN npm install --only=production
-RUN npm run build --production
+RUN yarn install --production
+ENV NODE_PATH=src
+RUN yarn run build
 COPY json-schema/public/ build/json-schema/public/
 
 FROM nginx:1.12.2-alpine
-ARG NGINX_UID
 WORKDIR /app
 VOLUME [ "/app/sock" ]
 EXPOSE 80
