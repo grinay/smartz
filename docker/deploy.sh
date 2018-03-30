@@ -8,7 +8,16 @@ AWS_REGION=eu-central-1
 
 if [[ -z "$1" ]] || [ "$1" == "-h" ] || [ "$1" == "--help" ];
 then
-	echo -e "\nusage: deploy.sh tag\nExample: \n\tdeploy.sh latest\n\tdeploy.sh branch_master_latest\n\tdeploy.sh branch_master_commit_xxxxxxx\n"
+	echo -e "\nusage:"
+	echo -e "\tDeploy containers: \n\t\tdeploy.sh latest\n\t\tdeploy.sh branch_master\n\t\tdeploy.sh commit_xxxxxxx\n"
+	echo -e "\tCheck started containers version:\n\t\tdeploy.sh -i | --info"
+	exit 1
+fi
+
+if [ "$1" == "--info" ] || [ "$1" == "-i" ];
+then
+	echo -e "Started containers info: \n"
+	docker ps -q | xargs docker inspect --format='{{.Config.Image}}' | xargs -I{} docker inspect {} | jq '.[0].ContainerConfig.Labels'
 	exit 1
 fi
 
