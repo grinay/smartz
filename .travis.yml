@@ -1,5 +1,4 @@
 ---
-
 language: generic
 dist: trusty
 sudo: required
@@ -22,10 +21,10 @@ install:
 - ecs-cli configure --cluster default --default-launch-type EC2 --region eu-central-1 --config-name travis
 
 script:
-- docker-compose -p smartzplatform build
-- /bin/sh ./test/tests.sh
-- docker images
-- /bin/bash ./docker/upload_to_registry.sh smartzplatform_frontend smartzplatform_backend
+- docker-compose -p smartzplatform build &&
+  /bin/sh ./test/tests.sh &&
+  docker images &&
+  /bin/bash ./docker/upload_to_registry.sh smartzplatform_frontend smartzplatform_backend
 
 notifications:
   email:
