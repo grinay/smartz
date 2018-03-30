@@ -5,7 +5,7 @@ AWS_REGION=eu-central-1
 BRANCH="$TRAVIS_BRANCH"
 COMMIT="$(git log -1  --pretty=format:'%H')"
 COMMIT_SHORT="$(git log -1  --pretty=format:'%h')"
-TAGS=( "latest" "branch_${BRANCH}_latest" "commit_${COMMIT}" "commit_${COMMIT_SHORT}" )
+TAGS=( "latest" "branch_${BRANCH}" "commit_${COMMIT}" "commit_${COMMIT_SHORT}" )
 
 # check if all images builded
 for NAME in "$@"
