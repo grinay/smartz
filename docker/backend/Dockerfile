@@ -1,7 +1,7 @@
 FROM node:8.10.0-alpine AS node_stage
 WORKDIR /build
 COPY package.json .
-RUN npm install --only=production
+RUN yarn install --production
 
 FROM alpine:3.7 AS python_stage
 WORKDIR /build
