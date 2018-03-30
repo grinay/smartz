@@ -17,6 +17,8 @@ COPY json-schema/ json-schema/
 COPY constructor_examples/ constructor_examples/
 
 FROM alpine:3.7
+LABEL maintainer=smartz.io
+#---labels-will-be-here---
 WORKDIR /app
 VOLUME [ "/app/sock", "/app/data" ]
 RUN apk --no-cache --update upgrade \
