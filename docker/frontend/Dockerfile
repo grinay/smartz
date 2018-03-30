@@ -7,6 +7,8 @@ RUN yarn run build
 COPY json-schema/public/ build/json-schema/public/
 
 FROM nginx:1.12.2-alpine
+LABEL maintainer=smartz.io
+#---labels-will-be-here---
 WORKDIR /app
 VOLUME [ "/app/sock" ]
 EXPOSE 80

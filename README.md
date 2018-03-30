@@ -55,5 +55,5 @@ sudo chown -R $USER .ecs/
 git clone https://github.com/mixbytes/smartz
 ```
 ```
-sh deploy.sh latest|branch_master_latest|branch_master_commit_xxxxxxx
+sh deploy.sh latest|branch_master|commit_xxxxxxx|-i|--info
 ```
