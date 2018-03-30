@@ -11,7 +11,7 @@ then
 	LABELS+="LABEL git.timestampt=\"$(git log -1  --pretty=format:'%ct')\"\n"
 	LABELS+="LABEL ci=\"Travis CI\"\n"
 	LABELS+="LABEL ci.travis_build_number=\"$TRAVIS_BUILD_NUMBER\"\n"
-	LABELS+="LABEL ci.build_date=\"$(date -u +\"%Y-%m-%dT%H:%M:%SZ\")\"\n"
+	LABELS+="LABEL ci.build_date=$(date -u +\"%Y-%m-%dT%H:%M:%SZ\")\n"
 	echo -e "$LABELS"
 	find "${TRAVIS_BUILD_DIR}" -name Dockerfile | xargs sed -i "s/#---labels-will-be-here---/${LABELS}/"
 fi
