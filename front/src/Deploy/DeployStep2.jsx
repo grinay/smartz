@@ -4,6 +4,10 @@ import {web3 as w3, getNetworkId, getTxReceipt} from 'helpers/eth';
 import Spinner from 'common/Spinner';
 
 class DeployStep2 extends Component {
+  componentWillMount() {
+    window.scrollTo(0, 0);
+  }
+
   deploy(e) {
     e.preventDefault();
 
