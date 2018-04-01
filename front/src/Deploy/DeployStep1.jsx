@@ -42,7 +42,7 @@ class DeployStep1 extends Component {
     const {ctor} = this.props;
 
     // Add instance name field in the form beginning
-    if (ctor && ctor.schema) {
+    if (ctor && ctor.schema && (!ctor.schema.properties || !ctor.schema.properties.instance_title)) {
       if (!("properties" in ctor.schema)) {
         ctor.schema.properties = {};
       }
