@@ -147,18 +147,15 @@ def list_ctors():
     ctors = db.ctors
 
     user_id = auth()
-    # todo
     if isinstance(user_id, dict):
-        filter = {} #{"is_public": True}
+        filter = {"is_public": True}
     else:
-        filter = {}
-
-        #     {
-        #     "$or": [
-        #         {"is_public": True},
-        #         {"user_id": user_id}
-        #     ]
-        # }
+        filter = {
+            "$or": [
+                {"is_public": True},
+                {"user_id": user_id}
+            ]
+        }
 
     return _send_output(list(map(_format_ctor, ctors.find(filter))))
 
