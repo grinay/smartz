@@ -42,7 +42,10 @@ class DeployStep1 extends Component {
     const {ctor} = this.props;
 
     // Add instance name field in the form beginning
-    if (ctor && ctor.schema && !ctor.schema.properties.instance_title) {
+    if (ctor && ctor.schema && (!ctor.schema.properties || !ctor.schema.properties.instance_title)) {
+      if (!("properties" in ctor.schema)) {
+        ctor.schema.properties = {};
+      }
       ctor.schema.properties.instance_title = {
         title: "Instance name",
         type: "string",
@@ -50,6 +53,10 @@ class DeployStep1 extends Component {
         minLength: 3,
         maxLength: 100
       };
+
+      if (!("required" in ctor.schema)) {
+        ctor.schema.required = [];
+      }
       ctor.schema.required.push("instance_title");
 
       if (ctor.ui_schema && ("ui:order" in ctor.ui_schema)) {

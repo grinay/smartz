@@ -24,6 +24,7 @@ VOLUME [ "/app/sock", "/app/data" ]
 RUN apk --no-cache --update upgrade \
 && apk --no-cache add nodejs python3 uwsgi uwsgi-python3
 ADD https://github.com/ethereum/solidity/releases/download/v0.4.20/solc-static-linux /usr/local/bin/solc
+RUN chmod 755 /usr/local/bin/solc
 COPY --from=node_stage /build/node_modules/ node_modules/
 COPY --from=python_stage /build/ .
 COPY docker/backend/entrypoint.sh .
