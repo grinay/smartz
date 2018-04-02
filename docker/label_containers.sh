@@ -1,5 +1,4 @@
 #!/bin/bash
-
 if [ "$TRAVIS" == "true" ];
 then
 	LABELS="LABEL git.branch=\"$TRAVIS_BRANCH\"\n"
@@ -13,5 +12,5 @@ then
 	LABELS+="LABEL ci.travis_build_number=\"$TRAVIS_BUILD_NUMBER\"\n"
 	LABELS+="LABEL ci.build_date=$(date -u +\"%Y-%m-%dT%H:%M:%SZ\")\n"
 	echo -e "$LABELS"
-	find "${TRAVIS_BUILD_DIR}" -name Dockerfile | xargs sed -i "s/#---labels-will-be-here---/${LABELS}/"
+	find "${TRAVIS_BUILD_DIR}" -name Dockerfile | xargs sed -i "s^#---labels-will-be-here---^${LABELS}^"
 fi
