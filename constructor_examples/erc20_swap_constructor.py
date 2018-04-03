@@ -188,7 +188,7 @@ class Constructor(ConstructorInstance):
                                         "count": {
                                             "title": "Tokens count",
                                             "description": "Tokens count, which participant #2 will swap for participant #1 tokens. . Token decimals must be <= 18",
-                                            "type": "number",
+                                            "type": "string",
                                             "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\.[0-9]{0,17}[1-9])$"
                                         }
                                     },
@@ -286,14 +286,14 @@ class Constructor(ConstructorInstance):
             },
 
             "participant1TokensCount": {
-                "title": "Tokens count of participant #1",
-                "description": "Tokens count, which participant #1 will swap for participant #2 tokens/ether",
+                "title": "Tokens count of participant #1 (in token wei)",
+                "description": "Tokens count, which participant #1 will swap for participant #2 tokens/ether (in token wei)",
                 'sorting_order': 40
             },
 
             "participant1SentTokensCount": {
-                "title": "Tokens count sent by participant #1",
-                "description": "Tokens count, which participant #1 has already sent",
+                "title": "Tokens count sent by participant #1 (in token wei)",
+                "description": "Tokens count, which participant #1 has already sent (in token wei)",
                 'sorting_order': 50
             },
 
@@ -318,13 +318,13 @@ class Constructor(ConstructorInstance):
 
         if fields['participant2']['swap_type'] == self._SWAP_TYPE_ETHER:
             function_titles["participant2EtherCount"] = {
-                "title": "Ether count of participant #2",
-                "description": "Ether count, which participant #1 will swap for participant #2 tokens",
+                "title": "Ether count of participant #2 (in wei)",
+                "description": "Ether count, which participant #1 will swap for participant #2 tokens (in wei)",
                 'sorting_order': 70
             }
             function_titles["participant2SentEtherCount"] = {
-                "title": "Ether count sent by participant #2",
-                "description": "Ether count, which participant #2 has already sent",
+                "title": "Ether count sent by participant #2 (in wei)",
+                "description": "Ether count, which participant #2 has already sent (in wei)",
                 'sorting_order': 80
             }
         else:
@@ -334,13 +334,13 @@ class Constructor(ConstructorInstance):
                 'sorting_order': 70
             }
             function_titles["participant2TokensCount"] = {
-                "title": "Tokens count of participant #2",
-                "description": "Tokens count, which participant #2 will swap for participant #1 tokens",
+                "title": "Tokens count of participant #2 (in token wei)",
+                "description": "Tokens count, which participant #2 will swap for participant #1 tokens (in token wei)",
                 'sorting_order': 80
             }
             function_titles["participant2SentTokensCount"] = {
-                "title": "Tokens count sent by participant #2",
-                "description": "Tokens count, which participant #2 has already sent",
+                "title": "Tokens count sent by participant #2 (in token wei)",
+                "description": "Tokens count, which participant #2 has already sent (in token wei)",
                 'sorting_order': 90
             }
 

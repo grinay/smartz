@@ -164,6 +164,20 @@ class Instance extends Component {
                 ))}
               </section>
             }
+
+            <section className="contract-functions">
+              <h2 className="contract-functions__header">
+                View functions
+              </h2>
+              <p className="contract-functions__description">
+                This functions just provide an information about contract states and values. Results of this fuctions are alrewady shown left.
+              </p>
+              {this.getFunctionsByType(instance, 'view').map((func, i) => (
+                <p key={i} className="contract-functions__description">
+                  <b>{func.title}</b> — {func.description}
+                </p>
+              ))}
+            </section>
           </aside>
         }
 
