@@ -3,6 +3,9 @@ from typing import Dict
 from smartz.api.constructor_engine import ConstructorInstance
 from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
+def is_true(arr, key):
+    return key in arr and bool(arr[key])
+
 class Constructor(ConstructorInstance):
 
     _SWAP_TYPE_ETHER  = 'Ether'
@@ -31,25 +34,18 @@ class Constructor(ConstructorInstance):
             "additionalProperties": False,
 
             "properties": {
-                "check_transfers": {
-                    "type": "boolean",
-                    "title": "Check token transfers",
-                    "description": "Verify that token balances after swap greater than before",
-                    "default": True
-                },
-
                 "participant1": {
                     "type": "object",
                     "title": "Participant #1",
 
-                    "required": ["address", "token", "count"],
-                    "additionalProperties": False,
+                    "required": ["token", "count"],
 
                     "properties": {
-                        "address": {
-                            "title": "Address",
-                            "description": "Address where tokens/ether from participant #2 will be sent",
-                            "$ref": "#/definitions/address"
+                        "use_my_address": {
+                            "type": "boolean",
+                            "title": "Use my address",
+                            "description": "Deployer's address would be got as participant #1 address",
+                            "default": True
                         },
 
                         "token": {
@@ -60,9 +56,41 @@ class Constructor(ConstructorInstance):
 
                         "count": {
                             "title": "Tokens count",
-                            "description": "Tokens count, which participant #1 will swap for participant #2 tokens/ether (IMPORTANT: in token wei)",
-                            "type": "integer",
-                            "minimum": 1
+                            "description": "Tokens count, which participant #1 will swap for participant #2 tokens/ether. Token decimals must be <= 18",
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\.[0-9]{0,17}[1-9])$"
+                        }
+                    },
+                    "dependencies": {
+                        "use_my_address": {
+                            "oneOf": [
+                                {
+                                    "properties": {
+                                        "use_my_address": {
+                                            "enum": [
+                                                True
+                                            ]
+                                        },
+                                    },
+                                },
+                                {
+                                    "properties": {
+                                        "use_my_address": {
+                                            "enum": [
+                                                False
+                                            ]
+                                        },
+                                        "address": {
+                                            "title": "Address",
+                                            "description": "Address where tokens/ether from participant #2 will be sent",
+                                            "$ref": "#/definitions/address"
+                                        },
+                                    },
+                                    "required": [
+                                        "address"
+                                    ]
+                                }
+                            ]
                         }
                     }
                 },
@@ -71,7 +99,7 @@ class Constructor(ConstructorInstance):
                     "type": "object",
                     "title": "Participant #2",
 
-                    "required": ["swap_type", "address"],
+                    "required": ["swap_type"],
 
                     "properties": {
                         "swap_type": {
@@ -85,13 +113,44 @@ class Constructor(ConstructorInstance):
                             ],
                             "default": self._SWAP_TYPE_ETHER
                         },
-                        "address": {
-                            "title": "Address",
-                            "description": "Address where tokens from participant #1 will be sent",
-                            "$ref": "#/definitions/address"
+                        "use_my_address": {
+                            "type": "boolean",
+                            "title": "Use my address",
+                            "description": "Deployer's address would be got as participant #1 address",
+                            "default": False
                         },
                     },
                     "dependencies": {
+                        "use_my_address": {
+                            "oneOf": [
+                                {
+                                    "properties": {
+                                        "use_my_address": {
+                                            "enum": [
+                                                True
+                                            ]
+                                        },
+                                    },
+                                },
+                                {
+                                    "properties": {
+                                        "use_my_address": {
+                                            "enum": [
+                                                False
+                                            ],
+                                        },
+                                        "address": {
+                                            "title": "Address",
+                                            "description": "Address where tokens/ether from participant #1 will be sent",
+                                            "$ref": "#/definitions/address"
+                                        },
+                                    },
+                                    "required": [
+                                        "address"
+                                    ]
+                                }
+                            ]
+                        },
                         "swap_type": {
                             "oneOf": [
                                 {
@@ -103,9 +162,9 @@ class Constructor(ConstructorInstance):
                                         },
                                         "count": {
                                             "title": "Ether count",
-                                            "description": "Ether count, which participant #2 will swap for participant #2 tokens (IMPORTANT: in wei)",
-                                            "type": "integer",
-                                            "minimum": 1
+                                            "description": "Ether count, which participant #2 will swap for participant #2 tokens",
+                                            "type": "string",
+                                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\.[0-9]{0,17}[1-9])$"
                                         }
                                     },
                                     "required": [
@@ -128,9 +187,9 @@ class Constructor(ConstructorInstance):
 
                                         "count": {
                                             "title": "Tokens count",
-                                            "description": "Tokens count, which participant #2 will swap for participant #1 tokens (IMPORTANT: in token wei)",
-                                            "type": "integer",
-                                            "minimum": 1
+                                            "description": "Tokens count, which participant #2 will swap for participant #1 tokens. . Token decimals must be <= 18",
+                                            "type": "number",
+                                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\.[0-9]{0,17}[1-9])$"
                                         }
                                     },
                                     "required": [
@@ -140,12 +199,22 @@ class Constructor(ConstructorInstance):
                             ]
                         }
                     }
-                }
+                },
+
+                "check_transfers": {
+                    "type": "boolean",
+                    "title": "Check token transfers correctness",
+                    "description": "Verify that token balances of participants after swap are greater for the amount of transfer (or more). If not, the transaction will be canceled.",
+                    "default": True
+                },
 
             }
         }
 
         ui_schema = {
+            "participant1": {
+                "ui:order": ["*", "token", "count"],
+            },
             "participant2": {
                 "swap_type": {
                     "ui:widget": "radio",
@@ -167,6 +236,11 @@ class Constructor(ConstructorInstance):
 
         errors = self._check_errors(part1, part2, swap_type)
         if errors:
+            # todo remove after supporting of errors dict
+            return {
+                "result": "error",
+                "error_descr": errors
+            }
             return {
                 "result": "error",
                 "errors": errors
@@ -213,13 +287,13 @@ class Constructor(ConstructorInstance):
 
             "participant1TokensCount": {
                 "title": "Tokens count of participant #1",
-                "description": "Tokens count, which participant #1 will swap for participant #2 tokens/ether (IMPORTANT: in token wei)",
+                "description": "Tokens count, which participant #1 will swap for participant #2 tokens/ether",
                 'sorting_order': 40
             },
 
             "participant1SentTokensCount": {
                 "title": "Tokens count sent by participant #1",
-                "description": "Tokens count, which participant #1 has already sent (IMPORTANT: in token wei)",
+                "description": "Tokens count, which participant #1 has already sent",
                 'sorting_order': 50
             },
 
@@ -237,7 +311,7 @@ class Constructor(ConstructorInstance):
 
             'refund': {
                 'title': 'Refund',
-                'description': 'Refund tokens/ether',
+                'description': 'Refund tokens/ether to participants',
                 'sorting_order': 110
             },
         }
@@ -245,12 +319,12 @@ class Constructor(ConstructorInstance):
         if fields['participant2']['swap_type'] == self._SWAP_TYPE_ETHER:
             function_titles["participant2EtherCount"] = {
                 "title": "Ether count of participant #2",
-                "description": "Ether count, which participant #1 will swap for participant #2 tokens (IMPORTANT: in wei)",
+                "description": "Ether count, which participant #1 will swap for participant #2 tokens",
                 'sorting_order': 70
             }
             function_titles["participant2SentEtherCount"] = {
                 "title": "Ether count sent by participant #2",
-                "description": "Ether count, which participant #2 has already sent (IMPORTANT: in wei)",
+                "description": "Ether count, which participant #2 has already sent",
                 'sorting_order': 80
             }
         else:
@@ -261,12 +335,12 @@ class Constructor(ConstructorInstance):
             }
             function_titles["participant2TokensCount"] = {
                 "title": "Tokens count of participant #2",
-                "description": "Tokens count, which participant #2 will swap for participant #1 tokens (IMPORTANT: in token wei)",
+                "description": "Tokens count, which participant #2 will swap for participant #1 tokens",
                 'sorting_order': 80
             }
             function_titles["participant2SentTokensCount"] = {
                 "title": "Tokens count sent by participant #2",
-                "description": "Tokens count, which participant #2 has already sent (IMPORTANT: in token wei)",
+                "description": "Tokens count, which participant #2 has already sent",
                 'sorting_order': 90
             }
 
@@ -280,14 +354,26 @@ class Constructor(ConstructorInstance):
         """ Check additional errors"""
         errors = {}
 
-        if part1['address'] == part2['address']:
+        if "address" in part1 and "address" in part2 \
+                and part1['address'] == part2['address']:
+            # todo remove after supporting of errors
+            return "Participants addresses must be different"
             errors['participant1'] = {
                 'address': "Participants addresses must be different"
+            }
+
+        if is_true(part1, "use_my_address") and is_true(part2, "use_my_address"):
+            # todo remove after supporting of errors
+            return "Participants addresses must be different"
+            errors['participant1'] = {
+                'use_my_address': "Participants addresses must be different"
             }
 
         if swap_type == self._SWAP_TYPE_TOKENS and part1['token'] == part2['token']:
             if 'participant1' not in errors:
                 errors['participant1'] = {}
+            # todo remove after supporting of errors
+            return "Tokens addresses must be different"
             errors['participant1']['token'] = "Tokens addresses must be different"
 
         return errors
@@ -303,9 +389,14 @@ class Constructor(ConstructorInstance):
         return source
 
     def _fill_main_vars(self, part1, part2, source):
+
+        part1_address = 'msg.sender' if is_true(part1, "use_my_address") else part1['address']
+        part2_address = 'msg.sender' if is_true(part2, "use_my_address") else part2['address']
+
         source = source \
-            .replace('%_participant1%', part1['address']) \
-            .replace('%_participant2%', part2['address']) \
+            .replace('%erc20_basic%', self._TEMPLATE_ERC20) \
+            .replace('%_participant1%', part1_address) \
+            .replace('%_participant2%', part2_address) \
             .replace('%_participant1TokenAddress%', part1['token']) \
             .replace('%_participant1TokensCount%', str(part1['count']))
         return source
@@ -324,20 +415,28 @@ class Constructor(ConstructorInstance):
         return source
 
     # language=Solidity
-    _TEMPLATE_TOKENS_FOR_ETHER = """
-pragma solidity ^0.4.18;
-
+    _TEMPLATE_ERC20 = """
 /**
  * @title ERC20Basic
  * @dev Simpler version of ERC20 interface
  * @dev see https://github.com/ethereum/EIPs/issues/179
  */
 contract ERC20Basic {
+  uint8 public decimals;
+
   uint256 public totalSupply;
   function balanceOf(address who) public view returns (uint256);
   function transfer(address to, uint256 value) public returns (bool);
   event Transfer(address indexed from, address indexed to, uint256 value);
 }
+    """
+
+    # language=Solidity
+    _TEMPLATE_TOKENS_FOR_ETHER = """
+pragma solidity ^0.4.18;
+
+
+%erc20_basic%
 
 /**
  * Copyright (C) 2018  Smartz, LLC
@@ -375,9 +474,11 @@ contract Swap {
         participant2 = %_participant2%;
 
         participant1Token = ERC20Basic(%_participant1TokenAddress%);
-        participant1TokensCount = %_participant1TokensCount%;
+        require(participant1Token.decimals() <= 18);
+        
+        participant1TokensCount = %_participant1TokensCount% ether / 10**(18-uint256(participant1Token.decimals()));
 
-        participant2EtherCount = %_participant2EtherCount%;
+        participant2EtherCount = %_participant2EtherCount% ether;
         
         assert(participant1 != participant2);
         assert(participant1Token != address(0));
@@ -465,17 +566,7 @@ contract Swap {
     _TEMPLATE_TOKENS_FOR_TOKENS = """
 pragma solidity ^0.4.18;
 
-/**
- * @title ERC20Basic
- * @dev Simpler version of ERC20 interface
- * @dev see https://github.com/ethereum/EIPs/issues/179
- */
-contract ERC20Basic {
-  uint256 public totalSupply;
-  function balanceOf(address who) public view returns (uint256);
-  function transfer(address to, uint256 value) public returns (bool);
-  event Transfer(address indexed from, address indexed to, uint256 value);
-}
+%erc20_basic%
 
 /**
  * Copyright (C) 2018  Smartz, LLC
@@ -515,10 +606,12 @@ contract Swap {
         participant2 = %_participant2%;
 
         participant1Token = ERC20Basic(%_participant1TokenAddress%);
-        participant1TokensCount = %_participant1TokensCount%;
+        require(participant1Token.decimals() <= 18);
+        participant1TokensCount = %_participant1TokensCount% ether / 10**(18-uint256(participant1Token.decimals()));
 
         participant2Token = ERC20Basic(%_participant2TokenAddress%);
-        participant2TokensCount = %_participant2TokensCount%;
+        require(participant2Token.decimals() <= 18);
+        participant2TokensCount = %_participant2TokensCount% ether / 10**(18-uint256(participant2Token.decimals()));
         
         assert(participant1 != participant2);
         assert(participant1Token != participant2Token);
