@@ -157,7 +157,12 @@ class Footer extends Component {
           </h2>
           <p className="page-footer__info">
             We do not store your private keys, passwords or your cryptocurrency.
-            Smartz is just a provider to conclude a smart contract.
+            <br />Smartz is just a provider to conclude a smart contract.
+          </p>
+          <p className="page-footer__copyright">
+            <a href="/legal/Smartz_privacy-policy.pdf">Privacy policy</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="/legal/Smartz_terms-and-conditions.pdf">Terms & conditions</a>
           </p>
           <p className="page-footer__copyright">
             <span>&#169; Smartz, </span><Link to="https://mixbytes.io">MixBytes</Link> <span>2018</span>

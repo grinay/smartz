@@ -38,6 +38,12 @@ class App extends Component {
     }, 250);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      window.scrollTo(0, 0);
+    }
+  }
+
   render() {
     const {metamaskStatus} = this.state;
     const isAuthenticated = auth.isAuthenticated();
@@ -50,7 +56,6 @@ class App extends Component {
       });
     }
 
-    // if(noMetamask) return <Alert message={checkMetaMask()} />;
     return (
       <div>
         <Route render={(props) => (

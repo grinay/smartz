@@ -1,4 +1,4 @@
-// const l = console.log;
+import React from 'react';
 
 export var web3 = window.Web3
   ? new window.Web3(window.web3.currentProvider)
@@ -15,10 +15,13 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
         if (abi_type === 'bool')
             return input ? 1 : 0;
 
-        if (abi_type === 'uint256' || abi_type === 'uint')
+        if (abi_type === 'uint256' || abi_type === 'uint' || abi_type === 'uint128')
             return new web3.BigNumber(input);
 
-        if (abi_type === 'address' || abi_type === 'bytes32' || abi_type === 'string')
+        if (abi_type === 'uint8' || abi_type === 'uint16' || abi_type === 'uint32' || abi_type === 'uint64')
+            return input * 1;
+
+        if (abi_type === 'address' || abi_type === 'bytes32' || abi_type === 'bytes' || abi_type === 'string')
             return input;   // 0x...
 
         if (abi_type.endsWith('[]')) {
@@ -81,10 +84,15 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
 // ALSO: render box with processControlForm() for each dashboard function
 
 export const processResult = res => {
-  if (typeof res === 'object' && "s" in res && "e" in res && "c" in res) {
-    return res.toNumber();
-  } else {
-    return res;
+  switch (typeof res) {
+    case 'object':
+      return res.toString();
+
+    case 'boolean':
+      return res ? 'yes' : 'no';
+
+    default:
+      return res;
   }
 };
 
@@ -143,4 +151,44 @@ export const getTxReceipt = (txHash, cb) => {
       cb(receipt);
     }
   });
+}
+
+export const isAddress = (hash) => {
+  if (typeof hash === 'string') {
+    return /^0x([A-Fa-f0-9]{40})$/.test(hash);
+  } else {
+    return false;
+  }
+}
+
+export const isTransaction = (hash) => {
+  if (typeof hash === 'string') {
+    return /^0x([A-Fa-f0-9]{64})$/.test(hash);
+  } else {
+    return false;
+  }
+}
+
+export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
+  if (!hash || !netId) return hash;
+
+  const explorerAddress = getNetworkEtherscanAddress(netId);
+  const networkName = getNetworkName(netId);
+  if (isAddress(hash)) {
+    return (
+      <span>
+        <a href={`${explorerAddress}/address/${hash}`} target="_blank">
+          {hash}
+        </a>{showNetworkName && ` (${networkName})`}
+      </span>
+    );
+  } else if (isTransaction(hash)) {
+    return (
+      <a href={`${explorerAddress}/tx/${hash}`} target="_blank">
+        {hash}
+      </a>
+    );
+  } else {
+    return hash;
+  }
 }

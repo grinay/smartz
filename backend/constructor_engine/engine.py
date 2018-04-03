@@ -14,7 +14,7 @@ SERVICE_URL = 'http://constructor_call_service.default/call' \
 
 class BaseEngine(object):
 
-    SOLC_BINARY = 'solc'
+    SOLC_BINARY = '/usr/local/bin/solc'
 
     METHOD_GET_PARAMS     = 'get_params'
     METHOD_CONSTRUCT      = 'construct'
@@ -56,7 +56,9 @@ class BaseEngine(object):
         try:
             bin, abi = self._compile(source, contract_name)
             abi = json.loads(abi)
-        except Exception:
+        except Exception as e:
+            print("[DEBUG] Compilation error. Ex: {}".format(str(e)))
+            print("[DEBUG] Compilation error. Code: {}".format(source))
             return {
                 'result': 'error',
                 'error_descr': 'Compilation error'

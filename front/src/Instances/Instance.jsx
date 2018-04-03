@@ -5,8 +5,7 @@ import {find} from 'lodash';
 import api from 'helpers/api';
 import {processControlForm,
         processResult,
-        getNetworkName,
-        getNetworkEtherscanAddress} from 'helpers/eth';
+        makeEtherscanLink} from 'helpers/eth';
 import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from 'common/Alert';
 import Transaction from './Transaction/Transaction';
@@ -41,8 +40,8 @@ class Instance extends Component {
     .catch(error => fetchCtorsFailure(error));
 
     fetchInstancesRequest();
-    api(auth).get('/instances')
-    .then(response => fetchInstancesSuccess(response.data))
+    api(auth).post(`/instances/${this.props.match.params.id}`)
+    .then(response => fetchInstancesSuccess([response.data]))
     .catch(error => fetchInstancesFailure(error));
   }
 
@@ -137,17 +136,32 @@ class Instance extends Component {
                   width="644" height="404"
                   alt={`${ctor.ctor_name} contract`} />
               </div>
+
               <div className="contract-info__wrapper">
                 <p className="contract-info__info  contract-info__info--column">
                   <span className="contract-info__name">
                     {ctor.ctor_name}
                   </span>
                 </p>
+
                 <p className="contract-info__description">
                   {ctor.ctor_descr}
                 </p>
               </div>
             </section>
+
+            {instance.transactions &&
+              <section className="transactions">
+                <p className="transactions__header">Transactions:</p>
+                {instance.transactions.reverse().map((transaction, i) => (
+                  <Transaction
+                    transaction={transaction}
+                    netId={instance.network_id}
+                    key={i}
+                  />
+                ))}
+              </section>
+            }
 
             <section className="contract-functions">
               <h2 className="contract-functions__header">
@@ -157,34 +171,6 @@ class Instance extends Component {
                 This functions just provide an information about contract states and values. Results of this fuctions are alrewady shown left.
               </p>
               {this.getFunctionsByType(instance, 'view').map((func, i) => (
-                <p key={i} className="contract-functions__description">
-                  <b>{func.title}</b> — {func.description}
-                </p>
-              ))}
-            </section>
-
-            <section className="contract-functions">
-              <h2 className="contract-functions__header">
-                Ask functions
-              </h2>
-              <p className="contract-functions__description">
-                This functions also provide an information about contract states and values, but related to some address or other conditions which you should provide. No any changes in blockchain are done by this functions.
-              </p>
-              {this.getFunctionsByType(instance, 'ask').map((func, i) => (
-                <p key={i} className="contract-functions__description">
-                  <b>{func.title}</b> — {func.description}
-                </p>
-              ))}
-            </section>
-
-            <section className="contract-functions">
-              <h2 className="contract-functions__header">
-                Write functions
-              </h2>
-              <p className="contract-functions__description">
-                This functions are changing states and values of smart contract, placing new information to the blockchain. All this functions consume some amount of gas. Be careful, their actions can not be undone.
-              </p>
-              {this.getFunctionsByType(instance, 'write').map((func, i) => (
                 <p key={i} className="contract-functions__description">
                   <b>{func.title}</b> — {func.description}
                 </p>
@@ -201,14 +187,9 @@ class Instance extends Component {
 
             <div className="block__wrapper">
               {instance.address &&
+
                 <span className="contract-controls__section-header  contract-controls__wallet-key">
-                  <a
-                    href={getNetworkEtherscanAddress(instance.network_id.toString()) + `/address/${instance.address}`}
-                    style={{textTransform: 'uppercase'}}
-                    target="_blank"
-                  >
-                    {instance.address}
-                  </a> ({getNetworkName(instance.network_id.toString())})
+                  {makeEtherscanLink(instance.address, instance.network_id, true)}
                 </span>
               }
 
@@ -222,11 +203,12 @@ class Instance extends Component {
                             <td className="table__label">
                               {func.title}
                             </td>
+
                             <td className="table__data">
                               <div className="table__inner">
-                                <span id="contract-stage">
+                                <span>
                                   {(instance.funcResults && instance.funcResults[func.name] !== undefined)
-                                    ? instance.funcResults[func.name].toString()
+                                    ? makeEtherscanLink(instance.funcResults[func.name], instance.network_id)
                                     : ''
                                   }
                                 </span>
@@ -234,6 +216,7 @@ class Instance extends Component {
                             </td>
                           </tr>
                         );
+
                       } else {
                         return null;
                       }
@@ -242,43 +225,49 @@ class Instance extends Component {
                 </table>
               </div>
 
-              <div className="contract-controls__wrapper">
-                <span className="contract-controls__section-header">
-                  Ask functions
-                </span>
-                <ul className="contract-controls__list">
-                  {this.getFunctionsByType(instance, 'ask').map((func, i) => (
-                    <li key={i} className="contract-controls__item">
-                      <button
-                        className="btn-contract contract-controls__button"
-                        type="button"
-                        onClick={() => this.setState({funcActive: func})}
-                      >
-                        {func.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {this.getFunctionsByType(instance, 'ask').length > 0 &&
+                <div className="contract-controls__wrapper">
+                  <span className="contract-controls__section-header">
+                    Ask functions
+                  </span>
 
-              <div className="contract-controls__wrapper">
-                <span className="contract-controls__section-header">
-                  Write functions
-                </span>
-                <ul className="contract-controls__list">
-                  {this.getFunctionsByType(instance, 'write').map((func, i) => (
-                    <li key={i} className="contract-controls__item">
-                      <button
-                        className="btn-contract contract-controls__button"
-                        type="button"
-                        onClick={() => this.setState({funcActive: func})}
-                      >
-                        {func.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <ul className="contract-controls__list">
+                    {this.getFunctionsByType(instance, 'ask').map((func, i) => (
+                      <li key={i} className="contract-controls__item">
+                        <button
+                          className="btn-contract contract-controls__button"
+                          type="button"
+                          onClick={() => this.setState({funcActive: func})}
+                        >
+                          {func.title}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              }
+
+              {this.getFunctionsByType(instance, 'write').length > 0 &&
+                <div className="contract-controls__wrapper">
+                  <span className="contract-controls__section-header">
+                    Write functions
+                  </span>
+
+                  <ul className="contract-controls__list">
+                    {this.getFunctionsByType(instance, 'write').map((func, i) => (
+                      <li key={i} className="contract-controls__item">
+                        <button
+                          className="btn-contract contract-controls__button"
+                          type="button"
+                          onClick={() => this.setState({funcActive: func})}
+                        >
+                          {func.title}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              }
 
               <FunctionCard
                 instance={instance}
@@ -288,16 +277,6 @@ class Instance extends Component {
                 }
                 refresh={this.getConstants.bind(this)}
               />
-
-              {instance.transactions &&
-                <div className="transactions">
-                  Transactions:
-                  {instance.transactions.reverse().map((transaction, i) => (
-                    <Transaction transaction={transaction} key={i}/>
-                  ))}
-                </div>
-              }
-
             </div>
           </section>
         }

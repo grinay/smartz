@@ -5,15 +5,21 @@ import {getNetworkName, getNetworkEtherscanAddress} from 'helpers/eth';
 import Spinner from 'common/Spinner';
 
 class DeployStep3 extends Component {
+  componentWillMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const {status, txHash, netId, instance, contractAddress} = this.props;
 
     return (
       <div className="block__wrapper  block__wrapper--top">
-        <p className="support-block__paragraph">
-          Deploy transaction has been sent to network:<br />
-          <a href={getNetworkEtherscanAddress(netId) + '/tx/' + txHash}>{txHash}</a>
-        </p>
+        {(status === 'transaction_sent' || status === 'transaction_mined') &&
+          <p className="support-block__paragraph">
+            Deploy transaction has been sent to network:<br />
+            <a href={getNetworkEtherscanAddress(netId) + '/tx/' + txHash}>{txHash}</a>
+          </p>
+        }
 
         {status === 'transaction_sent' &&
           <Spinner text="Awaiting for contract to be placed in block by miners to get it address..." />

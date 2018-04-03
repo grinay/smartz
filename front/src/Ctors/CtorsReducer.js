@@ -6,6 +6,33 @@ const initState = {
   error: null
 };
 
+const setPic = (ctorName) => { // Temporary until image management implemented
+  if (!ctorName) return null;
+  switch (ctorName.toLowerCase()) {
+    case 'simple ico':
+      return 'contract-ico.jpg';
+
+    case 'erc20 token':
+      return 'contract-erc20.jpg';
+
+    case 'equity token':
+      return 'contract-equity.jpg';
+
+    case 'smartz token':
+      return 'contract-smartz-erc20.jpg';
+
+    case 'multisignature wallet':
+      return 'contract-multisig.jpg';
+
+    case 'simple voting':
+      return 'contract-voting.jpg';
+
+    case 'atomic swap for erc20':
+      return 'contract-swap.jpg';
+    default:
+  }
+}
+
 const ctors = (state = initState, action) => {
   const nextState = {...state};
 
@@ -22,24 +49,7 @@ const ctors = (state = initState, action) => {
     case 'FETCH_CTORS_SUCCESS':
       nextState.fetchStatus = 'success';
       action.ctors.forEach(ctor => {
-        switch (ctor.ctor_name) { // Temporary block until image management implemented
-          case 'Simple ICO':
-            ctor.image = 'contract-ico.jpg';
-            break;
-          case 'ERC20 token':
-            ctor.image = 'contract-erc20.jpg';
-            break;
-          case 'Equity token':
-            ctor.image = 'contract-equity.jpg';
-            break;
-          case 'Multisignature wallet':
-            ctor.image = 'contract-multisig.jpg';
-            break;
-          case 'Simple voting':
-            ctor.image = 'contract-voting.jpg';
-            break;
-          default:
-        }
+        ctor.image = setPic(ctor.ctor_name);
         const i = findIndex(nextState.ctors, {ctor_id: ctor.ctor_id});
         if (i >= 0) {
           nextState.ctors[i] = Object.assign(nextState.ctors[i], ctor);
@@ -75,7 +85,8 @@ const ctors = (state = initState, action) => {
           action.ctorParams,
           {
             ctor_id: action.ctorId,
-            fetchStatus: 'success'
+            fetchStatus: 'success',
+            image: setPic(action.ctorParams.ctor_name)
           }
         );
       }

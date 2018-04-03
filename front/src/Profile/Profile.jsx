@@ -1,33 +1,35 @@
 import React, {Component} from 'react';
-import {Panel, ControlLabel, Glyphicon} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
 import './Profile.css';
 
 class Profile extends Component {
   render() {
-    const {profile} = this.props;
+    const {auth, profile} = this.props;
+
+    if (!auth.isAuthenticated())
+      return (<Redirect to="/" />);
 
     return (
-      <div className="container">
+      <main className="page-main">
         {profile &&
-          <div className="profile-area">
-            <h1>{profile.name}</h1>
-            <Panel header="Profile">
-              <img src={profile.picture} alt="profile" />
-              <div>
-                <ControlLabel><Glyphicon glyph="user" /> Nickname</ControlLabel>
-                <h3>{profile.nickname}</h3>
-              </div>
-              <pre>{JSON.stringify(profile, null, 2)}</pre>
-              <button
-                className="btn btn-primary btn-margin"
-                onClick={this.props.auth.logout}
-              >
-                Log Out
-              </button>
-            </Panel>
-          </div>
+          <section>
+            <h2>{profile.name}</h2>
+            <img
+              src={profile.picture} alt="profile pic"
+              style={{maxWidth: '200px'}}
+            />
+            <p>
+              {`Locale: ${profile.locale}`}
+            </p>
+            <button
+              className="button block__button"
+              onClick={this.props.auth.logout}
+            >
+              Log Out
+            </button>
+          </section>
         }
-      </div>
+      </main>
     );
   }
 }

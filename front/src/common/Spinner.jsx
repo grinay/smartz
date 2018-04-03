@@ -10,7 +10,7 @@ class Spinner extends Component {
         <img
           src={require('./i/loading.svg')}
           alt={alt}
-          style={{maxWidth: width}}
+          style={{maxWidth: width, maxHeight: width}}
         />
       </div>
     );

@@ -83,6 +83,10 @@ form.rjsf legend {
 }
 
 form.rjsf .field-array-of-object > legend {
+  margin-bottom: 4px;
+}
+
+form.rjsf .field-array-of-object > p {
   margin-bottom: 20px;
 }
 
@@ -184,4 +188,8 @@ form.rjsf ul.file-info {
   font-family: "Cera Pro 300", Arial, sans-serif;
   font-size: 16px;
   margin: 8px 0 0;
+}
+
+form .block__wrapper--top {
+  padding-bottom: 20px;
 }

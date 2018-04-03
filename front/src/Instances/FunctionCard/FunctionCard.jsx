@@ -32,7 +32,8 @@ class FunctionCard extends Component {
           this.getReceipt(result);
 
       } else {
-        console.error(error);
+        console.log(error);
+        transactionNew(instance.instance_id, func, formData, 'error');
       }
     });
   }

@@ -19,7 +19,8 @@ def abi_arguments2schema(abi_args_array):
                 "default": False
             }
 
-        elif abi_type in ('address', 'uint', 'uint256', 'bytes32', 'uint8', 'uint16', 'uint32'):
+        elif abi_type in ('address', 'uint', 'uint256', 'bytes32', 'bytes',
+                          'uint8', 'uint16', 'uint32', 'uint64', 'uint128'):
             result = {
                 "$ref": "#/definitions/" + abi_type
             }

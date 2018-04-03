@@ -4,6 +4,10 @@ import {web3 as w3, getNetworkId, getTxReceipt} from 'helpers/eth';
 import Spinner from 'common/Spinner';
 
 class DeployStep2 extends Component {
+  componentWillMount() {
+    window.scrollTo(0, 0);
+  }
+
   deploy(e) {
     e.preventDefault();
 
@@ -12,14 +16,20 @@ class DeployStep2 extends Component {
     const {deployId, deployTxSent, deployTxError, deployTxMined} = this.props;
 
     w3.eth.sendTransaction({
-      data: bin,
+      data: `0x${bin}`,
       value: w3.toWei(price_eth, 'ether'),
       gas: 3e6,
       gasPrice: 10e9
     },
     (err, txHash) => {
       if (err) {
-        deployTxError(err);
+        let errMsg = '';
+        try {
+          errMsg = err.message.split("\n")[0];
+        } catch(error){
+          errMsg = 'Unknown error';
+        }
+        deployTxError(deployId, errMsg);
 
       } else {
         getNetworkId(netId => deployTxSent(deployId, netId, txHash));
@@ -45,7 +55,7 @@ class DeployStep2 extends Component {
       <div>
         {status === 'construct_request' &&
           <div className="block__wrapper  block__wrapper--top">
-            <Spinner text="Preparing code, this can take up to 30-40 seconds..." />
+            <Spinner text="Preparing code, this can take some seconds..." />
           </div>
         }
 
@@ -67,7 +77,8 @@ class DeployStep2 extends Component {
                         height: '500px',
                         overflowY: 'auto',
                         fontSize: '12px',
-                        whiteSpace: 'pre'
+                        whiteSpace: 'pre',
+                        fontFamily: 'monospace'
                       }}
                     >
                       {instance.source || "If you don't see source code here, perhaps something gone wrong"}
