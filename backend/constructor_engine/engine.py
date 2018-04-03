@@ -7,14 +7,13 @@ import json
 import subprocess
 
 import requests
+from django.conf import settings
 
 SERVICE_URL = 'http://constructor_call_service.default/call' \
     if os.environ.get('ENVIRONMENT') in ['prod', 'stage'] \
     else 'http://constructor_call_service.dev/call'
 
 class BaseEngine(object):
-
-    SOLC_BINARY = '/usr/local/bin/solc'
 
     METHOD_GET_PARAMS     = 'get_params'
     METHOD_CONSTRUCT      = 'construct'
@@ -127,7 +126,7 @@ class BaseEngine(object):
             with open(tmpfilename, "w") as f:
                 print(source, file=f)
 
-            args = (self.SOLC_BINARY, "--bin", "--abi", "--optimize", "-o", tmpdir, tmpfilename)
+            args = (settings.SMARTZ_SOLC_PATH, "--bin", "--abi", "--optimize", "-o", tmpdir, tmpfilename)
             popen = subprocess.Popen(args, stdout=subprocess.PIPE)
             popen.wait()
 

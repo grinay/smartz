@@ -44,7 +44,7 @@ class Common(Configuration):
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        # 'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
@@ -121,6 +121,8 @@ class Common(Configuration):
     SMARTZ_MONGO_HOST = os.environ.get('SMARTZ_MONGO_HOST')
     assert SMARTZ_MONGO_HOST, "Mongo host is not set"
 
+    SMARTZ_SOLC_PATH = os.environ.get('SOLC_PATH')
+    assert SMARTZ_SOLC_PATH, "Solc path is not set"
 
 
     SMARTZ_ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
@@ -144,10 +146,10 @@ class Dev(Common):
     ]
 
     INSTALLED_APPS = Common.INSTALLED_APPS + [
-        'debug_toolbar'
+    #    'debug_toolbar'
     ]
     MIDDLEWARE = Common.MIDDLEWARE + [
-        'debug_toolbar.middleware.DebugToolbarMiddleware'
+    #    'debug_toolbar.middleware.DebugToolbarMiddleware'
     ]
 
 

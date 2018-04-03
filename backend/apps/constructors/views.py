@@ -107,7 +107,7 @@ class UploadView(View):
                 raise ValueError()
             uploaded_filename = "{}.py".format(uploaded_filename)
 
-            copy2(os.path.join(settings.ROOT_DIR, 'constructor_examples', uploaded_filename), filename)
+            copy2(os.path.join(settings.SMARTZ_ROOT_DIR, 'constructor_examples', uploaded_filename), filename)
 
             is_public = True
         elif 'ctor_file' in args:

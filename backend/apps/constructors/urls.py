@@ -1,6 +1,6 @@
 from django.urls import path
 
-from apps.constructor.views import ListView, \
+from apps.constructors.views import ListView, \
     UploadView, \
     GetParamsView, \
     ConstructView
