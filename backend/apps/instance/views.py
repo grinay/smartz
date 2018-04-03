@@ -7,7 +7,6 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from rest_framework import generics
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -38,38 +37,27 @@ def _prepare_instance_details(instance_info):
     return output
 
 
-class InstanceDetailsView(generics.GenericAPIView):
+class DetailsView(View):
 
-    def __init__(self, **kwargs):
-        super(InstanceDetailsView, self).__init__(**kwargs)
-
-    def get(self, request, *args, **kwargs):
-        # wget -q -O- --header=X-AccessToken:uGVak2qORGvidgG3L982jdhyjQKDP4f9 'http://10.100.8.33/instance/details/?instance_id=5a9aa93cf5ec65000b80d295'
+    def get(self, request, instance_id):
         instances_db = db.instances
 
-        instance_id = request.query_params.get('instance_id')
-        if instance_id is None or not isinstance(instance_id, str):
-            return error_response("Param 'instance_id' is empty or not string")
-            
         instance_info = instances_db.find_one({'_id': ObjectId(instance_id)})
         if instance_info is None:
             return error_response("Instance({}) not found".format(instance_id))
 
         if not instance_info.get('public_access'):
-            # [TODO]  refactor - move to middleware and process auth errors with exceptions
-            user_id = auth(request)
-            if user_id is None:
-                return error_response("Got empty 'user_id' after auth()")
-            if not isinstance(user_id, str):
-                return error_response("Got non-string 'user_id' after auth()")
+            user_id = auth(request, db)
+            if isinstance(user_id, HttpResponse):
+                return user_id  # error
 
             if instance_info['user_id'] != user_id:
-                return error_response('Instance({}), deployed by user({}) is not allowed for user({})'.format(instance_id, instance_info['user_id'], user_id))
+                return error_response('instance is not found')
 
         if 'address' not in instance_info:
             return error_response('Instance({}) is not yet deployed'.format(instance_id))
 
-        return ok_response(_prepare_instance_details(instance_info))
+        return JsonResponse(_prepare_instance_details(instance_info))
 
 
 class ListView(View):
@@ -87,7 +75,6 @@ class ListView(View):
         return JsonResponse(instances_list, safe=False)
 
 
-#q
 @method_decorator(csrf_exempt, name='dispatch')
 class UpdateView(View):
 
@@ -126,5 +113,5 @@ class UpdateView(View):
             }
         })
 
-        return ok_response({})
+        return JsonResponse({'ok': True}) # todo
 

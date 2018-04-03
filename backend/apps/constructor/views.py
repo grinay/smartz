@@ -17,7 +17,7 @@ from bson.objectid import ObjectId
 from jsonschema.validators import validator_for
 
 from utils.common import auth, nonempty, args_string
-from utils.responses import ok_response, error_response, engine_error_response
+from utils.responses import  error_response, engine_error_response
 from constructor_engine.engine import SimpleStorageEngine
 from pythonlib.smartz.json_schema import load_schema, add_definitions, assert_conforms2schema_part
 

@@ -26,50 +26,49 @@ class Common(Configuration):
 
     # Application definition
     INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
+        # 'django.contrib.admin',
+        # 'django.contrib.auth',
         'django.contrib.contenttypes',
-        'django.contrib.sessions',
+        # 'django.contrib.sessions',
         'django.contrib.messages',
-        'whitenoise.runserver_nostatic',
-        'django.contrib.staticfiles',
+        # 'django.contrib.staticfiles',
 
         'django_extensions',
-        'debug_toolbar',
 
-        'apps.users',
+
+        # 'apps.users',
     ]
 
     MIDDLEWARE = [
         'django.middleware.security.SecurityMiddleware',
-        'whitenoise.middleware.WhiteNoiseMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
         'smartz.middleware.SmartzMiddleware',
         'smartz.middleware.JSONMiddleware'
     ]
 
     ROOT_URLCONF = 'smartz.urls'
 
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [],
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'context_processors': [
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.request',
-                    'django.contrib.auth.context_processors.auth',
-                    'django.contrib.messages.context_processors.messages',
-                ],
-            },
-        },
-    ]
+    # TEMPLATES = [
+    #     {
+    #         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    #         'DIRS': [],
+    #         'APP_DIRS': True,
+    #         'OPTIONS': {
+    #             'context_processors': [
+    #                 'django.template.context_processors.debug',
+    #                 'django.template.context_processors.request',
+    #                 'django.contrib.auth.context_processors.auth',
+    #                 'django.contrib.messages.context_processors.messages',
+    #             ],
+    #         },
+    #     },
+    # ]
 
     WSGI_APPLICATION = 'smartz.wsgi.application'
 
@@ -110,24 +109,26 @@ class Common(Configuration):
 
     APPEND_SLASH = False
 
-    # Static files (CSS, JavaScript, Images)
-    # https://docs.djangoproject.com/en/2.0/howto/static-files/
-    STATIC_URL = '/static/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # # Static files (CSS, JavaScript, Images)
+    # # https://docs.djangoproject.com/en/2.0/howto/static-files/
+    # STATIC_URL = '/static/'
+    # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    AUTH_USER_MODEL = 'users.User'
+    # AUTH_USER_MODEL = 'users.User'
 
     # SMARTZ settings 
-    SMARTZ_MONGO_HOST = '127.0.0.1'
+    SMARTZ_MONGO_HOST = os.environ.get('SMARTZ_MONGO_HOST')
+    assert SMARTZ_MONGO_HOST, "Mongo host is not set"
 
 
 
-    ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
-    SMARTZ_CONSTRUCTOR_DATA_DIR = os.path.join(ROOT_DIR, 'data')
-    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(ROOT_DIR, '..', 'json-schema')
+    SMARTZ_ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+    SMARTZ_CONSTRUCTOR_DATA_DIR = os.path.join(SMARTZ_ROOT_DIR, 'data')
+    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(SMARTZ_ROOT_DIR, '..', 'json-schema')
 
-class Development(Common):
+
+class Dev(Common):
     """
     The in-development settings and the default configuration.
     """
@@ -142,12 +143,15 @@ class Development(Common):
         '127.0.0.1'
     ]
 
+    INSTALLED_APPS = Common.INSTALLED_APPS + [
+        'debug_toolbar'
+    ]
     MIDDLEWARE = Common.MIDDLEWARE + [
         'debug_toolbar.middleware.DebugToolbarMiddleware'
     ]
 
 
-class Staging(Common):
+class Stage(Common):
     """
     The in-staging settings.
     """
@@ -165,7 +169,7 @@ class Staging(Common):
     )
 
 
-class Production(Staging):
+class Prod(Stage):
     """
     The in-production settings.
     """

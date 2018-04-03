@@ -7,9 +7,11 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 import os
 
 
-configuration = os.getenv('ENVIRONMENT', 'development').title()
+env = os.getenv('ENVIRONMENT')
+assert env, "Env is not set"
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartz.settings')
-os.environ.setdefault('DJANGO_CONFIGURATION', configuration)
+os.environ.setdefault('DJANGO_CONFIGURATION', env.title())
 
 from configurations.wsgi import get_wsgi_application
 
