@@ -203,7 +203,7 @@ class Constructor(ConstructorInstance):
 
                 "check_transfers": {
                     "type": "boolean",
-                    "title": "Check token transfers correctness",
+                    "title": "Verify token transfers",
                     "description": "Verify that token balances of participants after swap are greater for the amount of transfer (or more). If not, the transaction will be canceled.",
                     "default": True
                 },
