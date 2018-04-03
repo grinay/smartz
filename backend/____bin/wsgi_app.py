@@ -77,20 +77,6 @@ def get_instance_details():
     return _send_output(_prepare_instance_details(instance_info))
 
 
-@app.route('/get_all_instances', methods=['GET', 'POST'])
-def get_all_instances():
-    instances = db.instances
-
-    user_id = auth()
-    if isinstance(user_id, dict):
-        return user_id  # error
-
-    found = instances.find({'user_id': user_id, 'address': {'$exists': True}})
-
-    return _send_output([_prepare_instance_details(i) for i in found])
-
-
-
 @app.route('/clearz', methods=['GET'])
 def clearz():
     db.ctors.delete_many({})
