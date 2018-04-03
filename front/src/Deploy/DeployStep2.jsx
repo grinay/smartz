@@ -16,14 +16,20 @@ class DeployStep2 extends Component {
     const {deployId, deployTxSent, deployTxError, deployTxMined} = this.props;
 
     w3.eth.sendTransaction({
-      data: bin,
+      data: `0x${bin}`,
       value: w3.toWei(price_eth, 'ether'),
       gas: 3e6,
       gasPrice: 10e9
     },
     (err, txHash) => {
       if (err) {
-        deployTxError(err);
+        let errMsg = '';
+        try {
+          errMsg = err.message.split("\n")[0];
+        } catch(error){
+          errMsg = 'Unknown error';
+        }
+        deployTxError(deployId, errMsg);
 
       } else {
         getNetworkId(netId => deployTxSent(deployId, netId, txHash));
