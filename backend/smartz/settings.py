@@ -118,19 +118,20 @@ class Common(Configuration):
     # AUTH_USER_MODEL = 'users.User'
 
     # SMARTZ settings 
-    SMARTZ_MONGO_HOST = os.environ.get('SMARTZ_MONGO_HOST')
-    assert SMARTZ_MONGO_HOST, "Mongo host is not set"
+    SMARTZ_MONGO_HOST = 'mongo' # docker container
 
-    SMARTZ_SOLC_PATH = os.environ.get('SOLC_PATH')
-    assert SMARTZ_SOLC_PATH, "Solc path is not set"
-
+    SMARTZ_SOLC_PATH = '/usr/local/bin/solc' # set in dockerfile
 
     SMARTZ_ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
     SMARTZ_CONSTRUCTOR_DATA_DIR = os.path.join(SMARTZ_ROOT_DIR, 'data')
-    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(SMARTZ_ROOT_DIR, '..', 'json-schema')
+    # inside docker in the same dir
+    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(SMARTZ_ROOT_DIR, 'json-schema')
+
+    # used for setup prefix on local development since thereis no nginx on it
+    SMARTZ_API_PREFIX = ''
 
 
-class Dev(Common):
+class Development(Common):
     """
     The in-development settings and the default configuration.
     """
@@ -153,7 +154,22 @@ class Dev(Common):
     ]
 
 
-class Stage(Common):
+class DevelopmentLocal(Development):
+    """
+    Development on local machine throw runserver
+    """
+
+    SMARTZ_API_PREFIX = 'api/'
+
+    # local machine paths
+    SMARTZ_MONGO_HOST = '127.0.0.1'
+    SMARTZ_SOLC_PATH = 'solc'
+
+    # for local development in repo path
+    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(Development.SMARTZ_ROOT_DIR, '..', 'json-schema')
+
+
+class Staging(Common):
     """
     The in-staging settings.
     """
@@ -171,7 +187,7 @@ class Stage(Common):
     )
 
 
-class Prod(Stage):
+class Production(Staging):
     """
     The in-production settings.
     """

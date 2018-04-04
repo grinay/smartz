@@ -1,9 +1,0 @@
-{
-  "name": "Smart-contract-constructors-marketplace",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "redux": "^3.7.2",
-    "solc": "0.4.19"
-  }
-}

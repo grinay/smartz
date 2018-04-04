@@ -65,7 +65,12 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
         });
     }
 
-    const result = CtorInstance[function_spec.name](...args_converted2abi, callback);
+    let result;
+    try {
+        result = CtorInstance[function_spec.name](...args_converted2abi, callback);
+    } catch (e) {
+        console.warn(e)
+    }
 
     return result;
     /*

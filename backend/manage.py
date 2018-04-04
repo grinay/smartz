@@ -4,7 +4,8 @@ import sys
 
 if __name__ == '__main__':
 
-    configuration = os.getenv('ENVIRONMENT', 'development').title()
+    # used for development on local machine only
+    configuration = "DevelopmentLocal" # os.getenv('ENVIRONMENT', 'development').title()
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartz.settings')
     os.environ.setdefault('DJANGO_CONFIGURATION', configuration)
 
