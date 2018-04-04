@@ -25,5 +25,11 @@ Price: 0.05 ETH
 
 Atomic Swap for ERC20
 erc20_swap_constructor
-Swap any ERC20 tokens for Ether or other tokens with counterparty preset by address.
+Two participants can swap tokens for ether or tokens with this simple smart contract.
 Price: 0.01 ETH
+
+Multitoken
+multitoken_constructor
+In this smart contract you can create a variety of non-standard tokens
+Price: 0.1 ETH
+
