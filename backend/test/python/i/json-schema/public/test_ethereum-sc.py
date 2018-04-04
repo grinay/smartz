@@ -3,7 +3,7 @@
 import sys
 import os
 
-PROJECT_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', '..', '..', '..', '..')
+PROJECT_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', '..', '..', '..', '..', '..')
 sys.path.append(os.path.join(PROJECT_ROOT, 'pythonlib'))
 
 import unittest

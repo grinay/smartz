@@ -13,11 +13,13 @@ from django.conf import settings
 from jsonschema import validate, ValidationError, RefResolutionError
 from jsonschema.compat import unquote
 
+_ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..'))
 
 @lru_cache(256)
 def load_schema(rel_path):
     assert '..' not in rel_path
-    with open(os.path.join(settings.SMARTZ_JSON_SCHEMA_ROOT_PATH, rel_path)) as fh:
+    # todo how to do it better? django settings not very good for independent lib
+    with open(os.path.join(_ROOT_DIR, 'json-schema', rel_path)) as fh:
         return json.load(fh)
 
 
