@@ -14,8 +14,8 @@ COPY backend/pythonlib/ pythonlib/
 COPY backend/utils/ utils/
 COPY backend/constructor_engine/ constructor_engine/
 COPY backend/constructor_examples/ constructor_examples/
-WORKDIR /json-schema
-COPY json-schema/ .
+#WORKDIR /json-schema
+#COPY json-schema/ .
 
 
 FROM alpine:3.7
@@ -28,8 +28,9 @@ RUN apk --no-cache --update upgrade \
 ADD https://github.com/ethereum/solidity/releases/download/v0.4.20/solc-static-linux /usr/local/bin/solc
 RUN chmod 755 /usr/local/bin/solc
 COPY --from=python_stage /build/ .
-WORKDIR /json-schema
-COPY --from=python_stage /json-schema/ .
-WORKDIR /app
+#WORKDIR /json-schema
+#COPY --from=python_stage /json-schema/ .
+COPY json-schema/ /json-schema
+#WORKDIR /app
 COPY docker/backend/entrypoint.sh .
 CMD [ "/bin/sh", "entrypoint.sh" ]
