@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Form from 'react-jsonschema-form';
 
-import api from 'helpers/api';
-import FormWidgets from 'common/FormWidgets';
+import api from '../helpers/api';
+import FormWidgets from '../common/FormWidgets';
 
 class DeployStep1 extends Component {
   submit({formData}) {

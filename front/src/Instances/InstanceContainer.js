@@ -5,7 +5,7 @@ import {find} from 'lodash';
 import Instance from './Instance';
 import {
   fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess
-} from 'Ctors/CtorsActions';
+} from '../Ctors/CtorsActions';
 import {
   fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
   viewFuncResult

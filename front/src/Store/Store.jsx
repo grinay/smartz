@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import Alert from 'common/Alert';
-import Spinner from 'common/Spinner';
-import api from 'helpers/api';
-import CtorCard from 'Ctors/CtorCard';
+import Alert from '../common/Alert';
+import Spinner from '../common/Spinner';
+import api from '../helpers/api';
+import CtorCard from '../Ctors/CtorCard';
 
 class Store extends Component {
   componentWillMount() {

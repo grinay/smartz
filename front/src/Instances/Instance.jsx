@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {find} from 'lodash';
 
-import api from 'helpers/api';
+import api from '../helpers/api';
 import {processControlForm,
         processResult,
-        makeEtherscanLink} from 'helpers/eth';
+        makeEtherscanLink} from '../helpers/eth';
 import FunctionCard from './FunctionCard/FunctionCardContainer';
-import Alert from 'common/Alert';
+import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
 
 import './Instance.css';

@@ -6,7 +6,7 @@ import {Router} from 'react-router-dom';
 
 import history from './history';
 import reducers from './reducers';
-import App from 'App/AppContainer';
+import App from './App/AppContainer';
 
 const store = createStore(
   reducers,

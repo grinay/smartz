@@ -5,15 +5,15 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import Callback from './Auth/Callback/Callback';
-import Store from 'Store/StoreContainer';
-import MyDapps from 'MyDapps/MyDappsContainer';
-import Profile from 'Profile/Profile';
-import Deploy from 'Deploy/DeployContainer';
-import CtorAdd from 'CtorAdd/CtorAdd';
-import Dashboard from 'Dashboard/DashboardContainer';
-import Instance from 'Instances/InstanceContainer';
-import Docs from 'Docs/Docs';
-import {checkMetaMask} from 'helpers/eth';
+import Store from '../Store/StoreContainer';
+import MyDapps from '../MyDapps/MyDappsContainer';
+import Profile from '../Profile/Profile';
+import Deploy from '../Deploy/DeployContainer';
+import CtorAdd from '../CtorAdd/CtorAdd';
+import Dashboard from '../Dashboard/DashboardContainer';
+import Instance from '../Instances/InstanceContainer';
+import Docs from '../Docs/Docs';
+import {checkMetaMask} from '../helpers/eth';
 
 import './App.css';
 

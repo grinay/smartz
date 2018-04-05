@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
-import Alert from 'common/Alert';
 
-import api from 'helpers/api';
+import Alert from '../common/Alert';
+import api from '../helpers/api';
 
 class CtorAdd extends Component {
   constructor(props) {

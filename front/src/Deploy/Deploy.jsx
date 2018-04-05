@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 
-import api from 'helpers/api';
-import Alert from 'common/Alert';
+import api from '../helpers/api';
+import Alert from '../common/Alert';
+import Spinner from '../common/Spinner';
 import DeployStep1 from './DeployStep1';
 import DeployStep2 from './DeployStep2';
 import DeployStep3 from './DeployStep3';
-import Spinner from 'common/Spinner';
 
 import './Deploy.css';
 

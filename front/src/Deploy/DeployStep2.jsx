@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import {web3 as w3, getNetworkId, getTxReceipt} from 'helpers/eth';
-import Spinner from 'common/Spinner';
+import {web3 as w3, getNetworkId, getTxReceipt} from '../helpers/eth';
+import Spinner from '../common/Spinner';
 
 class DeployStep2 extends Component {
   componentWillMount() {

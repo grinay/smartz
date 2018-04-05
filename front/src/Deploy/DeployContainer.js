@@ -7,7 +7,7 @@ import {
   fetchCtorParamsRequest,
   fetchCtorParamsFailure,
   fetchCtorParamsSuccess
-} from 'Ctors/CtorsActions';
+} from '../Ctors/CtorsActions';
 import {
   initDeploy,
   constructRequest,

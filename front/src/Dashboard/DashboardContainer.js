@@ -4,11 +4,11 @@ import {connect} from 'react-redux';
 import Dashboard from './Dashboard';
 import {
   fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess
-} from 'Ctors/CtorsActions';
+} from '../Ctors/CtorsActions';
 import {
   fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
   viewFuncResult
-} from 'Instances/InstancesActions';
+} from '../Instances/InstancesActions';
  
 const mapStateToProps = state => ({
   ctors: state.ctors.ctors,

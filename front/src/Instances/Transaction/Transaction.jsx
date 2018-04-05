@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import Spinner from 'common/Spinner';
-import {processResult, makeEtherscanLink} from 'helpers/eth';
+import Spinner from '../../common/Spinner';
+import {processResult, makeEtherscanLink} from '../../helpers/eth';
 
 class Transaction extends Component {
   render() {

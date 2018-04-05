@@ -4,8 +4,8 @@ import Form from 'react-jsonschema-form';
 import {
   web3 as w3,
   processControlForm
-} from 'helpers/eth';
-import FormWidgets from 'common/FormWidgets';
+} from '../../helpers/eth';
+import FormWidgets from '../../common/FormWidgets';
 
 import './FunctionCard.css';
 
