@@ -3,6 +3,9 @@
 import React from 'react';
 import moment from 'moment';
 import Datetime from 'react-datetime';
+
+import FileHashWidget from './widgets/file-hash-widget/FileHashWidget';
+
 import 'react-datetime/css/react-datetime.css';
 
 function makeid() {
@@ -89,6 +92,11 @@ const FormWidgets = {
           )
         })}
       </div>
+    )
+  },
+  FileHashWidget: (props)=> {
+    return (
+      <FileHashWidget {...props}/>
     )
   }
 };
