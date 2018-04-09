@@ -676,11 +676,16 @@ contract SimpleMultiSigWallet is multiowned {
     function sendTokens(address token, address to, uint value)
         external
         onlymanyowners(keccak256(msg.data))
+        returns (bool)
     {
         require(address(0) != to);
-        require(value > 0 && ERC20Basic(token).balanceOf(this) >= value);
-        ERC20Basic(token).transfer(to, value);
-        TokensSent(token, to, value);
+        
+        if (ERC20Basic(token).transfer(to, value)) {
+            TokensSent(token, to, value);
+            return true;
+        }
+        
+        return false;
     }
     
     function tokenBalance(address token) external view returns (uint256) {
