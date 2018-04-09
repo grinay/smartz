@@ -9,9 +9,6 @@ import subprocess
 import requests
 from django.conf import settings
 
-SERVICE_URL = 'http://constructor_call_service.default/call' \
-    if os.environ.get('ENVIRONMENT') in ['prod', 'stage'] \
-    else 'http://constructor_call_service.dev/call'
 
 class BaseEngine(object):
 
@@ -19,9 +16,8 @@ class BaseEngine(object):
     METHOD_CONSTRUCT      = 'construct'
     METHOD_POST_CONSTRUCT = 'post_construct'
 
-
-    def __init__(self, settings):
-        self._settings = settings
+    def __init__(self, engine_settings):
+        self._settings = engine_settings
         self._instances = {}
 
     def register_new_ctor(self, ctor_id, filename):
@@ -99,7 +95,7 @@ class BaseEngine(object):
             "args": args if args is not None else []
         }
         try:
-            res = requests.post(SERVICE_URL, json=data)
+            res = requests.post(settings.SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL, json=data)
             if res.status_code != requests.codes.ok:
                 return {
                     "result": "error",

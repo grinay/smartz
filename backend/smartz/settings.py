@@ -120,6 +120,9 @@ class Common(Configuration):
     # SMARTZ settings 
     SMARTZ_MONGO_HOST = 'mongo' # docker container
 
+    SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL = os.environ.get('CONSTRUCTOR_CALL_SERVICE_URL')
+    assert SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL, "Constructor call service url is not set in env"
+
     SMARTZ_SOLC_PATH = '/usr/local/bin/solc' # set in dockerfile
 
     SMARTZ_ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
