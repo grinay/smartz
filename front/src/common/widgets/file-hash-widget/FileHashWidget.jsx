@@ -34,7 +34,7 @@ export default class FileHashWidget extends PureComponent {
         .then(fileAsBinaryString => {
           const hash = web3.sha3(fileAsBinaryString);
 
-          this.setState({ msg: hash }, onChange(hash.slice(2)));
+          this.setState({ msg: hash }, onChange(hash));
         })
         .catch(error=> {
           switch (error.code) {
