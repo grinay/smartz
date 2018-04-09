@@ -140,11 +140,6 @@ class Development(Common):
     """
     DEBUG = True
 
-    # SECRET_KEY = values.SecretValue()
-
-    SECRET_KEY = "ASASHAJKHDJKADHKSADK"
-
-
     INTERNAL_IPS = [
         '127.0.0.1'
     ]
