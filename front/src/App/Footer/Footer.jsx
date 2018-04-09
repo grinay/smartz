@@ -12,7 +12,10 @@ class Footer extends Component {
             SEO header
           </h2>
           <p className="page-footer__logo">
-            smartz
+              <img
+                  src={require('./i/logo.svg')}
+                  alt="Logo"
+              />
           </p>
           <div className="page-footer__block">
             <div className="page-footer__section  page-footer__section--store">
