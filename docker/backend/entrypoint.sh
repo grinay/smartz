@@ -33,7 +33,6 @@ exec /usr/sbin/uwsgi \
 --chmod-socket=666 \
 --master \
 --plugin python3 \
---pythonpath /app/bin \
 --die-on-term \
 --processes "$UWSGI_PROCESSES" \
 --chdir=/app \

@@ -190,6 +190,12 @@ class ConstructView(View):
         # parsed input data POST JSON payload
         args = request.data
 
+        # field -> error string
+        # TODO - rename to better name
+        fields = args.get('fields')
+        if fields is None:
+            return error_response("Constructor({}), empty fields passed to constructor".format(constructor_id))
+
         # [TODO]  - move to get_constructor()
         constructor = constructors_db.find_one({'_id': ObjectId(constructor_id)})
         if constructor is None:
@@ -215,12 +221,6 @@ class ConstructView(View):
         validator_cls = validator_for(constructor_schema)
         validator_cls.check_schema(constructor_schema)
         validator = validator_cls(constructor_schema)
-
-        # field -> error string
-        # TODO - rename to better name
-        fields = args.get('fields')
-        if fields is None:
-            return error_response("Constructor({}), empty fields passed to constructor".format(constructor_id))
 
         errors = dict()
         for error in validator.iter_errors(fields):
