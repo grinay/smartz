@@ -171,6 +171,9 @@ class Staging(Common):
     """
     The in-staging settings.
     """
+
+    ALLOWED_HOSTS = ['staging.smartz.io']
+
     # Security
     SESSION_COOKIE_SECURE = values.BooleanValue(True)
     SECURE_BROWSER_XSS_FILTER = values.BooleanValue(True)
@@ -189,4 +192,7 @@ class Production(Staging):
     """
     The in-production settings.
     """
+
+    ALLOWED_HOSTS = ['platform.smartz.io']
+
     pass
