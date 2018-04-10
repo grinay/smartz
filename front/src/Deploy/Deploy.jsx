@@ -38,10 +38,7 @@ class Deploy extends Component {
 
       fetchCtorParamsRequest(ctorId);
 
-      api(this.props.auth).post(`/get_ctor_params`, {
-        'ctor_id': ctorId
-      })
-
+      api(this.props.auth).get(`/constructors/${ctorId}/params`)
       .then(response => {
         const {data} = response;
         if (data.error) {
@@ -61,8 +58,7 @@ class Deploy extends Component {
   componentWillReceiveProps(nextProps) {
     const {auth, netId, contractAddress, instance, publicAccess} = nextProps;
     if (netId && contractAddress) {
-      api(auth).post(`/set_instance_address`, {
-        instance_id: instance.instance_id,
+      api(auth).post(`/instances/${instance.instance_id}/update`, {
         address: contractAddress,
         network_id: Number.parseInt(netId, 10),
         public_access: publicAccess

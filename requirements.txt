@@ -1,4 +1,0 @@
-pymongo
-Flask
-requests
-jsonschema==2.6.0

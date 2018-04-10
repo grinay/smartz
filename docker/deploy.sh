@@ -9,7 +9,7 @@ AWS_REGION=eu-central-1
 if [[ -z "$1" ]] || [ "$1" == "-h" ] || [ "$1" == "--help" ];
 then
 	echo -e "\nusage:"
-	echo -e "\tDeploy containers: \n\t\tdeploy.sh latest\n\t\tdeploy.sh branch_master\n\t\tdeploy.sh commit_xxxxxxx\n"
+	echo -e "\tDeploy containers: \n\t\tdeploy.sh latest\n\t\tdeploy.sh branch_master\n\t\tdeploy.sh commit_xxxxxxx\n\t\tdeploy.sh tag_xxxxxxx\n"
 	echo -e "\tCheck started containers version:\n\t\tdeploy.sh -i | --info"
 	exit 1
 fi

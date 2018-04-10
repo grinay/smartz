@@ -1,0 +1,77 @@
+REST, GET|POST
+входная структура: json-сериализована в параметр request
+выходная: тело документа - json
+
+- /register_user
+    input:
+        {name: 'bob', mail: '...', pass: 'xx'}
+    output:
+        {ok: true} || {error: 'foo'}
+
+- /login
+    input:
+        {mail: '...', pass: 'xx'}
+    output:
+        {ok: true} || {error: 'foo'}
+
+- /constructors/upload
+    input:
+        {ctor_name: 'my ctor', ctor_descr: 'my ctor', price_eth: 0.01}
+    дополнительное поле запроса - файл ctor_file
+    output:
+        {ok: true} || {error: 'foo'}
+
+- /constructors
+    input: -
+    output: [
+        {
+            ctor_id: 4,
+            ctor_name: 'my ctor',
+            price_eth: 0.1,
+            ctor_descr: 'my ctor'
+        },
+        ...
+    ]
+
+- /constructors/:id/params
+    input:
+        {ctor_id: 4}
+    output:
+    {
+        ctor_name: 'my ctor',
+        ctor_descr: 'my ctor',
+        schema: json schema,
+        ui_schema: UI json schema
+    } || {error: 'foo'}
+
+- /constructors/:id/construct
+    input:
+        {
+            ctor_id: 4,
+            instance_title: 'бабушкина копилка',
+            # valid fields according to ctor's json-schema
+            fields: {
+                hard_cap: 1000,
+                ...
+            }
+        }
+    output:
+        {
+            result: 'success',
+            instance_id: 'dd353',
+            bin: '0xddd',
+            source: 'pragma ...'
+        }
+        ||
+        {error: 'foo'}
+        ||
+        {
+            result: 'error',
+            errors: {
+                hard_cap: 'Hard cap can not be empty'
+            }
+        }
+
+- /set_instance_address see json-schema/internal/front-back.json
+- /get_instance_details see json-schema/internal/front-back.json
+- /instances returns array of instance_details

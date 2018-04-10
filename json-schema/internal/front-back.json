@@ -110,26 +110,6 @@
             "output": { "$ref": "#/definitions/simpleResult" }
         },
 
-        "list_instances": {
-            "description": "Lists compiled instances of a contract",
-
-            "input": {
-                "type": "object",
-                "required": ["ctor_id"],
-                "additionalProperties": false,
-
-                "properties": {
-                    "ctor_id": { "$ref": "#/definitions/ObjectIdHex" }
-                }
-            },
-            "output": {
-                "oneOf": [
-                    { "$ref": "#/definitions/resultError" },
-                    { "type": "array", "items": { "$ref": "#/definitions/ObjectIdHex" } }
-                ]
-            }
-        },
-
         "get_instance_details": {
             "description": "Returns data and metadata necessary to control deployed contract",
 
