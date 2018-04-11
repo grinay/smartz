@@ -48,11 +48,11 @@ class Common(Configuration):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-        'smartz.middleware.SmartzMiddleware',
-        'smartz.middleware.JSONMiddleware'
+        'smartzcore.middleware.SmartzMiddleware',
+        'smartzcore.middleware.JSONMiddleware'
     ]
 
-    ROOT_URLCONF = 'smartz.urls'
+    ROOT_URLCONF = 'smartzcore.urls'
 
     # TEMPLATES = [
     #     {
@@ -70,7 +70,7 @@ class Common(Configuration):
     #     },
     # ]
 
-    WSGI_APPLICATION = 'smartz.wsgi.application'
+    WSGI_APPLICATION = 'smartzcore.wsgi.application'
 
     # Database
     # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

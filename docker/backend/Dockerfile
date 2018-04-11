@@ -8,7 +8,7 @@ COPY backend/Pipfile.lock .
 ENV PIPENV_VENV_IN_PROJECT=1
 RUN pipenv --three install
 
-COPY backend/smartz/ smartz/
+COPY backend/smartzcore/ smartzcore/
 COPY backend/apps/ apps/
 COPY backend/pythonlib/ pythonlib/
 COPY backend/utils/ utils/

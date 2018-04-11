@@ -3,7 +3,7 @@
 #   smartz.eth.contracts
 #
 
-from smartz.json_schema import load_schema, add_definitions, assert_conforms2definition, assert_conforms2schema
+from smartz.json_schema import load_schema, add_definitions, assert_conforms2definition, assert_conforms2schema_part
 
 
 def abi_arguments2schema(abi_args_array):
@@ -89,7 +89,9 @@ def merge_function_titles2specs(spec_array, titles_info):
     :param titles_info: data according to function_titles_info.json schema
     :return: modified ETHFunctionSpec
     """
-    assert_conforms2schema(titles_info, load_schema('internal/eth/contracts/function_titles_info.json'))
+    assert_conforms2schema_part(
+        titles_info, load_schema('public/constructor.json'), 'definitions/ETHFunctionAdditionalDescriptions'
+    )
 
     def set_title(to_spec, from_info):
         for field in ('title', 'description', 'sorting_order'):

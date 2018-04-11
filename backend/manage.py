@@ -4,9 +4,13 @@ import sys
 
 if __name__ == '__main__':
 
+    # todo
+    lib_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), 'pythonlib'))
+    sys.path.append(lib_dir)
+
     # used for development on local machine only
     configuration = "DevelopmentLocal" # os.getenv('ENVIRONMENT', 'development').title()
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartz.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartzcore.settings')
     os.environ.setdefault('DJANGO_CONFIGURATION', configuration)
 
     try:

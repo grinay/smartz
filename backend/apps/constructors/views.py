@@ -19,7 +19,7 @@ from jsonschema.validators import validator_for
 from utils.common import auth, nonempty, args_string
 from utils.responses import  error_response, engine_error_response
 from constructor_engine.engine import SimpleStorageEngine
-from pythonlib.smartz.json_schema import load_schema, add_definitions, assert_conforms2schema_part
+from smartz.json_schema import load_schema, add_definitions
 
 # FIXME (make good connect to db)
 db = MongoClient(settings.SMARTZ_MONGO_HOST).sc_ctors_db
@@ -243,7 +243,7 @@ class ConstructView(View):
             return error_response("Constructor({}), construct error, result is not dict".format(constructor_id))
 
         if 'error' == result['result']:
-            return engine_error_response(constructor_params)
+            return engine_error_response(result)
 
         # success
         instance_id = instances_db.insert_one(

@@ -36,7 +36,7 @@ exec /usr/sbin/uwsgi \
 --die-on-term \
 --processes "$UWSGI_PROCESSES" \
 --chdir=/app \
---module=smartz.wsgi \
+--module=smartzcore.wsgi \
 --home=/app/.venv \
---env DJANGO_SETTINGS_MODULE=smartz.settings \
+--env DJANGO_SETTINGS_MODULE=smartzcore.settings \
 --env DJANGO_CONFIGURATION=$DJANGO_CONFIGURATION

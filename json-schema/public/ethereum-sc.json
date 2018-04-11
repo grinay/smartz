@@ -19,7 +19,7 @@
 
         "fileHash": {
             "type": "string",
-            "pattern": "^[0-9a-fA-F]{64}$"
+            "pattern": "^0x[0-9a-fA-F]{64}$"
         },
 
         "addressMappingEntry": {

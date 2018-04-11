@@ -1,9 +1,5 @@
-import re
 from unittest import TestCase
 
-import os
-
-from constructor_engine.engine import SimpleStorageEngine
 from constructor_examples.equity_constructor import Constructor
 
 

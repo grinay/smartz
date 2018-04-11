@@ -50,8 +50,9 @@
                 "function_specs": {"type": ["object", "array"] }
             }
         },
+
         "ETHFunctionAdditionalDescription": {
-            "title": "Additional description of one function (todo copy of the same in public/constructor.json)",
+            "title": "Additional description of one function",
             "type": "object",
             "additionalProperties": false,
 
@@ -96,53 +97,27 @@
         }
     },
 
-    "rpc_calls": {
-        "call_service": {
-            "description": "Call service for construct contract code",
+    "calls": {
+        "get_version": {
+            "description": "Call get_version method of constructor",
 
-            "input": {
-                "type": "object",
-                "required": ["constructor_file", "method", "args"],
-                "additionalProperties": false,
-                "properties": {
-                    "constructor_file": {
-                        "type": "string"
-                    },
-                    "method": {
-                        "type": "string",
-                        "enum": ["construct", "get_params", "post_construct", "get_version"]
-                    },
-                    "args": {
-                        "type": "array"
-                    }
-                }
-            },
-            "output_construct": { "$ref": "#/definitions/resultConstruct" },
-            "output_get_params": { "$ref": "#/definitions/resultGetParams" },
-            "output_post_construct": { "$ref": "#/definitions/resultPostConstruct" },
-            "output_get_version": { "$ref": "#/definitions/resultGetVersion" }
+            "output": { "$ref": "#/definitions/resultGetVersion" }
         },
-        "call_service_worker": {
-            "description": "Call service worker for construct contract code",
 
-            "input": {
-                "type": "object",
-                "required": ["method", "args"],
-                "additionalProperties": false,
-                "properties": {
-                    "method": {
-                        "type": "string",
-                        "enum": ["construct", "get_params", "post_construct", "get_version"]
-                    },
-                    "args": {
-                        "type": "array"
-                    }
-                }
-            },
-            "output_construct": { "$ref": "#/definitions/resultConstruct" },
-            "output_get_params": { "$ref": "#/definitions/resultGetParams" },
-            "output_post_construct": { "$ref": "#/definitions/resultPostConstruct" },
-            "output_get_version": { "$ref": "#/definitions/resultGetVersion" }
+        "get_params": {
+            "description": "Call get_params method of constructor",
+
+            "output": { "$ref": "#/definitions/resultGetParams" }
+        },
+        "construct": {
+            "description": "Call construct method of constructor",
+
+            "output": { "$ref": "#/definitions/resultConstruct" }
+        },
+        "post_construct": {
+            "description": "Call post_construct method of constructor",
+
+            "output": { "$ref": "#/definitions/resultPostConstruct" }
         }
     }
 }

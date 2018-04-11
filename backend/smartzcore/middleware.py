@@ -1,7 +1,6 @@
 #!/usr/bin/env python3                                                                                                                                                                                             import re
 import json
 
-from django.http import QueryDict
 from django.utils.deprecation import MiddlewareMixin
 
 class SmartzMiddleware(MiddlewareMixin):

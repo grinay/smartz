@@ -13,7 +13,7 @@ from bson.objectid import ObjectId
 
 from utils.common import auth
 from utils.responses import ok_response, error_response
-from pythonlib.smartz.json_schema import load_schema, assert_conforms2schema_part
+from smartz.json_schema import load_schema, assert_conforms2schema_part
 
 
 # FIXME (make good connect to db)

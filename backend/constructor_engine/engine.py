@@ -9,30 +9,65 @@ import subprocess
 import requests
 from django.conf import settings
 
+from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
+from smartz.json_schema import is_conforms2schema_part, load_schema
+
 
 class BaseEngine(object):
 
+    METHOD_GET_VERSION    = 'get_version'
     METHOD_GET_PARAMS     = 'get_params'
     METHOD_CONSTRUCT      = 'construct'
     METHOD_POST_CONSTRUCT = 'post_construct'
+    CONSTRUCTOR_METHODS = [
+        METHOD_GET_VERSION, METHOD_GET_PARAMS, METHOD_CONSTRUCT, METHOD_POST_CONSTRUCT
+    ]
 
     def __init__(self, engine_settings):
         self._settings = engine_settings
         self._instances = {}
 
-    def register_new_ctor(self, ctor_id, filename):
-        self._save_constructor(ctor_id, filename)
+    def register_new_ctor(self, constructor_id, filename):
+        self._save_constructor(constructor_id, filename)
 
-    def get_ctor_params(self, id):
-        source = self._load_constructor(id)
+    def get_constructor_version(self, constructor_id):
+        source = self._load_constructor(constructor_id)
+        res = self._call_constructor_method(source, self.METHOD_GET_VERSION)
+
+        return res
+
+    def get_ctor_params(self, constructor_id):
+        try:
+            source = self._load_constructor(constructor_id)
+        except Exception:
+            return {
+                'result': 'error',
+                'error_descr': 'Failed to load constructor'
+            }
         res = self._call_constructor_method(source, self.METHOD_GET_PARAMS)
 
         return res
 
-    def construct(self, id, price_eth, fields):
-        constructor_source = self._load_constructor(id)
-        res = self._call_constructor_method(constructor_source, self.METHOD_CONSTRUCT, [fields])
+    def construct(self, constructor_id, price_eth, fields):
+        try:
+            constructor_source = self._load_constructor(constructor_id)
+        except Exception:
+            return {
+                'result': 'error',
+                'error_descr': 'Failed to load constructor'
+            }
 
+        res = self._call_constructor_method(constructor_source, self.METHOD_GET_VERSION, [])
+        if 'error' == res['result']:
+            if 'error_descr' in res and "object has no attribute 'get_version'" in res['error_descr']:
+                # todo remove this after 01.05.2018
+                version = 0
+            else:
+                return res
+        else:
+            version = res['version']
+
+        res = self._call_constructor_method(constructor_source, self.METHOD_CONSTRUCT, [fields])
         if 'error' == res['result']:
             return res
 
@@ -63,6 +98,11 @@ class BaseEngine(object):
         if 'error' == post_construct_info['result']:
             return post_construct_info
 
+        if version>0:
+            post_construct_info['function_specs'] = merge_function_titles2specs(
+                make_generic_function_spec(abi), post_construct_info['function_specs']
+            )
+
         post_construct_info['function_specs'] = sorted(
             post_construct_info['function_specs'],
             key=lambda x: x['sorting_order'] if 'sorting_order' in x else 0
@@ -89,6 +129,7 @@ class BaseEngine(object):
         pass
 
     def _call_constructor_method(self, source, method, args=None):
+        assert(method in self.CONSTRUCTOR_METHODS)
         data = {
             "constructor_file": source,
             "method": method,
@@ -102,7 +143,18 @@ class BaseEngine(object):
                     "error_descr": "Something got wrong/0"
                 }
 
-            #todo validate json
+            is_call_valid = is_conforms2schema_part(
+                res.json(),
+                load_schema('internal/call_ctor_service/call-service.json'),
+                'rpc_calls/call_service/output_{}'.format(method)
+            )
+
+            if not is_call_valid:
+                return {
+                    "result": "error",
+                    "error_descr": "Something got wrong/1 (Invalid response from method {} of constructor)".format(method)
+                }
+
             return res.json()
         except Exception as e:
             print("[DEBUG] {}".format(str(e)))

@@ -9,7 +9,6 @@ from collections import Sequence
 from functools import lru_cache
 from copy import deepcopy
 
-from django.conf import settings
 from jsonschema import validate, ValidationError, RefResolutionError
 from jsonschema.compat import unquote
 
