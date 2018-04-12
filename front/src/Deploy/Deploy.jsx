@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import api from 'helpers/api';
-import Alert from 'common/Alert';
+import api from '../helpers/api';
+import Alert from '../common/Alert';
 import DeployStep1 from './DeployStep1';
 import DeployStep2 from './DeployStep2';
 import DeployStep3 from './DeployStep3';
-import Spinner from 'common/Spinner';
+import Spinner from '../common/Spinner';
 
 import './Deploy.css';
 
@@ -15,7 +15,7 @@ class Deploy extends Component {
   constructor(props) {
     super(props);
 
-    const {ctorId, deployId} = props.match.params;
+    const { ctorId, deployId } = props.match.params;
     this.state = {
       auth: props.auth.isAuthenticated(),
       ctorId,
@@ -29,7 +29,7 @@ class Deploy extends Component {
       fetchCtorParamsRequest, fetchCtorParamsFailure, fetchCtorParamsSuccess,
       constructError
     } = this.props;
-    const {ctorId, deployId, auth} = this.state;
+    const { ctorId, deployId, auth } = this.state;
 
     if (auth) {
       if (!status) {
@@ -39,43 +39,43 @@ class Deploy extends Component {
       fetchCtorParamsRequest(ctorId);
 
       api(this.props.auth).get(`/constructors/${ctorId}/params`)
-      .then(response => {
-        const {data} = response;
-        if (data.error) {
-          constructError(deployId, data.error);
-          fetchCtorParamsFailure(ctorId, data.error);
-        } else {
-          fetchCtorParamsSuccess(ctorId, data);
-        }
-      })
-      .catch(error => {
-        constructError(deployId, error.message);
-        fetchCtorParamsFailure(ctorId, error.message)
-      });
+        .then(response => {
+          const { data } = response;
+          if (data.error) {
+            constructError(deployId, data.error);
+            fetchCtorParamsFailure(ctorId, data.error);
+          } else {
+            fetchCtorParamsSuccess(ctorId, data);
+          }
+        })
+        .catch(error => {
+          constructError(deployId, error.message);
+          fetchCtorParamsFailure(ctorId, error.message)
+        });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const {auth, netId, contractAddress, instance, publicAccess} = nextProps;
+    const { auth, netId, contractAddress, instance, publicAccess } = nextProps;
     if (netId && contractAddress) {
       api(auth).post(`/instances/${instance.instance_id}/update`, {
         address: contractAddress,
         network_id: Number.parseInt(netId, 10),
         public_access: publicAccess
       })
-      .catch(error => console.log(error));
+        .catch(error => console.log(error));
     }
   }
 
   render() {
-    const {metamaskStatus} = this.props;
+    const { metamaskStatus } = this.props;
     if (metamaskStatus) return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>
     );
 
-    const {deployId} = this.state;
+    const { deployId } = this.state;
     const {
       auth, ctor, status, errors, instance, netId, txHash, contractAddress,
       constructRequest, constructError, constructSuccess,
@@ -102,12 +102,12 @@ class Deploy extends Component {
           <section className="contract-info">
             {ctor.image &&
               <div className="contract-info__logo">
-                  <img
-                    className="contract-info__img"
-                    src={require(`../Ctors/i/${ctor.image}`)}
-                    width="644" height="404"
-                    alt={`${ctor.ctor_name} contract`}
-                  />
+                <img
+                  className="contract-info__img"
+                  src={require(`../Ctors/i/${ctor.image}`)}
+                  width="644" height="404"
+                  alt={`${ctor.ctor_name} contract`}
+                />
               </div>
             }
             <div className="contract-info__wrapper">
@@ -160,8 +160,8 @@ class Deploy extends Component {
             <Alert>
               {typeof errors === 'object'
                 ? Object.keys(errors).map((err, i) => (
-                    <p key={i}>{errors[err]}</p>)
-                  )
+                  <p key={i}>{errors[err]}</p>)
+                )
                 : <p>{errors}</p>
               }
             </Alert>
