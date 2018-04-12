@@ -47,8 +47,8 @@ http {
 		location / {
 			try_files $uri $uri/ /index.html;
 		}
-		location /prod {
-		    rewrite ^/prod(.*)$ $1 break;
+		location /api {
+		    rewrite ^/api(.*)$ $1 break;
 			include uwsgi_params;
 			uwsgi_read_timeout 120;
 			uwsgi_pass unix:/app/sock/backend;

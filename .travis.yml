@@ -23,7 +23,7 @@ install:
 script:
 - /bin/bash docker/label_containers.sh &&
   docker-compose -p smartzplatform build &&
-  /bin/bash ./test/tests.sh &&
+  /bin/bash ./tests/integration.sh &&
   docker images &&
   /bin/bash ./docker/upload_to_registry.sh smartzplatform_frontend smartzplatform_backend
 

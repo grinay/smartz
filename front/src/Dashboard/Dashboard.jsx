@@ -27,12 +27,12 @@ class Dashboard extends Component {
     } = this.props;
 
     fetchCtorsRequest();
-    api(auth).get('/list_ctors')
+    api(auth).get('/constructors')
     .then(response => fetchCtorsSuccess(response.data))
     .catch(error => fetchCtorsFailure(error));
 
     fetchInstancesRequest();
-    api(auth).get('/get_all_instances')
+    api(auth).get('/instances')
     .then(response => fetchInstancesSuccess(response.data))
     .catch(error => fetchInstancesFailure(error));
   }

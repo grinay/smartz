@@ -2,6 +2,7 @@
 if [ "$TRAVIS" == "true" ];
 then
 	LABELS="LABEL git.branch=\"$TRAVIS_BRANCH\"\n"
+	LABELS+="LABEL git.tag=\"$(git describe --tags)\"\n"
 	LABELS+="LABEL git.commit=\"$(git log -1  --pretty=format:'%H')\"\n"
 	LABELS+="LABEL git.commit.short=\"$(git log -1  --pretty=format:'%h')\"\n"
 	LABELS+="LABEL git.commit.message=\"$(git log -1  --pretty=format:'%B')\"\n"

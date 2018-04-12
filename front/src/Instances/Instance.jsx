@@ -35,14 +35,12 @@ class Instance extends Component {
     } = this.props;
 
     fetchCtorsRequest();
-    api(auth).get('/list_ctors')
+    api(auth).get('/constructors')
     .then(response => fetchCtorsSuccess(response.data))
     .catch(error => fetchCtorsFailure(error));
 
     fetchInstancesRequest();
-    api(auth).post('/get_instance_details', {
-      instance_id: this.props.match.params.id
-    })
+    api(auth).get(`/instances/${this.props.match.params.id}`)
     .then(response => fetchInstancesSuccess([response.data]))
     .catch(error => fetchInstancesFailure(error));
   }
