@@ -9,25 +9,6 @@ export default class StringHashWidget extends PureComponent {
     this.msg = ''
   }
 
-  hashFile = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new window.FileReader();
-
-      reader.onload = event => resolve(event.target.result);
-      reader.onerror = event => reject(event.target.error);
-      reader.onloadstart = event => this.setState({ msg: 'Hashing...' });
-
-      reader.readAsArrayBuffer(file);
-    });
-  }
-
-  buf2hex = (buffer) => {
-    return Array.prototype.map.call(
-      new Uint8Array(buffer), x =>
-        ('00' + x.toString(16)).slice(-2)
-    ).join('');
-  }
-
   onChange = event => {
     const { onChange } = this.props;
     const value = event.target.value;
