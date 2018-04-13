@@ -179,7 +179,7 @@ export const ctorCustom = {
     },
     "ui_schema": {
         "file_hash": {
-            "ui:widget": "hash"
+            "ui:widget": "fileHash"
         },
     }
 }

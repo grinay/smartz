@@ -20,7 +20,7 @@ function makeid() {
 
 const FormWidgets = {
   // собственные виджеты
-  hash: (props) => <FileHashWidget {...props} />,
+  fileHash: (props) => <FileHashWidget {...props} />,
   unixTime: (props) => {
     return (
       <Datetime value={moment.unix(props.value)}

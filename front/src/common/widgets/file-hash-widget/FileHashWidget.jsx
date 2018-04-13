@@ -21,14 +21,14 @@ export default class FileHashWidget extends PureComponent {
 
       reader.readAsArrayBuffer(file);
     });
-  }
+  };
 
   buf2hex = (buffer) => {
     return Array.prototype.map.call(
       new Uint8Array(buffer), x =>
         ('00' + x.toString(16)).slice(-2)
     ).join('');
-  }
+  };
 
   onChange = event => {
     const { onChange } = this.props;
@@ -53,7 +53,7 @@ export default class FileHashWidget extends PureComponent {
               break;
             default:
               this.setState({ msg: 'An error occurred reading this file' });
-          };
+          }
         });
     }
   };

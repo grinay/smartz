@@ -75,7 +75,7 @@ class DeployStep1 extends Component {
         uiSchema={ctor.ui_schema}
         widgets={FormWidgets}
         onSubmit={this.submit.bind(this)}
-        onError={(e) => console.log("I have", e.length, "errors to fix")}
+        onError={(e) => console.log("I have", e.length, "errors to fix", e)}
         showErrorList={false}
         id="deploy-form"
         autocomplete="off">
