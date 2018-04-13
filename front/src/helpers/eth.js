@@ -106,7 +106,7 @@ export const getNetworkId = cb => {
     err && console.log(err);
     netId && cb(netId);
   });
-}
+};
 
 export const getNetworkName = netId => {
   switch (netId.toString()) {
@@ -156,7 +156,7 @@ export const getTxReceipt = (txHash, cb) => {
       cb(receipt);
     }
   });
-}
+};
 
 export const isAddress = (hash) => {
   if (typeof hash === 'string') {
@@ -164,15 +164,8 @@ export const isAddress = (hash) => {
   } else {
     return false;
   }
-}
+};
 
-export const isTransaction = (hash) => {
-  if (typeof hash === 'string') {
-    return /^0x([A-Fa-f0-9]{64})$/.test(hash);
-  } else {
-    return false;
-  }
-}
 
 export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
   if (!hash || !netId) return hash;
@@ -187,13 +180,7 @@ export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
         </a>{showNetworkName && ` (${networkName})`}
       </span>
     );
-  } else if (isTransaction(hash)) {
-    return (
-      <a href={`${explorerAddress}/tx/${hash}`} target="_blank">
-        {hash}
-      </a>
-    );
   } else {
     return hash;
   }
-}
+};
