@@ -169,17 +169,46 @@ export const ctorCustom = {
                 "description": "File to hash",
                 "$ref": "#/definitions/fileHash",
             },
+            "string_hash": {
+                "title": "String2hash",
+                "description": "Sgting to hash",
+                "$ref": "#/definitions/fileHash",
+            },
+            "signs_count": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 2,
+                "maximum": 250,
+                "title": "Signatures quorum",
+                "description": "Number of signatures required to withdraw funds or modify signatures"
+            }
         },
         "definitions": {
             "fileHash": {
                 "type": "string",
-                "pattern": "^[0-9a-fA-F]{64}$"
+                "pattern": "^0x[0-9a-fA-F]{64}$"
             },
         }
     },
     "ui_schema": {
         "file_hash": {
-            "ui:widget": "hash"
+            "ui:widget": "fileHash"
         },
+        "string_hash": {
+            "ui:widget": "stringHash"
+        },
+        "signs_count": {
+            "ui:widget": "updown"
+        }
+    },
+    "error_schema": {
+        "file_hash": {
+            "errors": "Noooooooooooooooo"
+        },
+        "instance_title": {
+            "errors": "Noooooooooooooooo 3 characters"
+        }
     }
 }
+
+
