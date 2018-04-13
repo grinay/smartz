@@ -39,8 +39,7 @@ class Constructor(ConstructorInstance):
                     "description": "Photo, pdf, presentation",
                     "type": "string",
                     "minLength": 10,
-                    "maxLength": 300,
-                    "pattern": "^[a-zA-Z0-9,\.\? ]+$"
+                    "maxLength": 300
                 },
                 "fileHash": {
                     "title": "Hash of file above",
