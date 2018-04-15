@@ -1,30 +1,35 @@
 .alert {
-  margin-bottom: 40px;
-  background-color: #f89797;
-  color: #fff;
-  padding: 15px 30px;
+    margin-bottom: 40px;
+    padding: 15px 30px;
+
+    color: #FFFFFF;
+    background-color: #F89797;
 }
 
 .alert h2 {
-  font-size: 30px;
-  font-family: "Cera Pro 500";
+    font-family: 'Cera Pro 500';
+    font-size: 30px;
 }
 
 .alert p {
-  font-size: 16px;
-  line-height: 24px;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .alert p b {
-  font-family: "Cera Pro 700";
-  font-size: 20px;
-  line-height: 27px;
+    font-family: 'Cera Pro 700';
+    font-size: 20px;
+    line-height: 27px;
 }
 
 .alert.green {
-  background-color: #88db88;
+    background-color: #88DB88;
+}
+
+.alert.gray {
+    background-color: rgba(128, 128, 128, .7);
 }
 
 p b, p strong, li b, li strong {
-  font-family: "Cera Pro 700";
+    font-family: 'Cera Pro 700';
 }

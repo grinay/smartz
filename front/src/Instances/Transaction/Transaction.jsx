@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import Spinner from '../../common/Spinner';
-import {processResult, makeEtherscanLink} from '../../helpers/eth';
+import { processResult, makeEtherscanLink } from '../../helpers/eth';
 
 class Transaction extends Component {
   render() {
-    const {time, func, formData, txHash, result, timeMined} = this.props.transaction;
-    const {netId} = this.props;
+    const { time, func, formData, txHash, result, timeMined } = this.props.transaction;
+    const { netId } = this.props;
 
     return (
       <div>

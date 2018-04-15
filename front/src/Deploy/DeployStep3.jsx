@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import {getNetworkName, getNetworkEtherscanAddress} from '../helpers/eth';
+import { getNetworkName, getNetworkEtherscanAddress } from '../helpers/eth';
 import Spinner from '../common/Spinner';
 
 class DeployStep3 extends Component {
@@ -10,7 +10,7 @@ class DeployStep3 extends Component {
   }
 
   render() {
-    const {status, txHash, netId, instance, contractAddress} = this.props;
+    const { status, txHash, netId, instance, contractAddress } = this.props;
 
     return (
       <div className="block__wrapper  block__wrapper--top">

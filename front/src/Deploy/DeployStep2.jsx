@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {web3 as w3, getNetworkId, getTxReceipt} from '../helpers/eth';
+import { web3 as w3, getNetworkId, getTxReceipt } from '../helpers/eth';
 import Spinner from '../common/Spinner';
 
 class DeployStep2 extends Component {
@@ -11,9 +11,9 @@ class DeployStep2 extends Component {
   deploy(e) {
     e.preventDefault();
 
-    const {bin} = this.props.instance;
-    const {price_eth} = this.props.ctor;
-    const {deployId, deployTxSent, deployTxError, deployTxMined} = this.props;
+    const { bin } = this.props.instance;
+    const { price_eth } = this.props.ctor;
+    const { deployId, deployTxSent, deployTxError, deployTxMined } = this.props;
 
     w3.eth.sendTransaction({
       data: `0x${bin}`,
@@ -21,28 +21,28 @@ class DeployStep2 extends Component {
       gas: 3e6,
       gasPrice: 10e9
     },
-    (err, txHash) => {
-      if (err) {
-        let errMsg = '';
-        try {
-          errMsg = err.message.split("\n")[0];
-        } catch(error){
-          errMsg = 'Unknown error';
-        }
-        deployTxError(deployId, errMsg);
-
-      } else {
-        getNetworkId(netId => deployTxSent(deployId, netId, txHash));
-
-        getTxReceipt(txHash, receipt => {
-          if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
-            deployTxError(deployId, "Something went wrong and your contract deploy has failed. Try to add more gas or report problem to contract developers.");
-          } else {
-            deployTxMined(deployId, receipt.contractAddress);
+      (err, txHash) => {
+        if (err) {
+          let errMsg = '';
+          try {
+            errMsg = err.message.split("\n")[0];
+          } catch (error) {
+            errMsg = 'Unknown error';
           }
-        });
-      }
-    });
+          deployTxError(deployId, errMsg);
+
+        } else {
+          getNetworkId(netId => deployTxSent(deployId, netId, txHash));
+
+          getTxReceipt(txHash, receipt => {
+            if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
+              deployTxError(deployId, "Something went wrong and your contract deploy has failed. Try to add more gas or report problem to contract developers.");
+            } else {
+              deployTxMined(deployId, receipt.contractAddress);
+            }
+          });
+        }
+      });
   }
 
   render() {

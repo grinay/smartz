@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Button} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import Alert from '../common/Alert';
@@ -11,26 +11,26 @@ class CtorAdd extends Component {
     this.state = {};
   }
 
-  submit({formData}) {
+  submit({ formData }) {
     formData['constructor_id'] = this.getId();
 
     api(this.props.auth).post(`/constructors/upload`, formData)
       .then(response => {
         if (response.data.error) {
-          this.setState({error: response.data.error});
+          this.setState({ error: response.data.error });
 
         } else {
-          this.setState({message: `Contract "${formData.ctor_name}" uploaded.`});
+          this.setState({ message: `Contract "${formData.ctor_name}" uploaded.` });
         }
       })
 
       .catch(error => {
-        this.setState({error});
+        this.setState({ error });
       });
   }
 
   handleChange(e) {
-    this.setState({[e.target.name]: e.target.files ? e.target.files[0] : e.target.value});
+    this.setState({ [e.target.name]: e.target.files ? e.target.files[0] : e.target.value });
   }
 
   getId() {
@@ -99,7 +99,7 @@ class CtorAdd extends Component {
       }
     };
 
-    const {message, error} = this.state;
+    const { message, error } = this.state;
 
     return (
       <main className="page-main page-main--contracts">
@@ -112,7 +112,7 @@ class CtorAdd extends Component {
             uiSchema={uiSchema}
             onSubmit={this.submit.bind(this)}
             showErrorList={false}>
-            <div className="block__wrapper" style={{marginBottom: '40px'}}>
+            <div className="block__wrapper" style={{ marginBottom: '40px' }}>
               <Button bsStyle="primary"
                 className="button block__button"
                 type="submit">
