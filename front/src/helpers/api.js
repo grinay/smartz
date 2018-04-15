@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const API_URL = /localhost/.test(window.location.origin)
-  // ? 'http://localhost:3000/api'
-  ? 'http://172.28.128.3:3000/api'
+  ? 'http://localhost:3000/api'
   : window.location.origin + '/api';
 
 const api = (auth) => {
