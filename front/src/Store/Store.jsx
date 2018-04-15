@@ -24,6 +24,7 @@ class Store extends Component {
 
   render() {
     const { ctors, metamaskStatus, auth } = this.props;
+    const isAuthenticated = auth.isAuthenticated();
 
     return (
       <main className="page-main  page-main--store">
@@ -51,7 +52,12 @@ class Store extends Component {
           <Alert header="If you are developer" color="green"
             style={{ marginTop: '80px' }}
           >
-            <p>You can <Link to="/ctor-add">add a smart contract</Link> to our platform.</p>
+            <p>You can <Link to="/ctor-add" onClick={(e) => {
+              if (!isAuthenticated) {
+                e.preventDefault();
+                auth.login('/ctor-add');
+              }
+            }}>add a smart contract</Link> to our platform.</p>
           </Alert>
         </div>
       </main>
