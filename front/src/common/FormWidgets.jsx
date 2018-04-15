@@ -4,7 +4,8 @@ import React from 'react';
 import moment from 'moment';
 import Datetime from 'react-datetime';
 
-import FileHashWidget from './widgets/file-hash-widget/FileHashWidget';
+import FileHashWidget from './widgets/hash-widgets/FileHashWidget';
+import StringHashWidget from './widgets/hash-widgets/StringHashWidget';
 
 import 'react-datetime/css/react-datetime.css';
 
@@ -21,6 +22,7 @@ function makeid() {
 const FormWidgets = {
   // собственные виджеты
   fileHash: (props) => <FileHashWidget {...props} />,
+  stringHash: (props) => <StringHashWidget {...props} />,
   unixTime: (props) => {
     return (
       <Datetime value={moment.unix(props.value)}
