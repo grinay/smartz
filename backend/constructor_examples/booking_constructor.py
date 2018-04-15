@@ -93,9 +93,6 @@ class Constructor(ConstructorInstance):
 
     def construct(self, fields):
 
-        fields['noCancelPeriod'] *= 60*60
-        fields['acceptObjectPeriod'] *= 60*60
-
         errors = {}
 
         if fields['price'] <= fields['cancellationFee']:
@@ -122,7 +119,7 @@ class Constructor(ConstructorInstance):
             }
             errors['rentDateStart'] = 'Start rent time must be less than end rent time'
 
-        if fields['rentDateStart']+fields['acceptObjectPeriod'] >= fields['rentDateEnd']:
+        if fields['rentDateStart']+fields['acceptObjectPeriod']*60*60 >= fields['rentDateEnd']:
             # todo waiting for front
             return {
                 "result": "error",
@@ -130,7 +127,7 @@ class Constructor(ConstructorInstance):
             }
             errors['acceptObjectPeriod'] = 'Accept object time must be less than rent period'
 
-        if fields['rentDateStart'] <= fields['noCancelPeriod']:
+        if fields['rentDateStart'] <= fields['noCancelPeriod'] * 60*60:
             # todo waiting for front
             return {
                 "result": "error",
@@ -147,8 +144,8 @@ class Constructor(ConstructorInstance):
         source = self.__class__._TEMPLATE \
             .replace('%_description%', fields['description']) \
             .replace('%_price%', fields['price']) \
-            .replace('%_fileUrl%', fields['fileUrl']) \
-            .replace('%_fileHash%', fields['fileHash']) \
+            .replace('%_fileUrl%', fields['fileUrl'] if 'fileUrl' in fields else '') \
+            .replace('%_fileHash%', fields['fileHash'] if 'fileHash' in fields else '0') \
             .replace('%_cancellationFee%', fields['cancellationFee']) \
             .replace('%_rentDateStart%', str(fields['rentDateStart'])) \
             .replace('%_rentDateEnd%', str(fields['rentDateEnd'])) \
@@ -189,52 +186,47 @@ class Constructor(ConstructorInstance):
 
             'm_rentDateStart': {
                 'title': 'Start rent time',
-                #'ui:widget': 'unixtime',
+                'ui:widget': 'unixtime',
                 'sorting_order': 20
             },
 
             'm_rentDateEnd': {
                 'title': 'End rent time',
-                #'ui:widget': 'unixtime',
+                'ui:widget': 'unixtime',
                 'sorting_order': 30
             },
 
             'm_price': {
                 'title': 'Rent price',
                 'description': 'Rent price for whole period',
-                #'ui:widget': 'ethCount',
+                'ui:widget': 'ethCount',
                 'sorting_order': 40
             },
 
             'm_cancellationFee': {
                 'title': 'Cancellation fee',
-                #'ui:widget': 'ethCount',
+                'ui:widget': 'ethCount',
                 'sorting_order': 50
             },
 
             'm_noCancelPeriod': {
                 'title': '"No cancel" time',
-                #'ui:widget': 'time_hours',
                 'sorting_order': 60
             },
 
             'm_acceptObjectPeriod': {
                 'title': 'Accept object time',
-                #'ui:widget': 'time_hours',
                 'sorting_order': 70
             },
 
             'getCurrentState': {
                 'title': 'Get booking state',
-                #'ui:widget': 'enum',
-                # 'ui:widget_options': {
-                #     'enum': ['Offer', 'Paid', 'No cancel period', 'Rent', 'Finished']
-                # },
+                'ui:widget': 'enum',
+                'ui:widget_options': {
+                    'enum': ['Offer', 'Paid', 'No cancel period', 'Rent', 'Finished']
+                },
                 'sorting_order': 80
             },
-
-
-
 
             'refund': {
                 'title': 'Refund (customer)',
@@ -359,8 +351,8 @@ contract Booking is Ownable {
         assert(m_rentDateStart > getCurrentTime());
         assert(m_rentDateEnd > m_rentDateStart);
 
-        assert(m_rentDateStart+m_acceptObjectPeriod < m_rentDateEnd);
-        assert(m_rentDateStart > m_noCancelPeriod);
+        assert(m_rentDateStart+m_acceptObjectPeriod*60*60 < m_rentDateEnd);
+        assert(m_rentDateStart > m_noCancelPeriod*60*60);
         
         %payment_code%
     }
@@ -442,7 +434,7 @@ contract Booking is Ownable {
     }
 
     function cancelBooking() external onlyState(State.NO_CANCEL) {
-        if (getCurrentTime() >= m_rentDateStart+m_acceptObjectPeriod) {
+        if (getCurrentTime() >= m_rentDateStart+m_acceptObjectPeriod*60*60) {
             require(msg.sender == owner);
         } else {
             require(msg.sender == m_client);
@@ -455,7 +447,7 @@ contract Booking is Ownable {
 
     function getCurrentState() public view returns(State) {
         if (m_state == State.PAID) {
-            if (getCurrentTime() >= m_rentDateStart - m_noCancelPeriod) {
+            if (getCurrentTime() >= m_rentDateStart - m_noCancelPeriod*60*60) {
                 return State.NO_CANCEL;
             } else {
                 return State.PAID;

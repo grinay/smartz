@@ -94,7 +94,7 @@ def merge_function_titles2specs(spec_array, titles_info):
     )
 
     def set_title(to_spec, from_info):
-        for field in ('title', 'description', 'sorting_order'):
+        for field in ('title', 'description', 'sorting_order', 'ui:widget', 'ui:widget_options'):
             if field in from_info:
                 to_spec[field] = from_info[field]
 

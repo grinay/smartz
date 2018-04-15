@@ -11,6 +11,7 @@ import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
 
 import './Instance.css';
+import renderInstanceWidget from "../common/instance/InstanceWidgets";
 
 class Instance extends Component {
   constructor(props) {
@@ -207,10 +208,7 @@ class Instance extends Component {
                             <td className="table__data">
                               <div className="table__inner">
                                 <span>
-                                  {(instance.funcResults && instance.funcResults[func.name] !== undefined)
-                                    ? makeEtherscanLink(instance.funcResults[func.name], instance.network_id)
-                                    : ''
-                                  }
+                                  {renderInstanceWidget(func, instance)}
                                 </span>
                               </div>
                             </td>

@@ -1,6 +1,8 @@
 import abc
 import re
 import shutil
+import sys
+
 import os.path
 import tempfile
 import json
@@ -105,7 +107,7 @@ class BaseEngine(object):
 
         post_construct_info['function_specs'] = sorted(
             post_construct_info['function_specs'],
-            key=lambda x: x['sorting_order'] if 'sorting_order' in x else 0
+            key=lambda x: x['sorting_order'] if 'sorting_order' in x else sys.maxsize
         )
 
         return {
