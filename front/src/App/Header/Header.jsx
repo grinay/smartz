@@ -41,12 +41,9 @@ class Header extends Component {
           </ul>
         </nav>
         <div className="user-block">
-          <Link to="/profile" onClick={(e) => {
-            if (!isAuthenticated) {
-              e.preventDefault();
-              auth.login(`/profile`);
-            }
-          }} className="user-block__link">
+          <Link
+            to="/profile"
+            className="user-block__link">
             <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
               <use href="#lock"></use>
             </svg>

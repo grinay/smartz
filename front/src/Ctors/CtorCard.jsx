@@ -40,12 +40,9 @@ class CtorCard extends Component {
           </Link>
           <div className="contract-card__inner  contract-card__inner--position">
             <p className="contract-card__info">
-              <Link to={`/deploy/${ctor.ctor_id}`} onClick={(e) => {
-                if (!isAuthenticated) {
-                  e.preventDefault();
-                  auth.login(`/deploy/${ctor.ctor_id}`);
-                }
-              }} className="btn-square  contract-card__price">
+              <Link
+                to={`/deploy/${ctor.ctor_id}`}
+                className="btn-square  contract-card__price">
                 {buttonText}
               </Link>
 
