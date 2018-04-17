@@ -25,6 +25,21 @@ const handleAuthentication = ({ location }) => {
   }
 };
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => {
+      if (auth.isAuthenticated()) {
+        return <Component {...props} />;
+      } else {
+        auth.login(window.location.pathname);
+
+        return <Callback {...props} />;
+      }
+    }}
+  />
+);
+
 class App extends Component {
   componentWillMount() {
     this.setState({});
@@ -72,33 +87,36 @@ class App extends Component {
           }} />
           <Route path="/docs/:docUri?" component={Docs} />
 
-          {!auth.isAuthenticated() &&
-            <Redirect to="/" />
-          }
-
-          <Route path="/profile" render={props => (
-            <Profile auth={auth} profile={profile} {...props} />)}
+          <PrivateRoute path="/profile" component={props =>
+            <Profile auth={auth} profile={profile} {...props} />}
           />
 
-          <Route exact path="/deploy/:ctorId" render={props => (
+          <PrivateRoute exact path="/deploy/:ctorId" component={props =>
             <Redirect to={`/deploy/${props.match.params.ctorId}/${this.props.nextDeploy}`} />
-          )} />
-          <Route path="/deploy/:ctorId/:deployId" render={props => (
+          } />
+
+          <PrivateRoute path="/deploy/:ctorId/:deployId" component={props =>
             <Deploy auth={auth} metamaskStatus={metamaskStatus} {...props} />
-          )} />
+          } />
 
-          <Route path="/dashboard" render={props => (
+          <PrivateRoute path="/dashboard" component={props =>
             <Dashboard auth={auth} metamaskStatus={metamaskStatus} {...props} />
-          )} />
-          <Route path="/instance/:id" render={props => (
+          } />
+          <PrivateRoute path="/instance/:id" component={props =>
             <Instance auth={auth} metamaskStatus={metamaskStatus} {...props} />
-          )} />
+          } />
 
-          <Route path="/ctor-add" render={props => (<CtorAdd auth={auth} {...props} />)} />
-          <Route path="/constructors/:id/update" render={props => (<CtorAdd auth={auth} {...props} />)} />
-          <Route path="/my-dapps" render={(props) => (
+          <PrivateRoute path="/ctor-add" component={props =>
+            <CtorAdd auth={auth} {...props} />
+          } />
+
+          <PrivateRoute path="/constructors/:id/update" component={props =>
+            <CtorAdd auth={auth} {...props} />
+          } />
+
+          <PrivateRoute path="/my-dapps" component={props =>
             <MyDapps auth={auth} metamaskStatus={metamaskStatus} {...props} />
-          )} />
+          } />
 
           {/* TODO: <Route component={Page404} />*/}
         </Switch>
