@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { find } from 'lodash';
 
-import api from '../helpers/api';
+import api from '../api/api';
 import {
   processControlForm,
   processResult,

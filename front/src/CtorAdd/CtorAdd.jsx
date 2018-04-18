@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import Alert from '../common/Alert';
-import api from '../helpers/api';
+import api from '../api/api';
 
 class CtorAdd extends Component {
   constructor(props) {

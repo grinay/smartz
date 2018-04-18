@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Form from 'react-jsonschema-form';
 
-import api from '../helpers/api';
+import api from '../api/api';
 import FormWidgets from '../common/FormWidgets';
 
 class DeployStep1 extends Component {

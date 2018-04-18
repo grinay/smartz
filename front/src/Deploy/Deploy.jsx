@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import api from '../helpers/api';
+import api from '../api/api';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import DeployStep1 from './DeployStep1';
@@ -41,6 +41,7 @@ class Deploy extends Component {
       api(this.props.auth).get(`/constructors/${ctorId}/params`)
         .then(response => {
           const { data } = response;
+
           if (data.error) {
             constructError(deployId, data.error);
             fetchCtorParamsFailure(ctorId, data.error);

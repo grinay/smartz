@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
-import api from '../helpers/api';
+import api from '../api/api';
 import CtorCard from '../Ctors/CtorCard';
 
 class Store extends Component {

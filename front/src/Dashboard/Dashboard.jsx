@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import {
   processControlForm, processResult
 } from '../helpers/eth';
-import api from '../helpers/api';
+import api from '../api/api';
 import Alert from '../common/Alert';
 
 import './Dashboard.css';
