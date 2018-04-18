@@ -7,7 +7,7 @@ import FormWidgets from '../common/FormWidgets';
 class DeployStep1 extends Component {
   submit({ formData }) {
     const {
-      deployId, ctor, auth,
+      deployId, ctor,
       constructRequest, constructError, constructSuccess
     } = this.props;
 
@@ -15,7 +15,7 @@ class DeployStep1 extends Component {
 
     const instTitle = formData.instance_title;
     delete formData.instance_title;
-    api(auth).post(`/constructors/${ctor.ctor_id}/construct`, {
+    api().post(`/constructors/${ctor.ctor_id}/construct`, {
       instance_title: instTitle,
       fields: formData
     })

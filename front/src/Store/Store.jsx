@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import api from '../api/api';
+import Auth from '../App/Auth/Auth';
 import CtorCard from '../Ctors/CtorCard';
 
 class Store extends Component {
   componentWillMount() {
     const {
-      auth,
       fetchCtorsRequest,
       fetchCtorsFailure,
       fetchCtorsSuccess
@@ -17,14 +17,14 @@ class Store extends Component {
 
     fetchCtorsRequest();
 
-    api(auth).get('/constructors')
+    api().get('/constructors')
       .then(response => fetchCtorsSuccess(response.data))
       .catch(error => fetchCtorsFailure(error.message));
   }
 
   render() {
-    const { ctors, metamaskStatus, auth } = this.props;
-    const isAuthenticated = auth.isAuthenticated();
+    const { ctors, metamaskStatus } = this.props;
+    const isAuthenticated = Auth.isAuthenticated();
 
     return (
       <main className="page-main  page-main--store">
@@ -38,7 +38,7 @@ class Store extends Component {
               {ctors &&
                 <ul className="contracts-gallery__list  gallery__list">
                   {ctors.filter(el => el.is_public).map((el, i) => (
-                    <CtorCard key={i} ctor={el} auth={auth} />
+                    <CtorCard key={i} ctor={el} />
                   ))}
                 </ul>
               }
@@ -55,7 +55,7 @@ class Store extends Component {
             <p>You can <Link to="/ctor-add" onClick={(e) => {
               if (!isAuthenticated) {
                 e.preventDefault();
-                auth.login('/ctor-add');
+                Auth.login('/ctor-add');
               }
             }}>add a smart contract</Link> to our platform.</p>
           </Alert>

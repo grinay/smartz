@@ -14,7 +14,7 @@ class CtorAdd extends Component {
   submit({ formData }) {
     formData['constructor_id'] = this.getId();
 
-    api(this.props.auth).post(`/constructors/upload`, formData)
+    api().post(`/constructors/upload`, formData)
       .then(response => {
         if (response.data.error) {
           this.setState({ error: response.data.error });

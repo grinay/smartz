@@ -6,7 +6,7 @@ import Spinner from '../common/Spinner';
 import DeployStep1 from './DeployStep1';
 import DeployStep2 from './DeployStep2';
 import DeployStep3 from './DeployStep3';
-
+import Auth from '../App/Auth/Auth';
 import './Deploy.css';
 
 // TODO: refactor this file totally
@@ -17,7 +17,6 @@ class Deploy extends Component {
 
     const { ctorId, deployId } = props.match.params;
     this.state = {
-      auth: props.auth.isAuthenticated(),
       ctorId,
       deployId
     };
@@ -29,16 +28,16 @@ class Deploy extends Component {
       fetchCtorParamsRequest, fetchCtorParamsFailure, fetchCtorParamsSuccess,
       constructError
     } = this.props;
-    const { ctorId, deployId, auth } = this.state;
+    const { ctorId, deployId } = this.state;
 
-    if (auth) {
+    if (Auth.isAuthenticated()) {
       if (!status) {
         initDeploy(deployId);
       }
 
       fetchCtorParamsRequest(ctorId);
 
-      api(this.props.auth).get(`/constructors/${ctorId}/params`)
+      api().get(`/constructors/${ctorId}/params`)
         .then(response => {
           const { data } = response;
 
@@ -57,9 +56,9 @@ class Deploy extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { auth, netId, contractAddress, instance, publicAccess } = nextProps;
+    const { netId, contractAddress, instance, publicAccess } = nextProps;
     if (netId && contractAddress) {
-      api(auth).post(`/instances/${instance.instance_id}/update`, {
+      api().post(`/instances/${instance.instance_id}/update`, {
         address: contractAddress,
         network_id: Number.parseInt(netId, 10),
         public_access: publicAccess
@@ -78,18 +77,18 @@ class Deploy extends Component {
 
     const { deployId } = this.state;
     const {
-      auth, ctor, status, errors, instance, netId, txHash, contractAddress,
+      ctor, status, errors, instance, netId, txHash, contractAddress,
       constructRequest, constructError, constructSuccess,
       setPublicAccess, deployTxSent, deployTxError, deployTxMined
     } = this.props;
 
     const step1Props = {
-      deployId, auth, ctor,
+      deployId, ctor,
       constructRequest, constructError, constructSuccess
     };
 
     const step2Props = {
-      deployId, auth, ctor, instance, status,
+      deployId, ctor, instance, status,
       setPublicAccess, deployTxSent, deployTxError, deployTxMined
     };
 

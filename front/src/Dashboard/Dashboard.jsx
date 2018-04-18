@@ -21,18 +21,17 @@ class Dashboard extends Component {
 
   componentWillMount() {
     const {
-      auth,
       fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess,
       fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess
     } = this.props;
 
     fetchCtorsRequest();
-    api(auth).get('/constructors')
+    api().get('/constructors')
       .then(response => fetchCtorsSuccess(response.data))
       .catch(error => fetchCtorsFailure(error));
 
     fetchInstancesRequest();
-    api(auth).get('/instances')
+    api().get('/instances')
       .then(response => fetchInstancesSuccess(response.data))
       .catch(error => fetchInstancesFailure(error));
   }

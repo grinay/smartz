@@ -2,7 +2,7 @@ import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
 import history from '../../history';
 
-export default class Auth {
+class Auth {
   auth0 = new auth0.WebAuth({
     domain: AUTH_CONFIG.domain,
     clientID: AUTH_CONFIG.clientId,
@@ -88,3 +88,10 @@ export default class Auth {
     return new Date().getTime() < expiresAt;
   }
 }
+
+// Singleton.
+// A solution with ES6 is to use an instance of a class scoped to a module.
+// There are some drawbacks though:
+// if you want to use a static method, you will have 
+// to use the constructor property of the exported instance.
+export default new Auth();

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Auth from '../App/Auth/Auth';
 
 import './CtorCard.css';
 
 class CtorCard extends Component {
   render() {
-    const { ctor, auth } = this.props;
-    const isAuthenticated = auth.isAuthenticated();
-    const userId = isAuthenticated && auth.userProfile ? auth.userProfile['sub'] : '-1';
+    const { ctor } = this.props;
+    const isAuthenticated = Auth.isAuthenticated();
+    const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['sub'] : '-1';
 
     const buttonText = isAuthenticated
       ? (ctor.price_eth
@@ -43,7 +44,7 @@ class CtorCard extends Component {
               <Link to={`/deploy/${ctor.ctor_id}`} onClick={(e) => {
                 if (!isAuthenticated) {
                   e.preventDefault();
-                  auth.login(`/deploy/${ctor.ctor_id}`);
+                  Auth.login(`/deploy/${ctor.ctor_id}`);
                 }
               }} className="btn-square  contract-card__price">
                 {buttonText}

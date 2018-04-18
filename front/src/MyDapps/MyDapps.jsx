@@ -5,11 +5,11 @@ import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import api from '../api/api';
 import CtorCard from '../Ctors/CtorCard';
+import Auth from '../App/Auth/Auth';
 
 class MyDapps extends Component {
   componentWillMount() {
     const {
-      auth,
       fetchCtorsRequest,
       fetchCtorsFailure,
       fetchCtorsSuccess
@@ -17,16 +17,16 @@ class MyDapps extends Component {
 
     fetchCtorsRequest();
 
-    api(auth).get('/constructors')
+    api().get('/constructors')
       .then(response => fetchCtorsSuccess(response.data))
       .catch(error => fetchCtorsFailure(error.message));
   }
 
   render() {
-    const { ctors, metamaskStatus, auth } = this.props;
+    const { ctors, metamaskStatus } = this.props;
 
-    const isAuthenticated = auth.isAuthenticated();
-    const userId = isAuthenticated && auth.userProfile ? auth.userProfile['sub'] : '-1';
+    const isAuthenticated = Auth.isAuthenticated();
+    const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['sub'] : '-1';
 
     return (
       <main className="page-main  page-main--store">
@@ -40,7 +40,7 @@ class MyDapps extends Component {
               {ctors &&
                 <ul className="contracts-gallery__list  gallery__list">
                   {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) => (
-                    <CtorCard key={i} ctor={el} auth={auth} />
+                    <CtorCard key={i} ctor={el} />
                   ))}
                 </ul>
               }

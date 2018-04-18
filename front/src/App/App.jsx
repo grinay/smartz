@@ -17,11 +17,9 @@ import { checkMetaMask } from '../helpers/eth';
 
 import './App.css';
 
-const auth = new Auth();
-
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {
-    auth.handleAuthentication();
+    Auth.handleAuthentication();
   }
 };
 
@@ -46,12 +44,12 @@ class App extends Component {
 
   render() {
     const { metamaskStatus } = this.state;
-    const isAuthenticated = auth.isAuthenticated();
+    const isAuthenticated = Auth.isAuthenticated();
     const { profile, setUserProfile } = this.props;
 
     if (!isAuthenticated && profile) setUserProfile(null);
     if (isAuthenticated && !profile) {
-      auth.getProfile((err, newProfile) => {
+      Auth.getProfile((err, newProfile) => {
         setUserProfile(newProfile);
       });
     }
@@ -59,12 +57,12 @@ class App extends Component {
     return (
       <div>
         <Route render={(props) => (
-          <Header auth={auth} profile={profile} {...props} />
+          <Header profile={profile} {...props} />
         )} />
 
         <Switch>
           <Route exact path="/" render={(props) => (
-            <Store auth={auth} metamaskStatus={metamaskStatus} {...props} />
+            <Store metamaskStatus={metamaskStatus} {...props} />
           )} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
@@ -72,38 +70,38 @@ class App extends Component {
           }} />
           <Route path="/docs/:docUri?" component={Docs} />
 
-          {!auth.isAuthenticated() &&
+          {!Auth.isAuthenticated() &&
             <Redirect to="/" />
           }
 
           <Route path="/profile" render={props => (
-            <Profile auth={auth} profile={profile} {...props} />)}
+            <Profile profile={profile} {...props} />)}
           />
 
           <Route exact path="/deploy/:ctorId" render={props => (
             <Redirect to={`/deploy/${props.match.params.ctorId}/${this.props.nextDeploy}`} />
           )} />
           <Route path="/deploy/:ctorId/:deployId" render={props => (
-            <Deploy auth={auth} metamaskStatus={metamaskStatus} {...props} />
+            <Deploy metamaskStatus={metamaskStatus} {...props} />
           )} />
 
           <Route path="/dashboard" render={props => (
-            <Dashboard auth={auth} metamaskStatus={metamaskStatus} {...props} />
+            <Dashboard metamaskStatus={metamaskStatus} {...props} />
           )} />
           <Route path="/instance/:id" render={props => (
-            <Instance auth={auth} metamaskStatus={metamaskStatus} {...props} />
+            <Instance metamaskStatus={metamaskStatus} {...props} />
           )} />
 
-          <Route path="/ctor-add" render={props => (<CtorAdd auth={auth} {...props} />)} />
-          <Route path="/constructors/:id/update" render={props => (<CtorAdd auth={auth} {...props} />)} />
+          <Route path="/ctor-add" render={props => (<CtorAdd {...props} />)} />
+          <Route path="/constructors/:id/update" render={props => (<CtorAdd {...props} />)} />
           <Route path="/my-dapps" render={(props) => (
-            <MyDapps auth={auth} metamaskStatus={metamaskStatus} {...props} />
+            <MyDapps metamaskStatus={metamaskStatus} {...props} />
           )} />
 
           {/* TODO: <Route component={Page404} />*/}
         </Switch>
 
-        <Route render={(props) => <Footer auth={auth} {...props} />} />
+        <Route render={(props) => <Footer {...props} />} />
       </div>
     );
   }

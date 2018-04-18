@@ -1,11 +1,12 @@
 import axios from 'axios';
+import Auth from '../App/Auth/Auth';
 
 const API_URL = /localhost/.test(window.location.origin)
   ? 'http://localhost:3000/api'
   : window.location.origin + '/api';
 
-const api = (auth) => {
-  const accessToken = auth.isAuthenticated() ? auth.getAccessToken() : null;
+const api = () => {
+  const accessToken = Auth.isAuthenticated() ? Auth.getAccessToken() : null;
   return axios.create({
     baseURL: API_URL,
     headers: {
