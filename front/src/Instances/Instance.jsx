@@ -13,7 +13,7 @@ import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
 
 import './Instance.css';
-import renderInstanceWidget from "../common/instance/InstanceWidgets";
+import renderInstanceWidget from "../common/ContractInstance/ContractInstanceWidgets";
 
 class Instance extends Component {
   constructor(props) {
@@ -159,6 +159,7 @@ class Instance extends Component {
                 {instance.transactions.reverse().map((transaction, i) => (
                   <Transaction
                     transaction={transaction}
+                    contractInstance={instance}
                     netId={instance.network_id}
                     key={i}
                   />
