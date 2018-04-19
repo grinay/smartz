@@ -230,25 +230,25 @@ class Constructor(ConstructorInstance):
 
             'refund': {
                 'title': 'Refund (customer)',
-                'description': 'Refund ..',
+                # 'description': 'Refund ..',
                 'sorting_order': 200
             },
 
             'rejectPayment': {
                 'title': 'Reject payment (owner)',
-                'description': 'Reject payment ..',
+                # 'description': 'Reject payment ..',
                 'sorting_order': 210
             },
 
             'cancelBooking': {
                 'title': 'Cancel booking (owner)',
-                'description': 'Cancel booking ..',
+                # 'description': 'Cancel booking ..',
                 'sorting_order': 220
             },
 
             'startRent': {
                 'title': 'Start rent (customer)',
-                'description': 'Start rent ..',
+                # 'description': 'Start rent ..',
                 'sorting_order': 230
             },
 
