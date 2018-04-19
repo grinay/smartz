@@ -1,29 +1,44 @@
-import React, {Component} from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import Callback from './Auth/Callback/Callback';
-import Store from 'Store/StoreContainer';
-import MyDapps from 'MyDapps/MyDappsContainer';
-import Profile from 'Profile/Profile';
-import Deploy from 'Deploy/DeployContainer';
-import CtorAdd from 'CtorAdd/CtorAdd';
-import Dashboard from 'Dashboard/DashboardContainer';
-import Instance from 'Instances/InstanceContainer';
-import Docs from 'Docs/Docs';
-import {checkMetaMask} from 'helpers/eth';
+import Store from '../Store/StoreContainer';
+import MyDapps from '../MyDapps/MyDappsContainer';
+import Profile from '../Profile/Profile';
+import Deploy from '../Deploy/DeployContainer';
+import CtorAdd from '../CtorAdd/CtorAdd';
+import Dashboard from '../Dashboard/DashboardContainer';
+import Instance from '../Instances/InstanceContainer';
+import Docs from '../Docs/Docs';
+import { checkMetaMask } from '../helpers/eth';
 
 import './App.css';
 
 const auth = new Auth();
 
-const handleAuthentication = ({location}) => {
+const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {
     auth.handleAuthentication();
   }
 };
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => {
+      if (auth.isAuthenticated()) {
+        return <Component {...props} />;
+      } else {
+        auth.login(window.location.pathname);
+
+        return <Callback {...props} />;
+      }
+    }}
+  />
+);
 
 class App extends Component {
   componentWillMount() {
@@ -33,7 +48,7 @@ class App extends Component {
     setInterval(() => {
       if (metamaskStatus !== checkMetaMask()) {
         metamaskStatus = checkMetaMask();
-        this.setState({metamaskStatus});
+        this.setState({ metamaskStatus });
       }
     }, 250);
   }
@@ -45,9 +60,9 @@ class App extends Component {
   }
 
   render() {
-    const {metamaskStatus} = this.state;
+    const { metamaskStatus } = this.state;
     const isAuthenticated = auth.isAuthenticated();
-    const {profile, setUserProfile} = this.props;
+    const { profile, setUserProfile } = this.props;
 
     if (!isAuthenticated && profile) setUserProfile(null);
     if (isAuthenticated && !profile) {
@@ -69,36 +84,39 @@ class App extends Component {
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Callback {...props} />
-          }}/>
+          }} />
           <Route path="/docs/:docUri?" component={Docs} />
 
-          {!auth.isAuthenticated() &&
-            <Redirect to="/" />
-          }
-
-          <Route path="/profile" render={props => (
-            <Profile auth={auth} profile={profile} {...props} />)}
+          <PrivateRoute path="/profile" component={props =>
+            <Profile auth={auth} profile={profile} {...props} />}
           />
 
-          <Route exact path="/deploy/:ctorId" render={props => (
+          <PrivateRoute exact path="/deploy/:ctorId" component={props =>
             <Redirect to={`/deploy/${props.match.params.ctorId}/${this.props.nextDeploy}`} />
-          )} />
-          <Route path="/deploy/:ctorId/:deployId" render={props => (
+          } />
+
+          <PrivateRoute path="/deploy/:ctorId/:deployId" component={props =>
             <Deploy auth={auth} metamaskStatus={metamaskStatus} {...props} />
-          )} />
+          } />
 
-          <Route path="/dashboard" render={props => (
+          <PrivateRoute path="/dashboard" component={props =>
             <Dashboard auth={auth} metamaskStatus={metamaskStatus} {...props} />
-          )} />
-          <Route path="/instance/:id" render={props => (
+          } />
+          <PrivateRoute path="/instance/:id" component={props =>
             <Instance auth={auth} metamaskStatus={metamaskStatus} {...props} />
-          )} />
+          } />
 
-          <Route path="/ctor-add"                render={props => (<CtorAdd auth={auth} {...props} />)} />
-          <Route path="/constructors/:id/update" render={props => (<CtorAdd auth={auth} {...props} />)} />
-          <Route path="/my-dapps" render={(props) => (
+          <PrivateRoute path="/ctor-add" component={props =>
+            <CtorAdd auth={auth} {...props} />
+          } />
+
+          <PrivateRoute path="/constructors/:id/update" component={props =>
+            <CtorAdd auth={auth} {...props} />
+          } />
+
+          <PrivateRoute path="/my-dapps" component={props =>
             <MyDapps auth={auth} metamaskStatus={metamaskStatus} {...props} />
-          )} />
+          } />
 
           {/* TODO: <Route component={Page404} />*/}
         </Switch>

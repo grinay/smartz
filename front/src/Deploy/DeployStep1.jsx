@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Form from 'react-jsonschema-form';
 
-import api from 'helpers/api';
-import FormWidgets from 'common/FormWidgets';
+import api from '../helpers/api';
+import FormWidgets from '../common/FormWidgets';
 
 class DeployStep1 extends Component {
-  submit({formData}) {
+  submit({ formData }) {
     const {
       deployId, ctor, auth,
       constructRequest, constructError, constructSuccess
@@ -15,31 +15,30 @@ class DeployStep1 extends Component {
 
     const instTitle = formData.instance_title;
     delete formData.instance_title;
-    api(auth).post(`/construct`, {
-      ctor_id: ctor.ctor_id,
+    api(auth).post(`/constructors/${ctor.ctor_id}/construct`, {
       instance_title: instTitle,
       fields: formData
     })
 
-    .then(response => {
-      const {data} = response;
+      .then(response => {
+        const { data } = response;
 
-      if (data.error || data.result === 'error') {
-        constructError(deployId, data.error || data.errors);
+        if (data.error || data.result === 'error') {
+          constructError(deployId, data.error || data.errors);
 
-      } else {
-        constructSuccess(deployId, data);
-      }
-    })
+        } else {
+          constructSuccess(deployId, data);
+        }
+      })
 
-    .catch(error => {
-      console.log(error);
-      constructError(deployId, error);
-    });
+      .catch(error => {
+        console.log(error);
+        constructError(deployId, error);
+      });
   }
 
   render() {
-    const {ctor} = this.props;
+    const { ctor } = this.props;
 
     // Add instance name field in the form beginning
     if (ctor && ctor.schema && (!ctor.schema.properties || !ctor.schema.properties.instance_title)) {
@@ -76,11 +75,11 @@ class DeployStep1 extends Component {
         uiSchema={ctor.ui_schema}
         widgets={FormWidgets}
         onSubmit={this.submit.bind(this)}
-        onError={(e) => console.log("I have", e.length, "errors to fix")}
+        onError={(e) => console.log("I have", e.length, "errors to fix", e)}
         showErrorList={false}
         id="deploy-form"
         autocomplete="off">
-        <div className="block__wrapper" style={{marginBottom: '40px'}}>
+        <div className="block__wrapper" style={{ marginBottom: '40px' }}>
           <button className="button block__button" type="submit" name="form-submit">
             Proceed
           </button>

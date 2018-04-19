@@ -1,0 +1,136 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "resultGetVersion": {
+            "type": "object",
+            "required": ["result"],
+            "properties": {
+                "result": { "type": "string", "enum": ["success", "error"]},
+                "error_descr": { "type": "string" },
+
+                "version": { "type": "integer", "minimum": 1 }
+            }
+        },
+
+        "resultConstruct": {
+            "type": "object",
+            "required": ["result"],
+            "properties": {
+                "result": { "type": "string", "enum": ["success", "error"]},
+                "error_descr": { "type": "string" },
+                "errors": { "type": "object" },
+
+                "contract_name": { "type": "string" },
+                "source": { "type": "string" }
+            }
+        },
+
+        "resultGetParams": {
+            "type": "object",
+            "required": ["result"],
+            "properties": {
+                "result": { "type": "string", "enum": ["success", "error"]},
+                "error_descr": { "type": "string" },
+                "errors": { "type": "object" },
+
+                "schema": { "type": "object" },
+                "ui_schema": { "type": "object" }
+            }
+        },
+
+        "resultPostConstruct": {
+            "type": "object",
+            "required": ["result"],
+            "properties": {
+                "result": { "type": "string", "enum": ["success", "error"]},
+                "error_descr": { "type": "string" },
+                "errors": { "type": "object" },
+
+                "dashboard_functions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+                "function_specs": {"type": ["object", "array"] }
+            }
+        },
+
+        "ETHFunctionAdditionalDescription": {
+            "title": "Additional description of one function",
+            "type": "object",
+            "additionalProperties": false,
+
+            "properties": {
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "sorting_order": {"type": "integer"},
+                "ui:widget": {
+                    "description": "Widget for function result",
+                    "type": "string",
+                    "enum": ["unixtime", "ethCount", "enum"]
+                },
+                "ui:widget_options": {
+                    "description": "Options of widget for function result",
+                    "type": "object",
+                    "properties": {
+                        "format": { "type": "string" },
+                        "enum": { "type": "array", "items": { "type": "string" } }
+                    }
+                },
+
+                "inputs": {
+                    "title": "titles-n-descriptions of each function argument",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "title": {"type": "string"},
+                            "description": {"type": "string"}
+                        }
+                    }
+                },
+
+                "outputs": {
+                    "title": "titles-n-descriptions of each function output value",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "title": {"type": "string"},
+                            "description": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        },
+        "ETHFunctionAdditionalDescriptions": {
+            "title": "Additional description of contract functions",
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/ETHFunctionAdditionalDescription"
+            }
+        }
+    },
+
+    "calls": {
+        "get_version": {
+            "description": "Call get_version method of constructor",
+
+            "output": { "$ref": "#/definitions/resultGetVersion" }
+        },
+
+        "get_params": {
+            "description": "Call get_params method of constructor",
+
+            "output": { "$ref": "#/definitions/resultGetParams" }
+        },
+        "construct": {
+            "description": "Call construct method of constructor",
+
+            "output": { "$ref": "#/definitions/resultConstruct" }
+        },
+        "post_construct": {
+            "description": "Call post_construct method of constructor",
+
+            "output": { "$ref": "#/definitions/resultPostConstruct" }
+        }
+    }
+}

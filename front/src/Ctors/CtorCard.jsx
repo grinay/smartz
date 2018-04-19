@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './CtorCard.css';
 
 class CtorCard extends Component {
   render() {
-    const {ctor, auth} = this.props;
+    const { ctor, auth } = this.props;
     const isAuthenticated = auth.isAuthenticated();
     const userId = isAuthenticated && auth.userProfile ? auth.userProfile['sub'] : '-1';
 
@@ -40,19 +40,16 @@ class CtorCard extends Component {
           </Link>
           <div className="contract-card__inner  contract-card__inner--position">
             <p className="contract-card__info">
-              <Link to={`/deploy/${ctor.ctor_id}`} onClick={(e) => {
-                if (!isAuthenticated) {
-                  e.preventDefault();
-                  auth.login();
-                }
-              }} className="btn-square  contract-card__price">
+              <Link
+                to={`/deploy/${ctor.ctor_id}`}
+                className="btn-square  contract-card__price">
                 {buttonText}
               </Link>
 
               {
-                isAuthenticated && ctor.user_id===userId &&
-                  <Link to={`/constructors/${ctor.ctor_id}/update`} className="btn-square contract-card__price">
-                    Update
+                isAuthenticated && ctor.user_id === userId &&
+                <Link to={`/constructors/${ctor.ctor_id}/update`} className="btn-square contract-card__price">
+                  Update
                   </Link>
               }
 

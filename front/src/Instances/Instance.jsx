@@ -1,22 +1,25 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import {find} from 'lodash';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { find } from 'lodash';
 
-import api from 'helpers/api';
-import {processControlForm,
-        processResult,
-        makeEtherscanLink} from 'helpers/eth';
+import api from '../helpers/api';
+import {
+  processControlForm,
+  processResult,
+  makeEtherscanLink
+} from '../helpers/eth';
 import FunctionCard from './FunctionCard/FunctionCardContainer';
-import Alert from 'common/Alert';
+import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
 
 import './Instance.css';
+import renderInstanceWidget from "../common/ContractInstance/ContractInstanceWidgets";
 
 class Instance extends Component {
   constructor(props) {
     super(props);
 
-    const {instance} = this.props;
+    const { instance } = this.props;
     const funcActive = find(instance.functions, f => (
       f.inputs.minItems !== 0 || !f.constant
     ));
@@ -35,20 +38,18 @@ class Instance extends Component {
     } = this.props;
 
     fetchCtorsRequest();
-    api(auth).get('/list_ctors')
-    .then(response => fetchCtorsSuccess(response.data))
-    .catch(error => fetchCtorsFailure(error));
+    api(auth).get('/constructors')
+      .then(response => fetchCtorsSuccess(response.data))
+      .catch(error => fetchCtorsFailure(error));
 
     fetchInstancesRequest();
-    api(auth).post('/get_instance_details', {
-      instance_id: this.props.match.params.id
-    })
-    .then(response => fetchInstancesSuccess([response.data]))
-    .catch(error => fetchInstancesFailure(error));
+    api(auth).get(`/instances/${this.props.match.params.id}`)
+      .then(response => fetchInstancesSuccess([response.data]))
+      .catch(error => fetchInstancesFailure(error));
   }
 
   componentDidUpdate() {
-    const {instance, ctor} = this.props;
+    const { instance, ctor } = this.props;
     if (instance && ctor && !this.state.updateCycleActive) {
       this.getConstants();
     }
@@ -66,12 +67,12 @@ class Instance extends Component {
   }
 
   getConstants() {
-    const {instance, viewFuncResult} = this.props;
+    const { instance, viewFuncResult } = this.props;
 
     instance.functions.forEach(func => {
       if (func.constant && func.inputs.minItems === 0) {
         processControlForm(instance.abi, func, [], instance.address, (error, result) => {
-          if(error) {
+          if (error) {
             console.error(error);
           } else {
             viewFuncResult(
@@ -108,14 +109,14 @@ class Instance extends Component {
   }
 
   render() {
-    const {metamaskStatus} = this.props;
+    const { metamaskStatus } = this.props;
     if (metamaskStatus) return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>
     );
 
-    const {instance, ctor} = this.props;
+    const { instance, ctor } = this.props;
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">
         <Link to="/dashboard" className="page-main__link">
@@ -127,7 +128,7 @@ class Instance extends Component {
 
         {ctor && instance &&
           <aside className="block-half">
-            <section className="contract-info" style={{marginBottom: '20px'}}>
+            <section className="contract-info" style={{ marginBottom: '20px' }}>
               <div className="contract-info__logo">
                 <img
                   className="contract-info__img"
@@ -158,6 +159,7 @@ class Instance extends Component {
                 {instance.transactions.reverse().map((transaction, i) => (
                   <Transaction
                     transaction={transaction}
+                    contractInstance={instance}
                     netId={instance.network_id}
                     key={i}
                   />
@@ -209,10 +211,7 @@ class Instance extends Component {
                             <td className="table__data">
                               <div className="table__inner">
                                 <span>
-                                  {(instance.funcResults && instance.funcResults[func.name] !== undefined)
-                                    ? makeEtherscanLink(instance.funcResults[func.name], instance.network_id)
-                                    : ''
-                                  }
+                                  {renderInstanceWidget(func, instance)}
                                 </span>
                               </div>
                             </td>
@@ -239,7 +238,7 @@ class Instance extends Component {
                         <button
                           className="btn-contract contract-controls__button"
                           type="button"
-                          onClick={() => this.setState({funcActive: func})}
+                          onClick={() => this.setState({ funcActive: func })}
                         >
                           {func.title}
                         </button>
@@ -261,7 +260,7 @@ class Instance extends Component {
                         <button
                           className="btn-contract contract-controls__button"
                           type="button"
-                          onClick={() => this.setState({funcActive: func})}
+                          onClick={() => this.setState({ funcActive: func })}
                         >
                           {func.title}
                         </button>

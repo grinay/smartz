@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {find} from 'lodash';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { find } from 'lodash';
+import { Link } from 'react-router-dom';
 
 import {
   processControlForm, processResult
-} from 'helpers/eth';
-import api from 'helpers/api';
-import Alert from 'common/Alert';
+} from '../helpers/eth';
+import api from '../helpers/api';
+import Alert from '../common/Alert';
 
 import './Dashboard.css';
 
@@ -27,18 +27,18 @@ class Dashboard extends Component {
     } = this.props;
 
     fetchCtorsRequest();
-    api(auth).get('/list_ctors')
-    .then(response => fetchCtorsSuccess(response.data))
-    .catch(error => fetchCtorsFailure(error));
+    api(auth).get('/constructors')
+      .then(response => fetchCtorsSuccess(response.data))
+      .catch(error => fetchCtorsFailure(error));
 
     fetchInstancesRequest();
-    api(auth).get('/get_all_instances')
-    .then(response => fetchInstancesSuccess(response.data))
-    .catch(error => fetchInstancesFailure(error));
+    api(auth).get('/instances')
+      .then(response => fetchInstancesSuccess(response.data))
+      .catch(error => fetchInstancesFailure(error));
   }
 
   componentDidUpdate() {
-    const {ctors, instances} = this.props;
+    const { ctors, instances } = this.props;
     if (instances.length && ctors.length && !this.state.updateCycleActive) {
       this.updateCycle();
     }
@@ -56,7 +56,7 @@ class Dashboard extends Component {
   }
 
   updateCycle() {
-    const {instances, viewFuncResult} = this.props;
+    const { instances, viewFuncResult } = this.props;
 
     instances.forEach((inst, j) => {
       const {
@@ -65,12 +65,12 @@ class Dashboard extends Component {
 
       if (dashboard_functions) {
         dashboard_functions.forEach(dFunc => {
-          const fSpec = find(functions, {name: dFunc});
+          const fSpec = find(functions, { name: dFunc });
           if (!fSpec) {
             return;
           }
           processControlForm(abi, fSpec, [], address, (error, result) => {
-            if(error) {
+            if (error) {
               console.error(error);
             } else {
               viewFuncResult(
@@ -86,16 +86,16 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {metamaskStatus} = this.props;
+    const { metamaskStatus } = this.props;
     if (metamaskStatus) return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>
     );
 
-    const {ctors, ctorsError, instances, instancesError} = this.props;
+    const { ctors, ctorsError, instances, instancesError } = this.props;
     instances.forEach(inst => {
-      inst.ctor = find(ctors, {ctor_id: inst.ctor_id}) || {};
+      inst.ctor = find(ctors, { ctor_id: inst.ctor_id }) || {};
     });
 
     return (
@@ -138,7 +138,7 @@ class Dashboard extends Component {
                         <table className="table  table--contract-card">
                           <tbody className="table__tbody">
                             {inst.dashboard_functions.map((func, k) => {
-                              const funcObj = find(inst.functions, {name: func});
+                              const funcObj = find(inst.functions, { name: func });
                               if (!funcObj) return null;
                               return (
                                 <tr className="table__tr" key={k}>

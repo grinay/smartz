@@ -62,7 +62,7 @@
         },
 
         "ETHFunctionSpec": {
-            "description": "Specification of a function which controls a contract",
+            "description": "Specification of a function which controls a contract (todo copy of json-schema/public/constructor.json/ETHFunctionAdditionalDescription)",
             "type": "object",
             "required": ["name", "title", "constant", "payable", "inputs", "outputs"],
             "additionalProperties": false,
@@ -83,6 +83,19 @@
                 "sorting_order": {
                     "description": "Sorting order in dashboard",
                     "type": "integer"
+                },
+                "ui:widget": {
+                    "description": "Widget for function result",
+                    "type": "string",
+                    "enum": ["unixtime", "ethCount", "enum"]
+                },
+                "ui:widget_options": {
+                    "description": "Options of widget for function result",
+                    "type": "object",
+                    "properties": {
+                        "format": { "type": "string" },
+                        "enum": { "type": "array", "items": { "type": "string" } }
+                    }
                 },
                 "constant": { "type": "boolean" },
                 "payable": { "type": "boolean" },
@@ -108,26 +121,6 @@
                 }
             },
             "output": { "$ref": "#/definitions/simpleResult" }
-        },
-
-        "list_instances": {
-            "description": "Lists compiled instances of a contract",
-
-            "input": {
-                "type": "object",
-                "required": ["ctor_id"],
-                "additionalProperties": false,
-
-                "properties": {
-                    "ctor_id": { "$ref": "#/definitions/ObjectIdHex" }
-                }
-            },
-            "output": {
-                "oneOf": [
-                    { "$ref": "#/definitions/resultError" },
-                    { "type": "array", "items": { "$ref": "#/definitions/ObjectIdHex" } }
-                ]
-            }
         },
 
         "get_instance_details": {

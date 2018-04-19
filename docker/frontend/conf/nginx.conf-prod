@@ -50,9 +50,9 @@ http {
 			add_header Cache-Control "no-store, no-cache, must-revalidate";
 			expires off;
 		}
-		location /prod {
+		location /api {
 			if ($http_x_forwarded_proto != "https") { return 301 https://$host$request_uri; }
-			rewrite ^/prod(.*)$ $1 break;
+			rewrite ^/api(.*)$ $1 break;
 			include uwsgi_params;
 			uwsgi_read_timeout 120;
 			uwsgi_pass unix:/app/sock/backend;

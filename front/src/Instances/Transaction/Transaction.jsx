@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import Spinner from 'common/Spinner';
-import {processResult, makeEtherscanLink} from 'helpers/eth';
+import Spinner from '../../common/Spinner';
+import {processResult, makeEtherscanLink, decodeEventOfInstance, makeTxEtherscanLink} from '../../helpers/eth';
 
 class Transaction extends Component {
   render() {
-    const {time, func, formData, txHash, result, timeMined} = this.props.transaction;
-    const {netId} = this.props;
+    const { time, func, formData, txHash, result, timeMined } = this.props.transaction;
+    const { netId, contractInstance } = this.props;
+
 
     return (
       <div>
@@ -22,7 +23,7 @@ class Transaction extends Component {
 
           {txHash &&
             <li className="tx-link">
-              {makeEtherscanLink(txHash, netId)}
+              {makeTxEtherscanLink(txHash, netId)}
             </li>
           }
 
@@ -42,10 +43,25 @@ class Transaction extends Component {
               {txHash && // write function
                 (result.status === '0x1' ? ' done' : ' error')
               }
-
+                {console.log(result)}
               {!txHash && // ask function
                 ` ${processResult(result)}`
               }
+            </li>
+          }
+
+          {result && txHash && result.logs && result.logs.length>0 &&
+            <li>
+              <strong>Events:</strong>
+              {result.logs.map((log, i) => {
+                  let event = decodeEventOfInstance(contractInstance, log);
+
+                  return (
+                    <div key={i}>
+                      {event.name} ({Object.keys(event.params).map(key => `${key}=${event.params[key]}`).join(', ')})
+                    </div>
+                  )
+              })}
             </li>
           }
 

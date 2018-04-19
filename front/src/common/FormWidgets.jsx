@@ -3,6 +3,10 @@
 import React from 'react';
 import moment from 'moment';
 import Datetime from 'react-datetime';
+
+import FileHashWidget from './widgets/hash-widgets/FileHashWidget';
+import StringHashWidget from './widgets/hash-widgets/StringHashWidget';
+
 import 'react-datetime/css/react-datetime.css';
 
 function makeid() {
@@ -16,6 +20,9 @@ function makeid() {
 }
 
 const FormWidgets = {
+  // собственные виджеты
+  fileHash: (props) => <FileHashWidget {...props} />,
+  stringHash: (props) => <StringHashWidget {...props} />,
   unixTime: (props) => {
     return (
       <Datetime value={moment.unix(props.value)}
@@ -24,6 +31,7 @@ const FormWidgets = {
         closeOnSelect={true} />
     );
   },
+  // переопределение встроенных виджетов
   CheckboxWidget: (props) => {
     const id = makeid();
     return (
@@ -77,7 +85,7 @@ const FormWidgets = {
               <label className="form-field__label  form-field__label--radio" htmlFor={id}>
                 <svg className="form-field__icon  form-field__icon-radio" width="27" height="27">
                   <use className="form-field__icon-off" href="#radio" />
-                  <use className="form-field__icon-on" href="#radio-on"/>
+                  <use className="form-field__icon-on" href="#radio-on" />
                 </svg>
                 <span className="form-field__wrapper">
                   <b className="form-field__name">
@@ -90,7 +98,7 @@ const FormWidgets = {
         })}
       </div>
     )
-  }
+  },
 };
 
 export default FormWidgets;

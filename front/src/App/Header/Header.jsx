@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   goTo(route) {
@@ -11,7 +11,7 @@ class Header extends Component {
   }
 
   render() {
-    const {auth, profile} = this.props;
+    const { auth, profile } = this.props;
     const isAuthenticated = auth.isAuthenticated();
 
     return (
@@ -41,27 +41,24 @@ class Header extends Component {
           </ul>
         </nav>
         <div className="user-block">
-          <Link to="/profile" onClick={(e) => {
-            if (!isAuthenticated) {
-              e.preventDefault();
-              auth.login();
-            }
-          }} className="user-block__link">
+          <Link
+            to="/profile"
+            className="user-block__link">
             <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
               <use href="#lock"></use>
             </svg>
             {isAuthenticated
               ? <span className="user-block__name"
-                  style={{display: 'inherit'}}>
-                  {profile &&
-                    profile.name
-                  }
-                </span>
+                style={{ display: 'inherit' }}>
+                {profile &&
+                  profile.name
+                }
+              </span>
               : <span className="user-block__login">Login</span>
             }
           </Link>
         </div>
-      {/*
+        {/*
       <div>
         <Navbar fluid>
           <Navbar.Header>

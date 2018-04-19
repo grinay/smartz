@@ -1,6 +1,17 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {
+        "resultGetVersion": {
+            "type": "object",
+            "required": ["result"],
+            "properties": {
+                "result": { "type": "string", "enum": ["success", "error"]},
+                "error_descr": { "type": "string" },
+
+                "version": { "type": "integer", "minimum": 1 }
+            }
+        },
+
         "resultConstruct": {
             "type": "object",
             "required": ["result"],
@@ -36,7 +47,63 @@
                 "errors": { "type": "object" },
 
                 "dashboard_functions": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
-                "function_specs": { "type": "array" }
+                "function_specs": {"type": ["object", "array"] }
+            }
+        },
+        "ETHFunctionAdditionalDescription": {
+            "title": "Additional description of one function (todo copy of the same in public/constructor.json)",
+            "type": "object",
+            "additionalProperties": false,
+
+            "properties": {
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "sorting_order": {"type": "integer"},
+                "ui:widget": {
+                    "description": "Widget for function result",
+                    "type": "string",
+                    "enum": ["unixtime", "ethCount", "enum"]
+                },
+                "ui:widget_options": {
+                    "description": "Options of widget for function result",
+                    "type": "object",
+                    "properties": {
+                        "format": { "type": "string" },
+                        "enum": { "type": "array", "items": { "type": "string" } }
+                    }
+                },
+                "inputs": {
+                    "title": "titles-n-descriptions of each function argument",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "title": {"type": "string"},
+                            "description": {"type": "string"}
+                        }
+                    }
+                },
+
+                "outputs": {
+                    "title": "titles-n-descriptions of each function output value",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "title": {"type": "string"},
+                            "description": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        },
+        "ETHFunctionAdditionalDescriptions": {
+            "title": "Additional description of contract functions",
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/ETHFunctionAdditionalDescription"
             }
         }
     },
@@ -55,7 +122,7 @@
                     },
                     "method": {
                         "type": "string",
-                        "enum": ["construct", "get_params", "post_construct"]
+                        "enum": ["construct", "get_params", "post_construct", "get_version"]
                     },
                     "args": {
                         "type": "array"
@@ -64,7 +131,8 @@
             },
             "output_construct": { "$ref": "#/definitions/resultConstruct" },
             "output_get_params": { "$ref": "#/definitions/resultGetParams" },
-            "output_post_construct": { "$ref": "#/definitions/resultPostConstruct" }
+            "output_post_construct": { "$ref": "#/definitions/resultPostConstruct" },
+            "output_get_version": { "$ref": "#/definitions/resultGetVersion" }
         },
         "call_service_worker": {
             "description": "Call service worker for construct contract code",
@@ -76,7 +144,7 @@
                 "properties": {
                     "method": {
                         "type": "string",
-                        "enum": ["construct", "get_params", "post_construct"]
+                        "enum": ["construct", "get_params", "post_construct", "get_version"]
                     },
                     "args": {
                         "type": "array"
@@ -85,7 +153,8 @@
             },
             "output_construct": { "$ref": "#/definitions/resultConstruct" },
             "output_get_params": { "$ref": "#/definitions/resultGetParams" },
-            "output_post_construct": { "$ref": "#/definitions/resultPostConstruct" }
+            "output_post_construct": { "$ref": "#/definitions/resultPostConstruct" },
+            "output_get_version": { "$ref": "#/definitions/resultGetVersion" }
         }
     }
 }

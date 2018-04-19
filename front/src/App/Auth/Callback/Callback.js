@@ -3,7 +3,7 @@ import loading from './loading.svg';
 
 class Callback extends Component {
   render() {
-    const style = {
+    const styleContainer = {
       position: 'absolute',
       display: 'flex',
       justifyContent: 'center',
@@ -16,9 +16,14 @@ class Callback extends Component {
       backgroundColor: 'white',
     }
 
+    const styleLoading = {
+      height: '40vh',
+      width: '40vw',
+    }
+
     return (
-      <div style={style}>
-        <img src={loading} alt="loading"/>
+      <div style={styleContainer}>
+        <img src={loading} alt="loading" style={styleLoading} />
       </div>
     );
   }

@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Form from 'react-jsonschema-form';
 
 import {
   web3 as w3,
   processControlForm
-} from 'helpers/eth';
-import FormWidgets from 'common/FormWidgets';
+} from '../../helpers/eth';
+import FormWidgets from '../../common/FormWidgets';
 
 import './FunctionCard.css';
 
@@ -15,35 +15,35 @@ class FunctionCard extends Component {
     this.state = {};
   }
 
-  submit({formData}) {
+  submit({ formData }) {
     //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
     if (typeof formData === "object" && !Object.keys(formData).length) {
-        formData = []
+      formData = []
     }
-    const {func, instance, transactionNew} = this.props;
-    const {abi, address} = this.props.instance;
+    const { func, instance, transactionNew } = this.props;
+    const { abi, address } = this.props.instance;
 
     processControlForm(abi, func, formData, address,
-                      (error, result) => {
-      if (!error) {
-        // console.log(result);
-        transactionNew(instance.instance_id, func, formData, result);
-        if (/^0x([A-Fa-f0-9]{64})$/.test(result)) // Check if result is tx hash
-          this.getReceipt(result);
+      (error, result) => {
+        if (!error) {
+          // console.log(result);
+          transactionNew(instance.instance_id, func, formData, result);
+          if (/^0x([A-Fa-f0-9]{64})$/.test(result)) // Check if result is tx hash
+            this.getReceipt(result);
 
-      } else {
-        console.log(error);
-        transactionNew(instance.instance_id, func, formData, 'error');
-      }
-    });
+        } else {
+          console.log(error);
+          transactionNew(instance.instance_id, func, formData, 'error');
+        }
+      });
   }
 
   getReceipt(tx) {
-    const {transactionReceipt, instance, refresh} = this.props;
+    const { transactionReceipt, instance, refresh } = this.props;
 
     w3.eth.getTransactionReceipt(tx, (err, receipt) => {
       if (null == receipt)
-        window.setTimeout(() => {this.getReceipt(tx)}, 500);
+        window.setTimeout(() => { this.getReceipt(tx) }, 500);
 
       else {
         // console.log(receipt);
@@ -54,7 +54,7 @@ class FunctionCard extends Component {
   }
 
   render() {
-    const {func} = this.props;
+    const { func } = this.props;
     if (!func) return null;
 
     if (!func.constant && func.inputs.minItems === 0) {

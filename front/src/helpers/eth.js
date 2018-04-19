@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {decodeEvent} from 'ethjs-abi'
+
 export var web3 = window.Web3
   ? new window.Web3(window.web3.currentProvider)
   : undefined;
@@ -91,7 +93,11 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
 export const processResult = res => {
   switch (typeof res) {
     case 'object':
-      return res.toString();
+      if (Array.isArray(res)) {
+        return res.join("\n")
+      } else {
+        return res.toString();
+      }
 
     case 'boolean':
       return res ? 'yes' : 'no';
@@ -106,7 +112,7 @@ export const getNetworkId = cb => {
     err && console.log(err);
     netId && cb(netId);
   });
-}
+};
 
 export const getNetworkName = netId => {
   switch (netId.toString()) {
@@ -156,7 +162,7 @@ export const getTxReceipt = (txHash, cb) => {
       cb(receipt);
     }
   });
-}
+};
 
 export const isAddress = (hash) => {
   if (typeof hash === 'string') {
@@ -164,15 +170,16 @@ export const isAddress = (hash) => {
   } else {
     return false;
   }
-}
+};
 
-export const isTransaction = (hash) => {
+export const isTx = (hash) => {
   if (typeof hash === 'string') {
     return /^0x([A-Fa-f0-9]{64})$/.test(hash);
   } else {
     return false;
   }
-}
+};
+
 
 export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
   if (!hash || !netId) return hash;
@@ -187,13 +194,69 @@ export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
         </a>{showNetworkName && ` (${networkName})`}
       </span>
     );
-  } else if (isTransaction(hash)) {
+  } else {
+    return hash;
+  }
+};
+
+export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
+  if (!hash || !netId) return hash;
+
+  const explorerAddress = getNetworkEtherscanAddress(netId);
+  const networkName = getNetworkName(netId);
+  if (isTx(hash)) {
     return (
-      <a href={`${explorerAddress}/tx/${hash}`} target="_blank">
-        {hash}
-      </a>
+      <span>
+        <a href={`${explorerAddress}/tx/${hash}`} target="_blank">
+          {hash}
+        </a>{showNetworkName && ` (${networkName})`}
+      </span>
     );
   } else {
     return hash;
   }
-}
+};
+
+/**
+ * Return decoded event
+ *
+ * @param contractInstance
+ * @param log
+ * @returns {{params: {}, name: string}}
+ */
+export const decodeEventOfInstance = (contractInstance, log) => {
+    const abi = contractInstance.abi;
+    let eventAbi = null;
+
+
+    for (let i = 0; i < abi.length; i++) {
+        let item = abi[i];
+        if (item.type !== "event") continue;
+        let signature = item.name + "(" + item.inputs.map(function (input) {
+            return input.type;
+        }).join(",") + ")";
+        let hash = web3.sha3(signature);
+        if (hash === log.topics[0]) {
+            eventAbi = item;
+            break;
+        }
+    }
+
+
+    const decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
+    let event = {
+        params: {},
+        name: decodedEvent._eventName
+    };
+    for (let prop in decodedEvent) {
+        if (!decodedEvent.hasOwnProperty(prop)) {
+            continue;
+        }
+
+        if (prop!=='_eventName') {
+            event.params[prop] = decodedEvent[prop]
+        }
+    }
+
+    return event;
+};
