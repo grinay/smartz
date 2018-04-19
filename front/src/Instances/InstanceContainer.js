@@ -3,13 +3,7 @@ import { connect } from 'react-redux';
 import { find } from 'lodash';
 
 import Instance from './Instance';
-import {
-  fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess
-} from '../Ctors/CtorsActions';
-import {
-  fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
-  viewFuncResult
-} from './InstancesActions';
+import { viewFuncResult } from './InstancesActions';
 
 const mapStateToProps = (state, ownProps) => {
   const instance = find(state.instances.instances, { instance_id: ownProps.match.params.id });
@@ -20,11 +14,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = {
-  fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess,
-  fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
-  viewFuncResult
-};
+const mapDispatchToProps = { viewFuncResult };
 
 const InstanceContainer = withRouter(connect(
   mapStateToProps,

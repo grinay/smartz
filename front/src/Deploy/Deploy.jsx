@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import api from '../api/api';
+import * as api from '../api/apiRequests';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import DeployStep1 from './DeployStep1';
@@ -23,11 +23,7 @@ class Deploy extends Component {
   }
 
   componentWillMount() {
-    const {
-      status, initDeploy,
-      fetchCtorParamsRequest, fetchCtorParamsFailure, fetchCtorParamsSuccess,
-      constructError
-    } = this.props;
+    const { status, initDeploy } = this.props;
     const { ctorId, deployId } = this.state;
 
     if (Auth.isAuthenticated()) {
@@ -35,35 +31,21 @@ class Deploy extends Component {
         initDeploy(deployId);
       }
 
-      fetchCtorParamsRequest(ctorId);
-
-      api().get(`/constructors/${ctorId}/params`)
-        .then(response => {
-          const { data } = response;
-
-          if (data.error) {
-            constructError(deployId, data.error);
-            fetchCtorParamsFailure(ctorId, data.error);
-          } else {
-            fetchCtorParamsSuccess(ctorId, data);
-          }
-        })
-        .catch(error => {
-          constructError(deployId, error.message);
-          fetchCtorParamsFailure(ctorId, error.message)
-        });
+      api.getConstructorParams(ctorId, deployId);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     const { netId, contractAddress, instance, publicAccess } = nextProps;
     if (netId && contractAddress) {
-      api().post(`/instances/${instance.instance_id}/update`, {
+
+      const data = {
         address: contractAddress,
         network_id: Number.parseInt(netId, 10),
-        public_access: publicAccess
-      })
-        .catch(error => console.log(error));
+        public_access: publicAccess,
+      }
+
+      api.updateInstance(instance.instance_id, data)
     }
   }
 
@@ -78,14 +60,10 @@ class Deploy extends Component {
     const { deployId } = this.state;
     const {
       ctor, status, errors, instance, netId, txHash, contractAddress,
-      constructRequest, constructError, constructSuccess,
       setPublicAccess, deployTxSent, deployTxError, deployTxMined
     } = this.props;
 
-    const step1Props = {
-      deployId, ctor,
-      constructRequest, constructError, constructSuccess
-    };
+    const step1Props = { deployId, ctor };
 
     const step2Props = {
       deployId, ctor, instance, status,

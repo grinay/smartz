@@ -2,13 +2,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Dashboard from './Dashboard';
-import {
-  fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess
-} from '../Ctors/CtorsActions';
-import {
-  fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
-  viewFuncResult
-} from '../Instances/InstancesActions';
+import { viewFuncResult } from '../Instances/InstancesActions';
+
 const mapStateToProps = state => ({
   ctors: state.ctors.ctors,
   ctorsError: state.ctors.error,
@@ -18,11 +13,7 @@ const mapStateToProps = state => ({
   instancesFetchStatus: state.instances.fetchStatus,
 });
 
-const mapDispatchToProps = {
-  fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess,
-  fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess,
-  viewFuncResult
-};
+const mapDispatchToProps = { viewFuncResult };
 
 const DashboardContainer = withRouter(connect(
   mapStateToProps,

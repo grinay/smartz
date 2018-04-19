@@ -1,40 +1,22 @@
 import React, { Component } from 'react';
 import Form from 'react-jsonschema-form';
 
-import api from '../api/api';
+import * as api from '../api/apiRequests';
 import FormWidgets from '../common/FormWidgets';
 
 class DeployStep1 extends Component {
   submit({ formData }) {
-    const {
-      deployId, ctor,
-      constructRequest, constructError, constructSuccess
-    } = this.props;
-
-    constructRequest(deployId);
+    const { deployId, ctor } = this.props;
 
     const instTitle = formData.instance_title;
     delete formData.instance_title;
-    api().post(`/constructors/${ctor.ctor_id}/construct`, {
+
+    const data = {
       instance_title: instTitle,
       fields: formData
-    })
+    };
 
-      .then(response => {
-        const { data } = response;
-
-        if (data.error || data.result === 'error') {
-          constructError(deployId, data.error || data.errors);
-
-        } else {
-          constructSuccess(deployId, data);
-        }
-      })
-
-      .catch(error => {
-        console.log(error);
-        constructError(deployId, error);
-      });
+    api.sendFormDataDeployStep1(ctor.ctor_id, deployId, data);
   }
 
   render() {
@@ -71,7 +53,8 @@ class DeployStep1 extends Component {
     }
 
     return (
-      <Form schema={ctor.schema}
+      <Form
+        schema={ctor.schema}
         uiSchema={ctor.ui_schema}
         widgets={FormWidgets}
         onSubmit={this.submit.bind(this)}

@@ -3,23 +3,13 @@ import { Link } from 'react-router-dom';
 
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
-import api from '../api/api';
 import Auth from '../App/Auth/Auth';
 import CtorCard from '../Ctors/CtorCard';
+import * as api from '../api/apiRequests';
 
 class Store extends Component {
-  componentWillMount() {
-    const {
-      fetchCtorsRequest,
-      fetchCtorsFailure,
-      fetchCtorsSuccess
-    } = this.props;
-
-    fetchCtorsRequest();
-
-    api().get('/constructors')
-      .then(response => fetchCtorsSuccess(response.data))
-      .catch(error => fetchCtorsFailure(error.message));
+  componentDidMount() {
+    api.getConstructors();
   }
 
   render() {
