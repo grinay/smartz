@@ -39,13 +39,16 @@ class Transaction extends Component {
 
           {result &&
             <li className="tx-result">
-              Result:
+              Result:{' '}
               {txHash && // write function
-                (result.status === '0x1' ? ' done' : ' error')
+                (result.status === '0x1' ? 'done' : 'error')
               }
-                {console.log(result)}
-              {!txHash && // ask function
-                ` ${processResult(result)}`
+
+              {!txHash // ask functions
+                && processResult(result, func.outputs ? func.outputs.items : undefined)
+                  .split('\n').map((item, key) => {
+                  return <span key={key}>{item}<br/></span>
+                })
               }
             </li>
           }

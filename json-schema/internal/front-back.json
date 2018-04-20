@@ -87,7 +87,7 @@
                 "ui:widget": {
                     "description": "Widget for function result",
                     "type": "string",
-                    "enum": ["unixtime", "ethCount", "enum"]
+                    "enum": ["unixTime", "ethCount", "enum", "url"]
                 },
                 "ui:widget_options": {
                     "description": "Options of widget for function result",
