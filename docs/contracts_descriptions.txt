@@ -8,11 +8,6 @@ erc20_token_constructor
 Standard ERC20 token with custom name, ticker and optional minting, burning, emission limit, premint and pause functions.
 Price: 0.5 ETH.
 
-Equity Token
-equity_constructor
-Standard ERC20 token for representing your organisation shares.
-Price: 0.2 ETH.
-
 Multisignature Wallet
 multisig_wallet_constructor
 Wallet contract to keep your funds under defence of more than one signature. Number of signatures and quorum are adjustable, for example 2/3 or 3/5.
@@ -33,3 +28,17 @@ multitoken_constructor
 In this smart contract you can create a variety of non-standard tokens
 Price: 0.1 ETH
 
+Smartz token
+smartz_token
+ERC20-compatible token with additional features: freezing tokens, burning tokens, approveAndCall function. Used as Smartz platform token.
+Price: 0.3 ETH
+
+Booking
+booking_constructor
+Contract for the rental of real estate
+Price: 0.05 ETH
+
+Ledger
+ledger_constructor
+Universal ledger
+Price: 0.05 ETH
