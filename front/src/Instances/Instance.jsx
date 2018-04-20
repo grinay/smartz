@@ -53,10 +53,7 @@ class Instance extends Component {
     const { instance, ctor, metamaskStatus } = this.props;
 
     if (instance && ctor && !this.state.updateCycleActive) {
-      if (typeof metamaskStatus === 'undefined' ||
-        metamaskStatus === 'noMetamask' ||
-        metamaskStatus === 'unlockMetamask'
-      ) {
+      if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
         return null;
       }
       this.getConstants();
@@ -118,11 +115,8 @@ class Instance extends Component {
 
   render() {
     const { metamaskStatus, instance, ctor } = this.props;
-
-    if (typeof metamaskStatus === 'undefined' ||
-      metamaskStatus === 'noMetamask' ||
-      metamaskStatus === 'unlockMetamask'
-    ) {
+    console.log(metamaskStatus);
+    if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
       return (
         <div className="container">
           <Alert standardAlert={metamaskStatus} />
