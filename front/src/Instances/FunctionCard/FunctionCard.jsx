@@ -70,9 +70,21 @@ class FunctionCard extends Component {
       };
     }
 
+    let uiSchema = {items: []};
+    for (let input of func.inputs.items) {
+      let item = {}
+      if (typeof input === 'object' && 'ui:widget' in input) {
+        item = {
+            'ui:widget': input['ui:widget']
+        }
+      }
+      uiSchema.items.push(item)
+    }
+
     return (
       <Form className="contract-controls__form"
         schema={func.inputs}
+        uiSchema={uiSchema}
         widgets={FormWidgets}
         onSubmit={this.submit.bind(this)}
         onError={(e) => console.log("I have", e.length, "errors to fix")}
@@ -99,24 +111,3 @@ class FunctionCard extends Component {
 }
 
 export default FunctionCard;
-
-/*
-  {typeof value !== 'undefined' &&
-    <div className="func-value">{value.toString()}</div>
-  }
-
-  {tx &&
-    <div className="tx">
-      {spinner
-        ? <span>Wait for transaction to be mined:&ensp;</span>
-        : <span>Transaction mined:&ensp;</span>
-      }
-      <a href={`${getNetworkEtherscanAddress(instance.network_id)}/tx/${tx}`}>
-        {tx}
-      </a>
-      {spinner &&
-        <Spinner text="This can take up to minute..." />
-      }
-    </div>
-  }
-*/

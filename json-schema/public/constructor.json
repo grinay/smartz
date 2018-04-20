@@ -63,7 +63,7 @@
                 "ui:widget": {
                     "description": "Widget for function result",
                     "type": "string",
-                    "enum": ["unixtime", "ethCount", "enum"]
+                    "enum": ["unixTime", "ethCount", "enum", "url"]
                 },
                 "ui:widget_options": {
                     "description": "Options of widget for function result",
@@ -82,7 +82,12 @@
                         "additionalProperties": false,
                         "properties": {
                             "title": {"type": "string"},
-                            "description": {"type": "string"}
+                            "description": {"type": "string"},
+                            "ui:widget": {
+                                "description": "Widget for input",
+                                "type": "string",
+                                "enum": ["stringHash", "fileHash"]
+                            }
                         }
                     }
                 },
