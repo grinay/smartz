@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
-import Auth from '../App/Auth/Auth';
 import CtorCard from '../Ctors/CtorCard';
 import * as api from '../api/apiRequests';
 
@@ -14,7 +13,6 @@ class Store extends Component {
 
   render() {
     const { ctors, metamaskStatus } = this.props;
-    const isAuthenticated = Auth.isAuthenticated();
 
     return (
       <main className="page-main  page-main--store">
@@ -42,12 +40,7 @@ class Store extends Component {
           <Alert header="If you are developer" color="green"
             style={{ marginTop: '80px' }}
           >
-            <p>You can <Link to="/ctor-add" onClick={(e) => {
-              if (!isAuthenticated) {
-                e.preventDefault();
-                Auth.login('/ctor-add');
-              }
-            }}>add a smart contract</Link> to our platform.</p>
+            <p>You can <Link to="/ctor-add">add a smart contract</Link> to our platform.</p>
           </Alert>
         </div>
       </main>

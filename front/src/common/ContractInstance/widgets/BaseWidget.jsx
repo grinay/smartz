@@ -8,17 +8,17 @@ export default class BaseWidget extends PureComponent {
 
     this.state = {
       fnDescription: props.fnDescription,
-      instance: props.instance
+      contractInstance: props.contractInstance
     };
   }
 
   getResult(defaultValue) {
-    const { fnDescription, instance } = this.props;
-    if (!instance.funcResults || instance.funcResults[fnDescription.name] === undefined) {
+    const { fnDescription, contractInstance } = this.props;
+    if (!contractInstance.funcResults || contractInstance.funcResults[fnDescription.name] === undefined) {
       return defaultValue ? defaultValue : '';
     }
 
-    return instance.funcResults[fnDescription.name];
+    return contractInstance.funcResults[fnDescription.name];
   }
 
   getOption(optionName, defaultValue) {
@@ -34,7 +34,7 @@ export default class BaseWidget extends PureComponent {
   }
 
   render() {
-    const { fnDescription, instance } = this.props;
+    const { fnDescription, contractInstance } = this.props;
 
     const result = this.getResult();
 
@@ -45,7 +45,7 @@ export default class BaseWidget extends PureComponent {
         && typeof(fnDescription.outputs.items[0])==='object' && '$ref' in fnDescription.outputs.items[0]
         && fnDescription.outputs.items[0]['$ref'] === "#/definitions/address"
     ) {
-      return makeEtherscanLink(result, instance.network_id)
+      return makeEtherscanLink(result, contractInstance.network_id)
     }
 
     return result;

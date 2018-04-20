@@ -1,13 +1,13 @@
 import BaseWidget from "./BaseWidget";
 import dateFormat from "dateformat"
 
-export default class Unixtime extends BaseWidget {
+export default class UnixTime extends BaseWidget {
   constructor(props) {
     super(props);
 
     this.state = {
       fnDescription: props.fnDescription,
-      instance: props.instance
+      contractInstance: props.contractInstance
     }
   }
 
