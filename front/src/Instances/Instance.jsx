@@ -115,7 +115,7 @@ class Instance extends Component {
 
   render() {
     const { metamaskStatus, instance, ctor } = this.props;
-    console.log(metamaskStatus);
+
     if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
       return (
         <div className="container">
