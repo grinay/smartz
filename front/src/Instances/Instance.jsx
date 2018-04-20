@@ -11,6 +11,8 @@ import {
 import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
+import { instanceJson } from './mock';
+
 
 import './Instance.css';
 import renderInstanceWidget from "../common/ContractInstance/ContractInstanceWidgets";
@@ -44,7 +46,8 @@ class Instance extends Component {
 
     fetchInstancesRequest();
     api(auth).get(`/instances/${this.props.match.params.id}`)
-      .then(response => fetchInstancesSuccess([response.data]))
+      // .then(response => fetchInstancesSuccess([response.data]))
+      .then(response => fetchInstancesSuccess([instanceJson]))
       .catch(error => fetchInstancesFailure(error));
   }
 
