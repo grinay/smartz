@@ -71,14 +71,16 @@ class FunctionCard extends Component {
     }
 
     let uiSchema = {items: []};
-    for (let input of func.inputs.items) {
-      let item = {}
-      if (typeof input === 'object' && 'ui:widget' in input) {
-        item = {
+    if (func.inputs && func.inputs.items) {
+      for (let input of func.inputs.items) {
+        let item = {};
+        if (typeof input === 'object' && 'ui:widget' in input) {
+          item = {
             'ui:widget': input['ui:widget']
+          }
         }
+        uiSchema.items.push(item)
       }
-      uiSchema.items.push(item)
     }
 
     return (
