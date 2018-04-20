@@ -548,7 +548,7 @@ class Constructor(ConstructorInstance):
         return {
             "result": "success",
             'function_specs': function_titles,
-            'dashboard_functions': ['ballotName']
+            'dashboard_functions': ['name', 'description', 'recordName', 'getRecordsCount']
         }
 
 
