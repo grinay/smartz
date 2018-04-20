@@ -1,5 +1,6 @@
 import BaseWidget from "./BaseWidget";
-import dateFormat from "dateformat"
+import React  from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Url extends BaseWidget {
   constructor(props) {
