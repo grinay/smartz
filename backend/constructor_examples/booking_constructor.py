@@ -186,13 +186,13 @@ class Constructor(ConstructorInstance):
 
             'm_rentDateStart': {
                 'title': 'Start rent time',
-                'ui:widget': 'unixtime',
+                'ui:widget': 'unixTime',
                 'sorting_order': 20
             },
 
             'm_rentDateEnd': {
                 'title': 'End rent time',
-                'ui:widget': 'unixtime',
+                'ui:widget': 'unixTime',
                 'sorting_order': 30
             },
 

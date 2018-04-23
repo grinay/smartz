@@ -90,11 +90,23 @@ export const processControlForm = (contract_abi /* abi array */, function_spec /
 
 // ALSO: render box with processControlForm() for each dashboard function
 
-export const processResult = res => {
+export const processResult = (res, outputs) => {
   switch (typeof res) {
     case 'object':
       if (Array.isArray(res)) {
-        return res.join("\n")
+        let resultText = '';
+
+        for (let i in res) {
+            if (!res.hasOwnProperty(i)) {
+                continue;
+            }
+
+            resultText += outputs && outputs[i] && outputs[i].title
+                ? `${outputs[i].title}: ${res[i]}\n`
+                : res[[i]] + "\n";
+        }
+
+        return resultText;
       } else {
         return res.toString();
       }

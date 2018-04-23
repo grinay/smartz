@@ -2,9 +2,10 @@
 
 import React from "react";
 import BaseWidget from "./widgets/BaseWidget";
-import Unixtime from "./widgets/Unixtime";
+import UnixTime from "./widgets/UnixTime";
 import EthCount from "./widgets/EthCount";
 import Enum from "./widgets/Enum";
+import Url from "./widgets/Url";
 
 const ContractInstanceWidgets = {
   baseWidget: (fnDescr, contractInstance) =>
@@ -13,7 +14,7 @@ const ContractInstanceWidgets = {
       contractInstance={contractInstance}
     />,
   unixtime: (fnDescr, contractInstance) =>
-    <Unixtime
+    <UnixTime
       fnDescription={fnDescr}
       contractInstance={contractInstance}
     />,
@@ -24,6 +25,11 @@ const ContractInstanceWidgets = {
     />,
   enum: (fnDescr, contractInstance) =>
     <Enum
+      fnDescription={fnDescr}
+      contractInstance={contractInstance}
+    />,
+  url: (fnDescr, contractInstance) =>
+    <Url
       fnDescription={fnDescr}
       contractInstance={contractInstance}
     />,

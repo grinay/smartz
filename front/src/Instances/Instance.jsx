@@ -52,8 +52,13 @@ class Instance extends Component {
   }
 
   componentDidUpdate() {
-    const { instance, ctor } = this.props;
+    // TODO: refactor this shit
+    const { instance, ctor, metamaskStatus } = this.props;
+
     if (instance && ctor && !this.state.updateCycleActive) {
+      if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
+        return null;
+      }
       this.getConstants();
     }
     /*
@@ -112,14 +117,16 @@ class Instance extends Component {
   }
 
   render() {
-    const { metamaskStatus } = this.props;
-    if (metamaskStatus) return (
-      <div className="container">
-        <Alert standardAlert={metamaskStatus} />
-      </div>
-    );
+    const { metamaskStatus, instance, ctor } = this.props;
 
-    const { instance, ctor } = this.props;
+    if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
+      return (
+        <div className="container">
+          <Alert standardAlert={metamaskStatus} />
+        </div>
+      );
+    }
+
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">
         <Link to="/dashboard" className="page-main__link">
