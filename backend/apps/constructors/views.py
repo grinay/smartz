@@ -73,6 +73,12 @@ class UploadView(View):
         constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
         args = request.data
 
+        if 'payment_address' in args:
+            if not re.findall('^0x[0-9a-fA-F]{40}$', args['payment_address']):
+                return error_response("Invalid payment address")
+        else:
+            args['payment_address'] = ''
+
         user_id = auth(request, db)
         if isinstance(user_id, HttpResponse):
             return user_id  # error
@@ -126,28 +132,23 @@ class UploadView(View):
         else:
             return error_response("Invalid input")
 
+        record = {
+                    'ctor_name': name,
+                    'ctor_descr': descr,
+                    'payment_address': args['payment_address'],
+                    'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
+                    'is_public': is_public,
+                    'user_id': user_id
+                }
+
         if 'constructor_id' in args:
             ctors.replace_one(
                 {'_id': current_constructor['_id']},
-                {
-                    'ctor_name': name,
-                    'ctor_descr': descr,
-                    'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
-                    'is_public': is_public,
-                    'user_id': user_id
-                }
+                record
             )
             constructor_engine_instance.register_new_ctor(_ctor_id(current_constructor['_id']), filename)
         else:
-            ctor_id = ctors.insert_one(
-                {
-                    'ctor_name': name,
-                    'ctor_descr': descr,
-                    'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
-                    'is_public': is_public,
-                    'user_id': user_id
-                }
-            ).inserted_id
+            ctor_id = ctors.insert_one(record).inserted_id
 
             constructor_engine_instance.register_new_ctor(_ctor_id(ctor_id), filename)
 
@@ -237,7 +238,7 @@ class ConstructView(View):
                 }
             )
 
-        result = constructor_engine_instance.construct(constructor_id, price_eth, fields)
+        result = constructor_engine_instance.construct(constructor_id, constructor, fields)
 
         if not isinstance(result, dict):
             return error_response("Constructor({}), construct error, result is not dict".format(constructor_id))
