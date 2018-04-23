@@ -133,6 +133,10 @@ class Common(Configuration):
     # used for setup prefix on local development since thereis no nginx on it
     SMARTZ_API_PREFIX = ''
 
+    # business logic
+    SMARTZ_COMMISSION = 0.2
+    SMARTZ_COMMISSION_ADDRESS = '0xaacf78f8e1fbdcf7d941e80ff8b817be1f054af4'
+
 
 class Development(Common):
     """
