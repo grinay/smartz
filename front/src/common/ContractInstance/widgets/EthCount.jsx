@@ -31,7 +31,12 @@ export default class EthCount extends BaseWidget {
           const { data, status } = response;
 
           if (status === 200 && Array.isArray(data) && data.length > 0) {
-            this.setState({ currency: `${showCurrency} ${data[0].price_usd}` });
+            const priceString = data[0][`price_${showCurrency.toLowerCase()}`];
+            const priceFloat = parseFloat(priceString).toFixed(2);
+
+            this.setState({
+              currency: `${showCurrency} ${priceFloat}`
+            });
           }
         })
         .catch(error => {
