@@ -15,6 +15,7 @@ import {
 } from '../Instances/InstancesActions';
 import {
     // initDeploy,
+    setFormData,
     constructRequest,
     constructError,
     constructSuccess,
@@ -128,10 +129,11 @@ export function updateInstance(instanceId) {
 // Deploy
 // =============================================================================
 
-export function sendFormDataDeployStep1(ctorId, deployId, data) {
+export function sendFormDataDeployStep1(ctorId, deployId, data, formData) {
     const result = fetch(`/constructors/${ctorId}/construct`, data, 'post');
 
     dispatch(constructRequest(deployId));
+    dispatch(setFormData(deployId, formData));
 
     result
         .then(response => {

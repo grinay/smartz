@@ -1,9 +1,20 @@
 import axios from 'axios';
 import Auth from '../App/Auth/Auth';
+import MockAdapter from 'axios-mock-adapter';
+import subscribeMockRequests from './apiMock';
 
+const USE_MOCK = true;
+const COLLAPSED_LOG_REQUESTS = true;
 const API_URL = /localhost/.test(window.location.origin)
-  ? 'http://localhost:3000/api'
+  // ? 'http://localhost:3000/api'
+  ? 'http://172.28.128.3:3000/api'
   : window.location.origin + '/api';
+
+let r;
+if (USE_MOCK) {
+  r = new MockAdapter(axios)
+  subscribeMockRequests(r);
+}
 
 function logFetch(promise) {
 
@@ -15,7 +26,11 @@ function logFetch(promise) {
 
     result
       .then(response => {
-        console.group(`REQUEST %c Success `, 'background-color: green; color: white');
+        if (COLLAPSED_LOG_REQUESTS) {
+          console.groupCollapsed(`%c ${method.toUpperCase()} `, 'background-color: green; color: white', `${url}`);
+        } else {
+          console.group(`REQUEST %c Success `, 'background-color: green; color: white');
+        }
         console.log('HANDLER: ', url);
         console.log('METHOD: ', method.toUpperCase());
         if (data !== undefined) {
@@ -39,7 +54,7 @@ function logFetch(promise) {
   return wrapper;
 }
 
-const apiNew = (url = '/', data = undefined, method = 'post', mock = false) => {
+const apiNew = (url = '/', data = undefined, method = 'post', mock = USE_MOCK) => {
   const accessToken = Auth.isAuthenticated() ? Auth.getAccessToken() : null;
 
   const config = {

@@ -4,6 +4,12 @@ export const initDeploy = (deployId) => ({
 });
 
 // Step 1 - constructing
+export const setFormData = (deployId, formData) => ({
+  type: 'SET_FORM_DATA',
+  formData,
+  deployId
+});
+
 export const constructRequest = (deployId) => ({
   type: 'CONSTRUCT_REQUEST',
   deployId

@@ -60,10 +60,10 @@ class Deploy extends Component {
     const { deployId } = this.state;
     const {
       ctor, status, errors, instance, netId, txHash, contractAddress,
-      setPublicAccess, deployTxSent, deployTxError, deployTxMined
+      setPublicAccess, deployTxSent, deployTxError, deployTxMined, formData
     } = this.props;
 
-    const step1Props = { deployId, ctor };
+    const step1Props = { deployId, ctor, formData };
 
     const step2Props = {
       deployId, ctor, instance, status,

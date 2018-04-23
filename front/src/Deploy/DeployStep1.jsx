@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Form from 'react-jsonschema-form';
 
 import * as api from '../api/apiRequests';
 import FormWidgets from '../common/FormWidgets';
 
-class DeployStep1 extends Component {
+class DeployStep1 extends PureComponent {
   submit({ formData }) {
+    this.formDataSaved = formData;
+
     const { deployId, ctor } = this.props;
+
+    const formDataOrigin = Object.assign({}, { ...formData })
 
     const instTitle = formData.instance_title;
     delete formData.instance_title;
@@ -16,11 +20,11 @@ class DeployStep1 extends Component {
       fields: formData
     };
 
-    api.sendFormDataDeployStep1(ctor.ctor_id, deployId, data);
+    api.sendFormDataDeployStep1(ctor.ctor_id, deployId, data, formDataOrigin);
   }
 
   render() {
-    const { ctor } = this.props;
+    const { ctor, formData } = this.props;
 
     // Add instance name field in the form beginning
     if (ctor && ctor.schema && (!ctor.schema.properties || !ctor.schema.properties.instance_title)) {
@@ -57,7 +61,9 @@ class DeployStep1 extends Component {
         schema={ctor.schema}
         uiSchema={ctor.ui_schema}
         widgets={FormWidgets}
+        formData={formData}
         onSubmit={this.submit.bind(this)}
+        onChange={e => this.formDataSaved = e.formData}
         onError={(e) => console.log("I have", e.length, "errors to fix", e)}
         showErrorList={false}
         id="deploy-form"

@@ -1,10 +1,10 @@
-import {cloneDeep} from 'lodash';
+import { cloneDeep } from 'lodash';
 
 const initState = [];
 
 const deploy = (state = initState, action) => {
   const nextState = cloneDeep(state);
-  const {deployId} = action;
+  const { deployId } = action;
 
   switch (action.type) {
     case 'INIT_DEPLOY':
@@ -12,6 +12,10 @@ const deploy = (state = initState, action) => {
         status: 'configure',
         errors: null
       };
+      return nextState;
+
+    case 'SET_FORM_DATA':
+      nextState[deployId].formData = action.formData;
       return nextState;
 
     case 'CONSTRUCT_REQUEST':
