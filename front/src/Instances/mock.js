@@ -1172,7 +1172,10 @@ export const instanceJson = {
             },
             "description": "Rent price for whole period",
             "sorting_order": 40,
-            "ui:widget": "ethCount"
+            "ui:widget": "ethCount",
+            "ui:widget_options": {
+                "show_currency": "USD"
+            }
         },
         {
             "name": "m_cancellationFee",

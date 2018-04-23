@@ -9,19 +9,16 @@ export default class EthCount extends BaseWidget {
 
     this.state = {
       fnDescription: props.fnDescription,
-      contractInstance: props.contractInstance
+      contractInstance: props.contractInstance,
+      currency: null,
     }
   }
 
-  render() {
-    let res = web3.toBigNumber(this.getResult(0));
-    res = res.div(web3.toWei(1, 'ether'));
-
+  componentDidMount() {
     const showCurrency = this.getOption('show_currency');
-    const currency = null;
 
     if (showCurrency === undefined) {
-      return res.valueOf();
+      return null;
     }
 
     if (Array.isArray(showCurrency)) {
@@ -31,14 +28,23 @@ export default class EthCount extends BaseWidget {
 
       axios.get(url)
         .then(response => {
-          console.log(response);
-          if (response.status === '200') {
+          const { data, status } = response;
+
+          if (status === 200 && Array.isArray(data) && data.length > 0) {
+            this.setState({ currency: `${showCurrency} ${data[0].price_usd}` });
           }
         })
         .catch(error => {
-          console.log(error);
+          console.warn(error);
         });
     }
+  }
 
+  render() {
+    const { currency } = this.state;
+    let res = web3.toBigNumber(this.getResult(0));
+    res = res.div(web3.toWei(1, 'ether'));
+
+    return currency === null ? res.valueOf() : `${res.valueOf()} (${currency})`;
   }
 };
