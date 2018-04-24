@@ -78,22 +78,28 @@ class Deploy extends Component {
 
     let errorList = null;
     if (errors !== null && errors !== undefined) {
-      const errArr = transformObj2Flat(errors);
+      if (typeof errors === 'string') {
+        errorList = <p>{errors}</p>;
+      }
 
-      errorList = Object.keys(errArr).map(err => {
-        const value = errArr[err];
+      if (typeof errors === 'object') {
+        const errArr = transformObj2Flat(errors);
 
-        const listErr = Array.isArray(value) ?
-          value.map(item => <li key={item}>{item}</li>) :
-          <li key={errArr[err]}>{errArr[err]}</li>
+        errorList = Object.keys(errArr).map(err => {
+          const value = errArr[err];
 
-        return (
-          <span key={err}>
-            <p>{err}:</p>
-            <ul>{listErr}</ul>
-          </span>
-        );
-      });
+          const listErr = Array.isArray(value) ?
+            value.map(item => <li key={item}>{item}</li>) :
+            <li key={errArr[err]}>{errArr[err]}</li>
+
+          return (
+            <span key={err}>
+              <p>{err}:</p>
+              <ul>{listErr}</ul>
+            </span>
+          );
+        });
+      }
     }
 
     return (
