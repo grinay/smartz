@@ -44,7 +44,7 @@ class Constructor(ConstructorInstance):
                 "fileHash": {
                     "title": "Hash of file above",
                     "description": "Just upload file, hash will be calculated automatically",
-                    "$ref": "#/definitions/fileHash"
+                    "$ref": "#/definitions/hash"
                 },
                 "cancellationFee": {
                     "title": "Cancellation fee",

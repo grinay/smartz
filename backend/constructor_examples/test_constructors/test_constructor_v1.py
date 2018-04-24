@@ -21,7 +21,7 @@ class Constructor(ConstructorInstance):
                 "file": {
                     "title": "File",
                     "description": "Hash of file",
-                    "$ref": "#/definitions/fileHash"
+                    "$ref": "#/definitions/hash"
                 },
             }
         }

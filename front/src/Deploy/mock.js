@@ -33,7 +33,7 @@ export const ctorJson = {
             "file_hash": {
                 "title": "File",
                 "description": "File to hash",
-                "$ref": "#/definitions/fileHash",
+                "$ref": "#/definitions/hash",
                 "format": "data-url"
             },
         },
@@ -167,12 +167,12 @@ export const ctorCustom = {
             "file_hash": {
                 "title": "File",
                 "description": "File to hash",
-                "$ref": "#/definitions/fileHash",
+                "$ref": "#/definitions/hash",
             },
             "string_hash": {
                 "title": "String2hash",
                 "description": "Sgting to hash",
-                "$ref": "#/definitions/fileHash",
+                "$ref": "#/definitions/hash",
             },
             "signs_count": {
                 "type": "integer",
