@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 import * as api from '../api/apiRequests';
+import { transformObj2Flat } from '../helpers/normalize';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import DeployStep1 from './DeployStep1';
 import DeployStep2 from './DeployStep2';
 import DeployStep3 from './DeployStep3';
 import Auth from '../App/Auth/Auth';
+
 import './Deploy.css';
 
 // TODO: refactor this file totally
@@ -74,6 +76,26 @@ class Deploy extends Component {
       status, txHash, netId, instance, contractAddress
     };
 
+    let errorList = null;
+    if (errors !== null && errors !== undefined) {
+      const errArr = transformObj2Flat(errors);
+
+      errorList = Object.keys(errArr).map(err => {
+        const value = errArr[err];
+
+        const listErr = Array.isArray(value) ?
+          value.map(item => <li key={item}>{item}</li>) :
+          <li key={errArr[err]}>{errArr[err]}</li>
+
+        return (
+          <span key={err}>
+            <p>{err}:</p>
+            <ul>{listErr}</ul>
+          </span>
+        );
+      });
+    }
+
     return (
       <main className="page-main page-main--contracts">
         <aside className="block-half">
@@ -136,12 +158,7 @@ class Deploy extends Component {
 
           {errors &&
             <Alert>
-              {typeof errors === 'object'
-                ? Object.keys(errors).map((err, i) => (
-                  <p key={i}>{errors[err]}</p>)
-                )
-                : <p>{errors}</p>
-              }
+              {errorList}
             </Alert>
           }
 

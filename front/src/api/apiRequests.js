@@ -140,8 +140,8 @@ export function sendFormDataDeployStep1(ctorId, deployId, data, formData) {
             const { data, status } = response;
 
             if (status === 200) {
-                if (data.error || data.result === 'error') {
-                    dispatch(constructError(deployId, data.error || data.errors));
+                if (data.errors || data.result === 'error') {
+                    dispatch(constructError(deployId, data.errors || data.error_descr));
                 } else {
                     dispatch(constructSuccess(deployId, data));
                 }

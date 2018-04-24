@@ -1,21 +1,21 @@
+import * as data from './mock/constructors';
+
 export default function subscribeMockRequests(mockApi) {
     mockApi
-        // .onGet('/constructors').reply(200, {
-        //     const: ['rrr']
-        // })
-        // .onGet('/instances').reply(200, {
-        //     inst: [1, 1]
-        // })
+        .onAny('/constructors').reply(200, data.constructorListProd)
+        .onAny(/\/constructors\/........................\/params/).reply(200, data.ctorAtomicSwap)
+        // .onAny(/\/constructors\/........................\/params/).reply(200, data.ctorCustom)
         .onAny(/\/constructors\/........................\/construct/).reply(200, {
-            result: 'error',
-            error_descr: 'Some problem',
-            //             errors: {
-            //                 поле1: текст ошибки,
-            //                 поле2: [текст ошибки1, текст ошибки2] - это еще никто не возвращает, но хотелось бы
-            //    группа1: {
-            //                 поле1: текст ошибки(в группе может быть такой же id, как и в другой группе или вне группы)
-            //             }
-            // } 
+            // result: 'error',
+            // error_descr: 'Some problem',
+            result: 'success',
+            errors: {
+                check_transfers: 'Cho thie',
+                participant2: ['ONe err', 'Two error'],
+                participant1: {
+                    count: 'Bad count'
+                }
+            }
         })
         .onAny().passThrough();
 

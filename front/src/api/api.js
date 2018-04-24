@@ -3,17 +3,14 @@ import Auth from '../App/Auth/Auth';
 import MockAdapter from 'axios-mock-adapter';
 import subscribeMockRequests from './apiMock';
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 const COLLAPSED_LOG_REQUESTS = true;
 const API_URL = /localhost/.test(window.location.origin)
-  // ? 'http://localhost:3000/api'
-  ? 'http://172.28.128.3:3000/api'
+  ? 'http://localhost:3000/api'
   : window.location.origin + '/api';
 
-let r;
 if (USE_MOCK) {
-  r = new MockAdapter(axios)
-  subscribeMockRequests(r);
+  subscribeMockRequests(new MockAdapter(axios));
 }
 
 function logFetch(promise) {
