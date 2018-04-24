@@ -73,6 +73,12 @@ class CtorAdd extends Component {
           "minLength": 3,
           "maxLength": 300
         },
+        "payment_address": {
+          "title": "Address",
+          "description": "Payment for contract deploy will be sent to this address",
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{40}$"
+        },
         "price_eth": {
           "title": "Price of deploy in ETH",
           "description": "0 = free contract",

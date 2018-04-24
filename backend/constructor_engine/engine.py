@@ -50,7 +50,7 @@ class BaseEngine(object):
 
         return res
 
-    def construct(self, constructor_id, price_eth, fields):
+    def construct(self, constructor_id, constructor, fields):
         try:
             constructor_source = self._load_constructor(constructor_id)
         except Exception:
@@ -75,10 +75,33 @@ class BaseEngine(object):
 
         source, contract_name = res['source'], res['contract_name']
 
+
+        price_eth = constructor.get('price_eth', .0)
+        payment_address = constructor.get('payment_address', '')
+
         if price_eth:
             wei = int(price_eth * 1e18)
-            source = source.replace('%payment_code%',
-                        'address(0xaacf78f8e1fbdcf7d941e80ff8b817be1f054af4).transfer({} wei);'.format(wei))
+
+            if payment_address:
+                assert(settings.SMARTZ_COMMISSION < 1)
+
+                payment_code = """
+        address({commission_address}).transfer({commission} wei);
+        address({payment_address}).transfer({payment_sum} wei);
+                """.format(
+                    commission_address=settings.SMARTZ_COMMISSION_ADDRESS,
+                    commission=int(wei*settings.SMARTZ_COMMISSION),
+
+                    payment_address=payment_address,
+                    payment_sum=wei-int(wei*settings.SMARTZ_COMMISSION)
+                )
+            else:
+                payment_code = 'address({commission_address}).transfer({commission} wei);'.format(
+                    commission_address=settings.SMARTZ_COMMISSION_ADDRESS,
+                    commission=int(wei)
+                )
+
+            source = source.replace('%payment_code%', payment_code)
         else:
             source = source.replace('%payment_code%', '')
 
