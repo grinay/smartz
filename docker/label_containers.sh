@@ -5,7 +5,7 @@ then
 	LABELS+="LABEL git.tag=\"$(git describe --tags)\"\n"
 	LABELS+="LABEL git.commit=\"$(git log -1  --pretty=format:'%H')\"\n"
 	LABELS+="LABEL git.commit.short=\"$(git log -1  --pretty=format:'%h')\"\n"
-	LABELS+="LABEL git.commit.message=\"$(git log -1  --pretty=format:'%B')\"\n"
+	LABELS+="LABEL git.commit.message=\"$(git log -1  --pretty=format:'%B' | tr '\n' '|')\"\n"
 	LABELS+="LABEL git.committer=\"$(git log -1 --pretty=format:'%cn <%ce>')\"\n"
 	LABELS+="LABEL git.date=\"$(git log -1  --pretty=format:'%cd')\"\n"
 	LABELS+="LABEL git.timestampt=\"$(git log -1  --pretty=format:'%ct')\"\n"

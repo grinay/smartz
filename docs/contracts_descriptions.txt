@@ -42,3 +42,8 @@ Ledger
 ledger_constructor
 Universal ledger
 Price: 0.05 ETH
+
+Smartz platform features
+Simple constructor for presentation of smartz platform features (like widgets)
+features_constructor.py
+Price: 0
