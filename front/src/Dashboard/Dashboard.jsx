@@ -3,7 +3,7 @@ import { find } from 'lodash';
 import { Link } from 'react-router-dom';
 
 import {
-  processControlForm, processResult
+  processControlForm, processResult, getNetworkId
 } from '../helpers/eth';
 import api from '../helpers/api';
 import Alert from '../common/Alert';
@@ -15,7 +15,8 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      updateCycleActive: false
+      updateCycleActive: false,
+      networkId: null,
     };
   }
 
@@ -36,6 +37,11 @@ class Dashboard extends Component {
       .then(response => fetchInstancesSuccess(response.data))
       .catch(error => fetchInstancesFailure(error));
   }
+
+  componentDidMount() {
+    getNetworkId(networkId => this.setState({ networkId }));
+  }
+
 
   componentDidUpdate() {
     const { ctors, instances } = this.props;
@@ -87,16 +93,27 @@ class Dashboard extends Component {
 
   render() {
     const { metamaskStatus } = this.props;
+    const { networkId } = this.state;
+
     if (metamaskStatus) return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>
     );
 
+    if (networkId === null) {
+      return null;
+    }
+
     const { ctors, ctorsError, instances, instancesError } = this.props;
     instances.forEach(inst => {
       inst.ctor = find(ctors, { ctor_id: inst.ctor_id }) || {};
     });
+
+    // show instances only current network
+    const filterInstances = instances.filter(instance =>
+      instance.network_id.toString() === this.state.networkId
+    );
 
     return (
       <main className="page-main  page-main--my-contracts">
@@ -109,7 +126,7 @@ class Dashboard extends Component {
 
         <section className="my-contracts">
           <ul className="my-contracts__list">
-            {instances && instances.map((inst, j) => (
+            {filterInstances && filterInstances.map((inst, j) => (
               <li key={j} className="my-contracts__item">
                 <Link to={`/instance/${inst.instance_id}`} className="my-contracts__link">
                   <article className="my-contract">
