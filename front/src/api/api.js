@@ -82,6 +82,6 @@ const api = () => {
   });
 };
 
-export const fetch = logFetch(apiNew);
+export const fetch = USE_MOCK ? logFetch(apiNew) : apiNew;
 
 export default api;
