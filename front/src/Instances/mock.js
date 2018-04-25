@@ -911,7 +911,7 @@ export const instanceJson = {
                 }
             },
             "sorting_order": 20,
-            "ui:widget": "unixtime"
+            "ui:widget": "unixTime"
         },
         {
             "name": "m_rentDateEnd",
@@ -1041,7 +1041,7 @@ export const instanceJson = {
                 }
             },
             "sorting_order": 30,
-            "ui:widget": "unixtime"
+            "ui:widget": "unixTime"
         },
         {
             "name": "m_price",

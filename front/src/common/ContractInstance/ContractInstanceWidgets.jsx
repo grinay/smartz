@@ -13,7 +13,7 @@ const ContractInstanceWidgets = {
       fnDescription={fnDescr}
       contractInstance={contractInstance}
     />,
-  unixtime: (fnDescr, contractInstance) =>
+  unixTime: (fnDescr, contractInstance) =>
     <UnixTime
       fnDescription={fnDescr}
       contractInstance={contractInstance}
