@@ -205,6 +205,9 @@ class Constructor(ConstructorInstance):
                 'title': 'some eth count',
                 'description': 'In variable in smart contract it stored in wei',
                 'ui:widget': 'ethCount',
+                'ui:widget_options': {
+                    'show_currency': 'USD'
+                },
                 'sorting_order': 50
             },
 
@@ -244,6 +247,17 @@ class Constructor(ConstructorInstance):
                     {'title': 'Date time selector', 'description': 'unixtime will be sent', 'ui:widget': 'unixTime'}
                 ],
                 'sorting_order': 100
+            },
+
+            '': {
+                'title': 'Send ether to contract (fallback)',
+                'sorting_order': 1
+            },
+
+            'sendEther': {
+                'title': 'Send ether to contract',
+                'description': 'Payable function. Ether amount can be set',
+                'sorting_order': 200
             },
         }
 
@@ -312,7 +326,14 @@ contract SmartzFeatures {
     function setDate(uint256 _date) public {
         someDate = _date;
     }
+    
+    function() public payable {
+        ethCount = msg.value;
+    }
 
+    function sendEther() public payable {
+        ethCount = msg.value;
+    }
 }
 
     """
