@@ -12,7 +12,4 @@ def ok_response(result):
 
 
 def engine_error_response(res):
-    if 'error_descr' in res:
-        return JsonResponse({'error': res['error_descr']})
-    else:
-        return JsonResponse(res)
+    return JsonResponse(res)
