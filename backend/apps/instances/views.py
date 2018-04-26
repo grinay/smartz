@@ -115,3 +115,16 @@ class UpdateView(View):
 
         return JsonResponse({'ok': True}) # todo
 
+
+class DeleteMy(View):
+    """Temporary view"""
+
+    def get(self, request, user_id):
+        if not settings.DEBUG:
+            return JsonResponse({'ok': False})
+
+        instances_db = db.instances
+        instances_db.remove({'user_id': user_id})
+
+        return JsonResponse({'ok': True})
+
