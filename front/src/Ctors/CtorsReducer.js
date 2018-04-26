@@ -29,9 +29,19 @@ const setPic = (ctorName) => { // Temporary until image management implemented
 
     case 'atomic swap for erc20':
       return 'contract-swap.jpg';
+
+    case 'multitoken':
+      return 'contract-multitoken.jpg';
+
+    case 'booking':
+      return 'contract-booking.jpg';
+
+    case 'ledger':
+      return 'contract-ledger.jpg';
+
     default:
   }
-}
+};
 
 const ctors = (state = initState, action) => {
   const nextState = {...state};
