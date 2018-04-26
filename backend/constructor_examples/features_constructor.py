@@ -60,19 +60,24 @@ class Constructor(ConstructorInstance):
                     "type": "number"
                 },
 
+                "block1": {
+                    "title": "Block",
+                    "description": "Some fields can be in block",
+                    "type": "object",
+                    "properties": {
+                        "ethCountPositive": {
+                            "title": "Positive ether count",
+                            "description": "Float like field with without exp notation. Greater than zero",
+                            "$ref": "#/definitions/ethCountPositive"
+                        },
 
-                "ethCountPositive": {
-                    "title": "Positive ether count",
-                    "description": "Float like field with without exp notation. Greater than zero",
-                    "$ref": "#/definitions/ethCountPositive"
+                        "ethCount": {
+                            "title": "Ether count",
+                            "description": "Float like field with without exp notation. Greater or equal zero",
+                            "$ref": "#/definitions/ethCountPositive"
+                        },
+                    }
                 },
-
-                "ethCount": {
-                    "title": "Ether count",
-                    "description": "Float like field with without exp notation. Greater or equal zero",
-                    "$ref": "#/definitions/ethCountPositive"
-                },
-
 
                 "unxtimeWidget": {
                     "title": "Unixtime with widget",
@@ -104,7 +109,6 @@ class Constructor(ConstructorInstance):
                     "minItems": 1,
                     "$ref": "#/definitions/addressArray"
                 },
-
 
             }
         }
@@ -143,7 +147,10 @@ class Constructor(ConstructorInstance):
                 "result": "error",
                 "errors": {
                     'string': 'some error',
-                    'enum': ['some error 1', 'some error 2']
+                    'enum': ['some error 1', 'some error 2'],
+                    'block1': {
+                        'ethCount': 'error for item in block'
+                    }
                 }
             }
 
