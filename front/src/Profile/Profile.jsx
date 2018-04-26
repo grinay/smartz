@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import Auth from '../App/Auth/Auth';
 
 import './Profile.css';
 
 class Profile extends Component {
   render() {
-    const {auth, profile} = this.props;
+    const { profile } = this.props;
 
-    if (!auth.isAuthenticated())
+    if (!Auth.isAuthenticated())
       return (<Redirect to="/" />);
 
     return (
@@ -17,14 +18,14 @@ class Profile extends Component {
             <h2>{profile.name}</h2>
             <img
               src={profile.picture} alt="profile pic"
-              style={{maxWidth: '200px'}}
+              style={{ maxWidth: '200px' }}
             />
             <p>
               {`Locale: ${profile.locale}`}
             </p>
             <button
               className="button block__button"
-              onClick={this.props.auth.logout}
+              onClick={Auth.logout}
             >
               Log Out
             </button>

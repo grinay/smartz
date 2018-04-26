@@ -3,27 +3,16 @@ import { Link } from 'react-router-dom';
 
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
-import api from '../helpers/api';
 import CtorCard from '../Ctors/CtorCard';
+import * as api from '../api/apiRequests';
 
 class Store extends Component {
-  componentWillMount() {
-    const {
-      auth,
-      fetchCtorsRequest,
-      fetchCtorsFailure,
-      fetchCtorsSuccess
-    } = this.props;
-
-    fetchCtorsRequest();
-
-    api(auth).get('/constructors')
-      .then(response => fetchCtorsSuccess(response.data))
-      .catch(error => fetchCtorsFailure(error.message));
+  componentDidMount() {
+    api.getConstructors();
   }
 
   render() {
-    const { ctors, metamaskStatus, auth } = this.props;
+    const { ctors, metamaskStatus } = this.props;
 
     return (
       <main className="page-main  page-main--store">
@@ -37,7 +26,7 @@ class Store extends Component {
               {ctors &&
                 <ul className="contracts-gallery__list  gallery__list">
                   {ctors.filter(el => el.is_public).map((el, i) => (
-                    <CtorCard key={i} ctor={el} auth={auth} />
+                    <CtorCard key={i} ctor={el} />
                   ))}
                 </ul>
               }

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { find } from 'lodash';
 import { Link } from 'react-router-dom';
 
+import * as api from '../api/apiRequests';
 import {
   processControlForm, processResult, getNetworkId
 } from '../helpers/eth';
-import api from '../helpers/api';
 import Alert from '../common/Alert';
 
 import './Dashboard.css';
@@ -21,21 +21,8 @@ class Dashboard extends Component {
   }
 
   componentWillMount() {
-    const {
-      auth,
-      fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess,
-      fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess
-    } = this.props;
-
-    fetchCtorsRequest();
-    api(auth).get('/constructors')
-      .then(response => fetchCtorsSuccess(response.data))
-      .catch(error => fetchCtorsFailure(error));
-
-    fetchInstancesRequest();
-    api(auth).get('/instances')
-      .then(response => fetchInstancesSuccess(response.data))
-      .catch(error => fetchInstancesFailure(error));
+    api.getConstructors();
+    api.getInstances();
   }
 
   componentDidMount() {

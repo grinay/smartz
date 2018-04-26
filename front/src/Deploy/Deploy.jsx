@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
-import api from '../helpers/api';
+import * as api from '../api/apiRequests';
+import { transformObj2Flat } from '../helpers/normalize';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import DeployStep1 from './DeployStep1';
 import DeployStep2 from './DeployStep2';
 import DeployStep3 from './DeployStep3';
+import Auth from '../App/Auth/Auth';
 
 import './Deploy.css';
 
@@ -17,53 +19,35 @@ class Deploy extends Component {
 
     const { ctorId, deployId } = props.match.params;
     this.state = {
-      auth: props.auth.isAuthenticated(),
       ctorId,
       deployId
     };
   }
 
   componentWillMount() {
-    const {
-      status, initDeploy,
-      fetchCtorParamsRequest, fetchCtorParamsFailure, fetchCtorParamsSuccess,
-      constructError
-    } = this.props;
-    const { ctorId, deployId, auth } = this.state;
+    const { status, initDeploy } = this.props;
+    const { ctorId, deployId } = this.state;
 
-    if (auth) {
+    if (Auth.isAuthenticated()) {
       if (!status) {
         initDeploy(deployId);
       }
 
-      fetchCtorParamsRequest(ctorId);
-
-      api(this.props.auth).get(`/constructors/${ctorId}/params`)
-        .then(response => {
-          const { data } = response;
-          if (data.error) {
-            constructError(deployId, data.error);
-            fetchCtorParamsFailure(ctorId, data.error);
-          } else {
-            fetchCtorParamsSuccess(ctorId, data);
-          }
-        })
-        .catch(error => {
-          constructError(deployId, error.message);
-          fetchCtorParamsFailure(ctorId, error.message)
-        });
+      api.getConstructorParams(ctorId, deployId);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { auth, netId, contractAddress, instance, publicAccess } = nextProps;
+    const { netId, contractAddress, instance, publicAccess } = nextProps;
     if (netId && contractAddress) {
-      api(auth).post(`/instances/${instance.instance_id}/update`, {
+
+      const data = {
         address: contractAddress,
         network_id: Number.parseInt(netId, 10),
-        public_access: publicAccess
-      })
-        .catch(error => console.log(error));
+        public_access: publicAccess,
+      }
+
+      api.updateInstance(instance.instance_id, data)
     }
   }
 
@@ -77,24 +61,46 @@ class Deploy extends Component {
 
     const { deployId } = this.state;
     const {
-      auth, ctor, status, errors, instance, netId, txHash, contractAddress,
-      constructRequest, constructError, constructSuccess,
-      setPublicAccess, deployTxSent, deployTxError, deployTxMined
+      ctor, status, errors, instance, netId, txHash, contractAddress,
+      setPublicAccess, deployTxSent, deployTxError, deployTxMined, formData
     } = this.props;
 
-    const step1Props = {
-      deployId, auth, ctor,
-      constructRequest, constructError, constructSuccess
-    };
+    const step1Props = { deployId, ctor, formData };
 
     const step2Props = {
-      deployId, auth, ctor, instance, status,
+      deployId, ctor, instance, status,
       setPublicAccess, deployTxSent, deployTxError, deployTxMined
     };
 
     const step3Props = {
       status, txHash, netId, instance, contractAddress
     };
+
+    let errorList = null;
+    if (errors !== null && errors !== undefined) {
+      if (typeof errors === 'string') {
+        errorList = <p>{errors}</p>;
+      }
+
+      if (typeof errors === 'object') {
+        const errArr = transformObj2Flat(errors);
+
+        errorList = Object.keys(errArr).map(err => {
+          const value = errArr[err];
+
+          const listErr = Array.isArray(value) ?
+            value.map(item => <li key={item}>{item}</li>) :
+            <li key={errArr[err]}>{errArr[err]}</li>
+
+          return (
+            <span key={err}>
+              <p>{err}:</p>
+              <ul>{listErr}</ul>
+            </span>
+          );
+        });
+      }
+    }
 
     return (
       <main className="page-main page-main--contracts">
@@ -158,12 +164,7 @@ class Deploy extends Component {
 
           {errors &&
             <Alert>
-              {typeof errors === 'object'
-                ? Object.keys(errors).map((err, i) => (
-                  <p key={i}>{errors[err]}</p>)
-                )
-                : <p>{errors}</p>
-              }
+              {errorList}
             </Alert>
           }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { find } from 'lodash';
 
-import api from '../helpers/api';
+import * as api from '../api/apiRequests';
 import {
   processControlForm,
   processResult,
@@ -31,21 +31,8 @@ class Instance extends Component {
   }
 
   componentWillMount() {
-    const {
-      auth,
-      fetchCtorsRequest, fetchCtorsFailure, fetchCtorsSuccess,
-      fetchInstancesRequest, fetchInstancesFailure, fetchInstancesSuccess
-    } = this.props;
-
-    fetchCtorsRequest();
-    api(auth).get('/constructors')
-      .then(response => fetchCtorsSuccess(response.data))
-      .catch(error => fetchCtorsFailure(error));
-
-    fetchInstancesRequest();
-    api(auth).get(`/instances/${this.props.match.params.id}`)
-      .then(response => fetchInstancesSuccess([response.data]))
-      .catch(error => fetchInstancesFailure(error));
+    api.getConstructors();
+    api.getInstances();
   }
 
   componentDidUpdate() {

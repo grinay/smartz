@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Auth from '../Auth/Auth';
 
 class Header extends Component {
   goTo(route) {
@@ -7,12 +8,12 @@ class Header extends Component {
   }
 
   logout() {
-    this.props.auth.logout();
+    Auth.logout();
   }
 
   render() {
-    const { auth, profile } = this.props;
-    const isAuthenticated = auth.isAuthenticated();
+    const { profile } = this.props;
+    const isAuthenticated = Auth.isAuthenticated();
 
     return (
       <header className="page-header">
@@ -76,7 +77,7 @@ class Header extends Component {
                 <Button
                   bsStyle="primary"
                   className="btn-margin"
-                  onClick={auth.login}
+                  onClick={Auth.login}
                 >
                   Log In
                 </Button>
@@ -90,7 +91,7 @@ class Header extends Component {
                   <Link to={'/profile'} className="btn btn-primary btn-margin">
                     Profile
                   </Link>
-                  <Button className="btn btn-primary btn-margin" onClick={auth.logout}>
+                  <Button className="btn btn-primary btn-margin" onClick={Auth.logout}>
                     Log Out
                   </Button>
                 </span>

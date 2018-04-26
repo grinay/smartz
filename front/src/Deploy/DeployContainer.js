@@ -4,15 +4,7 @@ import { find } from 'lodash';
 
 import Deploy from './Deploy';
 import {
-  fetchCtorParamsRequest,
-  fetchCtorParamsFailure,
-  fetchCtorParamsSuccess
-} from '../Ctors/CtorsActions';
-import {
   initDeploy,
-  constructRequest,
-  constructError,
-  constructSuccess,
   setPublicAccess,
   deployTxSent,
   deployTxError,
@@ -29,12 +21,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
   initDeploy,
-  fetchCtorParamsRequest,
-  fetchCtorParamsFailure,
-  fetchCtorParamsSuccess,
-  constructRequest,
-  constructError,
-  constructSuccess,
   setPublicAccess,
   deployTxSent,
   deployTxError,

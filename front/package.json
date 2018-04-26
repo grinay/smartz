@@ -5,6 +5,7 @@
   "dependencies": {
     "auth0-js": "^8.12.1",
     "autoprefixer": "7.1.6",
+    "axios-mock-adapter": "^1.15.0",
     "axios": "^0.17.1",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",

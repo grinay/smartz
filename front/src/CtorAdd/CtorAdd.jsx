@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import Alert from '../common/Alert';
-import api from '../helpers/api';
+import * as api from '../api/apiRequests';
 
 class CtorAdd extends Component {
   constructor(props) {
@@ -14,16 +14,14 @@ class CtorAdd extends Component {
   submit({ formData }) {
     formData['constructor_id'] = this.getId();
 
-    api(this.props.auth).post(`/constructors/upload`, formData)
+    api.addCtor(formData)
       .then(response => {
         if (response.data.error) {
           this.setState({ error: response.data.error });
-
         } else {
           this.setState({ message: `Contract "${formData.ctor_name}" uploaded.` });
         }
       })
-
       .catch(error => {
         this.setState({ error });
       });

@@ -1,44 +1,30 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Form from 'react-jsonschema-form';
 
-import api from '../helpers/api';
+import * as api from '../api/apiRequests';
 import FormWidgets from '../common/FormWidgets';
 
-class DeployStep1 extends Component {
+class DeployStep1 extends PureComponent {
   submit({ formData }) {
-    const {
-      deployId, ctor, auth,
-      constructRequest, constructError, constructSuccess
-    } = this.props;
+    this.formDataSaved = formData;
 
-    constructRequest(deployId);
+    const { deployId, ctor } = this.props;
+
+    const formDataOrigin = Object.assign({}, { ...formData })
 
     const instTitle = formData.instance_title;
     delete formData.instance_title;
-    api(auth).post(`/constructors/${ctor.ctor_id}/construct`, {
+
+    const data = {
       instance_title: instTitle,
       fields: formData
-    })
+    };
 
-      .then(response => {
-        const { data } = response;
-
-        if (data.error || data.result === 'error') {
-          constructError(deployId, data.error || data.errors);
-
-        } else {
-          constructSuccess(deployId, data);
-        }
-      })
-
-      .catch(error => {
-        console.log(error);
-        constructError(deployId, error);
-      });
+    api.sendFormDataDeployStep1(ctor.ctor_id, deployId, data, formDataOrigin);
   }
 
   render() {
-    const { ctor } = this.props;
+    const { ctor, formData } = this.props;
 
     // Add instance name field in the form beginning
     if (ctor && ctor.schema && (!ctor.schema.properties || !ctor.schema.properties.instance_title)) {
@@ -71,10 +57,13 @@ class DeployStep1 extends Component {
     }
 
     return (
-      <Form schema={ctor.schema}
+      <Form
+        schema={ctor.schema}
         uiSchema={ctor.ui_schema}
         widgets={FormWidgets}
+        formData={formData}
         onSubmit={this.submit.bind(this)}
+        onChange={e => this.formDataSaved = e.formData}
         onError={(e) => console.log("I have", e.length, "errors to fix", e)}
         showErrorList={false}
         id="deploy-form"
