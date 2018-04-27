@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import * as api from '../api/apiRequests';
 import { transformObj2Flat } from '../helpers/normalize';
@@ -13,7 +13,7 @@ import './Deploy.css';
 
 // TODO: refactor this file totally
 
-class Deploy extends Component {
+class Deploy extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -47,7 +47,7 @@ class Deploy extends Component {
         public_access: publicAccess,
       }
 
-      api.updateInstance(instance.instance_id, data)
+      api.updateInstance(instance.instance_id, data);
     }
   }
 
