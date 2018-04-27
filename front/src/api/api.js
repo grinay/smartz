@@ -23,25 +23,34 @@ function logFetch(promise) {
 
     result
       .then(response => {
+
+        const str = USE_MOCK ?
+          [
+            `%c MOCK %c %c ${method.toUpperCase()} %c ${url}`,
+            'border: 1px solid yellow; color: white;', '',
+            'background-color: green; color: white', ''
+          ] :
+          [
+            `%c ${method.toUpperCase()} `,
+            'background-color: green; color: white',
+            `${url}`
+          ];
+
         if (COLLAPSED_LOG_REQUESTS) {
-          console.groupCollapsed(`%c ${method.toUpperCase()} `, 'background-color: green; color: white', `${url}`);
+          console.groupCollapsed(...str);
         } else {
-          console.group(`REQUEST %c Success `, 'background-color: green; color: white');
+          console.group(...str);
         }
         console.log('HANDLER: ', url);
         console.log('METHOD: ', method.toUpperCase());
-        if (data !== undefined) {
-          console.log('SENDING REQUEST OBJECT: ', data);
-        }
+        if (data !== undefined) console.log('SENDING REQUEST OBJECT: ', data);
         console.log(`RESPONSE STATUS: ${response.status}`);
         console.log('RESPONSE DATA: ', response.data);
         console.groupEnd();
       })
       .catch(error => {
         console.group(`ERROR!!! REQUEST. HANDLER: ${url} %c Error `, 'background-color: red; color: white');
-        if (data !== undefined) {
-          console.log('SENDING REQUEST OBJECT: ', data);
-        }
+        if (data !== undefined) console.log('SENDING REQUEST OBJECT: ', data);
         console.log('ERROR: ', error);
         console.groupEnd();
       });
@@ -82,6 +91,6 @@ const api = () => {
   });
 };
 
-export const fetch = USE_MOCK ? logFetch(apiNew) : apiNew;
+export const fetch = process.env.NODE_ENV !== 'production' ? logFetch(apiNew) : apiNew;
 
 export default api;
