@@ -89,9 +89,9 @@ class Field():
         )
 
     def input_descr(self):
-        if self.type == 'text_hash':
+        if self.name == 'text_hash':
             return 'Just type text in textbox. Hash will be calculated automatically'
-        elif self.type == 'file_hash':
+        elif self.name == 'file_hash':
             return 'Just select file. Hash will be calculated automatically'
         else:
             return None

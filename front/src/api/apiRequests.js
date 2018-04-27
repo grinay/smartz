@@ -107,8 +107,8 @@ export function getInstances() {
     return result;
 }
 
-export function updateInstance(instanceId) {
-    const result = fetch(`/instances/${instanceId}/update`, undefined, 'post');
+export function updateInstance(instanceId, data) {
+    const result = fetch(`/instances/${instanceId}/update`, data, 'post');
 
     result
         .then(response => { })
