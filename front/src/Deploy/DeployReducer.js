@@ -29,6 +29,7 @@ const deploy = (state = initState, action) => {
 
     case 'CONSTRUCT_SUCCESS':
       nextState[deployId].status = 'construct_success';
+      nextState[deployId].errors = null;
       nextState[deployId].instance = action.instance;
       return nextState;
 
