@@ -114,10 +114,20 @@ class Constructor(ConstructorInstance):
             }
         }
 
+        ui_schema = {
+            "frozen_premint": {
+                "items": {
+                    "thaw_ts": {
+                        "ui:widget": "unixTime"
+                    }
+                }
+            }
+        }
+
         return {
             "result": "success",
             'schema': json_schema,
-            'ui_schema': dict()
+            'ui_schema': ui_schema
         }
 
     def construct(self, fields):
