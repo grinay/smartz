@@ -110,17 +110,9 @@ export function getInstances() {
 export function updateInstance(instanceId) {
     const result = fetch(`/instances/${instanceId}/update`, undefined, 'post');
 
-    dispatch(fetchInstancesRequest());
-
     result
-        .then(response => {
-            if (response.status === 200) {
-                dispatch(fetchInstancesSuccess(response.data))
-            }
-        })
-        .catch(error => {
-            dispatch(fetchInstancesFailure(error.message))
-        });
+        .then(response => { })
+        .catch(error => console.error(error));
 
     return result;
 }
