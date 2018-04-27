@@ -68,16 +68,21 @@ class ListView(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class UploadView(View):
 
-    def post(self, request: HttpRequest):
+    def post(self, request):
         ctors = db.ctors
         constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
         args = request.data
+
+        price_eth = float(args.get('price_eth', 0))
 
         if 'payment_address' in args:
             if not re.findall('^0x[0-9a-fA-F]{40}$', args['payment_address']):
                 return error_response("Invalid payment address")
         else:
             args['payment_address'] = ''
+
+        if price_eth and not args['payment_address']:
+            return error_response("Payment address must be specified with price >0")
 
         user_id = auth(request, db)
         if isinstance(user_id, HttpResponse):
@@ -132,14 +137,19 @@ class UploadView(View):
         else:
             return error_response("Invalid input")
 
+        if price_eth:
+            with open(filename) as f:
+                if not '%payment_code%' in f.read(): # todo check on deploy in source of contract?
+                    return error_response("Payment code must be in contract constructor")
+
         record = {
-                    'ctor_name': name,
-                    'ctor_descr': descr,
-                    'payment_address': args['payment_address'],
-                    'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
-                    'is_public': is_public,
-                    'user_id': user_id
-                }
+            'ctor_name': name,
+            'ctor_descr': descr,
+            'payment_address': args['payment_address'],
+            'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
+            'is_public': is_public,
+            'user_id': user_id
+        }
 
         if 'constructor_id' in args:
             ctors.replace_one(
