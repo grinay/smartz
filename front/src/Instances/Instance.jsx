@@ -13,7 +13,7 @@ import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
 
 import './Instance.css';
-import renderInstanceWidget from "../common/ContractInstance/ContractInstanceWidgets";
+import renderInstanceWidget from "../common/contract-instance-widgets/ContractInstanceWidgets";
 
 class Instance extends Component {
   constructor(props) {

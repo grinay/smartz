@@ -4,8 +4,8 @@ import React from 'react';
 import moment from 'moment';
 import Datetime from 'react-datetime';
 
-import FileHashWidget from './widgets/hash-widgets/FileHashWidget';
-import StringHashWidget from './widgets/hash-widgets/StringHashWidget';
+import FileHashWidget from './hash-group/FileHashWidget';
+import StringHashWidget from './hash-group/StringHashWidget';
 
 import 'react-datetime/css/react-datetime.css';
 

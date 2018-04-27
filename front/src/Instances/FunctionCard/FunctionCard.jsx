@@ -5,7 +5,7 @@ import {
   web3 as w3,
   processControlForm
 } from '../../helpers/eth';
-import FormWidgets from '../../common/FormWidgets';
+import FormWidgets from '../../common/form-widgets/FormWidgets';
 
 import './FunctionCard.css';
 
@@ -70,7 +70,7 @@ class FunctionCard extends Component {
       };
     }
 
-    let uiSchema = {items: []};
+    let uiSchema = { items: [] };
     if (func.inputs && func.inputs.items) {
       for (let input of func.inputs.items) {
         let item = {};
