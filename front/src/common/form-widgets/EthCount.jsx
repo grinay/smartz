@@ -8,7 +8,7 @@ export default class EthCount extends PureComponent {
     const { onChange } = this.props;
     const value = event.target.value;
 
-    onChange(web3.toWei(value, 'ether'));
+    onChange(web3.toWei(value, 'ether').toString());
   };
 
   render() {
@@ -19,7 +19,7 @@ export default class EthCount extends PureComponent {
         <input
           ref={ref => (this.inputRef = ref)}
           id={id}
-          type="string"
+          type="number"
           disabled={readonly || disabled}
           onChange={this.onChange}
           defaultValue=""
