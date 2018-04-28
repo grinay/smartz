@@ -40,7 +40,7 @@ def auth(request, db):
     if user_info:
        user_id = user_info['user_id']
     else:
-        url = 'https://mixbytes.eu.auth0.com/userinfo'
+        url = 'https://smartz.auth0.com/userinfo'
         headers = {'authorization': 'Bearer {}'.format(token)}
         try:
             resp = requests.get(url, headers=headers)
