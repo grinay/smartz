@@ -96,43 +96,18 @@ class Constructor(ConstructorInstance):
         errors = {}
 
         if fields['price'] <= fields['cancellationFee']:
-            # todo waiting for front
-            return {
-                "result": "error",
-                "error_descr": 'Price must be greater than cancellation fee'
-            }
             errors['price'] = 'Price must be greater than cancellation fee'
 
         if fields['rentDateStart'] < time.time():
-            # todo waiting for front
-            return {
-                "result": "error",
-                "error_descr": 'Start rent time must be in future'
-            }
             errors['rentDateStart'] = 'Start rent time must be in future'
 
         if fields['rentDateStart'] >= fields['rentDateEnd']:
-            # todo waiting for front
-            return {
-                "result": "error",
-                "error_descr": 'Start rent time must be less than end rent time'
-            }
             errors['rentDateStart'] = 'Start rent time must be less than end rent time'
 
         if fields['rentDateStart']+fields['acceptObjectPeriod']*60*60 >= fields['rentDateEnd']:
-            # todo waiting for front
-            return {
-                "result": "error",
-                "error_descr": 'Accept object time must be less than rent period'
-            }
             errors['acceptObjectPeriod'] = 'Accept object time must be less than rent period'
 
         if fields['rentDateStart'] <= fields['noCancelPeriod'] * 60*60:
-            # todo waiting for front
-            return {
-                "result": "error",
-                "error_descr": '"No cancel" time must be less than start rent date'
-            }
             errors['rentDateStart'] = '"No cancel" time must be less than start rent date'
 
         if errors:

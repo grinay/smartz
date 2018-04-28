@@ -97,11 +97,6 @@ class Constructor(ConstructorInstance):
     def construct(self, fields):
         errors = {}
 
-        # if fields["date_start"] >= fields["date_end"]:
-        #     errors["date_start"] = 'Start date is greater or equal to end date'
-
-
-
         parents_code = ''
         constructors_code = ''
         if fields['is_mintable']:
