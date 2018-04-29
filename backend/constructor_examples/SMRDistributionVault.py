@@ -2,20 +2,34 @@
 import re
 
 from smartz.api.constructor_engine import ConstructorInstance
-from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
 
 class Constructor(ConstructorInstance):
 
     MAX_OWNERS = 250
 
+    def get_version(self):
+        return {
+            "result": "success",
+            "version": 1
+        }
+
     def get_params(self):
         json_schema = {
             "type": "object",
-            "required": ["owners", "name", "SMR", "thawTS"],
+            "required": ["signs_count", "owners", "name", "SMR", "thawTS"],
             "additionalProperties": False,
 
             "properties": {
+                "signs_count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "default": 2,
+                    "maximum": self.__class__.MAX_OWNERS,
+                    "title": "Signatures quorum",
+                    "description": "Number of signatures required to withdraw funds or modify signatures"
+                },
+
                 "owners": {
                     "title": "Addresses of owners",
                     "description": "Addresses (signatures) of owners of a token",
@@ -55,6 +69,16 @@ class Constructor(ConstructorInstance):
         }
 
     def construct(self, fields):
+        errors = {}
+
+        if fields['signs_count'] > len(fields['owners']):
+            errors["signs_count"] = 'Signatures quorum is greater than total number of owners'
+
+        if errors:
+            return {
+                "result": "error",
+                "errors": errors
+            }
 
         # generating
 
@@ -70,6 +94,7 @@ class Constructor(ConstructorInstance):
         )
 
         source = safe_replace(self.__class__._TEMPLATE, '%owners_code%', owners_code)
+        source = safe_replace(source, '%signs_count%', str(fields['signs_count']))
         source = safe_replace(source, '%name%', fields['name'])
         source = safe_replace(source, '%SMR%', fields['SMR'])
         source = safe_replace(source, '%thawTS%', fields['thawTS'])
@@ -213,29 +238,14 @@ class Constructor(ConstructorInstance):
 
         return {
             "result": "success",
-            'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
-            'dashboard_functions': ['name', 'symbol']
+            'function_specs': function_titles,
+            'dashboard_functions': ['name', 'symbol', 'm_numOwners', 'm_multiOwnedRequired']
         }
 
 
     # language=Solidity
     _TEMPLATE = """
 pragma solidity ^0.4.18;
-
-contract ArgumentsChecker {
-
-    /// @dev check which prevents short address attack
-    modifier payloadSizeIs(uint size) {
-       require(msg.data.length == size + 4 /* function selector */);
-       _;
-    }
-
-    /// @dev check that address is valid
-    modifier validAddress(address addr) {
-        require(addr != address(0));
-        _;
-    }
-}
 
 contract multiowned {
 
@@ -680,7 +690,7 @@ interface ISmartzToken {
     function frozenTransferFrom(address _from, address _to, uint256 _value, uint thawTS, bool isKYCRequired) external returns (bool);
 }
 
-contract SMRDistributionVault is ArgumentsChecker, multiowned, ERC20 {
+contract SMRDistributionVault is multiowned, ERC20 {
 
 
     // PUBLIC FUNCTIONS
@@ -688,7 +698,7 @@ contract SMRDistributionVault is ArgumentsChecker, multiowned, ERC20 {
     function SMRDistributionVault()
         public
         payable
-        multiowned(getInitialOwners(), 1)
+        multiowned(getInitialOwners(), %signs_count%)
     {
         m_SMR = ISmartzToken(address(%SMR%));
         m_thawTS = %thawTS%;
@@ -713,8 +723,7 @@ contract SMRDistributionVault is ArgumentsChecker, multiowned, ERC20 {
     /// @notice Looks like transfer of this token, but actually frozenTransfers SMR.
     function transfer(address to, uint256 value)
         public
-        payloadSizeIs(2 * 32)
-        onlyowner
+        onlymanyowners(keccak256(msg.data))
         returns (bool)
     {
         return m_SMR.frozenTransfer(to, value, m_thawTS, false);
@@ -723,8 +732,7 @@ contract SMRDistributionVault is ArgumentsChecker, multiowned, ERC20 {
     /// @notice Transfers using plain transfer remaining tokens.
     function withdrawRemaining(address to)
         external
-        payloadSizeIs(1 * 32)
-        onlyowner
+        onlymanyowners(keccak256(msg.data))
         returns (bool)
     {
         return m_SMR.transfer(to, m_SMR.balanceOf(this));
