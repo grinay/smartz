@@ -47,7 +47,7 @@ class DetailsView(View):
             return error_response("Instance({}) not found".format(instance_id))
 
         if not instance_info.get('public_access'):
-            user_id = auth(request, db)
+            user_id = auth(request)
             if isinstance(user_id, HttpResponse):
                 return user_id  # error
 
@@ -65,7 +65,7 @@ class ListView(View):
     def get(self, request):
         instances_db = db.instances
 
-        user_id = auth(request, db)
+        user_id = auth(request)
         if isinstance(user_id, HttpResponse):
             return user_id  # error
 
@@ -82,7 +82,7 @@ class UpdateView(View):
 
         instances_db = db.instances
 
-        user_id = auth(request, db)
+        user_id = auth(request)
         if isinstance(user_id, HttpResponse):
             return user_id  # error
 

@@ -28,8 +28,8 @@ class Common(Configuration):
 
     # Application definition
     INSTALLED_APPS = [
-        # 'django.contrib.admin',
-        # 'django.contrib.auth',
+        'django.contrib.admin',
+        'django.contrib.auth',
         'django.contrib.contenttypes',
         # 'django.contrib.sessions',
         'django.contrib.messages',
@@ -37,8 +37,10 @@ class Common(Configuration):
 
         'django_extensions',
 
-
-        # 'apps.users',
+        'apps.constructors',
+        'apps.instances',
+        'apps.users',
+        'apps.tools',
     ]
 
     MIDDLEWARE = [
@@ -74,10 +76,20 @@ class Common(Configuration):
 
     WSGI_APPLICATION = 'smartzcore.wsgi.application'
 
+
+    DB_HOST = os.environ.get('DB_HOST')
+    DB_USER = os.environ.get('DB_USER')
+    DB_PASS = os.environ.get('DB_PASS')
+    DB_NAME = os.environ.get('DB_NAME')
+    assert DB_HOST, "DB_HOST is not set in env"
+    assert DB_USER, "DB_USER is not set in env"
+    assert DB_PASS, "DB_PASS is not set in env"
+    assert DB_NAME, "DB_NAME is not set in env"
+
     # Database
     # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
     DATABASES = values.DatabaseURLValue(
-        # 'postgresql://sprilutskiy:BuagfbdhiLOfjdhfo@localhost/sprilutskiy'
+        'postgresql://{}:{}@{}/{}'.format(DB_USER, DB_PASS, DB_HOST, DB_NAME)
     )
 
     # Password validation
@@ -117,10 +129,13 @@ class Common(Configuration):
     # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    # AUTH_USER_MODEL = 'users.User'
+    AUTH_USER_MODEL = 'users.User'
 
     # SMARTZ settings 
     SMARTZ_MONGO_HOST = 'mongo' # docker container
+
+
+    AUTH0_HOST = 'smartz.auth0.com'
 
     SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL = os.environ.get('CONSTRUCTOR_CALL_SERVICE_URL')
     assert SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL, "Constructor call service url is not set in env"
@@ -203,7 +218,7 @@ class Production(Staging):
 
     pass
 
-class Tests(DevelopmentLocal):
+class Testing(DevelopmentLocal):
     """
     The tests settings.
     """

@@ -38,7 +38,7 @@ class ListView(View):
     def get(self, request, *args, **kwargs):
         constructors_table = db.ctors
 
-        user_id = auth(request, db)
+        user_id = auth(request)
         if isinstance(user_id, HttpResponse):  # todo
             query_filter = {"is_public": True}
         else:
@@ -84,7 +84,7 @@ class UploadView(View):
         if price_eth and not args['payment_address']:
             return error_response("Payment address must be specified with price >0")
 
-        user_id = auth(request, db)
+        user_id = auth(request)
         if isinstance(user_id, HttpResponse):
             return user_id  # error
 
@@ -212,7 +212,7 @@ class ConstructView(View):
         if constructor is None:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
-        user_id = auth(request, db)
+        user_id = auth(request)
         if isinstance(user_id, HttpResponse):
             return error_response("Wrong 'user_id' param")
 
