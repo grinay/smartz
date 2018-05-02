@@ -8,7 +8,7 @@ urlpatterns = [
         include([
             path('constructors', include('apps.constructors.urls')),
             # path('accounts', include('apps.account.urls')),
-            path('instances', include('apps.instances.urls')),
+            path('instances', include('apps.contracts.urls')),
         ])
     )
 ]

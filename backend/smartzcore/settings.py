@@ -38,7 +38,7 @@ class Common(Configuration):
         'django_extensions',
 
         'apps.constructors',
-        'apps.instances',
+        'apps.contracts',
         'apps.users',
         'apps.tools',
     ]

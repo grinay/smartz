@@ -7,10 +7,12 @@ import os.path
 import tempfile
 import json
 import subprocess
+from decimal import Decimal
 
 import requests
 from django.conf import settings
 
+from apps.constructors.models import Constructor
 from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
 from smartz.json_schema import is_conforms2schema_part, load_schema
 
@@ -50,7 +52,7 @@ class BaseEngine(object):
 
         return res
 
-    def construct(self, constructor_id, constructor, fields):
+    def construct(self, constructor_id, constructor: Constructor, fields):
         try:
             constructor_source = self._load_constructor(constructor_id)
         except Exception:
@@ -75,14 +77,10 @@ class BaseEngine(object):
 
         source, contract_name = res['source'], res['contract_name']
 
+        if constructor.price_eth:
+            wei = int(constructor.price_eth * Decimal('1000000000000000000'))
 
-        price_eth = constructor.get('price_eth', .0)
-        payment_address = constructor.get('payment_address', '')
-
-        if price_eth:
-            wei = int(price_eth * 1e18)
-
-            if payment_address:
+            if constructor.payment_address:
                 assert(settings.SMARTZ_COMMISSION < 1)
 
                 payment_code = """
@@ -92,7 +90,7 @@ class BaseEngine(object):
                     commission_address=settings.SMARTZ_COMMISSION_ADDRESS,
                     commission=int(wei*settings.SMARTZ_COMMISSION),
 
-                    payment_address=payment_address,
+                    payment_address=constructor.payment_address,
                     payment_sum=wei-int(wei*settings.SMARTZ_COMMISSION)
                 )
             else:
