@@ -6,9 +6,14 @@ export default class EthCount extends PureComponent {
 
   onChange = event => {
     const { onChange } = this.props;
-    const value = event.target.value;
+    const stringValue = event.target.value;
 
-    onChange(web3.toWei(value, 'ether').toString());
+    if (!isNaN(stringValue)) {
+      // "+" is operator for strict type conversion to type "number"
+      onChange(+web3.toWei(stringValue, 'ether'));
+    } else {
+      onChange('');
+    }
   };
 
   render() {
@@ -19,7 +24,7 @@ export default class EthCount extends PureComponent {
         <input
           ref={ref => (this.inputRef = ref)}
           id={id}
-          type="number"
+          type="string"
           disabled={readonly || disabled}
           onChange={this.onChange}
           defaultValue=""
