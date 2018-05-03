@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.urls import include, path, re_path
+from django.contrib import admin
 
 
 urlpatterns = [
@@ -10,7 +11,8 @@ urlpatterns = [
             # path('accounts', include('apps.account.urls')),
             path('instances', include('apps.contracts.urls')),
         ])
-    )
+    ),
+    path('admin', admin.site.urls),
 ]
 
 # if settings.DEBUG:

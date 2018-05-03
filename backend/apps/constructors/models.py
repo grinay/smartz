@@ -24,3 +24,6 @@ class Constructor(models.Model):
 
     def get_formatted_price_eth(self):
         return str(self.price_eth).rstrip('0').rstrip('.')
+
+    def __str__(self):
+        return self.name

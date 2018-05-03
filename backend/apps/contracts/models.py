@@ -32,3 +32,6 @@ class Contract(models.Model):
         )
 
         return constructor
+
+    def __str__(self):
+        return self.title
