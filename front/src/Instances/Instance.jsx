@@ -220,6 +220,7 @@ class Instance extends Component {
                 </table>
               </div>
 
+              {/* ask functions block */}
               {this.getFunctionsByType(instance, 'ask').length > 0 &&
                 <div className="contract-controls__wrapper">
                   <span className="contract-controls__section-header">
@@ -242,6 +243,7 @@ class Instance extends Component {
                 </div>
               }
 
+              {/* write functions block */}
               {this.getFunctionsByType(instance, 'write').length > 0 &&
                 <div className="contract-controls__wrapper">
                   <span className="contract-controls__section-header">
@@ -264,6 +266,7 @@ class Instance extends Component {
                 </div>
               }
 
+              {/* function block */}
               <FunctionCard
                 instance={instance}
                 func={this.state.funcActive

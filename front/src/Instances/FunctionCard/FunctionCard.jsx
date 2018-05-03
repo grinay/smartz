@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Form from 'react-jsonschema-form';
+import { find } from 'lodash';
 
 import {
   web3 as w3,
@@ -57,8 +58,29 @@ class FunctionCard extends Component {
     const { func } = this.props;
     if (!func) return null;
 
-    if (!func.constant && func.inputs.minItems === 0) {
-      func.inputs.items = [];
+    // add field 'Value' in schema
+    if (func.payable) {
+      const existValue = find(func.inputs.items, { title: "Value" });
+
+      if (!existValue) {
+
+        func.inputs.minItems += 1;
+        func.inputs.maxItems += 1;
+
+        if (typeof func.inputs.items === 'undefined') {
+          func.inputs.items = [];
+        }
+
+        func.inputs.items.push({
+          "type": "number",
+          "minLength": 1,
+          "maxLength": 78,
+          "pattern": "^[0-9]+$",
+          "title": "Value",
+          "description": "Some value",
+          "ui:widget": "ethCount"
+        });
+      }
     }
 
     //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
@@ -70,6 +92,7 @@ class FunctionCard extends Component {
       };
     }
 
+    // build uiSchema from func
     let uiSchema = { items: [] };
     if (func.inputs && func.inputs.items) {
       for (let input of func.inputs.items) {
@@ -89,7 +112,7 @@ class FunctionCard extends Component {
         uiSchema={uiSchema}
         widgets={FormWidgets}
         onSubmit={this.submit.bind(this)}
-        onError={(e) => console.log("I have", e.length, "errors to fix")}
+        onError={(e) => console.log("I have", e, "errors to fix")}
         showErrorList={false}>
 
         <h3 className="form-block__header">

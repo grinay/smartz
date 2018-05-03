@@ -10,9 +10,9 @@ export const processControlForm = (
   contract_abi /* abi array */,
   function_spec /* ETHFunctionSpec */,
   form_data /* data from react-jsonschema-form */,
-  contract_address, callback
+  contract_address,
+  callback
 ) => {
-
   // preparing args
 
   // converts user input to web3-compatible value
@@ -51,27 +51,42 @@ export const processControlForm = (
   if (!function_abi)
     throw new Error('not found abi of function ' + function_spec.name);
 
-  const args_converted2abi = form_data.map((input, index) => {
+  // get then delete 'Value'(ethCount) prop from form_data
+  let form_data_arr = [], value = '';
+  if (form_data.length > 0 && function_spec.payable) {
+    // always last element in arr
+    value = form_data[form_data.length - 1];
+    // delete last element
+    form_data_arr = form_data.slice(0, form_data.length - 1);
+  } else {
+    form_data_arr = form_data;
+  }
+
+  const args_converted2abi = form_data_arr.map((input, index) => {
     return input2ethereum(input, function_abi.inputs[index].type);
   });
-
 
   // calling/transacting
 
   const CtorInstance = web3.eth.contract(contract_abi).at(contract_address);
 
+  // non-constant - there will be a transaction instead of a local call
   if (!function_abi.constant) {
-    // non-constant - there will be a transaction instead of a local call
-    args_converted2abi.push({
-      // object with transaction parameters
+    const transactionParameters = {
       // value: ???,     // amount of ether to send with
       // gas: ???,       // amount of gas
       gasPrice: 5e9
-    });
+    };
+
+    if (value !== '')
+      transactionParameters.value = value;
+
+    args_converted2abi.push(transactionParameters);
   }
 
   let result;
   try {
+    console.log(CtorInstance);
     result = CtorInstance[function_spec.name](...args_converted2abi, callback);
   } catch (e) {
     console.warn(e);

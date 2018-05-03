@@ -168,7 +168,7 @@ export const instanceList = [
                 ],
                 "name": "burn",
                 "outputs": [],
-                "payable": false,
+                "payable": true,
                 "stateMutability": "nonpayable",
                 "type": "function"
             },
@@ -364,7 +364,7 @@ export const instanceList = [
             },
             {
                 "inputs": [],
-                "payable": true,
+                "payable": false,
                 "stateMutability": "payable",
                 "type": "constructor"
             },
@@ -1633,7 +1633,7 @@ export const instanceList = [
             {
                 "name": "unpause",
                 "constant": false,
-                "payable": false,
+                "payable": true,
                 "title": "Enable circulation",
                 "inputs": {
                     "type": "array",
@@ -1898,7 +1898,7 @@ export const instanceList = [
             {
                 "name": "burn",
                 "constant": false,
-                "payable": false,
+                "payable": true,
                 "title": "Burn tokens",
                 "inputs": {
                     "type": "array",
