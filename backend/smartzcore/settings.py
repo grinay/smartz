@@ -21,6 +21,8 @@ class Common(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = values.BooleanValue(False)
 
+    IS_TESTING = False
+
     # [+++]
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
@@ -200,3 +202,17 @@ class Production(Staging):
     ALLOWED_HOSTS = ['platform.smartz.io']
 
     pass
+
+class Tests(DevelopmentLocal):
+    """
+    The tests settings.
+    """
+
+    IS_TESTING = True
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'mydatabase',
+        }
+    }

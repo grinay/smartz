@@ -63,10 +63,9 @@ REST, GET|POST
             source: 'pragma ...'
         }
         ||
-        {error: 'foo'}
-        ||
         {
             result: 'error',
+            error_descr: 'global error',
             errors: {
                 hard_cap: 'Hard cap can not be empty'
             }

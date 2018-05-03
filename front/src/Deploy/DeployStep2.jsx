@@ -18,7 +18,7 @@ class DeployStep2 extends PureComponent {
     w3.eth.sendTransaction({
       data: `0x${bin}`,
       value: w3.toWei(price_eth, 'ether'),
-      gas: 3e6,
+      gas: 4400000,
       gasPrice: 10e9
     },
       (err, txHash) => {

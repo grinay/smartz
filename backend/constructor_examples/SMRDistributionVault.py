@@ -1,16 +1,23 @@
 
+import re
+
 from smartz.api.constructor_engine import ConstructorInstance
-from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
 
 class Constructor(ConstructorInstance):
 
     MAX_OWNERS = 250
 
+    def get_version(self):
+        return {
+            "result": "success",
+            "version": 1
+        }
+
     def get_params(self):
         json_schema = {
             "type": "object",
-            "required": ["signs_count", "owners"],
+            "required": ["signs_count", "owners", "name", "SMR", "thawTS"],
             "additionalProperties": False,
 
             "properties": {
@@ -25,33 +32,40 @@ class Constructor(ConstructorInstance):
 
                 "owners": {
                     "title": "Addresses of owners",
-                    "description": "Addresses (signatures) of owners of a new wallet",
+                    "description": "Addresses (signatures) of owners of a token",
                     "type": "array",
                     "items": {"$ref": "#/definitions/address"},
                     "minItems": 1,
                     "maxItems": self.__class__.MAX_OWNERS
-                }
-            }
-        }
-
-        ui_schema = {
-            "signs_count": {
-                "ui:widget": "updown",
-            },
-            "owners": {
-                "items": {
-                    "ui:placeholder": "Valid Ethereum address"
                 },
-                "ui:options": {
-                    "orderable": False
-                }
+
+                "name": {
+                    "title": "Name of a token",
+                    "description": "Token human-friendly name (3..100 characters, letters, digits and spaces only)",
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 100,
+                    "pattern": "^[a-zA-Z0-9 ]+$"
+                },
+
+                "SMR": {
+                    "title": "SMR address",
+                    "description": "Address of SMR token.",
+                    "$ref": "#/definitions/address"
+                },
+
+                "thawTS": {
+                    "title": "Thaw timestamp",
+                    "description": "Unix timestamp of unfreeze date-time.",
+                    "$ref": "#/definitions/uint"
+                },
             }
         }
 
         return {
             "result": "success",
             'schema': json_schema,
-            'ui_schema': ui_schema
+            'ui_schema': dict()
         }
 
     def construct(self, fields):
@@ -66,16 +80,35 @@ class Constructor(ConstructorInstance):
                 "errors": errors
             }
 
-        signers_txt = '\n'.join('_owners.push(address({}));'.format(owner) for owner in fields['owners'])
+        # generating
 
-        source = self.__class__._TEMPLATE \
-                     .replace('%owners%', signers_txt) \
-                     .replace('%signs_count%', str(fields['signs_count']))
+        def safe_replace(string, from_, to_):
+            result = string.replace(from_, to_)
+            if result == string:
+                raise AssertionError('failed to replace: {}'.format(from_))
+            return result
+
+        owners_code = 'address[] memory result = new address[]({});\n'.format(len(fields['owners']))
+        owners_code += '\n'.join(
+            'result[{}] = address({});'.format(idx, owner) for (idx, owner) in enumerate(fields['owners'])
+        )
+
+        source = safe_replace(self.__class__._TEMPLATE, '%owners_code%', owners_code)
+        source = safe_replace(source, '%signs_count%', str(fields['signs_count']))
+        source = safe_replace(source, '%name%', fields['name'])
+        source = safe_replace(source, '%SMR%', fields['SMR'])
+        source = safe_replace(source, '%thawTS%', fields['thawTS'])
+
+        # final checks
+
+        for match in re.findall(r'%([a-zA-Z_0-9]+)%', source):
+            if match != 'payment_code':
+                raise AssertionError('not substituted: {}'.format(match))
 
         return {
             'result': "success",
             'source': source,
-            'contract_name': "SimpleMultiSigWallet"
+            'contract_name': "SMRDistributionVault"
         }
 
     def post_construct(self, fields, abi_array):
@@ -93,38 +126,6 @@ class Constructor(ConstructorInstance):
                 'inputs': [{
                     'title': 'new requirement',
                     'description': 'new number of signatures required to perform actions on this wallet'
-                }]
-            },
-
-            'sendEther': {
-                'title': 'Send Ether',
-                'description': 'Send some amount of Ether from this wallet to specified address. Quorum of wallet owners must call this function with the same parameters for this action to happen.',
-                'inputs': [{
-                    'title': 'Destination address',
-                }, {
-                    'title': 'Amount in wei',
-                    'description': 'Amount must be specified in the smallest units: wei (1 Ether is 1000000000000000000 wei).'
-                }]
-            },
-
-            'sendTokens': {
-                'title': 'Send tokens',
-                'description': 'Send some amount of tokens',
-                'inputs': [{
-                    'title': 'Token smart contract address',
-                },{
-                    'title': 'Destination address',
-                }, {
-                    'title': 'Amount in token wei',
-                    'description': 'Amount must be specified in the smallest units: token wei'
-                }]
-            },
-
-            'tokenBalance': {
-                'title': 'Get token balance',
-                'description': 'Token balance in token wei',
-                'inputs': [{
-                    'title': 'Token smart contract address',
                 }]
             },
 
@@ -197,43 +198,55 @@ class Constructor(ConstructorInstance):
                     'title': 'New address',
                 }]
             },
+
+
+            'name': {
+                'title': 'Token name',
+                'description': 'Human-friendly name of the token.',
+            },
+
+            'symbol': {
+                'title': 'Token ticker',
+                'description': 'Abbreviated name of the token used on exchanges etc.',
+            },
+
+            'decimals': {
+                'title': 'Decimal places',
+                'description': 'Allowed digits in fractional part of the token. E.g. decimal places of US dollar is 2.',
+            },
+
+            'balanceOf': {
+                'title': 'Get balance',
+                'description': 'Gets the token balance of any address. Return value is specified in the smallest units of the token.',
+                'inputs': [{
+                    'title': 'Address',
+                }]
+            },
+
+            'transfer': {
+                'title': 'Transfer tokens',
+                'description': 'Transfers some amount of your tokens to another address.',
+                'inputs': [{
+                    'title': 'To',
+                    'description': 'Recipient address.',
+                }, {
+                    'title': 'Amount',
+                    'description': 'Amount must be specified in the smallest units of the token.',
+                }]
+            },
         }
 
         return {
             "result": "success",
-            'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
-            'dashboard_functions': ['m_numOwners', 'm_multiOwnedRequired']
+            'function_specs': function_titles,
+            'dashboard_functions': ['name', 'symbol', 'm_numOwners', 'm_multiOwnedRequired']
         }
 
 
     # language=Solidity
     _TEMPLATE = """
-// Copyright (C) 2017  MixBytes, LLC
+pragma solidity ^0.4.18;
 
-// Licensed under the Apache License, Version 2.0 (the "License").
-// You may not use this file except in compliance with the License.
-
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND (express or implied).
-
-// Code taken from https://github.com/ethereum/dapp-bin/blob/master/wallet/wallet.sol
-// Audit, refactoring and improvements by github.com/Eenae
-
-// @authors:
-// Gav Wood <g@ethdev.com>
-// inheritable "property" contract that enables methods to be protected by requiring the acquiescence of either a
-// single, or, crucially, each of a number of, designated owners.
-// usage:
-// use modifiers onlyowner (just own owned) or onlymanyowners(hash), whereby the same hash must be provided by
-// some number (specified in constructor) of the set of owners (specified in the constructor, modifiable) before the
-// interior is executed.
-
-pragma solidity ^0.4.15;
-
-
-/// note: during any ownership changes all pending operations (waiting for more signatures) are cancelled
-// TODO acceptOwnership
 contract multiowned {
 
 	// TYPES
@@ -312,16 +325,11 @@ contract multiowned {
 
     // constructor is given number of sigs required to do protected "onlymanyowners" transactions
     // as well as the selection of addresses capable of confirming them (msg.sender is not added to the owners!).
-    address[] _owners;
-    function multiowned() public
+    function multiowned(address[] _owners, uint _required)
+        public
+        validNumOwners(_owners.length)
+        multiOwnedValidRequirement(_required, _owners.length)
     {
-        uint _required = %signs_count%;
-
-        %owners%
-
-        require(_owners.length > 0 && _owners.length <= c_maxOwners);
-        require(_required > 0 && _required <= _owners.length);
-
         assert(c_maxOwners <= 255);
 
         m_numOwners = _owners.length;
@@ -622,88 +630,147 @@ contract multiowned {
     bytes32[] internal m_multiOwnedPendingIndex;
 }
 
-/**
- * @title ERC20Basic
- * @dev Simpler version of ERC20 interface
- * @dev see https://github.com/ethereum/EIPs/issues/179
- */
 contract ERC20Basic {
-  function totalSupply() public view returns (uint256);
+  uint256 public totalSupply;
   function balanceOf(address who) public view returns (uint256);
   function transfer(address to, uint256 value) public returns (bool);
   event Transfer(address indexed from, address indexed to, uint256 value);
 }
 
-/**
- * @title Basic demonstration of multi-owned entity.
- */
-contract SimpleMultiSigWallet is multiowned {
+contract ERC20 is ERC20Basic {
+  function allowance(address owner, address spender) public view returns (uint256);
+  function transferFrom(address from, address to, uint256 value) public returns (bool);
+  function approve(address spender, uint256 value) public returns (bool);
+  event Approval(address indexed owner, address indexed spender, uint256 value);
+}
 
-    event Deposit(address indexed sender, uint value);
-    event EtherSent(address indexed to, uint value);
-    event TokensSent(address token, address indexed to, uint value);
+interface ISmartzToken {
+    // multiowned
+    function changeOwner(address _from, address _to) external;
+    function addOwner(address _owner) external;
+    function removeOwner(address _owner) external;
+    function changeRequirement(uint _newRequired) external;
+    function getOwner(uint ownerIndex) public view returns (address);
+    function getOwners() public view returns (address[]);
+    function isOwner(address _addr) public view returns (bool);
+    function amIOwner() external view returns (bool);
+    function revoke(bytes32 _operation) external;
+    function hasConfirmed(bytes32 _operation, address _owner) external view returns (bool);
 
-    function SimpleMultiSigWallet()
-        multiowned()
+    // ERC20Basic
+    function totalSupply() public view returns (uint256);
+    function balanceOf(address who) public view returns (uint256);
+    function transfer(address to, uint256 value) public returns (bool);
+
+    // ERC20
+    function allowance(address owner, address spender) public view returns (uint256);
+    function transferFrom(address from, address to, uint256 value) public returns (bool);
+    function approve(address spender, uint256 value) public returns (bool);
+
+    function name() public view returns (string);
+    function symbol() public view returns (string);
+    function decimals() public view returns (uint8);
+
+    // BurnableToken
+    function burn(uint256 _amount) public returns (bool);
+
+    // TokenWithApproveAndCallMethod
+    function approveAndCall(address _spender, uint256 _value, bytes _extraData) public;
+
+    // SmartzToken
+    function setKYCProvider(address KYCProvider) external;
+    function setSale(address account, bool isSale) external;
+    function disablePrivileged() external;
+
+    function availableBalanceOf(address _owner) public view returns (uint256);
+    function frozenCellCount(address owner) public view returns (uint);
+    function frozenCell(address owner, uint index) public view returns (uint amount, uint thawTS, bool isKYCRequired);
+
+    function frozenTransfer(address _to, uint256 _value, uint thawTS, bool isKYCRequired) external returns (bool);
+    function frozenTransferFrom(address _from, address _to, uint256 _value, uint thawTS, bool isKYCRequired) external returns (bool);
+}
+
+contract SMRDistributionVault is multiowned, ERC20 {
+
+
+    // PUBLIC FUNCTIONS
+
+    function SMRDistributionVault()
         public
         payable
+        multiowned(getInitialOwners(), %signs_count%)
     {
+        m_SMR = ISmartzToken(address(%SMR%));
+        m_thawTS = %thawTS%;
+
+        totalSupply = m_SMR.totalSupply();
+
         %payment_code%
     }
 
-    /// @dev Fallback function allows to deposit ether.
-    function()
-        payable
-        public
-    {
-        if (msg.value > 0)
-            Deposit(msg.sender, msg.value);
+    function getInitialOwners() private pure returns (address[]) {
+        %owners_code%
+        return result;
     }
 
-    /// @notice Send `value` of ether to address `to`
-    /// @param to where to send ether
-    /// @param value amount of wei to send
-    function sendEther(address to, uint value)
-        external
-        onlymanyowners(keccak256(msg.data))
-    {
-        require(address(0) != to);
-        require(value > 0 && this.balance >= value);
-        to.transfer(value);
-        EtherSent(to, value);
+
+    /// @notice Balance of tokens.
+    /// @dev Owners are considered to possess all the tokens of this vault.
+    function balanceOf(address who) public view returns (uint256) {
+        return isOwner(who) ? m_SMR.balanceOf(this) : 0;
     }
-    
-    function sendTokens(address token, address to, uint value)
+
+    /// @notice Looks like transfer of this token, but actually frozenTransfers SMR.
+    function transfer(address to, uint256 value)
+        public
+        onlymanyowners(keccak256(msg.data))
+        returns (bool)
+    {
+        return m_SMR.frozenTransfer(to, value, m_thawTS, false);
+    }
+
+    /// @notice Transfers using plain transfer remaining tokens.
+    function withdrawRemaining(address to)
         external
         onlymanyowners(keccak256(msg.data))
         returns (bool)
     {
-        require(address(0) != to);
-        require(address(0) != token);
-        require(token != to);
-        require(isContract(token));
-        
-        if (ERC20Basic(token).transfer(to, value)) {
-            TokensSent(token, to, value);
-            return true;
-        }
-        
-        return false;
+        return m_SMR.transfer(to, m_SMR.balanceOf(this));
     }
-    
-    function tokenBalance(address token) external view returns (uint256) {
-        return ERC20Basic(token).balanceOf(this);
-    }
-    
-    function isContract(address _addr)
-        private
-        view
-        returns (bool hasCode)
-    {
-        uint length;
-        assembly { length := extcodesize(_addr) }
-        return length > 0;
-    }
-}
 
-    """
+
+    /// @dev There is no need to support this function.
+    function allowance(address , address ) public view returns (uint256) {
+        revert();
+    }
+
+    /// @dev There is no need to support this function.
+    function transferFrom(address , address , uint256 ) public returns (bool) {
+        revert();
+    }
+
+    /// @dev There is no need to support this function.
+    function approve(address , uint256 ) public returns (bool) {
+        revert();
+    }
+
+    function decimals() public view returns (uint8) {
+        return m_SMR.decimals();
+    }
+
+
+    // FIELDS
+
+    /// @notice link to the SMR
+    ISmartzToken public m_SMR;
+
+    /// @notice Thaw timestamp of frozenTransfers issued by this vault
+    uint public m_thawTS;
+
+
+    // CONSTANTS
+
+    string public constant name = "%name%";
+    string public constant symbol = "SMRDV";
+}
+"""

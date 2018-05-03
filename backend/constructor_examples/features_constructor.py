@@ -60,19 +60,24 @@ class Constructor(ConstructorInstance):
                     "type": "number"
                 },
 
+                "block1": {
+                    "title": "Block",
+                    "description": "Some fields can be in block",
+                    "type": "object",
+                    "properties": {
+                        "ethCountPositive": {
+                            "title": "Positive ether count",
+                            "description": "Float like field with without exp notation. Greater than zero",
+                            "$ref": "#/definitions/ethCountPositive"
+                        },
 
-                "ethCountPositive": {
-                    "title": "Positive ether count",
-                    "description": "Float like field with without exp notation. Greater than zero",
-                    "$ref": "#/definitions/ethCountPositive"
+                        "ethCount": {
+                            "title": "Ether count",
+                            "description": "Float like field with without exp notation. Greater or equal zero",
+                            "$ref": "#/definitions/ethCountPositive"
+                        },
+                    }
                 },
-
-                "ethCount": {
-                    "title": "Ether count",
-                    "description": "Float like field with without exp notation. Greater or equal zero",
-                    "$ref": "#/definitions/ethCountPositive"
-                },
-
 
                 "unxtimeWidget": {
                     "title": "Unixtime with widget",
@@ -104,7 +109,6 @@ class Constructor(ConstructorInstance):
                     "minItems": 1,
                     "$ref": "#/definitions/addressArray"
                 },
-
 
             }
         }
@@ -143,7 +147,10 @@ class Constructor(ConstructorInstance):
                 "result": "error",
                 "errors": {
                     'string': 'some error',
-                    'enum': ['some error 1', 'some error 2']
+                    'enum': ['some error 1', 'some error 2'],
+                    'block1': {
+                        'ethCount': 'error for item in block'
+                    }
                 }
             }
 
@@ -205,6 +212,9 @@ class Constructor(ConstructorInstance):
                 'title': 'some eth count',
                 'description': 'In variable in smart contract it stored in wei',
                 'ui:widget': 'ethCount',
+                'ui:widget_options': {
+                    'show_currency': 'USD'
+                },
                 'sorting_order': 50
             },
 
@@ -244,6 +254,17 @@ class Constructor(ConstructorInstance):
                     {'title': 'Date time selector', 'description': 'unixtime will be sent', 'ui:widget': 'unixTime'}
                 ],
                 'sorting_order': 100
+            },
+
+            '': {
+                'title': 'Send ether to contract (fallback)',
+                'sorting_order': 1
+            },
+
+            'sendEther': {
+                'title': 'Send ether to contract',
+                'description': 'Payable function. Ether amount can be set',
+                'sorting_order': 200
             },
         }
 
@@ -312,7 +333,14 @@ contract SmartzFeatures {
     function setDate(uint256 _date) public {
         someDate = _date;
     }
+    
+    function() public payable {
+        ethCount = msg.value;
+    }
 
+    function sendEther() public payable {
+        ethCount = msg.value;
+    }
 }
 
     """

@@ -112,7 +112,7 @@ export function updateInstance(instanceId, data) {
 
     result
         .then(response => { })
-        .catch(error => { console.warn(error) });
+        .catch(error => console.error(error));
 
     return result;
 }

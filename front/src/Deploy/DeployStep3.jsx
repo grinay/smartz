@@ -31,7 +31,7 @@ class DeployStep3 extends PureComponent {
               Congratulations! Your contract is deployed to {getNetworkName(netId)} blockchain!<br />
               Contract address is <a href={getNetworkEtherscanAddress(netId) + '/address/' + contractAddress}>{contractAddress}</a>.
             </p>
-            <p>
+            <p className="support-block__paragraph">
               Now you can <Link to={`/instance/${instance.instance_id}`}>manage your contract</Link> with Smartz Platform!
             </p>
           </div>
