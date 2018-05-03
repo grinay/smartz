@@ -86,7 +86,6 @@ export const processControlForm = (
 
   let result;
   try {
-    console.log(CtorInstance);
     result = CtorInstance[function_spec.name](...args_converted2abi, callback);
   } catch (e) {
     console.warn(e);
