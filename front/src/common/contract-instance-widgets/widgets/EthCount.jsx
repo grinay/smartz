@@ -1,6 +1,8 @@
+import axios from 'axios';
+
 import BaseWidget from "./BaseWidget";
 import { web3 } from "../../../helpers/eth";
-import axios from 'axios';
+import { moneyAbbr2Symbol } from '../../../helpers/localization';
 
 
 export default class EthCount extends BaseWidget {
@@ -32,7 +34,7 @@ export default class EthCount extends BaseWidget {
           const priceFloat = parseFloat(priceString).toFixed(2);
 
           this.setState({
-            currency: `${showCurrency} ${priceFloat}`
+            currency: `${moneyAbbr2Symbol(showCurrency)} ${priceFloat}`
           });
         }
       })
