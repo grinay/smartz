@@ -3,7 +3,7 @@
 
 A smart contract is a code that runs inside blockchain. The contract can be written in different programming languages and for different blockchains. Now Smartz platform provides smart contract uploading to Ethereum written on Solidity language.
 
-You can add your own contract on the “[Add a smart contract](https://platform.smartz.io/ctor-add)” page, where you need to specify the public name of smart contract, select the file with source code of the contract in ‘.py’ format, and add the description and the deployment price.
+You can add your own contract on the “[Add a smart contract](https://smartz.io/ctor-add)” page, where you need to specify the public name of smart contract, select the file with source code of the contract in ‘.py’ format, and add the description and the deployment price.
 
 To upload a smart contract, you need to write a Python constructor that will have the template of your smart contract, as well as several functions required to display the interface pages and generate the contract code with the settings specified by user.
 
@@ -151,7 +151,7 @@ The `replace` method replaces all occurrences of one string with another. In thi
 
 ## Creating a Page in the Dashboard
 
-The third method is for creating contract page in the [My Contracts](https://platform.smartz.io/dashboard) section, and it defines all the fields available for viewing and possible callable functions of the contract.
+The third method is for creating contract page in the [My Contracts](https://smartz.io/dashboard) section, and it defines all the fields available for viewing and possible callable functions of the contract.
 
 ``` python
    def post_construct(self, fields, abi_array):

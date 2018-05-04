@@ -9,7 +9,7 @@ Voting, storage and counting of votes is carried out in the Ethereum blockchain,
 
 ## Data for Creating a Smart Contract
 
-On Smartz.io platform, in the [Simple voting](https://platform.smartz.io/deploy/5a9a4df0f5ec65000b80d293) page, you need to specify the token information:
+On Smartz.io platform, in the [Simple voting](https://smartz.io/deploy/5a9a4df0f5ec65000b80d293) page, you need to specify the token information:
 
 * **Instance name**: the name of the smart contract;
 * **Ballot name**: the name of the ballot;
@@ -19,7 +19,7 @@ After entering the required data, you will receive the contract code.
 
 The contract will be deployed for 0.05 ether (through the MetaMask wallet).
 
-After network deployment, you can view the deployed contract at Etherscan or manage the contract in the [My contracts](https://platform.smartz.io/dashboard) page.
+After network deployment, you can view the deployed contract at Etherscan or manage the contract in the [My contracts](https://smartz.io/dashboard) page.
 
 ## Detailed Information on the Contract
 

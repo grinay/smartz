@@ -7,7 +7,7 @@ The Equity token is issued according to the ERC20 standard.
 
 ## Data for Creating a Smart Contract
 
-On Smartz.io platform, you need to specify the token information in the [Equity token](https://platform.smartz.io/deploy/5aaa7a92ab3d71000bd0c69e) page:
+On Smartz.io platform, you need to specify the token information in the [Equity token](https://smartz.io/deploy/5aaa7a92ab3d71000bd0c69e) page:
 
 * **Instance name**: the name of the smart contract;
 * **Name of a token**: the name of the token;
@@ -23,7 +23,7 @@ After entering the required data, you will receive the contract code.
 
 The contract will be deployed for 0.1 ether (through the MetaMask wallet).
 
-After network deployment, you can view the deployed contract at Etherscan or manage the contract in the [My contracts](https://platform.smartz.io/dashboard) page.
+After network deployment, you can view the deployed contract at Etherscan or manage the contract in the [My contracts](https://smartz.io/dashboard) page.
 
 ## Detailed Information on the Contract
 
