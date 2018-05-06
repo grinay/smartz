@@ -3,7 +3,7 @@
 
 To access the platform, you must complete a simple signup procedure.
 
-Go to [platform.smartz.io](https://platform.smartz.io/) and click **Log in** button to log in with your preferred method: Facebook, GitHub, Google, or specify your email and password. After signup is complete, you’re redirected to the page with available smart contracts.
+Go to [smartz.io](https://smartz.io/) and click **Log in** button to log in with your preferred method: Facebook, GitHub, Google, or specify your email and password. After signup is complete, you’re redirected to the page with available smart contracts.
 
 > **The authors are not responsible for any possible losses resulting from your use of the alpha version of the service with an Ethereum wallet. To use our service, you need to connect the Rinkeby test network.**
 
