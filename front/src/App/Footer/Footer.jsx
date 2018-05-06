@@ -102,6 +102,11 @@ class Footer extends Component {
               </h3>
               <ul className="page-footer__list">
                 <li className="page-footer__item">
+                  <a href="https://ico.smartz.io/" className="page-footer__link">
+                    Smartz ICO
+                  </a>
+                </li>
+                <li className="page-footer__item">
                   <ul className="social">
                     <li className="social__item">
                       <a href="https://www.facebook.com/SmartzPlatform/" className="social__link  social__link--facebook" aria-label="Follow us on Facebook">
