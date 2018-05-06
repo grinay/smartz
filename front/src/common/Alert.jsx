@@ -9,7 +9,7 @@ class Alert extends Component {
     const commonHeader = 'Greetings, fellow!';
     const msgCommonPart = (
       <span>
-        <p>Are you a developer? Then go to the page <a href='https://platform.smartz.io/docs/contract-uploading-en'>Contract uploading</a> and learn how to upload your own smart contract.</p>
+        <p>Are you a developer? Then go to the page <a href='https://smartz.io/docs/contract-uploading-en'>Contract uploading</a> and learn how to upload your own smart contract.</p>
         <p>Need Assistance? Welcome to our community <a href='https://t.me/smartz_en'>Telegram chat</a></p>
       </span>
     );
@@ -35,7 +35,7 @@ class Alert extends Component {
           header = commonHeader;
           message = (
             <span>
-              <p>First time on our platform? Let's give you a few instructions. First of all you need to register and install Metamask. It's well described on the documentation page <a href='https://platform.smartz.io/docs/first-steps-en'>First Steps</a></p>
+              <p>First time on our platform? Let's give you a few instructions. First of all you need to register and install Metamask. It's well described on the documentation page <a href='https://smartz.io/docs/first-steps-en'>First Steps</a></p>
               {msgCommonPart}
             </span>
           );

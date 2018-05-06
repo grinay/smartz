@@ -7,7 +7,7 @@ ERC20 describes the token functions that can be implemented in a smart contract 
 
 ## Data for Creating a Smart Contract
 
-On Smartz.io platform, in the [ERC20 token](https://platform.smartz.io/deploy/5aaa7a85ab3d71000bd0c69d/0) page, you need to specify:
+On Smartz.io platform, in the [ERC20 token](https://smartz.io/deploy/5aaa7a85ab3d71000bd0c69d/0) page, you need to specify:
 
 * **Instance name**: the name of the smart contract that will be displayed in the My contracts page;
 * **Name of a token**: the name of the token;
@@ -23,7 +23,7 @@ After entering the required data, you will receive the contract code.
 
 The contract will be deployed for 0.1 ether (through the MetaMask wallet).
 
-After network deployment, you can view the deployed contract at Etherscan or manage the contract in the [My contracts](https://platform.smartz.io/dashboard) page.
+After network deployment, you can view the deployed contract at Etherscan or manage the contract in the [My contracts](https://smartz.io/dashboard) page.
 
 ## Detailed Information on the Contract
 

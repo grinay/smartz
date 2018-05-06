@@ -199,7 +199,7 @@ class Production(Staging):
     The in-production settings.
     """
 
-    ALLOWED_HOSTS = ['platform.smartz.io']
+    ALLOWED_HOSTS = ['smartz.io']
 
     pass
 

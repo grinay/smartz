@@ -11,7 +11,7 @@ You receive ERC20 tokens with the possibility to choose their names, ticker, adj
 
 ## Data for smart contract creation
 
-On the Smartz.io platform in [Simple ICO](https://platform.smartz.io/deploy/5aaa7a76ab3d71000bd0c69c/0) page, you need to identify:
+On the Smartz.io platform in [Simple ICO](https://smartz.io/deploy/5aaa7a76ab3d71000bd0c69c/0) page, you need to identify:
 
 * **Instance name**: smart contract name;
 * **Name of a token**: name of a token;
@@ -27,7 +27,7 @@ After indicating all required data, you will receive the code of the contract.
 
 The deployment of a contract will be carried out for ETH 0.3 (via MetaMask wallet).
 
-After deployment on the network, you will be able to look through the deployed contract on Etherscan or proceed to managing the contract in [My contracts](https://platform.smartz.io/dashboard) page.
+After deployment on the network, you will be able to look through the deployed contract on Etherscan or proceed to managing the contract in [My contracts](https://smartz.io/dashboard) page.
 
 ## Detailed information on contract
 

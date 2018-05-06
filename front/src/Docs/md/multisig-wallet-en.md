@@ -11,7 +11,7 @@ Use case: a family fund that consists of the husband and wife and a third-party 
 
 ## Data for Creating a Smart Contract
 
-On Smartz.io platform, in the [Multisignature wallet](https://platform.smartz.io/deploy/5aaa7aa2ab3d71000bd0c69f) page, you need to specify:
+On Smartz.io platform, in the [Multisignature wallet](https://smartz.io/deploy/5aaa7aa2ab3d71000bd0c69f) page, you need to specify:
 
 * **Instance name**: the name of the smart contract;
 * **Signatures quorum**: the quorum of signatures required to withdraw funds or change signatures;
@@ -21,7 +21,7 @@ After entering the required data, you will receive the contract code. At this po
 
 The contract will be deployed for 0.05 ether (through the MetaMask wallet).
 
-After network deployment, you can view the deployed contract at Etherscan or manage the contract in the [My contracts](https://platform.smartz.io/deploy/5aaa7aa2ab3d71000bd0c69f) page.
+After network deployment, you can view the deployed contract at Etherscan or manage the contract in the [My contracts](https://smartz.io/deploy/5aaa7aa2ab3d71000bd0c69f) page.
 
 ## Detailed Information on the Contract
 
