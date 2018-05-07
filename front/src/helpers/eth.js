@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { decodeEvent } from 'ethjs-abi'
 
 export var web3 = window.Web3
@@ -14,6 +13,13 @@ export const processControlForm = (
   callback
 ) => {
   // preparing args
+
+
+  const transactionParameters = {
+    // value: ???,     // amount of ether to send with
+    // gas: ???,       // amount of gas
+    gasPrice: 5e9
+  };
 
   // converts user input to web3-compatible value
   function input2ethereum(input, abi_type) {
@@ -42,6 +48,27 @@ export const processControlForm = (
 
   if (!(form_data instanceof Array))
     throw new Error('form_data is not an array');
+
+  if (function_spec.type !== undefined && function_spec.type === 'fallback') {
+    let result, value;
+
+    if (form_data.length === 1) {
+      value = form_data[0];
+    } else {
+      throw new Error('Incorrect form-data');
+    }
+
+    try {
+      result = web3.eth
+        .contract(contract_abi)
+        .at(contract_address)
+      // .sendTransaction({ ...transactionParameters, value }, callback)
+    } catch (e) {
+      console.error(e);
+    }
+
+    return result;
+  }
 
   let function_abi;
   contract_abi.forEach(info => {
@@ -72,11 +99,6 @@ export const processControlForm = (
 
   // non-constant - there will be a transaction instead of a local call
   if (!function_abi.constant) {
-    const transactionParameters = {
-      // value: ???,     // amount of ether to send with
-      // gas: ???,       // amount of gas
-      gasPrice: 5e9
-    };
 
     if (value !== '')
       transactionParameters.value = value;

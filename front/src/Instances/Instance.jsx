@@ -11,6 +11,7 @@ import {
 import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
+import FunctionButton from './function-button/FunctionButton';
 
 import './Instance.css';
 import renderInstanceWidget from "../common/contract-instance-widgets/ContractInstanceWidgets";
@@ -111,6 +112,61 @@ class Instance extends Component {
       );
     }
 
+    const viewFunctions = this.getFunctionsByType(instance, 'view');
+    let viewFunctionsElements = viewFunctions.length > 0
+      ? viewFunctions.map((func, i) => (
+        <p key={i} className="contract-functions__description">
+          <b>{func.title}</b> — {func.description}
+        </p>
+      ))
+      : null;
+
+    const askFunctions = this.getFunctionsByType(instance, 'ask');
+    let askFunctionsElements = askFunctions.length > 0
+      ? askFunctions.map((func, i) => (
+        <FunctionButton
+          key={i}
+          title={func.title}
+          onClick={() => this.setState({ funcActive: func })}
+        />
+      ))
+      : null;
+
+    const writeFunctions = this.getFunctionsByType(instance, 'write');
+    let writeFunctionsElements = writeFunctions.length > 0
+      ? writeFunctions.map((func, i) => (
+        <FunctionButton
+          key={i}
+          title={func.title}
+          onClick={() => this.setState({ funcActive: func })}
+        />
+      ))
+      : null;
+
+    // add 'default function' - "send ether"
+    let defaultFunctionElement = null;
+    if (instance.abi && instance.abi.length > 0) {
+      const fallback = find(instance.abi, { type: 'fallback' })
+      defaultFunctionElement = fallback !== undefined
+        ? <FunctionButton
+          key={fallback.name}
+          title={'Send ether'}
+          onClick={() => this.setState({
+            funcActive: {
+              ...fallback,
+              title: 'Send ether',
+              inputs: {
+                "type": "array",
+                "minItems": 0,
+                "maxItems": 0
+              }
+            }
+          })}
+        />
+        : null;
+    }
+
+
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">
         <Link to="/dashboard" className="page-main__link">
@@ -168,11 +224,7 @@ class Instance extends Component {
               <p className="contract-functions__description">
                 This functions just provide an information about contract states and values. Results of this fuctions are alrewady shown left.
               </p>
-              {this.getFunctionsByType(instance, 'view').map((func, i) => (
-                <p key={i} className="contract-functions__description">
-                  <b>{func.title}</b> — {func.description}
-                </p>
-              ))}
+              {viewFunctionsElements}
             </section>
           </aside>
         }
@@ -221,47 +273,24 @@ class Instance extends Component {
               </div>
 
               {/* ask functions block */}
-              {this.getFunctionsByType(instance, 'ask').length > 0 &&
+              {askFunctionsElements.length > 0 &&
                 <div className="contract-controls__wrapper">
-                  <span className="contract-controls__section-header">
-                    Ask functions
-                  </span>
+                  <span className="contract-controls__section-header">Ask functions</span>
 
                   <ul className="contract-controls__list">
-                    {this.getFunctionsByType(instance, 'ask').map((func, i) => (
-                      <li key={i} className="contract-controls__item">
-                        <button
-                          className="btn-contract contract-controls__button"
-                          type="button"
-                          onClick={() => this.setState({ funcActive: func })}
-                        >
-                          {func.title}
-                        </button>
-                      </li>
-                    ))}
+                    {askFunctionsElements}
                   </ul>
                 </div>
               }
 
               {/* write functions block */}
-              {this.getFunctionsByType(instance, 'write').length > 0 &&
+              {writeFunctionsElements.length > 0 &&
                 <div className="contract-controls__wrapper">
-                  <span className="contract-controls__section-header">
-                    Write functions
-                  </span>
+                  <span className="contract-controls__section-header">Write functions</span>
 
                   <ul className="contract-controls__list">
-                    {this.getFunctionsByType(instance, 'write').map((func, i) => (
-                      <li key={i} className="contract-controls__item">
-                        <button
-                          className="btn-contract contract-controls__button"
-                          type="button"
-                          onClick={() => this.setState({ funcActive: func })}
-                        >
-                          {func.title}
-                        </button>
-                      </li>
-                    ))}
+                    {writeFunctionsElements}
+                    {defaultFunctionElement}
                   </ul>
                 </div>
               }
@@ -270,8 +299,8 @@ class Instance extends Component {
               <FunctionCard
                 instance={instance}
                 func={this.state.funcActive
-                  || this.getFunctionsByType(instance, 'ask')[0]
-                  || this.getFunctionsByType(instance, 'write')[0]
+                  || askFunctions[0]
+                  || writeFunctions[0]
                 }
                 refresh={this.getConstants.bind(this)}
               />

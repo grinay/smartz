@@ -60,16 +60,14 @@ class FunctionCard extends Component {
 
     // add field 'Value' in schema
     if (func.payable) {
+      if (func.inputs.items === undefined)
+        func.inputs.items = [];
+
       const existValue = find(func.inputs.items, { title: "Value" });
 
       if (!existValue) {
-
         func.inputs.minItems += 1;
         func.inputs.maxItems += 1;
-
-        if (typeof func.inputs.items === 'undefined') {
-          func.inputs.items = [];
-        }
 
         func.inputs.items.push({
           "type": "number",
@@ -126,7 +124,11 @@ class FunctionCard extends Component {
         }
 
         <div className="contract-controls__inner">
-          <button className="button  contract-controls__form-button" type="submit" name="mint-form-submit">
+          <button
+            className="button contract-controls__form-button"
+            type="submit"
+            name="mint-form-submit"
+          >
             Execute
           </button>
         </div>

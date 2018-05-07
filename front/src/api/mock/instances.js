@@ -23,6 +23,20 @@ export const instanceList = [
             {
                 "constant": true,
                 "inputs": [],
+                "name": "rtd",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": true,
+                "stateMutability": "view",
+                "type": "fallback"
+            },
+            {
+                "constant": true,
+                "inputs": [],
                 "name": "name",
                 "outputs": [
                     {
