@@ -39,6 +39,9 @@ const setPic = (ctorName) => { // Temporary until image management implemented
     case 'ledger':
       return 'contract-ledger.jpg';
 
+    case 'smartz platform features':
+      return 'platform-features.jpg';
+
     default:
   }
 };
