@@ -173,7 +173,7 @@ class Footer extends Component {
             <a href="/legal/Smartz_terms-and-conditions.pdf">Terms & conditions</a>
           </p>
           <p className="page-footer__copyright">
-            <span>&#169; Smartz, </span><Link to="https://mixbytes.io">MixBytes</Link> <span>2018</span>
+            <span>&#169; Smartz, </span><a href="https://mixbytes.io" target="_blank">MixBytes</a> <span>2018</span>
           </p>
         </section>
       </footer>
