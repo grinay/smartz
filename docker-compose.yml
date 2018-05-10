@@ -7,6 +7,14 @@ services:
     volumes:
       - "mongodb:/data/db"
 
+  postgres:
+    image: postgres:10.3-alpine
+    restart: "no"
+    env_file:
+      - smartzplatform.env
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+
   frontend:
     build:
       dockerfile: docker/frontend/Dockerfile
@@ -30,6 +38,7 @@ services:
     restart: "no"
     depends_on:
       - mongo
+      - postgres
     volumes:
       - "backendsocket:/app/sock"
       - "backenddata:/app/data"
@@ -37,6 +46,7 @@ services:
 volumes:
   backenddata:
   mongodb:
+  pgdata:
   backendsocket:
     driver: local
     driver_opts:
