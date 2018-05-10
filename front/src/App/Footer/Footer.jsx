@@ -102,7 +102,7 @@ class Footer extends Component {
               </h3>
               <ul className="page-footer__list">
                 <li className="page-footer__item">
-                  <a href="https://ico.smartz.io/" className="page-footer__link" target="_blank">
+                  <a href="https://platform.smartz.io/" className="page-footer__link" target="_blank">
                     About Smartz
                   </a>
                 </li>
