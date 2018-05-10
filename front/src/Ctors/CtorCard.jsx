@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Auth from '../App/Auth/Auth';
+import Auth from '../app/auth/Auth';
 
 import './CtorCard.css';
 

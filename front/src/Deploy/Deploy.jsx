@@ -7,7 +7,7 @@ import Spinner from '../common/Spinner';
 import DeployStep1 from './DeployStep1';
 import DeployStep2 from './DeployStep2';
 import DeployStep3 from './DeployStep3';
-import Auth from '../App/Auth/Auth';
+import Auth from '../app/auth/Auth';
 
 import './Deploy.css';
 
