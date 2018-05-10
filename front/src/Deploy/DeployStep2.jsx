@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import { web3 as w3, getNetworkId, getTxReceipt } from '../helpers/eth';
 import Spinner from '../common/Spinner';
 
-class DeployStep2 extends Component {
+class DeployStep2 extends PureComponent {
   componentWillMount() {
     window.scrollTo(0, 0);
   }

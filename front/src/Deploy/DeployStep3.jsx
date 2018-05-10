@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getNetworkName, getNetworkEtherscanAddress } from '../helpers/eth';
 import Spinner from '../common/Spinner';
 
-class DeployStep3 extends Component {
+class DeployStep3 extends PureComponent {
   componentWillMount() {
     window.scrollTo(0, 0);
   }
