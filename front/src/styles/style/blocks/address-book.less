@@ -1,0 +1,130 @@
+.address-book {
+    position: absolute;
+    z-index: 100;
+    top: 90px;
+    left: 0;
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 460px;
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    word-break: break-all;
+
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 4px 0 #CCCCCC;
+
+    font-family: 'Cera Pro 500', Arial, sans-serif;
+}
+
+.address-book__wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.address-book__link {
+    display: flex;
+    flex-direction: column;
+
+    padding: 17px 17px 22px 17px;
+
+    text-decoration: none;
+
+    color: #000000;
+
+    &:hover {
+        color: #FFFFFF;
+        background-color: @interactive-element-color;
+
+        .address-book__icon {
+            fill: #FFFFFF;
+        }
+    }
+}
+
+.address-book__name {
+    margin-bottom: 5px;
+
+    word-break: break-word;
+
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 29px;
+}
+
+.address-book__wallet {
+    display: flex;
+    align-items: center;
+
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.address-book__wallet, .address-book__email {
+    opacity: .5;
+
+    line-height: 15px;
+}
+
+.address-book__icon {
+    margin-right: 5px;
+
+    fill: #7F7F7F;
+}
+
+@media (min-width: @screen-lg) {
+    .address-book {
+        width: 90%;
+    }
+}
+
+.address-book--static {
+    position: static;
+
+    box-sizing: border-box;
+    max-height: none;
+    margin: 10px 0 0 0;
+
+    border: 0;
+    background-color: #F2F3F7;
+    box-shadow: none;
+
+    .address-book__item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .address-book__item + .address-book__item {
+        margin-top: 19px;
+    }
+
+    .address-book__name--arbitrator {
+        display: flex;
+        align-items: center;
+    }
+
+    .address-book__name--arbitrator::after {
+        display: block;
+        flex-shrink: 0;
+
+        margin-top: 6px;
+        margin-left: 5px;
+        padding: 2px 5px;
+
+        content: 'Arbitrator';
+
+        color: #FFFFFF;
+        border-radius: 2px;;
+        background-color: #8145BF;
+
+        font-size: 12px;
+        line-height: 14px;
+    }
+}

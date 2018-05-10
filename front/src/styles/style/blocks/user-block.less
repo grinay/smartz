@@ -1,0 +1,57 @@
+.user-block {
+  display: flex;
+  align-items: center;
+  order: 2;
+}
+
+.user-block__link {
+  display: flex;
+  padding: 12px 0 12px 12px;
+  margin-right: 15px;
+  font-family: "Cera Pro 700", Arial, sans-serif;
+  font-size: 14px;
+  color: inherit;
+  text-decoration: none;
+  opacity: .5;
+
+  &[href]:hover,
+  &[href]:focus {
+    color: @link-hover;
+    opacity: 1;
+
+    .user-block__icon {
+      fill: @link-hover;
+    }
+  }
+}
+
+.user-block__icon {
+  margin-top: 1px;
+  margin-right: 10px;
+  fill: #333333;
+}
+
+.user-block__name {
+  display: none;
+}
+
+@media (min-width: @screen-md) {
+  .user-block__link {
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 755px) {
+  .user-block {
+    order: 3;
+  }
+
+  .user-block__link {
+    padding: 25px 0 25px 25px;
+    margin: 0;
+
+    &::before {
+      left: 10px;
+    }
+  }
+}

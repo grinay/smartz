@@ -1,12 +1,13 @@
 import axios from 'axios';
-import Auth from '../App/Auth/Auth';
+import Auth from '../app/auth/Auth';
 import MockAdapter from 'axios-mock-adapter';
 import subscribeMockRequests from './apiMock';
 
-const USE_MOCK = false;
+const USE_MOCK = true;
 const COLLAPSED_LOG_REQUESTS = true;
 const API_URL = /localhost/.test(window.location.origin)
   ? 'http://localhost:3000/api'
+  // ? 'http://localhost:3000/api'
   : window.location.origin + '/api';
 
 if (USE_MOCK) {

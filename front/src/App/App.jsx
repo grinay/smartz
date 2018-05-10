@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Header from './Header/Header';
-import Footer from './Footer/Footer';
-import Auth from './Auth/Auth';
-import Callback from './Auth/Callback/Callback';
-import Store from '../Store/StoreContainer';
-import MyDapps from '../MyDapps/MyDappsContainer';
-import Profile from '../Profile/Profile';
-import Deploy from '../Deploy/DeployContainer';
-import CtorAdd from '../CtorAdd/CtorAdd';
-import Dashboard from '../Dashboard/DashboardContainer';
-import Instance from '../Instances/InstanceContainer';
-import Docs from '../Docs/Docs';
+import Header from './header/Header';
+import Footer from './footer/Footer';
+import Auth from './auth/Auth';
+import Callback from './auth/callback/Callback';
+import Store from './store/StoreContainer';
+import MyDapps from './my-dapps/MyDappsContainer';
+import Profile from './profile/Profile';
+import Deploy from './deploy/DeployContainer';
+import CtorAdd from './ctor-add/CtorAdd';
+import Dashboard from './dashboard/DashboardContainer';
+import Instance from './instances/InstanceContainer';
+import Docs from './docs/Docs';
 import { checkMetaMask } from '../helpers/eth';
 
-import './App.css';
+// import './App.scss';
 
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import './Footer.css';
+// import './Footer.scss';
 
 class Footer extends Component {
   render() {
@@ -12,10 +12,10 @@ class Footer extends Component {
             SEO header
           </h2>
           <p className="page-footer__logo">
-              <img
-                  src={require('./i/logo.svg')}
-                  alt="Logo"
-              />
+            <img
+              src={require('./i/logo.svg')}
+              alt="Logo"
+            />
           </p>
           <div className="page-footer__block">
             <div className="page-footer__section  page-footer__section--store">
@@ -109,35 +109,35 @@ class Footer extends Component {
                 <li className="page-footer__item">
                   <ul className="social">
                     <li className="social__item">
-                      <a href="https://www.facebook.com/SmartzPlatform/" className="social__link  social__link--facebook" aria-label="Follow us on Facebook"  target="_blank">
+                      <a href="https://www.facebook.com/SmartzPlatform/" className="social__link  social__link--facebook" aria-label="Follow us on Facebook" target="_blank">
                         <svg className="social__icon  social__icon--facebook" width="26" height="26">
                           <use href="#social-fb"></use>
                         </svg>
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://twitter.com/SmartzPlatform" className="social__link  social__link--twitter" aria-label="Follow us on Twitter"  target="_blank">
+                      <a href="https://twitter.com/SmartzPlatform" className="social__link  social__link--twitter" aria-label="Follow us on Twitter" target="_blank">
                         <svg className="social__icon  social__icon--twitter" width="27" height="22">
                           <use href="#social-twitter"></use>
                         </svg>
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://github.com/mixbytes" className="social__link  social__link--github" aria-label="Follow us on Github"  target="_blank">
+                      <a href="https://github.com/mixbytes" className="social__link  social__link--github" aria-label="Follow us on Github" target="_blank">
                         <svg className="social__icon  social__icon--github" width="26" height="26">
                           <use href="#social-github"></use>
                         </svg>
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://www.youtube.com/channel/UCn4kywh7NwNNHce2a2murSg" className="social__link  social__link--youtube" aria-label="Follow us on Youtube"  target="_blank">
+                      <a href="https://www.youtube.com/channel/UCn4kywh7NwNNHce2a2murSg" className="social__link  social__link--youtube" aria-label="Follow us on Youtube" target="_blank">
                         <svg className="social__icon  social__icon--youtube" width="26" height="18">
                           <use href="#social-youtube"></use>
                         </svg>
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://t.me/smartz_en" className="social__link  social__link--telegram" aria-label="Follow us on Telegram"  target="_blank">
+                      <a href="https://t.me/smartz_en" className="social__link  social__link--telegram" aria-label="Follow us on Telegram" target="_blank">
                         <svg className="social__icon  social__icon--telegram" width="23" height="20">
                           <use href="#social-telegram"></use>
                         </svg>

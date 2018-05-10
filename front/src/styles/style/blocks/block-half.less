@@ -1,0 +1,29 @@
+.block-half {
+  padding: 41px 10px 20px 15px;
+  background-color: #FFFFFF;
+}
+
+@media (min-width: @screen-md) {
+  .block-half {
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    max-width: 450px;
+    padding: 50px 0 0 0;
+  }
+
+  .block-half--wide {
+    max-width: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
+
+@media (min-width: @screen-lg) {
+  .block-half:not(.block-half--wide) {
+    padding-top: 0;
+  }
+
+  .block-half--wide {
+    padding: 0;
+  }
+}

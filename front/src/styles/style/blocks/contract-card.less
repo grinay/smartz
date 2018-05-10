@@ -1,0 +1,163 @@
+.contract-card {
+    display: grid;
+
+    box-sizing: border-box;
+    height: 100%;
+
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.03);
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.contract-card__link {
+    position: relative;
+    z-index: 100;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+
+    text-decoration: none;
+
+    color: #000000;
+
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+
+    &:hover, &:focus {
+        background-color: #F2F3F7;
+    }
+
+    &:hover .contract-card__header, &:focus .contract-card__header {
+        color: @link-hover;
+    }
+}
+
+.contract-card__wrapper {
+    overflow: hidden;
+}
+
+.contract-card__inner {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 13px 23px 13px;
+
+    &:not(.contract-card__inner--position) {
+        flex-grow: 1;
+
+        padding-bottom: 95px;
+
+        border-top: 1px solid #DDDDDD;
+    }
+}
+
+.contract-card__inner--position {
+    box-sizing: border-box;
+
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+}
+
+.contract-card__header {
+    margin-top: 0;
+    margin-bottom: 7px;
+
+    opacity: .9;
+
+    font-family: 'Cera Pro 700', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 21px;
+}
+
+.contract-card__description {
+    margin-top: 0;
+
+    opacity: .5;
+
+    font-family: 'Cera Pro 400', Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+@supports (word-break: break-word) {
+    .contract-card__description {
+        word-break: break-word;
+    }
+}
+
+@supports not (word-break: break-word) {
+    .contract-card__description {
+        word-break: break-all;
+    }
+}
+
+.contract-card__info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.contract-card__price {
+    position: relative;
+    z-index: 101;
+
+    margin-bottom: 10px;
+
+    &:hover, &:focus {
+        color: @link-hover;
+        box-shadow: inset 3px 3px @link-hover,
+        inset -3px -3px @link-hover;
+    }
+}
+
+.contract-card__quantity {
+    position: relative;
+    z-index: 101;
+
+    display: flex;
+    align-items: center;
+
+    opacity: .3;
+
+    font-family: 'Cera Pro Black', Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+
+    &::before {
+        display: block;
+
+        width: 15px;
+        height: 15px;
+        margin-right: 5px;
+
+        content: '';
+
+        background-image: url('../img/store/man.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
+
+@media (min-width: @screen-lg) {
+    .contract-card__inner {
+        padding-bottom: 15px;
+    }
+
+    .contract-card__header {
+        width: 230px;
+
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
