@@ -16,7 +16,7 @@ COPY backend/utils/ utils/
 COPY backend/constructor_engine/ constructor_engine/
 COPY backend/constructor_examples/ constructor_examples/
 COPY backend/manage.py manage.py
-
+COPY docker/backend/entrypoint.sh .
 
 
 FROM alpine:3.7
@@ -24,11 +24,10 @@ LABEL maintainer=smartz.io
 #---labels-will-be-here---
 WORKDIR /app
 VOLUME [ "/app/sock", "/app/data" ]
-RUN apk --no-cache --update upgrade \
-&& apk --no-cache add nodejs python3 uwsgi uwsgi-python3
 ADD https://github.com/ethereum/solidity/releases/download/v0.4.20/solc-static-linux /usr/local/bin/solc
-RUN chmod 755 /usr/local/bin/solc
+RUN apk --no-cache --update upgrade \
+&& apk --no-cache add nodejs python3 uwsgi uwsgi-python3 postgresql \
+&& chmod 755 /usr/local/bin/solc
 COPY --from=python_stage /build/ .
 COPY json-schema/ /json-schema
-COPY docker/backend/entrypoint.sh .
 CMD [ "/bin/sh", "entrypoint.sh" ]
