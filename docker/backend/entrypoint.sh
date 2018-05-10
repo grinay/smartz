@@ -9,12 +9,12 @@ case "$ENVIRONMENT" in
                 ;;
         stage)
                 echo "environment: STAGE"
-                UWSGI_PROCESSES=2
+                UWSGI_PROCESSES=5
                 DJANGO_CONFIGURATION=Staging
                 ;;
         prod)
                 echo "  environment: PRODUCTION"
-                UWSGI_PROCESSES=2
+                UWSGI_PROCESSES=5
                 DJANGO_CONFIGURATION=Production
                 ;;
         *)
