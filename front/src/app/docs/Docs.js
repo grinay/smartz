@@ -4,7 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-// import './Docs.scss';
+import './Docs.less';
 
 class Docs extends Component {
   constructor(props) {

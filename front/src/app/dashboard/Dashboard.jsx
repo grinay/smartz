@@ -8,7 +8,7 @@ import {
 } from '../../helpers/eth';
 import Alert from '../common/Alert';
 
-// import './Dashboard.scss';
+import './Dashboard.less';
 
 class Dashboard extends Component {
   constructor(props) {

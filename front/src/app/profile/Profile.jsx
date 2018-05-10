@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Auth from '../auth/Auth';
 
-// import './Profile.scss';
+import './Profile.less';
 
 class Profile extends Component {
   render() {

@@ -15,7 +15,7 @@ import Instance from './instances/InstanceContainer';
 import Docs from './docs/Docs';
 import { checkMetaMask } from '../helpers/eth';
 
-// import './App.scss';
+import './App.less';
 
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {

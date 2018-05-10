@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../auth/Auth';
 
+import './page-header.less';
+
 class Header extends Component {
   goTo(route) {
     this.props.history.replace(`/${route}`)

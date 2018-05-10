@@ -9,7 +9,7 @@ import DeployStep2 from './DeployStep2';
 import DeployStep3 from './DeployStep3';
 import Auth from '../auth/Auth';
 
-// import './Deploy.scss';
+import './Deploy.less';
 
 // TODO: refactor this file totally
 

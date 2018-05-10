@@ -13,7 +13,7 @@ import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
 import FunctionButton from './function-button/FunctionButton';
 
-// import './Instance.scss';
+import './Instance.less';
 import renderInstanceWidget from "../common/contract-instance-widgets/ContractInstanceWidgets";
 
 class Instance extends Component {
