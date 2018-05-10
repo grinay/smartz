@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Header from './header/Header';
-import Footer from './footer/Footer';
-import Auth from './auth/Auth';
-import Callback from './auth/callback/Callback';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
+import Auth from './Auth/Auth';
+import Callback from './Auth/Callback/Callback';
 import Store from '../Store/StoreContainer';
 import MyDapps from '../MyDapps/MyDappsContainer';
 import Profile from '../Profile/Profile';
@@ -83,7 +83,7 @@ class App extends Component {
             handleAuthentication(props);
             return <Callback {...props} />
           }} />
-          {/* <Route path="/docs/:docUri?" component={Docs} /> */}
+          <Route path="/docs/:docUri?" component={Docs} />
 
           <PrivateRoute path="/profile" component={props =>
             <Profile profile={profile} {...props} />}

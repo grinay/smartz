@@ -5,7 +5,7 @@ import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import * as api from '../api/apiRequests';
 import CtorCard from '../Ctors/CtorCard';
-import Auth from '../app/auth/Auth';
+import Auth from '../App/Auth/Auth';
 
 class MyDapps extends Component {
   componentWillMount() {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Auth from '../app/auth/Auth';
+import Auth from '../App/Auth/Auth';
 import MockAdapter from 'axios-mock-adapter';
 import subscribeMockRequests from './apiMock';
 

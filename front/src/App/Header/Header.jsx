@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Auth from '../auth/Auth';
+import Auth from '../Auth/Auth';
 
 class Header extends Component {
   goTo(route) {
