@@ -90,9 +90,9 @@ class Footer extends Component {
               </h3>
               <ul className="page-footer__list">
                 <li className="page-footer__item">
-                  <Link to="/docs" className="page-footer__link">
+                  <a href="https://wiki.smartz.io/" className="page-footer__link">
                     Docs
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
