@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Auth from '../Auth/Auth';
+import Auth from '../auth/Auth';
 
 class Header extends Component {
   goTo(route) {
@@ -35,9 +35,10 @@ class Header extends Component {
               </Link>
             </li>
             <li className="main-navigation__item">
-              <Link to="/docs" className="main-navigation__link">
-                Docs
-              </Link>
+              {/* <Link to="/docs" className="main-navigation__link"> */}
+              {/* Docs */}
+              <a href="https://wiki.smartz.io/" className="main-navigation__link">Docs</a>
+              {/* </Link> */}
             </li>
           </ul>
         </nav>
