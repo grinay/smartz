@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../auth/Auth';
 
-import './page-header.less';
+import './Header.less';
 
 class Header extends Component {
   goTo(route) {
@@ -14,29 +14,29 @@ class Header extends Component {
   }
 
   render() {
-    const { profile } = this.props;
+    const { profile, location } = this.props;
     const isAuthenticated = Auth.isAuthenticated();
 
     return (
-      <header className="page-header">
+      <header className="page-header flex-v">
         <Link to="/" className="page-header__link" aria-label="Back to main page">
-          <svg className="page-header__logo" width="120" height="23">
+          <svg className="page-header__logo">
             <use href="#logo"></use>
           </svg>
         </Link>
         <nav className="main-navigation">
           <ul className="main-navigation__list">
-            <li className="main-navigation__item">
+            <li className={`main-navigation__item ${location.pathname === '/' ? 'active' : ''}`}>
               <Link to="/" className="main-navigation__link">
                 Smart Store
               </Link>
             </li>
-            <li className="main-navigation__item">
+            <li className={`main-navigation__item ${location.pathname === '/dashboard' ? 'active' : ''}`}>
               <Link to="/dashboard" className="main-navigation__link">
-                My Contracts
+                Dashboard
               </Link>
             </li>
-            <li className="main-navigation__item">
+            <li className={`main-navigation__item ${location.pathname === '/docs' ? 'active' : ''}`}>
               <Link to="/docs" className="main-navigation__link">
                 Docs
               </Link>
@@ -47,17 +47,17 @@ class Header extends Component {
           <Link
             to="/profile"
             className="user-block__link">
-            <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
-              <use href="#lock"></use>
-            </svg>
             {isAuthenticated
               ? <span className="user-block__name"
                 style={{ display: 'inherit' }}>
-                {profile &&
-                  profile.name
-                }
+                {profile && profile.name}
               </span>
-              : <span className="user-block__login">Login</span>
+              : <span>
+                <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
+                  <use href="#lock" />
+                </svg>
+                <span className="user-block__login">Login</span>
+              </span>
             }
           </Link>
         </div>
