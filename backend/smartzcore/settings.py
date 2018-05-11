@@ -128,7 +128,7 @@ class Common(Configuration):
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/2.0/howto/static-files/
-    STATIC_URL = '/static/'
+    STATIC_URL = '/backend-static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
     AUTH_USER_MODEL = 'users.User'
@@ -149,8 +149,8 @@ class Common(Configuration):
     # inside docker in the same dir
     SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(SMARTZ_ROOT_DIR, 'json-schema')
 
-    # used for setup prefix on local development since thereis no nginx on it
-    SMARTZ_API_PREFIX = ''
+    # all api methods will use thi prefix
+    SMARTZ_API_PREFIX = 'api/'
 
     # business logic
     SMARTZ_COMMISSION = 0.2
@@ -179,8 +179,6 @@ class DevelopmentLocal(Development):
     """
     Development on local machine throw runserver
     """
-
-    SMARTZ_API_PREFIX = 'api/'
 
     # local machine paths
     SMARTZ_MONGO_HOST = '127.0.0.1'

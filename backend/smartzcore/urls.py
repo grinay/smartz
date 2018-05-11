@@ -12,7 +12,7 @@ urlpatterns = [
             path('instances', include('apps.contracts.urls')),
         ])
     ),
-    path('admin', admin.site.urls),
+    path('secret-admin/', admin.site.urls),
 ]
 
 # if settings.DEBUG:

@@ -6,28 +6,25 @@ case "$ENVIRONMENT" in
                 echo "environment: DEVELOPMENT"
                 UWSGI_PROCESSES=1
                 DJANGO_CONFIGURATION=Development
-		source .venv/bin/activate
-		python manage.py collectstatic --noinput
                 ;;
         stage)
                 echo "environment: STAGE"
                 UWSGI_PROCESSES=5
                 DJANGO_CONFIGURATION=Staging
-		source .venv/bin/activate
-		python manage.py collectstatic --noinput
                 ;;
         prod)
                 echo "  environment: PRODUCTION"
                 UWSGI_PROCESSES=5
                 DJANGO_CONFIGURATION=Production
-		source .venv/bin/activate
-		python manage.py collectstatic --noinput
                 ;;
         *)
                 echo "Please define environment with ENVIRONMENT variable(dev, stage, prod)!"
                 exit 1
                 ;;
 esac
+
+source .venv/bin/activate
+python manage.py collectstatic --noinput --clear
 
 chown -R uwsgi:uwsgi /app
 

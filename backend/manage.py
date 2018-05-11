@@ -24,6 +24,7 @@ if __name__ == '__main__':
 
     assert os.getenv('ENVIRONMENT') in envs, 'ENVIRONMENT is not set in env'
     os.environ.setdefault('DJANGO_CONFIGURATION', envs[os.getenv('ENVIRONMENT')])
+    print('[NOTICE][DJANGO] Using env: {}'.format(envs[os.getenv('ENVIRONMENT')]))
 
     try:
         from configurations.management import execute_from_command_line

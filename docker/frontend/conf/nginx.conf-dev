@@ -47,8 +47,7 @@ http {
 		location / {
 			try_files $uri $uri/ /index.html;
 		}
-		location /api {
-		    rewrite ^/api(.*)$ $1 break;
+		location ~ ^/(api|secret-admin) {
 			include uwsgi_params;
 			uwsgi_read_timeout 120;
 			uwsgi_pass unix:/app/sock/backend;
@@ -57,8 +56,8 @@ http {
 			expires off;
 			access_log off;
 		}
-		location /static/ {
-			alias /static;
+		location ^~ /backend-static/ {
+			alias /app/staticfiles/;
 			expires off;
 		}
 		location = /favicon.ico {
