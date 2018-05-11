@@ -98,6 +98,14 @@
                         "show_currency": { "type": "string" }
                     }
                 },
+                "payable_details": {
+                    "description": "Title and description of input with ether amount",
+                    "type": "object",
+                    "properties": {
+                        "title": { "type": "string" },
+                        "description": { "type": "string" }
+                    }
+                },
                 "constant": { "type": "boolean" },
                 "payable": { "type": "boolean" },
                 "inputs": { "$ref": "#/definitions/ETHFunctionArgumentList" },

@@ -64,18 +64,33 @@ def make_generic_function_spec(abi_array):
     """
     def fn2spec(fn):
         spec = dict()
-        for attr in ("name", "constant", "payable"):
-            spec[attr] = fn[attr]
 
-        spec['title'] = fn['name']    # to be extended by contract author
-        spec['inputs'] = abi_arguments2schema(fn['inputs'])
-        spec['outputs'] = abi_arguments2schema(fn['outputs'])
+        if fn['type'] == 'function':
+            for attr in ("name", "constant", "payable"):
+                spec[attr] = fn[attr]
+
+            spec['title'] = fn['name']  # to be extended by contract author
+            spec['inputs'] = abi_arguments2schema(fn['inputs'])
+            spec['outputs'] = abi_arguments2schema(fn['outputs'])
+
+        elif fn['type'] == 'fallback':
+            spec = {
+                'name': '',
+                'title': '',
+                'constant': False,
+                'payable': fn['payable'],
+                'inputs': abi_arguments2schema([]),
+                'outputs': abi_arguments2schema([])
+            }
+
+        else:
+            assert False
 
         assert_conforms2definition(spec, load_schema('internal/front-back.json'), 'ETHFunctionSpec')
 
         return spec
 
-    return [fn2spec(fn) for fn in abi_array if fn['type'] == 'function']
+    return [fn2spec(fn) for fn in abi_array if fn['type'] in ('function', 'fallback')]
 
 
 def merge_function_titles2specs(spec_array, titles_info):
@@ -94,7 +109,8 @@ def merge_function_titles2specs(spec_array, titles_info):
     )
 
     def set_title(to_spec, from_info):
-        for field in ('title', 'description', 'sorting_order', 'ui:widget', 'ui:widget_options'):
+        # todo how to deduplicate with json schema?
+        for field in ('title', 'description', 'sorting_order', 'ui:widget', 'ui:widget_options', 'payable_details'):
             if field in from_info:
                 to_spec[field] = from_info[field]
 

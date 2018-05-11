@@ -213,7 +213,7 @@ class Constructor(ConstructorInstance):
                 'description': 'In variable in smart contract it stored in wei',
                 'ui:widget': 'ethCount',
                 'ui:widget_options': {
-                    'show_currency': 'USD'
+                    'show_currency': 'EUR'
                 },
                 'sorting_order': 50
             },
@@ -258,13 +258,22 @@ class Constructor(ConstructorInstance):
 
             '': {
                 'title': 'Send ether to contract (fallback)',
-                'sorting_order': 1
+                'description': 'Send ether to contract (fallback description)',
+                'sorting_order': 1,
+                'payable_details': {
+                    'title': 'Ether amount (custom)',
+                    'description': 'This ether amount will be sent to the contract (custom)'
+                }
             },
 
             'sendEther': {
                 'title': 'Send ether to contract',
                 'description': 'Payable function. Ether amount can be set',
-                'sorting_order': 200
+                'sorting_order': 200,
+                'payable_details': {
+                    'title': 'Ether amount (custom)',
+                    'description': 'This ether amount will be sent with the function call (custom)'
+                }
             },
         }
 
