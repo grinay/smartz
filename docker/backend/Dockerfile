@@ -1,5 +1,5 @@
 FROM alpine:3.7 AS python_stage
-WORKDIR /build
+WORKDIR /app
 RUN apk --no-cache --update upgrade \
 && apk --no-cache add python3 python3-dev g++ make
 RUN apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev
@@ -28,6 +28,6 @@ ADD https://github.com/ethereum/solidity/releases/download/v0.4.20/solc-static-l
 RUN apk --no-cache --update upgrade \
 && apk --no-cache add nodejs python3 uwsgi uwsgi-python3 postgresql \
 && chmod 755 /usr/local/bin/solc
-COPY --from=python_stage /build/ .
+COPY --from=python_stage /app/ .
 COPY json-schema/ /json-schema
 CMD [ "/bin/sh", "entrypoint.sh" ]

@@ -54,8 +54,12 @@ http {
 			uwsgi_pass unix:/app/sock/backend;
 		}
 		location ~* \.(?:css(\.map)?|js(\.map)?|jpe?g|png|gif|ico|cur|heic|webp|tiff?|mp3|m4a|aac|ogg|midi?|wav|mp4|mov|webm|mpe?g|avi|ogv|flv|wmv)$ {
-			expires 7d;
+			expires off;
 			access_log off;
+		}
+		location /static/ {
+			alias /static;
+			expires off;
 		}
 		location = /favicon.ico {
 			access_log off;

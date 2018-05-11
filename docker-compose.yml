@@ -26,6 +26,7 @@ services:
       - backend
     volumes:
       - "backendsocket:/app/sock"
+      - "django_static:/static:ro"
     ports:
       - "3000:80"
 
@@ -42,11 +43,13 @@ services:
     volumes:
       - "backendsocket:/app/sock"
       - "backenddata:/app/data"
+      - "django_static:/static"
 
 volumes:
   backenddata:
   mongodb:
   pgdata:
+  django_static:
   backendsocket:
     driver: local
     driver_opts:
