@@ -18,7 +18,7 @@ export const processControlForm = (
   const transactionParameters = {
     // value: ???,     // amount of ether to send with
     // gas: ???,       // amount of gas
-    gasPrice: 5e9
+    gasPrice: 5e9,
   };
 
   // converts user input to web3-compatible value
@@ -60,9 +60,7 @@ export const processControlForm = (
 
     try {
       result = web3.eth
-        .contract(contract_abi)
-        .at(contract_address)
-      // .sendTransaction({ ...transactionParameters, value }, callback)
+        .sendTransaction({ ...transactionParameters, value, to: contract_address }, callback)
     } catch (e) {
       console.error(e);
     }
