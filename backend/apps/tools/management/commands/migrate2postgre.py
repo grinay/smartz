@@ -1,3 +1,4 @@
+import json
 from decimal import Decimal
 
 from django.conf import settings
@@ -52,7 +53,7 @@ class Command(BaseCommand):
                     source=mongo_contract['source'],
                     binary=mongo_contract['bin'],
                     function_specs=mongo_contract['function_specs'],
-                    dashboard_functions=mongo_contract['dashboard_functions'],
+                    dashboard_functions=json.dumps(mongo_contract['dashboard_functions']),
                     has_public_access=mongo_contract['public_access'] if 'public_access' in mongo_contract else False,
                     auth0_user_id=mongo_contract['user_id'],
                     network_id=str(mongo_contract['network_id']),

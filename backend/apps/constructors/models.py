@@ -23,7 +23,7 @@ class Constructor(models.Model):
         return constructor
 
     def get_formatted_price_eth(self):
-        return str(self.price_eth).rstrip('0').rstrip('.')
+        return float(format(self.price_eth, 'f').rstrip('0').rstrip('.'))
 
     def __str__(self):
         return self.name
