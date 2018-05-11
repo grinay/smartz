@@ -50,9 +50,8 @@ http {
 			add_header Cache-Control "no-store, no-cache, must-revalidate";
 			expires off;
 		}
-		location /api {
+		location ~ ^/(api|secret-admin) {
 			if ($http_x_forwarded_proto != "https") { return 301 https://$host$request_uri; }
-			rewrite ^/api(.*)$ $1 break;
 			include uwsgi_params;
 			uwsgi_read_timeout 120;
 			uwsgi_pass unix:/app/sock/backend;
@@ -60,7 +59,10 @@ http {
 		}
 		location ~* \.(?:css(\.map)?|js(\.map)?|jpe?g|png|gif|ico|cur|heic|webp|tiff?|mp3|m4a|aac|ogg|midi?|wav|mp4|mov|webm|mpe?g|avi|ogv|flv|wmv)$ {
 			if ($http_x_forwarded_proto != "https") { return 301 https://$host$request_uri; }
-			add_header Cache-Control "no-store, no-cache, must-revalidate";
+			expires off;
+		}
+		location ^~ /backend-static/ {
+			alias /app/staticfiles/;
 			expires off;
 		}
 		location = /favicon.ico {

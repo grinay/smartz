@@ -2,6 +2,7 @@
 import requests
 from django.conf import settings
 
+from apps.users.models import AuthToken
 from utils.responses import error_response
 
 
@@ -32,20 +33,19 @@ def nonempty(v):
 
 
 # [TODO] temporary here
-def auth(request, db):
+def auth(request):
     # todo
     if settings.IS_TESTING:
         return '123'
 
     token = request.META.get('HTTP_X_ACCESSTOKEN')
-    if not token:
+    if not token or token=='null':
         return error_response('not authorized')
 
-    user_info = db.auth_tokens.find_one({"token": token})
-    if user_info:
-       user_id = user_info['user_id']
-    else:
-        url = 'https://smartz.auth0.com/userinfo'
+    try:
+        auth_token = AuthToken.objects.get(token=token)
+    except AuthToken.DoesNotExist:
+        url = 'https://{}/userinfo'.format(settings.AUTH0_HOST)
         headers = {'authorization': 'Bearer {}'.format(token)}
         try:
             resp = requests.get(url, headers=headers)
@@ -54,9 +54,8 @@ def auth(request, db):
         except Exception:
             return error_response('authorization error')
 
-        user_id = user_info['sub']
-        db.auth_tokens.replace_one({"token": token}, {"token": token, 'user_id': user_id}, upsert=True)
+        auth_token = AuthToken(token=token, user_id=user_info['sub'])
+        auth_token.save()
 
-
-    print("[DEBUG][AUTH] {}".format(str(user_id)))
-    return user_id
+    print("[DEBUG][AUTH] {}".format(auth_token.user_id))
+    return auth_token.user_id

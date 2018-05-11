@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.urls import include, path, re_path
+from django.contrib import admin
 
 
 urlpatterns = [
@@ -8,9 +9,10 @@ urlpatterns = [
         include([
             path('constructors', include('apps.constructors.urls')),
             # path('accounts', include('apps.account.urls')),
-            path('instances', include('apps.instances.urls')),
+            path('instances', include('apps.contracts.urls')),
         ])
-    )
+    ),
+    path('secret-admin/', admin.site.urls),
 ]
 
 # if settings.DEBUG:
