@@ -7,5 +7,5 @@ class User(AbstractUser):
 
 
 class AuthToken(models.Model):
-    token = models.CharField(max_length=200)
+    token = models.CharField(max_length=200, unique=True)
     user_id = models.CharField(max_length=200)

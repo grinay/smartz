@@ -54,8 +54,7 @@ def auth(request):
         except Exception:
             return error_response('authorization error')
 
-        auth_token = AuthToken(token=token, user_id=user_info['sub'])
-        auth_token.save()
+        auth_token, created = AuthToken.objects.update_or_create(token=token, defaults={"user_id":user_info['sub']})
 
     print("[DEBUG][AUTH] {}".format(auth_token.user_id))
     return auth_token.user_id
