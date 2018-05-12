@@ -10,7 +10,7 @@ export default class EthCount extends PureComponent {
 
     if (!isNaN(stringValue)) {
       // "+" is operator for strict type conversion to type "number"
-      onChange(+web3.toWei(stringValue, 'ether'));
+      onChange(web3.toWei(stringValue, 'ether'));
     } else {
       onChange('');
     }
