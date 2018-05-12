@@ -123,7 +123,7 @@ class Dashboard extends Component {
                           <img
                             className="contract-info__img"
                             src={inst.ctor.image
-                              ? require(`../ctors/i/${inst.ctor.image}`)
+                              ? require(`../common/ctor-card/i/${inst.ctor.image}`)
                               : `https://lorempixel.com/640/400/?${Math.random()}`
                             }
                             width="644" height="404"

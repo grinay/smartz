@@ -7,7 +7,7 @@ import {
     fetchCtorParamsRequest,
     fetchCtorParamsFailure,
     fetchCtorParamsSuccess,
-} from '../app/ctors/CtorsActions';
+} from '../app/common/ctor-card/CtorsActions';
 import {
     fetchInstancesRequest,
     fetchInstancesFailure,

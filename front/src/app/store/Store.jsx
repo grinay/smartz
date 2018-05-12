@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
-import CtorCard from '../ctors/CtorCard';
+import CtorCard from '../common/ctor-card/CtorCard';
+import developersImg from './img/developers.jpg';
 import * as api from '../../api/apiRequests';
+
+import './Store.less';
 
 class Store extends Component {
   componentDidMount() {
@@ -17,17 +20,22 @@ class Store extends Component {
     return (
       <main className="page-main  page-main--store">
         <div className="page-main__inner">
-          {metamaskStatus &&
+          {/* {metamaskStatus &&
             <Alert standardAlert={metamaskStatus} color="gray" />
-          }
+          } */}
 
           <section className="contracts-gallery">
             <div className="contracts-gallery__gallery  gallery">
               {ctors &&
                 <ul className="contracts-gallery__list  gallery__list">
-                  {ctors.filter(el => el.is_public).map((el, i) => (
-                    <CtorCard key={i} ctor={el} />
-                  ))}
+                  {ctors.filter(el => el.is_public).map((el, i) =>
+                    <li
+                      key={i}
+                      className="gallery__item"
+                    >
+                      <CtorCard ctor={el} />
+                    </li>
+                  )}
                 </ul>
               }
 
@@ -37,11 +45,19 @@ class Store extends Component {
             </div>
           </section>
 
-          <Alert header="If you are developer" color="green"
+          {/* <Alert header="If you are developer" color="green"
             style={{ marginTop: '80px' }}
           >
             <p>You can <Link to="/ctor-add">add a smart contract</Link> to our platform.</p>
-          </Alert>
+          </Alert> */}
+          <div className="dev-block">
+            <div className="description">
+              <h2>Developers!</h2>
+              <p>You can upload your smart contract to Smartz platform.</p>
+              <button>Learn more</button>
+            </div>
+            <img src={developersImg} alt="for-dev" />
+          </div>
         </div>
       </main>
     );

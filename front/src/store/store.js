@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { createStore } from 'redux';
 
 import app from '../app/AppReducer';
-import ctors from '../app/ctors/CtorsReducer';
+import ctors from '../app/common/ctor-card/CtorsReducer';
 import deploy from '../app/deploy/DeployReducer';
 import instances from '../app/instances/InstancesReducer';
 

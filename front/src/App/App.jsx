@@ -13,6 +13,8 @@ import CtorAdd from './ctor-add/CtorAdd';
 import Dashboard from './dashboard/DashboardContainer';
 import Instance from './instances/InstanceContainer';
 import Docs from './docs/Docs';
+import InfoBlock from './common/InfoBlock';
+import metamask from './common/img/metamask.png';
 import { checkMetaMask } from '../helpers/eth';
 
 import './App.less';
@@ -71,6 +73,16 @@ class App extends Component {
 
     return (
       <div>
+        {metamaskStatus === 'noMetamask' &&
+          <InfoBlock className="install-block flex">
+            <img src={metamask} alt="" />
+            <p>To pay Ether you need a Metamask plugin.</p>
+            <button>
+              Install for Chrome
+          </button>
+          </InfoBlock>
+        }
+
         <Route render={(props) => (
           <Header profile={profile} {...props} />
         )} />

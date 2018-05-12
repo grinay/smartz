@@ -27,18 +27,31 @@ class Header extends Component {
         <nav className="main-navigation">
           <ul className="main-navigation__list">
             <li className={`main-navigation__item ${location.pathname === '/' ? 'active' : ''}`}>
-              <Link to="/" className="main-navigation__link">
+              <Link
+                to="/"
+                className="main-navigation__link">
                 Smart Store
               </Link>
             </li>
             <li className={`main-navigation__item ${location.pathname === '/dashboard' ? 'active' : ''}`}>
-              <Link to="/dashboard" className="main-navigation__link">
+              <Link
+                to="/dashboard"
+                className="main-navigation__link">
                 Dashboard
               </Link>
             </li>
             <li className={`main-navigation__item ${location.pathname === '/docs' ? 'active' : ''}`}>
-              <Link to="/docs" className="main-navigation__link">
+              <Link
+                to="/docs"
+                className="main-navigation__link">
                 Docs
+              </Link>
+            </li>
+            <li className={`main-navigation__item`}>
+              <Link
+                to="https://t.me/smartz_en"
+                className="main-navigation__link">
+                Chat
               </Link>
             </li>
           </ul>

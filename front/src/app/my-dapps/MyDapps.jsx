@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import * as api from '../../api/apiRequests';
-import CtorCard from '../ctors/CtorCard';
+import CtorCard from '../common/ctor-card/CtorCard';
 import Auth from '../auth/Auth';
 
 class MyDapps extends Component {

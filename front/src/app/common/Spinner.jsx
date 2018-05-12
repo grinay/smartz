@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class Spinner extends Component {
   render() {
-    const {text, alt = 'Spinner', width = '100px'} = this.props;
+    const { text, alt = 'Spinner', width = '100px' } = this.props;
 
     return (
       <div className="spinner">
         <p className="support-block__paragraph">{text}</p>
         <img
-          src={require('./i/loading.svg')}
+          src={require('./img/loading.svg')}
           alt={alt}
-          style={{maxWidth: width, maxHeight: width}}
+          style={{ maxWidth: width, maxHeight: width }}
         />
       </div>
     );

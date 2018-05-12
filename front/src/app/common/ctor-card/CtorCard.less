@@ -1,0 +1,218 @@
+// .ctor-card__info .ctor-card__price:not(:first-child) {
+//     min-width: inherit;
+// }
+@import '../../../styles/variables.less';
+
+.ctor-card {
+    position: relative;
+
+// display: grid;
+    // box-sizing: border-box;
+    // height: 100%;
+    // border: 1px solid #DDDDDD;
+
+    width: 240px;
+    height: 333px;
+
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.03);
+
+    // grid-template-columns: 1fr;
+    // grid-template-rows: 1fr;
+    &:hover, &:focus {
+        background-color: #E6E9F0;
+    }
+
+    .ctor-card__link {
+        z-index: 100;
+
+        display: flex;
+        flex-direction: column;
+
+// height: 100%;
+
+        padding-top: 138px;
+
+        text-decoration: none;
+
+        color: #000000;
+
+        // grid-column: 1 / -1;
+        // grid-row: 1 / -1;
+
+
+
+        &:hover .ctor-card__header, &:focus .ctor-card__header {
+            color: @link-hover;
+        }
+
+        .ctor-card__img {
+            position: absolute;
+            top: -30px;
+            left: 10px;
+
+            overflow: hidden;
+
+            width: 150px;
+            height: 150px;
+
+            border-radius: 24px;
+        }
+    }
+
+    // .ctor-card__wrapper {
+    //     overflow: hidden;
+    // }
+
+
+
+    .ctor-card__description {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+
+        padding: 0 10px;
+
+        // &:not(.ctor-card__description--position) {
+        //     flex-grow: 1;
+
+        //     padding-bottom: 95px;
+
+        //     border-top: 1px solid #DDDDDD;
+        // }
+        .ctor-card__header {
+            margin: 0 0 6px 0;
+
+            opacity: .9;
+            color: #000000;
+
+            font-family: @f-cera-pro-700;
+            font-size: 17px;
+            line-height: 21px;
+        }
+
+        .ctor-card__text {
+            margin: 0;
+
+            color: #000000;
+
+            font-family: @f-cera-pro-400;
+            font-size: 13px;
+            line-height: 18px;
+        }
+
+        @supports (word-break: break-word) {
+            .ctor-card__text {
+                word-break: break-word;
+            }
+        }
+
+        @supports not (word-break: break-word) {
+            .ctor-card__text {
+                word-break: break-all;
+            }
+        }
+    }
+
+    // .ctor-card__description--position {
+    //     box-sizing: border-box;
+
+    //     grid-column: 1 / -1;
+    //     grid-row: 1 / -1;
+    // }
+
+    .ctor-card__controls {
+        .ctor-card__buttons {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            margin: 0;
+            padding: 0 5px 20px 5px;
+
+            .btn {
+                height: 38px;
+                padding: 0 5px;
+
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                text-transform: uppercase;
+
+                opacity: .9;
+                color: #0C7186;
+                border-radius: 4px;
+                background-color: transparent;
+
+                font-family: @f-cera-pro-black;
+                font-size: 14.17px;
+                font-weight: normal;
+                line-height: 18px;
+
+&:extend(.flex);
+
+                &:hover {
+                    background-color: rgba(12,113,134,.1);
+                }
+            }
+        }
+
+        // .ctor-card__price {
+        //     position: relative;
+        //     z-index: 101;
+
+        //     margin-bottom: 10px;
+
+        //     &:hover, &:focus {
+        //         color: @link-hover;
+        //         box-shadow: inset 3px 3px @link-hover,
+        //         inset -3px -3px @link-hover;
+        //     }
+        // }
+
+        //         .ctor-card__quantity {
+        //             position: relative;
+        //             z-index: 101;
+
+        //             display: flex;
+        //             align-items: center;
+
+        //             opacity: .3;
+
+        //             font-family: 'Cera Pro Black', Arial, sans-serif;
+        //             font-size: 13px;
+        //             line-height: 18px;
+
+        //             &::before {
+        //                 display: block;
+
+        //                 width: 15px;
+        //                 height: 15px;
+        //                 margin-right: 5px;
+
+        //                 content: '';
+
+        // // background-image: url('../img/store/man.svg');
+
+        //                 background-repeat: no-repeat;
+        //                 background-position: center;
+        //             }
+        //         }
+    }
+}
+
+@media (min-width: @screen-lg) {
+    .ctor-card__description {
+        padding-bottom: 15px;
+    }
+
+    .ctor-card__header {
+        width: 230px;
+
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
+

@@ -183,7 +183,7 @@ class Instance extends Component {
                 <img
                   className="contract-info__img"
                   src={ctor.image
-                    ? require(`../ctors/i/${ctor.image}`)
+                    ? require(`../common/ctor-card/i/${ctor.image}`)
                     : `https://lorempixel.com/640/400/?${Math.random()}`
                   }
                   width="644" height="404"

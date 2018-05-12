@@ -1,4 +1,4 @@
-import {find, findIndex} from 'lodash';
+import { find, findIndex } from 'lodash';
 
 const initState = {
   fetchStatus: 'init',
@@ -10,41 +10,41 @@ const setPic = (ctorName) => { // Temporary until image management implemented
   if (!ctorName) return null;
   switch (ctorName.toLowerCase()) {
     case 'simple ico':
-      return 'contract-ico.jpg';
+      return 'contract-ico.png';
 
     case 'erc20 token':
-      return 'contract-erc20.jpg';
+      return 'contract-erc20.png';
 
     case 'equity token':
-      return 'contract-equity.jpg';
+      return 'contract-equity.png';
 
     case 'smartz token':
-      return 'contract-smartz-erc20.jpg';
+      return 'contract-smartz-erc20.png';
 
     case 'multisignature wallet':
-      return 'contract-multisig.jpg';
+      return 'contract-multisig.png';
 
     case 'simple voting':
-      return 'contract-voting.jpg';
+      return 'contract-voting.png';
 
     case 'atomic swap for erc20':
-      return 'contract-swap.jpg';
+      return 'contract-swap.png';
 
     case 'multitoken':
-      return 'contract-multitoken.jpg';
+      return 'contract-multitoken.png';
 
     case 'booking':
-      return 'contract-booking.jpg';
+      return 'contract-booking.png';
 
     case 'ledger':
-      return 'contract-ledger.jpg';
+      return 'contract-ledger.png';
 
     default:
   }
 };
 
 const ctors = (state = initState, action) => {
-  const nextState = {...state};
+  const nextState = { ...state };
 
   switch (action.type) {
     case 'FETCH_CTORS_REQUEST':
@@ -60,7 +60,7 @@ const ctors = (state = initState, action) => {
       nextState.fetchStatus = 'success';
       action.ctors.forEach(ctor => {
         ctor.image = setPic(ctor.ctor_name);
-        const i = findIndex(nextState.ctors, {ctor_id: ctor.ctor_id});
+        const i = findIndex(nextState.ctors, { ctor_id: ctor.ctor_id });
         if (i >= 0) {
           nextState.ctors[i] = Object.assign(nextState.ctors[i], ctor);
         } else {
@@ -70,7 +70,7 @@ const ctors = (state = initState, action) => {
       return nextState;
 
     case 'FETCH_CTOR_PARAMS_REQUEST':
-      let ctor = find(nextState.ctors, {ctor_id: action.ctorId});
+      let ctor = find(nextState.ctors, { ctor_id: action.ctorId });
       if (ctor) {
         ctor.fetchStatus = 'request';
       } else {
@@ -82,13 +82,13 @@ const ctors = (state = initState, action) => {
       return nextState;
 
     case 'FETCH_CTOR_PARAMS_FAILURE':
-      ctor = find(nextState.ctors, {ctor_id: action.ctorId});
+      ctor = find(nextState.ctors, { ctor_id: action.ctorId });
       ctor.fetchStatus = 'error';
       ctor.error = action.error;
       return nextState;
 
     case 'FETCH_CTOR_PARAMS_SUCCESS':
-      let i = findIndex(nextState.ctors, {ctor_id: action.ctorId});
+      let i = findIndex(nextState.ctors, { ctor_id: action.ctorId });
       if (i >= 0) {
         nextState.ctors[i] = Object.assign(
           nextState.ctors[i],
