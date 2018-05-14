@@ -119,7 +119,7 @@ class Instance extends Component {
           <b>{func.title}</b> — {func.description}
         </p>
       ))
-      : null;
+      : [];
 
     const askFunctions = this.getFunctionsByType(instance, 'ask');
     let askFunctionsElements = askFunctions.length > 0
@@ -130,7 +130,7 @@ class Instance extends Component {
           onClick={() => this.setState({ funcActive: func })}
         />
       ))
-      : null;
+      : [];
 
     const writeFunctions = this.getFunctionsByType(instance, 'write');
     let writeFunctionsElements = writeFunctions.length > 0
@@ -141,7 +141,7 @@ class Instance extends Component {
           onClick={() => this.setState({ funcActive: func })}
         />
       ))
-      : null;
+      : [];
 
     // add 'default function' - "send ether"
     let defaultFunctionElement = null;
@@ -183,7 +183,7 @@ class Instance extends Component {
                 <img
                   className="contract-info__img"
                   src={ctor.image
-                    ? require(`../common/ctor-card/i/${ctor.image}`)
+                    ? require(`../common/ctor-card/img/${ctor.image}`)
                     : `https://lorempixel.com/640/400/?${Math.random()}`
                   }
                   width="644" height="404"

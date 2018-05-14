@@ -114,8 +114,12 @@ class Dashboard extends Component {
         <section className="my-contracts">
           <ul className="my-contracts__list">
             {filterInstances && filterInstances.map((inst, j) => (
-              <li key={j} className="my-contracts__item">
-                <Link to={`/instance/${inst.instance_id}`} className="my-contracts__link">
+              <li
+                key={j}
+                className="my-contracts__item">
+                <Link
+                  to={`/instance/${inst.instance_id}`}
+                  className="my-contracts__link screen">
                   <article className="my-contract">
                     <section className="contract-info  contract-info--contract-card">
                       <div className="contract-info__wrapper">
@@ -123,10 +127,9 @@ class Dashboard extends Component {
                           <img
                             className="contract-info__img"
                             src={inst.ctor.image
-                              ? require(`../common/ctor-card/i/${inst.ctor.image}`)
+                              ? require(`../common/ctor-card/img/${inst.ctor.image}`)
                               : `https://lorempixel.com/640/400/?${Math.random()}`
                             }
-                            width="644" height="404"
                             alt="Contract" />
                         </div>
                         <p className="contract-info__info">
@@ -139,28 +142,21 @@ class Dashboard extends Component {
                         </p>
                       </div>
                       {inst.funcResults &&
-                        <table className="table  table--contract-card">
-                          <tbody className="table__tbody">
-                            {inst.dashboard_functions.map((func, k) => {
-                              const funcObj = find(inst.functions, { name: func });
-                              if (!funcObj) return null;
-                              return (
-                                <tr className="table__tr" key={k}>
-                                  <td className="table__label">
-                                    {funcObj.title}
-                                  </td>
-                                  <td className="table__data">
-                                    <div className="table__inner">
-                                      <span>
-                                        {inst.funcResults[func]}
-                                      </span>
-                                    </div>
-                                  </td>
-                                </tr>
-                              )
-                            })}
-                          </tbody>
-                        </table>
+                        <ul className="function-list">
+                          {inst.dashboard_functions.map((func, k) => {
+                            const funcObj = find(inst.functions, { name: func });
+
+                            if (!funcObj)
+                              return null;
+
+                            return (
+                              <li key={k} className="function-item">
+                                <p>{funcObj.title}</p>
+                                <p>{inst.funcResults[func]}</p>
+                              </li>
+                            )
+                          })}
+                        </ul>
                       }
                     </section>
                   </article>

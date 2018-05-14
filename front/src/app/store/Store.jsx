@@ -19,46 +19,41 @@ class Store extends Component {
 
     return (
       <main className="page-main  page-main--store">
-        <div className="page-main__inner">
-          {/* {metamaskStatus &&
+        {/* <div className="page-main__inner"> */}
+        {/* {metamaskStatus &&
             <Alert standardAlert={metamaskStatus} color="gray" />
           } */}
 
-          <section className="contracts-gallery">
-            <div className="contracts-gallery__gallery  gallery">
-              {ctors &&
-                <ul className="contracts-gallery__list  gallery__list">
-                  {ctors.filter(el => el.is_public).map((el, i) =>
-                    <li
-                      key={i}
-                      className="gallery__item"
-                    >
-                      <CtorCard ctor={el} />
-                    </li>
-                  )}
-                </ul>
-              }
+        <div className="ctor-block">
+          {ctors &&
+            <ul className="ctor-list">
+              {ctors.filter(el => el.is_public).map((el, i) =>
+                <li key={i} className="ctor-item">
+                  <CtorCard ctor={el} />
+                </li>
+              )}
+            </ul>
+          }
 
-              {!ctors &&
-                <Spinner text="Loading contracts" width="100" />
-              }
-            </div>
-          </section>
+          {!ctors &&
+            <Spinner text="Loading contracts" width="100" />
+          }
+        </div>
 
-          {/* <Alert header="If you are developer" color="green"
+        {/* <Alert header="If you are developer" color="green"
             style={{ marginTop: '80px' }}
           >
             <p>You can <Link to="/ctor-add">add a smart contract</Link> to our platform.</p>
           </Alert> */}
-          <div className="dev-block">
-            <div className="description">
-              <h2>Developers!</h2>
-              <p>You can upload your smart contract to Smartz platform.</p>
-              <button>Learn more</button>
-            </div>
-            <img src={developersImg} alt="for-dev" />
+        <div className="dev-block">
+          <div className="description">
+            <h2>Developers!</h2>
+            <p>You can upload your smart contract to Smartz platform.</p>
+            <button>Learn more</button>
           </div>
+          <img src={developersImg} alt="for-dev" />
         </div>
+        {/* </div> */}
       </main>
     );
   }

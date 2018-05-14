@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../auth/Auth';
+import telegramImg from './img/telegram.svg';
 
 import './Header.less';
 
@@ -19,40 +20,48 @@ class Header extends Component {
 
     return (
       <header className="page-header flex-v">
-        <Link to="/" className="page-header__link" aria-label="Back to main page">
+        <Link
+          to="/"
+          className="page-header__link"
+          aria-label="Back to main page">
           <svg className="page-header__logo">
             <use href="#logo"></use>
           </svg>
         </Link>
         <nav className="main-navigation">
-          <ul className="main-navigation__list">
+          <ul className="main-navigation__list flex-v">
             <li className={`main-navigation__item ${location.pathname === '/' ? 'active' : ''}`}>
               <Link
                 to="/"
-                className="main-navigation__link">
+                className="main-navigation__link flex">
                 Smart Store
               </Link>
             </li>
             <li className={`main-navigation__item ${location.pathname === '/dashboard' ? 'active' : ''}`}>
               <Link
                 to="/dashboard"
-                className="main-navigation__link">
+                className="main-navigation__link flex">
                 Dashboard
               </Link>
             </li>
             <li className={`main-navigation__item ${location.pathname === '/docs' ? 'active' : ''}`}>
               <Link
                 to="/docs"
-                className="main-navigation__link">
+                className="main-navigation__link flex">
                 Docs
               </Link>
             </li>
             <li className={`main-navigation__item`}>
-              <Link
-                to="https://t.me/smartz_en"
-                className="main-navigation__link">
+              <a
+                href="https://t.me/smartz_en"
+                target="_blank"
+                className="main-navigation__link flex">
+                <img
+                  className={"tgm"}
+                  src={telegramImg}
+                  alt="telegram chat" />
                 Chat
-              </Link>
+              </a>
             </li>
           </ul>
         </nav>

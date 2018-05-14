@@ -55,7 +55,7 @@ class Footer extends Component {
                 </li>
               </ul>
             </div>
-            <div className="page-footer__section  page-footer__section--contracts">
+            {/* <div className="page-footer__section  page-footer__section--contracts">
               <h3 className="page-footer__header">
                 Contracts
               </h3>
@@ -83,16 +83,40 @@ class Footer extends Component {
                   </Link>
                 </li>
               </ul>
+            </div> */}
+            <div className="page-footer__section  page-footer__section--dashboard">
+              <h3 className="page-footer__header">
+                Dashboard
+              </h3>
+              <ul className="page-footer__list">
+                <li className="page-footer__item">
+                  <Link to="/dashboard" className="page-footer__link">
+                    My contracts
+                  </Link>
+                </li>
+              </ul>
             </div>
             <div className="page-footer__section  page-footer__section--support">
               <h3 className="page-footer__header">
                 Support
               </h3>
               <ul className="page-footer__list">
-                <li className="page-footer__item">
+                {/* <li className="page-footer__item">
                   <Link to="/docs" className="page-footer__link">
                     Docs
                   </Link>
+                </li> */}
+                <li className="page-footer__item">
+                  <a className="page-footer__link" href="#">Help center</a>
+                </li>
+                <li className="page-footer__item">
+                  <a className="page-footer__link" href="#">Contact support</a>
+                </li>
+                <li className="page-footer__item">
+                  <a className="page-footer__link" href="#">Developers</a>
+                </li>
+                <li className="page-footer__item">
+                  <a className="page-footer__link" href="#">Blog</a>
                 </li>
               </ul>
             </div>
@@ -101,11 +125,6 @@ class Footer extends Component {
                 Follow us
               </h3>
               <ul className="page-footer__list">
-                <li className="page-footer__item">
-                  <a href="https://ico.smartz.io/" className="page-footer__link" target="_blank">
-                    Smartz ICO
-                  </a>
-                </li>
                 <li className="page-footer__item">
                   <ul className="social">
                     <li className="social__item">

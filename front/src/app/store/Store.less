@@ -1,78 +1,90 @@
 @import '../../styles/variables.less';
 
 .page-main {
-    background-color: #F5F6F8;
-}
+    .ctor-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
-.page-main {
-    &--store {
-        padding-top: 50px;
+        margin: 0 15px;
+        padding: 0;
 
-        .page-main__description {
-            margin-top: 0;
-            margin-bottom: 35px;
+        list-style-type: none;
 
-            color: #0F1418;
+        .ctor-item {
+            flex: 1;
 
-            font-family: 'Cera Pro 300', Arial, sans-serif;
-            font-size: 40px;
-            line-height: 49px;
+            margin: 45px 5px 0;
         }
     }
+    // &--store {
+    //     padding-top: 50px;
 
-    &--support {
-        padding: 33px 15px 0 15px;
-    }
+    //     .page-main__description {
+    //         margin-top: 0;
+    //         margin-bottom: 35px;
 
-    &--running-contract {
-        position: relative;
+    //         color: #0F1418;
 
-        padding-top: 40px;
+    //         font-family: 'Cera Pro 300', Arial, sans-serif;
+    //         font-size: 40px;
+    //         line-height: 49px;
+    //     }
+    // }
 
-        .page-main__link {
-            position: absolute;
-            top: 40px;
-            left: 15px;
+    // &--support {
+    //     padding: 33px 15px 0 15px;
+    // }
 
-            display: block;
+    // &--running-contract {
+    //     position: relative;
 
-            text-decoration: none;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+    //     padding-top: 40px;
 
-            color: @interactive-element-color;
+    //     .page-main__link {
+    //         position: absolute;
+    //         top: 40px;
+    //         left: 15px;
 
-            font-family: 'Cera Pro 700', Arial, sans-serif;
-            font-size: 13px;
-            line-height: 15px;
-        }
+    //         display: block;
 
-        .page-main__icon {
-            fill: @interactive-element-color;
-        }
+    //         text-decoration: none;
+    //         letter-spacing: 1px;
+    //         text-transform: uppercase;
 
-        .page-main__link:hover, .page-main__link:focus {
-            color: @link-hover;
-        }
+    //         color: @interactive-element-color;
 
-        .page-main__link:hover .page-main__icon, .page-main__link:focus .page-main__icon {
-            fill: @link-hover;
-        }
-    }
+    //         font-family: 'Cera Pro 700', Arial, sans-serif;
+    //         font-size: 13px;
+    //         line-height: 15px;
+    //     }
 
-    &--my-contracts {
-        padding-top: 50px;
-    }
+    //     .page-main__icon {
+    //         fill: @interactive-element-color;
+    //     }
+
+    //     .page-main__link:hover, .page-main__link:focus {
+    //         color: @link-hover;
+    //     }
+
+    //     .page-main__link:hover .page-main__icon, .page-main__link:focus .page-main__icon {
+    //         fill: @link-hover;
+    //     }
+    // }
+
+    // &--my-contracts {
+    //     padding-top: 50px;
+    // }
 }
 
-.page-main__inner {
-    padding-right: 15px;
-    padding-left: 15px;
-}
+// .page-main__inner {
+//     padding-right: 15px;
+//     padding-left: 15px;
+// }
 
-.page-main__inner--image {
-    margin-bottom: 50px;
-}
+// .page-main__inner--image {
+//     margin-bottom: 50px;
+// }
 
 .dev-block {
     display: flex;
@@ -81,7 +93,7 @@
 
     width: 766px;
     height: 253px;
-    margin: 40px auto 61px auto;
+    margin: 40px auto 0;
     padding-left: 27px;
 
     border-radius: 8px;
@@ -128,62 +140,62 @@
 
 
 @media (min-width: @screen-md) {
-    .page-main--contracts, .page-main--my-contracts, .page-main--support {
-        padding-right: 50px;
-        padding-left: 50px;
-    }
+    // .page-main--contracts, .page-main--my-contracts, .page-main--support {
+    //     padding-right: 50px;
+    //     padding-left: 50px;
+    // }
 
-    .page-main__inner {
-        padding-right: 50px;
-        padding-left: 50px;
-    }
+    // .page-main__inner {
+    //     padding-right: 50px;
+    //     padding-left: 50px;
+    // }
 
-    .page-main--running-contract {
-        padding-top: 0;
+    // .page-main--running-contract {
+    //     padding-top: 0;
 
-        .page-main__link {
-            top: 22px;
-            left: 60px;
-        }
-    }
+    //     .page-main__link {
+    //         top: 22px;
+    //         left: 60px;
+    //     }
+    // }
 }
 
 @media (min-width: @screen-lg) {
-    .page-main {
-        padding: 72px 50px 0 50px;
+    // .page-main {
+    //     padding: 72px 50px 0 50px;
 
-        &--support {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
+    //     &--support {
+    //         display: flex;
+    //         align-items: flex-start;
+    //         justify-content: flex-start;
 
-            padding-top: 47px;
-        }
+    //         padding-top: 47px;
+    //     }
 
-        &--contracts {
-            display: flex;
-            align-items: flex-start;
-        }
-    }
+    //     &--contracts {
+    //         display: flex;
+    //         align-items: flex-start;
+    //     }
+    // }
 
-    .page-main--store {
-        padding-right: 0;
-        padding-left: 0;
+    // .page-main--store {
+    //     padding-right: 0;
+    //     padding-left: 0;
 
-        .page-main__description {
-            margin-top: 0;
-            margin-bottom: 90px;
+    //     .page-main__description {
+    //         margin-top: 0;
+    //         margin-bottom: 90px;
 
-            font-size: 70px;
-            line-height: 75px;
-        }
-    }
+    //         font-size: 70px;
+    //         line-height: 75px;
+    //     }
+    // }
 
-    .page-main--running-contract {
-        .page-main__link {
-            top: 35px;
-            left: 60px;
-        }
-    }
+    // .page-main--running-contract {
+    //     .page-main__link {
+    //         top: 35px;
+    //         left: 60px;
+    //     }
+    // }
 }
 

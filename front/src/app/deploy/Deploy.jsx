@@ -110,7 +110,7 @@ class Deploy extends PureComponent {
               <div className="contract-info__logo">
                 <img
                   className="contract-info__img"
-                  src={require(`../common/ctor-card/i/${ctor.image}`)}
+                  src={require(`../common/ctor-card/img/${ctor.image}`)}
                   width="644" height="404"
                   alt={`${ctor.ctor_name} contract`}
                 />
