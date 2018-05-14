@@ -15,7 +15,7 @@ class Constructor(ConstructorInstance):
         json_schema = {
             "type": "object",
             "required": [
-                "string", "integer", "enum"
+                "string", "address", "enum"
             ],
             "additionalProperties": False,
 
@@ -29,12 +29,11 @@ class Constructor(ConstructorInstance):
                     "pattern": "^[a-z0-9]+$"
                 },
 
-                "integer": {
-                    "title": "Integer field",
-                    "description": "from 2 to 100 inclusive. Required",
-                    "minimum": 2,
-                    "maximum": 100,
-                    "type": "integer"
+                "address": {
+                    "title": "Address",
+                    "description": "See for more definitions https://github.com/smartzplatform/SDK/blob/master/json-schema/ethereum-sc.json . "
+                                   "Also this field has widget myAddress, which inserts address from metamask as default value",
+                    "$ref": "#/definitions/address"
                 },
 
                 "boolean_checkbox": {
@@ -50,6 +49,14 @@ class Constructor(ConstructorInstance):
                     "enum": [
                         'Global error', 'Without errors', 'Fields error'
                     ]
+                },
+
+                "integer": {
+                    "title": "Integer field",
+                    "description": "from 2 to 100 inclusive. Required",
+                    "minimum": 2,
+                    "maximum": 100,
+                    "type": "integer"
                 },
 
                 "number": {
@@ -85,12 +92,6 @@ class Constructor(ConstructorInstance):
                     "$ref": "#/definitions/unixTime"
                 },
 
-                "address": {
-                    "title": "Address",
-                    "description": "See for more definitions https://github.com/smartzplatform/SDK/blob/master/json-schema/ethereum-sc.json",
-                    "$ref": "#/definitions/address"
-                },
-
                 "fileHash": {
                     "title": "File hash",
                     "description": "Just upload file, hash (keccak256) of it will be sent",
@@ -100,6 +101,12 @@ class Constructor(ConstructorInstance):
                 "stringHash": {
                     "title": "String hash",
                     "description": "Just type text, hash (keccak256) of it will be sent",
+                    "$ref": "#/definitions/hash"
+                },
+
+                "stringHashSha256": {
+                    "title": "String hash (sha256)",
+                    "description": "Just type text, hash (sha256) of it will be sent",
                     "$ref": "#/definitions/hash"
                 },
 
@@ -125,6 +132,9 @@ class Constructor(ConstructorInstance):
             },
             "stringHash": {
                 "ui:widget": "stringHash",
+            },
+            "stringHashSha256": {
+                "ui:widget": "stringHashSha256",
             },
         }
 

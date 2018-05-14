@@ -1,13 +1,13 @@
 import React, { PureComponent } from "react";
 
-import { web3 } from "../../../helpers/eth";
+import { web3 } from "../../helpers/eth";
 
 export default class MyAddressWidget extends PureComponent {
   constructor(props) {
     super(props);
 
     try {
-      this.account = web3.eth.accounts[0]
+      this.account = "" + web3.eth.accounts[0]
     } catch (err) {
       this.account = ''
     }

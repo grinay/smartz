@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 
 const sha256 = x => "0x" + require('js-sha256')(x);
 
-export default class StringSha256Widget extends PureComponent {
+export default class StringHashSha256Widget extends PureComponent {
   constructor(props) {
     super(props);
 
