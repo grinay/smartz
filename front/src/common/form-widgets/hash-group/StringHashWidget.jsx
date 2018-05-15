@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 
 import { web3 } from "../../../helpers/eth";
+const sha256 = x => "0x" + require('js-sha256')(x);
 
 export default class StringHashWidget extends PureComponent {
   constructor(props) {
@@ -10,10 +11,15 @@ export default class StringHashWidget extends PureComponent {
   }
 
   onChange = event => {
-    const { onChange } = this.props;
+    const { onChange, options } = this.props;
     const value = event.target.value;
 
-    const hash = web3.sha3(value);
+    let hashFn = web3.sha3;
+    if (options.algorithm==='sha256') {
+      hashFn = sha256;
+    }
+
+    const hash = hashFn(value);
 
     this.msg = value !== '' ? hash : '';
     onChange(hash);

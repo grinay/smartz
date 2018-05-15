@@ -134,7 +134,10 @@ class Constructor(ConstructorInstance):
                 "ui:widget": "stringHash",
             },
             "stringHashSha256": {
-                "ui:widget": "stringHashSha256",
+                "ui:widget": "stringHash",
+                "ui:options": {
+                    "algorithm": "sha256"
+                }
             },
         }
 
