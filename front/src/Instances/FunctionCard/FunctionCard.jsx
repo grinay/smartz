@@ -118,6 +118,9 @@ class FunctionCard extends PureComponent {
         if (typeof input === 'object' && 'ui:widget' in input) {
           item = {
             'ui:widget': input['ui:widget']
+          };
+          if ('ui:options' in input) {
+            item['ui:options'] = input['ui:options'];
           }
         }
         uiSchema.items.push(item)

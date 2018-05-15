@@ -110,7 +110,7 @@ def merge_function_titles2specs(spec_array, titles_info):
 
     def set_title(to_spec, from_info):
         # todo how to deduplicate with json schema?
-        for field in ('title', 'description', 'sorting_order', 'ui:widget', 'ui:widget_options', 'payable_details'):
+        for field in ('title', 'description', 'sorting_order', 'ui:widget', 'ui:widget_options', 'payable_details', 'ui:options'):
             if field in from_info:
                 to_spec[field] = from_info[field]
 
