@@ -137,34 +137,34 @@ class Instance extends Component {
       ? writeFunctions.map((func, i) => (
         <FunctionButton
           key={i}
-          title={func.title}
+          title={func.title || 'Send ether'}
           onClick={() => this.setState({ funcActive: func })}
         />
       ))
       : null;
 
     // add 'default function' - "send ether"
-    let defaultFunctionElement = null;
-    if (instance.abi && instance.abi.length > 0) {
-      const fallback = find(instance.abi, { type: 'fallback' })
-      defaultFunctionElement = fallback !== undefined
-        ? <FunctionButton
-          key={fallback.name}
-          title={'Send ether'}
-          onClick={() => this.setState({
-            funcActive: {
-              ...fallback,
-              title: 'Send ether',
-              inputs: {
-                "type": "array",
-                "minItems": 0,
-                "maxItems": 0
-              }
-            }
-          })}
-        />
-        : null;
-    }
+    // let defaultFunctionElement = null;
+    // if (instance.abi && instance.abi.length > 0) {
+    //   const fallback = find(instance.abi, { type: 'fallback' })
+    //   defaultFunctionElement = fallback !== undefined
+    //     ? <FunctionButton
+    //       key={fallback.name}
+    //       title={'Send ether'}
+    //       onClick={() => this.setState({
+    //         funcActive: {
+    //           ...fallback,
+    //           title: 'Send ether',
+    //           inputs: {
+    //             "type": "array",
+    //             "minItems": 0,
+    //             "maxItems": 0
+    //           }
+    //         }
+    //       })}
+    //     />
+    //     : null;
+    // }
 
 
     return (
@@ -290,7 +290,7 @@ class Instance extends Component {
 
                   <ul className="contract-controls__list">
                     {writeFunctionsElements}
-                    {defaultFunctionElement}
+                    {/* {defaultFunctionElement} */}
                   </ul>
                 </div>
               }

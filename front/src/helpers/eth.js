@@ -59,8 +59,10 @@ export const processControlForm = (
     }
 
     try {
-      result = web3.eth
-        .sendTransaction({ ...transactionParameters, value, to: contract_address }, callback)
+      result = web3.eth.sendTransaction({
+        ...transactionParameters,
+        value, to: contract_address
+      }, callback)
     } catch (e) {
       console.error(e);
     }
@@ -76,7 +78,7 @@ export const processControlForm = (
   if (!function_abi)
     throw new Error('not found abi of function ' + function_spec.name);
 
-  // get then delete 'Value'(ethCount) prop from form_data
+  // get then delete 'Ether amount'(ethCount) prop from form_data
   let form_data_arr = [], value = '';
   if (form_data.length > 0 && function_spec.payable) {
     // always last element in arr
