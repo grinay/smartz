@@ -74,7 +74,14 @@
                         "show_currency": { "type": "string" }
                     }
                 },
-
+                "payable_details": {
+                    "description": "Title and description of input with ether amount",
+                    "type": "object",
+                    "properties": {
+                        "title": { "type": "string" },
+                        "description": { "type": "string" }
+                    }
+                },
                 "inputs": {
                     "title": "titles-n-descriptions of each function argument",
                     "type": "array",
@@ -87,7 +94,7 @@
                             "ui:widget": {
                                 "description": "Widget for input",
                                 "type": "string",
-                                "enum": ["stringHash", "fileHash", "unixTime"]
+                                "enum": ["stringHash", "fileHash", "unixTime", "stringSha256", "myAddress", "ethCount"]
                             }
                         }
                     }

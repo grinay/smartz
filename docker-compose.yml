@@ -7,6 +7,14 @@ services:
     volumes:
       - "mongodb:/data/db"
 
+  postgres:
+    image: postgres:10.3-alpine
+    restart: "no"
+    env_file:
+      - smartzplatform.env
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+
   frontend:
     build:
       dockerfile: docker/frontend/Dockerfile
@@ -18,6 +26,7 @@ services:
       - backend
     volumes:
       - "backendsocket:/app/sock"
+      - "django_static:/app/staticfiles:ro"
     ports:
       - "3000:80"
 
@@ -30,13 +39,18 @@ services:
     restart: "no"
     depends_on:
       - mongo
+      - postgres
     volumes:
       - "backendsocket:/app/sock"
       - "backenddata:/app/data"
+      - "django_static:/app/staticfiles"
+    container_name: smartz_backend
 
 volumes:
   backenddata:
   mongodb:
+  pgdata:
+  django_static:
   backendsocket:
     driver: local
     driver_opts:

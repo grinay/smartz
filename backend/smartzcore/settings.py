@@ -28,27 +28,32 @@ class Common(Configuration):
 
     # Application definition
     INSTALLED_APPS = [
-        # 'django.contrib.admin',
-        # 'django.contrib.auth',
-        'django.contrib.contenttypes',
-        # 'django.contrib.sessions',
-        'django.contrib.messages',
-        # 'django.contrib.staticfiles',
+        'django.contrib.auth',          # admin dependency
+        'django.contrib.contenttypes',  # admin dependency
+        'django.contrib.messages',      # admin dependency
+        'django.contrib.sessions',      # admin dependency
+        'django.contrib.admin',
+
+        'django.contrib.staticfiles',   # admin dependency
 
         'django_extensions',
 
-
-        # 'apps.users',
+        'apps.constructors',
+        'apps.contracts',
+        'apps.users',
+        'apps.tools',
     ]
 
     MIDDLEWARE = [
-        'django.middleware.security.SecurityMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',     # AuthenticationMiddleware dependency
+        'django.contrib.auth.middleware.AuthenticationMiddleware',  # admin dependency
+        'django.contrib.messages.middleware.MessageMiddleware',     # admin dependency
+
+        # 'django.middleware.security.SecurityMiddleware',
+        #
+        # 'django.middleware.common.CommonMiddleware',
+        # 'django.middleware.csrf.CsrfViewMiddleware',
+        # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
         'smartzcore.middleware.SmartzMiddleware',
         'smartzcore.middleware.JSONMiddleware'
@@ -56,28 +61,38 @@ class Common(Configuration):
 
     ROOT_URLCONF = 'smartzcore.urls'
 
-    # TEMPLATES = [
-    #     {
-    #         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    #         'DIRS': [],
-    #         'APP_DIRS': True,
-    #         'OPTIONS': {
-    #             'context_processors': [
-    #                 'django.template.context_processors.debug',
-    #                 'django.template.context_processors.request',
-    #                 'django.contrib.auth.context_processors.auth',
-    #                 'django.contrib.messages.context_processors.messages',
-    #             ],
-    #         },
-    #     },
-    # ]
+    TEMPLATES = [  # for admin mostly
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    # 'django.template.context_processors.debug',
+                    # 'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',          # admin dependency
+                    'django.contrib.messages.context_processors.messages',  # admin dependency
+                ],
+            },
+        },
+    ]
 
     WSGI_APPLICATION = 'smartzcore.wsgi.application'
+
+
+    DB_HOST = os.environ.get('DB_HOST')
+    DB_USER = os.environ.get('DB_USER')
+    DB_PASS = os.environ.get('DB_PASS')
+    DB_NAME = os.environ.get('DB_NAME')
+    assert DB_HOST, "DB_HOST is not set in env"
+    assert DB_USER, "DB_USER is not set in env"
+    assert DB_PASS, "DB_PASS is not set in env"
+    assert DB_NAME, "DB_NAME is not set in env"
 
     # Database
     # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
     DATABASES = values.DatabaseURLValue(
-        # 'postgresql://sprilutskiy:BuagfbdhiLOfjdhfo@localhost/sprilutskiy'
+        'postgresql://{}:{}@{}/{}'.format(DB_USER, DB_PASS, DB_HOST, DB_NAME)
     )
 
     # Password validation
@@ -111,16 +126,18 @@ class Common(Configuration):
 
     APPEND_SLASH = False
 
-    # # Static files (CSS, JavaScript, Images)
-    # # https://docs.djangoproject.com/en/2.0/howto/static-files/
-    # STATIC_URL = '/static/'
-    # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/2.0/howto/static-files/
+    STATIC_URL = '/backend-static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-    # AUTH_USER_MODEL = 'users.User'
+    AUTH_USER_MODEL = 'users.User'
 
     # SMARTZ settings 
     SMARTZ_MONGO_HOST = 'mongo' # docker container
+
+
+    AUTH0_HOST = 'smartz.auth0.com'
 
     SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL = os.environ.get('CONSTRUCTOR_CALL_SERVICE_URL')
     assert SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL, "Constructor call service url is not set in env"
@@ -132,8 +149,8 @@ class Common(Configuration):
     # inside docker in the same dir
     SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(SMARTZ_ROOT_DIR, 'json-schema')
 
-    # used for setup prefix on local development since thereis no nginx on it
-    SMARTZ_API_PREFIX = ''
+    # all api methods will use thi prefix
+    SMARTZ_API_PREFIX = 'api/'
 
     # business logic
     SMARTZ_COMMISSION = 0.2
@@ -162,8 +179,6 @@ class DevelopmentLocal(Development):
     """
     Development on local machine throw runserver
     """
-
-    SMARTZ_API_PREFIX = 'api/'
 
     # local machine paths
     SMARTZ_MONGO_HOST = '127.0.0.1'
@@ -199,11 +214,11 @@ class Production(Staging):
     The in-production settings.
     """
 
-    ALLOWED_HOSTS = ['platform.smartz.io']
+    ALLOWED_HOSTS = ['smartz.io']
 
     pass
 
-class Tests(DevelopmentLocal):
+class Testing(DevelopmentLocal):
     """
     The tests settings.
     """

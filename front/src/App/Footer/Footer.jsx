@@ -90,9 +90,9 @@ class Footer extends Component {
               </h3>
               <ul className="page-footer__list">
                 <li className="page-footer__item">
-                  <Link to="/docs" className="page-footer__link">
+                  <a href="https://wiki.smartz.io/" className="page-footer__link">
                     Docs
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -102,37 +102,42 @@ class Footer extends Component {
               </h3>
               <ul className="page-footer__list">
                 <li className="page-footer__item">
+                  <a href="https://platform.smartz.io/" className="page-footer__link" target="_blank" rel="noopener noreferrer">
+                    About Smartz
+                  </a>
+                </li>
+                <li className="page-footer__item">
                   <ul className="social">
                     <li className="social__item">
-                      <a href="https://www.facebook.com/SmartzPlatform/" className="social__link  social__link--facebook" aria-label="Follow us on Facebook">
+                      <a href="https://www.facebook.com/SmartzPlatform/" className="social__link  social__link--facebook" aria-label="Follow us on Facebook"  target="_blank"  rel="noopener noreferrer">
                         <svg className="social__icon  social__icon--facebook" width="26" height="26">
                           <use href="#social-fb"></use>
                         </svg>
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://twitter.com/SmartzPlatform" className="social__link  social__link--twitter" aria-label="Follow us on Twitter">
+                      <a href="https://twitter.com/SmartzPlatform" className="social__link  social__link--twitter" aria-label="Follow us on Twitter"  target="_blank"  rel="noopener noreferrer">
                         <svg className="social__icon  social__icon--twitter" width="27" height="22">
                           <use href="#social-twitter"></use>
                         </svg>
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://github.com/mixbytes" className="social__link  social__link--github" aria-label="Follow us on Github">
+                      <a href="https://github.com/mixbytes" className="social__link  social__link--github" aria-label="Follow us on Github"  target="_blank"  rel="noopener noreferrer">
                         <svg className="social__icon  social__icon--github" width="26" height="26">
                           <use href="#social-github"></use>
                         </svg>
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://www.youtube.com/channel/UCn4kywh7NwNNHce2a2murSg" className="social__link  social__link--youtube" aria-label="Follow us on Youtube">
+                      <a href="https://www.youtube.com/channel/UCn4kywh7NwNNHce2a2murSg" className="social__link  social__link--youtube" aria-label="Follow us on Youtube"  target="_blank"  rel="noopener noreferrer">
                         <svg className="social__icon  social__icon--youtube" width="26" height="18">
                           <use href="#social-youtube"></use>
                         </svg>
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://t.me/smartz_en" className="social__link  social__link--telegram" aria-label="Follow us on Telegram">
+                      <a href="https://t.me/smartz_en" className="social__link  social__link--telegram" aria-label="Follow us on Telegram"  target="_blank"  rel="noopener noreferrer">
                         <svg className="social__icon  social__icon--telegram" width="23" height="20">
                           <use href="#social-telegram"></use>
                         </svg>
@@ -146,7 +151,7 @@ class Footer extends Component {
                   </a>
                 </li>
                 <li className="page-footer__item">
-                  <a href="https://t.me/LoungerX" className="page-footer__link">
+                  <a href="https://t.me/LoungerX" className="page-footer__link" target="_blank"  rel="noopener noreferrer">
                     t.me/LoungerX
                   </a>
                 </li>
@@ -168,7 +173,7 @@ class Footer extends Component {
             <a href="/legal/Smartz_terms-and-conditions.pdf">Terms & conditions</a>
           </p>
           <p className="page-footer__copyright">
-            <span>&#169; Smartz, </span><Link to="https://mixbytes.io">MixBytes</Link> <span>2018</span>
+            <span>&#169; Smartz, </span><a href="https://mixbytes.io" target="_blank"  rel="noopener noreferrer">MixBytes</a> <span>2018</span>
           </p>
         </section>
       </footer>
