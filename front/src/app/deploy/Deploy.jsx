@@ -104,19 +104,25 @@ class Deploy extends PureComponent {
 
     return (
       <main className="page-main page-main--contracts">
-        <aside className="block-half">
-          <section className="contract-info">
-            {ctor.image &&
-              <div className="contract-info__logo">
-                <img
-                  className="contract-info__img"
-                  src={require(`../common/ctor-card/img/${ctor.image}`)}
-                  width="644" height="404"
-                  alt={`${ctor.ctor_name} contract`}
-                />
-              </div>
-            }
-            <div className="contract-info__wrapper">
+        {/* <aside className="block-half"> */}
+        <section className="form-title flex">
+          {ctor.image &&
+            <div className="form-title__logo">
+              <img
+                className="form-title__img"
+                src={require(`../common/ctor-card/img/${ctor.image}`)}
+                // width="644" height="404"
+                alt={`${ctor.ctor_name} contract`}
+              />
+            </div>
+          }
+          {ctor.ctor_name &&
+            <div className={"form-title__title"}>
+              <h2>{ctor.ctor_name}</h2>
+              <p>Contract: https://platform.smartz.io/deploy/5aaa7aa2ab3d71000bd0c69f/0</p>
+            </div>
+          }
+          {/* <div className="contract-info__wrapper">
               {ctor.ctor_name &&
                 <p className="contract-info__info  contract-info__info--column">
                   <span className="contract-info__name">
@@ -148,13 +154,13 @@ class Deploy extends PureComponent {
                   </tbody>
                 </table>
               }
-            </div>
-          </section>
-        </aside>
+            </div> */}
+        </section>
+        {/* </aside> */}
         <section className="block">
-          <h2 className="block__header">
+          {/* <h2 className="block__header">
             {ctor.ctor_name}
-          </h2>
+          </h2> */}
 
           {ctor && ctor.fetchStatus === 'request' &&
             <div className="block__wrapper  block__wrapper--top">

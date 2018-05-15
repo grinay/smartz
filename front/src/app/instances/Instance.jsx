@@ -166,7 +166,6 @@ class Instance extends Component {
         : null;
     }
 
-
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">
         <Link to="/dashboard" className="page-main__link">
@@ -177,30 +176,26 @@ class Instance extends Component {
         </Link>
 
         {ctor && instance &&
-          <aside className="block-half">
-            <section className="contract-info" style={{ marginBottom: '20px' }}>
-              <div className="contract-info__logo">
-                <img
-                  className="contract-info__img"
-                  src={ctor.image
-                    ? require(`../common/ctor-card/img/${ctor.image}`)
-                    : `https://lorempixel.com/640/400/?${Math.random()}`
-                  }
-                  width="644" height="404"
-                  alt={`${ctor.ctor_name} contract`} />
-              </div>
-
-              <div className="contract-info__wrapper">
-                <p className="contract-info__info  contract-info__info--column">
-                  <span className="contract-info__name">
-                    {ctor.ctor_name}
-                  </span>
-                </p>
-
-                <p className="contract-info__description">
-                  {ctor.ctor_descr}
+          <aside>
+            <section className="form-title flex">
+              <img
+                className="form-title__img"
+                src={ctor.image
+                  ? require(`../common/ctor-card/img/${ctor.image}`)
+                  : `https://lorempixel.com/640/400/?${Math.random()}`
+                }
+                width="644" height="404"
+                alt={`${ctor.ctor_name} contract`} />
+              <div className={"form-title__title"}>
+                <h2>
+                  {ctor.ctor_name}
+                </h2>
+                <p>
+                  <span>Contract: </span>
+                  <a href={`https://platform.smartz.io/instance/${instance.instance_id}`}>{`https://platform.smartz.io/instance/${instance.instance_id}`}</a>
                 </p>
               </div>
+
             </section>
 
             {instance.transactions &&

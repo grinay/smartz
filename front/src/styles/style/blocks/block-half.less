@@ -1,29 +1,27 @@
 .block-half {
-  padding: 41px 10px 20px 15px;
-  background-color: #FFFFFF;
+    padding: 41px 10px 20px 15px;
 }
 
 @media (min-width: @screen-md) {
-  .block-half {
-    background-color: #FFFFFF;
-    box-sizing: border-box;
-    max-width: 450px;
-    padding: 50px 0 0 0;
-  }
+    .block-half {
+        box-sizing: border-box;
+        max-width: 450px;
+        padding: 50px 0 0 0;
+    }
 
-  .block-half--wide {
-    max-width: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-  }
+    .block-half--wide {
+        max-width: 100%;
+        padding-right: 50px;
+        padding-left: 50px;
+    }
 }
 
 @media (min-width: @screen-lg) {
-  .block-half:not(.block-half--wide) {
-    padding-top: 0;
-  }
+    .block-half:not(.block-half--wide) {
+        padding-top: 0;
+    }
 
-  .block-half--wide {
-    padding: 0;
-  }
+    .block-half--wide {
+        padding: 0;
+    }
 }

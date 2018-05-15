@@ -38,14 +38,15 @@
 // }
 
 .my-contracts__list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
 
-    margin: 0;
+    margin: 20px 10px 0;
     padding: 0;
-    padding: 15px 5px 0;
 
     list-style: none;
+
+    grid-template-columns: repeat(auto-fit,minmax(353px,1fr));
+    grid-gap: 10px;
 }
 
 .my-contracts__item {
@@ -53,11 +54,7 @@
 
     overflow: hidden;
 
-    width: 353px;
-
-// margin-top: 35px;
     height: 250px;
-    margin: 5px;
 
     border-radius: 4px;
     background-color: rgba(255,255,255,1);
@@ -111,7 +108,7 @@
                 margin: 0;
 
                 &:first-child {
-                    width: 40%;
+                    width: 50%;
                 }
 
                 &:last-child {

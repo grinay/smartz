@@ -1,0 +1,55 @@
+.my-contracts--archive {
+  .my-contracts__item {
+    padding: 18px 15px 23px 15px;
+    background-color: #F2F3F7;
+    border-radius: 4px;
+  }
+}
+
+.my-contracts__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.my-contracts__item + .my-contracts__item {
+  margin-top: 35px;
+}
+
+.my-contracts__link {
+  display: block;
+  padding: 25px 15px 0 15px;
+  color: #000000;
+  text-decoration: none;
+  background-color: #F2F3F7;
+  border-radius: 4px;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.1);
+
+    .contract-info__name {
+      color: $link-hover;
+    }
+  }
+}
+
+@media (min-width: $screen-md) {
+  .my-contracts__link {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .my-contracts--archive {
+    .my-contracts__item {
+      padding-left: 22px;
+      padding-right: 22px;
+    }
+  }
+}
+
+@media (min-width: 1070px) {
+  .my-contracts__item {
+    max-width: 70%;
+  }
+}

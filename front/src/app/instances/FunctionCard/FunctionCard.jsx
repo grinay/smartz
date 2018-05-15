@@ -8,7 +8,7 @@ import {
 } from '../../../helpers/eth';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
 
-// import './FunctionCard.scss';
+import './FunctionCard.less';
 
 class FunctionCard extends Component {
   constructor(props) {

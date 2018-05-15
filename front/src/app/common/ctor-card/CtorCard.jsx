@@ -26,7 +26,7 @@ class CtorCard extends Component {
             className="ctor-card__img"
             src={ctor.image
               ? require(`./img/${ctor.image}`)
-              : `https://lorempixel.com/640/400/?${Math.random()}`
+              : `https://placeimg.com/150/150/blockchain`
             }
             // width="644" height="404"
             alt={`${ctor.ctor_name} contract`}
