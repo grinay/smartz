@@ -21,17 +21,14 @@ class CtorCard extends Component {
         <Link
           to={`/deploy/${ctor.ctor_id}`}
           className="ctor-card__link screen">
-          {/* <div className="ctor-card__wrapper"> */}
-          <img
-            className="ctor-card__img"
-            src={ctor.image
-              ? require(`./img/${ctor.image}`)
-              : `https://placeimg.com/150/150/blockchain`
+          <div className="ctor-card__img flex">
+            {ctor.image
+              ? <img
+                src={require(`./img/${ctor.image}`)}
+                alt={`${ctor.ctor_name} contract`} />
+              : <p>{ctor.ctor_name.charAt(0).toUpperCase()}</p>
             }
-            // width="644" height="404"
-            alt={`${ctor.ctor_name} contract`}
-          />
-          {/* </div> */}
+          </div>
           <section className="ctor-card__description">
             <h2 className="ctor-card__header">
               {ctor.ctor_name}

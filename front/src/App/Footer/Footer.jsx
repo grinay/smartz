@@ -116,7 +116,7 @@ class Footer extends Component {
                   <a className="page-footer__link" href="#">Developers</a>
                 </li>
                 <li className="page-footer__item">
-                  <a className="page-footer__link" href="#">Blog</a>
+                  <a className="page-footer__link" href="https://medium.com/@SmartzPlatform">Blog</a>
                 </li>
               </ul>
             </div>

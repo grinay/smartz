@@ -52,12 +52,12 @@ class Deploy extends PureComponent {
   }
 
   render() {
-    const { metamaskStatus } = this.props;
-    if (metamaskStatus) return (
-      <div className="container">
-        <Alert standardAlert={metamaskStatus} />
-      </div>
-    );
+    // const { metamaskStatus } = this.props;
+    // if (metamaskStatus) return (
+    //   <div className="container">
+    //     <Alert standardAlert={metamaskStatus} />
+    //   </div>
+    // );
 
     const { deployId } = this.state;
     const {
@@ -111,7 +111,6 @@ class Deploy extends PureComponent {
               <img
                 className="form-title__img"
                 src={require(`../common/ctor-card/img/${ctor.image}`)}
-                // width="644" height="404"
                 alt={`${ctor.ctor_name} contract`}
               />
             </div>
@@ -119,7 +118,12 @@ class Deploy extends PureComponent {
           {ctor.ctor_name &&
             <div className={"form-title__title"}>
               <h2>{ctor.ctor_name}</h2>
-              <p>Contract: https://platform.smartz.io/deploy/5aaa7aa2ab3d71000bd0c69f/0</p>
+              <p>
+                <span>Contract: </span>
+                <a href={`https://platform.smartz.io/deploy/${ctor.ctor_id}`}>
+                  {`https://platform.smartz.io/deploy/${ctor.ctor_id}`}
+                </a>
+              </p>
             </div>
           }
           {/* <div className="contract-info__wrapper">
