@@ -46,8 +46,8 @@ export default class EthCount extends BaseWidget {
   render() {
     const { currency } = this.state;
     let res = web3.toBigNumber(this.getResult(0));
-    res = res.div(web3.toWei(1, 'ether'));
+    res.div(web3.toWei(1, 'ether'));
 
-    return currency === null ? res.valueOf() : `${res.valueOf()} (${currency})`;
+    return currency === null ? res.valueOf() : `${res.valueOf()} (${currency * res.valueOf()})`;
   }
 };
