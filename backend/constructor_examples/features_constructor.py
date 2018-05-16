@@ -1,5 +1,4 @@
 import time
-
 from smartz.api.constructor_engine import ConstructorInstance
 
 
@@ -15,7 +14,7 @@ class Constructor(ConstructorInstance):
         json_schema = {
             "type": "object",
             "required": [
-                "string", "address", "enum"
+                "string", "integer", "enum"
             ],
             "additionalProperties": False,
 
@@ -29,11 +28,12 @@ class Constructor(ConstructorInstance):
                     "pattern": "^[a-z0-9]+$"
                 },
 
-                "address": {
-                    "title": "Address",
-                    "description": "See for more definitions https://github.com/smartzplatform/SDK/blob/master/json-schema/ethereum-sc.json . "
-                                   "Also this field has widget myAddress, which inserts address from metamask as default value",
-                    "$ref": "#/definitions/address"
+                "integer": {
+                    "title": "Integer field",
+                    "description": "from 2 to 100 inclusive. Required",
+                    "minimum": 2,
+                    "maximum": 100,
+                    "type": "integer"
                 },
 
                 "boolean_checkbox": {
@@ -51,12 +51,12 @@ class Constructor(ConstructorInstance):
                     ]
                 },
 
-                "integer": {
-                    "title": "Integer field",
-                    "description": "from 2 to 100 inclusive. Required",
-                    "minimum": 2,
-                    "maximum": 100,
-                    "type": "integer"
+
+
+                "address": {
+                    "title": "Address",
+                    "description": "See for more definitions https://github.com/smartzplatform/SDK/blob/master/json-schema/ethereum-sc.json",
+                    "$ref": "#/definitions/address"
                 },
 
                 "number": {
