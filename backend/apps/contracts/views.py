@@ -102,16 +102,3 @@ class UpdateView(View):
         contract.save()
 
         return JsonResponse({'ok': True}) # todo
-
-
-class DeleteMy(View):
-    """Temporary view"""
-
-    def get(self, request, user_id):
-        if not settings.DEBUG:
-            return JsonResponse({'ok': False})
-
-        Contract.objects.filter(auth0_user_id=user_id).delete()
-
-        return JsonResponse({'ok': True})
-
