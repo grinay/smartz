@@ -88,7 +88,7 @@ class FunctionCard extends PureComponent {
       if (!existValue) {
         func.inputs.minItems += 1;
         func.inputs.maxItems += 1;
-        console.log('push: ', func.inputs.items);
+
         func.inputs.items.push({
           "type": "number",
           "minLength": 1,
