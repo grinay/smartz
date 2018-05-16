@@ -13,6 +13,7 @@ const instances = (state = initState, action) => {
   switch (action.type) {
     case 'FETCH_INSTANCES_REQUEST':
       nextState.fetchStatus = 'request';
+      nextState.error = '';
       return nextState;
 
     case 'FETCH_INSTANCES_FAILURE':
@@ -22,6 +23,11 @@ const instances = (state = initState, action) => {
 
     case 'FETCH_INSTANCES_SUCCESS':
       nextState.fetchStatus = 'success';
+      nextState.error = '';
+      if (!Array.isArray(action.instances)) {
+        action.instances = [action.instances];
+      }
+
       action.instances.forEach(instance => {
         const i = findIndex(nextState.instances, { instance_id: instance.instance_id });
         if (i >= 0) {

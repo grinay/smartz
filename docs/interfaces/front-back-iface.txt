@@ -28,7 +28,8 @@ REST, GET|POST
             ctor_id: 4,
             ctor_name: 'my ctor',
             price_eth: 0.1,
-            ctor_descr: 'my ctor'
+            ctor_descr: 'my ctor',
+            image: 'default.jpg'
         },
         ...
     ]
@@ -41,7 +42,8 @@ REST, GET|POST
         ctor_name: 'my ctor',
         ctor_descr: 'my ctor',
         schema: json schema,
-        ui_schema: UI json schema
+        ui_schema: UI json schema,
+        image: 'default.jpg'
     } || {error: 'foo'}
 
 - /constructors/:id/construct

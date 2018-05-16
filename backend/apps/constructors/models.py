@@ -13,6 +13,31 @@ class Constructor(models.Model):
     is_public = models.BooleanField(default=False)
     auth0_user_id = models.CharField(max_length=200)
 
+    @property
+    def image(self):
+        """todo kill this with file uploading"""
+        name_lower = self.name.lower()
+
+        images = {
+            'simple ico': 'contract-ico.jpg',
+            'erc20 token': 'contract-erc20.jpg',
+            'equity token': 'contract-equity.jpg',
+            'smartz token': 'contract-smartz-erc20.jpg',
+            'multisignature wallet': 'contract-multisig.jpg',
+            'simple voting': 'contract-voting.jpg',
+            'atomic swap for erc20': 'contract-swap.jpg',
+            'multitoken': 'contract-multitoken.jpg',
+            'booking': 'contract-booking.jpg',
+            'ledger': 'contract-ledger.jpg',
+            'smartz platform features': 'platform-features.jpg'
+        }
+
+        if name_lower in images:
+            return images[name_lower]
+        else:
+            return 'default.jpg'
+
+
     @classmethod
     def create(cls, **kwargs):
         constructor = cls(**kwargs)

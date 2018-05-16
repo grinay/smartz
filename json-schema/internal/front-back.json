@@ -148,7 +148,7 @@
                     { "$ref": "#/definitions/resultError" },
                     {
                         "type": "object",
-                        "required": ["instance_id", "instance_title", "ctor_id", "address", "network_id", "abi", "functions", "dashboard_functions"],
+                        "required": ["instance_id", "instance_title", "ctor_id", "address", "network_id", "abi", "functions", "dashboard_functions", "constructor"],
                         "additionalProperties": false,
 
                         "properties": {
@@ -166,6 +166,15 @@
                                 "description": "List of names of functions (which are parameter-less and constant) which results(!) along with name and description should be included in contract dashboard",
                                 "type": "array",
                                 "items": { "type": "string" }
+                            },
+                            "constructor": {
+                                "type": "object",
+                                "required": ["name", "description", "image"],
+                                "properties": {
+                                    "name": {"type": "string"},
+                                    "description": {"type": "string"},
+                                    "image": {"type": "string"}
+                                }
                             }
                         }
                     }

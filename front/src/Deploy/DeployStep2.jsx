@@ -92,19 +92,19 @@ class DeployStep2 extends PureComponent {
                     <input
                       type="checkbox"
                       className="form-field__input  form-field__input--checkbox form-field__input--terms  visually-hidden"
-                      id="public-access"
+                      id="restrict-public-access"
                       onChange={(e) => {
-                        setPublicAccess(deployId, e.target.checked)
+                        setPublicAccess(deployId, !e.target.checked)
                       }}
                     />
-                    <label className="form-field__label  form-field__label--checkbox  form-field__label--terms" htmlFor="public-access">
+                    <label className="form-field__label  form-field__label--checkbox  form-field__label--terms" htmlFor="restrict-public-access">
                       <svg className="form-field__icon  form-field__icon-checkbox" width="23" height="23">
                         <use className="form-field__icon-off" href="#checkbox"></use>
                         <use className="form-field__icon-on" href="#checkbox-on"></use>
                       </svg>
                       <span className="form-field__wrapper">
                         <b className="form-field__description  form-field__description--terms">
-                          Allow public access to the contract UI.
+                          Restrict public access to the contract UI.
                         </b>
                       </span>
                     </label>
