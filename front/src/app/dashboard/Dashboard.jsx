@@ -26,15 +26,22 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    getNetworkId(networkId => this.setState({ networkId }));
+    const { metamaskStatus } = this.props;
+
+    if (metamaskStatus !== undefined && metamaskStatus !== 'noMetamask')
+      getNetworkId(networkId => this.setState({ networkId }));
   }
 
 
   componentDidUpdate() {
-    const { ctors, instances } = this.props;
-    if (instances.length && ctors.length && !this.state.updateCycleActive) {
+    const { ctors, instances, metamaskStatus } = this.props;
+
+    if (instances.length &&
+      ctors.length &&
+      !this.state.updateCycleActive &&
+      metamaskStatus !== 'noMetamask')
       this.updateCycle();
-    }
+
     /*
     const {ctors, instances} = this.props;
 
@@ -82,11 +89,12 @@ class Dashboard extends Component {
     const { metamaskStatus } = this.props;
     const { networkId } = this.state;
 
-    if (metamaskStatus) return (
-      <div className="container">
-        <Alert standardAlert={metamaskStatus} />
-      </div>
-    );
+    if (metamaskStatus === 'noMetamask')
+      return <p style={{
+        textAlign: "center",
+        margin: "100px",
+        fontSize: "20px"
+      }}>Fellow, you need a Metamask plugin!</p>
 
     if (networkId === null) {
       return null;

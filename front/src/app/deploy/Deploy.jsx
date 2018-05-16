@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 
 import * as api from '../../api/apiRequests';
 import { transformObj2Flat } from '../../helpers/normalize';
+import UnlockMetamaskPopover from '../common/unlock-metamask-popover/UnlockMetamaskPopover';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import DeployStep1 from './DeployStep1';
@@ -52,20 +53,13 @@ class Deploy extends PureComponent {
   }
 
   render() {
-    // const { metamaskStatus } = this.props;
-    // if (metamaskStatus) return (
-    //   <div className="container">
-    //     <Alert standardAlert={metamaskStatus} />
-    //   </div>
-    // );
-
     const { deployId } = this.state;
     const {
-      ctor, status, errors, instance, netId, txHash, contractAddress,
+      ctor, status, errors, instance, netId, txHash, contractAddress, metamaskStatus,
       setPublicAccess, deployTxSent, deployTxError, deployTxMined, formData
     } = this.props;
 
-    const step1Props = { deployId, ctor, formData };
+    const step1Props = { deployId, ctor, formData, metamaskStatus };
 
     const step2Props = {
       deployId, ctor, instance, status,
@@ -75,6 +69,13 @@ class Deploy extends PureComponent {
     const step3Props = {
       status, txHash, netId, instance, contractAddress
     };
+
+    if (metamaskStatus === 'noMetamask')
+      return <p style={{
+        textAlign: "center",
+        margin: "100px",
+        fontSize: "20px"
+      }}>Fellow, you need a Metamask plugin!</p>
 
     let errorList = null;
     if (errors !== null && errors !== undefined) {
@@ -104,6 +105,10 @@ class Deploy extends PureComponent {
 
     return (
       <main className="page-main page-main--contracts">
+
+        {/* popover 'Unlock metamask' */}
+        {metamaskStatus === 'unlockMetamask' && <UnlockMetamaskPopover />}
+
         {/* <aside className="block-half"> */}
         <section className="form-title flex">
           {ctor.image &&

@@ -6,6 +6,10 @@ import FormWidgets from '../common/form-widgets/FormWidgets';
 
 class DeployStep1 extends PureComponent {
   submit({ formData }) {
+
+    if (this.props.metamaskStatus)
+      return null;
+
     this.formDataSaved = formData;
 
     const { deployId, ctor } = this.props;
@@ -24,7 +28,7 @@ class DeployStep1 extends PureComponent {
   }
 
   render() {
-    const { ctor, formData } = this.props;
+    const { ctor, formData, metamaskStatus } = this.props;
 
     // Add instance name field in the form beginning
     if (ctor && ctor.schema && (!ctor.schema.properties || !ctor.schema.properties.instance_title)) {
@@ -69,7 +73,11 @@ class DeployStep1 extends PureComponent {
         id="deploy-form"
         autocomplete="off">
         <div className="block__wrapper" style={{ marginBottom: '40px' }}>
-          <button className="button block__button" type="submit" name="form-submit">
+          <button
+            style={metamaskStatus ? { cursor: 'not-allowed' } : {}}
+            className="button block__button"
+            type="submit"
+            name="form-submit">
             Proceed
           </button>
         </div>

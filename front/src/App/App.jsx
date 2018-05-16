@@ -73,13 +73,15 @@ class App extends Component {
 
     return (
       <div>
+        {/* block 'Install metamask' */}
         {metamaskStatus === 'noMetamask' &&
           <InfoBlock className="install-block flex">
             <img src={metamask} alt="" />
             <p>To pay Ether you need a Metamask plugin.</p>
-            <button>
-              Install for Chrome
-          </button>
+            <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
+            target="_blanc">
+            <button>Install for Chrome</button>
+            </a>
           </InfoBlock>
         }
 
