@@ -14,7 +14,6 @@ class FunctionCard extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
-
   }
 
   submit({ formData }) {
@@ -59,51 +58,52 @@ class FunctionCard extends PureComponent {
     const { func } = this.props;
     if (!func) return null;
 
-    // prevent mutate data
-    const fnc = Object.assign({}, { ...func });
-
     // add field for ethCount in schema
-    if (fnc.payable) {
+    if (func.payable) {
 
       // if function is 'default function'
-      if (fnc.name === '') {
-        fnc.type = 'fallback';
-        fnc.title = fnc.title ? fnc.title : 'Send ether';
-        fnc.description = fnc.description
-          ? fnc.description
+      if (func.name === '') {
+        func.type = 'fallback';
+        func.title = func.title ? func.title : 'Send ether';
+        func.description = func.description
+          ? func.description
           : 'Send ether to contract';
       }
 
-      if (fnc.inputs.items === undefined)
-        fnc.inputs.items = [];
+      if (func.inputs.items === undefined)
+        func.inputs.items = [];
 
-      // const existValue = find(func.inputs.items, { title: "Ether amount (custom)" });
+      const payableTitle = (func.payable_details && func.payable_details.title)
+        ? func.payable_details.title
+        : 'Ether amount';
 
-      // if (!existValue) {
-      fnc.inputs.minItems += 1;
-      fnc.inputs.maxItems += 1;
+      const payableDescription = (func.payable_details && func.payable_details.description)
+        ? func.payable_details.description
+        : func.name === '' // if 'default function'
+          ? 'This ether amount will be sent to the contract'
+          : 'This ether amount will be sent with the function call';
 
-      fnc.inputs.items.push({
-        "type": "number",
-        "minLength": 1,
-        "maxLength": 78,
-        "pattern": "^[0-9]+$",
-        "title": (fnc.payable_details && fnc.payable_details.title)
-          ? fnc.payable_details.title
-          : 'Ether amount',
-        "description": (fnc.payable_details && fnc.payable_details.description)
-          ? fnc.payable_details.description
-          : fnc.name === '' // if 'default function'
-            ? 'This ether amount will be sent to the contract'
-            : 'This ether amount will be sent with the function call',
-        "ui:widget": "ethCount"
-      });
-      // }
+      const existValue = find(func.inputs.items, { title: payableTitle });
+
+      if (!existValue) {
+        func.inputs.minItems += 1;
+        func.inputs.maxItems += 1;
+        console.log('push: ', func.inputs.items);
+        func.inputs.items.push({
+          "type": "number",
+          "minLength": 1,
+          "maxLength": 78,
+          "pattern": "^[0-9]+$",
+          "title": payableTitle,
+          "description": payableDescription,
+          "ui:widget": "ethCount"
+        });
+      }
     }
 
     //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
-    if (!fnc.constant && fnc.inputs.minItems === 0) {
-      fnc.inputs = {
+    if (!func.constant && func.inputs.minItems === 0) {
+      func.inputs = {
         "$schema": "http://json-schema.org/draft-06/schema#",
         type: "object",
         properties: {}
@@ -112,8 +112,8 @@ class FunctionCard extends PureComponent {
 
     // build uiSchema from func
     let uiSchema = { items: [] };
-    if (fnc.inputs && fnc.inputs.items) {
-      for (let input of fnc.inputs.items) {
+    if (func.inputs && func.inputs.items) {
+      for (let input of func.inputs.items) {
         let item = {};
         if (typeof input === 'object' && 'ui:widget' in input) {
           item = {
@@ -129,7 +129,7 @@ class FunctionCard extends PureComponent {
 
     return (
       <Form className="contract-controls__form"
-        schema={fnc.inputs}
+        schema={func.inputs}
         uiSchema={uiSchema}
         widgets={FormWidgets}
         onSubmit={this.submit.bind(this)}
@@ -137,13 +137,13 @@ class FunctionCard extends PureComponent {
         showErrorList={false}>
 
         <h3 className="form-block__header">
-          {fnc.title || fnc.name}
-          {(fnc.title && fnc.name && (fnc.title !== fnc.name)) &&
-            <span> ({fnc.name})</span>
+          {func.title || func.name}
+          {(func.title && func.name && (func.title !== func.name)) &&
+            <span> ({func.name})</span>
           }
         </h3>
-        {fnc.description &&
-          <span className="form-block__description">{fnc.description}</span>
+        {func.description &&
+          <span className="form-block__description">{func.description}</span>
         }
 
         <div className="contract-controls__inner">
