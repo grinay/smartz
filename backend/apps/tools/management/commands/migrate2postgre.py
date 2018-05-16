@@ -16,15 +16,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         db = MongoClient(settings.SMARTZ_MONGO_HOST).sc_ctors_db
 
-        # tokens
-        tokens = db.auth_tokens.find({})
-        for mongo_token in tokens:
-            try:
-                AuthToken(token=mongo_token['token'], user_id=mongo_token['user_id']).save()
-            except Exception as e:
-                print(e)
-
-
         #constructors
         constructors = db.ctors.find({})
         for mongo_constructor in constructors:
