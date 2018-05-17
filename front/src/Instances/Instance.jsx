@@ -25,7 +25,7 @@ class Instance extends Component {
       ? find(instance.functions, f => (
         f.inputs.minItems !== 0 || !f.constant
       ))
-      : undefined ;
+      : undefined;
 
     this.state = {
       updateCycleActive: false,
@@ -102,7 +102,7 @@ class Instance extends Component {
   render() {
     const { metamaskStatus, instance, instanceError } = this.props;
 
-    if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
+    if (metamaskStatus !== 'okMetamask') {
       return (
         <div className="container">
           <Alert standardAlert={metamaskStatus} />
@@ -117,7 +117,7 @@ class Instance extends Component {
           <b>{func.title}</b> — {func.description}
         </p>
       ))
-      : null;
+      : [];
 
     const askFunctions = this.getFunctionsByType(instance, 'ask');
     let askFunctionsElements = askFunctions.length > 0
@@ -128,7 +128,7 @@ class Instance extends Component {
           onClick={() => this.setState({ funcActive: func })}
         />
       ))
-      : null;
+      : [];
 
     const writeFunctions = this.getFunctionsByType(instance, 'write');
     let writeFunctionsElements = writeFunctions.length > 0
@@ -139,7 +139,7 @@ class Instance extends Component {
           onClick={() => this.setState({ funcActive: func })}
         />
       ))
-      : null;
+      : [];
 
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">

@@ -26,13 +26,17 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    getNetworkId(networkId => this.setState({ networkId }));
+    if (this.props.metamaskStatus === 'okMetamask')
+      getNetworkId(networkId => this.setState({ networkId }));
   }
 
 
   componentDidUpdate() {
-    const { ctors, instances } = this.props;
-    if (instances.length && ctors.length && !this.state.updateCycleActive) {
+    const { ctors, instances, metamaskStatus } = this.props;
+    if (instances.length &&
+      ctors.length &&
+      !this.state.updateCycleActive &&
+      metamaskStatus === 'okMetamask') {
       this.updateCycle();
     }
     /*
@@ -82,7 +86,7 @@ class Dashboard extends Component {
     const { metamaskStatus } = this.props;
     const { networkId } = this.state;
 
-    if (metamaskStatus) return (
+    if (metamaskStatus !== 'okMetamask') return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>
