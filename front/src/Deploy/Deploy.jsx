@@ -53,7 +53,7 @@ class Deploy extends PureComponent {
 
   render() {
     const { metamaskStatus } = this.props;
-    if (metamaskStatus) return (
+    if (metamaskStatus !== 'okMetamask') return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>

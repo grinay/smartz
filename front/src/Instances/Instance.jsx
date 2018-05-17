@@ -25,7 +25,7 @@ class Instance extends Component {
       ? find(instance.functions, f => (
         f.inputs.minItems !== 0 || !f.constant
       ))
-      : undefined ;
+      : undefined;
 
     this.state = {
       updateCycleActive: false,
@@ -102,7 +102,7 @@ class Instance extends Component {
   render() {
     const { metamaskStatus, instance, instanceError } = this.props;
 
-    if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
+    if (metamaskStatus !== 'okMetamask') {
       return (
         <div className="container">
           <Alert standardAlert={metamaskStatus} />
