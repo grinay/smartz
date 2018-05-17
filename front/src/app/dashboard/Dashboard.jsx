@@ -28,7 +28,7 @@ class Dashboard extends Component {
   componentDidMount() {
     const { metamaskStatus } = this.props;
 
-    if (metamaskStatus !== undefined && metamaskStatus !== 'noMetamask')
+    if (metamaskStatus !== 'noMetamask')
       getNetworkId(networkId => this.setState({ networkId }));
   }
 

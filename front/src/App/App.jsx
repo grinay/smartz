@@ -45,6 +45,7 @@ class App extends Component {
     this.setState({});
 
     let metamaskStatus = false;
+    
     setInterval(() => {
       if (metamaskStatus !== checkMetaMask()) {
         metamaskStatus = checkMetaMask();

@@ -74,7 +74,7 @@ class DeployStep1 extends PureComponent {
         autocomplete="off">
         <div className="block__wrapper" style={{ marginBottom: '40px' }}>
           <button
-            style={metamaskStatus ? { cursor: 'not-allowed' } : {}}
+            style={metamaskStatus !== 'okMetamask' ? { cursor: 'not-allowed' } : {}}
             className="button block__button"
             type="submit"
             name="form-submit">
