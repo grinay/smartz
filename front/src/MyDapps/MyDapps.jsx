@@ -21,7 +21,7 @@ class MyDapps extends Component {
     return (
       <main className="page-main  page-main--store">
         <div className="page-main__inner">
-          {metamaskStatus &&
+          {metamaskStatus !== 'okMetamask' &&
             <Alert standardAlert={metamaskStatus} />
           }
 
