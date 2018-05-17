@@ -275,7 +275,6 @@ export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
  *
  * @param contractInstance
  * @param log
- * @returns {{params: {}, name: string}}
  */
 export const decodeEventOfInstance = (contractInstance, log) => {
   const abi = contractInstance.abi;
@@ -295,8 +294,17 @@ export const decodeEventOfInstance = (contractInstance, log) => {
     }
   }
 
+  if (!eventAbi) {
+    return false;
+  }
 
-  const decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
+  let decodedEvent;
+
+  try {
+    decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
+  } catch (e) {
+    return false;
+  }
   let event = {
     params: {},
     name: decodedEvent._eventName
