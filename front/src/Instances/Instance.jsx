@@ -117,7 +117,7 @@ class Instance extends Component {
           <b>{func.title}</b> — {func.description}
         </p>
       ))
-      : null;
+      : [];
 
     const askFunctions = this.getFunctionsByType(instance, 'ask');
     let askFunctionsElements = askFunctions.length > 0
@@ -128,7 +128,7 @@ class Instance extends Component {
           onClick={() => this.setState({ funcActive: func })}
         />
       ))
-      : null;
+      : [];
 
     const writeFunctions = this.getFunctionsByType(instance, 'write');
     let writeFunctionsElements = writeFunctions.length > 0
@@ -139,7 +139,7 @@ class Instance extends Component {
           onClick={() => this.setState({ funcActive: func })}
         />
       ))
-      : null;
+      : [];
 
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">
