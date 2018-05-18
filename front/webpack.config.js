@@ -7,7 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CaseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const Dotenv = require('dotenv-webpack');
+const DotenvPlugin = require('webpack-dotenv-extended-plugin');
 const { getIfUtils, removeEmpty, propIf } = require('webpack-config-utils');
 
 const PORT = 3000;
@@ -240,10 +240,9 @@ module.exports = (env) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(env)
       }),
-      new Dotenv({
-        path: './config/.env.local',
-        // load '.env.example' to verify the '.env' variables are all set.
-        safe: './config/.env.example',
+      new DotenvPlugin({
+        defaults: './config/.env.defaults',
+        path: './config/.env.local'
       }),
       // копирование папок и файлов
       new CopyWebpackPlugin([
