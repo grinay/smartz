@@ -29,7 +29,8 @@ class Constructor(models.Model):
             'multitoken': 'contract-multitoken.jpg',
             'booking': 'contract-booking.jpg',
             'ledger': 'contract-ledger.jpg',
-            'smartz platform features': 'platform-features.jpg'
+            'smartz platform features': 'platform-features.jpg',
+            'crowdfunding for erc20 token': 'crowdfunding-erc20.jpg'
         }
 
         if name_lower in images:
