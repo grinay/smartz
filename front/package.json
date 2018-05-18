@@ -1,9 +1,9 @@
 {
   "name": "Smart-contract-constructors-marketplace-front-end",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server -d --progress --inline --env=development",
+    "start": "./node_modules/.bin/webpack-dev-server -d --progress --env=development",
     "build": "./node_modules/.bin/webpack -p --progress --colors --env=production"
   },
   "devDependencies": {

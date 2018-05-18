@@ -11,6 +11,7 @@ const Dotenv = require('dotenv-webpack');
 const { getIfUtils, removeEmpty, propIf } = require('webpack-config-utils');
 
 const PORT = 3000;
+const HOST = 'localhost'
 
 const sourcePath = path.join(__dirname);
 const appPath = path.join(__dirname, './src');
@@ -22,7 +23,7 @@ module.exports = (env) => {
   return removeEmpty({
     entry: removeEmpty({
       app: removeEmpty([
-        ifDevelopment(`webpack-dev-server/client?http://localhost:${PORT}`),
+        ifDevelopment(`webpack-dev-server/client?http://${HOST}:${PORT}`),
         ifDevelopment('webpack/hot/only-dev-server'),
         './src/index',
       ]),
@@ -37,11 +38,17 @@ module.exports = (env) => {
     devtool: propIf(env == 'development', 'eval', 'source-map'),
 
     devServer: ifDevelopment({
-      host: 'localhost',
+      inline: true,
+      host: HOST,
       port: PORT,
       historyApiFallback: true,
       hot: true,
+      disableHostCheck: true,
       open: true,
+      overlay: {
+        warnings: true,
+        errors: true
+      }
     }),
 
     resolve: {
