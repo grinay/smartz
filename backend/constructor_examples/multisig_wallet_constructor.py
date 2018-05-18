@@ -43,7 +43,7 @@ class Constructor(ConstructorInstance):
                     "title": "Thaw time",
                     "description": "Until that time any funds or tokens which is held by this contract will be frozen "
                                    "- no one will be able to transfer it.",
-                     "$ref": "#/definitions/unixTime",
+                    "$ref": "#/definitions/unixTime",
                 }
             }
         }
