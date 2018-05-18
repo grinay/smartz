@@ -30,11 +30,11 @@ def _process_ctor_schema(schema):
 class ListView(View):
 
     def get(self, request, *args, **kwargs):
-        user_id = auth(request)
-        if isinstance(user_id, HttpResponse):  # todo
+        user = auth(request)
+        if isinstance(user, HttpResponse):  # todo
             constructors_objects = Constructor.objects.filter(is_public=True)
         else:
-            constructors_objects = Constructor.objects.filter(Q(is_public=True) | Q(auth0_user_id=user_id))
+            constructors_objects = Constructor.objects.filter(Q(is_public=True) | Q(user=user))
 
         constructors = []
         for constructor in constructors_objects:
@@ -45,7 +45,7 @@ class ListView(View):
                     'price_eth': constructor.get_formatted_price_eth(),
                     'ctor_descr': constructor.description,
                     'is_public': constructor.is_public,
-                    'user_id': constructor.auth0_user_id,
+                    'user_id': constructor.user_id,
                 }
             )
 
@@ -70,9 +70,9 @@ class UploadView(View):
         if float(price_eth) and not args['payment_address']:
             return error_response("Payment address must be specified with price >0")
 
-        user_id = auth(request)
-        if isinstance(user_id, HttpResponse):
-            return user_id  # error
+        user = auth(request)
+        if isinstance(user, HttpResponse):
+            return user  # error
 
         name = nonempty(args_string(args, 'ctor_name'))
         descr = nonempty(args_string(args, 'ctor_descr')) if 'ctor_descr' in args else ''
@@ -84,7 +84,7 @@ class UploadView(View):
             except Constructor.DoesNotExist:
                 return error_response('Constructor does not exists')
 
-            if current_constructor.auth0_user_id != user_id:
+            if current_constructor.user_id != user.pk:
                 return error_response('Access denied')
 
             if Constructor.objects.filter(name=name).exclude(slug=args['constructor_id']).exists():
@@ -130,7 +130,7 @@ class UploadView(View):
         current_constructor.payment_address = args['payment_address']
         current_constructor.price_eth = Decimal(price_eth)
         current_constructor.is_public = is_public
-        current_constructor.auth0_user_id = user_id
+        current_constructor.user = user
         current_constructor.save()
 
         constructor_engine_instance.register_new_ctor(current_constructor.slug, filename)
@@ -181,9 +181,9 @@ class ConstructView(View):
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
 
-        user_id = auth(request)
-        if isinstance(user_id, HttpResponse):
-            return error_response("Wrong 'user_id' param")
+        user = auth(request)
+        if isinstance(user, HttpResponse):
+            return user
 
         instance_title = args.get('instance_title')
         if not instance_title or not isinstance(instance_title, str):
@@ -232,7 +232,7 @@ class ConstructView(View):
         contract.function_specs = json.dumps(result['function_specs'])
         contract.dashboard_functions = json.dumps(result['dashboard_functions'])
         contract.constructor = constructor
-        contract.auth0_user_id = user_id
+        contract.user = user
         contract.save()
 
         return JsonResponse({

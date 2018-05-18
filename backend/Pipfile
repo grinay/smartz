@@ -14,9 +14,17 @@ gunicorn = "==19.7.1"
 newrelic = "==2.98.0.81"
 "psycopg2-binary" = "==2.7.4"
 dj-database-url = "==0.5.0"
+flex = "==6.13.1"
+PyJWT = "==1.6.1"
+
+ethereum = "==2.3.1"
+rlp = "==0.6.0" # temporary https://github.com/ethereum/pyethereum/issues/868
+coincurve = "==7.1.0"
+eth-utils = "==1.0.3"
 
 [dev-packages]
 pytest = "*"
+django-webtest = "*"
 
 [requires]
 python_version = "3.6"

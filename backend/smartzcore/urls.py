@@ -8,8 +8,8 @@ urlpatterns = [
         settings.SMARTZ_API_PREFIX,
         include([
             path('constructors', include('apps.constructors.urls')),
-            # path('accounts', include('apps.account.urls')),
-            path('instances', include('apps.contracts.urls')),
+            path('users', include('apps.users.urls')),
+            path('contracts', include('apps.contracts.urls')),
         ])
     ),
     path('secret-admin/', admin.site.urls),
@@ -20,3 +20,8 @@ urlpatterns = [
 #     urlpatterns = [
 #         re_path(r'^__debug__/', include(debug_toolbar.urls)),
 #     ] + urlpatterns
+
+if settings.IS_TESTING:
+    urlpatterns += [
+        path('__tests', include('apps.common.tests.urls')),
+    ]

@@ -1,0 +1,7 @@
+BLOCKCHAIN_ETHEREUM = 'ethereum'
+BLOCKCHAIN_EOS = 'eos'
+
+BLOCKCHAINS = (
+    (BLOCKCHAIN_ETHEREUM, 'Ethereum'),
+    (BLOCKCHAIN_EOS, 'EOS')
+)

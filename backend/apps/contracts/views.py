@@ -40,11 +40,11 @@ class DetailsView(View):
             return error_response("Contract not found")
 
         if not contract.has_public_access:
-            user_id = auth(request)
-            if isinstance(user_id, HttpResponse):
-                return user_id  # error
+            user = auth(request)
+            if isinstance(user, HttpResponse):
+                return user  # error
 
-            if contract.auth0_user_id != user_id:
+            if contract.user_id != user.pk:
                 return error_response('Contract not found')
 
         if not contract.address:
@@ -56,11 +56,11 @@ class DetailsView(View):
 class ListView(View):
 
     def get(self, request):
-        user_id = auth(request)
-        if isinstance(user_id, HttpResponse):
-            return user_id  # error
+        user = auth(request)
+        if isinstance(user, HttpResponse):
+            return user  # error
 
-        contracts = Contract.objects.filter(auth0_user_id=user_id).exclude(address='').prefetch_related('constructor')
+        contracts = Contract.objects.filter(user=user).exclude(address='').prefetch_related('constructor')
 
         return JsonResponse(
             [_prepare_instance_details(i) for i in contracts],
@@ -72,12 +72,12 @@ class ListView(View):
 class UpdateView(View):
 
     def post(self, request, instance_id):
-        user_id = auth(request)
-        if isinstance(user_id, HttpResponse):
-            return user_id  # error
+        user = auth(request)
+        if isinstance(user, HttpResponse):
+            return user  # error
 
         try:
-            contract = Contract.objects.get(slug=instance_id, auth0_user_id=user_id)
+            contract = Contract.objects.get(slug=instance_id, user=user)
         except Contract.DoesNotExist:
             return error_response("Contract not found")
 
@@ -102,16 +102,4 @@ class UpdateView(View):
         contract.save()
 
         return JsonResponse({'ok': True}) # todo
-
-
-class DeleteMy(View):
-    """Temporary view"""
-
-    def get(self, request, user_id):
-        if not settings.DEBUG:
-            return JsonResponse({'ok': False})
-
-        Contract.objects.filter(auth0_user_id=user_id).delete()
-
-        return JsonResponse({'ok': True})
 

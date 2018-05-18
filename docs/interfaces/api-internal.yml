@@ -1,0 +1,102 @@
+swagger: "2.0"
+info:
+  title: Internal api description
+  version: 0.8.0
+
+basePath: /api
+schemes:
+  - https
+
+paths:
+  /users/login/start:
+    post:
+      summary: Start login
+      consumes: [application/json]
+      produces: [application/json]
+      parameters:
+        - in: body
+          name: SignRequest
+          schema:
+            $ref: '#/definitions/SignRequest'
+      responses:
+        '200':
+          description: Data to sigh
+          schema:
+            $ref: '#/definitions/SignResponse'
+
+  /users/login/finish:
+    post:
+      summary: Finish login
+      consumes: [application/json]
+      produces: [application/json]
+      parameters:
+        - in: body
+          name: SignedData
+          schema:
+            $ref: '#/definitions/SignedData'
+      responses:
+        '200':
+          description: Token
+          schema:
+            $ref: '#/definitions/Token'
+        '400':
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+definitions:
+  SignRequest:
+    type: object
+    required:
+      - public_key
+      - blockchain
+    properties:
+      public_key:
+        type: string
+      blockchain:
+        type: string
+  SignResponse:
+    type: object
+    required:
+      - description
+      - data
+    properties:
+      description:
+        type: string
+      data:
+        type: string
+
+  SignedData:
+    type: object
+    required:
+      - public_key
+      - blockchain
+      - data
+      - signed_data
+    properties:
+      public_key:
+        type: string
+      blockchain:
+        type: string
+      signed_data:
+        type: string
+
+
+  Token:
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        type: string
+
+  Error:
+    type: object
+    required:
+      - error
+    properties:
+      error:
+        type: string
+      
+      

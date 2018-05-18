@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models import ForeignKey
 
 from apps.constructors.models import Constructor
+from apps.users.models import User
 
 
 class Contract(models.Model):
@@ -16,7 +17,8 @@ class Contract(models.Model):
     function_specs = models.TextField()
     dashboard_functions = models.TextField()
     has_public_access = models.BooleanField(default=False)
-    auth0_user_id = models.CharField(max_length=200)
+    auth0_user_id = models.CharField(max_length=200, blank=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
     network_id = models.CharField(max_length=200, default='')
     address = models.CharField(max_length=42, default='')

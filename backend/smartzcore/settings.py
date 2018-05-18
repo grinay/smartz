@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 import os
 
+import pytz
 from configurations import Configuration, values
 
 class Common(Configuration):
@@ -42,6 +43,7 @@ class Common(Configuration):
         'apps.contracts',
         'apps.users',
         'apps.tools',
+        'apps.common',
     ]
 
     MIDDLEWARE = [
@@ -56,7 +58,9 @@ class Common(Configuration):
         # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
         'smartzcore.middleware.SmartzMiddleware',
-        'smartzcore.middleware.JSONMiddleware'
+        'smartzcore.middleware.JSONMiddleware',
+        'smartzcore.middleware.SwaggerRequestValidationMiddleware',
+        'smartzcore.middleware.CatchExceptionMiddleware',
     ]
 
     ROOT_URLCONF = 'smartzcore.urls'
@@ -115,13 +119,9 @@ class Common(Configuration):
     # Internationalization
     # https://docs.djangoproject.com/en/2.0/topics/i18n/
     LANGUAGE_CODE = 'en-us'
-
     TIME_ZONE = 'UTC'
-
     USE_I18N = True
-
     USE_L10N = True
-
     USE_TZ = True
 
     APPEND_SLASH = False
@@ -133,9 +133,8 @@ class Common(Configuration):
 
     AUTH_USER_MODEL = 'users.User'
 
-    # SMARTZ settings 
+    # SMARTZ settings
     SMARTZ_MONGO_HOST = 'mongo' # docker container
-
 
     AUTH0_HOST = 'smartz.auth0.com'
 
@@ -144,12 +143,12 @@ class Common(Configuration):
 
     SMARTZ_SOLC_PATH = '/usr/local/bin/solc' # set in dockerfile
 
-    SMARTZ_ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+    SMARTZ_ROOT_DIR = os.path.realpath(BASE_DIR)
     SMARTZ_CONSTRUCTOR_DATA_DIR = os.path.join(SMARTZ_ROOT_DIR, 'data')
     # inside docker in the same dir
     SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(SMARTZ_ROOT_DIR, 'json-schema')
 
-    # all api methods will use thi prefix
+    SMARTZ_INTERNAL_API_SWAGGER_SCHEMA = os.path.realpath(os.path.join(SMARTZ_ROOT_DIR, '../docs/interfaces/api-internal.yml'))# all api methods will use thi prefix
     SMARTZ_API_PREFIX = 'api/'
 
     # business logic
