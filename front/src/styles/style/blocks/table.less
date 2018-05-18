@@ -1,0 +1,235 @@
+.table--big {
+    margin-top: 20px;
+}
+
+.table__tbody {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.table__tr {
+    display: flex;
+    flex-direction: column;
+
+    margin-right: 20px;
+    margin-bottom: 20px;
+
+    &--margin {
+        margin-right: 33px;
+        margin-bottom: 27px;
+    }
+}
+
+.table__data {
+    display: flex;
+    flex-direction: column;
+}
+
+.table__label {
+    padding: 0;
+
+    opacity: .5;
+
+    font-family: 'Cera Pro 500', Arial, sans-serif;
+    line-height: 14px;
+}
+
+.table__inner {
+    display: flex;
+
+    font-family: 'Cera Pro 700', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 18px;
+
+    &--user {
+        align-items: center;
+    }
+
+    &--user::after {
+        display: block;
+
+        width: 15px;
+        height: 14px;
+
+        content: '';
+
+        background-image: url('../img/store/man.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    &--margin {
+        font-family: 'Cera Pro 400', Arial, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+.table__icons {
+    display: flex;
+
+    margin-left: 5px;
+}
+
+.table__icon {
+    width: 15px;
+    height: 15px;
+
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &--star {
+        background-image: url('../img/icons/star-1.svg');
+    }
+
+    &--half {
+        background-image: url('../img/icons/star-2.svg');
+    }
+}
+
+.table--medium {
+    .table__tr + .table__tr--sign {
+        margin-top: 29px;
+        margin-right: 18px;
+    }
+
+    .table__data {
+        font-family: 'Cera Pro 100', Arial, sans-serif;
+        font-size: 35px;
+        line-height: 42px;
+
+        &--bottom {
+            margin-top: auto;
+        }
+    }
+
+    .table__input {
+        box-sizing: border-box;
+        min-width: 130px;
+        max-width: 250px;
+        min-height: 37px;
+        padding: 0 5px 0 5px;
+
+        cursor: pointer;
+
+        color: #395FFF;
+        border-radius: 4px;
+        background-color: transparent;
+
+        &:hover {
+            background-color: #F5F6F7;
+        }
+
+        &:focus {
+            outline: 0;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 4px 0 rgba(79,108,255,.18);
+        }
+    }
+}
+
+.table__link {
+    position: relative;
+
+    text-decoration: none;
+
+    color: @interactive-element-color;
+
+    &::after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        height: 1px;
+
+        content: '';
+
+        opacity: .3;
+        background-color: @interactive-element-color;
+    }
+
+    &:hover, &:focus {
+        color: @link-hover;
+    }
+
+    &:hover::after, &:focus::after {
+        background-color: @link-hover;
+    }
+}
+
+@media (min-width: @screen-md) {
+    .table--contract-card {
+        .table__tr {
+            margin-right: 40px;
+        }
+
+        .table__inner {
+            align-items: center;
+
+            font-family: 'Cera Pro 100', Arial, sans-serif;
+            font-size: 45px;
+            line-height: 54px;
+
+            &--user::after {
+                width: 36px;
+                height: 36px;
+
+                background-image: url('../img/contract/man.svg');
+            }
+        }
+
+        .table__icon {
+            width: 37px;
+            height: 35px;
+
+            &--star {
+                background-image: url('../img/contract/star-1.svg');
+            }
+
+            &--half {
+                background-image: url('../img/contract/star-2.svg');
+            }
+        }
+    }
+
+    .table--big {
+        margin-top: 0;
+    }
+}
+
+@media (min-width: @screen-lg) {
+    .table--big {
+        .table__tr {
+            margin-right: 40px;
+        }
+
+        .table__inner {
+            align-items: center;
+
+            font-family: 'Cera Pro 100', Arial, sans-serif;
+            font-size: 45px;
+            line-height: 54px;
+
+            &--user::after {
+                width: 36px;
+                height: 36px;
+
+                background-image: url('../img/contract/man.svg');
+            }
+        }
+
+        .table__icon {
+            width: 37px;
+            height: 35px;
+
+            &--star {
+                background-image: url('../img/contract/star-1.svg');
+            }
+
+            &--half {
+                background-image: url('../img/contract/star-2.svg');
+            }
+        }
+    }
+}

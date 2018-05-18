@@ -1,0 +1,118 @@
+.contract-controls {
+  padding-bottom: 59px;
+}
+
+.contract-controls__wrapper {
+  margin-top: 33px;
+  margin-bottom: 30px;
+
+  &--margin {
+    margin-top: 50px;
+  }
+}
+
+.contract-controls__wallet-key {
+  position: relative;
+  display: block;
+  padding-left: 15px;
+  word-break: break-all;
+
+  &::before {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    content: "";
+    display: block;
+    width: 12px;
+    height: 7px;
+    background-image: url("../img/running/key.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.contract-controls__section-header {
+  font-family: "Cera Pro 500", Arial, sans-serif;
+  line-height: 14px;
+  opacity: .5;
+}
+
+.contract-controls__form {
+  margin-top: 25px;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+}
+
+.contract-controls__inner {
+  padding: 26px;
+  background-color: #E6E9F0;
+  border-radius: 4px;
+}
+
+.contract-controls__form-button {
+  width: 150px;
+}
+
+.contract-controls__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0;
+  margin: 10px 0 0 0;
+  list-style: none;
+}
+
+.contract-controls__item {
+  margin-right: 14px;
+  margin-bottom: 14px;
+}
+
+.contract-controls__info {
+  margin-left: 10px;
+  text-transform: initial;
+}
+
+.contract-controls__btn {
+  margin-bottom: 5px;
+  font-size: 10px;
+  line-height: 12px;
+  color: @interactive-element-color;
+  opacity: 1;
+
+  &:hover,
+  &:focus {
+    color: @link-hover;
+  }
+}
+
+.contract-controls__list--donaters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 25%);
+  grid-gap: 15px;
+  margin-bottom: 20px;
+
+  .contract-controls__item {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+.contract-controls__link {
+  font-family: "Cera Pro 500", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 22px;
+  color: @interactive-element-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: @link-hover;
+  }
+}
+
+@media (min-width: @screen-lg) {
+  .contract-controls__form-block {
+    margin: 0;
+  }
+}

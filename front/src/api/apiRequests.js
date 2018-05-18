@@ -1,4 +1,4 @@
-import store from '../store';
+import store from '../store/store';
 import { fetch } from './api';
 import {
     fetchCtorsRequest,
@@ -7,12 +7,12 @@ import {
     fetchCtorParamsRequest,
     fetchCtorParamsFailure,
     fetchCtorParamsSuccess,
-} from '../Ctors/CtorsActions';
+} from '../app/common/ctor-card/CtorsActions';
 import {
     fetchInstancesRequest,
     fetchInstancesFailure,
     fetchInstancesSuccess,
-} from '../Instances/InstancesActions';
+} from '../app/instances/InstancesActions';
 import {
     // initDeploy,
     setFormData,
@@ -23,7 +23,7 @@ import {
     // deployTxSent,
     // deployTxError,
     // deployTxMined
-} from '../Deploy//DeployActions';
+} from '../app/deploy/DeployActions';
 
 const { dispatch } = store;
 

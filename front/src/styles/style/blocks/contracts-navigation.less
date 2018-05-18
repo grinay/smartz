@@ -1,0 +1,109 @@
+.contracts-navigation {
+  height: 35px;
+  margin-bottom: 50px;
+  overflow: hidden;
+}
+
+.contracts-navigation__list {
+  display: flex;
+  height: 60px;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  list-style: none;
+}
+
+.contracts-navigation__item {
+  flex-shrink: 0;
+
+  &:first-of-type {
+    margin-left: 15px;
+  }
+
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
+.contracts-navigation__input:focus + .contracts-navigation__label {
+  color: @link-hover;
+}
+
+.contracts-navigation__label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 35px;
+  padding-left: 21px;
+  padding-right: 17px;
+  font-family: "Cera Pro 700", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: 1px;
+  color: #3E63FE;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: #F2F3F7;
+  border-radius: 2px;
+
+  &:hover {
+    color: @link-hover;
+    cursor: pointer;
+  }
+
+  &--audited {
+    padding-left: 11px;
+  }
+}
+
+.contracts-navigation__icon {
+  margin-right: 20px;
+  opacity: .2;
+}
+
+.contracts-navigation__input:checked + .contracts-navigation__label:not(.contracts-navigation__label--audited)::before {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  content: "";
+  display: block;
+  width: 4.5px;
+  height: 4.5px;
+  margin-right: 5px;
+  background-color: #3E63FE;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.contracts-navigation__input:checked + .contracts-navigation__label--audited .contracts-navigation__icon {
+  opacity: 1;
+}
+
+.contracts-navigation__name {
+  margin-right: 5px;
+}
+
+.contracts-navigation__quantity {
+  opacity: .5;
+}
+
+@media (min-width: @screen-md) {
+  .contracts-navigation__item:first-of-type {
+    margin-left: 50px;
+  }
+}
+
+@media (min-width: @screen-lg) {
+  .contracts-navigation__list {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .contracts-navigation__item:first-of-type {
+    margin-left: 0;
+  }
+}

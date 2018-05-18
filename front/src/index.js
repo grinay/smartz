@@ -4,9 +4,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 
-import history from './history';
-import store from './store';
-import App from './App/AppContainer';
+import history from './helpers/history';
+import store from './store/store';
+import App from './app/AppContainer';
+
+// import './index.scss';
+import './index.less';
 
 ReactDOM.render(
   <Provider store={store}>

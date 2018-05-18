@@ -1,0 +1,40 @@
+
+@keyframes loader {
+    0% {
+        transform: scale(1) translateZ(0);
+    }
+    100% {
+        transform: scale(.3333333) translateZ(0);
+    }
+}
+
+.loader {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #F5F6F8;
+
+    .loader__mask {
+        position: absolute;
+        z-index: 2;
+
+        width: 300px;
+    }
+
+    .loader__carpet {
+        position: absolute;
+
+        width: 300px;
+
+        animation: loader 1s ease-in-out infinite;
+        animation-direction: reverse;
+    }
+}

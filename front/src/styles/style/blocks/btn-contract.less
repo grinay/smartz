@@ -1,0 +1,30 @@
+.btn-contract {
+  display: flex;
+  align-items: center;
+  padding: 11px 20px 9px 20px;
+  font-family: "Cera Pro 700", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 15px;
+  color: @interactive-element-color;
+  letter-spacing: 1px;
+  background-color: transparent;
+  text-transform: uppercase;
+  border: 0.5px solid rgba(49, 131, 238, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: rgba(49, 131, 238, 0.3);
+  }
+
+  &--alert {
+    color: #F21F43;
+    border-color: rgba(242, 31, 67, 0.3);
+
+    &:hover,
+    &:focus {
+      background-color: rgba(242, 31, 67, 0.3);
+    }
+  }
+}

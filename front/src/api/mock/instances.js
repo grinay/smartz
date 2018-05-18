@@ -3965,6 +3965,19723 @@ export const instanceList = [
         ],
         "dashboard_functions": [
             "symbol",
+            "totalSupply",
+            "paused",
+            "mintingFinished"
+        ]
+    },
+    {
+        "instance_id": "5ae1b6fd2a35e200093748d7",
+        "instance_title": "1212121",
+        "network_id": 4,
+        "ctor_id": "5ad9a507672dfe000a7e0a31",
+        "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
+        "abi": [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "mintingFinished",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "rtd",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": true,
+                "stateMutability": "view",
+                "type": "fallback"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "approve",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_from",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transferFrom",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint8"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "cap",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "unpause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "mint",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "burn",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "paused",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_subtractedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "decreaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "finishMinting",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "pause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transfer",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_addedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "increaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    }
+                ],
+                "name": "allowance",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "transferOwnership",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "payable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Pause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Unpause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "burner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Burn",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Mint",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "MintFinished",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "previousOwner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "OwnershipTransferred",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "spender",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Approval",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "from",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event"
+            }
+        ],
+        "functions": [
+            {
+                "name": "mintingFinished",
+                "constant": true,
+                "payable": false,
+                "title": "Minting finished",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true no more tokens could be created."
+            },
+            {
+                "name": "name",
+                "constant": true,
+                "payable": false,
+                "title": "Token name",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Human-friendly name of the token."
+            },
+            {
+                "name": "approve",
+                "constant": false,
+                "payable": false,
+                "title": "Approve spending",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address to allow to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allow some amount of your tokens to be spent by specified address."
+            },
+            {
+                "name": "totalSupply",
+                "constant": true,
+                "payable": false,
+                "title": "Total supply",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Current total amount of the token. Specified in the smallest units of the token."
+            },
+            {
+                "name": "transferFrom",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer from",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "From",
+                            "description": "Subtract tokens from this account."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Transfer tokens to this account."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers from one account to another. Account which tokens are transferred has to approve this spending."
+            },
+            {
+                "name": "decimals",
+                "constant": true,
+                "payable": false,
+                "title": "Decimal places",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint8",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allowed digits in fractional part of the token. E.g. decimal places of US dollar is 2."
+            },
+            {
+                "name": "cap",
+                "constant": true,
+                "payable": false,
+                "title": "Maximum tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Maximum number of tokens which could be created. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "unpause",
+                "constant": false,
+                "payable": true,
+                "title": "Enable circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Enables token transfers in case they were paused. Callable only by token owner."
+            },
+            {
+                "name": "mint",
+                "constant": false,
+                "payable": false,
+                "title": "Mint new tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Transfer tokens to this address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Creates new tokens out-of-thin-air and gives them to specified address. Callable only by token owner."
+            },
+            {
+                "name": "burn",
+                "constant": false,
+                "payable": true,
+                "title": "Burn tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Burns specified amount of tokens owned by current account."
+            },
+            {
+                "name": "paused",
+                "constant": true,
+                "payable": false,
+                "title": "Paused",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true any token transfers are disabled."
+            },
+            {
+                "name": "decreaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Decrease approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Decreases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "balanceOf",
+                "constant": true,
+                "payable": false,
+                "title": "Get balance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "balance"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Gets the token balance of any address. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "finishMinting",
+                "constant": false,
+                "payable": false,
+                "title": "Finish minting",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Disables any further token creation via minting. Callable only by token owner."
+            },
+            {
+                "name": "pause",
+                "constant": false,
+                "payable": false,
+                "title": "Pause circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Disable any token transfers. Callable only by token owner."
+            },
+            {
+                "name": "owner",
+                "constant": true,
+                "payable": false,
+                "title": "Owner",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Address of the token owner."
+            },
+            {
+                "name": "symbol",
+                "constant": true,
+                "payable": false,
+                "title": "Token ticker",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Abbreviated name of the token used on exchanges etc."
+            },
+            {
+                "name": "transfer",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Recipient address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers some amount of your tokens to another address."
+            },
+            {
+                "name": "increaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Increase approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Increases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "allowance",
+                "constant": true,
+                "payable": false,
+                "title": "View allowance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of owner",
+                            "description": "Address which allowed to spend his tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of spender",
+                            "description": "Address which was allowed to spend tokens."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "View amount of tokens which some token holder allowed to spend by another address."
+            },
+            {
+                "name": "transferOwnership",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer ownership",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which'll receive ownership rights."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Transfers ownership of the token to another address. Ownership rights are required to perform some administrative operations."
+            }
+        ],
+        "dashboard_functions": [
+            "symbol",
+            "totalSupply"
+        ]
+    },
+    {
+        "instance_id": "5ae1b6fd2a35e200093748d6",
+        "instance_title": "1212121",
+        "network_id": 4,
+        "ctor_id": "5ad9a507672dfe000a7e0a31",
+        "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
+        "abi": [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "mintingFinished",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "rtd",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": true,
+                "stateMutability": "view",
+                "type": "fallback"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "approve",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_from",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transferFrom",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint8"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "cap",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "unpause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "mint",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "burn",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "paused",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_subtractedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "decreaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "finishMinting",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "pause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transfer",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_addedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "increaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    }
+                ],
+                "name": "allowance",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "transferOwnership",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "payable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Pause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Unpause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "burner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Burn",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Mint",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "MintFinished",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "previousOwner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "OwnershipTransferred",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "spender",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Approval",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "from",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event"
+            }
+        ],
+        "functions": [
+            {
+                "name": "mintingFinished",
+                "constant": true,
+                "payable": false,
+                "title": "Minting finished",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true no more tokens could be created."
+            },
+            {
+                "name": "name",
+                "constant": true,
+                "payable": false,
+                "title": "Token name",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Human-friendly name of the token."
+            },
+            {
+                "name": "approve",
+                "constant": false,
+                "payable": false,
+                "title": "Approve spending",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address to allow to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allow some amount of your tokens to be spent by specified address."
+            },
+            {
+                "name": "totalSupply",
+                "constant": true,
+                "payable": false,
+                "title": "Total supply",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Current total amount of the token. Specified in the smallest units of the token."
+            },
+            {
+                "name": "transferFrom",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer from",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "From",
+                            "description": "Subtract tokens from this account."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Transfer tokens to this account."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers from one account to another. Account which tokens are transferred has to approve this spending."
+            },
+            {
+                "name": "decimals",
+                "constant": true,
+                "payable": false,
+                "title": "Decimal places",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint8",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allowed digits in fractional part of the token. E.g. decimal places of US dollar is 2."
+            },
+            {
+                "name": "cap",
+                "constant": true,
+                "payable": false,
+                "title": "Maximum tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Maximum number of tokens which could be created. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "unpause",
+                "constant": false,
+                "payable": true,
+                "title": "Enable circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Enables token transfers in case they were paused. Callable only by token owner."
+            },
+            {
+                "name": "mint",
+                "constant": false,
+                "payable": false,
+                "title": "Mint new tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Transfer tokens to this address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Creates new tokens out-of-thin-air and gives them to specified address. Callable only by token owner."
+            },
+            {
+                "name": "burn",
+                "constant": false,
+                "payable": true,
+                "title": "Burn tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Burns specified amount of tokens owned by current account."
+            },
+            {
+                "name": "paused",
+                "constant": true,
+                "payable": false,
+                "title": "Paused",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true any token transfers are disabled."
+            },
+            {
+                "name": "decreaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Decrease approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Decreases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "balanceOf",
+                "constant": true,
+                "payable": false,
+                "title": "Get balance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "balance"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Gets the token balance of any address. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "finishMinting",
+                "constant": false,
+                "payable": false,
+                "title": "Finish minting",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Disables any further token creation via minting. Callable only by token owner."
+            },
+            {
+                "name": "pause",
+                "constant": false,
+                "payable": false,
+                "title": "Pause circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Disable any token transfers. Callable only by token owner."
+            },
+            {
+                "name": "owner",
+                "constant": true,
+                "payable": false,
+                "title": "Owner",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Address of the token owner."
+            },
+            {
+                "name": "symbol",
+                "constant": true,
+                "payable": false,
+                "title": "Token ticker",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Abbreviated name of the token used on exchanges etc."
+            },
+            {
+                "name": "transfer",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Recipient address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers some amount of your tokens to another address."
+            },
+            {
+                "name": "increaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Increase approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Increases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "allowance",
+                "constant": true,
+                "payable": false,
+                "title": "View allowance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of owner",
+                            "description": "Address which allowed to spend his tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of spender",
+                            "description": "Address which was allowed to spend tokens."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "View amount of tokens which some token holder allowed to spend by another address."
+            },
+            {
+                "name": "transferOwnership",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer ownership",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which'll receive ownership rights."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Transfers ownership of the token to another address. Ownership rights are required to perform some administrative operations."
+            }
+        ],
+        "dashboard_functions": [
+            "symbol",
+            "totalSupply"
+        ]
+    },
+    {
+        "instance_id": "5ae1b6fd2a35e200093748d5",
+        "instance_title": "1212121",
+        "network_id": 4,
+        "ctor_id": "5ad9a507672dfe000a7e0a31",
+        "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
+        "abi": [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "mintingFinished",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "rtd",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": true,
+                "stateMutability": "view",
+                "type": "fallback"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "approve",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_from",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transferFrom",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint8"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "cap",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "unpause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "mint",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "burn",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "paused",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_subtractedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "decreaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "finishMinting",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "pause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transfer",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_addedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "increaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    }
+                ],
+                "name": "allowance",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "transferOwnership",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "payable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Pause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Unpause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "burner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Burn",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Mint",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "MintFinished",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "previousOwner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "OwnershipTransferred",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "spender",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Approval",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "from",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event"
+            }
+        ],
+        "functions": [
+            {
+                "name": "mintingFinished",
+                "constant": true,
+                "payable": false,
+                "title": "Minting finished",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true no more tokens could be created."
+            },
+            {
+                "name": "name",
+                "constant": true,
+                "payable": false,
+                "title": "Token name",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Human-friendly name of the token."
+            },
+            {
+                "name": "approve",
+                "constant": false,
+                "payable": false,
+                "title": "Approve spending",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address to allow to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allow some amount of your tokens to be spent by specified address."
+            },
+            {
+                "name": "totalSupply",
+                "constant": true,
+                "payable": false,
+                "title": "Total supply",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Current total amount of the token. Specified in the smallest units of the token."
+            },
+            {
+                "name": "transferFrom",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer from",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "From",
+                            "description": "Subtract tokens from this account."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Transfer tokens to this account."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers from one account to another. Account which tokens are transferred has to approve this spending."
+            },
+            {
+                "name": "decimals",
+                "constant": true,
+                "payable": false,
+                "title": "Decimal places",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint8",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allowed digits in fractional part of the token. E.g. decimal places of US dollar is 2."
+            },
+            {
+                "name": "cap",
+                "constant": true,
+                "payable": false,
+                "title": "Maximum tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Maximum number of tokens which could be created. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "unpause",
+                "constant": false,
+                "payable": true,
+                "title": "Enable circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Enables token transfers in case they were paused. Callable only by token owner."
+            },
+            {
+                "name": "mint",
+                "constant": false,
+                "payable": false,
+                "title": "Mint new tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Transfer tokens to this address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Creates new tokens out-of-thin-air and gives them to specified address. Callable only by token owner."
+            },
+            {
+                "name": "burn",
+                "constant": false,
+                "payable": true,
+                "title": "Burn tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Burns specified amount of tokens owned by current account."
+            },
+            {
+                "name": "paused",
+                "constant": true,
+                "payable": false,
+                "title": "Paused",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true any token transfers are disabled."
+            },
+            {
+                "name": "decreaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Decrease approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Decreases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "balanceOf",
+                "constant": true,
+                "payable": false,
+                "title": "Get balance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "balance"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Gets the token balance of any address. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "finishMinting",
+                "constant": false,
+                "payable": false,
+                "title": "Finish minting",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Disables any further token creation via minting. Callable only by token owner."
+            },
+            {
+                "name": "pause",
+                "constant": false,
+                "payable": false,
+                "title": "Pause circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Disable any token transfers. Callable only by token owner."
+            },
+            {
+                "name": "owner",
+                "constant": true,
+                "payable": false,
+                "title": "Owner",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Address of the token owner."
+            },
+            {
+                "name": "symbol",
+                "constant": true,
+                "payable": false,
+                "title": "Token ticker",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Abbreviated name of the token used on exchanges etc."
+            },
+            {
+                "name": "transfer",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Recipient address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers some amount of your tokens to another address."
+            },
+            {
+                "name": "increaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Increase approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Increases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "allowance",
+                "constant": true,
+                "payable": false,
+                "title": "View allowance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of owner",
+                            "description": "Address which allowed to spend his tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of spender",
+                            "description": "Address which was allowed to spend tokens."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "View amount of tokens which some token holder allowed to spend by another address."
+            },
+            {
+                "name": "transferOwnership",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer ownership",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which'll receive ownership rights."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Transfers ownership of the token to another address. Ownership rights are required to perform some administrative operations."
+            }
+        ],
+        "dashboard_functions": [
+            "symbol",
+            "totalSupply"
+        ]
+    },
+    {
+        "instance_id": "5ae1b6fd2a35e200093748d4",
+        "instance_title": "1212121",
+        "network_id": 4,
+        "ctor_id": "5ad9a507672dfe000a7e0a31",
+        "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
+        "abi": [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "mintingFinished",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "rtd",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": true,
+                "stateMutability": "view",
+                "type": "fallback"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "approve",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_from",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transferFrom",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint8"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "cap",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "unpause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "mint",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "burn",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "paused",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_subtractedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "decreaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "finishMinting",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "pause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transfer",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_addedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "increaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    }
+                ],
+                "name": "allowance",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "transferOwnership",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "payable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Pause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Unpause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "burner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Burn",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Mint",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "MintFinished",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "previousOwner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "OwnershipTransferred",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "spender",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Approval",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "from",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event"
+            }
+        ],
+        "functions": [
+            {
+                "name": "mintingFinished",
+                "constant": true,
+                "payable": false,
+                "title": "Minting finished",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true no more tokens could be created."
+            },
+            {
+                "name": "name",
+                "constant": true,
+                "payable": false,
+                "title": "Token name",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Human-friendly name of the token."
+            },
+            {
+                "name": "approve",
+                "constant": false,
+                "payable": false,
+                "title": "Approve spending",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address to allow to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allow some amount of your tokens to be spent by specified address."
+            },
+            {
+                "name": "totalSupply",
+                "constant": true,
+                "payable": false,
+                "title": "Total supply",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Current total amount of the token. Specified in the smallest units of the token."
+            },
+            {
+                "name": "transferFrom",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer from",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "From",
+                            "description": "Subtract tokens from this account."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Transfer tokens to this account."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers from one account to another. Account which tokens are transferred has to approve this spending."
+            },
+            {
+                "name": "decimals",
+                "constant": true,
+                "payable": false,
+                "title": "Decimal places",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint8",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allowed digits in fractional part of the token. E.g. decimal places of US dollar is 2."
+            },
+            {
+                "name": "cap",
+                "constant": true,
+                "payable": false,
+                "title": "Maximum tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Maximum number of tokens which could be created. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "unpause",
+                "constant": false,
+                "payable": true,
+                "title": "Enable circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Enables token transfers in case they were paused. Callable only by token owner."
+            },
+            {
+                "name": "mint",
+                "constant": false,
+                "payable": false,
+                "title": "Mint new tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Transfer tokens to this address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Creates new tokens out-of-thin-air and gives them to specified address. Callable only by token owner."
+            },
+            {
+                "name": "burn",
+                "constant": false,
+                "payable": true,
+                "title": "Burn tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Burns specified amount of tokens owned by current account."
+            },
+            {
+                "name": "paused",
+                "constant": true,
+                "payable": false,
+                "title": "Paused",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true any token transfers are disabled."
+            },
+            {
+                "name": "decreaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Decrease approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Decreases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "balanceOf",
+                "constant": true,
+                "payable": false,
+                "title": "Get balance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "balance"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Gets the token balance of any address. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "finishMinting",
+                "constant": false,
+                "payable": false,
+                "title": "Finish minting",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Disables any further token creation via minting. Callable only by token owner."
+            },
+            {
+                "name": "pause",
+                "constant": false,
+                "payable": false,
+                "title": "Pause circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Disable any token transfers. Callable only by token owner."
+            },
+            {
+                "name": "owner",
+                "constant": true,
+                "payable": false,
+                "title": "Owner",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Address of the token owner."
+            },
+            {
+                "name": "symbol",
+                "constant": true,
+                "payable": false,
+                "title": "Token ticker",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Abbreviated name of the token used on exchanges etc."
+            },
+            {
+                "name": "transfer",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Recipient address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers some amount of your tokens to another address."
+            },
+            {
+                "name": "increaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Increase approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Increases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "allowance",
+                "constant": true,
+                "payable": false,
+                "title": "View allowance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of owner",
+                            "description": "Address which allowed to spend his tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of spender",
+                            "description": "Address which was allowed to spend tokens."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "View amount of tokens which some token holder allowed to spend by another address."
+            },
+            {
+                "name": "transferOwnership",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer ownership",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which'll receive ownership rights."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Transfers ownership of the token to another address. Ownership rights are required to perform some administrative operations."
+            }
+        ],
+        "dashboard_functions": [
+            "symbol",
+            "totalSupply"
+        ]
+    },
+    {
+        "instance_id": "5ae1b6fd2a35e200093748d3",
+        "instance_title": "1212121",
+        "network_id": 4,
+        "ctor_id": "5ad9a507672dfe000a7e0a31",
+        "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
+        "abi": [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "mintingFinished",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "rtd",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": true,
+                "stateMutability": "view",
+                "type": "fallback"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "approve",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_from",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transferFrom",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint8"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "cap",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "unpause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "mint",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "burn",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "paused",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_subtractedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "decreaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "finishMinting",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "pause",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transfer",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_addedValue",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "increaseApproval",
+                "outputs": [
+                    {
+                        "name": "success",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    },
+                    {
+                        "name": "_spender",
+                        "type": "address"
+                    }
+                ],
+                "name": "allowance",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "transferOwnership",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "payable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Pause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "Unpause",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "burner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Burn",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Mint",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [],
+                "name": "MintFinished",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "previousOwner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "OwnershipTransferred",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "spender",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Approval",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "from",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "to",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "value",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Transfer",
+                "type": "event"
+            }
+        ],
+        "functions": [
+            {
+                "name": "mintingFinished",
+                "constant": true,
+                "payable": false,
+                "title": "Minting finished",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true no more tokens could be created."
+            },
+            {
+                "name": "name",
+                "constant": true,
+                "payable": false,
+                "title": "Token name",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Human-friendly name of the token."
+            },
+            {
+                "name": "approve",
+                "constant": false,
+                "payable": false,
+                "title": "Approve spending",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address to allow to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allow some amount of your tokens to be spent by specified address."
+            },
+            {
+                "name": "totalSupply",
+                "constant": true,
+                "payable": false,
+                "title": "Total supply",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Current total amount of the token. Specified in the smallest units of the token."
+            },
+            {
+                "name": "transferFrom",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer from",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "From",
+                            "description": "Subtract tokens from this account."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Transfer tokens to this account."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers from one account to another. Account which tokens are transferred has to approve this spending."
+            },
+            {
+                "name": "decimals",
+                "constant": true,
+                "payable": false,
+                "title": "Decimal places",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint8",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Allowed digits in fractional part of the token. E.g. decimal places of US dollar is 2."
+            },
+            {
+                "name": "cap",
+                "constant": true,
+                "payable": false,
+                "title": "Maximum tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Maximum number of tokens which could be created. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "unpause",
+                "constant": false,
+                "payable": true,
+                "title": "Enable circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Enables token transfers in case they were paused. Callable only by token owner."
+            },
+            {
+                "name": "mint",
+                "constant": false,
+                "payable": false,
+                "title": "Mint new tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Transfer tokens to this address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Creates new tokens out-of-thin-air and gives them to specified address. Callable only by token owner."
+            },
+            {
+                "name": "burn",
+                "constant": false,
+                "payable": true,
+                "title": "Burn tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Burns specified amount of tokens owned by current account."
+            },
+            {
+                "name": "paused",
+                "constant": true,
+                "payable": false,
+                "title": "Paused",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "If true any token transfers are disabled."
+            },
+            {
+                "name": "decreaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Decrease approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Decreases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "balanceOf",
+                "constant": true,
+                "payable": false,
+                "title": "Get balance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "balance"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Gets the token balance of any address. Return value is specified in the smallest units of the token."
+            },
+            {
+                "name": "finishMinting",
+                "constant": false,
+                "payable": false,
+                "title": "Finish minting",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Disables any further token creation via minting. Callable only by token owner."
+            },
+            {
+                "name": "pause",
+                "constant": false,
+                "payable": false,
+                "title": "Pause circulation",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Disable any token transfers. Callable only by token owner."
+            },
+            {
+                "name": "owner",
+                "constant": true,
+                "payable": false,
+                "title": "Owner",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Address of the token owner."
+            },
+            {
+                "name": "symbol",
+                "constant": true,
+                "payable": false,
+                "title": "Token ticker",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "string",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Abbreviated name of the token used on exchanges etc."
+            },
+            {
+                "name": "transfer",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer tokens",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "To",
+                            "description": "Recipient address."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Transfers some amount of your tokens to another address."
+            },
+            {
+                "name": "increaseApproval",
+                "constant": false,
+                "payable": false,
+                "title": "Increase approval",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which was allowed to spend tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": "Amount",
+                            "description": "Amount must be specified in the smallest units of the token."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "success"
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "Increases amount of your tokens which are allowed to be spent by specified address."
+            },
+            {
+                "name": "allowance",
+                "constant": true,
+                "payable": false,
+                "title": "View allowance",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of owner",
+                            "description": "Address which allowed to spend his tokens."
+                        },
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address of spender",
+                            "description": "Address which was allowed to spend tokens."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/uint256",
+                            "title": ""
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "description": "View amount of tokens which some token holder allowed to spend by another address."
+            },
+            {
+                "name": "transferOwnership",
+                "constant": false,
+                "payable": false,
+                "title": "Transfer ownership",
+                "inputs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": [
+                        {
+                            "$ref": "#/definitions/address",
+                            "title": "Address",
+                            "description": "Address which'll receive ownership rights."
+                        }
+                    ],
+                    "definitions": {
+                        "address": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+                        },
+                        "addressArray": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/address"
+                            }
+                        },
+                        "unixTime": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 2147483647
+                        },
+                        "fileHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-fA-F]{64}$"
+                        },
+                        "addressMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/address"
+                                },
+                                {}
+                            ]
+                        },
+                        "addressMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addressMappingEntry"
+                            }
+                        },
+                        "uintMappingEntry": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": [
+                                {
+                                    "$ref": "#/definitions/uint"
+                                },
+                                {}
+                            ]
+                        },
+                        "uintMapping": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/uintMappingEntry"
+                            }
+                        },
+                        "uint256": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 78,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "uint": {
+                            "$ref": "#/definitions/uint256"
+                        },
+                        "bytes32": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+                        },
+                        "bytes": {
+                            "type": "string",
+                            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+                        },
+                        "uint8": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "uint16": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        },
+                        "uint32": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4294967295
+                        },
+                        "uint64": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709552000
+                        },
+                        "uint128": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 39,
+                            "pattern": "^[0-9]+$"
+                        },
+                        "ethCount": {
+                            "type": "string",
+                            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        },
+                        "ethCountPositive": {
+                            "type": "string",
+                            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+                        }
+                    }
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Transfers ownership of the token to another address. Ownership rights are required to perform some administrative operations."
+            }
+        ],
+        "dashboard_functions": [
+            "symbol",
             "totalSupply"
         ]
     },

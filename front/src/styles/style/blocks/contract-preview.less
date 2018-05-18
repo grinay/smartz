@@ -1,0 +1,103 @@
+.contract-preview {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  padding: 0;
+  background-image: url("../img/store/contract-wedding.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &:hover {
+    box-shadow: 0 5px 10px -2px rgba(0,0,0,0.1);
+  }
+
+  &:hover .contract-preview__header {
+    color: #EF2654;
+  }
+}
+
+.contract-preview__link {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 430px;
+  padding: 31px 26px 26px 26px;
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 2.85px;
+  background: linear-gradient(90deg, rgba(17,17,17,0.5) 0%, rgba(17,17,17,0) 100%);
+
+  &:focus .contract-preview__header {
+    color: #EF2654;
+  }
+}
+
+.contract-preview__label {
+  display: block;
+  margin-bottom: 7px;
+  font-family: "Cera Pro 700", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: .7;
+}
+
+.contract-preview__header {
+  margin: 0 0 20px 0;
+  font-family: "Cera Pro Black", Arial, sans-serif;
+  font-size: 45px;
+  line-height: 45px;
+}
+
+.contract-preview__description {
+  margin: 0 0 60px 0;
+  font-family: "Cera Pro 500", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.contract-preview__btn {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  width: 150px;
+  margin-top: auto;
+  margin-left: 26px;
+  margin-bottom: 26px;
+  color: #FFFFFF;
+  opacity: 1;
+  box-shadow: inset 3px 3px #FFFFFF,
+              inset -3px -3px #FFFFFF;
+
+  &:hover,
+  &:focus {
+    color: @link-hover;
+    box-shadow: inset 3px 3px @link-hover,
+                inset -3px -3px @link-hover;
+  }
+}
+
+@media (min-width: @screen-lg) {
+  .contract-preview__link {
+    padding: 55px 40px 36px 40px;
+  }
+
+  .contract-preview__header {
+    width: 50%;
+    font-size: 70px;
+    line-height: 68px;
+    letter-spacing: -1px;
+  }
+
+  .contract-preview__description {
+    width: 50%;
+  }
+
+  .contract-preview__btn {
+    margin-left: 40px;
+    margin-bottom: 36px;
+  }
+}

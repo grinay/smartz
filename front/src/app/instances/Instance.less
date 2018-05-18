@@ -1,0 +1,159 @@
+@import '../../styles/variables.less';
+
+
+.contract-controls__wallet-key::before {
+    background-image: url(./i/key.svg);
+}
+
+.form-title {
+    margin-top: 53px;
+    padding: 25px;
+
+    border-radius: 8px;
+    background-color: #FFFFFF;
+
+    .form-title__img {
+        width: 50px;
+        height: 50px;
+
+        border-radius: 8px;
+    }
+
+    .form-title__title {
+        flex: 1;
+
+        padding-left: 15px;
+        h2 {
+            margin: 0 0 6px 0;
+
+            color: rgba(23,23,24,1);
+
+            font-family: @f-cera-pro-black;
+            font-size: 32px;
+            line-height: 30px;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+}
+
+.page-main--running-contract {
+    position: relative;
+
+    width: 70%;
+    margin: 0 auto;
+    padding-top: 40px;
+
+    .page-main__link {
+        position: absolute;
+        top: 40px;
+        left: 15px;
+
+        display: block;
+
+        text-decoration: none;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+        color: @interactive-element-color;
+
+        font-family: 'Cera Pro 700', Arial, sans-serif;
+        font-size: 13px;
+        line-height: 15px;
+    }
+
+    .page-main__icon {
+        fill: @interactive-element-color;
+    }
+
+    .page-main__link:hover, .page-main__link:focus {
+        color: @link-hover;
+    }
+
+    .page-main__link:hover .page-main__icon, .page-main__link:focus .page-main__icon {
+        fill: @link-hover;
+    }
+
+    .contract-functions {
+        margin: 20px 0;
+        padding: 25px;
+
+        border-radius: 8px;
+        background-color: #FFFFFF;
+    }
+}
+
+@media (min-width: 1000px) {
+    // .block-half .contract-functions {
+    //     display: block;
+    // }
+}
+
+
+
+.transactions .transactions__header {
+    font-family: 'Cera Pro 700';
+    font-size: 15px;
+}
+
+.transactions > div {
+    margin-bottom: 20px;
+    padding: 0 10px;
+    padding: 10px 0;
+
+    background: #F2F3F7;
+}
+
+.transactions > div ul {
+    flex-grow: 1;
+
+    margin: 0;
+    padding: 0 0 0 20px;
+
+    list-style: none;
+}
+
+.transactions .spinner {
+    padding: 10px 0;
+}
+
+.transactions .spinner img {
+    height: 80px;
+}
+
+.transactions .func-name, .transactions .tx-result {
+    font-family: 'Cera Pro 700';
+}
+
+.transactions .tx-link {
+    font-size: 90%;
+}
+
+.transactions .tx-params {
+    padding: 8px 0;
+}
+
+.transactions .support-block__paragraph {
+    margin: 0;
+
+    font-size: 12px;
+}
+
+.contract-controls__wrapper .table__inner {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    max-width: 280px;
+}
+
+@media (min-width: 600px) {
+    .contract-controls__wrapper .table__inner {
+        max-width: 500px;
+    }
+}
+
+.contract-controls__wrapper .table__inner a {
+    font-size: 18px;
+}

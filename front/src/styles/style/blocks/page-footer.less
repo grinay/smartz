@@ -1,0 +1,190 @@
+.page-footer {
+  padding: 70px 17px 25px 21px;
+  font-family: "Cera Pro 500", Arial, sans-serif;
+}
+
+.page-footer__wrapper:first-of-type {
+  padding-top: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 -1px #CCCCCC;
+}
+
+.page-footer__logo {
+  margin: 0 0 40px 0;
+  font-family: "Cera Pro 100", Arial, sans-serif;
+  font-size: 35px;
+  line-height: 42px;
+}
+
+.page-footer__block {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.page-footer__section {
+  margin-bottom: 30px;
+
+  &--store {
+    order: 1;
+  }
+
+  &--contracts {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  &--support {
+    order: 2;
+    margin-left: 80px;
+  }
+
+  &--social {
+    order: 4;
+    flex-basis: 100%;
+
+    .page-footer__item:first-of-type {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.page-footer__header {
+  margin-top: 0;
+  font-size: 18px;
+  line-height: 22px;
+  opacity: .8;
+}
+
+.page-footer__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.page-footer__link {
+  font-size: 15px;
+  line-height: 31px;
+  color: #000000;
+  text-decoration: none;
+  opacity: .5;
+
+  &[href]:hover,
+  &[href]:focus {
+    color: @link-hover;
+    opacity: 1;
+  }
+}
+
+.page-footer__info {
+  line-height: 15px;
+}
+
+.page-footer__copyright {
+  margin-bottom: 7px;
+
+  span {
+    line-height: 15px;
+    opacity: .5;
+  }
+
+  a {
+    color: inherit;
+    line-height: 15px;
+    opacity: .5;
+
+    &:hover,
+    &:focus {
+      color: @link-hover;
+      opacity: 1;
+    }
+  }
+}
+
+.page-footer__address {
+  font-style: normal;
+  span {
+    opacity: .5;
+  }
+
+  a {
+    color: #000000;
+    opacity: .5;
+
+    &:hover,
+    &:focus {
+      color: @link-hover;
+      opacity: 1;
+    }
+  }
+}
+
+@media (min-width: @screen-md) {
+  .page-footer {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  .page-footer__section--support {
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: @screen-lg) {
+  .page-footer {
+    padding: 83px 50px 25px 50px;
+  }
+
+  .page-footer__wrapper:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 60px;
+    margin-bottom: 120px;
+  }
+
+  .page-footer__logo {
+    margin: 0;
+    font-size: 54px;
+    line-height: 54px;
+  }
+
+  .page-footer__block {
+    justify-content: space-between;
+    width: 75%;
+    padding-top: 10px;
+  }
+
+  .page-footer__section {
+    margin-bottom: 0;
+
+    &--store {
+      order: 1;
+    }
+
+    &--contracts {
+      order: 2;
+      flex-basis: auto;
+    }
+
+    &--support {
+      order: 3;
+      margin: 0;
+    }
+
+    &--social {
+      order: 4;
+      flex-basis: auto;
+
+      .page-footer__header {
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  .page-footer__header {
+    margin-bottom: 25px;
+  }
+
+  .page-footer__info {
+    width: 400px;
+  }
+}
