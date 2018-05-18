@@ -7,6 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CaseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const Dotenv = require('dotenv-webpack');
 const { getIfUtils, removeEmpty, propIf } = require('webpack-config-utils');
 
 const PORT = 3000;
@@ -229,7 +230,14 @@ module.exports = (env) => {
       // удаляет лишние локали из библиотеки moment - очень облегчает сборку
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // определение переменных для среды (доступны в коде)
-      new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(env) }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(env)
+      }),
+      new Dotenv({
+        path: './config/.env.local',
+        // load '.env.example' to verify the '.env' variables are all set.
+        safe: './config/.env.example',
+      }),
       // копирование папок и файлов
       new CopyWebpackPlugin([
         {
@@ -247,7 +255,10 @@ module.exports = (env) => {
           to: 'static/media/favicons',
           toType: 'dir'
         },
-      ], { debug: 'info' })
+      ],
+        {
+          debug: 'info'
+        })
     ])
   })
 }

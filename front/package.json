@@ -2,6 +2,10 @@
   "name": "Smart-contract-constructors-marketplace-front-end",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "./node_modules/.bin/webpack-dev-server -d --progress --inline --env=development",
+    "build": "./node_modules/.bin/webpack -p --progress --colors --env=production"
+  },
   "devDependencies": {
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
@@ -46,6 +50,7 @@
     "axios-mock-adapter": "^1.15.0",
     "classnames": "^2.2.5",
     "dateformat": "^3.0.3",
+    "dotenv-webpack": "^1.5.5",
     "ethjs": "^0.3.1",
     "ethjs-contract": "^0.1.9",
     "ethjs-query": "^0.3.2",
@@ -62,9 +67,5 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"
-  },
-  "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server -d --progress --inline --env=development",
-    "build": "./node_modules/.bin/webpack -p --progress --colors --env=production"
   }
 }
