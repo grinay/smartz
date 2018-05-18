@@ -18,7 +18,7 @@ export const processControlForm = (
   const transactionParameters = {
     // value: ???,     // amount of ether to send with
     // gas: ???,       // amount of gas
-    gasPrice: 5e9
+    gasPrice: 5e9,
   };
 
   // converts user input to web3-compatible value
@@ -59,10 +59,10 @@ export const processControlForm = (
     }
 
     try {
-      result = web3.eth
-        .contract(contract_abi)
-        .at(contract_address)
-      // .sendTransaction({ ...transactionParameters, value }, callback)
+      result = web3.eth.sendTransaction({
+        ...transactionParameters,
+        value, to: contract_address
+      }, callback)
     } catch (e) {
       console.error(e);
     }
@@ -78,7 +78,7 @@ export const processControlForm = (
   if (!function_abi)
     throw new Error('not found abi of function ' + function_spec.name);
 
-  // get then delete 'Value'(ethCount) prop from form_data
+  // get then delete 'Ether amount'(ethCount) prop from form_data
   let form_data_arr = [], value = '';
   if (form_data.length > 0 && function_spec.payable) {
     // always last element in arr
@@ -275,7 +275,6 @@ export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
  *
  * @param contractInstance
  * @param log
- * @returns {{params: {}, name: string}}
  */
 export const decodeEventOfInstance = (contractInstance, log) => {
   const abi = contractInstance.abi;
@@ -295,8 +294,17 @@ export const decodeEventOfInstance = (contractInstance, log) => {
     }
   }
 
+  if (!eventAbi) {
+    return false;
+  }
 
-  const decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
+  let decodedEvent;
+
+  try {
+    decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
+  } catch (e) {
+    return false;
+  }
   let event = {
     params: {},
     name: decodedEvent._eventName

@@ -64,6 +64,10 @@ class Transaction extends Component {
               {result.logs.map((log, i) => {
                 let event = decodeEventOfInstance(contractInstance, log);
 
+                if (!event) {
+                  return ''
+                }
+
                 return (
                   <div key={i}>
                     {event.name} ({Object.keys(event.params).map(key => `${key}=${event.params[key]}`).join(', ')})

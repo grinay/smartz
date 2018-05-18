@@ -44,12 +44,11 @@ class Header extends Component {
                 Dashboard
               </Link>
             </li>
-            <li className={`main-navigation__item ${location.pathname === '/docs' ? 'active' : ''}`}>
-              <Link
-                to="/docs"
-                className="main-navigation__link flex">
-                Docs
-              </Link>
+            <li className="main-navigation__item">
+              {/* <Link to="/docs" className="main-navigation__link"> */}
+              {/* Docs */}
+              <a href="https://wiki.smartz.io/" className="main-navigation__link flex">Docs</a>
+              {/* </Link> */}
             </li>
             <li className={`main-navigation__item`}>
               <a

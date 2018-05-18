@@ -46,7 +46,7 @@ class Deploy extends PureComponent {
         address: contractAddress,
         network_id: Number.parseInt(netId, 10),
         public_access: publicAccess,
-      }
+      };
 
       api.updateInstance(instance.instance_id, data);
     }

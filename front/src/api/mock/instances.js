@@ -498,6 +498,28 @@ export const instanceList = [
         ],
         "functions": [
             {
+                "name": "",
+                "title": "Send ether to contract (fallback)",
+                "constant": false,
+                "payable": true,
+                "inputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "outputs": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                },
+                "description": "Send ether to contract (fallback description)",
+                "sorting_order": 1,
+                "payable_details": {
+                    "title": "Ether amount (custom)",
+                    "description": "This ether amount will be sent to the contract (custom)"
+                }
+            },
+            {
                 "name": "mintingFinished",
                 "constant": true,
                 "payable": false,
@@ -1659,7 +1681,11 @@ export const instanceList = [
                     "minItems": 0,
                     "maxItems": 0
                 },
-                "description": "Enables token transfers in case they were paused. Callable only by token owner."
+                "description": "Enables token transfers in case they were paused. Callable only by token owner.",
+                "payable_details": {
+                    "title": "Ether 111",
+                    "description": "This ether 222"
+                }
             },
             {
                 "name": "mint",
@@ -23658,7 +23684,7 @@ export const instanceList = [
             "symbol",
             "totalSupply"
         ]
-    }
+    },
 ]
 
 // error deploy step 1. Server validating

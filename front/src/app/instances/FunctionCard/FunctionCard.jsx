@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Form from 'react-jsonschema-form';
 import { find } from 'lodash';
 
@@ -10,7 +10,7 @@ import FormWidgets from '../../common/form-widgets/FormWidgets';
 
 import './FunctionCard.less';
 
-class FunctionCard extends Component {
+class FunctionCard extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
@@ -58,12 +58,32 @@ class FunctionCard extends Component {
     const { func } = this.props;
     if (!func) return null;
 
-    // add field 'Value' in schema
+    // add field for ethCount in schema
     if (func.payable) {
+
+      // if function is 'default function'
+      if (func.name === '') {
+        func.type = 'fallback';
+        func.title = func.title ? func.title : 'Send ether';
+        func.description = func.description
+          ? func.description
+          : 'Send ether to contract';
+      }
+
       if (func.inputs.items === undefined)
         func.inputs.items = [];
 
-      const existValue = find(func.inputs.items, { title: "Value" });
+      const payableTitle = (func.payable_details && func.payable_details.title)
+        ? func.payable_details.title
+        : 'Ether amount';
+
+      const payableDescription = (func.payable_details && func.payable_details.description)
+        ? func.payable_details.description
+        : func.name === '' // if 'default function'
+          ? 'This ether amount will be sent to the contract'
+          : 'This ether amount will be sent with the function call';
+
+      const existValue = find(func.inputs.items, { title: payableTitle });
 
       if (!existValue) {
         func.inputs.minItems += 1;
@@ -74,8 +94,8 @@ class FunctionCard extends Component {
           "minLength": 1,
           "maxLength": 78,
           "pattern": "^[0-9]+$",
-          "title": "Value",
-          "description": "Some value",
+          "title": payableTitle,
+          "description": payableDescription,
           "ui:widget": "ethCount"
         });
       }
@@ -98,6 +118,9 @@ class FunctionCard extends Component {
         if (typeof input === 'object' && 'ui:widget' in input) {
           item = {
             'ui:widget': input['ui:widget']
+          };
+          if ('ui:options' in input) {
+            item['ui:options'] = input['ui:options'];
           }
         }
         uiSchema.items.push(item)
@@ -115,7 +138,7 @@ class FunctionCard extends Component {
 
         <h3 className="form-block__header">
           {func.title || func.name}
-          {(func.title && (func.title !== func.name)) &&
+          {(func.title && func.name && (func.title !== func.name)) &&
             <span> ({func.name})</span>
           }
         </h3>

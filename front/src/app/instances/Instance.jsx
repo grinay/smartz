@@ -21,9 +21,11 @@ class Instance extends Component {
     super(props);
 
     const { instance } = this.props;
-    const funcActive = find(instance.functions, f => (
-      f.inputs.minItems !== 0 || !f.constant
-    ));
+    const funcActive = instance
+      ? find(instance.functions, f => (
+        f.inputs.minItems !== 0 || !f.constant
+      ))
+      : undefined;
 
     this.state = {
       updateCycleActive: false,
@@ -32,35 +34,27 @@ class Instance extends Component {
   }
 
   componentWillMount() {
-    api.getConstructors();
-    api.getInstances();
+    api.getInstance(this.props.match.params.id);
   }
 
   componentDidUpdate() {
     // TODO: refactor this shit
-    const { instance, ctor, metamaskStatus } = this.props;
+    const { instance, metamaskStatus } = this.props;
 
-    if (instance && ctor && !this.state.updateCycleActive) {
+    if (instance && !this.state.updateCycleActive) {
       if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
         return null;
       }
       this.getConstants();
     }
-    /*
-    const {instance, ctor} = this.props;
 
-    if (instance && ctor && !this.state.updateCycleActive) {
-      this.setState({
-        updateCycleActive: true
-      });
-      this.getConstants();
-      setInterval(this.getConstants.bind(this), 60000);
-    }
-    */
   }
 
   getConstants() {
     const { instance, viewFuncResult } = this.props;
+    if (!instance) {
+      return;
+    }
 
     instance.functions.forEach(func => {
       if (func.constant && func.inputs.minItems === 0) {
@@ -81,6 +75,10 @@ class Instance extends Component {
 
   getFunctionsByType(instance, type) {
     const result = [];
+    if (!instance) {
+      return result;
+    }
+
     instance.functions && instance.functions.forEach(func => {
       switch (type) {
         case 'view':
@@ -102,9 +100,9 @@ class Instance extends Component {
   }
 
   render() {
-    const { metamaskStatus, instance, ctor } = this.props;
+    const { metamaskStatus, instance, instanceError } = this.props;
 
-    if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
+    if (metamaskStatus !== 'okMetamask') {
       return (
         <div className="container">
           <Alert standardAlert={metamaskStatus} />
@@ -137,34 +135,11 @@ class Instance extends Component {
       ? writeFunctions.map((func, i) => (
         <FunctionButton
           key={i}
-          title={func.title}
+          title={func.title || 'Send ether'}
           onClick={() => this.setState({ funcActive: func })}
         />
       ))
       : [];
-
-    // add 'default function' - "send ether"
-    let defaultFunctionElement = null;
-    if (instance.abi && instance.abi.length > 0) {
-      const fallback = find(instance.abi, { type: 'fallback' })
-      defaultFunctionElement = fallback !== undefined
-        ? <FunctionButton
-          key={fallback.name}
-          title={'Send ether'}
-          onClick={() => this.setState({
-            funcActive: {
-              ...fallback,
-              title: 'Send ether',
-              inputs: {
-                "type": "array",
-                "minItems": 0,
-                "maxItems": 0
-              }
-            }
-          })}
-        />
-        : null;
-    }
 
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">
@@ -224,7 +199,7 @@ class Instance extends Component {
           </aside>
         }
 
-        {ctor && instance &&
+        {instance &&
           <section className="block  contract-controls">
             <h2 className="block__header">
               {instance.instance_title}
@@ -285,7 +260,7 @@ class Instance extends Component {
 
                   <ul className="contract-controls__list">
                     {writeFunctionsElements}
-                    {defaultFunctionElement}
+                    {/* {defaultFunctionElement} */}
                   </ul>
                 </div>
               }

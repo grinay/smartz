@@ -23,10 +23,11 @@ case "$ENVIRONMENT" in
                 ;;
 esac
 
+source .venv/bin/activate
+python manage.py collectstatic --noinput --clear
+
 chown -R uwsgi:uwsgi /app
 
-# https://uwsgi.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
-# https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/uwsgi/
 exec /usr/sbin/uwsgi \
 --uid uwsgi --gid uwsgi \
 --socket /app/sock/backend \

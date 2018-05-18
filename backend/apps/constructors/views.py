@@ -1,32 +1,26 @@
 import base64
 import os
 import re
-import sys
 import json
 import tempfile
+from decimal import Decimal
 from shutil import copy2
 
 from django.conf import settings
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import View
 
-from pymongo import MongoClient
-from bson.objectid import ObjectId
 from jsonschema.validators import validator_for
 
+from apps.constructors.models import Constructor
+from apps.contracts.models import Contract
 from utils.common import auth, nonempty, args_string
 from utils.responses import  error_response, engine_error_response
 from constructor_engine.engine import SimpleStorageEngine
 from smartz.json_schema import load_schema, add_definitions
-
-# FIXME (make good connect to db)
-db = MongoClient(settings.SMARTZ_MONGO_HOST).sc_ctors_db
-
-
-def _ctor_id(id):
-    return id.binary.hex()
 
 
 def _process_ctor_schema(schema):
@@ -36,29 +30,23 @@ def _process_ctor_schema(schema):
 class ListView(View):
 
     def get(self, request, *args, **kwargs):
-        constructors_table = db.ctors
-
-        user_id = auth(request, db)
+        user_id = auth(request)
         if isinstance(user_id, HttpResponse):  # todo
-            query_filter = {"is_public": True}
+            constructors_objects = Constructor.objects.filter(is_public=True)
         else:
-            query_filter = {
-                "$or": [
-                    {"is_public": True},
-                    {"user_id": user_id}
-                ]
-            }
+            constructors_objects = Constructor.objects.filter(Q(is_public=True) | Q(auth0_user_id=user_id))
 
         constructors = []
-        for ctor in constructors_table.find(query_filter):
+        for constructor in constructors_objects:
             constructors.append(
                 {
-                    'ctor_id': _ctor_id(ctor['_id']),
-                    'ctor_name': ctor['ctor_name'],
-                    'price_eth': ctor.get('price_eth', .0),
-                    'ctor_descr': ctor['ctor_descr'] if 'ctor_descr' in ctor else '',
-                    'is_public': ctor['is_public'] if 'is_public' in ctor else True,
-                    'user_id': ctor['user_id'] if 'user_id' in ctor else '',
+                    'ctor_id': constructor.slug,
+                    'ctor_name': constructor.name,
+                    'price_eth': constructor.get_formatted_price_eth(),
+                    'ctor_descr': constructor.description,
+                    'is_public': constructor.is_public,
+                    'user_id': constructor.auth0_user_id,
+                    'image': constructor.image
                 }
             )
 
@@ -69,11 +57,10 @@ class ListView(View):
 class UploadView(View):
 
     def post(self, request):
-        ctors = db.ctors
         constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
         args = request.data
 
-        price_eth = float(args.get('price_eth', 0))
+        price_eth = str(args.get('price_eth', 0))
 
         if 'payment_address' in args:
             if not re.findall('^0x[0-9a-fA-F]{40}$', args['payment_address']):
@@ -81,10 +68,10 @@ class UploadView(View):
         else:
             args['payment_address'] = ''
 
-        if price_eth and not args['payment_address']:
+        if float(price_eth) and not args['payment_address']:
             return error_response("Payment address must be specified with price >0")
 
-        user_id = auth(request, db)
+        user_id = auth(request)
         if isinstance(user_id, HttpResponse):
             return user_id  # error
 
@@ -92,25 +79,22 @@ class UploadView(View):
         descr = nonempty(args_string(args, 'ctor_descr')) if 'ctor_descr' in args else ''
         filename = tempfile.mktemp('ctor')
 
-        current_constructor = {}
-        # todo remake in pg
         if 'constructor_id' in args:
-            res = [c for c in ctors.find() if _ctor_id(c['_id']) == args['constructor_id']]
-            if len(res):
-                current_constructor = res.pop()
-            else:
+            try:
+                current_constructor = Constructor.objects.get(slug=args['constructor_id'])
+            except Constructor.DoesNotExist:
                 return error_response('Constructor does not exists')
 
-            if current_constructor['user_id'] != user_id:
+            if current_constructor.auth0_user_id != user_id:
                 return error_response('Access denied')
 
-        same_named_constructors = list(ctors.find({'ctor_name': name}))
-        if 'constructor_id' in args:
-            if len([c for c in same_named_constructors if _ctor_id(c['_id']) != args['constructor_id']]):
+            if Constructor.objects.filter(name=name).exclude(slug=args['constructor_id']).exists():
                 return error_response('Constructor with this name already exists')
         else:
-            if len(same_named_constructors):
+            if Constructor.objects.filter(name=name).exists():
                 return error_response('Constructor with this name already exists')
+
+            current_constructor = Constructor.create()
 
         if 'ctor_file_name' in args:
             uploaded_filename = args['ctor_file_name']
@@ -137,30 +121,20 @@ class UploadView(View):
         else:
             return error_response("Invalid input")
 
-        if price_eth:
+        if float(price_eth):
             with open(filename) as f:
                 if not '%payment_code%' in f.read(): # todo check on deploy in source of contract?
                     return error_response("Payment code must be in contract constructor")
 
-        record = {
-            'ctor_name': name,
-            'ctor_descr': descr,
-            'payment_address': args['payment_address'],
-            'price_eth': float(args['price_eth']) if 'price_eth' in args else .0,
-            'is_public': is_public,
-            'user_id': user_id
-        }
+        current_constructor.name = name
+        current_constructor.description = descr
+        current_constructor.payment_address = args['payment_address']
+        current_constructor.price_eth = Decimal(price_eth)
+        current_constructor.is_public = is_public
+        current_constructor.auth0_user_id = user_id
+        current_constructor.save()
 
-        if 'constructor_id' in args:
-            ctors.replace_one(
-                {'_id': current_constructor['_id']},
-                record
-            )
-            constructor_engine_instance.register_new_ctor(_ctor_id(current_constructor['_id']), filename)
-        else:
-            ctor_id = ctors.insert_one(record).inserted_id
-
-            constructor_engine_instance.register_new_ctor(_ctor_id(ctor_id), filename)
+        constructor_engine_instance.register_new_ctor(current_constructor.slug, filename)
 
         return JsonResponse({'ok': True})
 
@@ -168,11 +142,9 @@ class UploadView(View):
 class GetParamsView(View):
 
     def get(self, request, constructor_id):
-        constructors_db = db.ctors
-
-        # [TODO]  - move to get_constructor()
-        constructor = constructors_db.find_one({'_id': ObjectId(constructor_id)})
-        if constructor is None:
+        try:
+            constructor = Constructor.objects.get(slug=constructor_id)
+        except Constructor.DoesNotExist:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
         constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
@@ -183,11 +155,12 @@ class GetParamsView(View):
         ui_schema = constructor_params.get('ui_schema', {})
 
         return JsonResponse({
-            'ctor_name': constructor['ctor_name'],
-            'ctor_descr': constructor['ctor_descr'] if 'ctor_descr' in constructor else '',
-            'price_eth': constructor.get('price_eth', .0),
+            'ctor_name': constructor.name,
+            'ctor_descr': constructor.description,
+            'price_eth': constructor.get_formatted_price_eth(),
             'schema': _process_ctor_schema(constructor_params['schema']),
             'ui_schema': ui_schema,
+            'image': constructor.image
         })
 
 
@@ -195,9 +168,6 @@ class GetParamsView(View):
 class ConstructView(View):
 
     def post(self, request, constructor_id):
-        constructors_db = db.ctors
-        instances_db = db.instances
-
         # parsed input data POST JSON payload
         args = request.data
 
@@ -207,20 +177,19 @@ class ConstructView(View):
         if fields is None:
             return error_response("Constructor({}), empty fields passed to constructor".format(constructor_id))
 
-        # [TODO]  - move to get_constructor()
-        constructor = constructors_db.find_one({'_id': ObjectId(constructor_id)})
-        if constructor is None:
+        try:
+            constructor = Constructor.objects.get(slug=constructor_id)
+        except Constructor.DoesNotExist:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
-        user_id = auth(request, db)
+
+        user_id = auth(request)
         if isinstance(user_id, HttpResponse):
             return error_response("Wrong 'user_id' param")
 
         instance_title = args.get('instance_title')
         if not instance_title or not isinstance(instance_title, str):
             return error_response("Wrong 'instance_title' param")
-
-        price_eth = constructor.get('price_eth', .0)
 
         constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
         constructor_params = constructor_engine_instance.get_ctor_params(constructor_id)
@@ -256,23 +225,21 @@ class ConstructView(View):
         if 'error' == result['result']:
             return engine_error_response(result)
 
-        # success
-        instance_id = instances_db.insert_one(
-            {
-                'abi': json.dumps(result['abi']),
-                'source': result['source'],
-                'bin': result['bin'],
-                'function_specs': json.dumps(result['function_specs']),
-                'dashboard_functions': result['dashboard_functions'],
-                'ctor_id': constructor_id,
-                'instance_title': instance_title,
-                'user_id': user_id
-            }
-        ).inserted_id
+
+        contract = Contract.create()
+        contract.title = instance_title
+        contract.abi = json.dumps(result['abi'])
+        contract.source = result['source']
+        contract.binary = result['bin']
+        contract.function_specs = json.dumps(result['function_specs'])
+        contract.dashboard_functions = json.dumps(result['dashboard_functions'])
+        contract.constructor = constructor
+        contract.auth0_user_id = user_id
+        contract.save()
 
         return JsonResponse({
-            'instance_id': _ctor_id(instance_id),
+            'instance_id': contract.slug,
             'bin': result['bin'],
             'source': result['source'],
-            'price_eth': price_eth
+            'price_eth': constructor.get_formatted_price_eth()
         })
