@@ -46,6 +46,7 @@ class ListView(View):
                     'ctor_descr': constructor.description,
                     'is_public': constructor.is_public,
                     'user_id': constructor.user_id,
+                    'image': constructor.image
                 }
             )
 
@@ -159,6 +160,7 @@ class GetParamsView(View):
             'price_eth': constructor.get_formatted_price_eth(),
             'schema': _process_ctor_schema(constructor_params['schema']),
             'ui_schema': ui_schema,
+            'image': constructor.image
         })
 
 

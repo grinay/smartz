@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getNetworkName, getNetworkEtherscanAddress } from '../helpers/eth';
 import Spinner from '../common/Spinner';
 
-class DeployStep3 extends Component {
+class DeployStep3 extends PureComponent {
   componentWillMount() {
     window.scrollTo(0, 0);
   }
@@ -17,7 +17,7 @@ class DeployStep3 extends Component {
         {(status === 'transaction_sent' || status === 'transaction_mined') &&
           <p className="support-block__paragraph">
             Deploy transaction has been sent to network:<br />
-            <a href={getNetworkEtherscanAddress(netId) + '/tx/' + txHash}>{txHash}</a>
+            <a href={getNetworkEtherscanAddress(netId) + '/tx/' + txHash} target="_blank" rel="noopener noreferrer">{txHash}</a>
           </p>
         }
 
@@ -29,7 +29,7 @@ class DeployStep3 extends Component {
           <div>
             <p className="support-block__paragraph">
               Congratulations! Your contract is deployed to {getNetworkName(netId)} blockchain!<br />
-              Contract address is <a href={getNetworkEtherscanAddress(netId) + '/address/' + contractAddress}>{contractAddress}</a>.
+              Contract address is <a href={getNetworkEtherscanAddress(netId) + '/address/' + contractAddress} target="_blank" rel="noopener noreferrer">{contractAddress}</a>.
             </p>
             <p className="support-block__paragraph">
               Now you can <Link to={`/instance/${instance.instance_id}`}>manage your contract</Link> with Smartz Platform!

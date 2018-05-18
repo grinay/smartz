@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import * as api from '../api/apiRequests';
 import { transformObj2Flat } from '../helpers/normalize';
@@ -13,7 +13,7 @@ import './Deploy.css';
 
 // TODO: refactor this file totally
 
-class Deploy extends Component {
+class Deploy extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -45,15 +45,15 @@ class Deploy extends Component {
         address: contractAddress,
         network_id: Number.parseInt(netId, 10),
         public_access: publicAccess,
-      }
+      };
 
-      api.updateInstance(instance.instance_id, data)
+      api.updateInstance(instance.instance_id, data);
     }
   }
 
   render() {
     const { metamaskStatus } = this.props;
-    if (metamaskStatus) return (
+    if (metamaskStatus !== 'okMetamask') return (
       <div className="container">
         <Alert standardAlert={metamaskStatus} />
       </div>

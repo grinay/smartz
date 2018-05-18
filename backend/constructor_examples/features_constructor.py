@@ -1,5 +1,4 @@
 import time
-
 from smartz.api.constructor_engine import ConstructorInstance
 
 
@@ -52,6 +51,14 @@ class Constructor(ConstructorInstance):
                     ]
                 },
 
+
+
+                "address": {
+                    "title": "Address",
+                    "description": "See for more definitions https://github.com/smartzplatform/SDK/blob/master/json-schema/ethereum-sc.json",
+                    "$ref": "#/definitions/address"
+                },
+
                 "number": {
                     "title": "Float field",
                     "description": "from 2 to 100 inclusive",
@@ -85,12 +92,6 @@ class Constructor(ConstructorInstance):
                     "$ref": "#/definitions/unixTime"
                 },
 
-                "address": {
-                    "title": "Address",
-                    "description": "See for more definitions https://github.com/smartzplatform/SDK/blob/master/json-schema/ethereum-sc.json",
-                    "$ref": "#/definitions/address"
-                },
-
                 "fileHash": {
                     "title": "File hash",
                     "description": "Just upload file, hash (keccak256) of it will be sent",
@@ -100,6 +101,12 @@ class Constructor(ConstructorInstance):
                 "stringHash": {
                     "title": "String hash",
                     "description": "Just type text, hash (keccak256) of it will be sent",
+                    "$ref": "#/definitions/hash"
+                },
+
+                "stringHashSha256": {
+                    "title": "String hash (sha256)",
+                    "description": "Just type text, hash (sha256) of it will be sent",
                     "$ref": "#/definitions/hash"
                 },
 
@@ -125,6 +132,12 @@ class Constructor(ConstructorInstance):
             },
             "stringHash": {
                 "ui:widget": "stringHash",
+            },
+            "stringHashSha256": {
+                "ui:widget": "stringHash",
+                "ui:options": {
+                    "algorithm": "sha256"
+                }
             },
         }
 
@@ -213,7 +226,7 @@ class Constructor(ConstructorInstance):
                 'description': 'In variable in smart contract it stored in wei',
                 'ui:widget': 'ethCount',
                 'ui:widget_options': {
-                    'show_currency': 'USD'
+                    'show_currency': 'EUR'
                 },
                 'sorting_order': 50
             },
@@ -258,13 +271,22 @@ class Constructor(ConstructorInstance):
 
             '': {
                 'title': 'Send ether to contract (fallback)',
-                'sorting_order': 1
+                'description': 'Send ether to contract (fallback description)',
+                'sorting_order': 1,
+                'payable_details': {
+                    'title': 'Ether amount (custom)',
+                    'description': 'This ether amount will be sent to the contract (custom)'
+                }
             },
 
             'sendEther': {
                 'title': 'Send ether to contract',
                 'description': 'Payable function. Ether amount can be set',
-                'sorting_order': 200
+                'sorting_order': 200,
+                'payable_details': {
+                    'title': 'Ether amount (custom)',
+                    'description': 'This ether amount will be sent with the function call (custom)'
+                }
             },
         }
 

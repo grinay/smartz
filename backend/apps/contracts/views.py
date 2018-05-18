@@ -23,7 +23,12 @@ def _prepare_instance_details(contract: Contract):
         "address": contract.address,
         "abi": json.loads(contract.abi),
         "functions": json.loads(contract.function_specs),
-        "dashboard_functions": json.loads(contract.dashboard_functions)
+        "dashboard_functions": json.loads(contract.dashboard_functions),
+        "constructor": {
+            "name": contract.constructor.name,
+            "description": contract.constructor.description,
+            "image": contract.constructor.image
+        }
     }
     assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
                                 'rpc_calls/get_instance_details/output')

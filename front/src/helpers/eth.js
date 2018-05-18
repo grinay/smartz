@@ -1,86 +1,125 @@
 import React from 'react';
-
-import {decodeEvent} from 'ethjs-abi'
+import { decodeEvent } from 'ethjs-abi'
 
 export var web3 = window.Web3
   ? new window.Web3(window.web3.currentProvider)
   : undefined;
 
-export const processControlForm = (contract_abi /* abi array */, function_spec /* ETHFunctionSpec */,
-                            form_data /* data from react-jsonschema-form */,
-                            contract_address, callback) => {
+export const processControlForm = (
+  contract_abi /* abi array */,
+  function_spec /* ETHFunctionSpec */,
+  form_data /* data from react-jsonschema-form */,
+  contract_address,
+  callback
+) => {
+  // preparing args
 
-    // preparing args
 
-    // converts user input to web3-compatible value
-    function input2ethereum(input, abi_type) {
-        if (abi_type === 'bool')
-            return input ? 1 : 0;
+  const transactionParameters = {
+    // value: ???,     // amount of ether to send with
+    // gas: ???,       // amount of gas
+    gasPrice: 5e9,
+  };
 
-        if (abi_type === 'uint256' || abi_type === 'uint' || abi_type === 'uint128')
-            return new web3.BigNumber(input);
+  // converts user input to web3-compatible value
+  function input2ethereum(input, abi_type) {
+    if (abi_type === 'bool')
+      return input ? 1 : 0;
 
-        if (abi_type === 'uint8' || abi_type === 'uint16' || abi_type === 'uint32' || abi_type === 'uint64')
-            return input * 1;
+    if (abi_type === 'uint256' || abi_type === 'uint' || abi_type === 'uint128')
+      return new web3.BigNumber(input);
 
-        if (abi_type === 'address' || abi_type === 'bytes32' || abi_type === 'bytes' || abi_type === 'string')
-            return input;   // 0x...
+    if (abi_type === 'uint8' || abi_type === 'uint16' || abi_type === 'uint32' || abi_type === 'uint64')
+      return input * 1;
 
-        if (abi_type.endsWith('[]')) {
-            if (!(input instanceof Array))
-                throw new Error('input is not an array');
+    if (abi_type === 'address' || abi_type === 'bytes32' || abi_type === 'bytes' || abi_type === 'string')
+      return input;   // 0x...
 
-            const item_type = abi_type.substr(0, abi_type.length - 2);
-            return input.map(v => input2ethereum(v, item_type));
-        }
+    if (abi_type.endsWith('[]')) {
+      if (!(input instanceof Array))
+        throw new Error('input is not an array');
 
-        throw new Error('type not supported: ' + abi_type);
+      const item_type = abi_type.substr(0, abi_type.length - 2);
+      return input.map(v => input2ethereum(v, item_type));
     }
 
-    if (!(form_data instanceof Array))
-        throw new Error('form_data is not an array');
+    throw new Error('type not supported: ' + abi_type);
+  }
 
-    let function_abi;
-    contract_abi.forEach(info => {
-        if (info.type === "function" && info.name === function_spec.name)
-            function_abi = info;
-    });
-    if (! function_abi)
-        throw new Error('not found abi of function ' + function_spec.name);
+  if (!(form_data instanceof Array))
+    throw new Error('form_data is not an array');
 
-    const args_converted2abi = form_data.map((input, index) => {
-        return input2ethereum(input, function_abi.inputs[index].type);
-    });
+  if (function_spec.type !== undefined && function_spec.type === 'fallback') {
+    let result, value;
 
-
-    // calling/transacting
-
-    const CtorInstance = web3.eth.contract(contract_abi).at(contract_address);
-
-    if (!function_abi.constant) {
-        // non-constant - there will be a transaction instead of a local call
-        args_converted2abi.push({
-            // object with transaction parameters
-            // value: ???,     // amount of ether to send with
-            // gas: ???,       // amount of gas
-            gasPrice: 5e9
-        });
+    if (form_data.length === 1) {
+      value = form_data[0];
+    } else {
+      throw new Error('Incorrect form-data');
     }
 
-    let result;
     try {
-        result = CtorInstance[function_spec.name](...args_converted2abi, callback);
+      result = web3.eth.sendTransaction({
+        ...transactionParameters,
+        value, to: contract_address
+      }, callback)
     } catch (e) {
-        console.warn(e);
+      console.error(e);
     }
 
     return result;
-    /*
-    if (function_abi.constant) {
-        // show in UI
-        result.forEach(v => {l(v)});
-    }
-    */
+  }
+
+  let function_abi;
+  contract_abi.forEach(info => {
+    if (info.type === "function" && info.name === function_spec.name)
+      function_abi = info;
+  });
+  if (!function_abi)
+    throw new Error('not found abi of function ' + function_spec.name);
+
+  // get then delete 'Ether amount'(ethCount) prop from form_data
+  let form_data_arr = [], value = '';
+  if (form_data.length > 0 && function_spec.payable) {
+    // always last element in arr
+    value = form_data[form_data.length - 1];
+    // delete last element
+    form_data_arr = form_data.slice(0, form_data.length - 1);
+  } else {
+    form_data_arr = form_data;
+  }
+
+  const args_converted2abi = form_data_arr.map((input, index) => {
+    return input2ethereum(input, function_abi.inputs[index].type);
+  });
+
+  // calling/transacting
+
+  const CtorInstance = web3.eth.contract(contract_abi).at(contract_address);
+
+  // non-constant - there will be a transaction instead of a local call
+  if (!function_abi.constant) {
+
+    if (value !== '')
+      transactionParameters.value = value;
+
+    args_converted2abi.push(transactionParameters);
+  }
+
+  let result;
+  try {
+    result = CtorInstance[function_spec.name](...args_converted2abi, callback);
+  } catch (e) {
+    console.warn(e);
+  }
+
+  return result;
+  /*
+  if (function_abi.constant) {
+      // show in UI
+      result.forEach(v => {l(v)});
+  }
+  */
 };
 
 
@@ -97,13 +136,13 @@ export const processResult = (res, outputs) => {
         let resultText = '';
 
         for (let i in res) {
-            if (!res.hasOwnProperty(i)) {
-                continue;
-            }
+          if (!res.hasOwnProperty(i)) {
+            continue;
+          }
 
-            resultText += outputs && outputs[i] && outputs[i].title
-                ? `${outputs[i].title}: ${res[i]}\n`
-                : res[[i]] + "\n";
+          resultText += outputs && outputs[i] && outputs[i].title
+            ? `${outputs[i].title}: ${res[i]}\n`
+            : res[[i]] + "\n";
         }
 
         return resultText;
@@ -160,10 +199,12 @@ export const checkMetaMask = () => {
   if (!window.Web3) {
     return 'noMetamask';
   }
+
   if (!web3.eth.accounts[0]) {
     return 'unlockMetamask';
   }
-  return false;
+
+  return 'okMetamask';
 };
 
 export const getTxReceipt = (txHash, cb) => {
@@ -234,41 +275,49 @@ export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
  *
  * @param contractInstance
  * @param log
- * @returns {{params: {}, name: string}}
  */
 export const decodeEventOfInstance = (contractInstance, log) => {
-    const abi = contractInstance.abi;
-    let eventAbi = null;
+  const abi = contractInstance.abi;
+  let eventAbi = null;
 
 
-    for (let i = 0; i < abi.length; i++) {
-        let item = abi[i];
-        if (item.type !== "event") continue;
-        let signature = item.name + "(" + item.inputs.map(function (input) {
-            return input.type;
-        }).join(",") + ")";
-        let hash = web3.sha3(signature);
-        if (hash === log.topics[0]) {
-            eventAbi = item;
-            break;
-        }
+  for (let i = 0; i < abi.length; i++) {
+    let item = abi[i];
+    if (item.type !== "event") continue;
+    let signature = item.name + "(" + item.inputs.map(function (input) {
+      return input.type;
+    }).join(",") + ")";
+    let hash = web3.sha3(signature);
+    if (hash === log.topics[0]) {
+      eventAbi = item;
+      break;
+    }
+  }
+
+  if (!eventAbi) {
+    return false;
+  }
+
+  let decodedEvent;
+
+  try {
+    decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
+  } catch (e) {
+    return false;
+  }
+  let event = {
+    params: {},
+    name: decodedEvent._eventName
+  };
+  for (let prop in decodedEvent) {
+    if (!decodedEvent.hasOwnProperty(prop)) {
+      continue;
     }
 
-
-    const decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
-    let event = {
-        params: {},
-        name: decodedEvent._eventName
-    };
-    for (let prop in decodedEvent) {
-        if (!decodedEvent.hasOwnProperty(prop)) {
-            continue;
-        }
-
-        if (prop!=='_eventName') {
-            event.params[prop] = decodedEvent[prop]
-        }
+    if (prop !== '_eventName') {
+      event.params[prop] = decodedEvent[prop]
     }
+  }
 
-    return event;
+  return event;
 };

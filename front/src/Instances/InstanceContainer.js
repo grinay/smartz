@@ -7,10 +7,10 @@ import { viewFuncResult } from './InstancesActions';
 
 const mapStateToProps = (state, ownProps) => {
   const instance = find(state.instances.instances, { instance_id: ownProps.match.params.id });
-  const ctor = find(state.ctors.ctors, { ctor_id: instance ? instance.ctor_id : -1 });
+
   return {
-    instance: { ...instance },
-    ctor
+    instance: instance,
+    instanceError: state.instances.error,
   };
 };
 

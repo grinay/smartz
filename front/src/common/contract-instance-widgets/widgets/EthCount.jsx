@@ -1,6 +1,8 @@
+import axios from 'axios';
+
 import BaseWidget from "./BaseWidget";
 import { web3 } from "../../../helpers/eth";
-import axios from 'axios';
+import { moneyAbbr2Symbol } from '../../../helpers/localization';
 
 
 export default class EthCount extends BaseWidget {
@@ -11,6 +13,7 @@ export default class EthCount extends BaseWidget {
       fnDescription: props.fnDescription,
       contractInstance: props.contractInstance,
       currency: null,
+      symbol: null,
     }
   }
 
@@ -29,10 +32,11 @@ export default class EthCount extends BaseWidget {
 
         if (status === 200 && Array.isArray(data) && data.length > 0) {
           const priceString = data[0][`price_${showCurrency.toLowerCase()}`];
-          const priceFloat = parseFloat(priceString).toFixed(2);
+          const priceFloat = parseFloat(priceString);
 
           this.setState({
-            currency: `${showCurrency} ${priceFloat}`
+            currency: priceFloat,
+            symbol: `${moneyAbbr2Symbol(showCurrency)}`
           });
         }
       })
@@ -42,10 +46,12 @@ export default class EthCount extends BaseWidget {
   }
 
   render() {
-    const { currency } = this.state;
+    const { currency, symbol } = this.state;
     let res = web3.toBigNumber(this.getResult(0));
     res = res.div(web3.toWei(1, 'ether'));
 
-    return currency === null ? res.valueOf() : `${res.valueOf()} (${currency})`;
+    return currency === null
+      ? res.valueOf()
+      : `${res.valueOf()} (${symbol} ${(currency * res.valueOf()).toFixed(2)})`;
   }
 };

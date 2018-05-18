@@ -75,7 +75,7 @@ export const constructorList = [
 
 export const constructorListProd = [
     {
-        "ctor_id": "5aaa7a76ab3d71000bd0c69c",
+        "ctor_id": "5ad9a4f7672dfe000a7e0a30",
         "ctor_name": "Simple ICO",
         "price_eth": 0,
         "ctor_descr": "Simple and reliable smart contracts system for ICO. You get ERC20 token with custom name and ticker and crowdsale with settable sale period, hardcap and token to Ether rate.",
@@ -83,7 +83,7 @@ export const constructorListProd = [
         "user_id": "facebook|1467280236722219"
     },
     {
-        "ctor_id": "5aaa7a85ab3d71000bd0c69d",
+        "ctor_id": "5ad9a507672dfe000a7e0a31",
         "ctor_name": "ERC20 Token",
         "price_eth": 0,
         "ctor_descr": "Standard ERC20 token with custom name, ticker and optional minting, burning, emission limit, premint and pause functions.",
@@ -91,7 +91,7 @@ export const constructorListProd = [
         "user_id": "facebook|1467280236722219"
     },
     {
-        "ctor_id": "5aaa7aa2ab3d71000bd0c69f",
+        "ctor_id": "5ad9a517672dfe000a7e0a32",
         "ctor_name": "Multisignature Wallet",
         "price_eth": 0,
         "ctor_descr": "Wallet contract to keep your funds under defence of more than one signature. Number of signatures and quorum are adjustable, for example 2/3 or 3/5.",
@@ -99,7 +99,7 @@ export const constructorListProd = [
         "user_id": "facebook|1467280236722219"
     },
     {
-        "ctor_id": "5aaa7aaeab3d71000bd0c6a0",
+        "ctor_id": "5ad9a527672dfe000a7e0a33",
         "ctor_name": "Simple Voting",
         "price_eth": 0,
         "ctor_descr": "Just simple and robust ballot contract. Suitable for fast cooking crypto-protected voting in any organisation.",
@@ -107,15 +107,7 @@ export const constructorListProd = [
         "user_id": "facebook|1467280236722219"
     },
     {
-        "ctor_id": "5abd2628882820000c1ebf56",
-        "ctor_name": "Smartz token",
-        "price_eth": 0.3,
-        "ctor_descr": "ERC20-compatible token with additional features: freezing tokens, burning tokens, approveAndCall function. Used as Smartz platform token.",
-        "is_public": true,
-        "user_id": "facebook|879709678854943"
-    },
-    {
-        "ctor_id": "5ac50d4e34d83a000d115517",
+        "ctor_id": "5ad9a539672dfe000a7e0a34",
         "ctor_name": "Atomic Swap for ERC20",
         "price_eth": 0,
         "ctor_descr": "Two participants can swap tokens for ether or tokens with this simple smart contract.",
@@ -123,15 +115,15 @@ export const constructorListProd = [
         "user_id": "facebook|1467280236722219"
     },
     {
-        "ctor_id": "5ac50d5a34d83a000d115518",
+        "ctor_id": "5ad9a54e672dfe000a7e0a35",
         "ctor_name": "Multitoken",
         "price_eth": 0,
-        "ctor_descr": "In this smart contract you can create a variety of non-standard tokens.",
+        "ctor_descr": "In this smart contract you can create a variety of non-standard tokens",
         "is_public": true,
         "user_id": "facebook|1467280236722219"
     },
     {
-        "ctor_id": "5ada07c94a5ad7000a19d642",
+        "ctor_id": "5ad9a602672dfe000a7e0a36",
         "ctor_name": "Booking",
         "price_eth": 0,
         "ctor_descr": "Contract for the rental of real estate",
@@ -139,7 +131,7 @@ export const constructorListProd = [
         "user_id": "facebook|1467280236722219"
     },
     {
-        "ctor_id": "5ada07d44a5ad7000a19d643",
+        "ctor_id": "5ad9a612672dfe000a7e0a37",
         "ctor_name": "Ledger",
         "price_eth": 0,
         "ctor_descr": "Universal ledger",

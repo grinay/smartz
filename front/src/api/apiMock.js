@@ -1,22 +1,15 @@
-import * as data from './mock/constructors';
+import * as constructors from './mock/constructors';
+import * as instances from './mock/instances';
 
 export default function subscribeMockRequests(mockApi) {
     mockApi
-        .onAny('/constructors').reply(200, data.constructorListProd)
-        .onAny(/\/constructors\/........................\/params/).reply(200, data.ctorAtomicSwap)
-        // .onAny(/\/constructors\/........................\/params/).reply(200, data.ctorCustom)
-        .onAny(/\/constructors\/........................\/construct/).reply(200, {
-            // result: 'error',
-            // error_descr: 'Some problem',
-            result: 'success',
-            errors: {
-                check_transfers: 'Cho thie',
-                participant2: ['ONe err', 'Two error'],
-                participant1: {
-                    count: 'Bad count'
-                }
-            }
-        })
+        .onAny('/constructors').reply(200, constructors.constructorListProd)
+        .onAny('/instances').reply(200, instances.instanceList)
+        // go to deploy step 1 (request form)
+        .onAny(/\/constructors\/.{24}\/params/).reply(200, constructors.ctorAtomicSwap)
+        // go to deploy step 2 (request code)
+        .onAny(/\/constructors\/.{24}\/construct/).replyOnce(200, instances.instanceError)
+        .onAny(/\/constructors\/.{24}\/construct/).replyOnce(200, instances.instanceCode)
         .onAny().passThrough();
 
 }

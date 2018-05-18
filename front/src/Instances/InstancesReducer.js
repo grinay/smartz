@@ -1,4 +1,4 @@
-import {find, findIndex, cloneDeep} from 'lodash';
+import { find, findIndex, cloneDeep } from 'lodash';
 import moment from 'moment';
 
 const initState = {
@@ -13,6 +13,7 @@ const instances = (state = initState, action) => {
   switch (action.type) {
     case 'FETCH_INSTANCES_REQUEST':
       nextState.fetchStatus = 'request';
+      nextState.error = '';
       return nextState;
 
     case 'FETCH_INSTANCES_FAILURE':
@@ -22,8 +23,13 @@ const instances = (state = initState, action) => {
 
     case 'FETCH_INSTANCES_SUCCESS':
       nextState.fetchStatus = 'success';
+      nextState.error = '';
+      if (!Array.isArray(action.instances)) {
+        action.instances = [action.instances];
+      }
+
       action.instances.forEach(instance => {
-        const i = findIndex(nextState.instances, {instance_id: instance.instance_id});
+        const i = findIndex(nextState.instances, { instance_id: instance.instance_id });
         if (i >= 0) {
           nextState.instances[i] = Object.assign(nextState.instances[i], instance);
         } else {
@@ -33,9 +39,9 @@ const instances = (state = initState, action) => {
       return nextState;
 
     case 'VIEW_FUNC_RESULT':
-      const {instanceId, funcName, result} = action;
+      const { instanceId, funcName, result } = action;
 
-      let instance = find(nextState.instances, {instance_id: instanceId});
+      let instance = find(nextState.instances, { instance_id: instanceId });
       if (instance) {
         if (instance.funcResults && (instance.funcResults[funcName] === result)) {
           return state;
@@ -49,7 +55,7 @@ const instances = (state = initState, action) => {
       return nextState;
 
     case 'TRANSACTION_NEW':
-      instance = find(nextState.instances, {instance_id: action.instanceId});
+      instance = find(nextState.instances, { instance_id: action.instanceId });
       if (instance) {
         if (!instance.transactions) instance.transactions = [];
         instance.transactions.push({
@@ -62,9 +68,9 @@ const instances = (state = initState, action) => {
       return nextState;
 
     case 'TRANSACTION_RECEIPT':
-      instance = find(nextState.instances, {instance_id: action.instanceId});
+      instance = find(nextState.instances, { instance_id: action.instanceId });
       if (instance) {
-        const transaction = find(instance.transactions, {txHash: action.txHash});
+        const transaction = find(instance.transactions, { txHash: action.txHash });
         if (transaction) {
           transaction.result = action.receipt;
           transaction.timeMined = moment();

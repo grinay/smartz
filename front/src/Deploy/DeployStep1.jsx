@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Form from 'react-jsonschema-form';
 
 import * as api from '../api/apiRequests';
-import FormWidgets from '../common/FormWidgets';
+import FormWidgets from '../common/form-widgets/FormWidgets';
 
 class DeployStep1 extends PureComponent {
   submit({ formData }) {

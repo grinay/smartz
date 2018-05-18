@@ -6,43 +6,6 @@ const initState = {
   error: null
 };
 
-const setPic = (ctorName) => { // Temporary until image management implemented
-  if (!ctorName) return null;
-  switch (ctorName.toLowerCase()) {
-    case 'simple ico':
-      return 'contract-ico.jpg';
-
-    case 'erc20 token':
-      return 'contract-erc20.jpg';
-
-    case 'equity token':
-      return 'contract-equity.jpg';
-
-    case 'smartz token':
-      return 'contract-smartz-erc20.jpg';
-
-    case 'multisignature wallet':
-      return 'contract-multisig.jpg';
-
-    case 'simple voting':
-      return 'contract-voting.jpg';
-
-    case 'atomic swap for erc20':
-      return 'contract-swap.jpg';
-
-    case 'multitoken':
-      return 'contract-multitoken.jpg';
-
-    case 'booking':
-      return 'contract-booking.jpg';
-
-    case 'ledger':
-      return 'contract-ledger.jpg';
-
-    default:
-  }
-};
-
 const ctors = (state = initState, action) => {
   const nextState = {...state};
 
@@ -59,7 +22,6 @@ const ctors = (state = initState, action) => {
     case 'FETCH_CTORS_SUCCESS':
       nextState.fetchStatus = 'success';
       action.ctors.forEach(ctor => {
-        ctor.image = setPic(ctor.ctor_name);
         const i = findIndex(nextState.ctors, {ctor_id: ctor.ctor_id});
         if (i >= 0) {
           nextState.ctors[i] = Object.assign(nextState.ctors[i], ctor);
@@ -96,7 +58,7 @@ const ctors = (state = initState, action) => {
           {
             ctor_id: action.ctorId,
             fetchStatus: 'success',
-            image: setPic(action.ctorParams.ctor_name)
+            image: action.ctorParams.image
           }
         );
       }

@@ -107,6 +107,26 @@ export function getInstances() {
     return result;
 }
 
+export function getInstance(id) {
+    const result = fetch(`/instances/${id}`, undefined, 'get');
+
+    dispatch(fetchInstancesRequest());
+
+    result
+        .then(response => {
+            if (response.status === 200 && !response.data.error) {
+                dispatch(fetchInstancesSuccess(response.data))
+            } else {
+                dispatch(fetchInstancesFailure(response.data.error ? response.data.error : 'error'))
+            }
+        })
+        .catch(error => {
+            dispatch(fetchInstancesFailure(error.message))
+        });
+
+    return result;
+}
+
 export function updateInstance(instanceId, data) {
     const result = fetch(`/instances/${instanceId}/update`, data, 'post');
 

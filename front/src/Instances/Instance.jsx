@@ -11,18 +11,21 @@ import {
 import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
+import FunctionButton from './function-button/FunctionButton';
 
 import './Instance.css';
-import renderInstanceWidget from "../common/ContractInstance/ContractInstanceWidgets";
+import renderInstanceWidget from "../common/contract-instance-widgets/ContractInstanceWidgets";
 
 class Instance extends Component {
   constructor(props) {
     super(props);
 
     const { instance } = this.props;
-    const funcActive = find(instance.functions, f => (
-      f.inputs.minItems !== 0 || !f.constant
-    ));
+    const funcActive = instance
+      ? find(instance.functions, f => (
+        f.inputs.minItems !== 0 || !f.constant
+      ))
+      : undefined;
 
     this.state = {
       updateCycleActive: false,
@@ -31,35 +34,27 @@ class Instance extends Component {
   }
 
   componentWillMount() {
-    api.getConstructors();
-    api.getInstances();
+    api.getInstance(this.props.match.params.id);
   }
 
   componentDidUpdate() {
     // TODO: refactor this shit
-    const { instance, ctor, metamaskStatus } = this.props;
+    const { instance, metamaskStatus } = this.props;
 
-    if (instance && ctor && !this.state.updateCycleActive) {
+    if (instance && !this.state.updateCycleActive) {
       if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
         return null;
       }
       this.getConstants();
     }
-    /*
-    const {instance, ctor} = this.props;
 
-    if (instance && ctor && !this.state.updateCycleActive) {
-      this.setState({
-        updateCycleActive: true
-      });
-      this.getConstants();
-      setInterval(this.getConstants.bind(this), 60000);
-    }
-    */
   }
 
   getConstants() {
     const { instance, viewFuncResult } = this.props;
+    if (!instance) {
+      return;
+    }
 
     instance.functions.forEach(func => {
       if (func.constant && func.inputs.minItems === 0) {
@@ -80,6 +75,10 @@ class Instance extends Component {
 
   getFunctionsByType(instance, type) {
     const result = [];
+    if (!instance) {
+      return result;
+    }
+
     instance.functions && instance.functions.forEach(func => {
       switch (type) {
         case 'view':
@@ -101,15 +100,46 @@ class Instance extends Component {
   }
 
   render() {
-    const { metamaskStatus, instance, ctor } = this.props;
+    const { metamaskStatus, instance, instanceError } = this.props;
 
-    if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
+    if (metamaskStatus !== 'okMetamask') {
       return (
         <div className="container">
           <Alert standardAlert={metamaskStatus} />
         </div>
       );
     }
+
+    const viewFunctions = this.getFunctionsByType(instance, 'view');
+    let viewFunctionsElements = viewFunctions.length > 0
+      ? viewFunctions.map((func, i) => (
+        <p key={i} className="contract-functions__description">
+          <b>{func.title}</b> — {func.description}
+        </p>
+      ))
+      : [];
+
+    const askFunctions = this.getFunctionsByType(instance, 'ask');
+    let askFunctionsElements = askFunctions.length > 0
+      ? askFunctions.map((func, i) => (
+        <FunctionButton
+          key={i}
+          title={func.title}
+          onClick={() => this.setState({ funcActive: func })}
+        />
+      ))
+      : [];
+
+    const writeFunctions = this.getFunctionsByType(instance, 'write');
+    let writeFunctionsElements = writeFunctions.length > 0
+      ? writeFunctions.map((func, i) => (
+        <FunctionButton
+          key={i}
+          title={func.title || 'Send ether'}
+          onClick={() => this.setState({ funcActive: func })}
+        />
+      ))
+      : [];
 
     return (
       <main className="page-main  page-main--contracts  page-main--running-contract">
@@ -120,29 +150,35 @@ class Instance extends Component {
           Back
         </Link>
 
-        {ctor && instance &&
+        {instanceError &&
+          <Alert>
+            <p>{instanceError}</p>
+          </Alert>
+        }
+
+        {instance &&
           <aside className="block-half">
             <section className="contract-info" style={{ marginBottom: '20px' }}>
               <div className="contract-info__logo">
                 <img
                   className="contract-info__img"
-                  src={ctor.image
-                    ? require(`../Ctors/i/${ctor.image}`)
+                  src={instance.constructor.image
+                    ? require(`../Ctors/i/${instance.constructor.image}`)
                     : `https://lorempixel.com/640/400/?${Math.random()}`
                   }
                   width="644" height="404"
-                  alt={`${ctor.ctor_name} contract`} />
+                  alt={`${instance.constructor.name} contract`} />
               </div>
 
               <div className="contract-info__wrapper">
                 <p className="contract-info__info  contract-info__info--column">
                   <span className="contract-info__name">
-                    {ctor.ctor_name}
+                    {instance.constructor.name}
                   </span>
                 </p>
 
                 <p className="contract-info__description">
-                  {ctor.ctor_descr}
+                  {instance.constructor.description}
                 </p>
               </div>
             </section>
@@ -168,16 +204,12 @@ class Instance extends Component {
               <p className="contract-functions__description">
                 This functions just provide an information about contract states and values. Results of this fuctions are alrewady shown left.
               </p>
-              {this.getFunctionsByType(instance, 'view').map((func, i) => (
-                <p key={i} className="contract-functions__description">
-                  <b>{func.title}</b> — {func.description}
-                </p>
-              ))}
+              {viewFunctionsElements}
             </section>
           </aside>
         }
 
-        {ctor && instance &&
+        {instance &&
           <section className="block  contract-controls">
             <h2 className="block__header">
               {instance.instance_title}
@@ -220,55 +252,35 @@ class Instance extends Component {
                 </table>
               </div>
 
-              {this.getFunctionsByType(instance, 'ask').length > 0 &&
+              {/* ask functions block */}
+              {askFunctionsElements.length > 0 &&
                 <div className="contract-controls__wrapper">
-                  <span className="contract-controls__section-header">
-                    Ask functions
-                  </span>
+                  <span className="contract-controls__section-header">Ask functions</span>
 
                   <ul className="contract-controls__list">
-                    {this.getFunctionsByType(instance, 'ask').map((func, i) => (
-                      <li key={i} className="contract-controls__item">
-                        <button
-                          className="btn-contract contract-controls__button"
-                          type="button"
-                          onClick={() => this.setState({ funcActive: func })}
-                        >
-                          {func.title}
-                        </button>
-                      </li>
-                    ))}
+                    {askFunctionsElements}
                   </ul>
                 </div>
               }
 
-              {this.getFunctionsByType(instance, 'write').length > 0 &&
+              {/* write functions block */}
+              {writeFunctionsElements.length > 0 &&
                 <div className="contract-controls__wrapper">
-                  <span className="contract-controls__section-header">
-                    Write functions
-                  </span>
+                  <span className="contract-controls__section-header">Write functions</span>
 
                   <ul className="contract-controls__list">
-                    {this.getFunctionsByType(instance, 'write').map((func, i) => (
-                      <li key={i} className="contract-controls__item">
-                        <button
-                          className="btn-contract contract-controls__button"
-                          type="button"
-                          onClick={() => this.setState({ funcActive: func })}
-                        >
-                          {func.title}
-                        </button>
-                      </li>
-                    ))}
+                    {writeFunctionsElements}
+                    {/* {defaultFunctionElement} */}
                   </ul>
                 </div>
               }
 
+              {/* function block */}
               <FunctionCard
                 instance={instance}
                 func={this.state.funcActive
-                  || this.getFunctionsByType(instance, 'ask')[0]
-                  || this.getFunctionsByType(instance, 'write')[0]
+                  || askFunctions[0]
+                  || writeFunctions[0]
                 }
                 refresh={this.getConstants.bind(this)}
               />

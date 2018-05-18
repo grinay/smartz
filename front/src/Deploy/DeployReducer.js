@@ -10,6 +10,7 @@ const deploy = (state = initState, action) => {
     case 'INIT_DEPLOY':
       nextState[deployId] = {
         status: 'configure',
+        publicAccess: true,
         errors: null
       };
       return nextState;
