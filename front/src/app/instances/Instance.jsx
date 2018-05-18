@@ -101,6 +101,7 @@ class Instance extends Component {
 
   render() {
     const { metamaskStatus, instance, instanceError } = this.props;
+    console.log('instance: ', instance);
 
     if (metamaskStatus !== 'okMetamask') {
       return (
@@ -150,24 +151,27 @@ class Instance extends Component {
           Back
         </Link>
 
-        {ctor && instance &&
+        {instance &&
           <aside>
             <section className="form-title flex">
               <img
                 className="form-title__img"
-                src={ctor.image
-                  ? require(`../common/ctor-card/img/${ctor.image}`)
+                src={instance.constructor.image
+                  ? require(`../common/ctor-card/img/${instance.constructor.image}`)
                   : `https://lorempixel.com/640/400/?${Math.random()}`
                 }
-                width="644" height="404"
-                alt={`${ctor.ctor_name} contract`} />
+                alt={`${instance.constructor.name} contract`} />
               <div className={"form-title__title"}>
                 <h2>
-                  {ctor.ctor_name}
+                  {instance.instance_title}
                 </h2>
-                <p>
+                <p className="flex-v">
                   <span>Contract: </span>
-                  <a href={`https://platform.smartz.io/instance/${instance.instance_id}`}>{`https://platform.smartz.io/instance/${instance.instance_id}`}</a>
+                  {instance.address &&
+                    <span className="contract-controls__section-header  contract-controls__wallet-key">
+                      {makeEtherscanLink(instance.address, instance.network_id, true)}
+                    </span>
+                  }
                 </p>
               </div>
 
@@ -201,18 +205,7 @@ class Instance extends Component {
 
         {instance &&
           <section className="block  contract-controls">
-            <h2 className="block__header">
-              {instance.instance_title}
-            </h2>
-
             <div className="block__wrapper">
-              {instance.address &&
-
-                <span className="contract-controls__section-header  contract-controls__wallet-key">
-                  {makeEtherscanLink(instance.address, instance.network_id, true)}
-                </span>
-              }
-
               <div className="contract-controls__wrapper  contract-controls__wrapper--margin">
                 <table className="table  table--big">
                   <tbody className="table__tbody">

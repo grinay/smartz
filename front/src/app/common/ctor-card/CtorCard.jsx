@@ -7,6 +7,7 @@ import './CtorCard.less';
 class CtorCard extends Component {
   render() {
     const { ctor } = this.props;
+
     const isAuthenticated = Auth.isAuthenticated();
     const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['sub'] : '-1';
 

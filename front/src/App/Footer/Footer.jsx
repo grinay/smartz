@@ -125,8 +125,12 @@ class Footer extends Component {
                 Follow us
               </h3>
               <ul className="page-footer__list">
-                <li>
-                  <a href="https://about.smartz.io/" className="page-footer__link" target="_blank" rel="noopener noreferrer">
+                <li className="page-footer__item">
+                  <a
+                    href="https://about.smartz.io/"
+                    className="page-footer__link"
+                    target="_blank"
+                    rel="noopener noreferrer">
                     About Smartz
                   </a>
                 </li>

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import BaseWidget from "./BaseWidget";
 import { web3 } from "../../../../helpers/eth";
-import { moneyAbbr2Symbol } from '../../../helpers/localization';
+import { moneyAbbr2Symbol } from '../../../../helpers/localization';
 
 
 export default class EthCount extends BaseWidget {

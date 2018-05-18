@@ -49,7 +49,12 @@ class Store extends Component {
           <div className="description">
             <h2>Developers!</h2>
             <p>You can upload your smart contract to Smartz platform.</p>
-            <button>Learn more</button>
+            <a
+              href="https://wiki.smartz.io/"
+              className="description__link flex"
+              target="_blanc">
+              Learn more
+            </a>
           </div>
           <img src={developersImg} alt="for-dev" />
         </div>

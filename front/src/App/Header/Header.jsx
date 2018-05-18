@@ -47,7 +47,10 @@ class Header extends Component {
             <li className="main-navigation__item">
               {/* <Link to="/docs" className="main-navigation__link"> */}
               {/* Docs */}
-              <a href="https://wiki.smartz.io/" className="main-navigation__link flex">Docs</a>
+              <a
+                href="https://wiki.smartz.io/"
+                className="main-navigation__link flex"
+                target="_blanc">Docs</a>
               {/* </Link> */}
             </li>
             <li className={`main-navigation__item`}>
