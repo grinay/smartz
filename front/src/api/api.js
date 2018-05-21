@@ -88,6 +88,7 @@ const api = () => {
   });
 };
 
+// todo check token expired and forward to login page
 export const fetch = process.env.NODE_ENV !== 'production' ? logFetch(apiNew) : apiNew;
 
 export default api;

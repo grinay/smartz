@@ -9,8 +9,3 @@ export const requestsConfig = {
         ? `${process.env.API_URL_DEV}`
         : window.location.origin + '/api'
 }
-export const authConfig = {
-    "DOMAIN": 'smartz.auth0.com',
-    "CLIENT_ID": 'ZMO5C37C8WqaM5jU0egVI5am3hWNhGBv',
-    "CALLBACK_URL": window.location.origin + '/callback',
-}

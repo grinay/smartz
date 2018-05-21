@@ -9,6 +9,7 @@ import Store from './store/StoreContainer';
 import MyDapps from './my-dapps/MyDappsContainer';
 import Profile from './profile/Profile';
 import Deploy from './deploy/DeployContainer';
+import Login from "./auth/login/LoginContainer";
 import CtorAdd from './ctor-add/CtorAdd';
 import Dashboard from './dashboard/DashboardContainer';
 import Instance from './instances/InstanceContainer';
@@ -18,12 +19,6 @@ import metamask from './common/img/metamask.png';
 import { checkMetaMask } from '../helpers/eth';
 
 import './App.less';
-
-const handleAuthentication = ({ location }) => {
-  if (/access_token|id_token|error/.test(location.hash)) {
-    Auth.handleAuthentication();
-  }
-};
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -94,10 +89,11 @@ class App extends Component {
           <Route exact path="/" render={(props) => (
             <Store metamaskStatus={metamaskStatus} {...props} />
           )} />
-          <Route path="/callback" render={(props) => {
-            handleAuthentication(props);
-            return <Callback {...props} />
-          }} />
+
+          <Route path="/login" render={(props) =>
+            <Login metamaskStatus={metamaskStatus} {...props} />
+          } />
+
           <Route path="/docs/:docUri?" component={Docs} />
 
           <PrivateRoute path="/profile" component={props =>

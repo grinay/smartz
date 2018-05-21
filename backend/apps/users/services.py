@@ -36,7 +36,7 @@ class SignService(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def split_descr_data(self, descr, data):
+    def build_descr_data(self, descr, data):
         raise NotImplementedError()
 
 
@@ -45,24 +45,27 @@ class EthereumSignService(SignService):
     def get_blockchain(self):
         return BLOCKCHAIN_ETHEREUM
 
-    def check_sign(self, public_key, signed_data, data):
+    def check_sign(self, public_key, signed_data, rand_data_str):
         try:
             rand_data = RandomDataForSign.objects.get(
                 blockchain=self.get_blockchain(),
                 public_key=public_key.lower(),
-                data=data,
+                data=rand_data_str,
                 valid_to__gt=datetime.now(pytz.timezone(settings.TIME_ZONE))
             )
         except RandomDataForSign.DoesNotExist:
             return False
 
-        recovered_addr = recover_addr_from_signed(signed_data, self.split_descr_data(rand_data.description, data))
+        recovered_addr = recover_addr_from_signed(
+            signed_data,
+            self.build_descr_data(rand_data.description, rand_data_str)
+        )
 
         rand_data.valid_to = datetime.now(pytz.timezone(settings.TIME_ZONE))
 
         return recovered_addr.lower() == public_key.lower()
 
-    def split_descr_data(self, descr, data):
+    def build_descr_data(self, descr, data):
         return "{}\n{}".format(descr, data)
 
 
@@ -84,7 +87,9 @@ class UsersService:
 
     def register_user(self, blockchain: str, public_key: str) -> User:
         user = User(
-            username='user_{}_{}'.format(blockchain, public_key)
+            username='user_{}_{}'.format(blockchain, public_key),
+            first_name=blockchain,
+            last_name=public_key
         )
         user.save()
 
@@ -94,10 +99,15 @@ class UsersService:
         return user
 
     def generate_token(self, user: User):
+        expires_at = datetime.now(pytz.timezone(settings.TIME_ZONE)) + timedelta(hours=24)
+
         return jwt.encode(
             {
                 'user_id': user.pk,
-                'user_name': user.username
+                'user_name': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'expires_at': expires_at.timestamp()
             },
             settings.SECRET_KEY,
             algorithm='HS256'

@@ -24,6 +24,12 @@ import {
     // deployTxError,
     // deployTxMined
 } from '../app/deploy/DeployActions';
+import {
+  finishLoginAction, finishLoginSuccessAction,
+  loginErrorAction,
+  startLoginAction,
+  startLoginSuccessAction
+} from '../app/auth/login/LoginActions'
 
 const { dispatch } = store;
 
@@ -90,7 +96,7 @@ export function addCtor(formData) {
 // =============================================================================
 
 export function getInstances() {
-    const result = fetch('/instances', undefined, 'get');
+    const result = fetch('/contracts', undefined, 'get');
 
     dispatch(fetchInstancesRequest());
 
@@ -108,7 +114,7 @@ export function getInstances() {
 }
 
 export function getInstance(id) {
-    const result = fetch(`/instances/${id}`, undefined, 'get');
+    const result = fetch(`/contracts/${id}`, undefined, 'get');
 
     dispatch(fetchInstancesRequest());
 
@@ -128,7 +134,7 @@ export function getInstance(id) {
 }
 
 export function updateInstance(instanceId, data) {
-    const result = fetch(`/instances/${instanceId}/update`, data, 'post');
+    const result = fetch(`/contracts/${instanceId}/update`, data, 'post');
 
     result
         .then(response => { })
@@ -161,6 +167,65 @@ export function sendFormDataDeployStep1(ctorId, deployId, data, formData) {
         })
         .catch(error => {
             dispatch(constructError(deployId, error))
+        });
+
+    return result;
+}
+
+// =============================================================================
+// Auth
+// =============================================================================
+
+export function startLogin(blockchain, identity) {
+    const result = fetch(`/users/login/start`, {blockchain: blockchain, public_key: identity}, 'post');
+
+    dispatch(startLoginAction(blockchain, identity));
+
+    result
+        .then(response => {
+            const { data, status } = response;
+
+            if (status === 200 && !data.error) {
+              dispatch(startLoginSuccessAction(data));
+            } else {
+              let errorMsg = data.error ? data.error : 'Login error';
+              dispatch(loginErrorAction(errorMsg));
+            }
+        })
+        .catch(error => {
+          dispatch(loginErrorAction('Login error'));
+        });
+
+    return result;
+}
+
+export function finishLogin(blockchain, identity, randData, signedData) {
+    const result = fetch(
+      `/users/login/finish`,
+      {
+        blockchain: blockchain,
+        public_key: identity,
+        rand_data: randData,
+        signed_data: signedData
+      },
+      'post'
+    );
+
+    dispatch(finishLoginAction(blockchain, identity, signedData));
+
+    result
+        .then(response => {
+            const { data, status } = response;
+
+            if (status === 200 && !data.error && data.token) {
+              dispatch(finishLoginSuccessAction(data.token));
+            } else {
+              let errorMsg = data.error ? data.error : 'Login error';
+              dispatch(loginErrorAction(errorMsg));
+            }
+        })
+        .catch(error => {
+          dispatch(loginErrorAction('Login error'));
         });
 
     return result;

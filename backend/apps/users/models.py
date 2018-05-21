@@ -21,6 +21,9 @@ class PublicKey(models.Model):
     class Meta:
         unique_together = (('public_key', 'blockchain'),)
 
+    def __str__(self):
+        return "{}_{}".format(self.blockchain, self.public_key)
+
 
 class RandomDataForSign(models.Model):
     public_key = models.CharField(max_length=60)
@@ -33,3 +36,6 @@ class RandomDataForSign(models.Model):
         indexes = [
             models.Index(fields=['public_key', 'blockchain']),
         ]
+
+    def __str__(self):
+        return self.data

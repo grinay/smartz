@@ -15,7 +15,7 @@ class LoginStartTests(WebTest):
             expect_errors=True
         )
 
-        self.assertEqual(response.status_int, 400)
+        self.assertEqual(response.status_int, 200)
         self.assertJSONEqual(response.body, {'error': 'Blockchain is not supported'})
 
 
@@ -24,6 +24,7 @@ class LoginViewsIntegrationTests(WebTest):
     priv_key = 'c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3'
     addr = '0x627306090abab3a6e1400e9345bc60c78a8bef57'
 
+    # todo test expired
     def test_register(self):
 
         resp_start = self.app.post_json('/api/users/login/start', params={"blockchain": "ethereum", "public_key": self.addr})
@@ -35,7 +36,7 @@ class LoginViewsIntegrationTests(WebTest):
         assert type(resp_start.json['data']) == str
         assert len(resp_start.json['data']) == 32
 
-
+        # todo test for metamask sign (v=27-28)
         signed_data = sign_as_hex(
             "{}\n{}".format(resp_start.json['description'], resp_start.json['data']),
             self.priv_key
@@ -47,10 +48,11 @@ class LoginViewsIntegrationTests(WebTest):
             params={
                 "blockchain": "ethereum",
                 "public_key": self.addr,
-                "data": resp_start.json['data'],
+                "rand_data": resp_start.json['data'],
                 "signed_data": signed_data
             }
         )
+
 
         assert 'token' in resp_finish.json
         assert type(resp_finish.json['token']) == str

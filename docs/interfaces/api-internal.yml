@@ -20,7 +20,7 @@ paths:
             $ref: '#/definitions/SignRequest'
       responses:
         '200':
-          description: Data to sigh
+          description: Data to sign or error
           schema:
             $ref: '#/definitions/SignResponse'
 
@@ -39,7 +39,7 @@ paths:
           description: Token
           schema:
             $ref: '#/definitions/Token'
-        '400':
+        '200':
           description: Error
           schema:
             $ref: '#/definitions/Error'
@@ -72,7 +72,7 @@ definitions:
     required:
       - public_key
       - blockchain
-      - data
+      - rand_data
       - signed_data
     properties:
       public_key:

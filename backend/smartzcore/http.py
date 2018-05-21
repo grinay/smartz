@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 
 
-def error_response(msg, status=400):
+def error_response(msg, status=200):
     return JsonResponse(
         {
             "error": str(msg)

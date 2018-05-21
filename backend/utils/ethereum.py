@@ -15,6 +15,11 @@ def sign_as_hex(text2sign, priv_key):
 
 
 def recover_addr_from_signed(signed_data, data):
+    # different format of v part in metamask sign and coincurvew
+    if int(signed_data[-2:], 16) > 3:
+        normalized_v = int(signed_data[-2:], 16) - 27
+        signed_data = "{}{:02x}".format(signed_data[:-2], normalized_v)
+
     try:
         pk = coincurve.PublicKey.from_signature_and_message(
             decode_hex(signed_data),

@@ -74,7 +74,7 @@ class Header extends Component {
             {isAuthenticated
               ? <span className="user-block__name"
                 style={{ display: 'inherit' }}>
-                {profile && profile.name}
+                {profile && profile.last_name}
               </span>
               : <span>
                 <svg className="user-block__icon user-block__icon--lock" width="11" height="14">

@@ -46,7 +46,7 @@
     "webpack-dotenv-extended-plugin": "^1.0.0"
   },
   "dependencies": {
-    "auth0-js": "^8.12.1",
+    "jwt-decode": "^2.2.0",
     "axios": "^0.17.1",
     "axios-mock-adapter": "^1.15.0",
     "classnames": "^2.2.5",

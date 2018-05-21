@@ -1,6 +1,8 @@
 #!/usr/bin/env python3                                                                                                                                                                                             import re
+from datetime import datetime
+
 import jwt
-import requests
+import pytz
 from django.conf import settings
 
 from apps.users.models import AuthToken, User
@@ -39,13 +41,19 @@ def auth(request):
     if not token or token=='null':
         return error_response('not authorized')
 
-    data = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+    try:
+        data = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+    except:
+        return error_response('not authorized')
 
     try:
         user = User.objects.get(pk=data['user_id'])
     except AuthToken.DoesNotExist:
         # very strange
         return error_response('not authorized')
+
+    if data['expires_at'] < datetime.now(pytz.timezone(settings.TIME_ZONE)).timestamp():
+        return error_response('Token expired. Please log in again')
 
     print("[DEBUG][AUTH] {}".format(user))
     return user

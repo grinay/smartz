@@ -19,5 +19,5 @@ class ExceptionMiddlewareTests(TestCase):
             content_type='application/json'
         )
 
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 200)
         self.assertJSONEqual(response.content, {'error': 'Custom public error'})

@@ -46,12 +46,12 @@ class LoginFinishView(LoginBaseView):
     def post(self, request):
         blockchain = request.data.get('blockchain')
         public_key = request.data.get('public_key')
-        data = request.data.get('data')
+        rand_data = request.data.get('rand_data')
         signed_data = request.data.get('signed_data')
 
         service = self._require_service(blockchain)
 
-        is_valid = service.check_sign(public_key, signed_data, data)
+        is_valid = service.check_sign(public_key, signed_data, rand_data)
         if not is_valid:
             return error_response("Incorrect sign")
 

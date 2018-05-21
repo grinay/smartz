@@ -41,6 +41,10 @@ class SwaggerRequestValidationMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        if request.method == 'OPTIONS':
+            request.is_swagger_schema_validated = True
+            return self.get_response(request)
+
         schema = load(settings.SMARTZ_INTERNAL_API_SWAGGER_SCHEMA)
 
         request.is_swagger_schema_validated = False
@@ -71,6 +75,6 @@ class CatchExceptionMiddleware:
         print("[ERROR] {}".format(str(exception)))
 
         if isinstance(exception, PublicException):
-            return error_response(exception.public_message, 400)
+            return error_response(exception.public_message, 200)
         else:
             return error_response('Something got wrong', 500)
