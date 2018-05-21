@@ -16,6 +16,7 @@ import Docs from './docs/Docs';
 import InfoBlock from './common/InfoBlock';
 import metamask from './common/img/metamask.png';
 import { checkMetaMask } from '../helpers/eth';
+import Page404 from './page-404/Page404';
 
 import './App.less';
 
@@ -45,7 +46,7 @@ class App extends Component {
     this.setState({});
 
     let metamaskStatus = false;
-    
+
     setInterval(() => {
       if (metamaskStatus !== checkMetaMask()) {
         metamaskStatus = checkMetaMask();
@@ -80,8 +81,8 @@ class App extends Component {
             <img src={metamask} alt="" />
             <p>To pay Ether you need a Metamask plugin.</p>
             <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
-            target="_blanc">
-            <button>Install for Chrome</button>
+              target="_blanc">
+              <button>Install for Chrome</button>
             </a>
           </InfoBlock>
         }
@@ -131,7 +132,10 @@ class App extends Component {
             <MyDapps metamaskStatus={metamaskStatus} {...props} />
           } />
 
-          {/* TODO: <Route component={Page404} />*/}
+          <Route component={props =>
+            <Page404 {...props} />
+          } />
+
         </Switch>
 
         <Route render={(props) => <Footer {...props} />} />
