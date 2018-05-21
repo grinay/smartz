@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Auth from '../auth/Auth';
 import telegramImg from './img/telegram.svg';
 import logoImg from '../../assets/img/common/menu/logo.svg';
@@ -26,34 +26,38 @@ class Header extends Component {
         </Link>
         <nav className="main-navigation">
           <ul className="main-navigation__list flex-v">
-            <Link
+            <NavLink
               to="/"
-              className="main-navigation__link">
-              <li className={`main-navigation__item flex-v ${location.pathname === '/' ? 'active' : ''}`}>
-                Store
-            </li>
-            </Link>
-            <Link
+              exact={true}
+              className="main-navigation__link"
+              activeClassName="active">
+              <li className='main-navigation__item flex-v'>
+                <p>Store</p>
+              </li>
+            </NavLink>
+            <NavLink
               to="/dashboard"
-              className="main-navigation__link">
-              <li className={`main-navigation__item flex ${location.pathname === '/dashboard' ? 'active' : ''}`}>
-                Dashboard
-            </li>
-            </Link>
-            <Link
+              className="main-navigation__link"
+              activeClassName="active">
+              <li className='main-navigation__item flex'>
+                <p>Dashboard</p>
+              </li>
+            </NavLink>
+            <NavLink
               to="/custom-contracts"
-              className="main-navigation__link">
-              <li className={`main-navigation__item flex ${location.pathname === '/dashboard' ? 'active' : ''}`}>
-                Custom Contracts
-            </li>
-            </Link>
+              className="main-navigation__link"
+              activeClassName="active">
+              <li className='main-navigation__item flex'>
+                <p>Custom Contracts</p>
+              </li>
+            </NavLink>
             <a
               href="https://wiki.smartz.io/"
               className="main-navigation__link"
               target="_blanc">
               <li className="main-navigation__item flex">
-                Support
-            </li>
+                <p>Support</p>
+              </li>
             </a>
             <a
               href="https://t.me/smartz_en"
@@ -64,8 +68,8 @@ class Header extends Component {
                   className={"tgm"}
                   src={telegramImg}
                   alt="telegram chat" />
-                Chat
-            </li>
+                <p>Chat</p>
+              </li>
             </a>
             <Link
               to="/profile"

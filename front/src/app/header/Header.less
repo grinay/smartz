@@ -89,6 +89,10 @@
                     font-family: @f-cera-pro-700;
                     font-size: 15px;
 
+                    p {
+                        margin: 0;
+                    }
+
                     .tgm {
                         margin: 0px 5px 0 0;
 
@@ -96,8 +100,10 @@
                     }
                 }
 
-                .active {
-                    color: rgba(0,0,0,1);
+                &.active {
+                    li {
+                        color: rgba(0,0,0,1);
+                    }
                 }
             }
         }
