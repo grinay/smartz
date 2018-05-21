@@ -26,7 +26,7 @@ class Auth {
       authResult = jwtDecode(token);
       console.log(authResult)
     } catch (e) {
-      console.log(e);
+      console.error(e);
       history.replace('/login');
       return;
     }

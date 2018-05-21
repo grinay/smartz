@@ -86,7 +86,7 @@ export function addCtor(formData) {
 
     result
         .then(response => { })
-        .catch(error => console.log('Error request: ', error));
+        .catch(error => console.error('Error request: ', error));
 
     return result;
 }

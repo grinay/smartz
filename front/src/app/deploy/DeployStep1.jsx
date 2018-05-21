@@ -7,7 +7,7 @@ import FormWidgets from '../common/form-widgets/FormWidgets';
 class DeployStep1 extends PureComponent {
   submit({ formData }) {
 
-    if (this.props.metamaskStatus)
+    if (this.props.metamaskStatus != 'okMetamask')
       return null;
 
     this.formDataSaved = formData;
@@ -68,7 +68,7 @@ class DeployStep1 extends PureComponent {
         formData={formData}
         onSubmit={this.submit.bind(this)}
         onChange={e => this.formDataSaved = e.formData}
-        onError={(e) => console.log("I have", e.length, "errors to fix", e)}
+        onError={(e) => console.warn("I have", e.length, "errors to fix", e)}
         showErrorList={false}
         id="deploy-form"
         autocomplete="off">
