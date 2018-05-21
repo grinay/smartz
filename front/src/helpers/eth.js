@@ -160,7 +160,7 @@ export const processResult = (res, outputs) => {
 
 export const getNetworkId = cb => {
   web3.version.getNetwork((err, netId) => {
-    err && console.log(err);
+    err && console.error(err);
     netId && cb(netId);
   });
 };

@@ -27,13 +27,12 @@ class FunctionCard extends PureComponent {
     processControlForm(abi, func, formData, address,
       (error, result) => {
         if (!error) {
-          // console.log(result);
           transactionNew(instance.instance_id, func, formData, result);
           if (/^0x([A-Fa-f0-9]{64})$/.test(result)) // Check if result is tx hash
             this.getReceipt(result);
 
         } else {
-          console.log(error);
+          console.error(error);
           transactionNew(instance.instance_id, func, formData, 'error');
         }
       });
@@ -47,7 +46,6 @@ class FunctionCard extends PureComponent {
         window.setTimeout(() => { this.getReceipt(tx) }, 500);
 
       else {
-        // console.log(receipt);
         transactionReceipt(instance.instance_id, tx, receipt);
         refresh();
       }
@@ -133,7 +131,7 @@ class FunctionCard extends PureComponent {
         uiSchema={uiSchema}
         widgets={FormWidgets}
         onSubmit={this.submit.bind(this)}
-        onError={(e) => console.log("I have", e, "errors to fix")}
+        onError={(e) => console.warn("I have", e, "errors to fix")}
         showErrorList={false}>
 
         <h3 className="form-block__header">

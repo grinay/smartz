@@ -36,7 +36,7 @@ class Auth {
         this.setSession(authResult);
       } else if (err) {
         history.replace('/');
-        console.log(err);
+        console.error(err);
         // alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });

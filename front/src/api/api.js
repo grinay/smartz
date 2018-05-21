@@ -58,7 +58,6 @@ function logFetch(promise) {
 
 const apiNew = (url = '/', data = undefined, method = 'post', mock = requestsConfig.USE_MOCK) => {
   const accessToken = Auth.isAuthenticated() ? Auth.getAccessToken() : null;
-  console.log('info: ', `${process.env.NODE_ENV}`);
 
   const config = {
     method,
@@ -76,18 +75,4 @@ const apiNew = (url = '/', data = undefined, method = 'post', mock = requestsCon
   return axios(config);
 };
 
-
-// old version. Remove after refactoring
-const api = () => {
-  const accessToken = Auth.isAuthenticated() ? Auth.getAccessToken() : null;
-  return axios.create({
-    baseURL: requestsConfig.API_URL,
-    headers: {
-      'X-AccessToken': accessToken
-    }
-  });
-};
-
 export const fetch = process.env.NODE_ENV !== 'production' ? logFetch(apiNew) : apiNew;
-
-export default api;

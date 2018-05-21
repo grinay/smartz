@@ -68,7 +68,7 @@ class DeployStep1 extends PureComponent {
         formData={formData}
         onSubmit={this.submit.bind(this)}
         onChange={e => this.formDataSaved = e.formData}
-        onError={(e) => console.log("I have", e.length, "errors to fix", e)}
+        onError={(e) => console.warn("I have", e.length, "errors to fix", e)}
         showErrorList={false}
         id="deploy-form"
         autocomplete="off">

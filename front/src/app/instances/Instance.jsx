@@ -101,7 +101,6 @@ class Instance extends Component {
 
   render() {
     const { metamaskStatus, instance, instanceError } = this.props;
-    console.log('instance: ', instance);
 
     if (metamaskStatus !== 'okMetamask') {
       return (
