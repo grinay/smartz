@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import * as api from '../../api/apiRequests';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
-import * as api from '../../api/apiRequests';
 import CtorCard from '../common/ctor-card/CtorCard';
 import Auth from '../auth/Auth';
+import DevBlock from './../common/dev-block/DevBlock';
 
 class MyDapps extends Component {
   componentWillMount() {
@@ -20,33 +21,25 @@ class MyDapps extends Component {
 
     return (
       <main className="page-main  page-main--store">
-        <div className="page-main__inner">
-          {metamaskStatus !== 'okMetamask' &&
-            <Alert standardAlert={metamaskStatus} />
+        {metamaskStatus !== 'okMetamask' &&
+          <Alert standardAlert={metamaskStatus} />
+        }
+        <div className="ctor-block">
+          {ctors &&
+            <ul className="ctor-list">
+              {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) =>
+                <li key={i} className="ctor-item">
+                  <CtorCard key={i} ctor={el} />
+                </li>
+              )}
+            </ul>
           }
 
-          <section className="contracts-gallery">
-            <div className="contracts-gallery__gallery  gallery">
-              {ctors &&
-                <ul className="contracts-gallery__list  gallery__list">
-                  {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) => (
-                    <CtorCard key={i} ctor={el} />
-                  ))}
-                </ul>
-              }
-
-              {!ctors &&
-                <Spinner text="Loading contracts" width="100" />
-              }
-            </div>
-          </section>
-
-          <Alert header="If you are developer"
-            style={{ marginTop: '80px', background: '#88db88' }}
-          >
-            <p>You can <Link to="/ctor-add">add a smart contract</Link> to our platform.</p>
-          </Alert>
+          {!ctors &&
+            <Spinner text="Loading contracts" width="100" />
+          }
         </div>
+        <DevBlock />
       </main>
     );
   }

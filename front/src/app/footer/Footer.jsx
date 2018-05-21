@@ -71,7 +71,7 @@ class Footer extends Component {
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <div className="page-footer__section  page-footer__section--contracts">
               <h3 className="page-footer__header">
                 Developers
@@ -83,7 +83,7 @@ class Footer extends Component {
                   </Link>
                 </li>
               </ul>
-            </div> */}
+            </div>
             <div className="page-footer__section  page-footer__section--dashboard">
               <h3 className="page-footer__header">
                 Dashboard
