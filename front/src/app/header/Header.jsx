@@ -40,6 +40,13 @@ class Header extends Component {
                 Dashboard
             </li>
             </Link>
+            <Link
+              to="/custom-contracts"
+              className="main-navigation__link">
+              <li className={`main-navigation__item flex ${location.pathname === '/dashboard' ? 'active' : ''}`}>
+                Custom Contracts
+            </li>
+            </Link>
             <a
               href="https://wiki.smartz.io/"
               className="main-navigation__link"

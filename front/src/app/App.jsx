@@ -16,6 +16,7 @@ import Instance from './instances/InstanceContainer';
 import Docs from './docs/Docs';
 import InfoBlock from './common/InfoBlock';
 import metamask from './common/img/metamask.png';
+import CustomContracts from './custom-contracts/CustomContracts';
 import { checkMetaMask } from '../helpers/eth';
 import Page404 from './page-404/Page404';
 
@@ -96,11 +97,15 @@ class App extends Component {
           <Route exact path="/" render={(props) => (
             <Store metamaskStatus={metamaskStatus} {...props} />
           )} />
+
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Callback {...props} />
           }} />
+
           <Route path="/docs/:docUri?" component={Docs} />
+
+          <Route path="/custom-contracts" component={CustomContracts} />
 
           <PrivateRoute path="/profile" component={props =>
             <Profile profile={profile} {...props} />}
