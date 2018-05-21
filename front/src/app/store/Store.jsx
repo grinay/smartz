@@ -5,6 +5,7 @@ import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
 import CtorCard from '../common/ctor-card/CtorCard';
 import DevBlock from '../common/dev-block/DevBlock';
+import SortBlockchain from './sort-blockchain/SortBlockchain';
 import * as api from '../../api/apiRequests';
 
 import './Store.less';
@@ -19,6 +20,7 @@ class Store extends Component {
 
     return (
       <main className="page-main  page-main--store">
+        <SortBlockchain />
         <div className="ctor-block">
           {ctors &&
             <ul className="ctor-list">

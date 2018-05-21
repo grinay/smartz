@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { hot } from 'react-hot-loader';
 
 import Header from './header/Header';
 import Footer from './footer/Footer';
@@ -144,4 +145,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default hot(module)(App);
