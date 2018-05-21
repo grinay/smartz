@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../auth/Auth';
 import telegramImg from './img/telegram.svg';
+import logoImg from '../../assets/img/common/menu/logo.svg';
 
 import './Header.less';
 
@@ -20,71 +21,67 @@ class Header extends Component {
 
     return (
       <header className="page-header flex-v">
-        <Link
-          to="/"
-          className="page-header__link"
-          aria-label="Back to main page">
-          <svg className="page-header__logo">
-            <use href="#logo"></use>
-          </svg>
+        <Link to="/" className="logo flex">
+          <img src={logoImg} alt="logo" />
         </Link>
         <nav className="main-navigation">
           <ul className="main-navigation__list flex-v">
-            <li className={`main-navigation__item ${location.pathname === '/' ? 'active' : ''}`}>
-              <Link
-                to="/"
-                className="main-navigation__link flex">
-                Smart Store
-              </Link>
+            <Link
+              to="/"
+              className="main-navigation__link">
+              <li className={`main-navigation__item flex-v ${location.pathname === '/' ? 'active' : ''}`}>
+                Store
             </li>
-            <li className={`main-navigation__item ${location.pathname === '/dashboard' ? 'active' : ''}`}>
-              <Link
-                to="/dashboard"
-                className="main-navigation__link flex">
+            </Link>
+            <Link
+              to="/dashboard"
+              className="main-navigation__link">
+              <li className={`main-navigation__item flex ${location.pathname === '/dashboard' ? 'active' : ''}`}>
                 Dashboard
-              </Link>
             </li>
-            <li className="main-navigation__item">
-              {/* <Link to="/docs" className="main-navigation__link"> */}
-              {/* Docs */}
-              <a
-                href="https://wiki.smartz.io/"
-                className="main-navigation__link flex"
-                target="_blanc">Docs</a>
-              {/* </Link> */}
+            </Link>
+            <a
+              href="https://wiki.smartz.io/"
+              className="main-navigation__link"
+              target="_blanc">
+              <li className="main-navigation__item flex">
+                Support
             </li>
-            <li className={`main-navigation__item`}>
-              <a
-                href="https://t.me/smartz_en"
-                target="_blank"
-                className="main-navigation__link flex">
+            </a>
+            <a
+              href="https://t.me/smartz_en"
+              target="_blank"
+              className="main-navigation__link">
+              <li className={`main-navigation__item flex`}>
                 <img
                   className={"tgm"}
                   src={telegramImg}
                   alt="telegram chat" />
                 Chat
-              </a>
             </li>
+            </a>
+            <Link
+              to="/profile"
+              className="main-navigation__link">
+              <li className="main-navigation__item flex">
+                {isAuthenticated
+                  ? <span className="user-block__name"
+                    style={{ display: 'inherit' }}>
+                    {profile && profile.name}
+                  </span>
+                  : <span>
+                    <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
+                      <use href="#lock" />
+                    </svg>
+                    <span className="user-block__login">Login</span>
+                  </span>
+                }
+              </li>
+            </Link>
           </ul>
         </nav>
-        <div className="user-block">
-          <Link
-            to="/profile"
-            className="user-block__link">
-            {isAuthenticated
-              ? <span className="user-block__name"
-                style={{ display: 'inherit' }}>
-                {profile && profile.name}
-              </span>
-              : <span>
-                <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
-                  <use href="#lock" />
-                </svg>
-                <span className="user-block__login">Login</span>
-              </span>
-            }
-          </Link>
-        </div>
+        {/* <div className="user-block">
+        </div> */}
         {/*
       <div>
         <Navbar fluid>
