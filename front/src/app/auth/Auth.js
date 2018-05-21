@@ -2,6 +2,9 @@ const jwtDecode = require('jwt-decode');
 import history from '../../helpers/history';
 
 class Auth {
+  // todo maybe do in another way?
+  userProfile;
+
   constructor() {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -52,6 +55,7 @@ class Auth {
       cb('No access token found', {});
     }
 
+    this.userProfile = JSON.parse(profile);
     cb(false, JSON.parse(profile));
   }
 
@@ -60,6 +64,8 @@ class Auth {
     localStorage.removeItem('access_token2');
     localStorage.removeItem('access_token_decoded');
     localStorage.removeItem('expires_at');
+
+    this.userProfile = null;
 
     history.replace('/');
   }

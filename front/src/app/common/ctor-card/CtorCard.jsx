@@ -9,7 +9,7 @@ class CtorCard extends Component {
     const { ctor } = this.props;
 
     const isAuthenticated = Auth.isAuthenticated();
-    const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['sub'] : '-1';
+    const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['user_id'] : -1;
 
     const buttonText = isAuthenticated
       ? (ctor.price_eth

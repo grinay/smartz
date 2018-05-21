@@ -8,8 +8,6 @@ class Profile extends Component {
   render() {
     const { profile } = this.props;
 
-    console.log(profile)
-
     if (!Auth.isAuthenticated())
       return (<Redirect to="/" />);
 
@@ -25,7 +23,7 @@ class Profile extends Component {
     }
 
     return (
-      <main className="page-main">
+      <main className="page-main" style={{margin: '0 50px'}}>
         {profile &&
           <section>
             <h2>{name}</h2>
