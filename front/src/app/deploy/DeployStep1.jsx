@@ -7,7 +7,7 @@ import FormWidgets from '../common/form-widgets/FormWidgets';
 class DeployStep1 extends PureComponent {
   submit({ formData }) {
 
-    if (this.props.metamaskStatus)
+    if (this.props.metamaskStatus != 'okMetamask')
       return null;
 
     this.formDataSaved = formData;
