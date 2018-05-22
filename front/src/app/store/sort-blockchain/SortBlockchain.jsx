@@ -16,7 +16,7 @@ export default class SortBlockchain extends PureComponent {
                 }
             },
             {
-                name: 'EOS (Coming soon)',
+                name: 'EOS (Coming in september)',
                 select: false,
                 img: {
                     on: 'EOS-on.svg',

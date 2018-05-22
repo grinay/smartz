@@ -11,13 +11,20 @@ export default class DevBlock extends PureComponent {
             <div className="dev-block">
                 <div className="description">
                     <h2>Developers!</h2>
-                    <p>You can <Link to="/ctor-add">upload your smart contract</Link> to Smartz platform.</p>
-                    <a
-                        href="https://wiki.smartz.io/"
-                        className="description__link flex"
-                        target="_blanc">
-                        Learn more
+                    <p>You can upload your smart contract to Smartz platform.</p>
+                    <div className="buttons-block flex-v">
+                        <Link
+                            to="/ctor-add"
+                            className="description__link upload flex">
+                            Upload contract
+                        </Link>
+                        <a
+                            href="https://wiki.smartz.io/en/contract-uploading"
+                            className="description__link learn flex"
+                            target="_blanc">
+                            Learn more
                         </a>
+                    </div>
                 </div>
                 <img src={developersImg} alt="for-dev" />
             </div>

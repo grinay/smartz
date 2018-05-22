@@ -8,6 +8,8 @@ import CtorCard from '../common/ctor-card/CtorCard';
 import Auth from '../auth/Auth';
 import DevBlock from './../common/dev-block/DevBlock';
 
+import './MyDapps.less';
+
 class MyDapps extends Component {
   componentWillMount() {
     api.getConstructors();
@@ -20,17 +22,25 @@ class MyDapps extends Component {
     const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['sub'] : '-1';
 
     return (
-      <main className="page-main  page-main--store">
+      <main className="page-main  my-dapps">
         {metamaskStatus !== 'okMetamask' &&
           <Alert standardAlert={metamaskStatus} />
         }
         <div className="ctor-block">
           {ctors &&
             <ul className="ctor-list">
-              {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) =>
-                <li key={i} className="ctor-item">
-                  <CtorCard key={i} ctor={el} />
-                </li>
+              {/* {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) => */}
+              {ctors.map((el, i) => {
+                if (i < 2) {
+                  return (
+                    <li key={i} className="ctor-item">
+                      <CtorCard key={i} ctor={el} />
+                    </li>
+                  )
+                } else {
+                  return null;
+                }
+              }
               )}
             </ul>
           }
@@ -39,7 +49,6 @@ class MyDapps extends Component {
             <Spinner text="Loading contracts" width="100" />
           }
         </div>
-        <DevBlock />
       </main>
     );
   }

@@ -22,6 +22,22 @@
         }
     }
 
+    .title-main {
+        flex: 1;
+
+        padding-left: 20px;
+
+        text-align: left;
+        white-space: nowrap;
+
+        font-family: @f-cera-pro-400;
+        font-size: 37px;
+
+        p {
+            height: 25px;
+        }
+    }
+
     // .page-header__link {
     //     display: block;
 
@@ -40,7 +56,6 @@
 
     .main-navigation {
         overflow-x: auto;
-        flex: 1;
 
         height: 100%;
 
@@ -57,23 +72,15 @@
                 display: inline-block;
 
                 height: 100%;
-                padding: 0  23px;
+                padding: 0  18px;
 
                 text-decoration: none;
 
-                &:first-child {
-                    flex: 1;
-
-                    padding-left: 20px;
+                // &:first-child {
+                //     flex: 1;
 
 
-                    li {
-                        text-align: left;
-
-                        font-family: @f-cera-pro-400;
-                        font-size: 37px;
-                    }
-                }
+                // }
 
                 .main-navigation__item {
                     display: flex;
@@ -84,9 +91,9 @@
                     text-decoration: none;
                     letter-spacing: .3px;
 
-                    color: rgba(0,0,0,.5);
+                    color: #191919;
 
-                    font-family: @f-cera-pro-700;
+                    font-family: @f-cera-pro-500;
                     font-size: 15px;
 
                     p {
@@ -402,5 +409,3 @@
     //         padding: 0;
     //     }
 }
-
-

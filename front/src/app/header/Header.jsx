@@ -5,8 +5,17 @@ import telegramImg from './img/telegram.svg';
 import logoImg from '../../assets/img/common/menu/logo.svg';
 
 import './Header.less';
+import { sendFormDataDeployStep1 } from './../../api/apiRequests';
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedMenu: 'Store',
+    };
+  }
+
   goTo(route) {
     this.props.history.replace(`/${route}`)
   }
@@ -15,21 +24,30 @@ class Header extends Component {
     Auth.logout();
   }
 
+  setMenu(item) {
+    return () => this.setState({ selectedMenu: item })
+  }
+
   render() {
     const { profile, location } = this.props;
+    const { selectedMenu } = this.state;
     const isAuthenticated = Auth.isAuthenticated();
 
     return (
       <header className="page-header flex-v">
-        <Link to="/" className="logo flex">
+        <Link to="/" className="logo flex" onClick={this.setMenu('Store')}>
           <img src={logoImg} alt="logo" />
         </Link>
+        <section className="title-main flex-v">
+          <p>{selectedMenu}</p>
+        </section>
         <nav className="main-navigation">
           <ul className="main-navigation__list flex-v">
             <NavLink
               to="/"
               exact={true}
               className="main-navigation__link"
+              onClick={this.setMenu('Store')}
               activeClassName="active">
               <li className='main-navigation__item flex-v'>
                 <p>Store</p>
@@ -38,6 +56,7 @@ class Header extends Component {
             <NavLink
               to="/dashboard"
               className="main-navigation__link"
+              onClick={this.setMenu('Dashboard')}
               activeClassName="active">
               <li className='main-navigation__item flex'>
                 <p>Dashboard</p>
@@ -46,6 +65,7 @@ class Header extends Component {
             <NavLink
               to="/custom-contracts"
               className="main-navigation__link"
+              onClick={this.setMenu('Custom Contracts')}
               activeClassName="active">
               <li className='main-navigation__item flex'>
                 <p>Custom Contracts</p>
@@ -56,7 +76,7 @@ class Header extends Component {
               className="main-navigation__link"
               target="_blanc">
               <li className="main-navigation__item flex">
-                <p>Support</p>
+                <p>Docs</p>
               </li>
             </a>
             <a
