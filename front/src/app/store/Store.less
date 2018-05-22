@@ -1,13 +1,12 @@
 @import '../../styles/variables.less';
 
 .page-main {
+    padding-bottom: 61px;
+
     .ctor-list {
-        // display: flex;
-        // flex-wrap: wrap;
-        // justify-content: flex-start;
         display: grid;
 
-        margin: 20px 15px 0;
+        margin: 0;
         padding: 0;
 
         list-style-type: none;
@@ -16,134 +15,16 @@
         grid-gap: 10px;
 
         .ctor-item {
-            // flex: 1;
             // min-width: 240px;
             // max-width: 360px;
             margin-top: 35px;
         }
     }
-    // &--store {
-    //     padding-top: 50px;
-
-    //     .page-main__description {
-    //         margin-top: 0;
-    //         margin-bottom: 35px;
-
-    //         color: #0F1418;
-
-    //         font-family: 'Cera Pro 300', Arial, sans-serif;
-    //         font-size: 40px;
-    //         line-height: 49px;
-    //     }
-    // }
-
-    // &--support {
-    //     padding: 33px 15px 0 15px;
-    // }
-
-    // &--running-contract {
-    //     position: relative;
-
-    //     padding-top: 40px;
-
-    //     .page-main__link {
-    //         position: absolute;
-    //         top: 40px;
-    //         left: 15px;
-
-    //         display: block;
-
-    //         text-decoration: none;
-    //         letter-spacing: 1px;
-    //         text-transform: uppercase;
-
-    //         color: @interactive-element-color;
-
-    //         font-family: 'Cera Pro 700', Arial, sans-serif;
-    //         font-size: 13px;
-    //         line-height: 15px;
-    //     }
-
-    //     .page-main__icon {
-    //         fill: @interactive-element-color;
-    //     }
-
-    //     .page-main__link:hover, .page-main__link:focus {
-    //         color: @link-hover;
-    //     }
-
-    //     .page-main__link:hover .page-main__icon, .page-main__link:focus .page-main__icon {
-    //         fill: @link-hover;
-    //     }
-    // }
-
-    // &--my-contracts {
-    //     padding-top: 50px;
-    // }
 }
 
-// .page-main__inner {
-//     padding-right: 15px;
-//     padding-left: 15px;
-// }
-
-// .page-main__inner--image {
-//     margin-bottom: 50px;
-// }
-
-.dev-block {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 766px;
-    height: 253px;
-    margin: 40px auto 0;
-    padding-left: 27px;
-
-    border-radius: 8px;
-    background-color: rgba(230,233,240,1);
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.03);
-
-    img {
-        width: auto;
-        max-height: 100%;
-    }
-
-    .description {
-        width: 225px;
-
-        h2 {
-            margin: 0 0 17px 0;
-
-            font-size: 42px;
-        }
-
-        p {
-            margin: 0;
-        }
-
-        .description__link {
-            width: 129px;
-            height: 38px;
-            margin-top: 27px;
-
-            cursor: pointer;
-            text-decoration: none;
-
-            color: rgba(12,113,134,.8);
-            border: none;
-            border-radius: 4px;
-            outline: none;
-            background-color: rgba(12,113,134,.1);
-
-            font-family: @f-cera-pro-500;
-            font-size: 16px;
-        }
-    }
+.page-main--store {
+    padding: 0 15px 40px;
 }
-
-
 
 @media (min-width: @screen-md) {
     // .page-main--contracts, .page-main--my-contracts, .page-main--support {

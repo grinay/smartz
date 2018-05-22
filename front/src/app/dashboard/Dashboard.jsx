@@ -16,7 +16,7 @@ class Dashboard extends Component {
 
     this.state = {
       updateCycleActive: false,
-      networkId: null,
+      filterInstances: [],
     };
   }
 
@@ -25,34 +25,34 @@ class Dashboard extends Component {
     api.getInstances();
   }
 
-  componentDidMount() {
-    const { metamaskStatus } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { metamaskStatus, instances } = this.props;
 
-    if (metamaskStatus !== 'noMetamask')
-      getNetworkId(networkId => this.setState({ networkId }));
+    if (metamaskStatus !== 'noMetamask') {
+      if (instances.length > 0) {
+        getNetworkId(networkId => {
+
+          // show instances only current network
+          const filterInstances = instances.filter(instance =>
+            instance.network_id.toString() === networkId
+          );
+
+          this.setState({ filterInstances });
+        });
+      }
+    }
   }
 
 
   componentDidUpdate() {
     const { ctors, instances, metamaskStatus } = this.props;
+    const { filterInstances } = this.state;
 
-    if (instances.length &&
+    if (filterInstances.length &&
       ctors.length &&
       !this.state.updateCycleActive &&
       metamaskStatus !== 'noMetamask')
       this.updateCycle();
-
-    /*
-    const {ctors, instances} = this.props;
-
-    if (instances.length && ctors.length && !this.state.updateCycleActive) {
-      this.setState({
-        updateCycleActive: true
-      });
-      this.updateCycle();
-      setInterval(this.updateCycle.bind(this), 60000);
-    }
-    */
   }
 
   updateCycle() {
@@ -87,7 +87,7 @@ class Dashboard extends Component {
 
   render() {
     const { metamaskStatus } = this.props;
-    const { networkId } = this.state;
+    const { filterInstances } = this.state;
 
     if (metamaskStatus === 'noMetamask')
       return <p style={{
@@ -96,19 +96,12 @@ class Dashboard extends Component {
         fontSize: "20px"
       }}>Fellow, you need a Metamask plugin!</p>
 
-    if (networkId === null) {
-      return null;
-    }
-
     const { ctors, ctorsError, instances, instancesError } = this.props;
-    instances.forEach(inst => {
+
+    filterInstances.forEach(inst => {
       inst.ctor = find(ctors, { ctor_id: inst.ctor_id }) || {};
     });
 
-    // show instances only current network
-    const filterInstances = instances.filter(instance =>
-      instance.network_id.toString() === this.state.networkId
-    );
 
     return (
       <main className="page-main  page-main--my-contracts">
@@ -121,7 +114,7 @@ class Dashboard extends Component {
 
         <section className="my-contracts">
           <ul className="my-contracts__list">
-            {filterInstances && filterInstances.map((inst, j) => (
+            {filterInstances.length > 0 && filterInstances.map((inst, j) => (
               <li
                 key={j}
                 className="my-contracts__item">

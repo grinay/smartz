@@ -8,7 +8,6 @@ import history from './helpers/history';
 import store from './store/store';
 import App from './app/AppContainer';
 
-// import './index.scss';
 import './index.less';
 
 ReactDOM.render(

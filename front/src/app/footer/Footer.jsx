@@ -18,6 +18,7 @@ class Footer extends Component {
             />
           </p>
           <div className="page-footer__block">
+            {/* Store */}
             <div className="page-footer__section  page-footer__section--store">
               <h3 className="page-footer__header">
                 Store
@@ -55,35 +56,33 @@ class Footer extends Component {
                 </li>
               </ul>
             </div>
-            {/* <div className="page-footer__section  page-footer__section--contracts">
-              <h3 className="page-footer__header">
-                Contracts
-              </h3>
-              <ul className="page-footer__list">
-                <li className="page-footer__item">
-                  <Link to="/dashboard" className="page-footer__link">
-                    Running
-                  </Link>
-                </li>
-                <li className="page-footer__item">
-                  <Link to="/dashboard" className="page-footer__link">
-                    All my contracts
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {/* Developers */}
             <div className="page-footer__section  page-footer__section--contracts">
               <h3 className="page-footer__header">
                 Developers
               </h3>
               <ul className="page-footer__list">
                 <li className="page-footer__item">
+                  <a
+                    className="page-footer__link"
+                    target="_blank"
+                    href=" https://wiki.smartz.io/en/contract-uploading">
+                    Docs
+                    </a>
+                </li>
+                <li className="page-footer__item">
+                  <Link to="/ctor-add" className="page-footer__link">
+                    Add contract
+                  </Link>
+                </li>
+                <li className="page-footer__item">
                   <Link to="/my-dapps" className="page-footer__link">
-                    My dapps
+                    My sandbox
                   </Link>
                 </li>
               </ul>
-            </div> */}
+            </div>
+            {/* Dashboard */}
             <div className="page-footer__section  page-footer__section--dashboard">
               <h3 className="page-footer__header">
                 Dashboard
@@ -96,16 +95,12 @@ class Footer extends Component {
                 </li>
               </ul>
             </div>
+            {/* Support */}
             <div className="page-footer__section  page-footer__section--support">
               <h3 className="page-footer__header">
                 Support
               </h3>
               <ul className="page-footer__list">
-                {/* <li className="page-footer__item">
-                  <Link to="/docs" className="page-footer__link">
-                    Docs
-                  </Link>
-                </li> */}
                 <li className="page-footer__item">
                   <a className="page-footer__link" href="#">Help center</a>
                 </li>
@@ -120,6 +115,7 @@ class Footer extends Component {
                 </li>
               </ul>
             </div>
+            {/* Follow us */}
             <div className="page-footer__section  page-footer__section--social">
               <h3 className="page-footer__header">
                 Follow us

@@ -241,7 +241,7 @@ module.exports = (env) => {
         'process.env.NODE_ENV': JSON.stringify(env)
       }),
       new DotenvPlugin({
-        defaults: './config/.env.defaults',
+        defaults: './config/.env.default',
         path: './config/.env.local'
       }),
       // копирование папок и файлов

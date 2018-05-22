@@ -11,12 +11,6 @@ class CtorCard extends Component {
     const isAuthenticated = Auth.isAuthenticated();
     const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['user_id'] : -1;
 
-    const buttonText = isAuthenticated
-      ? (ctor.price_eth
-        ? `${ctor.price_eth} ETH`
-        : 'Deploy free')
-      : 'Login to deploy';
-
     return (
       <article className="ctor-card">
         <Link
@@ -43,7 +37,7 @@ class CtorCard extends Component {
               <Link
                 to={`/deploy/${ctor.ctor_id}`}
                 className="btn ctor-card__price">
-                {buttonText}
+                {ctor.price_eth ? `${ctor.price_eth} ETH` : 'Deploy free'}
               </Link>
 
               {

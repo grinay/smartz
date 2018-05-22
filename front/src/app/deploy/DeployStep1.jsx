@@ -36,9 +36,9 @@ class DeployStep1 extends PureComponent {
         ctor.schema.properties = {};
       }
       ctor.schema.properties.instance_title = {
-        title: "Instance name",
+        title: "Contract instance name",
         type: "string",
-        description: "Name of smart contract instance you are now configuring and deploying (any string of 3..100 chars)",
+        description: "Name of contract instance which you are now configuring and deploying. Will be used only in Smartz interfaces. Any string from 3 to 100 symbols",
         minLength: 3,
         maxLength: 100
       };
