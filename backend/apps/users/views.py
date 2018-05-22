@@ -1,5 +1,8 @@
+from datetime import datetime
 from typing import Dict
 
+import pytz
+from django.conf import settings
 from django.db import transaction
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
@@ -29,7 +32,16 @@ class LoginBaseView(View):
 @method_decorator(assert_swagger_schema_validated, name='dispatch')
 class LoginStartView(LoginBaseView):
     def post(self, request):
-        descr = 'Sign this text message to login to smartz.io'
+        curr_date = datetime.now(tz=pytz.timezone(settings.TIME_ZONE))
+
+        descr = "Sign this text message to login to smartz.io\n" \
+                "Your address: {}\n" \
+                "Current time: {}\n" \
+                "Random data: ".format(
+                    request.data.get('identity'),
+                    curr_date.strftime("%Y.%m.%d %H:%I:%S %Z".format(settings.TIME_ZONE))
+                )
+
         service = self._require_service(request.data.get('blockchain'))
 
         rand_data = service.get_rand_data(request.data.get('identity'), descr)

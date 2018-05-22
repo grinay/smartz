@@ -72,7 +72,7 @@ class EthereumSignService(SignService):
         return recovered_addr.lower() == identity.lower()
 
     def build_descr_data(self, descr, data):
-        return "{}\n{}".format(descr, data)
+        return "{}{}".format(descr, data)
 
 
 class EOSSignService(SignService):

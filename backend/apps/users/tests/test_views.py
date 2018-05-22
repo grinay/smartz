@@ -30,25 +30,26 @@ class LoginViewsIntegrationTests(WebTest):
         resp_start = self.app.post_json('/api/users/login/start', params={"blockchain": "ethereum", "identity": self.addr})
 
         assert 'description' in resp_start.json
-        assert resp_start.json['description'] == 'Sign this text message to login to smartz.io'
+        assert 'Sign this text message to login to smartz.io\nYour address: {}'.format(self.addr) \
+               in resp_start.json['description']
 
-        assert 'data' in resp_start.json
-        assert type(resp_start.json['data']) == str
-        assert len(resp_start.json['data']) == 32
+        assert 'rand_data' in resp_start.json
+        assert type(resp_start.json['rand_data']) == str
+        assert len(resp_start.json['rand_data']) == 32
 
         # todo test for metamask sign (v=27-28)
         signed_data = sign_as_hex(
-            "{}\n{}".format(resp_start.json['description'], resp_start.json['data']),
+            "{}{}".format(resp_start.json['description'], resp_start.json['rand_data']),
             self.priv_key
         )
 
 
         resp_finish = self.app.post_json(
-            '/api/users/login',
+            '/api/users/login/finish',
             params={
                 "blockchain": "ethereum",
                 "identity": self.addr,
-                "rand_data": resp_start.json['data'],
+                "rand_data": resp_start.json['rand_data'],
                 "signed_data": signed_data
             }
         )

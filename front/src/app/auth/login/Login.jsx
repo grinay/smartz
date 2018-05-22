@@ -44,7 +44,7 @@ class Login extends Component {
       this.startedLogins[rand_data] = true;
 
       web3.personal.sign(
-        web3.toHex(`${startLoginData.description}\n${startLoginData.rand_data}`),
+        web3.toHex(`${startLoginData.description}${startLoginData.rand_data}`),
         web3.eth.accounts[0],
         (error, signedMsg)=> {
           if (error) {
