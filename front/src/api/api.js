@@ -4,6 +4,7 @@ import Auth from '../app/auth/Auth';
 import MockAdapter from 'axios-mock-adapter';
 import subscribeMockRequests from './apiMock';
 import { requestsConfig } from '../../config/config';
+import history from '../helpers/history'
 
 if (requestsConfig.USE_MOCK) {
   subscribeMockRequests(new MockAdapter(axios));
@@ -56,6 +57,26 @@ function logFetch(promise) {
   return wrapper;
 }
 
+function checkToken(promise) {
+
+  function wrapper(url, data, method, mock) {
+
+    const result = promise(url, data, method, mock);
+
+    result
+      .then(response => {
+        const { data, status } = response;
+
+        if (status === 200 && data.error && data.error === 'Token expired. Please log in again') {
+          history.replace('/login');
+        }
+      });
+
+    return result;
+  }
+  return wrapper;
+}
+
 const apiNew = (url = '/', data = undefined, method = 'post', mock = requestsConfig.USE_MOCK) => {
   const accessToken = Auth.isAuthenticated() ? Auth.getAccessToken() : null;
 
@@ -75,5 +96,6 @@ const apiNew = (url = '/', data = undefined, method = 'post', mock = requestsCon
   return axios(config);
 };
 
-// todo check token expired and forward to login page
-export const fetch = process.env.NODE_ENV !== 'production' ? logFetch(apiNew) : apiNew;
+const api = checkToken(apiNew);
+
+export const fetch = process.env.NODE_ENV !== 'production' ? logFetch(api) : api;
