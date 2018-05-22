@@ -11,7 +11,7 @@ class LoginStartTests(WebTest):
     def test_incorrect_blockchain(self):
         response = self.app.post_json(
             '/api/users/login/start',
-            params={"blockchain": "usdchain", "public_key": "123"},
+            params={"blockchain": "usdchain", "identity": "123"},
             expect_errors=True
         )
 
@@ -27,7 +27,7 @@ class LoginViewsIntegrationTests(WebTest):
     # todo test expired
     def test_register(self):
 
-        resp_start = self.app.post_json('/api/users/login/start', params={"blockchain": "ethereum", "public_key": self.addr})
+        resp_start = self.app.post_json('/api/users/login/start', params={"blockchain": "ethereum", "identity": self.addr})
 
         assert 'description' in resp_start.json
         assert resp_start.json['description'] == 'Sign this text message to login to smartz.io'
@@ -44,10 +44,10 @@ class LoginViewsIntegrationTests(WebTest):
 
 
         resp_finish = self.app.post_json(
-            '/api/users/login/finish',
+            '/api/users/login',
             params={
                 "blockchain": "ethereum",
-                "public_key": self.addr,
+                "identity": self.addr,
                 "rand_data": resp_start.json['data'],
                 "signed_data": signed_data
             }

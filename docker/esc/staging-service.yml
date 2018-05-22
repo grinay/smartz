@@ -1,22 +1,12 @@
 version: '2'
 services:
 
-  mongo:
-    mem_limit: 0.4GB
-    image: docker.io/mongo:latest
-    restart: always
-    volumes:
-    - "mongodb:/data/db"
-    networks:
-    - backendnet
-
   frontend:
     mem_limit: 0.2GB
     image: 128894178443.dkr.ecr.eu-central-1.amazonaws.com/smartz_frontend:latest
     restart: always
     depends_on:
     - backend
-    - mongo
     environment:
     - BASIC_AUTH=mixbytes:$$apr1$$xx19Hrq5$$7xS6s9p7Qlea9/rn04prg0
     volumes:
@@ -36,7 +26,6 @@ services:
 
 volumes:
   backendsocket:
-  mongodb:
   backenddata:
 
 networks:

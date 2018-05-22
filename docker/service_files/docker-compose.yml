@@ -1,12 +1,6 @@
 version: '3.2'
 services:
 
-  mongo:
-    image: mongo:3.6.3
-    restart: always
-    volumes:
-      - "mongodb:/data/db"
-
   frontend:
     image: smartzplatform_frontend:latest
     env_file:
@@ -25,8 +19,6 @@ services:
     env_file:
       - /etc/smartzplatform.env
     restart: always
-    depends_on:
-      - mongo
     volumes:
       - "backendsocket:/app/sock"
       - "backenddata:/app/data"
@@ -35,7 +27,6 @@ services:
 
 volumes:
   backenddata:
-  mongodb:
   django_static:
   backendsocket:
     driver: local

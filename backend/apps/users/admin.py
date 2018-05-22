@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, AuthToken, PublicKey, RandomDataForSign
+from .models import User, RandomDataForSign, UserIdentity
 
 admin.site.register(User, UserAdmin)
-admin.site.register(AuthToken)
-admin.site.register(PublicKey)
+admin.site.register(UserIdentity)
 admin.site.register(RandomDataForSign)

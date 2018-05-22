@@ -177,7 +177,7 @@ export function sendFormDataDeployStep1(ctorId, deployId, data, formData) {
 // =============================================================================
 
 export function startLogin(blockchain, identity) {
-    const result = fetch(`/users/login/start`, {blockchain: blockchain, public_key: identity}, 'post');
+    const result = fetch(`/users/login/start`, {blockchain: blockchain, identity: identity}, 'post');
 
     dispatch(startLoginAction(blockchain, identity));
 
@@ -204,7 +204,7 @@ export function finishLogin(blockchain, identity, randData, signedData) {
       `/users/login/finish`,
       {
         blockchain: blockchain,
-        public_key: identity,
+        identity: identity,
         rand_data: randData,
         signed_data: signedData
       },

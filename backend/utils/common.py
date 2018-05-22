@@ -5,7 +5,7 @@ import jwt
 import pytz
 from django.conf import settings
 
-from apps.users.models import AuthToken, User
+from apps.users.models import User
 from utils.responses import error_response
 
 
@@ -48,7 +48,7 @@ def auth(request):
 
     try:
         user = User.objects.get(pk=data['user_id'])
-    except AuthToken.DoesNotExist:
+    except User.DoesNotExist:
         # very strange
         return error_response('not authorized')
 

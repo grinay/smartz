@@ -11,6 +11,7 @@ import store from '../../../store/store';
 const { dispatch } = store;
 
 import auth from '../Auth'
+import { loginErrorAction } from './LoginActions'
 
 
 
@@ -38,18 +39,18 @@ class Login extends Component {
   componentDidUpdate() {
     const {startLoginData, blockchain, identity, token} = this.props.login;
 
-    if (startLoginData && !this.startedLogins[startLoginData.data]) {
-      const {descr, data} = startLoginData;
-      this.startedLogins[data] = true;
+    if (startLoginData && !this.startedLogins[startLoginData.rand_data]) {
+      const {descr, rand_data} = startLoginData;
+      this.startedLogins[rand_data] = true;
 
       web3.personal.sign(
-        web3.toHex(`${startLoginData.description}\n${startLoginData.data}`),
+        web3.toHex(`${startLoginData.description}\n${startLoginData.rand_data}`),
         web3.eth.accounts[0],
         (error, signedMsg)=> {
           if (error) {
             dispatch(loginErrorAction('Sign canceled'))
           } else {
-            finishLogin(blockchain, identity, data, signedMsg)
+            finishLogin(blockchain, identity, rand_data, signedMsg)
           }
         }
       )

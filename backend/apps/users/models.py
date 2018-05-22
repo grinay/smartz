@@ -8,25 +8,24 @@ class User(AbstractUser):
     pass
 
 
-class AuthToken(models.Model):
-    token = models.CharField(max_length=200, unique=True)
-    user_id = models.CharField(max_length=200)
-
-
-class PublicKey(models.Model):
-    public_key = models.CharField(max_length=60)
-    blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50)
+class UserIdentity(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
+    identity = models.CharField(max_length=60)
+    blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50)
+    # eos - network will be added
+    # facebook - type will be added (oauth, sigh etc)
+
+
     class Meta:
-        unique_together = (('public_key', 'blockchain'),)
+        unique_together = (('identity', 'blockchain'),)
 
     def __str__(self):
-        return "{}_{}".format(self.blockchain, self.public_key)
+        return "{}_{}".format(self.blockchain, self.identity)
 
 
 class RandomDataForSign(models.Model):
-    public_key = models.CharField(max_length=60)
+    identity = models.CharField(max_length=60)
     blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50)
     description = models.CharField(max_length=300)
     data = models.CharField(max_length=32)
@@ -34,7 +33,7 @@ class RandomDataForSign(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['public_key', 'blockchain']),
+            models.Index(fields=['identity', 'blockchain']),
         ]
 
     def __str__(self):

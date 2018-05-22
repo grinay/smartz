@@ -27,23 +27,7 @@ docker-compose down
 
 **Container environment (dev, prod, stage)**
 
-## containerized DB backup/restore
 
-mongo service should be up before backup/restore (docker-compose up)
-
-### Dump all databases to ./backupdb/$currentdate folder:
-```
-docker-compose -f db-backup.yml run mongo_dump
-```
-### Restore dump from ./restoredb folder:
-```
-docker-compose -f db-backup.yml run mongo_restore
-```
-### Dump-restore DB on stage/prod server
-```
-docker-compose -f db-backup.yml -p smartzplatform run mongo_dump
-docker-compose -f db-backup.yml -p smartzplatform run mongo_restore
-```
 ### [Stage URL](https://staging.smartz.io)
 
 ## Update service (stage, prod)

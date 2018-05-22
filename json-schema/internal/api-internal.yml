@@ -49,10 +49,10 @@ definitions:
   SignRequest:
     type: object
     required:
-      - public_key
+      - identity
       - blockchain
     properties:
-      public_key:
+      identity:
         type: string
       blockchain:
         type: string
@@ -60,26 +60,28 @@ definitions:
     type: object
     required:
       - description
-      - data
+      - rand_data
     properties:
       description:
         type: string
-      data:
+      rand_data:
         type: string
 
   SignedData:
     type: object
     required:
-      - public_key
+      - identity
       - blockchain
       - rand_data
       - signed_data
     properties:
-      public_key:
+      identity:
         type: string
       blockchain:
         type: string
       signed_data:
+        type: string
+      rand_data:
         type: string
 
 

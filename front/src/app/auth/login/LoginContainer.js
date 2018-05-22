@@ -4,8 +4,8 @@ import { find } from 'lodash';
 
 import Login from './Login';
 import {
-  startLogin,
-  finishLogin
+  startLoginAction,
+  finishLoginAction
 } from './LoginActions';
 
 const mapStateToProps = (state) => {
@@ -15,8 +15,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  startLogin,
-  finishLogin
+  startLoginAction,
+  finishLoginAction
 };
 
 const LoginContainer = withRouter(

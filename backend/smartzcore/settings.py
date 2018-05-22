@@ -134,9 +134,6 @@ class Common(Configuration):
     AUTH_USER_MODEL = 'users.User'
 
     # SMARTZ settings
-    SMARTZ_MONGO_HOST = 'mongo' # docker container
-
-    AUTH0_HOST = 'smartz.auth0.com'
 
     SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL = os.environ.get('CONSTRUCTOR_CALL_SERVICE_URL')
     assert SMARTZ_CONSTRUCTOR_CALL_SERVICE_URL, "Constructor call service url is not set in env"
@@ -146,9 +143,12 @@ class Common(Configuration):
     SMARTZ_ROOT_DIR = os.path.realpath(BASE_DIR)
     SMARTZ_CONSTRUCTOR_DATA_DIR = os.path.join(SMARTZ_ROOT_DIR, 'data')
     # inside docker in the same dir
-    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(SMARTZ_ROOT_DIR, 'json-schema')
+    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(SMARTZ_ROOT_DIR, '..', 'json-schema')
 
-    SMARTZ_INTERNAL_API_SWAGGER_SCHEMA = os.path.realpath(os.path.join(SMARTZ_ROOT_DIR, '../docs/interfaces/api-internal.yml'))# all api methods will use thi prefix
+    SMARTZ_INTERNAL_API_SWAGGER_SCHEMA = os.path.realpath(
+        os.path.join(SMARTZ_JSON_SCHEMA_ROOT_PATH, 'internal/api-internal.yml')
+    )# all api methods will use this prefix
+
     SMARTZ_API_PREFIX = 'api/'
 
     # business logic
@@ -180,11 +180,8 @@ class DevelopmentLocal(Development):
     """
 
     # local machine paths
-    SMARTZ_MONGO_HOST = '127.0.0.1'
     SMARTZ_SOLC_PATH = 'solc'
 
-    # for local development in repo path
-    SMARTZ_JSON_SCHEMA_ROOT_PATH = os.path.join(Development.SMARTZ_ROOT_DIR, '..', 'json-schema')
 
 
 class Staging(Common):

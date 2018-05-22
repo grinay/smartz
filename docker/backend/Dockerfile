@@ -2,7 +2,7 @@ FROM alpine:3.7 AS python_stage
 WORKDIR /app
 RUN apk --no-cache --update upgrade \
 && apk --no-cache add python3 python3-dev g++ make
-RUN apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev
+RUN apk add --virtual .build-deps gcc python3-dev musl-dev postgresql-dev libffi-dev gmp-dev
 RUN pip3 install pipenv
 COPY backend/Pipfile .
 COPY backend/Pipfile.lock .
@@ -26,7 +26,7 @@ WORKDIR /app
 VOLUME [ "/app/sock", "/app/data" ]
 ADD https://github.com/ethereum/solidity/releases/download/v0.4.20/solc-static-linux /usr/local/bin/solc
 RUN apk --no-cache --update upgrade \
-&& apk --no-cache add nodejs python3 uwsgi uwsgi-python3 postgresql \
+&& apk --no-cache add nodejs python3 uwsgi uwsgi-python3 postgresql gmp \
 && chmod 755 /usr/local/bin/solc
 COPY --from=python_stage /app/ .
 COPY json-schema/ /json-schema

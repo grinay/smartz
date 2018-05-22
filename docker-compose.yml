@@ -1,12 +1,6 @@
 version: '3.2'
 services:
 
-  mongo:
-    image: mongo:3.6.3
-    restart: "no"
-    volumes:
-      - "mongodb:/data/db"
-
   postgres:
     image: postgres:10.3-alpine
     restart: "no"
@@ -38,7 +32,6 @@ services:
       - smartzplatform.env
     restart: "no"
     depends_on:
-      - mongo
       - postgres
     volumes:
       - "backendsocket:/app/sock"
@@ -48,7 +41,6 @@ services:
 
 volumes:
   backenddata:
-  mongodb:
   pgdata:
   django_static:
   backendsocket:
