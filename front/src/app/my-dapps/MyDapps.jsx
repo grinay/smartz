@@ -29,6 +29,7 @@ class MyDapps extends Component {
         <div className="ctor-block">
           {ctors &&
             <ul className="ctor-list">
+              {/* TODO: fix this */}
               {/* {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) => */}
               {ctors.map((el, i) => {
                 if (i < 2) {
