@@ -123,7 +123,7 @@ class Footer extends Component {
                       </a>
                     </li>
                     <li className="social__item">
-                      <a href="https://github.com/mixbytes" className="social__link  social__link--github" aria-label="Follow us on Github" target="_blank" rel="noopener noreferrer">
+                      <a href="https://github.com/smartzplatform" className="social__link  social__link--github" aria-label="Follow us on Github" target="_blank" rel="noopener noreferrer">
                         <svg className="social__icon  social__icon--github" width="26" height="26">
                           <use href="#social-github"></use>
                         </svg>

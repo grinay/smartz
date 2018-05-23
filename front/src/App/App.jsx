@@ -100,7 +100,7 @@ class App extends Component {
           <PrivateRoute path="/dashboard" component={props =>
             <Dashboard metamaskStatus={metamaskStatus} {...props} />
           } />
-          <PrivateRoute path="/instance/:id" component={props =>
+          <Route path="/instance/:id" component={props =>
             <Instance metamaskStatus={metamaskStatus} {...props} />
           } />
 
