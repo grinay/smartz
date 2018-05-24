@@ -140,7 +140,7 @@ class Footer extends Component {
           <a href="mailto:hello@smartz.io">hello@smartz.io</a>
           &nbsp;&nbsp;&nbsp;
           <a href="https://t.me/LoungerX">t.me/LoungerX</a>
-          <p>Designed by <a href="">Artdictators</a></p>
+          <p>Designed by <a href="http://artdictators.ru/">Artdictators</a></p>
         </section>
         {/* Policy */}
         <section className="policy">
