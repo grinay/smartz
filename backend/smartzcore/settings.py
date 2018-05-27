@@ -131,6 +131,43 @@ class Common(Configuration):
     STATIC_URL = '/backend-static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s  %(module)s %(process)d %(thread)d %(message)s'
+            },
+            'simple': {
+                'format': '%(asctime)s [%(levelname)s][%(name)s] %(message)s'
+            },
+        },
+        'handlers': {
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple'
+            },
+        },
+        'loggers': {
+            'apps': {
+                'handlers': ['console'],
+                'level': 'INFO',
+            },
+            'smartzcore': {
+                'handlers': ['console'],
+                'level': 'INFO',
+            },
+            'utils': {
+                'handlers': ['console'],
+                'level': 'INFO',
+            },
+        }
+    }
+
+
+
     AUTH_USER_MODEL = 'users.User'
 
     # SMARTZ settings

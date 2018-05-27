@@ -1,14 +1,14 @@
+import logging
+
 from django.http import JsonResponse
 
 
+logger = logging.getLogger(__name__)
+
+
 def error_response(string):
-    print('[ERROR]: {}'.format(string))
+    logger.error('Error response: {}'.format(string))
     return JsonResponse({'error': string})
-
-
-# todo delete this
-def ok_response(result):
-    return JsonResponse({'ok': True, 'result': result})
 
 
 def engine_error_response(res):

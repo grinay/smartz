@@ -15,7 +15,9 @@ def sign_as_hex(text2sign, priv_key):
 
 
 def recover_addr_from_signed(signed_data, data):
-    # different format of v part in metamask sign and coincurvew
+    # different format of v part in metamask sign and coincurve
+    # ecsign(hash, key) - returns the v, r, s values of a signature
+    # in metamask v encoded as is, in python v-27
     if int(signed_data[-2:], 16) > 3:
         normalized_v = int(signed_data[-2:], 16) - 27
         signed_data = "{}{:02x}".format(signed_data[:-2], normalized_v)

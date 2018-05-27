@@ -16,7 +16,7 @@ class LoginStartTests(WebTest):
         )
 
         self.assertEqual(response.status_int, 200)
-        self.assertJSONEqual(response.body, {'error': 'Blockchain is not supported'})
+        self.assertJSONEqual(response.body, {'error': "Blockchain 'usdchain' is not supported"})
 
 
 class LoginViewsIntegrationTests(WebTest):
@@ -37,7 +37,6 @@ class LoginViewsIntegrationTests(WebTest):
         assert type(resp_start.json['rand_data']) == str
         assert len(resp_start.json['rand_data']) == 32
 
-        # todo test for metamask sign (v=27-28)
         signed_data = sign_as_hex(
             "{}{}".format(resp_start.json['description'], resp_start.json['rand_data']),
             self.priv_key
