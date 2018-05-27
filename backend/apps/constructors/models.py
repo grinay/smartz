@@ -1,7 +1,9 @@
 import random
 import string
 
+from django.core.exceptions import ValidationError
 from django.db import models
+from eth_utils import is_address
 
 from apps.users.models import User
 
@@ -56,3 +58,7 @@ class Constructor(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self, *args, **kwargs):
+        if self.price_eth > 0 and not is_address(self.payment_address):
+            raise ValidationError('Correct payment address must be specified in constructor if price>0')
