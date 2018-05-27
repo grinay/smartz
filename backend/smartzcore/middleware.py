@@ -1,5 +1,6 @@
 import collections
 import json
+import logging
 
 from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
@@ -8,6 +9,9 @@ from flex.exceptions import ValidationError
 
 from smartzcore.exceptions import PublicException
 from smartzcore.http import error_response
+
+
+logger = logging.getLogger(__name__)
 
 
 class SmartzMiddleware(MiddlewareMixin):
@@ -54,11 +58,11 @@ class SwaggerRequestValidationMiddleware:
         except ValidationError as err:
             if 'path' in err.detail and isinstance(err.detail['path'], collections.Iterable) \
                     and len(err.detail['path'])>0 and 'No paths found for' in str(err.detail['path'][0]):
-                print("[NOTICE] {}".format(str(err.detail['path'][0])))
+                logger.info(str(err.detail['path'][0]))
                 request.is_swagger_schema_validated = True
             else:
-                print("[ERROR] {}".format(err))
-                return error_response(err)
+                logger.warning(str(err))
+                return error_response(str(err))
 
         return self.get_response(request)
 
@@ -72,7 +76,7 @@ class CatchExceptionMiddleware:
 
     def process_exception(self, request, exception):
         # todo maybe only for api
-        print("[ERROR] {}".format(str(exception)))
+        logger.error("Unhandled error: {}".format(str(exception)))
 
         if isinstance(exception, PublicException):
             return error_response(exception.public_message, 200)

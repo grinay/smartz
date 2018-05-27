@@ -1,4 +1,5 @@
 import abc
+import logging
 import re
 import shutil
 import sys
@@ -15,6 +16,8 @@ from django.conf import settings
 from apps.constructors.models import Constructor
 from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
 from smartz.json_schema import is_conforms2schema_part, load_schema
+
+logger = logging.getLogger(__name__)
 
 
 class BaseEngine(object):
@@ -110,8 +113,8 @@ class BaseEngine(object):
             bin, abi = self._compile(source, contract_name)
             abi = json.loads(abi)
         except Exception as e:
-            print("[DEBUG] Compilation error. Ex: {}".format(str(e)))
-            print("[DEBUG] Compilation error. Code: {}".format(source))
+            logger.warning("Compilation error. Ex: {}".format(str(e)))
+            logger.warning("Compilation error. Code: {}".format(source))
             return {
                 'result': 'error',
                 'error_descr': 'Compilation error'
@@ -180,7 +183,7 @@ class BaseEngine(object):
 
             return res.json()
         except Exception as e:
-            print("[DEBUG] {}".format(str(e)))
+            logger.warning("Failed to call constructor method {}: {}".format(method, str(e)))
             return {
                 "result": "error",
                 "error_descr": "Something got wrong/1"

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3                                                                                                                                                                                             import re
+import logging
 from datetime import datetime
 
 import jwt
@@ -55,5 +56,6 @@ def auth(request):
     if data['expires_at'] < datetime.now(pytz.timezone(settings.TIME_ZONE)).timestamp():
         return error_response('Token expired. Please log in again')
 
-    print("[DEBUG][AUTH] {}".format(user))
+    logger = logging.getLogger("{}.auth".format(__name__))
+    logger.debug(user)
     return user

@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from apps.contracts.models import Contract
 from utils.common import auth
-from utils.responses import ok_response, error_response
+from utils.responses import error_response
 from smartz.json_schema import load_schema, assert_conforms2schema_part
 
 
