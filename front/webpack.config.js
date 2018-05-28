@@ -9,6 +9,7 @@ const CaseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-pl
 const autoprefixer = require('autoprefixer');
 const DotenvPlugin = require('webpack-dotenv-extended-plugin');
 const { getIfUtils, removeEmpty, propIf } = require('webpack-config-utils');
+const { CheckerPlugin } = require('awesome-typescript-loader')
 
 const PORT = 3000;
 const HOST = 'localhost'
@@ -91,11 +92,45 @@ module.exports = (env) => {
             }),
           }
         },
-        // {
-        //   test: /\.(ts|tsx)$/,
-        //   include: path.join(__dirname),
-        //   use: ['babel-loader', 'ts-loader'],
-        // },
+        {
+          test: /\.(ts|tsx)$/,
+          include: path.join(__dirname),
+          use: {
+            loader: 'awesome-typescript-loader',
+            options: {
+              useBabel: true,
+              babelOptions: removeEmpty({
+                /* Important line */
+                // don't use .babelrc config
+                babelrc: false,
+                presets: [
+                  ["env", { "targets": "last 2 versions, ie 11", "modules": false }],
+                  "react", "stage-0"
+                ],
+                plugins: ifDevelopment(["react-hot-loader/babel"]),
+              }),
+
+
+              // babelrc: false,
+              // presets: [
+              //   ["env", {
+              //     "targets": {
+              //       "browsers": ["last 2 versions", "safari >= 7"]
+              //     }
+              //   }],
+              //   "react",
+              //   "stage-0"
+              // ],
+              // plugins: ifDevelopment(["react-hot-loader/babel"]),
+              // // This is a feature of `babel-loader` for webpack (not Babel itself).
+              // // It enables caching results in ./node_modules/.cache/babel-loader/
+              // // directory for faster rebuilds.
+              // cacheDirectory: ifDevelopment(true),
+              // // Do not include superfluous whitespace characters and line terminators
+              // compact: ifProduction(true),
+            },
+          }
+        },
         ifProduction({
           test: /\.less$/,
           loader: ExtractTextPlugin.extract({
@@ -116,26 +151,6 @@ module.exports = (env) => {
             'less-loader?sourceMap'
           ]
         }),
-        // ifProduction({
-        //   test: /\.(css|scss)$/,
-        //   loader: ExtractTextPlugin.extract({
-        //     fallback: 'style-loader',
-        //     use: [
-        //       'css-loader',
-        //       'postcss-loader',
-        //       'sass-loader'
-        //     ]
-        //   })
-        // }),
-        // ifDevelopment({
-        //   test: /\.(css|scss)$/,
-        //   use: [
-        //     'style-loader',
-        //     'css-loader?sourceMap',
-        //     'postcss-loader',
-        //     'sass-loader?sourceMap'
-        //   ]
-        // }),
         // загружает файлы в base64, если они < limit
         // если >, то просто вызывается file-loader
         {
@@ -219,6 +234,7 @@ module.exports = (env) => {
           minifyURLs: true,
         },
       })),
+      new CheckerPlugin(),
       // дополнительные опции для плагинов
       new webpack.LoaderOptionsPlugin(removeEmpty({
         minimize: ifProduction(true),

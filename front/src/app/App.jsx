@@ -19,6 +19,7 @@ import InfoBlock from './common/InfoBlock';
 import metamask from './common/img/metamask.png';
 import CustomContracts from './custom-contracts/CustomContracts';
 import { checkMetaMask } from '../helpers/eth';
+import eos from '../helpers/eos.ts';
 import Page404 from './page-404/Page404';
 
 import './App.less';
@@ -69,6 +70,7 @@ class App extends Component {
         setUserProfile(newProfile);
       });
     }
+
 
     return (
       <div>
