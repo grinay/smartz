@@ -31,7 +31,28 @@ class Header extends Component {
   render() {
     const { profile, location } = this.props;
     const { selectedMenu } = this.state;
-    const isAuthenticated = Auth.isAuthenticated();
+
+    let username;
+    if (Auth.isAuthenticated()) {
+      let profileName = profile && profile.last_name ? profile.last_name : 'Profile';
+
+      // cut string, template '0x111...111'
+      if (profileName.length > 8) {
+        profileName = profileName.substring(0, 5)
+          + '...' + profileName.substring(profileName.length - 3);
+      }
+
+      username = <span className="user-block__name" style={{ display: 'inherit' }}>
+        {profileName}
+      </span>;
+    } else {
+      username = <span>
+        <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
+          <use href="#lock" />
+        </svg>
+        <span className="user-block__login">Login</span>
+      </span>;
+    }
 
     return (
       <header className="page-header flex-v">
@@ -95,18 +116,7 @@ class Header extends Component {
               to="/profile"
               className="main-navigation__link">
               <li className="main-navigation__item flex">
-                {isAuthenticated
-                  ? <span className="user-block__name"
-                    style={{ display: 'inherit' }}>
-                    {profile && profile.last_name}
-                  </span>
-                  : <span>
-                    <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
-                      <use href="#lock" />
-                    </svg>
-                    <span className="user-block__login">Login</span>
-                  </span>
-                }
+                {username}
               </li>
             </Link>
           </ul>
