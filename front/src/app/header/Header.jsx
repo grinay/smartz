@@ -62,7 +62,7 @@ class Header extends Component {
         <section className="title-main flex-v">
           <p>{selectedMenu}</p>
         </section>
-        <nav className="main-navigation">
+        <nav className="main-navigation flex-v">
           <ul className="main-navigation__list flex-v">
             <NavLink
               to="/"
