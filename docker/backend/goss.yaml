@@ -12,7 +12,7 @@ file:
     size: 0
     owner: uwsgi
     group: uwsgi
-    filetype: file
+    filetype: socket
     contains: []
 user:
   uwsgi:
