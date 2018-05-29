@@ -70,7 +70,7 @@ class App extends Component {
     }
 
     return (
-      <div>
+      <main className="app">
         {/* block 'Install metamask' */}
         {metamaskStatus === 'noMetamask' &&
           <InfoBlock className="install-block flex">
@@ -135,7 +135,7 @@ class App extends Component {
         </Switch>
 
         <Route render={(props) => <Footer {...props} />} />
-      </div>
+      </main>
     );
   }
 }
