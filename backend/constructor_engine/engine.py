@@ -12,10 +12,15 @@ from decimal import Decimal
 
 import requests
 from django.conf import settings
+from typing import Dict
 
+from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS
 from apps.constructors.models import Constructor
+from constructor_engine.services import BaseCompilerService, EosCompilerService, EthereumCompilerService, \
+    BaseContractProcessor, EthereumContractProcessor, EosContractProcessor
 from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
 from smartz.json_schema import is_conforms2schema_part, load_schema
+from smartzcore.exceptions import PublicException
 
 logger = logging.getLogger(__name__)
 
@@ -30,11 +35,21 @@ class BaseEngine(object):
         METHOD_GET_VERSION, METHOD_GET_PARAMS, METHOD_CONSTRUCT, METHOD_POST_CONSTRUCT
     ]
 
+    _compiler_services: Dict[str, BaseCompilerService] = {
+        BLOCKCHAIN_ETHEREUM: EthereumCompilerService(),
+        BLOCKCHAIN_EOS: EosCompilerService()
+    }
+
+    _contract_processors: Dict[str, BaseContractProcessor] = {
+        BLOCKCHAIN_ETHEREUM: EthereumContractProcessor(),
+        BLOCKCHAIN_EOS: EosContractProcessor()
+    }
+
     def __init__(self, engine_settings):
         self._settings = engine_settings
         self._instances = {}
 
-    def register_new_ctor(self, constructor_id, filename):
+    def register_constructor(self, constructor_id, filename):
         self._save_constructor(constructor_id, filename)
 
     def get_constructor_version(self, constructor_id):
@@ -43,7 +58,7 @@ class BaseEngine(object):
 
         return res
 
-    def get_ctor_params(self, constructor_id):
+    def get_constructor_params(self, constructor_id):
         try:
             source = self._load_constructor(constructor_id)
         except Exception:
@@ -143,7 +158,6 @@ class BaseEngine(object):
             'dashboard_functions': post_construct_info['dashboard_functions']
         }
 
-
     @abc.abstractmethod
     def _save_constructor(self, id, filename):
         """Saves constructor to some storage"""
@@ -216,6 +230,18 @@ class BaseEngine(object):
                 abi = f.read()
 
             return bin, abi
+
+    def _require_compiler_service(self, blockchain):
+        if blockchain not in self._compiler_services:
+            raise PublicException("Blockchain '{}' is not supported".format(blockchain))
+
+        return self._compiler_services[blockchain]
+
+    def _require_contract_processors(self, blockchain):
+        if blockchain not in self._contract_processors:
+            raise PublicException("Blockchain '{}' is not supported".format(blockchain))
+
+        return self._contract_processors[blockchain]
 
 
 class SimpleStorageEngine(BaseEngine):

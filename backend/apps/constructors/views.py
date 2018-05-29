@@ -27,6 +27,11 @@ def _process_ctor_schema(schema):
     return add_definitions(schema, load_schema('public/ethereum-sc.json'))
 
 
+class WithEngineMixin:
+    def __init__(self):
+        self.constructor_engine = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
+
+
 class ListView(View):
 
     def get(self, request, *args, **kwargs):
@@ -54,10 +59,9 @@ class ListView(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class UploadView(View):
+class UploadView(View, WithEngineMixin):
 
     def post(self, request):
-        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
         args = request.data
 
         price_eth = str(args.get('price_eth', 0))
@@ -134,12 +138,12 @@ class UploadView(View):
         current_constructor.user = user
         current_constructor.save()
 
-        constructor_engine_instance.register_new_ctor(current_constructor.slug, filename)
+        self.constructor_engine.register_constructor(current_constructor.slug, filename)
 
         return JsonResponse({'ok': True})
 
 
-class GetParamsView(View):
+class GetParamsView(View, WithEngineMixin):
 
     def get(self, request, constructor_id):
         try:
@@ -147,8 +151,7 @@ class GetParamsView(View):
         except Constructor.DoesNotExist:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
-        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
-        constructor_params = constructor_engine_instance.get_ctor_params(constructor_id)
+        constructor_params = self.constructor_engine.get_constructor_params(constructor_id)
         if 'error' == constructor_params['result']:
             return engine_error_response(constructor_params)
 
@@ -165,7 +168,7 @@ class GetParamsView(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class ConstructView(View):
+class ConstructView(View, WithEngineMixin):
 
     def post(self, request, constructor_id):
         # parsed input data POST JSON payload
@@ -191,8 +194,7 @@ class ConstructView(View):
         if not instance_title or not isinstance(instance_title, str):
             return error_response("Wrong 'instance_title' param")
 
-        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
-        constructor_params = constructor_engine_instance.get_ctor_params(constructor_id)
+        constructor_params = self.constructor_engine.get_constructor_params(constructor_id)
         if 'error' == constructor_params['result']:
             return engine_error_response(constructor_params)
 
@@ -217,7 +219,7 @@ class ConstructView(View):
                 }
             )
 
-        result = constructor_engine_instance.construct(constructor_id, constructor, fields)
+        result = self.constructor_engine.construct(constructor_id, constructor, fields)
 
         if not isinstance(result, dict):
             return error_response("Constructor({}), construct error, result is not dict".format(constructor_id))

@@ -10,7 +10,7 @@ class TestSimpleStorageEngine(TestCase):
     def test__complex(self):
 
         engine = SimpleStorageEngine({'datadir': '/tmp'})
-        engine.register_new_ctor(
+        engine.register_constructor(
             '123',
             os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
@@ -18,11 +18,11 @@ class TestSimpleStorageEngine(TestCase):
             )
         )
 
-        self.assertEqual('error', engine.get_ctor_params('124'), 'Error on getting params of not registered contract')
+        self.assertEqual('error', engine.get_constructor_params('124'), 'Error on getting params of not registered contract')
 
         self.assertDictEqual(
             {'hard_cap': {'desc': 'Maximum funds', 'name': 'Mard cap', 'type': 'int'}},
-            engine.get_ctor_params('123'),
+            engine.get_constructor_params('123'),
             'contract params not equals'
         )
 
@@ -47,7 +47,7 @@ class TestSimpleStorageEngine(TestCase):
     def test__invalid_name(self):
 
         engine = SimpleStorageEngine({'datadir': '/tmp'})
-        engine.register_new_ctor(
+        engine.register_constructor(
             '123',
             os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
