@@ -1,88 +1,42 @@
 @import '../../styles/variables.less';
 
 .page-main {
+    flex: 1;
+
     padding-bottom: 61px;
 
-    .ctor-list {
-        display: grid;
+    .banner-section {
+        margin-top: 10px;
+    }
 
-        margin: 0;
-        padding: 0;
+    .sort-section {
+        margin-top: 10px;
+    }
 
-        list-style-type: none;
+    .ctor-section {
+        margin-top: 15px;
 
-        grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-        grid-gap: 10px;
+        .ctor-list {
+            display: grid;
 
-        .ctor-item {
-            // min-width: 240px;
-            // max-width: 360px;
-            margin-top: 35px;
+            margin: 0;
+            padding: 0;
+
+            list-style-type: none;
+
+            grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+            grid-gap: 10px;
+
+            .ctor-item {
+                // min-width: 240px;
+                // max-width: 360px;
+                margin-top: 35px;
+            }
         }
     }
 }
 
 .page-main--store {
     padding: 0 15px 40px;
-}
-
-@media (min-width: @screen-md) {
-    // .page-main--contracts, .page-main--my-contracts, .page-main--support {
-    //     padding-right: 50px;
-    //     padding-left: 50px;
-    // }
-
-    // .page-main__inner {
-    //     padding-right: 50px;
-    //     padding-left: 50px;
-    // }
-
-    // .page-main--running-contract {
-    //     padding-top: 0;
-
-    //     .page-main__link {
-    //         top: 22px;
-    //         left: 60px;
-    //     }
-    // }
-}
-
-@media (min-width: @screen-lg) {
-    // .page-main {
-    //     padding: 72px 50px 0 50px;
-
-    //     &--support {
-    //         display: flex;
-    //         align-items: flex-start;
-    //         justify-content: flex-start;
-
-    //         padding-top: 47px;
-    //     }
-
-    //     &--contracts {
-    //         display: flex;
-    //         align-items: flex-start;
-    //     }
-    // }
-
-    // .page-main--store {
-    //     padding-right: 0;
-    //     padding-left: 0;
-
-    //     .page-main__description {
-    //         margin-top: 0;
-    //         margin-bottom: 90px;
-
-    //         font-size: 70px;
-    //         line-height: 75px;
-    //     }
-    // }
-
-    // .page-main--running-contract {
-    //     .page-main__link {
-    //         top: 35px;
-    //         left: 60px;
-    //     }
-    // }
 }
 

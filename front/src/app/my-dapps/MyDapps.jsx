@@ -26,22 +26,13 @@ class MyDapps extends Component {
         {metamaskStatus !== 'okMetamask' &&
           <Alert standardAlert={metamaskStatus} />
         }
-        <div className="ctor-block">
+        <div className="ctor-section">
           {ctors &&
             <ul className="ctor-list">
-              {/* TODO: fix this */}
-              {/* {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) => */}
-              {ctors.map((el, i) => {
-                if (i < 2) {
-                  return (
-                    <li key={i} className="ctor-item">
-                      <CtorCard key={i} ctor={el} />
-                    </li>
-                  )
-                } else {
-                  return null;
-                }
-              }
+              {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) =>
+                <li key={i} className="ctor-item">
+                  <CtorCard key={i} ctor={el} />
+                </li>
               )}
             </ul>
           }

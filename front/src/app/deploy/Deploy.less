@@ -20,9 +20,11 @@
         }
 
         .form-title__title {
+            overflow: hidden;
             flex: 1;
 
             padding-left: 15px;
+
             h2 {
                 margin: 0 0 6px 0;
 
@@ -34,7 +36,11 @@
             }
 
             p {
+                overflow: hidden;
+
                 margin: 0;
+
+                text-overflow: ellipsis;
             }
         }
     }
@@ -42,6 +48,19 @@
     .block {
         border-radius: 8px;
         background-color: #FFFFFF;
+    }
+}
+
+@media (max-width: 1000px) {
+    .page-main--contracts {
+        width: 84%;
+        margin: 0 auto;
+    }
+}
+@media (max-width: 600px) {
+    .page-main--contracts {
+        width: 94%;
+        margin: 0 auto;
     }
 }
 
