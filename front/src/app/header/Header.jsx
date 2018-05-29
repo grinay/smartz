@@ -83,15 +83,6 @@ class Header extends Component {
                 <p>Dashboard</p>
               </li>
             </NavLink>
-            <NavLink
-              to="/custom-contracts"
-              className="main-navigation__link"
-              onClick={this.setMenu('Custom Contracts')}
-              activeClassName="active">
-              <li className='main-navigation__item flex'>
-                <p>Custom Contracts</p>
-              </li>
-            </NavLink>
             <a
               href="https://wiki.smartz.io/"
               className="main-navigation__link"
