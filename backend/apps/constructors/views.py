@@ -17,19 +17,14 @@ from jsonschema.validators import validator_for
 
 from apps.constructors.models import Constructor
 from apps.contracts.models import Contract
+from smartzcore.service_instances import WithEngineMixin
 from utils.common import auth, nonempty, args_string
 from utils.responses import  error_response, engine_error_response
-from constructor_engine.engine import SimpleStorageEngine
 from smartz.json_schema import load_schema, add_definitions
 
 
 def _process_ctor_schema(schema):
     return add_definitions(schema, load_schema('public/ethereum-sc.json'))
-
-
-class WithEngineMixin:
-    def __init__(self):
-        self.constructor_engine = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
 
 
 class ListView(View):

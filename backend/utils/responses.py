@@ -1,13 +1,12 @@
-import logging
-
 from django.http import JsonResponse
 
-
-logger = logging.getLogger(__name__)
+from smartzcore.service_instances import WithLogger
 
 
 def error_response(string):
-    logger.error('Error response: {}'.format(string))
+    logger = WithLogger()
+    logger.set_logger_name()
+    logger.logger.error('Error response: {}'.format(string))
     return JsonResponse({'error': string})
 
 

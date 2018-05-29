@@ -1,5 +1,4 @@
 import abc
-import logging
 import re
 import shutil
 import sys
@@ -21,11 +20,10 @@ from constructor_engine.services import BaseCompilerService, EosCompilerService,
 from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
 from smartz.json_schema import is_conforms2schema_part, load_schema
 from smartzcore.exceptions import PublicException
+from smartzcore.service_instances import WithLogger
 
-logger = logging.getLogger(__name__)
 
-
-class BaseEngine(object):
+class BaseEngine(WithLogger):
 
     METHOD_GET_VERSION    = 'get_version'
     METHOD_GET_PARAMS     = 'get_params'
@@ -128,8 +126,8 @@ class BaseEngine(object):
             bin, abi = self._compile(source, contract_name)
             abi = json.loads(abi)
         except Exception as e:
-            logger.warning("Compilation error. Ex: {}".format(str(e)))
-            logger.warning("Compilation error. Code: {}".format(source))
+            self.logger.warning("Compilation error. Ex: {}".format(str(e)))
+            self.logger.warning("Compilation error. Code: {}".format(source))
             return {
                 'result': 'error',
                 'error_descr': 'Compilation error'
@@ -197,7 +195,7 @@ class BaseEngine(object):
 
             return res.json()
         except Exception as e:
-            logger.warning("Failed to call constructor method {}: {}".format(method, str(e)))
+            self.logger.warning("Failed to call constructor method {}: {}".format(method, str(e)))
             return {
                 "result": "error",
                 "error_descr": "Something got wrong/1"
