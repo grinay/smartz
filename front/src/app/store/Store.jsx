@@ -10,6 +10,7 @@ import CustomContract from './custom-contract/CustomContract';
 import * as api from '../../api/apiRequests';
 
 import './Store.less';
+import Banner from './banner/Banner';
 
 class Store extends Component {
   componentDidMount() {
@@ -17,12 +18,23 @@ class Store extends Component {
   }
 
   render() {
-    const { ctors, metamaskStatus } = this.props;
+    const { ctors } = this.props;
 
     return (
       <main className="page-main  page-main--store">
-        <SortBlockchain />
-        <div className="ctor-block">
+
+        {/* Banner section */}
+        <section className="banner-section">
+          <Banner />
+        </section>
+
+        {/* Sorting section */}
+        <section className="sort-section">
+          <SortBlockchain />
+        </section>
+
+        {/* Contracts section */}
+        <section className="ctor-section">
           {ctors &&
             <ul className="ctor-list">
               {ctors.filter(el => el.is_public).map((el, i) =>
@@ -40,8 +52,13 @@ class Store extends Component {
           {!ctors &&
             <Spinner text="Loading contracts" width="100" />
           }
-        </div>
-        <DevBlock />
+        </section>
+
+        {/* Banner for developers section */}
+        <section className="dev-section">
+          <DevBlock />
+        </section>
+
       </main>
     );
   }
