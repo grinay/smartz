@@ -16,8 +16,8 @@ import Dashboard from './dashboard/DashboardContainer';
 import Instance from './instances/InstanceContainer';
 import Docs from './docs/Docs';
 import InfoBlock from './common/InfoBlock';
-import metamask from './common/img/metamask.png';
 import { checkMetaMask } from '../helpers/eth';
+import InstallExtension from './common/install-extension/InstallExtension';
 import Page404 from './page-404/Page404';
 
 import './App.less';
@@ -71,16 +71,13 @@ class App extends Component {
 
     return (
       <main className="app">
-        {/* block 'Install metamask' */}
+
+        {/* Install extension */}
         {metamaskStatus === 'noMetamask' &&
-          <InfoBlock className="install-block flex">
-            <img src={metamask} alt="" />
-            <p>To pay Ether you need a Metamask plugin.</p>
-            <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
-              target="_blanc">
-              <button>Install for Chrome</button>
-            </a>
-          </InfoBlock>
+          // <InfoBlock className="install-block flex">
+
+          // </InfoBlock>
+          <InstallExtension />
         }
 
         <Route render={(props) => (
