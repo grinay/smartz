@@ -214,7 +214,7 @@ class ConstructView(View, WithEngineMixin):
                 }
             )
 
-        result = self.constructor_engine.construct(constructor_id, constructor, fields)
+        result = self.constructor_engine.construct(constructor, fields)
 
         if not isinstance(result, dict):
             return error_response("Constructor({}), construct error, result is not dict".format(constructor_id))

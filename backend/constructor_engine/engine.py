@@ -11,7 +11,7 @@ from decimal import Decimal
 
 import requests
 from django.conf import settings
-from typing import Dict
+from typing import Dict, Tuple
 
 from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS
 from apps.constructors.models import Constructor
@@ -51,26 +51,24 @@ class BaseEngine(WithLogger):
         self._save_constructor(constructor_id, filename)
 
     def get_constructor_version(self, constructor_id):
-        source = self._load_constructor(constructor_id)
+        source = self._load_constructor_source(constructor_id)
         res = self._call_constructor_method(source, self.METHOD_GET_VERSION)
-
         return res
 
     def get_constructor_params(self, constructor_id):
         try:
-            source = self._load_constructor(constructor_id)
+            source = self._load_constructor_source(constructor_id)
         except Exception:
             return {
                 'result': 'error',
                 'error_descr': 'Failed to load constructor'
             }
         res = self._call_constructor_method(source, self.METHOD_GET_PARAMS)
-
         return res
 
-    def construct(self, constructor_id, constructor: Constructor, fields):
+    def construct(self, constructor: Constructor, fields):
         try:
-            constructor_source = self._load_constructor(constructor_id)
+            constructor_source = self._load_constructor_source(constructor.slug)
         except Exception:
             return {
                 'result': 'error',
@@ -93,37 +91,14 @@ class BaseEngine(WithLogger):
 
         source, contract_name = res['source'], res['contract_name']
 
-        if constructor.price_eth:
-            wei = int(constructor.price_eth * Decimal('1000000000000000000'))
-
-            if constructor.payment_address:
-                assert(settings.SMARTZ_COMMISSION < 1)
-
-                payment_code = """
-        address({commission_address}).transfer({commission} wei);
-        address({payment_address}).transfer({payment_sum} wei);
-                """.format(
-                    commission_address=settings.SMARTZ_COMMISSION_ADDRESS,
-                    commission=int(wei*settings.SMARTZ_COMMISSION),
-
-                    payment_address=constructor.payment_address,
-                    payment_sum=wei-int(wei*settings.SMARTZ_COMMISSION)
-                )
-            else:
-                payment_code = 'address({commission_address}).transfer({commission} wei);'.format(
-                    commission_address=settings.SMARTZ_COMMISSION_ADDRESS,
-                    commission=int(wei)
-                )
-
-            source = source.replace('%payment_code%', payment_code)
-        else:
-            source = source.replace('%payment_code%', '')
-
         if re.findall('[^a-zA-Z0-9]', contract_name):
             raise Exception
 
+        processor = self._require_contract_processor(constructor.blockchain)
+        source = processor.process_source(constructor, source, contract_name)
+
         try:
-            bin, abi = self._compile(source, contract_name)
+            bin, abi = self._compile(constructor, source, contract_name)
             abi = json.loads(abi)
         except Exception as e:
             self.logger.warning("Compilation error. Ex: {}".format(str(e)))
@@ -162,7 +137,7 @@ class BaseEngine(WithLogger):
         pass
 
     @abc.abstractmethod
-    def _load_constructor(self, id):
+    def _load_constructor_source(self, id):
         """Loads constructor from some storage, return constructor source"""
         pass
 
@@ -201,33 +176,10 @@ class BaseEngine(WithLogger):
                 "error_descr": "Something got wrong/1"
             }
 
-    def _compile(self, source, contract_name):
-        """compiles source fi"""
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            tmpfile, tmpfilename = tempfile.mkstemp(dir=tmpdir)
-            outsock = os.fdopen(tmpfile, 'w')
-            outsock.close() #closing resource
-
-            with open(tmpfilename, "w") as f:
-                print(source, file=f)
-
-            args = (settings.SMARTZ_SOLC_PATH, "--bin", "--abi", "--optimize", "-o", tmpdir, tmpfilename)
-            popen = subprocess.Popen(args, stdout=subprocess.PIPE)
-            popen.wait()
-
-            #out, err = popen.communicate()
-            #errcode = popen.returncode
-
-            #solc stores bin and abi in two files with the same names
-            out_file = os.path.join(tmpdir, contract_name)
-            with open('{}.bin'.format(out_file)) as f:
-                bin = f.read()
-
-            with open('{}.abi'.format(out_file)) as f:
-                abi = f.read()
-
-            return bin, abi
+    def _compile(self, constructor: Constructor, source: str, contract_name: str) -> Tuple[str, str]:
+        """compiles source """
+        compiler = self._require_compiler_service(constructor.blockchain)
+        return compiler.compile(constructor, source, contract_name)
 
     def _require_compiler_service(self, blockchain):
         if blockchain not in self._compiler_services:
@@ -235,7 +187,7 @@ class BaseEngine(WithLogger):
 
         return self._compiler_services[blockchain]
 
-    def _require_contract_processors(self, blockchain):
+    def _require_contract_processor(self, blockchain):
         if blockchain not in self._contract_processors:
             raise PublicException("Blockchain '{}' is not supported".format(blockchain))
 
@@ -264,7 +216,7 @@ class SimpleStorageEngine(BaseEngine):
     def _save_constructor(self, id, filename):
         shutil.copy(filename, self._get_filename(id))
 
-    def _load_constructor(self, id):
+    def _load_constructor_source(self, id):
         f = open(self._get_filename(id), 'r')
         source = f.read()
         f.close()

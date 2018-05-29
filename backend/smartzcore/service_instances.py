@@ -8,7 +8,7 @@ class WithEngineMixin:
     @property
     def constructor_engine(self):
         from constructor_engine.engine import SimpleStorageEngine
-        if not getattr(self, '_constructor_engine'):
+        if not hasattr(self, '_constructor_engine'):
             self._constructor_engine = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
 
         return self._constructor_engine

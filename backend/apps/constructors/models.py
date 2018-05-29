@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from eth_utils import is_address
 
+from apps.common.constants import BLOCKCHAINS, BLOCKCHAIN_ETHEREUM
 from apps.users.models import User
 
 
@@ -17,6 +18,8 @@ class Constructor(models.Model):
     is_public = models.BooleanField(default=False)
     auth0_user_id = models.CharField(max_length=200, blank=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+
+    blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50, default=BLOCKCHAIN_ETHEREUM)
 
     @property
     def image(self):
