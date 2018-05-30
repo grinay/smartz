@@ -35,7 +35,7 @@ class Auth {
   setSession(token, authResult) {
     localStorage.setItem('access_token2', token);
     localStorage.setItem('access_token_decoded', JSON.stringify(authResult));
-    localStorage.setItem('expires_at', JSON.stringify(authResult.expires_at * 1000));
+    localStorage.setItem('expires_at2', JSON.stringify(authResult.expires_at * 1000));
     // navigate to the redirect route
     history.replace(localStorage.getItem('route_after_login'));
   }
@@ -62,7 +62,7 @@ class Auth {
     // Clear access token and ID token from local storage
     localStorage.removeItem('access_token2');
     localStorage.removeItem('access_token_decoded');
-    localStorage.removeItem('expires_at');
+    localStorage.removeItem('expires_at2');
 
     this.userProfile = null;
 
@@ -72,7 +72,7 @@ class Auth {
   isAuthenticated() {
     // Check whether the current time is past the
     // access token's expiry time
-    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    let expiresAt = JSON.parse(localStorage.getItem('expires_at2'));
     return new Date().getTime() < expiresAt;
   }
 }
