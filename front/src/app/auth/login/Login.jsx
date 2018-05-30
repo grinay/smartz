@@ -77,7 +77,7 @@ class Login extends Component {
         }
 
         <button className="button block__button" onClick={this.metamaskLogin}>
-          Login with metamask
+          Login with your Ethereum signature
         </button>
       </main>
     );
