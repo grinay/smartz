@@ -11,6 +11,11 @@ class CtorAdd extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
+
   submit({ formData }) {
     formData['constructor_id'] = this.getId();
 

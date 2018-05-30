@@ -25,6 +25,11 @@ class Deploy extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
+
   componentWillMount() {
     const { status, initDeploy } = this.props;
     const { ctorId, deployId } = this.state;

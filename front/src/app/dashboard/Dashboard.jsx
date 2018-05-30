@@ -25,6 +25,11 @@ class Dashboard extends Component {
     api.getInstances();
   }
 
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
+
   componentWillReceiveProps(nextProps) {
     const { metamaskStatus, instances } = this.props;
 

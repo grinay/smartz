@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Auth from '../Auth';
-import {find} from "lodash";
-import {blockchains} from "../../../helpers/constants";
-import {web3} from "../../../helpers/eth";
+import { find } from "lodash";
+import { blockchains } from "../../../helpers/constants";
+import { web3 } from "../../../helpers/eth";
 import { finishLogin, startLogin } from '../../../api/apiRequests'
 import Alert from '../../common/Alert'
 
@@ -26,6 +26,11 @@ class Login extends Component {
     this.metamaskLogin = this.metamaskLogin.bind(this);
   }
 
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
+
   metamaskLogin() {
     const { metamaskStatus } = this.props;
 
@@ -37,16 +42,16 @@ class Login extends Component {
   }
 
   componentDidUpdate() {
-    const {startLoginData, blockchain, identity, token} = this.props.login;
+    const { startLoginData, blockchain, identity, token } = this.props.login;
 
     if (startLoginData && !this.startedLogins[startLoginData.rand_data]) {
-      const {descr, rand_data} = startLoginData;
+      const { descr, rand_data } = startLoginData;
       this.startedLogins[rand_data] = true;
 
       web3.personal.sign(
         web3.toHex(`${startLoginData.description}${startLoginData.rand_data}`),
         web3.eth.accounts[0],
-        (error, signedMsg)=> {
+        (error, signedMsg) => {
           if (error) {
             dispatch(loginErrorAction('Sign canceled'))
           } else {
