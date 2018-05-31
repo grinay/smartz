@@ -45,6 +45,7 @@ module.exports = (env) => {
       historyApiFallback: true,
       hot: true,
       disableHostCheck: true,
+      clientLogLevel: "error",
       open: true,
       overlay: {
         warnings: true,
@@ -59,6 +60,10 @@ module.exports = (env) => {
         path.resolve(sourcePath, 'node_modules'),
         appPath
       ],
+    },
+
+    node: {
+      fs: 'empty'
     },
 
     module: {
