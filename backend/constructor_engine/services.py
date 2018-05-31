@@ -1,13 +1,19 @@
 import os
 import subprocess
+import sys
 import tempfile
 from abc import ABCMeta, abstractmethod
+from copy import deepcopy
 from decimal import Decimal
 from typing import  Tuple
 
+import requests
 from django.conf import settings
 
 from apps.constructors.models import Constructor
+from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
+from smartzcore.exceptions import PublicException
+from smartzcore.service_instances import WithLogger
 
 
 class BaseCompilerService(metaclass=ABCMeta):
@@ -44,9 +50,30 @@ class EthereumCompilerService(BaseCompilerService):
             return bin, abi
 
 
-class EosCompilerService(BaseCompilerService):
+class EosCompilerService(BaseCompilerService, WithLogger):
     def compile(self, constructor: Constructor, source, contract_name) -> Tuple[str, str]:
-        return '', ''
+        return self._call_compiler(source)
+
+    def _call_compiler(self, source):
+        data = {
+            "source": source,
+        }
+        try:
+            res = requests.post(settings.SMARTZ_EOS_COMPILATION_SERVICE_URL, json=data)
+        except Exception as e:
+            self.logger.warning("Failed to call eos compilation service")
+            raise PublicException("Compilation error/0")
+
+        if res.status_code != requests.codes.ok:
+            raise PublicException("Compilation error/1")
+
+        #todo schema checks
+        res_json = res.json()
+        if 'result' not in res_json or res_json['result']!='success' \
+                or 'bin' not in res_json or 'abi' not in res_json:
+            raise PublicException("Compilation error/2")
+
+        return res_json['bin'], res_json['abi']
 
 
 ########################################################################################################################
@@ -56,6 +83,18 @@ class BaseContractProcessor(metaclass=ABCMeta):
 
     @abstractmethod
     def process_source(self, constructor: Constructor, source: str, contract_name: str) -> str:
+        raise NotImplementedError()
+
+    def process_functions_specs(self, constructor: Constructor, abi, functions_specs):
+        new_functions_specs = self._specific_process_functions_specs(constructor, abi, functions_specs)
+        new_functions_specs = sorted(
+            new_functions_specs,
+            key=lambda x: x['sorting_order'] if 'sorting_order' in x else sys.maxsize
+        )
+        return new_functions_specs
+
+    @abstractmethod
+    def _specific_process_functions_specs(self, constructor: Constructor, abi, functions_specs):
         raise NotImplementedError()
 
 
@@ -87,7 +126,19 @@ class EthereumContractProcessor(BaseContractProcessor):
 
         return source.replace('%payment_code%', payment_code)
 
+    def _specific_process_functions_specs(self, constructor: Constructor, abi, functions_specs):
+        new_functions_specs = deepcopy(functions_specs)
+        if constructor.version>0:
+            new_functions_specs = merge_function_titles2specs(
+                make_generic_function_spec(abi), new_functions_specs
+            )
+
+        return new_functions_specs
+
 
 class EosContractProcessor(BaseContractProcessor):
     def process_source(self, constructor: Constructor, source: str, contract_name: str) -> str:
         return source
+
+    def _specific_process_functions_specs(self, constructor: Constructor, abi, functions_specs):
+        return deepcopy(functions_specs)

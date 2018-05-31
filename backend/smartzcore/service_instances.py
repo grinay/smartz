@@ -4,7 +4,7 @@ import logging
 from django.conf import settings
 
 
-class WithEngineMixin:
+class WithEngine:
     @property
     def constructor_engine(self):
         from constructor_engine.engine import SimpleStorageEngine

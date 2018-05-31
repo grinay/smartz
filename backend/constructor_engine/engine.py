@@ -50,19 +50,24 @@ class BaseEngine(WithLogger):
     def register_constructor(self, constructor_id, filename):
         self._save_constructor(constructor_id, filename)
 
-    def get_constructor_version(self, constructor_id):
-        source = self._load_constructor_source(constructor_id)
+    def get_constructor_version(self, source):
         res = self._call_constructor_method(source, self.METHOD_GET_VERSION)
+        if 'error' == res['result']:
+            if 'error_descr' in res and "object has no attribute 'get_version'" in res['error_descr']:
+                # todo versioning
+                res = {
+                    'result': 'success',
+                    'version': 0,
+                    'blockchain': BLOCKCHAIN_ETHEREUM
+                }
+            else:
+                return res
+        else:
+            if res['version'] < 2:
+                res['blockchain'] = BLOCKCHAIN_ETHEREUM
         return res
 
-    def get_constructor_params(self, constructor_id):
-        try:
-            source = self._load_constructor_source(constructor_id)
-        except Exception:
-            return {
-                'result': 'error',
-                'error_descr': 'Failed to load constructor'
-            }
+    def get_constructor_params(self, source):
         res = self._call_constructor_method(source, self.METHOD_GET_PARAMS)
         return res
 
@@ -74,16 +79,6 @@ class BaseEngine(WithLogger):
                 'result': 'error',
                 'error_descr': 'Failed to load constructor'
             }
-
-        res = self._call_constructor_method(constructor_source, self.METHOD_GET_VERSION, [])
-        if 'error' == res['result']:
-            if 'error_descr' in res and "object has no attribute 'get_version'" in res['error_descr']:
-                # todo remove this after 01.05.2018
-                version = 0
-            else:
-                return res
-        else:
-            version = res['version']
 
         res = self._call_constructor_method(constructor_source, self.METHOD_CONSTRUCT, [fields])
         if 'error' == res['result']:
@@ -112,14 +107,8 @@ class BaseEngine(WithLogger):
         if 'error' == post_construct_info['result']:
             return post_construct_info
 
-        if version>0:
-            post_construct_info['function_specs'] = merge_function_titles2specs(
-                make_generic_function_spec(abi), post_construct_info['function_specs']
-            )
-
-        post_construct_info['function_specs'] = sorted(
-            post_construct_info['function_specs'],
-            key=lambda x: x['sorting_order'] if 'sorting_order' in x else sys.maxsize
+        post_construct_info['function_specs'] = processor.process_functions_specs(
+            constructor, abi, post_construct_info['function_specs']
         )
 
         return {

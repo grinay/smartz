@@ -1,3 +1,4 @@
+import json
 import random
 import string
 
@@ -20,6 +21,10 @@ class Constructor(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
     blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50, default=BLOCKCHAIN_ETHEREUM)
+    version = models.IntegerField(default=0)
+
+    schema = models.TextField(default='{}')
+    ui_schema = models.TextField(default='{}')
 
     @property
     def image(self):
@@ -58,6 +63,12 @@ class Constructor(models.Model):
 
     def get_formatted_price_eth(self):
         return float(format(self.price_eth, 'f').rstrip('0').rstrip('.'))
+
+    def get_schema(self):
+        return json.loads(self.schema)
+
+    def get_ui_schema(self):
+        return json.loads(self.ui_schema)
 
     def __str__(self):
         return self.name

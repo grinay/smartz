@@ -59,7 +59,7 @@ class Constructor(ConstructorInstance):
 
     def construct(self, fields):
         source = self.__class__._TEMPLATE \
-            .replace('%decimals%', fields['decimals']) \
+            .replace('%decimals%', str(fields['decimals'])) \
             .replace('%ticker%', fields['ticker']) \
             .replace('%owner_account%', fields['owner'])
 
@@ -114,8 +114,8 @@ using eosio::asset;
 
 class simpletoken : public eosio::contract {
    public:
-      simpletoken( )
-      :contract("%owner_account%"),_accounts( _self, _self){}
+      simpletoken(account_name self )
+      :contract(self /*"%owner_account%"*/),_accounts( _self, _self){}
 
       // @abi action
       void transfer( account_name from, account_name to, asset quantity ) {
@@ -171,6 +171,6 @@ class simpletoken : public eosio::contract {
       }
 };
 
-EOSIO_ABI( simpletoken, (transfer)(issue)(totalSupply) )
+EOSIO_ABI( simpletoken, (transfer)(issue)/*(totalSupply)*/ )
 
     """

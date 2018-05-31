@@ -7,6 +7,7 @@ from decimal import Decimal
 from shutil import copy2
 
 from django.conf import settings
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
@@ -17,7 +18,7 @@ from jsonschema.validators import validator_for
 
 from apps.constructors.models import Constructor
 from apps.contracts.models import Contract
-from smartzcore.service_instances import WithEngineMixin
+from smartzcore.service_instances import WithEngine
 from utils.common import auth, nonempty, args_string
 from utils.responses import  error_response, engine_error_response
 from smartz.json_schema import load_schema, add_definitions
@@ -54,8 +55,9 @@ class ListView(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class UploadView(View, WithEngineMixin):
+class UploadView(View, WithEngine):
 
+    @transaction.atomic
     def post(self, request):
         args = request.data
 
@@ -103,6 +105,9 @@ class UploadView(View, WithEngineMixin):
 
             copy2(os.path.join(settings.SMARTZ_ROOT_DIR, 'constructor_examples', uploaded_filename), filename)
 
+            with open(filename, 'r') as f:
+                file_source = f.read()
+
             is_public = True
         elif 'ctor_file' in args:
             file_base64 = re.sub('^data:.+;base64,', '', args['ctor_file'])
@@ -131,6 +136,20 @@ class UploadView(View, WithEngineMixin):
         current_constructor.price_eth = Decimal(price_eth)
         current_constructor.is_public = is_public
         current_constructor.user = user
+
+
+        version_info = self.constructor_engine.get_constructor_version(file_source)
+        if 'error' in version_info:
+            return error_response(version_info['error_descr'])
+        current_constructor.version = version_info['version']
+        current_constructor.blockchain = version_info['blockchain']
+
+        params = self.constructor_engine.get_constructor_params(file_source)
+        if 'error' in params:
+            return error_response(params['error_descr'])
+        current_constructor.schema = json.dumps(params.get('schema', {}))
+        current_constructor.ui_schema = json.dumps(params.get('ui_schema', {}))
+
         current_constructor.save()
 
         self.constructor_engine.register_constructor(current_constructor.slug, filename)
@@ -138,7 +157,7 @@ class UploadView(View, WithEngineMixin):
         return JsonResponse({'ok': True})
 
 
-class GetParamsView(View, WithEngineMixin):
+class GetParamsView(View):
 
     def get(self, request, constructor_id):
         try:
@@ -146,24 +165,18 @@ class GetParamsView(View, WithEngineMixin):
         except Constructor.DoesNotExist:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
-        constructor_params = self.constructor_engine.get_constructor_params(constructor_id)
-        if 'error' == constructor_params['result']:
-            return engine_error_response(constructor_params)
-
-        ui_schema = constructor_params.get('ui_schema', {})
-
         return JsonResponse({
             'ctor_name': constructor.name,
             'ctor_descr': constructor.description,
             'price_eth': constructor.get_formatted_price_eth(),
-            'schema': _process_ctor_schema(constructor_params['schema']),
-            'ui_schema': ui_schema,
+            'schema': _process_ctor_schema(constructor.get_schema()),
+            'ui_schema': constructor.get_ui_schema(),
             'image': constructor.image
         })
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class ConstructView(View, WithEngineMixin):
+class ConstructView(View, WithEngine):
 
     def post(self, request, constructor_id):
         # parsed input data POST JSON payload
@@ -189,11 +202,7 @@ class ConstructView(View, WithEngineMixin):
         if not instance_title or not isinstance(instance_title, str):
             return error_response("Wrong 'instance_title' param")
 
-        constructor_params = self.constructor_engine.get_constructor_params(constructor_id)
-        if 'error' == constructor_params['result']:
-            return engine_error_response(constructor_params)
-
-        constructor_schema = _process_ctor_schema(constructor_params['schema'])
+        constructor_schema = _process_ctor_schema(constructor.get_schema())
 
         validator_cls = validator_for(constructor_schema)
         validator_cls.check_schema(constructor_schema)
