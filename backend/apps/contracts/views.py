@@ -24,6 +24,7 @@ def _prepare_instance_details(contract: Contract):
         "abi": json.loads(contract.abi),
         "functions": json.loads(contract.function_specs),
         "dashboard_functions": json.loads(contract.dashboard_functions),
+        "blockchain": contract.constructor.blockchain,
         "constructor": {
             "name": contract.constructor.name,
             "description": contract.constructor.description,

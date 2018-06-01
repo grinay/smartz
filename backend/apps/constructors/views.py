@@ -47,7 +47,8 @@ class ListView(View):
                     'ctor_descr': constructor.description,
                     'is_public': constructor.is_public,
                     'user_id': constructor.user_id,
-                    'image': constructor.image
+                    'image': constructor.image,
+                    'blockchain': constructor.blockchain
                 }
             )
 
@@ -97,21 +98,8 @@ class UploadView(View, WithEngine):
 
             current_constructor = Constructor.create()
 
-        if 'ctor_file_name' in args:
-            uploaded_filename = args['ctor_file_name']
-            if not re.findall('^[a-zA-Z][a-zA-Z0-9_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
-                raise ValueError()
-            uploaded_filename = "{}.py".format(uploaded_filename)
-
-            copy2(os.path.join(settings.SMARTZ_ROOT_DIR, 'constructor_examples', uploaded_filename), filename)
-
-            with open(filename, 'r') as f:
-                file_source = f.read()
-
-            is_public = True
-        elif 'ctor_file' in args:
+        if 'ctor_file' in args:
             file_base64 = re.sub('^data:.+;base64,', '', args['ctor_file'])
-
             try:
                 file_source = base64.b64decode(file_base64).decode('utf-8')
             except Exception:
@@ -123,7 +111,7 @@ class UploadView(View, WithEngine):
 
             is_public = False
         else:
-            return error_response("Invalid input")
+            return error_response("Constructor file is missing")
 
         if float(price_eth):
             with open(filename) as f:
@@ -171,6 +159,7 @@ class GetParamsView(View):
             'price_eth': constructor.get_formatted_price_eth(),
             'schema': _process_ctor_schema(constructor.get_schema()),
             'ui_schema': constructor.get_ui_schema(),
+            'blockchain': constructor.blockchain,
             'image': constructor.image
         })
 
@@ -247,5 +236,7 @@ class ConstructView(View, WithEngine):
             'instance_id': contract.slug,
             'bin': result['bin'],
             'source': result['source'],
+            'blockchain': constructor.blockchain,
+            #todo
             'price_eth': constructor.get_formatted_price_eth()
         })
