@@ -79,7 +79,7 @@ class Footer extends Component {
             </li>
             <li className="social__item">
               <a
-                href="https://github.com/mixbytes"
+                href="https://github.com/smartzplatform"
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
@@ -140,7 +140,7 @@ class Footer extends Component {
           <a href="mailto:hello@smartz.io">hello@smartz.io</a>
           &nbsp;&nbsp;&nbsp;
           <a href="https://t.me/LoungerX">t.me/LoungerX</a>
-          <p>Designed by <a href="http://artdictators.ru/">Artdictators</a></p>
+          <p>Designed by <a href="http://artdictators.ru/" target="_blank" rel="noopener noreferrer">Artdictators</a></p>
         </section>
         {/* Policy */}
         <section className="policy">

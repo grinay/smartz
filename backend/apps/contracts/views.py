@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from apps.contracts.models import Contract
 from utils.common import auth
-from utils.responses import ok_response, error_response
+from utils.responses import error_response
 from smartz.json_schema import load_schema, assert_conforms2schema_part
 
 
@@ -24,6 +24,7 @@ def _prepare_instance_details(contract: Contract):
         "abi": json.loads(contract.abi),
         "functions": json.loads(contract.function_specs),
         "dashboard_functions": json.loads(contract.dashboard_functions),
+        "blockchain": contract.constructor.blockchain,
         "constructor": {
             "name": contract.constructor.name,
             "description": contract.constructor.description,

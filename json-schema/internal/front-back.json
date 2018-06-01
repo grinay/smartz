@@ -148,7 +148,7 @@
                     { "$ref": "#/definitions/resultError" },
                     {
                         "type": "object",
-                        "required": ["instance_id", "instance_title", "ctor_id", "address", "network_id", "abi", "functions", "dashboard_functions", "constructor"],
+                        "required": ["instance_id", "instance_title", "ctor_id", "address", "network_id", "abi", "functions", "dashboard_functions", "constructor", "blockchain"],
                         "additionalProperties": false,
 
                         "properties": {
@@ -158,6 +158,7 @@
                             "address": { "$ref": "#/definitions/address" },
                             "network_id": {"type": "integer", "minimum": 0},
                             "abi": { "$ref": "#/definitions/ETHABI" },
+                            "blockchain": {"type": "string", "enum": ["eos", "ethereum"]},
                             "functions": {
                                 "type": "array",
                                 "items": { "$ref": "#/definitions/ETHFunctionSpec" }

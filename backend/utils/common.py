@@ -1,4 +1,5 @@
 #!/usr/bin/env python3                                                                                                                                                                                             import re
+import logging
 from datetime import datetime
 
 import jwt
@@ -6,6 +7,7 @@ import pytz
 from django.conf import settings
 
 from apps.users.models import User
+from smartzcore.service_instances import WithLogger
 from utils.responses import error_response
 
 
@@ -55,5 +57,8 @@ def auth(request):
     if data['expires_at'] < datetime.now(pytz.timezone(settings.TIME_ZONE)).timestamp():
         return error_response('Token expired. Please log in again')
 
-    print("[DEBUG][AUTH] {}".format(user))
+    #todo use WithLogger in class
+    logger = WithLogger()
+    logger.set_logger_name(__name__)
+    logger.logger.debug(user)
     return user

@@ -1,25 +1,13 @@
-// .ctor-card__info .ctor-card__price:not(:first-child) {
-//     min-width: inherit;
-// }
 @import '../../../styles/variables.less';
 
 .ctor-card {
     position: relative;
-
-// display: grid;
-    // box-sizing: border-box;
-    // height: 100%;
-    // border: 1px solid #DDDDDD;
 
     height: 333px;
 
     border-radius: 8px;
     background-color: #FFFFFF;
 
-    // box-shadow: 0 1px 4px 0 rgba(0,0,0,.03);
-
-    // grid-template-columns: 1fr;
-    // grid-template-rows: 1fr;
     &:hover, &:focus {
         background-color: #E6E9F0;
     }
@@ -30,22 +18,9 @@
         display: flex;
         flex-direction: column;
 
-// height: 100%;
-
         padding-top: 138px;
 
         text-decoration: none;
-
-        color: #000000;
-
-        // grid-column: 1 / -1;
-        // grid-row: 1 / -1;
-
-
-
-        // &:hover .ctor-card__header, &:focus .ctor-card__header {
-        //     color: @link-hover;
-        // }
 
         .ctor-card__img {
             position: absolute;
@@ -76,12 +51,6 @@
         }
     }
 
-    // .ctor-card__wrapper {
-    //     overflow: hidden;
-    // }
-
-
-
     .ctor-card__description {
         display: flex;
         flex: 1;
@@ -89,18 +58,10 @@
 
         padding: 0 10px;
 
-        // &:not(.ctor-card__description--position) {
-        //     flex-grow: 1;
-
-        //     padding-bottom: 95px;
-
-        //     border-top: 1px solid #DDDDDD;
-        // }
         .ctor-card__header {
             margin: 0 0 6px 0;
 
             opacity: .9;
-            color: #000000;
 
             font-family: @f-cera-pro-700;
             font-size: 17px;
@@ -109,8 +70,6 @@
 
         .ctor-card__text {
             margin: 0;
-
-            color: #000000;
 
             font-family: @f-cera-pro-400;
             font-size: 13px;
@@ -130,13 +89,6 @@
         }
     }
 
-    // .ctor-card__description--position {
-    //     box-sizing: border-box;
-
-    //     grid-column: 1 / -1;
-    //     grid-row: 1 / -1;
-    // }
-
     .ctor-card__controls {
         .ctor-card__buttons {
             display: flex;
@@ -145,9 +97,9 @@
             justify-content: space-between;
 
             margin: 0;
-            padding: 0 7px 20px 7px;
+            padding: 0 20px 20px 7px;
 
-            .btn {
+            .ctor-card__price {
                 height: 38px;
                 padding: 0 6px;
 

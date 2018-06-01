@@ -1,0 +1,134 @@
+@import '../../../styles/variables.less';
+
+.banner-telegram {
+    @height: 40px;
+
+    position: relative;
+
+    flex-wrap: wrap;
+
+    min-height: @height;
+    padding: 10px 125px 10px 16px;
+
+    border-radius: 4px;
+    background-color: #191919;
+
+    .description, .chat-link {
+        margin: 0;
+        margin-right: 20px;
+
+        font-size: 16px;
+    }
+
+    .description {
+        color: white;
+    }
+
+    .chat-link {
+        margin: 5px 0;
+
+        cursor: pointer;
+        white-space: nowrap;
+        text-decoration: none;
+        text-transform: uppercase;
+
+        opacity: 1;
+        color: lighten(#3BB0E9, 20);
+
+        font-family: @f-cera-pro-500;
+    }
+
+    .bg-wrapper {
+        @radius: 141px;
+        @shift: -15px;
+
+        position: absolute;
+        right: 0;
+
+        overflow: hidden;
+
+        width: @radius;
+        height: 100%;
+
+        .bg {
+            position: absolute;
+            right: @shift;
+
+            width: @radius;
+            height: @radius;
+
+            opacity: .5;
+            border-radius: 50%;
+            background: linear-gradient(191.89deg, #3BB0E9 0%, #2DA1DB 48.99%, #2094CC 100%);
+        }
+    }
+
+    .tlg {
+        position: absolute;
+        right: 25px;
+
+        width: 68px;
+        height: 57px;
+    }
+
+    &:hover {
+        .bg {
+            transform: scale(1.2);
+        }
+
+        .tlg {
+            transform: scale(1.1);
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    .banner-telegram {
+        .bg-wrapper {
+            width: 280px;
+            .bg {
+                right: -125px;
+
+                width: 261px;
+                height: 261px;
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .banner-telegram {
+        .bg-wrapper {
+            width: 240px;
+            .bg {
+                right: -105px;
+
+                width: 261px;
+                height: 261px;
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .banner-telegram {
+        padding-right: 160px;
+
+        .bg-wrapper {
+            width: 240px;
+            .bg {
+                right: -75px;
+
+                width: 241px;
+                height: 241px;
+            }
+        }
+
+        .tlg {
+            right: 15px;
+
+            width: 118px;
+            height: 107px;
+        }
+    }
+}

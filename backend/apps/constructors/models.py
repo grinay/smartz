@@ -1,8 +1,12 @@
+import json
 import random
 import string
 
+from django.core.exceptions import ValidationError
 from django.db import models
+from eth_utils import is_address
 
+from apps.common.constants import BLOCKCHAINS, BLOCKCHAIN_ETHEREUM
 from apps.users.models import User
 
 
@@ -15,6 +19,12 @@ class Constructor(models.Model):
     is_public = models.BooleanField(default=False)
     auth0_user_id = models.CharField(max_length=200, blank=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+
+    blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50, default=BLOCKCHAIN_ETHEREUM)
+    version = models.IntegerField(default=0)
+
+    schema = models.TextField(default='{}')
+    ui_schema = models.TextField(default='{}')
 
     @property
     def image(self):
@@ -54,5 +64,15 @@ class Constructor(models.Model):
     def get_formatted_price_eth(self):
         return float(format(self.price_eth, 'f').rstrip('0').rstrip('.'))
 
+    def get_schema(self):
+        return json.loads(self.schema)
+
+    def get_ui_schema(self):
+        return json.loads(self.ui_schema)
+
     def __str__(self):
         return self.name
+
+    def clean(self, *args, **kwargs):
+        if self.price_eth > 0 and not is_address(self.payment_address):
+            raise ValidationError('Correct payment address must be specified in constructor if price>0')

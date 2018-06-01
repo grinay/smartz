@@ -40,12 +40,7 @@ class CtorAdd extends Component {
 
     const formSchema = {
       "type": "object",
-      "required": ["ctor_name", "ctor_descr", "price_eth"],
-      "oneOf": [{
-        "required": ["ctor_file_name"]
-      }, {
-        "required": ["ctor_file"]
-      }],
+      "required": ["ctor_name", "ctor_descr", "price_eth", "ctor_file"],
       "additionalProperties": false,
       "properties": {
         "ctor_name": {
@@ -60,13 +55,6 @@ class CtorAdd extends Component {
           "type": "string",
           "format": "data-url"
         },
-        "ctor_file_name": {
-          "title": "Name of smart contract .py file (legacy)",
-          "type": "string",
-          "minLength": 3,
-          "maxLength": 100,
-          "pattern": "^[a-zA-Z0-9_-]+$"
-        },
         "ctor_descr": {
           "title": "Description of the smart contract (3..300 chars)",
           "type": "string",
@@ -80,7 +68,7 @@ class CtorAdd extends Component {
           "pattern": "^0x[0-9a-fA-F]{40}$"
         },
         "price_eth": {
-          "title": "Price of deploy in ETH",
+          "title": "Price of deploy (in ETH or EOS)",
           "description": "0 = free contract",
           "type": "number",
           "minimum": 0,
@@ -93,9 +81,6 @@ class CtorAdd extends Component {
     const uiSchema = {
       "ctor_name": {
         "ui:placeholder": "My ever best contract"
-      },
-      "ctor_file_name": {
-        "ui:placeholder": "without_extension"
       },
       "ctor_descr": {
         "ui:widget": "textarea",

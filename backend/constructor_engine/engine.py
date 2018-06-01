@@ -11,13 +11,19 @@ from decimal import Decimal
 
 import requests
 from django.conf import settings
+from typing import Dict, Tuple
 
+from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS
 from apps.constructors.models import Constructor
+from constructor_engine.services import BaseCompilerService, EosCompilerService, EthereumCompilerService, \
+    BaseContractProcessor, EthereumContractProcessor, EosContractProcessor
 from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
 from smartz.json_schema import is_conforms2schema_part, load_schema
+from smartzcore.exceptions import PublicException
+from smartzcore.service_instances import WithLogger
 
 
-class BaseEngine(object):
+class BaseEngine(WithLogger):
 
     METHOD_GET_VERSION    = 'get_version'
     METHOD_GET_PARAMS     = 'get_params'
@@ -27,49 +33,52 @@ class BaseEngine(object):
         METHOD_GET_VERSION, METHOD_GET_PARAMS, METHOD_CONSTRUCT, METHOD_POST_CONSTRUCT
     ]
 
+    _compiler_services: Dict[str, BaseCompilerService] = {
+        BLOCKCHAIN_ETHEREUM: EthereumCompilerService(),
+        BLOCKCHAIN_EOS: EosCompilerService()
+    }
+
+    _contract_processors: Dict[str, BaseContractProcessor] = {
+        BLOCKCHAIN_ETHEREUM: EthereumContractProcessor(),
+        BLOCKCHAIN_EOS: EosContractProcessor()
+    }
+
     def __init__(self, engine_settings):
         self._settings = engine_settings
         self._instances = {}
 
-    def register_new_ctor(self, constructor_id, filename):
+    def register_constructor(self, constructor_id, filename):
         self._save_constructor(constructor_id, filename)
 
-    def get_constructor_version(self, constructor_id):
-        source = self._load_constructor(constructor_id)
+    def get_constructor_version(self, source):
         res = self._call_constructor_method(source, self.METHOD_GET_VERSION)
-
-        return res
-
-    def get_ctor_params(self, constructor_id):
-        try:
-            source = self._load_constructor(constructor_id)
-        except Exception:
-            return {
-                'result': 'error',
-                'error_descr': 'Failed to load constructor'
-            }
-        res = self._call_constructor_method(source, self.METHOD_GET_PARAMS)
-
-        return res
-
-    def construct(self, constructor_id, constructor: Constructor, fields):
-        try:
-            constructor_source = self._load_constructor(constructor_id)
-        except Exception:
-            return {
-                'result': 'error',
-                'error_descr': 'Failed to load constructor'
-            }
-
-        res = self._call_constructor_method(constructor_source, self.METHOD_GET_VERSION, [])
         if 'error' == res['result']:
             if 'error_descr' in res and "object has no attribute 'get_version'" in res['error_descr']:
-                # todo remove this after 01.05.2018
-                version = 0
+                # todo versioning
+                res = {
+                    'result': 'success',
+                    'version': 0,
+                    'blockchain': BLOCKCHAIN_ETHEREUM
+                }
             else:
                 return res
         else:
-            version = res['version']
+            if res['version'] < 2:
+                res['blockchain'] = BLOCKCHAIN_ETHEREUM
+        return res
+
+    def get_constructor_params(self, source):
+        res = self._call_constructor_method(source, self.METHOD_GET_PARAMS)
+        return res
+
+    def construct(self, constructor: Constructor, fields):
+        try:
+            constructor_source = self._load_constructor_source(constructor.slug)
+        except Exception:
+            return {
+                'result': 'error',
+                'error_descr': 'Failed to load constructor'
+            }
 
         res = self._call_constructor_method(constructor_source, self.METHOD_CONSTRUCT, [fields])
         if 'error' == res['result']:
@@ -77,41 +86,18 @@ class BaseEngine(object):
 
         source, contract_name = res['source'], res['contract_name']
 
-        if constructor.price_eth:
-            wei = int(constructor.price_eth * Decimal('1000000000000000000'))
-
-            if constructor.payment_address:
-                assert(settings.SMARTZ_COMMISSION < 1)
-
-                payment_code = """
-        address({commission_address}).transfer({commission} wei);
-        address({payment_address}).transfer({payment_sum} wei);
-                """.format(
-                    commission_address=settings.SMARTZ_COMMISSION_ADDRESS,
-                    commission=int(wei*settings.SMARTZ_COMMISSION),
-
-                    payment_address=constructor.payment_address,
-                    payment_sum=wei-int(wei*settings.SMARTZ_COMMISSION)
-                )
-            else:
-                payment_code = 'address({commission_address}).transfer({commission} wei);'.format(
-                    commission_address=settings.SMARTZ_COMMISSION_ADDRESS,
-                    commission=int(wei)
-                )
-
-            source = source.replace('%payment_code%', payment_code)
-        else:
-            source = source.replace('%payment_code%', '')
-
         if re.findall('[^a-zA-Z0-9]', contract_name):
             raise Exception
 
+        processor = self._require_contract_processor(constructor.blockchain)
+        source = processor.process_source(constructor, source, contract_name)
+
         try:
-            bin, abi = self._compile(source, contract_name)
+            bin, abi = self._compile(constructor, source, contract_name)
             abi = json.loads(abi)
         except Exception as e:
-            print("[DEBUG] Compilation error. Ex: {}".format(str(e)))
-            print("[DEBUG] Compilation error. Code: {}".format(source))
+            self.logger.warning("Compilation error. Ex: {}".format(str(e)))
+            self.logger.warning("Compilation error. Code: {}".format(source))
             return {
                 'result': 'error',
                 'error_descr': 'Compilation error'
@@ -121,14 +107,8 @@ class BaseEngine(object):
         if 'error' == post_construct_info['result']:
             return post_construct_info
 
-        if version>0:
-            post_construct_info['function_specs'] = merge_function_titles2specs(
-                make_generic_function_spec(abi), post_construct_info['function_specs']
-            )
-
-        post_construct_info['function_specs'] = sorted(
-            post_construct_info['function_specs'],
-            key=lambda x: x['sorting_order'] if 'sorting_order' in x else sys.maxsize
+        post_construct_info['function_specs'] = processor.process_functions_specs(
+            constructor, abi, post_construct_info['function_specs']
         )
 
         return {
@@ -140,14 +120,13 @@ class BaseEngine(object):
             'dashboard_functions': post_construct_info['dashboard_functions']
         }
 
-
     @abc.abstractmethod
     def _save_constructor(self, id, filename):
         """Saves constructor to some storage"""
         pass
 
     @abc.abstractmethod
-    def _load_constructor(self, id):
+    def _load_constructor_source(self, id):
         """Loads constructor from some storage, return constructor source"""
         pass
 
@@ -180,39 +159,28 @@ class BaseEngine(object):
 
             return res.json()
         except Exception as e:
-            print("[DEBUG] {}".format(str(e)))
+            self.logger.warning("Failed to call constructor method {}: {}".format(method, str(e)))
             return {
                 "result": "error",
                 "error_descr": "Something got wrong/1"
             }
 
-    def _compile(self, source, contract_name):
-        """compiles source fi"""
+    def _compile(self, constructor: Constructor, source: str, contract_name: str) -> Tuple[str, str]:
+        """compiles source """
+        compiler = self._require_compiler_service(constructor.blockchain)
+        return compiler.compile(constructor, source, contract_name)
 
-        with tempfile.TemporaryDirectory() as tmpdir:
-            tmpfile, tmpfilename = tempfile.mkstemp(dir=tmpdir)
-            outsock = os.fdopen(tmpfile, 'w')
-            outsock.close() #closing resource
+    def _require_compiler_service(self, blockchain):
+        if blockchain not in self._compiler_services:
+            raise PublicException("Blockchain '{}' is not supported".format(blockchain))
 
-            with open(tmpfilename, "w") as f:
-                print(source, file=f)
+        return self._compiler_services[blockchain]
 
-            args = (settings.SMARTZ_SOLC_PATH, "--bin", "--abi", "--optimize", "-o", tmpdir, tmpfilename)
-            popen = subprocess.Popen(args, stdout=subprocess.PIPE)
-            popen.wait()
+    def _require_contract_processor(self, blockchain):
+        if blockchain not in self._contract_processors:
+            raise PublicException("Blockchain '{}' is not supported".format(blockchain))
 
-            #out, err = popen.communicate()
-            #errcode = popen.returncode
-
-            #solc stores bin and abi in two files with the same names
-            out_file = os.path.join(tmpdir, contract_name)
-            with open('{}.bin'.format(out_file)) as f:
-                bin = f.read()
-
-            with open('{}.abi'.format(out_file)) as f:
-                abi = f.read()
-
-            return bin, abi
+        return self._contract_processors[blockchain]
 
 
 class SimpleStorageEngine(BaseEngine):
@@ -237,7 +205,7 @@ class SimpleStorageEngine(BaseEngine):
     def _save_constructor(self, id, filename):
         shutil.copy(filename, self._get_filename(id))
 
-    def _load_constructor(self, id):
+    def _load_constructor_source(self, id):
         f = open(self._get_filename(id), 'r')
         source = f.read()
         f.close()

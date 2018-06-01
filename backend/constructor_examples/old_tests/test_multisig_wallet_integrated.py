@@ -10,7 +10,7 @@ class TestMultisigWalletIntegrated(TestCase):
     def test__complex(self):
 
         engine = SimpleStorageEngine({'datadir': '/tmp'})
-        engine.register_new_ctor(
+        engine.register_constructor(
             '123',
             os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),

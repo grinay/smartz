@@ -23,7 +23,7 @@ class LoginBaseView(View):
 
     def _require_service(self, blockchain):
         if blockchain not in self._sign_services:
-            raise PublicException('Blockchain is not supported')
+            raise PublicException("Blockchain '{}' is not supported".format(blockchain))
 
         return self._sign_services[blockchain]
 
@@ -66,7 +66,7 @@ class LoginFinishView(LoginBaseView):
 
         is_valid = service.check_sign(identity, signed_data, rand_data)
         if not is_valid:
-            return error_response("Incorrect sign")
+            return error_response("Incorrect signature")
 
         user = self.users_service.find_user(blockchain=blockchain, identity=identity)
         if not user:

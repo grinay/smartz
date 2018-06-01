@@ -10,6 +10,8 @@ if (requestsConfig.USE_MOCK) {
   subscribeMockRequests(new MockAdapter(axios));
 }
 
+const TOKEN_EXPIRED_ERROR_MESSAGE = 'Token expired. Please log in again';
+
 function logFetch(promise) {
 
   console.clear();
@@ -67,7 +69,7 @@ function checkToken(promise) {
       .then(response => {
         const { data, status } = response;
 
-        if (status === 200 && data.error && data.error === 'Token expired. Please log in again') {
+        if (status === 200 && data.error && data.error === TOKEN_EXPIRED_ERROR_MESSAGE) {
           history.replace('/login');
         }
       });

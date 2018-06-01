@@ -7,6 +7,7 @@ from decimal import Decimal
 from shutil import copy2
 
 from django.conf import settings
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
@@ -17,9 +18,9 @@ from jsonschema.validators import validator_for
 
 from apps.constructors.models import Constructor
 from apps.contracts.models import Contract
+from smartzcore.service_instances import WithEngine
 from utils.common import auth, nonempty, args_string
 from utils.responses import  error_response, engine_error_response
-from constructor_engine.engine import SimpleStorageEngine
 from smartz.json_schema import load_schema, add_definitions
 
 
@@ -46,7 +47,8 @@ class ListView(View):
                     'ctor_descr': constructor.description,
                     'is_public': constructor.is_public,
                     'user_id': constructor.user_id,
-                    'image': constructor.image
+                    'image': constructor.image,
+                    'blockchain': constructor.blockchain
                 }
             )
 
@@ -54,10 +56,10 @@ class ListView(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class UploadView(View):
+class UploadView(View, WithEngine):
 
+    @transaction.atomic
     def post(self, request):
-        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
         args = request.data
 
         price_eth = str(args.get('price_eth', 0))
@@ -96,18 +98,8 @@ class UploadView(View):
 
             current_constructor = Constructor.create()
 
-        if 'ctor_file_name' in args:
-            uploaded_filename = args['ctor_file_name']
-            if not re.findall('^[a-zA-Z][a-zA-Z0-9_]*$', uploaded_filename) or uploaded_filename.startswith('test_'):
-                raise ValueError()
-            uploaded_filename = "{}.py".format(uploaded_filename)
-
-            copy2(os.path.join(settings.SMARTZ_ROOT_DIR, 'constructor_examples', uploaded_filename), filename)
-
-            is_public = True
-        elif 'ctor_file' in args:
+        if 'ctor_file' in args:
             file_base64 = re.sub('^data:.+;base64,', '', args['ctor_file'])
-
             try:
                 file_source = base64.b64decode(file_base64).decode('utf-8')
             except Exception:
@@ -119,7 +111,7 @@ class UploadView(View):
 
             is_public = False
         else:
-            return error_response("Invalid input")
+            return error_response("Constructor file is missing")
 
         if float(price_eth):
             with open(filename) as f:
@@ -132,9 +124,23 @@ class UploadView(View):
         current_constructor.price_eth = Decimal(price_eth)
         current_constructor.is_public = is_public
         current_constructor.user = user
+
+
+        version_info = self.constructor_engine.get_constructor_version(file_source)
+        if 'error' == version_info['result']:
+            return error_response(version_info['error_descr'])
+        current_constructor.version = version_info['version']
+        current_constructor.blockchain = version_info['blockchain']
+
+        params = self.constructor_engine.get_constructor_params(file_source)
+        if 'error' == params['result']:
+            return error_response(params['error_descr'])
+        current_constructor.schema = json.dumps(params.get('schema', {}))
+        current_constructor.ui_schema = json.dumps(params.get('ui_schema', {}))
+
         current_constructor.save()
 
-        constructor_engine_instance.register_new_ctor(current_constructor.slug, filename)
+        self.constructor_engine.register_constructor(current_constructor.slug, filename)
 
         return JsonResponse({'ok': True})
 
@@ -147,25 +153,19 @@ class GetParamsView(View):
         except Constructor.DoesNotExist:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
-        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
-        constructor_params = constructor_engine_instance.get_ctor_params(constructor_id)
-        if 'error' == constructor_params['result']:
-            return engine_error_response(constructor_params)
-
-        ui_schema = constructor_params.get('ui_schema', {})
-
         return JsonResponse({
             'ctor_name': constructor.name,
             'ctor_descr': constructor.description,
             'price_eth': constructor.get_formatted_price_eth(),
-            'schema': _process_ctor_schema(constructor_params['schema']),
-            'ui_schema': ui_schema,
+            'schema': _process_ctor_schema(constructor.get_schema()),
+            'ui_schema': constructor.get_ui_schema(),
+            'blockchain': constructor.blockchain,
             'image': constructor.image
         })
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class ConstructView(View):
+class ConstructView(View, WithEngine):
 
     def post(self, request, constructor_id):
         # parsed input data POST JSON payload
@@ -191,12 +191,7 @@ class ConstructView(View):
         if not instance_title or not isinstance(instance_title, str):
             return error_response("Wrong 'instance_title' param")
 
-        constructor_engine_instance = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
-        constructor_params = constructor_engine_instance.get_ctor_params(constructor_id)
-        if 'error' == constructor_params['result']:
-            return engine_error_response(constructor_params)
-
-        constructor_schema = _process_ctor_schema(constructor_params['schema'])
+        constructor_schema = _process_ctor_schema(constructor.get_schema())
 
         validator_cls = validator_for(constructor_schema)
         validator_cls.check_schema(constructor_schema)
@@ -217,7 +212,7 @@ class ConstructView(View):
                 }
             )
 
-        result = constructor_engine_instance.construct(constructor_id, constructor, fields)
+        result = self.constructor_engine.construct(constructor, fields)
 
         if not isinstance(result, dict):
             return error_response("Constructor({}), construct error, result is not dict".format(constructor_id))
@@ -241,5 +236,7 @@ class ConstructView(View):
             'instance_id': contract.slug,
             'bin': result['bin'],
             'source': result['source'],
+            'blockchain': constructor.blockchain,
+            #todo
             'price_eth': constructor.get_formatted_price_eth()
         })

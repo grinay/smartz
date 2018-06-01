@@ -82,6 +82,7 @@ class EOSSignService(SignService):
 
 ###########################################################################
 
+
 class UsersService:
     def find_user(self, blockchain: str, identity: str) -> Optional[UserIdentity]:
         try:
@@ -92,6 +93,7 @@ class UsersService:
         return pub_key.user
 
     def register_user(self, blockchain: str, identity: str) -> User:
+        #todo do not allow custom usernames with prefix user_
         user = User(
             username='user_{}_{}'.format(blockchain, identity),
             first_name=blockchain,
