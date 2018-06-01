@@ -139,13 +139,13 @@ class UploadView(View, WithEngine):
 
 
         version_info = self.constructor_engine.get_constructor_version(file_source)
-        if 'error' in version_info:
+        if 'error' == version_info['result']:
             return error_response(version_info['error_descr'])
         current_constructor.version = version_info['version']
         current_constructor.blockchain = version_info['blockchain']
 
         params = self.constructor_engine.get_constructor_params(file_source)
-        if 'error' in params:
+        if 'error' == params['result']:
             return error_response(params['error_descr'])
         current_constructor.schema = json.dumps(params.get('schema', {}))
         current_constructor.ui_schema = json.dumps(params.get('ui_schema', {}))
