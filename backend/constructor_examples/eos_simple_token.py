@@ -22,7 +22,7 @@ class Constructor(ConstructorInstance):
             "properties": {
                 "ticker": {
                     "title": "Token ticker",
-                    "description": "Only symbols (with length 3-10)",
+                    "description": "Only symbols (with length 3-7)",
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 7,
@@ -36,16 +36,6 @@ class Constructor(ConstructorInstance):
                     "min": 1,
                     "max": 8
                 },
-
-                "owner": {
-                    "title": "Owner",
-                    "description": "Account of token owner (12 symbols)",
-                    "type": "string",
-                    "minLength": 12,
-                    "maxLength": 12,
-                    "pattern": "^[A-Za-z][a-zA-Z0-9]+$"
-                },
-
             }
         }
 
@@ -60,8 +50,7 @@ class Constructor(ConstructorInstance):
     def construct(self, fields):
         source = self.__class__._TEMPLATE \
             .replace('%decimals%', str(fields['decimals'])) \
-            .replace('%ticker%', fields['ticker']) \
-            .replace('%owner_account%', fields['owner'])
+            .replace('%ticker%', fields['ticker'])
 
         return {
             "result": "success",
