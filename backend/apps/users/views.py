@@ -9,15 +9,16 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import View
 
-from apps.common.constants import BLOCKCHAIN_ETHEREUM
-from apps.users.services import EthereumSignService, SignService, UsersService
+from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS
+from apps.users.services import EthereumSignService, SignService, UsersService, EOSSignService
 from smartzcore.exceptions import PublicException
 from smartzcore.http import assert_swagger_schema_validated, error_response
 
 
 class LoginBaseView(View):
     _sign_services: Dict[str, SignService] = {
-        BLOCKCHAIN_ETHEREUM: EthereumSignService()
+        BLOCKCHAIN_ETHEREUM: EthereumSignService(),
+        BLOCKCHAIN_EOS: EOSSignService(),
     }
     users_service = UsersService()
 
@@ -32,22 +33,16 @@ class LoginBaseView(View):
 @method_decorator(assert_swagger_schema_validated, name='dispatch')
 class LoginStartView(LoginBaseView):
     def post(self, request):
-        curr_date = datetime.now(tz=pytz.timezone(settings.TIME_ZONE))
-
-        descr = "Sign this text message to login to smartz.io\n" \
-                "Your address: {}\n" \
-                "Current time: {}\n" \
-                "Random data: ".format(
-                    request.data.get('identity'),
-                    curr_date.strftime("%Y.%m.%d %H:%I:%S %Z".format(settings.TIME_ZONE))
-                )
-
         service = self._require_service(request.data.get('blockchain'))
+
+        descr = service.get_descr(request.data.get('identity'))
 
         rand_data = service.get_rand_data(request.data.get('identity'), descr)
         return JsonResponse({
             "description": descr,
-            "rand_data": rand_data.data
+            "rand_data": rand_data.data,
+            "blockchain": request.data.get('blockchain'),
+            "identity": request.data.get('identity')
         })
 
 
@@ -73,5 +68,5 @@ class LoginFinishView(LoginBaseView):
             user = self.users_service.register_user(blockchain=blockchain, identity=identity)
 
         return JsonResponse({
-            "token": self.users_service.generate_token(user)
+            "token": self.users_service.generate_token(user, blockchain)
         })

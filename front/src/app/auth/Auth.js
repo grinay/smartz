@@ -1,5 +1,6 @@
 const jwtDecode = require('jwt-decode');
 import history from '../../helpers/history';
+import Eos from "../../helpers/eos2";
 
 class Auth {
   // todo maybe do in another way?
@@ -48,6 +49,14 @@ class Auth {
     return accessToken;
   }
 
+  getAccessTokenDecoded() {
+    const accessToken = localStorage.getItem('access_token_decoded');
+    if (!accessToken) {
+      throw new Error('No access token found');
+    }
+    return JSON.parse(accessToken);
+  }
+
   getProfile(cb) {
     const profile = localStorage.getItem('access_token_decoded');
     if (!profile) {
@@ -59,12 +68,19 @@ class Auth {
   }
 
   logout() {
+
+    let data = this.getAccessTokenDecoded()
+
     // Clear access token and ID token from local storage
     localStorage.removeItem('access_token2');
     localStorage.removeItem('access_token_decoded');
     localStorage.removeItem('expires_at2');
 
     this.userProfile = null;
+
+    if (data.blockchain === 'eos' && Eos.scatter) {
+      Eos.scatter.forgetIdentity();
+    }
 
     history.replace('/');
   }
