@@ -193,7 +193,7 @@ class Common(Configuration):
 
     # business logic
     SMARTZ_COMMISSION = 0.2
-    SMARTZ_COMMISSION_ADDRESS = '0xaacf78f8e1fbdcf7d941e80ff8b817be1f054af4'
+    SMARTZ_COMMISSION_ADDRESS = '0x325890465307FBaC3226d2688165205098936674'
 
 
 class Development(Common):

@@ -57,6 +57,13 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    window.Intercom("boot", {
+      app_id: "q0bwfagc"
+    });
+  }
+
+
   render() {
     const { metamaskStatus } = this.state;
     const isAuthenticated = Auth.isAuthenticated();

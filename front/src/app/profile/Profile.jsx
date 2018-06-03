@@ -5,6 +5,10 @@ import Auth from '../auth/Auth';
 import './Profile.less';
 
 class Profile extends Component {
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
   render() {
     const { profile } = this.props;
 
@@ -23,7 +27,7 @@ class Profile extends Component {
     }
 
     return (
-      <main className="page-main" style={{margin: '0 50px'}}>
+      <main className="page-main" style={{ margin: '0 50px' }}>
         {profile &&
           <section>
             <h2>{name}</h2>

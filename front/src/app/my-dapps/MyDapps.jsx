@@ -15,6 +15,11 @@ class MyDapps extends Component {
     api.getConstructors();
   }
 
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
+
   render() {
     const { ctors, metamaskStatus } = this.props;
 

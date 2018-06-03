@@ -3,6 +3,10 @@ import React, { PureComponent } from 'react';
 import './Page404.less';
 
 export default class Page404 extends PureComponent {
+    componentDidMount() {
+        window.Intercom("update");
+    }
+
     render() {
         return (
             <div className="page-404">

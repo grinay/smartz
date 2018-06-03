@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Auth from '../Auth';
-import {find} from "lodash";
-import {blockchains} from "../../../helpers/constants";
-import {web3} from "../../../helpers/eth";
+import { find } from "lodash";
+import { blockchains } from "../../../helpers/constants";
+import { web3 } from "../../../helpers/eth";
 import { finishLogin, startLogin } from '../../../api/apiRequests'
 import Alert from '../../common/Alert'
 
@@ -26,6 +26,11 @@ class Login extends Component {
 
     this.metamaskLogin = this.metamaskLogin.bind(this);
   }
+
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
 
   metamaskLogin() {
     const { metamaskStatus } = this.props;
@@ -51,7 +56,7 @@ class Login extends Component {
   }
 
   componentDidUpdate() {
-    const {startLoginData, blockchain, identity, token} = this.props.login;
+    const { startLoginData, blockchain, identity, token } = this.props.login;
 
     if (
       startLoginData && (

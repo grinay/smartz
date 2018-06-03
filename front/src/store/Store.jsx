@@ -9,6 +9,8 @@ import * as api from '../api/apiRequests';
 class Store extends Component {
   componentDidMount() {
     api.getConstructors();
+
+    window.Intercom("update");
   }
 
   render() {
