@@ -34,11 +34,12 @@ export const setPublicAccess = (deployId, publicAccess) => ({
   deployId
 });
 
-export const deployTxSent = (deployId, netId, txHash) => ({
+export const deployTxSent = (deployId, netId, txHash, blockchain) => ({
   type: 'DEPLOY_TX_SENT',
   netId,
   txHash,
-  deployId
+  deployId,
+  blockchain
 });
 
 export const deployTxError = (deployId, errors) => ({

@@ -1,75 +1,115 @@
-const binaryen = require('binaryen');
-import { processResult } from './eth';
+import Eos from 'eosjs';
+import axios from 'axios';
+import { eosConstants } from '../constants/constants';
+import * as binaryen from 'binaryen';
+import { wast } from './eos-pos';
 
 // declare global {
 //     interface Window { scatter: any; }
 // }
 
-class Eos {
-    // public init: string = 'okInit';
+const scatter = () => window.scatter ? window.scatter : null;
 
-    constructor() {
-        console.log('hi, i`m Eos');
-        this.init();
-    }
+export const deployContract = (bin) => {
+    return new Promise((res, rej) => {
+        scatter().requireVersion(5.0);
 
-    init() {
-        document.addEventListener('scatterLoaded', scatterExtension => {
-            // Scatter will now be available from the window scope.
-            // At this stage the connection to Scatter from the application is 
-            // already encrypted. 
-            const scatter = window.scatter;
-            console.log('scatter here!');
-            console.log(scatter);
+        const network = {
+            port: eosConstants.PORT,
+            host: eosConstants.HOST,
+            blockchain: eosConstants.BLOCKCHAIN,
+        };
 
-            // It is good practice to take this off the window once you have 
-            // a reference to it.
-            window.scatter = null;
+        scatter().suggestNetwork(network)
+            .then((ok) => {
+                scatter().getIdentity()
+                    .then(identity => {
+                        console.log('indentyt: ', identity);
 
-            // If you want to require a specific version of Scatter
-            scatter.requireVersion(3.0);
-            // console.log(scatter);
-
-
+                        const configEosInstance = {
+                            binaryen,
+                            chainId: eosConstants.CHAIN_ID,
+                            // mockTransactions: () => 'pass',
+                        };
+                        const eos = scatter().eos(network, Eos, configEosInstance);
 
 
-            scatter.getIdentity()
-                .then(ident => {
-                    console.log('ident', ident);
-                    scatter.suggestNetwork({
-                        blockchain: 'eos',
-                        host: '79.137.175.6',
-                        port: 8888,
+                        eos.setcode('gloryreteser', 0, 0, wast)
+                            .then((result) => {
+                                res(result);
+                            })
+                            .catch((err) => {
+                                rej(err);
+                            });
                     })
-                        .then((processResult) => {
-                            console.log('processResult', processResult);
-                            const eos = scatter.eos(Eos.Localnet, {});
-                            console.log('eos: ', eos);
-
-                            // eos.setcode(name, 0, 0, wast)
-                            //     .then((result) => {
-                            //         console.log('in promise:', result);
-                            //     })
-                            //     .catch((err) => {
-                            //         console.log('err:', err);
-                            //     });
-
-                        })
-                        .catch((err) => {
-                            console.log('error from suggest: ', err);
-                        })
-                    // fetch("/eos-poc.wast")
-                    //     .then(resp => { return resp.text() })
-                    //     .then(wast => {
-                    //         eos.setcode('mxpaul', 0, 0, wast)
-                    //             .then(console.log)
-                    //             .catch(console.error);
-                    //     })
-                    //     .catch(console.error)
-                });
-
-        })
-    }
+                    .catch((err) => {
+                        rej(err);
+                    })
+            })
+            .catch()
+    });
 };
 
-export default new Eos();
+// export default class Eos {
+//     // public static scatter: any = window.scatter;
+
+//     // public static checkScatterStatus() {
+//     //     return Eos.scatter === null ? 'noScatter' : 'okScatter';
+//     // }
+
+//     // private static init(): void {
+//     //     if (Eos.scatter === null) {
+//     //         if (window.scatter) {
+//     //             Eos.scatter = window.scatter;
+//     //             window.scatter = null;
+
+//     //             Eos.scatter.requireVersion(3.0);
+//     //         } else {
+//     //             throw Error('Scatter doesn`t init');
+//     //         }
+//     //     }
+//     // }
+
+//     static deployContract(bin) {
+//         // Eos.init();
+
+//         return new Promise((res, rej) => {
+//             Eos.scatter.getIdentity()
+//                 .then(identity => {
+//                     console.log('indentyt');
+//                     const network = {
+//                         port: eosConstants.PORT,
+//                         host: eosConstants.HOST,
+//                         blockchain: eosConstants.BLOCKCHAIN,
+//                     };
+
+//                     const configEosInstance = {
+//                         binaryen,
+//                         chainId: eosConstants.CHAIN_ID,
+//                         mockTransactions: () => 'pass',
+//                     };
+
+//                     const eos = Eos.scatter.eos(network, eosInstance.Localnet, configEosInstance);
+
+
+//                     // Eos.scatter.suggestNetwork(network)
+//                     //     .then((ok) => {
+
+//                     //     })
+//                     //     .catch()
+
+//                     eos.setcode(identity.name, 0, 0, bin)
+//                         .then((result) => {
+//                             res(result);
+//                         })
+//                         .catch((err) => {
+//                             rej(err);
+//                         });
+//                 })
+//                 .catch((err) => {
+//                     rej(err);
+//                 })
+//         });
+
+//     }
+// };

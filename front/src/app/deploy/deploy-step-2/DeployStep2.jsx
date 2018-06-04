@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 
-import { web3 as w3, getNetworkId, getTxReceipt } from '../../helpers/eth';
-import Spinner from '../common/Spinner';
+import { web3 as w3, getNetworkId, getTxReceipt } from '../../../helpers/eth';
+import { deployContract } from '../../../helpers/eos';
+import Spinner from '../../common/Spinner';
 
 class DeployStep2 extends PureComponent {
   componentWillMount() {
@@ -11,38 +12,59 @@ class DeployStep2 extends PureComponent {
   deploy(e) {
     e.preventDefault();
 
-    const { bin } = this.props.instance;
+    const { bin, blockchain } = this.props.instance;
     const { price_eth } = this.props.ctor;
     const { deployId, deployTxSent, deployTxError, deployTxMined } = this.props;
 
-    w3.eth.sendTransaction({
-      data: `0x${bin}`,
-      value: w3.toWei(price_eth, 'ether'),
-      gas: 4400000,
-      gasPrice: 10e9
-    },
-      (err, txHash) => {
-        if (err) {
-          let errMsg = '';
-          try {
-            errMsg = err.message.split("\n")[0];
-          } catch (error) {
-            errMsg = 'Unknown error';
-          }
-          deployTxError(deployId, errMsg);
-
-        } else {
-          getNetworkId(netId => deployTxSent(deployId, netId, txHash));
-
-          getTxReceipt(txHash, receipt => {
-            if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
-              deployTxError(deployId, "Something went wrong and your contract deploy has failed. Try to add more gas or report problem to contract developers.");
-            } else {
-              deployTxMined(deployId, receipt.contractAddress);
-            }
-          });
+    const callback = (err, txHash) => {
+      if (err) {
+        let errMsg = '';
+        try {
+          errMsg = err.message.split("\n")[0];
+        } catch (error) {
+          errMsg = 'Unknown error';
         }
-      });
+        deployTxError(deployId, errMsg);
+
+      } else {
+        getNetworkId(netId => deployTxSent(deployId, netId, txHash, blockchain));
+
+        getTxReceipt(txHash, receipt => {
+          if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
+            deployTxError(deployId, "Something went wrong!");
+          } else {
+            deployTxMined(deployId, receipt.contractAddress);
+          }
+        });
+      }
+    }
+
+    switch (blockchain) {
+      case 'ethereum':
+        w3.eth.sendTransaction({
+          data: `0x${bin}`,
+          value: w3.toWei(price_eth, 'ether'),
+          gas: 4400000,
+          gasPrice: 10e9
+        }, callback);
+        break;
+      case 'eos':
+        deployContract(bin)
+          .then((result) => {
+            console.log(result);
+            deployTxMined(deployId, result);
+          })
+          .catch((error) => {
+            console.log(error);
+            deployTxError(deployId, error);
+          });
+
+        deployTxSent(deployId, netId, txHash, blockchain)
+        break;
+      default:
+        break;
+    }
+
   }
 
   render() {

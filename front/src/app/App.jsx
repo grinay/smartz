@@ -17,7 +17,6 @@ import Instance from './instances/InstanceContainer';
 import Docs from './docs/Docs';
 import InfoBlock from './common/InfoBlock';
 import { checkMetaMask } from '../helpers/eth';
-import eos from '../helpers/eos.js';
 import InstallExtension from './common/install-extension/InstallExtension';
 import Page404 from './page-404/Page404';
 

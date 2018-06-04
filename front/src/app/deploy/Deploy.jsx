@@ -5,9 +5,9 @@ import { transformObj2Flat } from '../../helpers/normalize';
 import UnlockMetamaskPopover from '../common/unlock-metamask-popover/UnlockMetamaskPopover';
 import Alert from '../common/Alert';
 import Spinner from '../common/Spinner';
-import DeployStep1 from './DeployStep1';
-import DeployStep2 from './DeployStep2';
-import DeployStep3 from './DeployStep3';
+import DeployStep1 from './deploy-step-1/DeployStep1';
+import DeployStep2 from './deploy-step-2/DeployStep2';
+import DeployStep3 from './deploy-step-3/DeployStep3';
 import Auth from '../auth/Auth';
 
 import './Deploy.less';
@@ -56,7 +56,7 @@ class Deploy extends PureComponent {
     const { deployId } = this.state;
     const {
       ctor, status, errors, instance, netId, txHash, contractAddress, metamaskStatus,
-      setPublicAccess, deployTxSent, deployTxError, deployTxMined, formData
+      setPublicAccess, deployTxSent, deployTxError, deployTxMined, formData, blockchain
     } = this.props;
 
     const step1Props = { deployId, ctor, formData, metamaskStatus };
@@ -67,7 +67,7 @@ class Deploy extends PureComponent {
     };
 
     const step3Props = {
-      status, txHash, netId, instance, contractAddress
+      status, txHash, netId, instance, contractAddress, blockchain
     };
 
     if (metamaskStatus === 'noMetamask')

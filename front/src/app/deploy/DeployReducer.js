@@ -42,6 +42,7 @@ const deploy = (state = initState, action) => {
       nextState[deployId].status = 'transaction_sent';
       nextState[deployId].txHash = action.txHash;
       nextState[deployId].netId = action.netId;
+      nextState[deployId].blockchain = action.blockchain;
       return nextState;
 
     case 'DEPLOY_TX_ERROR':
