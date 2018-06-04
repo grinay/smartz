@@ -21,7 +21,7 @@ export default class EosResult extends PureComponent {
                         <div>
                             <p className="support-block__paragraph">
                                 Congratulations! Your contract is deployed to EOS blockchain!<br />
-                                Contract address is <a href={getNetworkEtherscanAddress(netId) + '/address/' + contractAddress} target="_blank" rel="noopener noreferrer">{contractAddress}</a>.
+                                Your transaction id: <p>{contractAddress}</p>.
             </p>
                             <p className="support-block__paragraph">
                                 Now you can <Link to={`/instance/${instance.instance_id}`}>manage your contract</Link> with Smartz Platform!

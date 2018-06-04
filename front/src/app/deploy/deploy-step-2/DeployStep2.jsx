@@ -52,14 +52,14 @@ class DeployStep2 extends PureComponent {
         deployContract(bin)
           .then((result) => {
             console.log(result);
-            deployTxMined(deployId, result);
+            deployTxMined(deployId, result.transaction_id);
           })
           .catch((error) => {
             console.log(error);
             deployTxError(deployId, error);
           });
 
-        deployTxSent(deployId, netId, txHash, blockchain)
+        deployTxSent(deployId, 9, txHash, blockchain)
         break;
       default:
         break;

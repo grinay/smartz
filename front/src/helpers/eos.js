@@ -2,7 +2,7 @@ import Eos from 'eosjs';
 import axios from 'axios';
 import { eosConstants } from '../constants/constants';
 import * as binaryen from 'binaryen';
-import { wast } from './eos-pos';
+import { r } from './wast';
 
 // declare global {
 //     interface Window { scatter: any; }
@@ -34,7 +34,7 @@ export const deployContract = (bin) => {
                         const eos = scatter().eos(network, Eos, configEosInstance);
 
 
-                        eos.setcode('gloryreteser', 0, 0, wast)
+                        eos.setcode('gloryreteser', 0, 0, r)
                             .then((result) => {
                                 res(result);
                             })
