@@ -1,35 +1,34 @@
 import React, { PureComponent } from 'react';
 
+import Spinner from '../../../common/Spinner';
+import { Link } from 'react-router-dom';
+
 import './EosResult.less';
 
 export default class EosResult extends PureComponent {
-    render() {
-        return (
-            <div className="eos-result">
-                <div className="block__wrapper  block__wrapper--top">
-                    {(status === 'transaction_sent' || status === 'transaction_mined') &&
-                        <p className="support-block__paragraph">
-                            Deploy transaction has been sent to EOS network.
-                        </p>
-                    }
+  render() {
+    const { status, instance, contractAddress } = this.props;
 
-                    {status === 'transaction_sent' &&
-                        <Spinner text="Awaiting for contract to be placed in block by miners to get it address..." />
-                    }
+    return (
+      <div className="eos-result">
+        {status === 'transaction_sent' && (
+          <Spinner text="Awaiting for contract to be placed in block by miners to get it address..." />
+        )}
 
-                    {status === 'transaction_mined' &&
-                        <div>
-                            <p className="support-block__paragraph">
-                                Congratulations! Your contract is deployed to EOS blockchain!<br />
-                                Your transaction id: <p>{contractAddress}</p>.
+        {status === 'transaction_mined' && (
+          <div>
+            <p className="support-block__paragraph">
+              Congratulations! Your contract is deployed to EOS blockchain!<br />
+              Your transaction id: <span>{contractAddress}</span>
             </p>
-                            <p className="support-block__paragraph">
-                                Now you can <Link to={`/instance/${instance.instance_id}`}>manage your contract</Link> with Smartz Platform!
+            <p className="support-block__paragraph">
+              Now you can
+              <Link to={`/instance/${instance.instance_id}`}> manage your contract </Link>with
+              Smartz Platform!
             </p>
-                        </div>
-                    }
-                </div>
-            </div>
-        );
-    }
-};
+          </div>
+        )}
+      </div>
+    );
+  }
+}
