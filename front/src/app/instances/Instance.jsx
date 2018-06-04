@@ -37,6 +37,11 @@ class Instance extends Component {
     api.getInstance(this.props.match.params.id);
   }
 
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
+
   componentDidUpdate() {
     // TODO: refactor this shit
     const { instance, metamaskStatus } = this.props;

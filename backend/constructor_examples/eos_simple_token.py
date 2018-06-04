@@ -22,7 +22,7 @@ class Constructor(ConstructorInstance):
             "properties": {
                 "ticker": {
                     "title": "Token ticker",
-                    "description": "Only symbols (with length 3-10)",
+                    "description": "Only symbols (with length 3-7)",
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 7,
@@ -36,16 +36,6 @@ class Constructor(ConstructorInstance):
                     "min": 1,
                     "max": 8
                 },
-
-                "owner": {
-                    "title": "Owner",
-                    "description": "Account of token owner (12 symbols)",
-                    "type": "string",
-                    "minLength": 12,
-                    "maxLength": 12,
-                    "pattern": "^[A-Za-z][a-zA-Z0-9]+$"
-                },
-
             }
         }
 
@@ -60,8 +50,7 @@ class Constructor(ConstructorInstance):
     def construct(self, fields):
         source = self.__class__._TEMPLATE \
             .replace('%decimals%', str(fields['decimals'])) \
-            .replace('%ticker%', fields['ticker']) \
-            .replace('%owner_account%', fields['owner'])
+            .replace('%ticker%', fields['ticker'])
 
         return {
             "result": "success",
@@ -71,7 +60,7 @@ class Constructor(ConstructorInstance):
 
     def post_construct(self, fields, abi_array):
 
-        function_titles = {
+        function_specs = {
             'transfer': {
                 'title': 'Transfer',
                 'description': 'Transfer tokens',
@@ -94,11 +83,17 @@ class Constructor(ConstructorInstance):
             'totalSupply': {
                 'title': 'Total supply',
             },
+            'account': {
+                'title': 'Get balance',
+                'inputs': [
+                    {'title': 'Account name'},
+                ]
+            },
         }
 
         return {
             "result": "success",
-            'function_specs': function_titles,
+            'function_specs': function_specs,
             'dashboard_functions': ['totalSupply']
         }
 
@@ -114,8 +109,11 @@ using eosio::asset;
 
 class simpletoken : public eosio::contract {
    public:
-      simpletoken(account_name self )
-      :contract(self /*"%owner_account%"*/),_accounts( _self, _self){}
+      simpletoken( account_name self ):
+        contract(self),
+        _accounts( _self, _self),
+        _state(_self, _self)
+        {}
 
       // @abi action
       void transfer( account_name from, account_name to, asset quantity ) {
@@ -135,12 +133,7 @@ class simpletoken : public eosio::contract {
          eosio_assert( quantity.symbol == token_symbol, "wrong symbol" );
 
          add_balance( _self, to, quantity );
-         _totalSupply += quantity;
-      }
-      
-      // @abi action
-      asset totalSupply() {
-        return _totalSupply;
+         add_total_supply(_self, quantity);
       }
 
    private:
@@ -151,9 +144,17 @@ class simpletoken : public eosio::contract {
 
          uint64_t primary_key()const { return owner; }
       };
-
       eosio::multi_index<N(account), account> _accounts;
-      asset _totalSupply;
+
+      // @abi table
+      struct state {
+         uint64_t id;
+         eosio::asset totalSupply;
+
+         uint64_t primary_key()const { return id; }
+      };
+      eosio::multi_index<N(state), state> _state;
+
 
       void add_balance( account_name payer, account_name to, asset q ) {
          auto toitr = _accounts.find( to );
@@ -169,8 +170,23 @@ class simpletoken : public eosio::contract {
            });
          }
       }
+
+      void add_total_supply(account_name payer, asset cnt ) {
+         auto toitr = _state.find( 0 );
+         if( toitr == _state.end() ) {
+           _state.emplace( payer, [&]( auto& a ) {
+              a.id = 0;
+           });
+         } else {
+           _state.modify( toitr, 0, [&]( auto& a ) {
+              a.totalSupply += cnt;
+              eosio_assert( a.totalSupply >= cnt, "overflow detected" );
+           });
+         }
+      }
 };
 
-EOSIO_ABI( simpletoken, (transfer)(issue)/*(totalSupply)*/ )
+EOSIO_ABI( simpletoken, (transfer)(issue))
+
 
     """

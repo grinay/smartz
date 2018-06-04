@@ -1,6 +1,6 @@
 import collections
 import json
-import logging
+import traceback
 
 from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
@@ -74,7 +74,7 @@ class CatchExceptionMiddleware(WithLogger):
 
     def process_exception(self, request, exception):
         # todo maybe only for api
-        self.logger.error("Unhandled error: {}".format(str(exception)))
+        self.logger.error("Unhandled error: {}. {}".format(str(exception), traceback.format_exc().replace("\n", ' ')))
 
         if isinstance(exception, PublicException):
             return error_response(exception.public_message, 200)

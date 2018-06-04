@@ -12,6 +12,7 @@ const { dispatch } = store;
 
 import auth from '../Auth'
 import { loginErrorAction } from './LoginActions'
+import Eos from "../../../helpers/eos2";
 
 
 
@@ -26,6 +27,11 @@ class Login extends Component {
     this.metamaskLogin = this.metamaskLogin.bind(this);
   }
 
+  componentDidMount() {
+    window.Intercom("update");
+  }
+
+
   metamaskLogin() {
     const { metamaskStatus } = this.props;
 
@@ -36,24 +42,62 @@ class Login extends Component {
     startLogin(blockchains.ethereum, web3.eth.accounts[0])
   }
 
+  scatterLogin() {
+    if (!Eos.scatter) {
+      alert("Scatter is not active");
+      return;
+    }
+
+    Eos.scatter.getIdentity().then(identity => {
+      startLogin(blockchains.eos, identity.publicKey)
+    }).catch(error => {
+      console.warn(error)
+    });
+  }
+
   componentDidUpdate() {
     const { startLoginData, blockchain, identity, token } = this.props.login;
 
+    if (
+      startLoginData && (
+        blockchain !== startLoginData.blockchain || identity !== startLoginData.identity)
+    ) {
+      return;
+    }
+
     if (startLoginData && !this.startedLogins[startLoginData.rand_data]) {
-      const { descr, rand_data } = startLoginData;
+      const { description, rand_data, blockchain, identity } = startLoginData;
       this.startedLogins[rand_data] = true;
 
-      web3.personal.sign(
-        web3.toHex(`${startLoginData.description}${startLoginData.rand_data}`),
-        web3.eth.accounts[0],
-        (error, signedMsg) => {
-          if (error) {
-            dispatch(loginErrorAction('Sign canceled'))
-          } else {
-            finishLogin(blockchain, identity, rand_data, signedMsg)
+      const signMsg = `${description}${rand_data}`;
+
+      if (blockchain === blockchains.ethereum) {
+        web3.personal.sign(
+          web3.toHex(signMsg),
+          identity,
+          (error, signedMsg) => {
+            if (error) {
+              console.warn(error)
+              dispatch(loginErrorAction('Sign canceled'))
+            } else {
+              finishLogin(blockchain, identity, rand_data, signedMsg)
+            }
           }
-        }
-      )
+        );
+      } else if (blockchain === blockchains.eos) {
+        Eos.scatter.getArbitrarySignature(
+          identity,
+          signMsg,
+          'Login Authentication',
+          false
+        )
+          .then(signedMsg => finishLogin(blockchain, identity, rand_data, signedMsg))
+          .catch(e => dispatch(loginErrorAction('Sign canceled')))
+      } else {
+        alert('Something went wrong')
+      }
+
+
     }
 
     if (token && !this.tokens[token]) {
@@ -78,6 +122,10 @@ class Login extends Component {
 
         <button className="button block__button" onClick={this.metamaskLogin}>
           Login with your Ethereum signature
+        </button>
+
+        <button className="button block__button" onClick={this.scatterLogin}>
+          Login with your EOS signature via Scatter
         </button>
       </main>
     );

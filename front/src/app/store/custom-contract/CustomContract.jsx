@@ -7,7 +7,9 @@ import './CustomContract.less';
 export default class CustomContract extends PureComponent {
     render() {
         return (
-            <article className="custom-contract ctor-card">
+            <article
+                className="custom-contract ctor-card"
+                onClick={() => window.location = "mailto:hello@smartz.io"}>
                 <div className="ctor-card__link screen">
                     <div className="ctor-card__img flex">
                         <img

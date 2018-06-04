@@ -8,9 +8,9 @@ import jwt
 import pytz
 from django.conf import settings
 
-from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS
+from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS, BLOCKCHAINS
 from apps.users.models import RandomDataForSign, UserIdentity, User
-from utils.ethereum import recover_addr_from_signed
+from utils import ethereum, eos
 
 
 class SignService(metaclass=ABCMeta):
@@ -22,7 +22,7 @@ class SignService(metaclass=ABCMeta):
         :return:
         """
         rand_data = RandomDataForSign(
-            identity=identity.lower(),
+            identity=self._proccess_identity(identity),
             blockchain=self.get_blockchain(),
             description=descr,
             data=''.join(
@@ -33,16 +33,50 @@ class SignService(metaclass=ABCMeta):
         rand_data.save()
         return rand_data
 
+    def check_sign(self, identity, signed_data, rand_data_str) -> bool:
+        try:
+            rand_data = RandomDataForSign.objects.get(
+                blockchain=self.get_blockchain(),
+                identity=self._proccess_identity(identity),
+                data=rand_data_str,
+                valid_to__gt=datetime.now(pytz.timezone(settings.TIME_ZONE))
+            )
+        except RandomDataForSign.DoesNotExist:
+            return False
+
+        rand_data.valid_to = datetime.now(pytz.timezone(settings.TIME_ZONE))
+        rand_data.save()
+
+        return self._check_sign_internal(rand_data, signed_data)
+
+    def get_descr(self, identity):
+        curr_date = datetime.now(tz=pytz.timezone(settings.TIME_ZONE))
+
+        return """Sign this text message to login to smartz.io.
+Your {}: {}.
+Current time: {}.
+Random data: """.format(
+            self.get_identity_name(),
+            identity,
+            curr_date.strftime("%Y.%m.%d %H:%M:%S %Z".format(settings.TIME_ZONE))
+        )
+
+    def _build_descr_data(self, descr, data):
+        return "{}{}".format(descr, data)
+
+    def _proccess_identity(self, identity: str) -> str:
+        return identity
+
     @abstractmethod
     def get_blockchain(self):
         raise NotImplementedError()
 
     @abstractmethod
-    def check_sign(self, identity, signed_data, data):
+    def get_identity_name(self):
         raise NotImplementedError()
 
     @abstractmethod
-    def build_descr_data(self, descr, data):
+    def _check_sign_internal(self, rand_data: RandomDataForSign, signed_data) -> bool:
         raise NotImplementedError()
 
 
@@ -51,34 +85,35 @@ class EthereumSignService(SignService):
     def get_blockchain(self):
         return BLOCKCHAIN_ETHEREUM
 
-    def check_sign(self, identity, signed_data, rand_data_str):
-        try:
-            rand_data = RandomDataForSign.objects.get(
-                blockchain=self.get_blockchain(),
-                identity=identity.lower(),
-                data=rand_data_str,
-                valid_to__gt=datetime.now(pytz.timezone(settings.TIME_ZONE))
-            )
-        except RandomDataForSign.DoesNotExist:
-            return False
+    def get_identity_name(self):
+        return 'address'
 
-        recovered_addr = recover_addr_from_signed(
+    def _proccess_identity(self, identity: str) -> str:
+        return identity.lower()
+
+    def _check_sign_internal(self, rand_data: RandomDataForSign, signed_data) -> bool:
+        recovered_addr = ethereum.recover_addr_from_signed(
             signed_data,
-            self.build_descr_data(rand_data.description, rand_data_str)
+            self._build_descr_data(rand_data.description, rand_data.data)
         )
 
-        rand_data.valid_to = datetime.now(pytz.timezone(settings.TIME_ZONE))
-
-        return recovered_addr.lower() == identity.lower()
-
-    def build_descr_data(self, descr, data):
-        return "{}{}".format(descr, data)
+        return recovered_addr.lower() == rand_data.identity.lower()
 
 
 class EOSSignService(SignService):
-
     def get_blockchain(self):
         return BLOCKCHAIN_EOS
+
+    def get_identity_name(self):
+        return 'public key'
+
+    def _check_sign_internal(self, rand_data: RandomDataForSign, signed_data) -> bool:
+        recovered_addr = eos.recover_addr_from_signed(
+            signed_data,
+            self._build_descr_data(rand_data.description, rand_data.data)
+        )
+
+        return recovered_addr == rand_data.identity
 
 ###########################################################################
 
@@ -106,7 +141,8 @@ class UsersService:
 
         return user
 
-    def generate_token(self, user: User):
+    def generate_token(self, user: User, blockchain: str):
+        assert blockchain in dict(BLOCKCHAINS), 'Incorrect blockchain: {}'.format(blockchain)
         expires_at = datetime.now(pytz.timezone(settings.TIME_ZONE)) + timedelta(hours=24)
 
         return jwt.encode(
@@ -115,6 +151,7 @@ class UsersService:
                 'user_name': user.username,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
+                'blockchain': blockchain,
                 'expires_at': expires_at.timestamp()
             },
             settings.SECRET_KEY,
