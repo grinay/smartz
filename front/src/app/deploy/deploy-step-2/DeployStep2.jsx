@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { web3 as w3, getNetworkId, getTxReceipt } from '../../../helpers/eth';
 import Eoss from '../../../helpers/eos';
 import Spinner from '../../common/Spinner';
+import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
 
 class DeployStep2 extends PureComponent {
   componentWillMount() {
@@ -15,6 +16,8 @@ class DeployStep2 extends PureComponent {
     const { bin, blockchain } = this.props.instance;
     const { price_eth } = this.props.ctor;
     const { deployId, deployTxSent, deployTxError, deployTxMined } = this.props;
+
+    if (blockchain === 'ethereum' && metamaskStatus != 'okMetamask') return null;
 
     const callback = (err, txHash) => {
       if (err) {
@@ -51,13 +54,12 @@ class DeployStep2 extends PureComponent {
         );
         break;
       case 'eos':
-        console.log(Eoss);
         Eoss.deployContract(bin)
           .then((result) => {
             deployTxMined(deployId, result.transaction_id);
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
             const msg = error.message ? error.message : error;
             deployTxError(deployId, msg);
           });
@@ -70,10 +72,14 @@ class DeployStep2 extends PureComponent {
   }
 
   render() {
-    const { deployId, ctor, instance, status, setPublicAccess } = this.props;
+    const { deployId, ctor, instance, status, setPublicAccess, blockchain } = this.props;
 
     return (
       <div>
+        {/* popover 'Unlock metamask' */}
+        {blockchain === 'ethereum' &&
+          metamaskStatus === 'unlockMetamask' && <UnlockMetamaskPopover />}
+
         {status === 'construct_request' && (
           <div className="block__wrapper  block__wrapper--top">
             <Spinner text="Preparing code, this can take some seconds..." />

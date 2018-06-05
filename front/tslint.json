@@ -95,7 +95,7 @@
       false
     ],
     "no-console": [
-      false
+      true
     ],
     "callable-types": false,
     "member-ordering": [
