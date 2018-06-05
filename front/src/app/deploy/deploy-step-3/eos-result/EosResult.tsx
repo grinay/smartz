@@ -1,12 +1,17 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
 import Spinner from '../../../common/Spinner';
+import './EosResult.less';
 import { Link } from 'react-router-dom';
 
-import './EosResult.less';
+interface IEosResultProps {
+  status: any;
+  instance: any;
+  contractAddress: any;
+}
 
-export default class EosResult extends PureComponent {
-  render() {
+export default class EosResult extends React.PureComponent<IEosResultProps, {}> {
+  public render() {
     const { status, instance, contractAddress } = this.props;
 
     return (

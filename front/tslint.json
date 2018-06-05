@@ -1,7 +1,8 @@
 {
   "extends": [
     "tslint:recommended",
-    "tslint-react"
+    "tslint-react",
+    "tslint-config-prettier"
   ],
   "rules": {
     "use-isnan": true,
@@ -121,7 +122,7 @@
   "jsRules": {
     "max-line-length": [
       true,
-      180
+      100
     ]
   }
 }

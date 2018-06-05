@@ -29,39 +29,27 @@ class Eos {
       blockchain: eosConstants.BLOCKCHAIN,
     };
 
-    const configEosInstance = {
-      binaryen,
-      chainId: null,
-      mockTransactions: () => null,
-    };
-
-    // get chain id
-    return axios
-      .get('http://' + eosConstants.HOST + ':' + eosConstants.PORT + '/v1/chain/get_info')
-      .then((response) => {
-        if (response.status !== 200) {
-          throw Error('Request error');
-        }
-
-        // set chain id
-        configEosInstance.chainId = response.data.chain_id;
-
-        // accept current network
-        return this.scatter.suggestNetwork(network);
-      })
+    // accept current network
+    return this.scatter
+      .suggestNetwork(network)
       .then((ok) => this.scatter.getIdentity({ accounts: [network] }))
       .then((identity) => {
         let accountName;
         if (Array.isArray(identity.accounts) && identity.accounts.length > 0) {
           accountName = identity.accounts[0].name;
         }
+        const configEosInstance = {
+          binaryen,
+          chainId: eosConstants.CHAIN_ID,
+          mockTransactions: () => null,
+        };
 
         // send smart-contract
         return this.scatter
           .eos(network, eosInstance, configEosInstance)
           .setcode(accountName, 0, 0, bin);
       });
-  }
+  };
 }
 
 export default new Eos();
