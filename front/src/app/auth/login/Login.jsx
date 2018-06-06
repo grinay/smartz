@@ -91,8 +91,7 @@ class Login extends Component {
 
     if (token && !this.tokens[token]) {
       this.tokens[token] = true;
-
-      auth.handleAuthentication(token);
+      Eos.scatter.forgetIdentity().then(()=>auth.handleAuthentication(token));
     }
   }
 
