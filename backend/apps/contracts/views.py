@@ -97,7 +97,7 @@ class UpdateView(View):
             return error_response("Param 'address' is empty or not string")
 
         network_id = request.data.get('network_id')
-        if network_id is None or not isinstance(network_id, int):
+        if network_id is None or type(network_id) not in (int, str):
             return error_response("Param 'network_id' is empty or not int")
 
         public_access = bool(request.data.get('public_access'))
