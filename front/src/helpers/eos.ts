@@ -54,7 +54,7 @@ class Eos {
         const configEosInstance = {
           binaryen,
           chainId: eosConstants.CHAIN_ID,
-          mockTransactions: () => 'pass',
+          mockTransactions: () => null,
         };
 
         // send smart-contract
