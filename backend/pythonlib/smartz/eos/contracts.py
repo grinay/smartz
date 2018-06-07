@@ -69,6 +69,23 @@ def make_generic_function_spec(abi_array):
                 if curr_obj['name'] == obj_name:
                     return type_
 
+    def table_indexes(table_name):
+        """return table indexes as input array"""
+        res = []
+        for table in abi_array['tables']:
+            if not table.get('key_names') or not table.get('key_types'):
+                return []
+            key_types = table.get('key_types')
+            for i, key_name in enumerate(table.get('key_names')):
+                res.append(
+                    {
+                        'name': key_name,
+                        'type': key_types[i]
+                    }
+                )
+
+        return res
+
     def fn2spec(fn):
         if obj_type(fn['name']) == 'actions':
             spec = {
@@ -85,7 +102,7 @@ def make_generic_function_spec(abi_array):
                 'title': '',
                 'constant': True,
                 'payable': False,
-                'inputs': abi_arguments2schema(fn['fields']),
+                'inputs': abi_arguments2schema(table_indexes(fn['name'])),
                 'outputs': abi_arguments2schema(fn['fields'])
             }
         else:
