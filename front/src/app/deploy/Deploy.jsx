@@ -46,7 +46,7 @@ class Deploy extends PureComponent {
     if (netId && contractAddress) {
       const data = {
         address: contractAddress,
-        network_id: Number.parseInt(netId, 10),
+        network_id: netId,
         public_access: publicAccess
       };
 

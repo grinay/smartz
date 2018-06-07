@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 
 import { web3 as w3, getNetworkId, getTxReceipt } from '../../../helpers/eth';
-import Eoss from '../../../helpers/eos';
+import Eos from '../../../helpers/eos';
 import Spinner from '../../common/Spinner';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
+import { eosConstants } from '../../../constants/constants';
 
 class DeployStep2 extends PureComponent {
   componentWillMount() {
@@ -54,9 +55,17 @@ class DeployStep2 extends PureComponent {
         );
         break;
       case 'eos':
-        Eoss.deployContract(bin)
+        let adrress;
+        Eos.deployContract(bin)
           .then((result) => {
-            deployTxMined(deployId, result.transaction_id);
+            const identity = Eos.currentIdentity;
+            let accountName = '';
+
+            if (Array.isArray(identity.accounts) && identity.accounts.length > 0) {
+              accountName = identity.accounts[0].name;
+            }
+            console.log(accountName);
+            deployTxMined(deployId, accountName);
           })
           .catch((error) => {
             console.error(error);
@@ -64,7 +73,7 @@ class DeployStep2 extends PureComponent {
             deployTxError(deployId, msg);
           });
 
-        deployTxSent(deployId, 99, '---', blockchain);
+        deployTxSent(deployId, eosConstants.CHAIN_ID, '---', blockchain);
         break;
       default:
         break;

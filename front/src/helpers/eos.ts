@@ -11,42 +11,55 @@ declare global {
 }
 
 class Eos {
+  private network: any;
+
   public scatter: any;
+  public currentIdentity: any;
 
   constructor() {
     document.addEventListener('scatterLoaded', (scatterExtension) => {
       this.scatter = window.scatter;
       window.scatter = null;
     });
+
+    this.currentIdentity = null;
+    this.network = {
+      port: eosConstants.PORT,
+      host: eosConstants.HOST,
+      blockchain: eosConstants.BLOCKCHAIN,
+    };
+  }
+
+  public suggestNetwork(network: any = null) {
+    return this.scatter.suggestNetwork(network === null ? this.network : network);
   }
 
   public deployContract = (bin: string) => {
     this.scatter.requireVersion(5.0);
 
-    const network = {
-      port: eosConstants.PORT,
-      host: eosConstants.HOST,
-      blockchain: eosConstants.BLOCKCHAIN,
-    };
-
     // accept current network
     return this.scatter
-      .suggestNetwork(network)
-      .then((ok) => this.scatter.getIdentity({ accounts: [network] }))
+      .suggestNetwork(this.network)
+      .then((ok) => this.scatter.getIdentity({ accounts: [this.network] }))
       .then((identity) => {
+        this.currentIdentity = identity;
+
         let accountName;
         if (Array.isArray(identity.accounts) && identity.accounts.length > 0) {
           accountName = identity.accounts[0].name;
+        } else {
+          throw Error('Account not found!');
         }
+
         const configEosInstance = {
           binaryen,
           chainId: eosConstants.CHAIN_ID,
-          mockTransactions: () => null,
+          mockTransactions: () => 'pass',
         };
 
         // send smart-contract
         return this.scatter
-          .eos(network, eosInstance, configEosInstance)
+          .eos(this.network, eosInstance, configEosInstance)
           .setcode(accountName, 0, 0, bin);
       });
   };
