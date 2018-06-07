@@ -20,7 +20,7 @@ def abi_arguments2schema(abi_args_array):
                 "default": False
             }
 
-        elif abi_type in ('account_name', 'asset'):
+        elif abi_type in ('account_name', 'name', 'asset'): #todo why name instead of account_name ?
             result = {
                 "$ref": "#/definitions/" + abi_type
             }
@@ -70,8 +70,6 @@ def make_generic_function_spec(abi_array):
                     return type_
 
     def fn2spec(fn):
-        spec = dict()
-
         if obj_type(fn['name']) == 'actions':
             spec = {
                 'name': fn['name'],
@@ -79,15 +77,15 @@ def make_generic_function_spec(abi_array):
                 'constant': False,
                 'payable': False,
                 'inputs': abi_arguments2schema(fn['fields']),
-                'outputs': []
+                'outputs': abi_arguments2schema([])
             }
-        elif fn['type'] == 'tables':
+        elif obj_type(fn['name']) == 'tables':
             spec = {
                 'name': fn['name'],
                 'title': '',
-                'constant': False,
+                'constant': True,
                 'payable': False,
-                'inputs': abi_arguments2schema([]),
+                'inputs': abi_arguments2schema(fn['fields']),
                 'outputs': abi_arguments2schema(fn['fields'])
             }
         else:

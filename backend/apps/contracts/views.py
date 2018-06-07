@@ -18,7 +18,7 @@ def _prepare_instance_details(contract: Contract):
     output = {
         "instance_id": contract.slug,
         "instance_title": contract.title,
-        "network_id": int(contract.network_id),
+        "network_id": str(contract.network_id),
         "ctor_id": contract.constructor.slug,
         "address": contract.address,
         "abi": json.loads(contract.abi),

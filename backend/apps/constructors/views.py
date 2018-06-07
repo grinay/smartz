@@ -16,6 +16,7 @@ from django.views.generic.base import View
 
 from jsonschema.validators import validator_for
 
+from apps.common.constants import BLOCKCHAINS
 from apps.constructors.models import Constructor
 from apps.contracts.models import Contract
 from smartzcore.service_instances import WithEngine
@@ -24,8 +25,9 @@ from utils.responses import  error_response, engine_error_response
 from smartz.json_schema import load_schema, add_definitions
 
 
-def _process_ctor_schema(schema):
-    return add_definitions(schema, load_schema('public/ethereum-sc.json'))
+def _process_ctor_schema(blockchain: str, schema):
+    assert blockchain in dict(BLOCKCHAINS), "Blockchain {} is not supported".format(blockchain)
+    return add_definitions(schema, load_schema('public/{}-sc.json'.format(blockchain)))
 
 
 class ListView(View):
@@ -157,7 +159,7 @@ class GetParamsView(View):
             'ctor_name': constructor.name,
             'ctor_descr': constructor.description,
             'price_eth': constructor.get_formatted_price_eth(),
-            'schema': _process_ctor_schema(constructor.get_schema()),
+            'schema': _process_ctor_schema(constructor.blockchain, constructor.get_schema()),
             'ui_schema': constructor.get_ui_schema(),
             'blockchain': constructor.blockchain,
             'image': constructor.image
@@ -191,7 +193,7 @@ class ConstructView(View, WithEngine):
         if not instance_title or not isinstance(instance_title, str):
             return error_response("Wrong 'instance_title' param")
 
-        constructor_schema = _process_ctor_schema(constructor.get_schema())
+        constructor_schema = _process_ctor_schema(constructor.blockchain, constructor.get_schema())
 
         validator_cls = validator_for(constructor_schema)
         validator_cls.check_schema(constructor_schema)

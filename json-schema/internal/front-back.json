@@ -41,6 +41,10 @@
             "type": "array",
             "items": { "type": "object" }
         },
+        "EOSABI": {
+            "description": "Ethereum contract ABI array",
+            "type": "object"
+        },
 
         "ETHFunctionArgumentList": {
             "description": "Ethereum function inputs or returns list",
@@ -155,9 +159,14 @@
                             "instance_id": { "$ref": "#/definitions/ObjectIdHex" },
                             "instance_title": {"type": "string"},
                             "ctor_id": { "$ref": "#/definitions/ObjectIdHex" },
-                            "address": { "$ref": "#/definitions/address" },
-                            "network_id": {"type": "integer", "minimum": 0},
-                            "abi": { "$ref": "#/definitions/ETHABI" },
+                            "address": { "type": "string"},
+                            "network_id": {"type": "string"},
+                            "abi": {
+                                "oneOf": [
+                                    {"$ref": "#/definitions/ETHABI"},
+                                    {"$ref": "#/definitions/EOSABI"}
+                                ]
+                            },
                             "blockchain": {"type": "string", "enum": ["eos", "ethereum"]},
                             "functions": {
                                 "type": "array",
