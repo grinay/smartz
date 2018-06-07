@@ -2,7 +2,6 @@ import * as eosInstance from 'eosjs';
 import axios from 'axios';
 import { eosConstants } from '../constants/constants';
 import * as binaryen from 'binaryen';
-import { abi } from './abi';
 
 declare global {
   // tslint:disable-next-line:interface-name
