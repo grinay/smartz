@@ -24,7 +24,6 @@ export default class EosResult extends React.PureComponent<IEosResultProps, {}> 
           <div>
             <p className="support-block__paragraph">
               Congratulations! Your contract is deployed to EOS blockchain!<br />
-              Your transaction id: <span>{contractAddress}</span>
             </p>
             <p className="support-block__paragraph">
               Now you can

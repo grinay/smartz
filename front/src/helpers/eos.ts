@@ -2,6 +2,7 @@ import * as eosInstance from 'eosjs';
 import axios from 'axios';
 import { eosConstants } from '../constants/constants';
 import * as binaryen from 'binaryen';
+import { abi } from './abi';
 
 declare global {
   // tslint:disable-next-line:interface-name
@@ -12,6 +13,8 @@ declare global {
 
 class Eos {
   private network: any;
+  private configEosInstance: any;
+  private eos: any;
 
   public scatter: any;
   public currentIdentity: any;
@@ -28,13 +31,19 @@ class Eos {
       host: eosConstants.HOST,
       blockchain: eosConstants.BLOCKCHAIN,
     };
+    this.configEosInstance = {
+      binaryen,
+      chainId: eosConstants.CHAIN_ID,
+      mockTransactions: () => null,
+    };
+    this.eos = null;
   }
 
   public suggestNetwork(network: any = null) {
     return this.scatter.suggestNetwork(network === null ? this.network : network);
   }
 
-  public deployContract = (bin: string) => {
+  public deployContract = (bin: string, abi: any) => {
     this.scatter.requireVersion(5.0);
 
     // accept current network
@@ -51,18 +60,22 @@ class Eos {
           throw Error('Account not found!');
         }
 
-        const configEosInstance = {
-          binaryen,
-          chainId: eosConstants.CHAIN_ID,
-          mockTransactions: () => null,
-        };
-
         // send smart-contract
-        return this.scatter
-          .eos(this.network, eosInstance, configEosInstance)
-          .setcode(accountName, 0, 0, bin);
+        return this.getEos().setcode(accountName, 0, 0, bin);
+      })
+      .then((param) => {
+        return this.getEos().setabi(this.currentIdentity.accounts[0].name, JSON.parse(abi));
       });
   };
+
+  public getEos() {
+    if (this.eos === null) {
+      this.eos = this.scatter.eos(this.network, eosInstance, this.configEosInstance);
+      return this.eos;
+    } else {
+      return this.eos;
+    }
+  }
 }
 
 export default new Eos();
