@@ -11,7 +11,8 @@ import requests
 from django.conf import settings
 
 from apps.constructors.models import Constructor
-from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
+from smartz.eth import contracts as eth_contracts
+from smartz.eos import contracts as eos_contracts
 from smartzcore.exceptions import PublicException
 from smartzcore.service_instances import WithLogger
 
@@ -129,8 +130,8 @@ class EthereumContractProcessor(BaseContractProcessor):
     def _specific_process_functions_specs(self, constructor: Constructor, abi, functions_specs):
         new_functions_specs = deepcopy(functions_specs)
         if constructor.version>0:
-            new_functions_specs = merge_function_titles2specs(
-                make_generic_function_spec(abi), new_functions_specs
+            new_functions_specs = eth_contracts.merge_function_titles2specs(
+                eth_contracts.make_generic_function_spec(abi), new_functions_specs
             )
 
         return new_functions_specs
@@ -141,4 +142,10 @@ class EosContractProcessor(BaseContractProcessor):
         return source
 
     def _specific_process_functions_specs(self, constructor: Constructor, abi, functions_specs):
-        return deepcopy(functions_specs)
+        new_functions_specs = deepcopy(functions_specs)
+        if constructor.version>0:
+            new_functions_specs = eos_contracts.merge_function_titles2specs(
+                eos_contracts.make_generic_function_spec(abi), new_functions_specs
+            )
+
+        return new_functions_specs

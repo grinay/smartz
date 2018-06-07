@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "account_name": {
+            "type": "string",
+            "pattern": "^[1-5a-f]{2,12}$"
+        },
+
+        "asset": {
+            "type": "string",
+            "items": "^[0-9]\.[0-9]+\ [a-zA-Z]+"
+        }
+    }
+}
