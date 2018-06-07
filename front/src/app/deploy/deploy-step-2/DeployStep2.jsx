@@ -14,7 +14,7 @@ class DeployStep2 extends PureComponent {
   deploy(e) {
     e.preventDefault();
 
-    const { bin, blockchain } = this.props.instance;
+    const { bin, blockchain, abi } = this.props.instance;
     const { price_eth } = this.props.ctor;
     const { deployId, deployTxSent, deployTxError, deployTxMined } = this.props;
 
@@ -56,7 +56,7 @@ class DeployStep2 extends PureComponent {
         break;
       case 'eos':
         let adrress;
-        Eos.deployContract(bin)
+        Eos.deployContract(bin, abi)
           .then((result) => {
             const identity = Eos.currentIdentity;
             let accountName = '';
