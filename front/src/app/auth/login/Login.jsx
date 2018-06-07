@@ -10,7 +10,6 @@ import Alert from '../../common/Alert';
 import store from '../../../store/store';
 const { dispatch } = store;
 
-import auth from '../Auth';
 import { loginErrorAction } from './LoginActions';
 import Eos from '../../../helpers/eos';
 
@@ -91,7 +90,11 @@ class Login extends Component {
 
     if (token && !this.tokens[token]) {
       this.tokens[token] = true;
-      Eos.scatter.forgetIdentity().then(()=>auth.handleAuthentication(token));
+      if (blockchain === blockchains.eos) {
+        Eos.scatter.forgetIdentity().then(() => Auth.handleAuthentication(token));
+      } else {
+        Auth.handleAuthentication(token);
+      }
     }
   }
 
