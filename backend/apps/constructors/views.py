@@ -238,6 +238,7 @@ class ConstructView(View, WithEngine):
             'instance_id': contract.slug,
             'bin': result['bin'],
             'source': result['source'],
+            'abi': contract.abi,
             'blockchain': constructor.blockchain,
             #todo
             'price_eth': constructor.get_formatted_price_eth()
