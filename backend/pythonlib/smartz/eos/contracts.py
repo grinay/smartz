@@ -127,7 +127,7 @@ def merge_function_titles2specs(spec_array, titles_info):
     for spec in spec_array:
         fn_titles = titles_info.get(spec['name'])
         if not fn_titles:
-            continue
+            pass
 
         set_title(spec, fn_titles)
 
@@ -140,5 +140,21 @@ def merge_function_titles2specs(spec_array, titles_info):
                     break
 
                 set_title(spec[io]["items"][idx], arg_titles)
+
+    # assume that it is ask function, since ask is getting record from special table
+    spec_functions = [x['name'] for x in spec_array]
+    for name, info in titles_info.items():
+        if name not in spec_functions and not titles_info.get('inputs'):
+            spec_fn = { #todo remove copy paste
+                'name': name,
+                'title': '',
+                'constant': True,
+                'payable': False,
+                'inputs': abi_arguments2schema([]),
+                'outputs': abi_arguments2schema([])
+            }
+
+            set_title(spec_fn, info)
+            spec_array.append(spec_fn)
 
     return spec_array
