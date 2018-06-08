@@ -154,7 +154,7 @@ class Deploy extends PureComponent {
               <h2>{ctor.ctor_name}</h2>
               <p>
                 <span>Contract: </span>
-                <a href={`https://platform.smartz.io/deploy/${ctor.ctor_id}`}>
+                <a href={`${window.location.origin}/deploy/${ctor.ctor_id}`}>
                   {`${window.location.origin}/deploy/${ctor.ctor_id}`}
                 </a>
               </p>
