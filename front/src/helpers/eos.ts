@@ -29,6 +29,7 @@ class Eos {
       port: eosConstants.PORT,
       host: eosConstants.HOST,
       blockchain: eosConstants.BLOCKCHAIN,
+      protocol: eosConstants.PROTOCOL
     };
 
     this.configEosInstance = {
@@ -70,7 +71,7 @@ class Eos {
 
   public getEos() {
     if (this.eos === null) {
-      this.eos = this.scatter.eos(this.network, eosInstance, this.configEosInstance);
+      this.eos = this.scatter.eos(this.network, eosInstance, this.configEosInstance, this.network.protocol);
       return this.eos;
     } else {
       return this.eos;
