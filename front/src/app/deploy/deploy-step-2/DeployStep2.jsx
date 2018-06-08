@@ -65,7 +65,7 @@ class DeployStep2 extends PureComponent {
               accountName = identity.accounts[0].name;
             }
 
-            Eos.getEosInstance()
+            Eos.getEos()
               .contract(accountName)
               .then((result) => {
                 console.log(result);
