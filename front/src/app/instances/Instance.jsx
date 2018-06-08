@@ -7,6 +7,8 @@ import { processControlForm, processResult, makeEtherscanLink } from '../../help
 import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
+import { sheme } from './sheme';
+
 import FunctionButton from './function-button/FunctionButton';
 
 import './Instance.less';
@@ -17,14 +19,9 @@ class Instance extends Component {
   constructor(props) {
     super(props);
 
-    const { instance } = this.props;
-    const funcActive = instance
-      ? find(instance.functions, (f) => f.inputs.minItems !== 0 || !f.constant)
-      : undefined;
-
     this.state = {
       updateCycleActive: false,
-      funcActive
+      funcActive: null
     };
   }
 
@@ -54,6 +51,9 @@ class Instance extends Component {
       return;
     }
 
+    //TODO:delete mock
+    instance.functions = sheme;
+
     instance.functions.forEach((func) => {
       if (func.constant && func.inputs.minItems === 0) {
         processControlForm(instance.abi, func, [], instance.address, (error, result) => {
@@ -72,6 +72,9 @@ class Instance extends Component {
     if (!instance) {
       return result;
     }
+
+    //TODO:delete mock
+    instance.functions = sheme;
 
     instance.functions &&
       instance.functions.forEach((func) => {
@@ -104,6 +107,11 @@ class Instance extends Component {
           <Alert standardAlert={metamaskStatus} />
         </div>
       );
+    }
+
+    // TODO:delete mock
+    if (instance && instance.functions) {
+      instance.functions = sheme;
     }
 
     const viewFunctions = this.getFunctionsByType(instance, 'view');

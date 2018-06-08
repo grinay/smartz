@@ -66,15 +66,6 @@ class DeployStep2 extends PureComponent {
               accountName = identity.accounts[0].name;
             }
 
-            Eos.getEos()
-              .contract(accountName)
-              .then((result) => {
-                console.log(result);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-
             deployTxMined(deployId, accountName);
           })
           .catch((error) => {
