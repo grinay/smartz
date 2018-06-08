@@ -20,7 +20,7 @@ def abi_arguments2schema(abi_args_array):
                 "default": False
             }
 
-        elif abi_type in ('account_name', 'name', 'asset'): #todo why name instead of account_name ?
+        elif abi_type in ('account_name', 'name', 'asset', 'uint32', 'uint64'): #todo why name instead of account_name ?
             result = {
                 "$ref": "#/definitions/" + abi_type
             }
@@ -144,7 +144,7 @@ def merge_function_titles2specs(spec_array, titles_info):
     for spec in spec_array:
         fn_titles = titles_info.get(spec['name'])
         if not fn_titles:
-            pass
+            continue
 
         set_title(spec, fn_titles)
 

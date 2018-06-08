@@ -14,6 +14,18 @@
         "asset": {
             "type": "string",
             "pattern": "^[0-9]\\.[0-9]+\\ [a-zA-Z]+"
+        },
+
+        "uint32": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+        },
+
+        "uint64": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709552000
         }
     }
 }
