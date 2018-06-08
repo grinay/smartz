@@ -1,6 +1,7 @@
 const jwtDecode = require('jwt-decode');
 import history from '../../helpers/history';
 import Eos from '../../helpers/eos';
+import { blockchains } from './../../constants/constants';
 
 class Auth {
   // todo maybe do in another way?
@@ -77,7 +78,7 @@ class Auth {
 
     this.userProfile = null;
 
-    if (data.blockchain === 'eos' && Eos.scatter) {
+    if (data.blockchain === blockchains.eos && Eos.scatter) {
       Eos.scatter.forgetIdentity();
     }
 

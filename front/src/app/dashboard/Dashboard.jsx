@@ -7,6 +7,7 @@ import { processControlForm, processResult, getNetworkId } from '../../helpers/e
 import Alert from '../common/Alert';
 
 import './Dashboard.less';
+import { blockchains } from './../../constants/constants';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -14,13 +15,22 @@ class Dashboard extends Component {
 
     this.state = {
       updateCycleActive: false,
-      filterInstances: []
+      filterInstances: [],
+      networkId: null
     };
   }
 
   componentWillMount() {
+    const { metamaskStatus } = this.props;
+
     api.getConstructors();
     api.getInstances();
+
+    if (metamaskStatus !== 'noMetamask') {
+      getNetworkId((networkId) => {
+        this.setState({ networkId });
+      });
+    }
   }
 
   componentDidMount() {
@@ -29,23 +39,39 @@ class Dashboard extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { metamaskStatus, instances } = this.props;
+    let filterInstances = [];
 
-    //TODO: how to filter contracts, if we've eos contracts
-    // show all contracts
-    this.setState({ filterInstances: instances });
-    // if (metamaskStatus !== 'noMetamask') {
-    //   if (instances.length > 0) {
-    //     getNetworkId(networkId => {
+    // const isEthContractExist =
+    //   typeof find(instances, { blockchain: blockchains.ethereum }) !== 'undefined';
 
-    //       // show instances only current network
-    //       const filterInstances = instances.filter(instance =>
-    //         instance.network_id.toString() === networkId
-    //       );
-
-    //       this.setState({ filterInstances });
-    //     });
-    //   }
+    // if (isEthContractExist && metamaskStatus !== 'noMetamask') {
+    //     if (inst.network_id.toString() === networkId) {
+    //       console.log(filterInstances);
+    //       filterInstances.push(inst);
+    //     }
     // }
+
+    for (let i = 0; i < instances.length; i++) {
+      let inst = instances[i];
+      switch (inst.blockchain) {
+        case blockchains.ethereum:
+          if (metamaskStatus !== 'noMetamask') {
+            if (inst.network_id.toString() === this.state.networkId) {
+              filterInstances.push(inst);
+            }
+          }
+          break;
+        case blockchains.eos:
+          filterInstances.push(inst);
+          break;
+        default:
+          break;
+      }
+    }
+    // console.log(filterInstances);
+    this.setState({
+      filterInstances
+    });
   }
 
   componentDidUpdate() {
@@ -57,8 +83,9 @@ class Dashboard extends Component {
       ctors.length &&
       !this.state.updateCycleActive &&
       metamaskStatus !== 'noMetamask'
-    )
+    ) {
       this.updateCycle();
+    }
   }
 
   updateCycle() {
@@ -67,7 +94,7 @@ class Dashboard extends Component {
     instances.forEach((inst, j) => {
       const { instance_id, abi, address, dashboard_functions, functions, blockchain } = inst;
 
-      if (blockchain === 'ethereum' && dashboard_functions) {
+      if (blockchain === blockchains.ethereum && dashboard_functions) {
         dashboard_functions.forEach((dFunc) => {
           const fSpec = find(functions, { name: dFunc });
           if (!fSpec) {
@@ -89,17 +116,16 @@ class Dashboard extends Component {
     const { metamaskStatus } = this.props;
     const { filterInstances } = this.state;
 
-    if (metamaskStatus === 'noMetamask')
+    if (
+      find(filterInstances, { blockchain: blockchains.ethereum }) &&
+      metamaskStatus === 'noMetamask'
+    ) {
       return (
-        <p
-          style={{
-            textAlign: 'center',
-            margin: '100px',
-            fontSize: '20px'
-          }}>
+        <p style={{ textAlign: 'center', margin: '100px', fontSize: '20px' }}>
           Fellow, you need a Metamask plugin!
         </p>
       );
+    }
 
     const { ctors, ctorsError, instances, instancesError } = this.props;
 
@@ -121,7 +147,6 @@ class Dashboard extends Component {
             {filterInstances.length > 0 &&
               filterInstances.map((inst, j) => (
                 <li key={j} className="my-contracts__item">
-                  {console.log(inst)}
                   <Link to={`/instance/${inst.instance_id}`} className="my-contracts__link screen">
                     <article className="my-contract">
                       <section className="contract-info  contract-info--contract-card">

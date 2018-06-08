@@ -5,6 +5,7 @@ import Eos from '../../../helpers/eos';
 import Spinner from '../../common/Spinner';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
 import { eosConstants } from '../../../constants/constants';
+import { blockchains } from './../../../constants/constants';
 
 class DeployStep2 extends PureComponent {
   componentWillMount() {
@@ -18,7 +19,7 @@ class DeployStep2 extends PureComponent {
     const { price_eth } = this.props.ctor;
     const { deployId, deployTxSent, deployTxError, deployTxMined, metamaskStatus } = this.props;
 
-    if (blockchain === 'ethereum' && metamaskStatus != 'okMetamask') return null;
+    if (blockchain === blockchains.ethereum && metamaskStatus != 'okMetamask') return null;
 
     const callback = (err, txHash) => {
       if (err) {
@@ -105,7 +106,7 @@ class DeployStep2 extends PureComponent {
     return (
       <div>
         {/* popover 'Unlock metamask' */}
-        {blockchain === 'ethereum' &&
+        {blockchain === blockchains.ethereum &&
           metamaskStatus === 'unlockMetamask' && <UnlockMetamaskPopover />}
 
         {status === 'construct_request' && (

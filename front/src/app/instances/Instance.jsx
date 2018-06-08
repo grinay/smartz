@@ -11,6 +11,7 @@ import FunctionButton from './function-button/FunctionButton';
 
 import './Instance.less';
 import renderInstanceWidget from '../common/contract-instance-widgets/ContractInstanceWidgets';
+import { blockchains } from './../../constants/constants';
 
 class Instance extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class Instance extends Component {
     // TODO: refactor this shit
     const { instance, metamaskStatus } = this.props;
 
-    if (instance && !this.state.updateCycleActive) {
+    if (instance && instance.blockchain === blockchains.ethereum && !this.state.updateCycleActive) {
       if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
         return null;
       }
@@ -93,7 +94,11 @@ class Instance extends Component {
   render() {
     const { metamaskStatus, instance, instanceError } = this.props;
 
-    if (instance.blockchain !== 'eos' && metamaskStatus !== 'okMetamask') {
+    if (
+      instance &&
+      instance.blockchain === blockchains.ethereum &&
+      metamaskStatus !== 'okMetamask'
+    ) {
       return (
         <div className="container">
           <Alert standardAlert={metamaskStatus} />
