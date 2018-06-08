@@ -16,7 +16,7 @@ class DeployStep2 extends PureComponent {
 
     const { bin, blockchain, abi } = this.props.instance;
     const { price_eth } = this.props.ctor;
-    const { deployId, deployTxSent, deployTxError, deployTxMined } = this.props;
+    const { deployId, deployTxSent, deployTxError, deployTxMined, metamaskStatus } = this.props;
 
     if (blockchain === 'ethereum' && metamaskStatus != 'okMetamask') return null;
 

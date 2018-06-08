@@ -30,6 +30,7 @@ class Eos {
       host: eosConstants.HOST,
       blockchain: eosConstants.BLOCKCHAIN,
     };
+
     this.configEosInstance = {
       binaryen,
       chainId: eosConstants.CHAIN_ID,
