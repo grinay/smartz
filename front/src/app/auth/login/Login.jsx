@@ -38,12 +38,12 @@ class Login extends Component {
   }
 
   scatterLogin() {
-    if (!window.scatter) {
+    if (!Eos.scatter) {
       alert('Scatter is not active');
       return;
     }
 
-    window.scatter
+    Eos.scatter
       .getIdentity()
       .then((identity) => {
         startLogin(blockchains.eos, identity.publicKey);
@@ -79,7 +79,7 @@ class Login extends Component {
           }
         });
       } else if (blockchain === blockchains.eos) {
-        window.scatter
+        Eos.scatter
           .getArbitrarySignature(identity, signMsg, 'Login Authentication', false)
           .then((signedMsg) => finishLogin(blockchain, identity, rand_data, signedMsg))
           .catch((e) => dispatch(loginErrorAction('Sign canceled')));
@@ -91,7 +91,7 @@ class Login extends Component {
     if (token && !this.tokens[token]) {
       this.tokens[token] = true;
       if (blockchain === blockchains.eos) {
-        window.scatter.forgetIdentity().then(() => Auth.handleAuthentication(token));
+        Eos.scatter.forgetIdentity().then(() => Auth.handleAuthentication(token));
       } else {
         Auth.handleAuthentication(token);
       }
