@@ -25,6 +25,7 @@ class Constructor(models.Model):
 
         images = {
             'simple ico': 'contract-ico.jpg',
+            'erc721 token': 'contract-erc721.png',
             'erc20 token': 'contract-erc20.jpg',
             'equity token': 'contract-equity.jpg',
             'smartz token': 'contract-smartz-erc20.jpg',
