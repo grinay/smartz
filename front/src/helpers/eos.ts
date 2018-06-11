@@ -46,19 +46,19 @@ class Eos {
     this.getAccountName = this.getAccountName.bind(this);
   }
 
-  private getIdentity() {
-    return this.getScatter().getIdentity({ accounts: [this.network] });
-  }
+  // private getIdentity() {
+  //   return this.getScatter().getIdentity({ accounts: [this.network] });
+  // }
 
-  private setIdentity() {
-    this.getIdentity()
-      .then((identity) => {
-        this.identity = identity;
-      })
-      .catch((error) => {
-        throw Error('setIdentity: problem with getIdentity!');
-      });
-  }
+  // private setIdentity() {
+  //   this.getIdentity()
+  //     .then((identity) => {
+  //       this.identity = identity;
+  //     })
+  //     .catch((error) => {
+  //       throw Error('setIdentity: problem with getIdentity!');
+  //     });
+  // }
 
   private getAccountName(identity) {
     if (identity.accounts && Array.isArray(identity.accounts) && identity.accounts.length > 0) {
@@ -86,9 +86,9 @@ class Eos {
   //     });
   // }
 
-  private setEos() {
-    this.eos = this.getEos();
-  }
+  // private setEos() {
+  //   this.eos = this.getEos();
+  // }
 
   public suggestNetwork(network: any = null) {
     if (this.scatter) {
