@@ -15,6 +15,7 @@ class Eos {
   private configEosInstance: any;
   private eos: any;
   private identity: any;
+  private accountName: any;
 
   public scatter: any = window.scatter;
   public currentIdentity: any;
@@ -39,8 +40,10 @@ class Eos {
     };
     this.eos = null;
     this.identity = null;
+    this.accountName = null;
 
     this.sendTransaction = this.sendTransaction.bind(this);
+    this.getAccountName = this.getAccountName.bind(this);
   }
 
   private getIdentity() {
@@ -55,6 +58,14 @@ class Eos {
       .catch((error) => {
         throw Error('setIdentity: problem with getIdentity!');
       });
+  }
+
+  private getAccountName(identity) {
+    if (identity.accounts && Array.isArray(identity.accounts) && identity.accounts.length > 0) {
+      return identity.accounts[0].name;
+    } else {
+      throw Error('Account not found!');
+    }
   }
 
   // private getEos(): any {
@@ -79,14 +90,6 @@ class Eos {
     this.eos = this.getEos();
   }
 
-  private getAccountName(identity: any) {
-    if (identity.accounts && Array.isArray(identity.accounts) && identity.accounts.length > 0) {
-      return identity.accounts[0].name;
-    } else {
-      throw Error('Account not found!');
-    }
-  }
-
   public suggestNetwork(network: any = null) {
     if (this.scatter) {
       return this.scatter.suggestNetwork(network === null ? this.network : network);
@@ -98,56 +101,58 @@ class Eos {
   public deployContract = (bin: string, abi: any) => {
     this.scatter.requireVersion(5.0);
 
-    // accept current network
-    return this.scatter
-      .suggestNetwork(this.network)
-      .then((ok) => this.scatter.getIdentity({ accounts: [this.network] }))
-      .then((identity) => {
-        this.currentIdentity = identity;
+    return (
+      this.scatter
+        // accept current network
+        .suggestNetwork(this.network)
+        .then((ok) => this.scatter.getIdentity({ accounts: [this.network] }))
+        .then((identity) => {
+          this.currentIdentity = identity;
 
-        let accountName;
-        if (Array.isArray(identity.accounts) && identity.accounts.length > 0) {
-          accountName = identity.accounts[0].name;
-        } else {
-          throw Error('Account not found!');
-        }
+          this.accountName = this.getAccountName(identity);
 
-        // send smart-contract
-        return this.getEos().setcode(accountName, 0, 0, bin);
-      })
-      .then((param) => {
-        return this.getEos().setabi(this.currentIdentity.accounts[0].name, JSON.parse(abi));
-      });
+          // send smart-contract code
+          return this.scatter
+            .eos(this.network, eosInstance, this.configEosInstance, this.network.protocol)
+            .setcode(this.accountName, 0, 0, bin);
+        })
+        .then((param) => {
+          // send smart-contract abi
+          return this.scatter
+            .eos(this.network, eosInstance, this.configEosInstance, this.network.protocol)
+            .setabi(this.accountName, JSON.parse(abi));
+        })
+    );
   };
 
-  public getEos() {
-    if (this.eos === null) {
-      this.eos = this.scatter.eos(
-        this.network,
-        eosInstance,
-        this.configEosInstance,
-        this.network.protocol,
-      );
-      return this.eos;
-    } else {
-      return this.eos;
-    }
-  }
+  // public getEos() {
+  //   if (this.eos === null) {
+  //     this.eos = this.scatter.eos(
+  //       this.network,
+  //       eosInstance,
+  //       this.configEosInstance,
+  //       this.network.protocol,
+  //     );
+  //     return this.eos;
+  //   } else {
+  //     return this.eos;
+  //   }
+  // }
 
   public checkAccount() {
     return this.scatter.getIdentity({ accounts: [this.network] });
   }
 
-  public getScatter() {
-    if (this.scatter) {
-      return this.scatter;
-    } else {
-      throw Error('Scatter don`t init!');
-    }
-  }
+  // public getScatter() {
+  //   if (this.scatter) {
+  //     return this.scatter;
+  //   } else {
+  //     throw Error('Scatter don`t init!');
+  //   }
+  // }
 
   public sendTransaction(funcName: string, formData: any) {
-    this.scatter
+    return this.scatter
       .suggestNetwork(this.network)
       .then((ok) => this.scatter.getIdentity({ accounts: [this.network] }))
       .then((identity) => {
