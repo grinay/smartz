@@ -57,23 +57,23 @@ class Eos {
       });
   }
 
-  private getEos(): any {
-    this.getScatter()
-      .suggestNetwork(this.network)
-      .then(() => this.getIdentity())
-      .then((identity) => {
-        this.identity = identity;
-        return this.getScatter().eos(
-          this.network,
-          eosInstance,
-          this.configEosInstance,
-          eosConstants.PROTOCOL,
-        );
-      })
-      .catch((error) => {
-        throw Error('getEos: Error getIdentity');
-      });
-  }
+  // private getEos(): any {
+  //   this.getScatter()
+  //     .suggestNetwork(this.network)
+  //     .then(() => this.getIdentity())
+  //     .then((identity) => {
+  //       this.identity = identity;
+  //       return this.getScatter().eos(
+  //         this.network,
+  //         eosInstance,
+  //         this.configEosInstance,
+  //         eosConstants.PROTOCOL
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       throw Error('getEos: Error getIdentity');
+  //     });
+  // }
 
   private setEos() {
     this.eos = this.getEos();
@@ -112,14 +112,27 @@ class Eos {
           throw Error('Account not found!');
         }
 
-        this.eos = this.scatter.eos(this.network, eosInstance, this.configEosInstance);
         // send smart-contract
-        return this.eos.setcode(accountName, 0, 0, bin);
+        return this.getEos().setcode(accountName, 0, 0, bin);
       })
       .then((param) => {
-        return this.eos.setabi(this.currentIdentity.accounts[0].name, JSON.parse(abi));
+        return this.getEos().setabi(this.currentIdentity.accounts[0].name, JSON.parse(abi));
       });
   };
+
+  public getEos() {
+    if (this.eos === null) {
+      this.eos = this.scatter.eos(
+        this.network,
+        eosInstance,
+        this.configEosInstance,
+        this.network.protocol,
+      );
+      return this.eos;
+    } else {
+      return this.eos;
+    }
+  }
 
   public checkAccount() {
     return this.scatter.getIdentity({ accounts: [this.network] });
