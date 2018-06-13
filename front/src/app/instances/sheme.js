@@ -13,8 +13,8 @@ export const sheme = [
         { $ref: '#/definitions/uint64', title: 'id' }
       ],
       definitions: {
-        account_name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
-        name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
+        account_name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
+        name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
         asset: { type: 'string', pattern: '^[0-9]\\.[0-9]+\\ [a-zA-Z]+' },
         uint32: { type: 'integer', minimum: 0, maximum: 4294967295 },
         uint64: { type: 'integer', minimum: 0, maximum: 18446744073709552000 }
@@ -29,8 +29,8 @@ export const sheme = [
         { $ref: '#/definitions/asset', title: 'balance' }
       ],
       definitions: {
-        account_name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
-        name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
+        account_name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
+        name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
         asset: { type: 'string', pattern: '^[0-9]\\.[0-9]+\\ [a-zA-Z]+' },
         uint32: { type: 'integer', minimum: 0, maximum: 4294967295 },
         uint64: { type: 'integer', minimum: 0, maximum: 18446744073709552000 }
@@ -51,8 +51,8 @@ export const sheme = [
         { $ref: '#/definitions/uint64', title: 'id' }
       ],
       definitions: {
-        account_name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
-        name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
+        account_name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
+        name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
         asset: { type: 'string', pattern: '^[0-9]\\.[0-9]+\\ [a-zA-Z]+' },
         uint32: { type: 'integer', minimum: 0, maximum: 4294967295 },
         uint64: { type: 'integer', minimum: 0, maximum: 18446744073709552000 }
@@ -67,8 +67,8 @@ export const sheme = [
         { $ref: '#/definitions/asset', title: 'totalSupply' }
       ],
       definitions: {
-        account_name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
-        name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
+        account_name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
+        name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
         asset: { type: 'string', pattern: '^[0-9]\\.[0-9]+\\ [a-zA-Z]+' },
         uint32: { type: 'integer', minimum: 0, maximum: 4294967295 },
         uint64: { type: 'integer', minimum: 0, maximum: 18446744073709552000 }
@@ -90,8 +90,8 @@ export const sheme = [
         { $ref: '#/definitions/asset', title: 'Quantity' }
       ],
       definitions: {
-        account_name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
-        name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
+        account_name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
+        name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
         asset: { type: 'string', pattern: '^[0-9]\\.[0-9]+\\ [a-zA-Z]+' },
         uint32: { type: 'integer', minimum: 0, maximum: 4294967295 },
         uint64: { type: 'integer', minimum: 0, maximum: 18446744073709552000 }
@@ -114,8 +114,8 @@ export const sheme = [
         { $ref: '#/definitions/asset', title: 'Quantity' }
       ],
       definitions: {
-        account_name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
-        name: { type: 'string', pattern: '^[1-5a-z]{2,12}$' },
+        account_name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
+        name: { type: 'string', pattern: '^[1-5a-z]{2,15}$' },
         asset: { type: 'string', pattern: '^[0-9]\\.[0-9]+\\ [a-zA-Z]+' },
         uint32: { type: 'integer', minimum: 0, maximum: 4294967295 },
         uint64: { type: 'integer', minimum: 0, maximum: 18446744073709552000 }

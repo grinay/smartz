@@ -186,6 +186,15 @@ class Eos {
             scope: formData[0],
             table: 'account',
           });
+        } else if (funcName === 'state') {
+          console.log('state');
+          console.log('formData :', formData);
+          return this.eos.getTableRows({
+            json: true,
+            code: formData[0],
+            scope: formData[0],
+            table: 'state',
+          });
         }
       });
   }
