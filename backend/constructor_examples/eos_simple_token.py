@@ -22,11 +22,11 @@ class Constructor(ConstructorInstance):
             "properties": {
                 "ticker": {
                     "title": "Token ticker",
-                    "description": "Only symbols (with length 3-7)",
+                    "description": "Only uppercase symbols (with length 3-7)",
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 7,
-                    "pattern": "^[A-Za-z][a-zA-Z0-9]+$"
+                    "pattern": "^[A-Z][A-Z0-9]+$"
                 },
 
                 "decimals": {
@@ -176,6 +176,7 @@ class simpletoken : public eosio::contract {
          if( toitr == _state.end() ) {
            _state.emplace( payer, [&]( auto& a ) {
               a.id = 0;
+              a.totalSupply = asset(0, token_symbol);
            });
          } else {
            _state.modify( toitr, 0, [&]( auto& a ) {
