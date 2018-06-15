@@ -92,7 +92,7 @@ def make_generic_function_spec(abi_array):
         if obj_type(fn['name']) == 'actions':
             spec = {
                 'name': fn['name'],
-                'title': '',
+                'title': fn['name'],
                 'constant': False,
                 'payable': False,
                 'inputs': abi_arguments2schema(fn['fields']),
@@ -101,7 +101,7 @@ def make_generic_function_spec(abi_array):
         elif obj_type(fn['name']) == 'tables':
             spec = {
                 'name': fn['name'],
-                'title': '',
+                'title': fn['name'],
                 'constant': True,
                 'payable': False,
                 'inputs': abi_arguments2schema(table_indexes(fn['name'])),
