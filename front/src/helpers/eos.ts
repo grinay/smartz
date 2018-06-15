@@ -106,38 +106,28 @@ class EosClass {
 
         this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
 
-        // very bad hardcode //TODO:remove after
         return this.eos.transaction(accountName, (contract) => {
           contract[funcName](data, { authorization: accountName });
         });
       });
   }
 
-  public readTable(tableName: string, formData: any) {
-    this.scatter
+  public readTable(tableName: string, address: string, data: any) {
+    return this.scatter
       .suggestNetwork(this.network)
       .then((ok) => this.scatter.getIdentity({ accounts: [this.network] }))
       .then((identity) => {
         this.currentIdentity = identity;
 
-        let accountName = this.getAccountName(identity);
-
         this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
 
-        this.eos.transaction(accountName, () => {
-          this.eos
-            .getTableRows({
-              json: true,
-              code: formData,
-              scope: formData,
-              table: tableName,
-            })
-            .then((result) => {
-              console.log('result: ', result);
-            })
-            .catch((error) => {
-              console.error('err in eos: ', error);
-            });
+        return this.eos.getTableRows({
+          json: true,
+          code: address,
+          scope: address,
+          table: tableName,
+          lower_bound: data,
+          limit: 1,
         });
       });
   }

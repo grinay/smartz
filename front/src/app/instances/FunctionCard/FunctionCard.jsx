@@ -56,13 +56,13 @@ class FunctionCard extends PureComponent {
             transactionNew(instance.instance_id, func, formData, 'error');
           });
       } else if (func.name === 'account' || func.name === 'state') {
-        Eos.readTable('account', formData[0]);
-        // .then((result) => {
-        //   console.log(result);
-        // })
-        // .catch((error) => {
-        //   console.error(error);
-        // });
+        Eos.readTable('account', address, formData[0])
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       }
     }
   }
