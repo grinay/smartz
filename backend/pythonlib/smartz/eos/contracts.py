@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-#   smartz.eth.contracts
+#   smartz.eos.contracts
 #
+
+#todo eth -> eos
 
 from smartz.json_schema import load_schema, add_definitions, assert_conforms2definition, assert_conforms2schema_part
 
