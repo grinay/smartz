@@ -36,14 +36,34 @@ class FunctionCard extends PureComponent {
         }
       });
     } else {
-      Eos.sendTransaction(func.name, formData)
-        .then((result) => {
-          console.log('result: ', result);
-          transactionNew(instance.instance_id, func, formData, result);
-        })
-        .catch((error) => {
-          transactionNew(instance.instance_id, func, formData, 'error');
-        });
+      let data = {};
+
+      if (func.name === 'issue' || func.name === 'transfer') {
+        if (func.name === 'issue') {
+          data = { to: formData[0], quantity: formData[1] };
+        }
+
+        if (func.name === 'transfer') {
+          data = { from: formData[0], to: formData[1], quantity: formData[2] };
+        }
+
+        Eos.sendTransaction(func.name, data)
+          .then((result) => {
+            console.log('result: ', result);
+            transactionNew(instance.instance_id, func, formData, result);
+          })
+          .catch((error) => {
+            transactionNew(instance.instance_id, func, formData, 'error');
+          });
+      } else if (func.name === 'account' || func.name === 'state') {
+        Eos.readTable('account', formData[0]);
+        // .then((result) => {
+        //   console.log(result);
+        // })
+        // .catch((error) => {
+        //   console.error(error);
+        // });
+      }
     }
   }
 
