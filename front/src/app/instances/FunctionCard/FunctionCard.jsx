@@ -32,7 +32,7 @@ class FunctionCard extends PureComponent {
             this.getReceipt(result);
         } else {
           console.error(error);
-          transactionNew(instance.instance_id, func, formData, 'error');
+          transactionNew(instance.instance_id, func, formData, error);
         }
       });
     } else {
@@ -49,19 +49,40 @@ class FunctionCard extends PureComponent {
 
         Eos.sendTransaction(func.name, data)
           .then((result) => {
-            console.log('result: ', result);
-            transactionNew(instance.instance_id, func, formData, result);
+            transactionNew(instance.instance_id, func, formData, result.transaction_id);
           })
-          .catch((error) => {
-            transactionNew(instance.instance_id, func, formData, 'error');
+          .catch((err) => {
+            const error = JSON.parse(err).message || 'error';
+            transactionNew(instance.instance_id, func, formData, error);
           });
       } else if (func.name === 'account' || func.name === 'state') {
-        Eos.readTable('account', address, formData[0])
+        let data = {};
+
+        if (func.name === 'account') {
+          data = {
+            code: address,
+            scope: address,
+            table: func.name
+          };
+        }
+
+        if (func.name === 'state') {
+          data = {
+            code: address,
+            scope: address,
+            table: func.name,
+            lower_bound: 0
+          };
+        }
+
+        Eos.readTable(data)
           .then((result) => {
-            console.log(result);
+            transactionNew(instance.instance_id, func, formData, JSON.stringify(result.rows[0]));
           })
-          .catch((error) => {
-            console.error(error);
+          .catch((err) => {
+            console.error(err);
+            const error = error.message || 'error';
+            transactionNew(instance.instance_id, func, formData, error);
           });
       }
     }

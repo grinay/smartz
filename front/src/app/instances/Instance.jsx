@@ -7,7 +7,6 @@ import { processControlForm, processResult, makeEtherscanLink } from '../../help
 import FunctionCard from './FunctionCard/FunctionCardContainer';
 import Alert from '../common/Alert';
 import Transaction from './Transaction/Transaction';
-import { sheme } from './sheme';
 
 import FunctionButton from './function-button/FunctionButton';
 
@@ -51,9 +50,6 @@ class Instance extends Component {
       return;
     }
 
-    //TODO:delete mock
-    instance.functions = sheme;
-
     instance.functions.forEach((func) => {
       if (func.constant && func.inputs.minItems === 0) {
         processControlForm(instance.abi, func, [], instance.address, (error, result) => {
@@ -72,9 +68,6 @@ class Instance extends Component {
     if (!instance) {
       return result;
     }
-
-    //TODO:delete mock
-    instance.functions = sheme;
 
     instance.functions &&
       instance.functions.forEach((func) => {
@@ -107,11 +100,6 @@ class Instance extends Component {
           <Alert standardAlert={metamaskStatus} />
         </div>
       );
-    }
-
-    // TODO:delete mock
-    if (instance && instance.functions) {
-      instance.functions = sheme;
     }
 
     const viewFunctions = this.getFunctionsByType(instance, 'view');
@@ -198,44 +186,49 @@ class Instance extends Component {
               </section>
             )}
 
-            <section className="contract-functions">
-              <h2 className="contract-functions__header">View functions</h2>
-              <p className="contract-functions__description">
-                This functions just provide an information about contract states and values. Results
-                of this fuctions are alrewady shown left.
-              </p>
-              {viewFunctionsElements}
-            </section>
+            {instance.blockchain === blockchains.ethereum && (
+              <section className="contract-functions">
+                <h2 className="contract-functions__header">View functions</h2>
+                <p className="contract-functions__description">
+                  This functions just provide an information about contract states and values.
+                  Results of this fuctions are alrewady shown left.
+                </p>
+                {viewFunctionsElements}
+              </section>
+            )}
           </aside>
         )}
 
         {instance && (
           <section className="block  contract-controls">
             <div className="block__wrapper">
-              <div className="contract-controls__wrapper  contract-controls__wrapper--margin">
-                <table className="table  table--big">
-                  <tbody className="table__tbody">
-                    {instance.functions &&
-                      instance.functions.map((func, i) => {
-                        if (func.constant && func.inputs.minItems === 0) {
-                          return (
-                            <tr key={i} className="table__tr">
-                              <td className="table__label">{func.title}</td>
+              {/* view functions block */}
+              {instance.blockchain === blockchains.ethereum && (
+                <div className="contract-controls__wrapper  contract-controls__wrapper--margin">
+                  <table className="table  table--big">
+                    <tbody className="table__tbody">
+                      {instance.functions &&
+                        instance.functions.map((func, i) => {
+                          if (func.constant && func.inputs.minItems === 0) {
+                            return (
+                              <tr key={i} className="table__tr">
+                                <td className="table__label">{func.title}</td>
 
-                              <td className="table__data">
-                                <div className="table__inner">
-                                  <span>{renderInstanceWidget(func, instance)}</span>
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        } else {
-                          return null;
-                        }
-                      })}
-                  </tbody>
-                </table>
-              </div>
+                                <td className="table__data">
+                                  <div className="table__inner">
+                                    <span>{renderInstanceWidget(func, instance)}</span>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          } else {
+                            return null;
+                          }
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
 
               {/* ask functions block */}
               {askFunctionsElements.length > 0 && (

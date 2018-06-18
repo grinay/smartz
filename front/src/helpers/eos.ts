@@ -112,24 +112,14 @@ class EosClass {
       });
   }
 
-  public readTable(tableName: string, address: string, data: any) {
-    return this.scatter
-      .suggestNetwork(this.network)
-      .then((ok) => this.scatter.getIdentity({ accounts: [this.network] }))
-      .then((identity) => {
-        this.currentIdentity = identity;
+  public readTable(data: any) {
+    this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
 
-        this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
-
-        return this.eos.getTableRows({
-          json: true,
-          code: address,
-          scope: address,
-          table: tableName,
-          lower_bound: data,
-          limit: 1,
-        });
-      });
+    return this.eos.getTableRows({
+      json: true,
+      limit: 1,
+      ...data,
+    });
   }
 }
 
