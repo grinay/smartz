@@ -60,8 +60,8 @@ class FunctionCard extends PureComponent {
 
         if (func.name === 'account') {
           data = {
-            code: address,
-            scope: address,
+            code: formData[0],
+            scope: formData[0],
             table: func.name
           };
         }
