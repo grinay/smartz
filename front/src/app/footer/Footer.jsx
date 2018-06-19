@@ -62,7 +62,7 @@ class Footer extends Component {
             <li className="social__item">
               <a
                 className="social__link"
-                href="https://t.me/smartz_en"
+                href="https://t.me/SmartzCommunityEn"
                 target="_blank"
                 rel="noopener noreferrer">
                 <img src={telegramImg} alt="telegram" />
