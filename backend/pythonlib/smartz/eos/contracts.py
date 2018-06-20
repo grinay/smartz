@@ -75,6 +75,8 @@ def make_generic_function_spec(abi_array):
         """return table indexes as input array"""
         res = []
         for table in abi_array['tables']:
+            if not table.get('name') or table.get('name')!=table_name:
+                continue
             if not table.get('key_names') or not table.get('key_types'):
                 return []
             key_types = table.get('key_types')
