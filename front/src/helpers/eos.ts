@@ -3,6 +3,7 @@ import * as binaryen from 'binaryen';
 import * as Eos from 'eosjs';
 
 import { eosConstants } from '../constants/constants';
+import { getFuncType } from './common';
 
 
 declare global {
@@ -18,6 +19,7 @@ class EosClass {
   private eos: any;
   private identity: any;
   private accountName: any;
+  private url: string;
 
   public scatter: any = window.scatter;
   public currentIdentity: any;
@@ -27,25 +29,28 @@ class EosClass {
       this.scatter = window.scatter;
       window.scatter = null;
     });
+    this.identity = null;
+    this.eos = null;
     this.currentIdentity = null;
+    this.identity = null;
+    this.accountName = null;
     this.network = {
       port: eosConstants.PORT,
       host: eosConstants.HOST,
       blockchain: eosConstants.BLOCKCHAIN,
       protocol: eosConstants.PROTOCOL,
     };
+    this.url = eosConstants.PROTOCOL + '://' + eosConstants.HOST + ':' + eosConstants.PORT;
 
     this.configEosInstance = {
       binaryen,
-      chainId: eosConstants.CHAIN_ID,
       // mockTransactions: () => null,
     };
-    this.eos = null;
-    this.identity = null;
-    this.accountName = null;
 
     this.sendTransaction = this.sendTransaction.bind(this);
     this.getAccountName = this.getAccountName.bind(this);
+    this.setChainId = this.setChainId.bind(this);
+    this.executeFunc = this.executeFunc.bind(this);
   }
 
   private getAccountName(identity) {
@@ -56,25 +61,34 @@ class EosClass {
     }
   }
 
-  public suggestNetwork(network: any = null) {
-    if (this.scatter) {
-      return this.scatter.suggestNetwork(network === null ? this.network : network);
-    } else {
-      throw Error('Scatter don`t init!');
-    }
+  private setChainId() {
+    return new Promise((resolve, reject) => {
+      if (!this.configEosInstance.chainId) {
+        axios
+          .get(this.url + '/v1/chain/get_info')
+          .then((result) => {
+            if (result.status === 200) {
+              this.configEosInstance.chainId = result.data.chain_id;
+              resolve();
+            }
+          })
+          .catch((error) => reject(error));
+      } else {
+        return resolve();
+      }
+    });
   }
 
   public deployContract = (bin: string, abi: any) => {
     this.scatter.requireVersion(5.0);
 
     return (
-      this.scatter
+      this.setChainId()
         // accept current network
-        .suggestNetwork(this.network)
+        .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
         .then((identity) => {
           this.currentIdentity = identity;
-
           this.accountName = this.getAccountName(identity);
 
           // send smart-contract code
@@ -95,10 +109,10 @@ class EosClass {
     return this.scatter.getIdentity({ accounts: [this.network] });
   }
 
-  public sendTransaction(funcName: string, data: any) {
-    return this.scatter
-      .suggestNetwork(this.network)
-      .then((ok) => this.scatter.getIdentity({ accounts: [this.network] }))
+  public sendTransaction(funcName: string, formData: any) {
+    return this.setChainId()
+      .then(() => this.scatter.suggestNetwork(this.network))
+      .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
       .then((identity) => {
         this.currentIdentity = identity;
 
@@ -107,19 +121,38 @@ class EosClass {
         this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
 
         return this.eos.transaction(accountName, (contract) => {
-          contract[funcName](data, { authorization: accountName });
+          contract[funcName](formData, { authorization: accountName });
         });
       });
   }
 
-  public readTable(data: any) {
-    this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
+  public readTable(address: any, func: any, formData: any) {
+    return this.setChainId().then(() => {
+      this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
 
-    return this.eos.getTableRows({
-      json: true,
-      limit: 1,
-      ...data,
+      return this.eos.getTableRows({
+        json: true,
+        code: address,
+        scope: address,
+        table: func.name,
+        lower_bound: formData[0],
+        limit: 1,
+      });
     });
+  }
+
+  public executeFunc(func: any, address: any, formData: any) {
+    let funcType = getFuncType(func);
+
+    switch (funcType) {
+      case 'write':
+        return this.sendTransaction(func.name, formData);
+      case 'ask':
+      case 'view':
+        return this.readTable(address, func, formData);
+      default:
+        break;
+    }
   }
 }
 
