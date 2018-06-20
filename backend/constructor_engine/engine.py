@@ -13,7 +13,7 @@ import requests
 from django.conf import settings
 from typing import Dict, Tuple
 
-from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS
+from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS, BLOCKCHAINS
 from apps.constructors.models import Constructor
 from constructor_engine.services import BaseCompilerService, EosCompilerService, EthereumCompilerService, \
     BaseContractProcessor, EthereumContractProcessor, EosContractProcessor
@@ -51,8 +51,10 @@ class BaseEngine(WithLogger):
         self._save_constructor(constructor_id, filename)
 
     def get_constructor_version(self, source):
+        """Returns validated version and blockchain"""
         res = self._call_constructor_method(source, self.METHOD_GET_VERSION)
         if 'error' == res['result']:
+            # todo version 0 is deprecated, remove support of it in future
             if 'error_descr' in res and "object has no attribute 'get_version'" in res['error_descr']:
                 # todo versioning
                 res = {
@@ -65,6 +67,12 @@ class BaseEngine(WithLogger):
         else:
             if res['version'] < 2:
                 res['blockchain'] = BLOCKCHAIN_ETHEREUM
+
+        if res['version'] not in (0, 1, 2):
+            raise PublicException("Unsupported constructor version: {}".format(res['version']))
+        if res['blockchain'] not in dict(BLOCKCHAINS):
+            raise PublicException("Unsupported constructor blockchain: {}".format(res['blockchain']))
+
         return res
 
     def get_constructor_params(self, source):
@@ -200,15 +208,12 @@ class SimpleStorageEngine(BaseEngine):
 
         self._datadir = self._settings['datadir']
 
-
-
     def _save_constructor(self, id, filename):
         shutil.copy(filename, self._get_filename(id))
 
     def _load_constructor_source(self, id):
-        f = open(self._get_filename(id), 'r')
-        source = f.read()
-        f.close()
+        with open(self._get_filename(id), 'r') as f:
+            source = f.read()
 
         return source
 

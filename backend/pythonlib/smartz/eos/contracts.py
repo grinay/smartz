@@ -3,7 +3,7 @@
 #   smartz.eos.contracts
 #
 
-#todo eth -> eos
+# fixme fixme all eth mentioning must be remade since eos now supported
 
 from smartz.json_schema import load_schema, add_definitions, assert_conforms2definition, assert_conforms2schema_part
 
@@ -22,7 +22,7 @@ def abi_arguments2schema(abi_args_array):
                 "default": False
             }
 
-        elif abi_type in ('account_name', 'name', 'asset', 'uint32', 'uint64'): #todo why name instead of account_name ?
+        elif abi_type in ('account_name', 'name', 'asset', 'uint32', 'uint64'):  # todo why name instead of account_name ?
             result = {
                 "$ref": "#/definitions/" + abi_type
             }
