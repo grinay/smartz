@@ -12,7 +12,7 @@ export const eosConstants = {
   BLOCKCHAIN: 'eos',
   PORT: '443',
   PROTOCOL: 'https',
-  HOST: 'api.eos-hackathon.smartz.io'
+  HOST: 'api.komododragon.eosbp.mixbytes.io'
   // CHAIN_ID: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
   // BLOCKCHAIN: 'eos'
   // PORT: '38888',
