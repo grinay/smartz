@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as binaryen from 'binaryen';
 import * as Eos from 'eosjs';
+import { find } from 'lodash';
 
 import { eosConstants } from '../constants/constants';
 import { getFuncType } from './common';
@@ -110,7 +111,7 @@ class EosClass {
   }
 
   public sendTransaction(func: any, formData: any) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.setChainId()
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
@@ -131,12 +132,13 @@ class EosClass {
             func,
             formData,
           });
-        });
+        })
+        .catch((error) => reject(error));
     });
   }
 
-  public readTable(address: any, func: any, formData: any) {
-    return new Promise((resolve) => {
+  public readTable(address: any, tableKey: any, func: any, formData: any) {
+    return new Promise((resolve, reject) => {
       this.setChainId()
         .then(() => {
           this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
@@ -146,6 +148,7 @@ class EosClass {
             code: address,
             scope: address,
             table: func.name,
+            table_key: tableKey,
             lower_bound: formData[0],
             limit: 1,
           });
@@ -156,23 +159,49 @@ class EosClass {
             func,
             formData,
           });
-        });
+        })
+        .catch((error) => reject(error));
     });
   }
 
-  public executeFunc(func: any, address: any, formData: any) {
-    let funcType = getFuncType(func);
+  public executeFunc(abi: any, func: any, address: any, formData: any) {
+    return new Promise((resolve, reject) => {
+      switch (getFuncType(func)) {
+        case 'write':
+          this.sendTransaction(func, formData)
+            .then((data: any) => {
+              const result = data.result.transaction_id;
 
-    switch (funcType) {
-      case 'write':
-        return this.sendTransaction(func, formData);
-      case 'ask':
-        return this.readTable(address, func, formData);
-      case 'view':
-        return null;
-      default:
-        break;
-    }
+              resolve(result);
+            })
+            .catch((error) => reject(error));
+          break;
+        case 'ask':
+          const table = find(abi.tables, { name: func.name });
+          const tableKey = table.key_names[0];
+
+          this.readTable(address, tableKey, func, formData)
+            .then((data: any) => {
+              const rows = data.result.rows;
+
+              let result =
+                rows.length > 0 && data.formData[0].toString() === rows[0][tableKey].toString()
+                  ? data.result.rows[0]
+                  : 'Not found';
+
+              let strString = JSON.stringify(result);
+              strString = strString.substr(1, strString.length - 2);
+
+              resolve(strString);
+            })
+            .catch((error) => reject(error));
+          break;
+        case 'view':
+          return null;
+        default:
+          break;
+      }
+    });
   }
 }
 

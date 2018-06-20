@@ -56,7 +56,6 @@ class DeployStep2 extends PureComponent {
         );
         break;
       case 'eos':
-        let adrress;
         Eos.deployContract(bin, abi)
           .then((result) => {
             const identity = Eos.currentIdentity;
@@ -66,6 +65,7 @@ class DeployStep2 extends PureComponent {
               accountName = identity.accounts[0].name;
             }
 
+            deployTxSent(deployId, Eos.configEosInstance.chainId, '---', blockchain);
             deployTxMined(deployId, accountName);
           })
           .catch((error) => {
@@ -83,8 +83,6 @@ class DeployStep2 extends PureComponent {
 
             deployTxError(deployId, msg);
           });
-
-        deployTxSent(deployId, Eos.configEosInstance.chainId, '---', blockchain);
         break;
       default:
         break;

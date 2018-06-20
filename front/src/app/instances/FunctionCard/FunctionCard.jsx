@@ -41,43 +41,19 @@ class FunctionCard extends PureComponent {
         });
         break;
       case blockchains.eos:
-        Eos.executeFunc(func, address, formData)
-          .then((data) => {
-            let result = '';
-
-            switch (getFuncType(data.func)) {
-              case 'ask':
-                if (data.func.title === 'Get balance') {
-                  result =
-                    data.formData[0] === data.result.rows[0].owner
-                      ? data.result.rows[0].balance
-                      : 'Not found';
-                } else {
-                  result = JSON.stringify(data.result.rows[0]);
-                }
-                break;
-              case 'write':
-                result = data.result.transaction_id;
-                break;
-              case 'view':
-                break;
-
-              default:
-                break;
-            }
-
+        Eos.executeFunc(abi, func, address, formData)
+          .then((result) => {
             transactionNew(instance.instance_id, func, formData, result);
             window.scrollTo(0, 0);
           })
           .catch((err) => {
             console.error(err);
-            let error = 'error';
+            let error = JSON.parse(err);
 
-            try {
-              error = JSON.parse(err).message;
-            } catch (error) {}
+            error = error.error.what || error.message || 'error';
 
             transactionNew(instance.instance_id, func, formData, error);
+            window.scrollTo(0, 0);
           });
         break;
 
