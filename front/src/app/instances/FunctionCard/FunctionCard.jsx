@@ -8,6 +8,7 @@ import Eos from '../../../helpers/eos';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
 
 import './FunctionCard.less';
+import { blockchains } from '../../../constants/constants';
 
 class FunctionCard extends PureComponent {
   constructor(props) {
@@ -20,71 +21,39 @@ class FunctionCard extends PureComponent {
     if (typeof formData === 'object' && !Object.keys(formData).length) {
       formData = [];
     }
+
     const { func, instance, transactionNew } = this.props;
     const { abi, address } = this.props.instance;
 
-    if (instance.blockchain === 'ethereum') {
-      processControlForm(abi, func, formData, address, (error, result) => {
-        if (!error) {
-          transactionNew(instance.instance_id, func, formData, result);
-          if (/^0x([A-Fa-f0-9]{64})$/.test(result))
-            // Check if result is tx hash
-            this.getReceipt(result);
-        } else {
-          console.error(error);
-          transactionNew(instance.instance_id, func, formData, error);
-        }
-      });
-    } else {
-      let data = {};
-
-      if (func.name === 'issue' || func.name === 'transfer') {
-        if (func.name === 'issue') {
-          data = { to: formData[0], quantity: formData[1] };
-        }
-
-        if (func.name === 'transfer') {
-          data = { from: formData[0], to: formData[1], quantity: formData[2] };
-        }
-
-        Eos.sendTransaction(func.name, data)
+    switch (instance.blockchain) {
+      case blockchains.ethereum:
+        processControlForm(abi, func, formData, address, (error, result) => {
+          if (!error) {
+            transactionNew(instance.instance_id, func, formData, result);
+            if (/^0x([A-Fa-f0-9]{64})$/.test(result))
+              // Check if result is tx hash
+              this.getReceipt(result);
+          } else {
+            console.error(error);
+            transactionNew(instance.instance_id, func, formData, error);
+          }
+        });
+        break;
+      case blockchains.eos:
+        Eos.executeFunc(func, address, formData)
           .then((result) => {
+            console.log(result);
             transactionNew(instance.instance_id, func, formData, result.transaction_id);
           })
           .catch((err) => {
-            const error = JSON.parse(err).message || 'error';
-            transactionNew(instance.instance_id, func, formData, error);
-          });
-      } else if (func.name === 'account' || func.name === 'state') {
-        let data = {};
-
-        if (func.name === 'account') {
-          data = {
-            code: formData[0],
-            scope: formData[0],
-            table: func.name
-          };
-        }
-
-        if (func.name === 'state') {
-          data = {
-            code: address,
-            scope: address,
-            table: func.name,
-            lower_bound: 0
-          };
-        }
-
-        Eos.readTable(data)
-          .then((result) => {
-            transactionNew(instance.instance_id, func, formData, JSON.stringify(result.rows[0]));
-          })
-          .catch((err) => {
+            // const error = JSON.parse(err).message || 'error';
             console.error(err);
-            const error = error.message || 'error';
             transactionNew(instance.instance_id, func, formData, error);
           });
-      }
+        break;
+
+      default:
+        break;
     }
   }
 
