@@ -75,18 +75,9 @@ class DeployStep2 extends PureComponent {
           })
           .catch((error) => {
             console.error(error);
-            let msg = error.message ? JSON.parse(error.message) : JSON.parse(error);
+            const msgError = error.message ? error.message : error;
 
-            if (
-              msg.error &&
-              msg.error.details &&
-              Array.isArray(msg.error.details) &&
-              msg.error.details.length > 0
-            ) {
-              msg = msg.error.details[0].message;
-            }
-
-            deployTxError(deployId, msg);
+            deployTxError(deployId, msgError);
           });
         break;
       default:
