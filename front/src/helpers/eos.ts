@@ -169,11 +169,7 @@ class EosClass {
       switch (getFuncType(func)) {
         case 'write':
           this.sendTransaction(func, formData)
-            .then((data: any) => {
-              const result = data.result.transaction_id;
-
-              resolve(result);
-            })
+            .then(() => resolve('success'))
             .catch((error) => reject(error));
           break;
         case 'ask':

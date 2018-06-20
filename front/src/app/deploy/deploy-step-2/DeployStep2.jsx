@@ -65,7 +65,12 @@ class DeployStep2 extends PureComponent {
               accountName = identity.accounts[0].name;
             }
 
-            deployTxSent(deployId, Eos.configEosInstance.chainId, '---', blockchain);
+            deployTxSent(
+              deployId,
+              Eos.configEosInstance.chainId,
+              result.transaction_id,
+              blockchain
+            );
             deployTxMined(deployId, accountName);
           })
           .catch((error) => {
