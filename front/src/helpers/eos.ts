@@ -109,35 +109,54 @@ class EosClass {
     return this.scatter.getIdentity({ accounts: [this.network] });
   }
 
-  public sendTransaction(funcName: string, formData: any) {
-    return this.setChainId()
-      .then(() => this.scatter.suggestNetwork(this.network))
-      .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
-      .then((identity) => {
-        this.currentIdentity = identity;
+  public sendTransaction(func: any, formData: any) {
+    return new Promise((resolve) => {
+      this.setChainId()
+        .then(() => this.scatter.suggestNetwork(this.network))
+        .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
+        .then((identity) => {
+          this.currentIdentity = identity;
 
-        let accountName = this.getAccountName(identity);
+          let accountName = this.getAccountName(identity);
 
-        this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
+          this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
 
-        return this.eos.transaction(accountName, (contract) => {
-          contract[funcName](formData, { authorization: accountName });
+          return this.eos.transaction(accountName, (contract) => {
+            contract[func.name](...formData, { authorization: accountName });
+          });
+        })
+        .then((result) => {
+          resolve({
+            result,
+            func,
+            formData,
+          });
         });
-      });
+    });
   }
 
   public readTable(address: any, func: any, formData: any) {
-    return this.setChainId().then(() => {
-      this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
+    return new Promise((resolve) => {
+      this.setChainId()
+        .then(() => {
+          this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
 
-      return this.eos.getTableRows({
-        json: true,
-        code: address,
-        scope: address,
-        table: func.name,
-        lower_bound: formData[0],
-        limit: 1,
-      });
+          return this.eos.getTableRows({
+            json: true,
+            code: address,
+            scope: address,
+            table: func.name,
+            lower_bound: formData[0],
+            limit: 1,
+          });
+        })
+        .then((result) => {
+          resolve({
+            result,
+            func,
+            formData,
+          });
+        });
     });
   }
 
@@ -146,10 +165,11 @@ class EosClass {
 
     switch (funcType) {
       case 'write':
-        return this.sendTransaction(func.name, formData);
+        return this.sendTransaction(func, formData);
       case 'ask':
-      case 'view':
         return this.readTable(address, func, formData);
+      case 'view':
+        return null;
       default:
         break;
     }

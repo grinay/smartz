@@ -9,6 +9,7 @@ import FormWidgets from '../../common/form-widgets/FormWidgets';
 
 import './FunctionCard.less';
 import { blockchains } from '../../../constants/constants';
+import { getFuncType } from '../../../helpers/common';
 
 class FunctionCard extends PureComponent {
   constructor(props) {
@@ -41,13 +42,41 @@ class FunctionCard extends PureComponent {
         break;
       case blockchains.eos:
         Eos.executeFunc(func, address, formData)
-          .then((result) => {
-            console.log(result);
-            transactionNew(instance.instance_id, func, formData, result.transaction_id);
+          .then((data) => {
+            let result = '';
+
+            switch (getFuncType(data.func)) {
+              case 'ask':
+                if (data.func.title === 'Get balance') {
+                  result =
+                    data.formData[0] === data.result.rows[0].owner
+                      ? data.result.rows[0].balance
+                      : 'Not found';
+                } else {
+                  result = JSON.stringify(data.result.rows[0]);
+                }
+                break;
+              case 'write':
+                result = data.result.transaction_id;
+                break;
+              case 'view':
+                break;
+
+              default:
+                break;
+            }
+
+            transactionNew(instance.instance_id, func, formData, result);
+            window.scrollTo(0, 0);
           })
           .catch((err) => {
-            // const error = JSON.parse(err).message || 'error';
             console.error(err);
+            let error = 'error';
+
+            try {
+              error = JSON.parse(err).message;
+            } catch (error) {}
+
             transactionNew(instance.instance_id, func, formData, error);
           });
         break;

@@ -84,7 +84,7 @@ class DeployStep2 extends PureComponent {
             deployTxError(deployId, msg);
           });
 
-        deployTxSent(deployId, eosConstants.CHAIN_ID, '---', blockchain);
+        deployTxSent(deployId, Eos.configEosInstance.chainId, '---', blockchain);
         break;
       default:
         break;
