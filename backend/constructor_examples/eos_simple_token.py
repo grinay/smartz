@@ -176,7 +176,7 @@ class simpletoken : public eosio::contract {
          if( toitr == _state.end() ) {
            _state.emplace( payer, [&]( auto& a ) {
               a.id = 0;
-              a.totalSupply = asset(0, token_symbol);
+              a.totalSupply = cnt;
            });
          } else {
            _state.modify( toitr, 0, [&]( auto& a ) {

@@ -13,41 +13,34 @@ class CtorCard extends Component {
 
     return (
       <article className="ctor-card">
-        <Link
-          to={`/deploy/${ctor.ctor_id}`}
-          className="ctor-card__link screen">
+        <Link to={`/deploy/${ctor.ctor_id}`} className="ctor-card__link screen">
           <div className="ctor-card__img flex">
-            {ctor.image
-              ? <img
-                src={require(`./img/${ctor.image}`)}
-                alt={`${ctor.ctor_name} contract`} />
-              : <p>{ctor.ctor_name.charAt(0).toUpperCase()}</p>
-            }
+            {ctor.image ? (
+              <img src={require(`./img/${ctor.image}`)} alt={`${ctor.ctor_name} contract`} />
+            ) : (
+              <div className="empty_img flex">
+                <p>{ctor.ctor_name.charAt(0).toUpperCase()}</p>
+              </div>
+            )}
           </div>
           <section className="ctor-card__description">
-            <h2 className="ctor-card__header">
-              {ctor.ctor_name}
-            </h2>
-            <p className="ctor-card__text">
-              {ctor.ctor_descr}
-            </p>
+            <h2 className="ctor-card__header">{ctor.ctor_name}</h2>
+            <p className="ctor-card__text">{ctor.ctor_descr}</p>
           </section>
           <section className="ctor-card__controls">
             <p className="ctor-card__buttons">
-              <Link
-                to={`/deploy/${ctor.ctor_id}`}
-                className="btn ctor-card__price">
+              <Link to={`/deploy/${ctor.ctor_id}`} className="btn ctor-card__price">
                 {ctor.price_eth ? `${ctor.price_eth} ETH` : 'Deploy free'}
               </Link>
 
-              {
-                isAuthenticated && ctor.user_id === userId &&
-                <Link
-                  to={`/constructors/${ctor.ctor_id}/update`}
-                  className="btn ctor-card__price">
-                  Update
+              {isAuthenticated &&
+                ctor.user_id === userId && (
+                  <Link
+                    to={`/constructors/${ctor.ctor_id}/update`}
+                    className="btn ctor-card__price">
+                    Update
                   </Link>
-              }
+                )}
 
               {/*<span className="ctor-card__quantity">2510</span>*/}
             </p>
