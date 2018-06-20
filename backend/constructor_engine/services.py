@@ -120,10 +120,7 @@ class EthereumContractProcessor(BaseContractProcessor):
                 payment_sum=wei-int(wei*settings.SMARTZ_COMMISSION)
             )
         else:
-            payment_code = 'address({commission_address}).transfer({commission} wei);'.format(
-                commission_address=settings.SMARTZ_COMMISSION_ADDRESS,
-                commission=int(wei)
-            )
+            assert False, 'Constructor {} has price but hasn\'t payment address'.format(constructor.slug)
 
         return source.replace('%payment_code%', payment_code)
 

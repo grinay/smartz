@@ -92,7 +92,7 @@ class Header extends Component {
               </li>
             </a>
             <a
-              href="https://t.me/smartz_en"
+              href="https://t.me/SmartzCommunityEn"
               target="_blank"
               className="main-navigation__link">
               <li className={`main-navigation__item flex`}>
