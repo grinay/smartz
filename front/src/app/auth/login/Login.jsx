@@ -13,6 +13,8 @@ const { dispatch } = store;
 import { loginErrorAction } from './LoginActions';
 import Eos from '../../../helpers/eos';
 
+import './Login.less';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -30,11 +32,18 @@ class Login extends Component {
   metamaskLogin() {
     const { metamaskStatus } = this.props;
 
-    if (metamaskStatus !== 'okMetamask') {
-      alert('Unlock metamask first');
+    switch (metamaskStatus) {
+      case 'unlockMetamask':
+        alert('Unlock metamask first');
+        return;
+      case 'noMetamask':
+        alert('Install metamask first');
+        return;
+      case 'okMetamask':
+        startLogin(blockchains.ethereum, web3.eth.accounts[0]);
+      default:
+        break;
     }
-
-    startLogin(blockchains.ethereum, web3.eth.accounts[0]);
   }
 
   scatterLogin() {
@@ -104,7 +113,7 @@ class Login extends Component {
     if (Auth.isAuthenticated()) return <Redirect to="/profile" />;
 
     return (
-      <main className="container">
+      <main className="login-page flex">
         {login && login.error && <Alert>{login.error}</Alert>}
 
         <button className="button block__button" onClick={this.metamaskLogin}>
