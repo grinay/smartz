@@ -35,9 +35,9 @@ class ListView(View):
     def get(self, request, *args, **kwargs):
         user = auth(request)
         if isinstance(user, HttpResponse):  # todo
-            constructors_objects = Constructor.objects.filter(is_public=True)
+            constructors_objects = Constructor.objects.order_by('sorting_order').reverse().filter(is_public=True)
         else:
-            constructors_objects = Constructor.objects.filter(Q(is_public=True) | Q(user=user))
+            constructors_objects = Constructor.objects.order_by('sorting_order').reverse().filter(Q(is_public=True) | Q(user=user))
 
         constructors = []
         for constructor in constructors_objects:

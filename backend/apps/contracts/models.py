@@ -1,11 +1,18 @@
 import random
 import string
+from datetime import datetime
 
+import pytz
+from django.conf import settings
 from django.db import models
 from django.db.models import ForeignKey
 
 from apps.constructors.models import Constructor
 from apps.users.models import User
+
+
+def init_time():
+    return datetime(2018, 1, 1, tzinfo=pytz.timezone(settings.TIME_ZONE))
 
 
 class Contract(models.Model):
@@ -25,15 +32,22 @@ class Contract(models.Model):
 
     constructor = ForeignKey(Constructor, on_delete=models.PROTECT)
 
+    created_at = models.DateTimeField(default=init_time)
 
     @classmethod
     def create(cls, **kwargs):
-        constructor = cls(**kwargs)
-        constructor.slug = ''.join(
+        contract = cls(**kwargs)
+        contract.slug = ''.join(
             random.SystemRandom().choice('abcdef' + string.digits) for _ in range(24)
         )
 
-        return constructor
+        return contract
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created_at = datetime.now(pytz.timezone(settings.TIME_ZONE))
+
+        return super().save(*args, **kwargs)

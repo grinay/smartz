@@ -1,13 +1,20 @@
 import json
 import random
 import string
+from datetime import datetime
 
+import pytz
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from eth_utils import is_address
 
 from apps.common.constants import BLOCKCHAINS, BLOCKCHAIN_ETHEREUM
 from apps.users.models import User
+
+
+def init_time():
+    return datetime(2018, 1, 1, tzinfo=pytz.timezone(settings.TIME_ZONE))
 
 
 class Constructor(models.Model):
@@ -25,6 +32,10 @@ class Constructor(models.Model):
 
     schema = models.TextField(default='{}')
     ui_schema = models.TextField(default='{}')
+
+    sorting_order = models.IntegerField(default=0)
+    created_at = models.DateTimeField(default=init_time)
+    updated_at = models.DateTimeField(default=init_time)
 
     @property
     def image(self):
@@ -77,3 +88,10 @@ class Constructor(models.Model):
     def clean(self, *args, **kwargs):
         if self.price_eth > 0 and not is_address(self.payment_address):
             raise ValidationError('Correct payment address must be specified in constructor if price>0')
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created_at = datetime.now(pytz.timezone(settings.TIME_ZONE))
+        self.updated_at = datetime.now(pytz.timezone(settings.TIME_ZONE))
+
+        return super().save(*args, **kwargs)
