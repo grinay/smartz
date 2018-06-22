@@ -11,6 +11,7 @@ class ConstructorInstance(metaclass=ABCMeta):
     Constructor interface (v2).
     """
 
+    @abstractmethod
     def get_version(self):
         """
         Get version of constructor api. If function is not exist version 0 would be used
@@ -24,10 +25,7 @@ class ConstructorInstance(metaclass=ABCMeta):
 
         or throws exception.
         """
-        return {
-            "result": "success",
-            "version": 1
-        }
+        raise NotImplementedError()
 
     @abstractmethod
     def get_params(self):
