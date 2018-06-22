@@ -21,16 +21,19 @@ class LoginStartTests(WebTest):
 
 class LoginViewsIntegrationTests(WebTest):
 
-    priv_key = 'c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3'
-    addr = '0x627306090abab3a6e1400e9345bc60c78a8bef57'
+    eth_priv_key = 'c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3'
+    eth_addr = '0x627306090abab3a6e1400e9345bc60c78a8bef57'
 
-    # todo test expired
-    def test_register(self):
+    eos_priv_key = '5K75vkoHnPkbggFpuGbb8p5LrWdjr1bY7KhRdnFrQi51RZHe2cD'
+    eos_pub_key = 'EOS7eNjDTKnkDmoohBWsS3KRnoCzJcLBZzFWdQrujZUWWcpBHoW5x'
 
-        resp_start = self.app.post_json('/api/users/login/start', params={"blockchain": "ethereum", "identity": self.addr})
+
+    def test_register_eth_complex(self):
+
+        resp_start = self.app.post_json('/api/users/login/start', params={"blockchain": "ethereum", "identity": self.eth_addr})
 
         assert 'description' in resp_start.json
-        assert 'Sign this text message to login to smartz.io\nYour address: {}'.format(self.addr) \
+        assert 'Sign this text message to login to smartz.io.\nYour address: {}.'.format(self.eth_addr) \
                in resp_start.json['description']
 
         assert 'rand_data' in resp_start.json
@@ -39,7 +42,7 @@ class LoginViewsIntegrationTests(WebTest):
 
         signed_data = sign_as_hex(
             "{}{}".format(resp_start.json['description'], resp_start.json['rand_data']),
-            self.priv_key
+            self.eth_priv_key
         )
 
 
@@ -47,7 +50,7 @@ class LoginViewsIntegrationTests(WebTest):
             '/api/users/login/finish',
             params={
                 "blockchain": "ethereum",
-                "identity": self.addr,
+                "identity": self.eth_addr,
                 "rand_data": resp_start.json['rand_data'],
                 "signed_data": signed_data
             }
@@ -67,3 +70,6 @@ class LoginViewsIntegrationTests(WebTest):
         assert 'error' not in resp.json
         assert resp.json == []
 
+    def test_register_eos_simple(self):
+        pass
+        # todo implement sigh

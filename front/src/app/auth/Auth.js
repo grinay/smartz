@@ -1,5 +1,7 @@
 const jwtDecode = require('jwt-decode');
 import history from '../../helpers/history';
+import Eos from '../../helpers/eos';
+import { blockchains } from './../../constants/constants';
 
 class Auth {
   // todo maybe do in another way?
@@ -48,6 +50,14 @@ class Auth {
     return accessToken;
   }
 
+  getAccessTokenDecoded() {
+    const accessToken = localStorage.getItem('access_token_decoded');
+    if (!accessToken) {
+      throw new Error('No access token found');
+    }
+    return JSON.parse(accessToken);
+  }
+
   getProfile(cb) {
     const profile = localStorage.getItem('access_token_decoded');
     if (!profile) {
@@ -59,12 +69,18 @@ class Auth {
   }
 
   logout() {
+    let data = this.getAccessTokenDecoded();
+
     // Clear access token and ID token from local storage
     localStorage.removeItem('access_token2');
     localStorage.removeItem('access_token_decoded');
     localStorage.removeItem('expires_at2');
 
     this.userProfile = null;
+
+    if (data.blockchain === blockchains.eos && Eos.scatter) {
+      Eos.scatter.forgetIdentity();
+    }
 
     history.replace('/');
   }
@@ -80,6 +96,6 @@ class Auth {
 // Singleton.
 // A solution with ES6 is to use an instance of a class scoped to a module.
 // There are some drawbacks though:
-// if you want to use a static method, you will have 
+// if you want to use a static method, you will have
 // to use the constructor property of the exported instance.
 export default new Auth();

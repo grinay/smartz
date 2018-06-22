@@ -1,4 +1,3 @@
-#!/usr/bin/env python3                                                                                                                                                                                             import re
 import logging
 from datetime import datetime
 
@@ -8,6 +7,8 @@ from django.conf import settings
 
 from apps.users.models import User
 from utils.responses import error_response
+
+logger = logging.getLogger(__name__)
 
 
 def args_string(args, key):
@@ -56,6 +57,5 @@ def auth(request):
     if data['expires_at'] < datetime.now(pytz.timezone(settings.TIME_ZONE)).timestamp():
         return error_response('Token expired. Please log in again')
 
-    logger = logging.getLogger("{}.auth".format(__name__))
     logger.debug(user)
     return user

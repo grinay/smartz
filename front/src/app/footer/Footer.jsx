@@ -10,6 +10,7 @@ import twitterImg from '../../assets/img/common/footer/twitter.svg';
 import youtubeImg from '../../assets/img/common/footer/youtube.svg';
 import searchImg from '../../assets/img/common/footer/search.svg';
 import logoImg from '../../assets/img/common/footer/logo.svg';
+import steemitImg from '../../assets/img/common/footer/steemit.svg';
 
 import './Footer.less';
 
@@ -25,34 +26,22 @@ class Footer extends Component {
         <nav className="navigation">
           <ul className="nav-list">
             <Link className="nav-item" to="/">
-              <li>
-                Store
-              </li>
+              <li>Store</li>
             </Link>
             <Link className="nav-item" to="/dashboard">
-              <li>
-                Dashboard
-              </li>
+              <li>Dashboard</li>
             </Link>
             <Link className="nav-item" to="/my-dapps">
-              <li>
-                Developers
-              </li>
+              <li>Developers</li>
             </Link>
             <a className="nav-item" href="https://wiki.smartz.io/en/contract-uploading">
-              <li>
-                Docs
-              </li>
+              <li>Docs</li>
             </a>
             <a className="nav-item" href="https://about.smartz.io/">
-              <li>
-                About
-              </li>
+              <li>About</li>
             </a>
             <a className="nav-item" href="https://medium.com/@SmartzPlatform">
-              <li>
-                Blog
-              </li>
+              <li>Blog</li>
             </a>
           </ul>
         </nav>
@@ -88,11 +77,20 @@ class Footer extends Component {
             </li>
             <li className="social__item">
               <a
-                href="https://medium.com/@SmartzPlatform"
+                href="https://medium.com/smartz-blog"
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
                 <img src={mediumImg} alt="medium" />
+              </a>
+            </li>
+            <li className="social__item">
+              <a
+                href="https://steemit.com/@smartz"
+                className="social__link"
+                target="_blank"
+                rel="noopener noreferrer">
+                <img src={steemitImg} alt="steemit" />
               </a>
             </li>
             <li className="social__item">
@@ -106,7 +104,7 @@ class Footer extends Component {
             </li>
             <li className="social__item">
               <a
-                href="https://www.youtube.com/channel/UCn4kywh7NwNNHce2a2murSg"
+                href="https://www.youtube.com/smartz"
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
@@ -115,7 +113,7 @@ class Footer extends Component {
             </li>
             <li className="social__item">
               <a
-                href="https://www.linkedin.com/company/smartz-platform"
+                href="https://www.linkedin.com/company/smartzplatform/"
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
@@ -128,10 +126,7 @@ class Footer extends Component {
         <section className="search">
           <div className="wrapper-input">
             <img className="search-input" src={searchImg} alt="search" />
-            <input
-              placeholder="Contract name or address"
-              type="text"
-              className="search-field" />
+            <input placeholder="Contract name or address" type="text" className="search-field" />
           </div>
         </section>
         {/* Info */}
@@ -140,19 +135,38 @@ class Footer extends Component {
           <a href="mailto:hello@smartz.io">hello@smartz.io</a>
           &nbsp;&nbsp;&nbsp;
           <a href="https://t.me/LoungerX">t.me/LoungerX</a>
-          <p>Designed by <a href="http://artdictators.ru/" target="_blank" rel="noopener noreferrer">Artdictators</a></p>
+          <p>
+            Designed by{' '}
+            <a href="http://artdictators.ru/" target="_blank" rel="noopener noreferrer">
+              Artdictators
+            </a>
+          </p>
         </section>
         {/* Policy */}
         <section className="policy">
           <div className="wrap-text">
             <p className="page-footer__info">
               We do not store your private keys, passwords or your cryptocurrency.
-            <br />Smartz is just a provider to conclude a smart contract.
-          </p>
+              <br />Smartz is just a provider to conclude a smart contract.
+            </p>
             <p className="page-footer__copyright">
-              <a href="/legal/Smartz_privacy-policy.pdf">Privacy policy</a>
+              <a href="/legal/Smartz_privacy-policy.pdf" target="_blank" rel="noopener noreferrer">
+                Privacy policy
+              </a>
               &nbsp;&nbsp;&nbsp;
-            <a href="/legal/Smartz_terms-and-conditions.pdf">Terms & conditions</a>
+              <a
+                href="/legal/Smartz_terms-and-conditions.pdf"
+                target="_blank"
+                rel="noopener noreferrer">
+                Terms & conditions
+              </a>
+              &nbsp;&nbsp;&nbsp;
+              <a
+                href="https://github.com/smartzplatform/tech-docs/blob/master/Technical_WP_EN.md"
+                target="_blank"
+                rel="noopener noreferrer">
+                Technical Whitepaper
+              </a>
             </p>
           </div>
         </section>

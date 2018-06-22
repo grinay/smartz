@@ -6,21 +6,22 @@ import ethereumImg from '../../../../assets/img/common/ethereum.svg';
 import './NetworkItem.less';
 
 export default class NetworkItem extends PureComponent {
-    render() {
-        const { name, select, img } = this.props;
-
-        return (
-            <button className={classNames('network-item flex', { select })}>
-                {img !== null
-                    ? <img
-                        alt="blockchain"
-                        src={select
-                            ? require(`../../../../assets/img/common/blockchain/${img.on}`)
-                            : require(`../../../../assets/img/common/blockchain/${img.off}`)} />
-                    : null
-                }
-                <p>{name}</p>
-            </button>
-        );
-    }
-};
+  render() {
+    const { name, select, img, onClick } = this.props;
+    return (
+      <button className={classNames('network-item flex', { select })} onClick={onClick}>
+        {img !== null ? (
+          <img
+            alt="blockchain"
+            src={
+              select
+                ? require(`../../../../assets/img/common/blockchain/${img.on}`)
+                : require(`../../../../assets/img/common/blockchain/${img.off}`)
+            }
+          />
+        ) : null}
+        <p>{name}</p>
+      </button>
+    );
+  }
+}

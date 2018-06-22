@@ -10,15 +10,17 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     instance: instance,
-    instanceError: state.instances.error,
+    instanceError: state.instances.error
   };
 };
 
 const mapDispatchToProps = { viewFuncResult };
 
-const InstanceContainer = withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Instance));
+const InstanceContainer = withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Instance)
+);
 
 export default InstanceContainer;

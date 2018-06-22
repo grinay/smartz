@@ -1,6 +1,6 @@
 import collections
 import json
-import logging
+import traceback
 
 from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
@@ -9,9 +9,7 @@ from flex.exceptions import ValidationError
 
 from smartzcore.exceptions import PublicException
 from smartzcore.http import error_response
-
-
-logger = logging.getLogger(__name__)
+from smartzcore.service_instances import WithLogger
 
 
 class SmartzMiddleware(MiddlewareMixin):
@@ -39,7 +37,7 @@ class JSONMiddleware:
         return self.get_response(request)
 
 
-class SwaggerRequestValidationMiddleware:
+class SwaggerRequestValidationMiddleware(WithLogger):
     """Validate swagger schema if exist for current path"""
     def __init__(self, get_response):
         self.get_response = get_response
@@ -58,16 +56,16 @@ class SwaggerRequestValidationMiddleware:
         except ValidationError as err:
             if 'path' in err.detail and isinstance(err.detail['path'], collections.Iterable) \
                     and len(err.detail['path'])>0 and 'No paths found for' in str(err.detail['path'][0]):
-                logger.info(str(err.detail['path'][0]))
+                self.logger.info(str(err.detail['path'][0]))
                 request.is_swagger_schema_validated = True
             else:
-                logger.warning(str(err))
+                self.logger.warning(str(err))
                 return error_response(str(err))
 
         return self.get_response(request)
 
 
-class CatchExceptionMiddleware:
+class CatchExceptionMiddleware(WithLogger):
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -76,7 +74,7 @@ class CatchExceptionMiddleware:
 
     def process_exception(self, request, exception):
         # todo maybe only for api
-        logger.error("Unhandled error: {}".format(str(exception)))
+        self.logger.error("Unhandled error: {}. {}".format(str(exception), traceback.format_exc().replace("\n", ' ')))
 
         if isinstance(exception, PublicException):
             return error_response(exception.public_message, 200)

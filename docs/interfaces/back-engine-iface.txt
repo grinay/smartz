@@ -3,9 +3,9 @@ class EngineInterface(object):
 
     def __init__(self, data_dir)
 
-    def register_new_ctor(self, ctor_id, filename)
+    def register_constructor(self, ctor_id, filename)
 
-    def get_ctor_params(self, ctor_id)
+    def get_constructor_params(self, ctor_id)
         returns {
             schema: json schema,
             ui_schema: optional react-jsonschema-form UI schema

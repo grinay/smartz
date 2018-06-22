@@ -8,7 +8,7 @@
     "noImplicitAny": false,
     "outDir": "./build/",
     "preserveConstEnums": true,
-    "allowJs": false,
+    "allowJs": true,
     "experimentalDecorators": true,
     "baseUrl": "./"
   },

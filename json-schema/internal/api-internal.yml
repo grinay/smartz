@@ -61,6 +61,8 @@ definitions:
     required:
       - description
       - rand_data
+      - blockchain
+      - identity
     properties:
       description:
         type: string

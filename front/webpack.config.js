@@ -3,12 +3,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CaseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 const DotenvPlugin = require('webpack-dotenv-extended-plugin');
 const { getIfUtils, removeEmpty, propIf } = require('webpack-config-utils');
+const { CheckerPlugin } = require('awesome-typescript-loader')
 
 const PORT = 3000;
 const HOST = 'localhost'
@@ -44,6 +44,7 @@ module.exports = (env) => {
       historyApiFallback: true,
       hot: true,
       disableHostCheck: true,
+      clientLogLevel: "error",
       open: true,
       overlay: {
         warnings: true,
@@ -51,13 +52,19 @@ module.exports = (env) => {
       }
     }),
 
+    mode: env,
+
     resolve: {
-      // extensions: ['.ts', '.tsx', '.js', '.jsx'],
-      extensions: ['.js', '.jsx'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      // extensions: ['.js', '.jsx'],
       modules: [
         path.resolve(sourcePath, 'node_modules'),
         appPath
       ],
+    },
+
+    node: {
+      fs: 'empty'
     },
 
     module: {
@@ -91,53 +98,77 @@ module.exports = (env) => {
             }),
           }
         },
-        // {
-        //   test: /\.(ts|tsx)$/,
-        //   include: path.join(__dirname),
-        //   use: ['babel-loader', 'ts-loader'],
-        // },
+        {
+          test: /\.(ts|tsx)$/,
+          include: path.join(__dirname),
+          use: {
+            loader: 'awesome-typescript-loader',
+            options: {
+              useBabel: true,
+              babelOptions: removeEmpty({
+                /* Important line */
+                // don't use .babelrc config
+                babelrc: false,
+                presets: [
+                  ["env", { "targets": "last 2 versions, ie 11", "modules": false }],
+                  "react", "stage-0"
+                ],
+                plugins: ifDevelopment(["react-hot-loader/babel"]),
+              }),
+
+
+              // babelrc: false,
+              // presets: [
+              //   ["env", {
+              //     "targets": {
+              //       "browsers": ["last 2 versions", "safari >= 7"]
+              //     }
+              //   }],
+              //   "react",
+              //   "stage-0"
+              // ],
+              // plugins: ifDevelopment(["react-hot-loader/babel"]),
+              // // This is a feature of `babel-loader` for webpack (not Babel itself).
+              // // It enables caching results in ./node_modules/.cache/babel-loader/
+              // // directory for faster rebuilds.
+              // cacheDirectory: ifDevelopment(true),
+              // // Do not include superfluous whitespace characters and line terminators
+              // compact: ifProduction(true),
+            },
+          }
+        },
         ifProduction({
           test: /\.less$/,
-          loader: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              'css-loader',
-              'postcss-loader',
-              'less-loader'
-            ]
-          })
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [require('autoprefixer')({
+                  'browsers': ['> 1%', 'last 2 versions']
+                })],
+              }
+            },
+            'less-loader'
+          ]
         }),
         ifDevelopment({
           test: /\.less$/,
           use: [
             'style-loader',
             'css-loader?sourceMap',
-            'postcss-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [require('autoprefixer')({
+                  'browsers': ['> 1%', 'last 2 versions']
+                })],
+              }
+            },
             'less-loader?sourceMap'
           ]
         }),
-        // ifProduction({
-        //   test: /\.(css|scss)$/,
-        //   loader: ExtractTextPlugin.extract({
-        //     fallback: 'style-loader',
-        //     use: [
-        //       'css-loader',
-        //       'postcss-loader',
-        //       'sass-loader'
-        //     ]
-        //   })
-        // }),
-        // ifDevelopment({
-        //   test: /\.(css|scss)$/,
-        //   use: [
-        //     'style-loader',
-        //     'css-loader?sourceMap',
-        //     'postcss-loader',
-        //     'sass-loader?sourceMap'
-        //   ]
-        // }),
-        // загружает файлы в base64, если они < limit
-        // если >, то просто вызывается file-loader
         {
           test: /\.(jpg|jpeg|gif|png|svg)$/,
           loader: 'url-loader',
@@ -147,7 +178,6 @@ module.exports = (env) => {
             limit: 10000
           }
         },
-        // обработка шрифтов
         {
           test: /\.(ttf|eot|woff|woff2)$/,
           loader: 'file-loader',
@@ -162,28 +192,13 @@ module.exports = (env) => {
             name: 'static/media/md/[name].[ext]'
           }
         }
-        // {
-        //   loader: require.resolve('file-loader'),
-        //   // Exclude `js` files to keep "css" loader working as it injects
-        //   // it's runtime that would otherwise processed through "file" loader.
-        //   // Also exclude `html` and `json` extensions so they get processed
-        //   // by webpacks internal loaders.
-        //   exclude: [/\.js$/, /\.html$/, /\.json$/],
-        //   options: {
-        //     name: 'static/media/[name].[hash:8].[ext]',
-        //   },
-        // },
       ])
     },
 
     plugins: removeEmpty([
-      // проверка, чтобы пути были точные
       ifDevelopment(new CaseSensitivePathsWebpackPlugin()),
-      // плагин перезагрузки "на лету"
       ifDevelopment(new webpack.HotModuleReplacementPlugin()),
-      // чистит папку build перед новой сборкой
       ifProduction(new CleanWebpackPlugin(buildPath)),
-      // минификация js файлов
       ifProduction(new UglifyJsPlugin({
         // parallelization can speedup build significantly
         parallel: true,
@@ -193,14 +208,12 @@ module.exports = (env) => {
           output: { comments: false }
         }
       })),
-      // собирает все необходимые либы в один файл
-      // ifProduction(new webpack.optimize.CommonsChunkPlugin({
-      //   name: 'vendor',
-      //   filename: 'static/js/vendor.bundle.js'
-      // })),
-      // необходим для инжекции css в html
-      ifProduction(new ExtractTextPlugin({ filename: 'static/css/bundle.css' })),
-      // генерация html из шаблона
+      ifProduction(new MiniCssExtractPlugin({
+        filename: 'static/css/bundle.css'
+      })),
+      ifDevelopment(new MiniCssExtractPlugin({
+        filename: 'bundle.css'
+      })),
       new HtmlWebpackPlugin(removeEmpty({
         path: propIf(env == 'development', appPath, buildPath),
         hash: ifDevelopment(true),
@@ -219,32 +232,12 @@ module.exports = (env) => {
           minifyURLs: true,
         },
       })),
-      // дополнительные опции для плагинов
-      new webpack.LoaderOptionsPlugin(removeEmpty({
-        minimize: ifProduction(true),
-        debug: ifProduction(false),
-        options: {
-          postcss: [
-            autoprefixer({
-              browsers: ['last 3 version', 'ie >= 10']
-            })
-          ],
-          context: sourcePath
-        }
-      })),
-      // отображение относительного пути модуля при hmr
-      ifDevelopment(new webpack.NamedModulesPlugin()),
-      // удаляет лишние локали из библиотеки moment - очень облегчает сборку
+      new CheckerPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      // определение переменных для среды (доступны в коде)
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(env)
-      }),
       new DotenvPlugin({
         defaults: './config/.env.default',
         path: './config/.env.local'
       }),
-      // копирование папок и файлов
       new CopyWebpackPlugin([
         {
           from: 'src/assets/legal',
