@@ -11,7 +11,6 @@ class ConstructorInstance(metaclass=ABCMeta):
     Constructor interface (v2).
     """
 
-    @abstractmethod
     def get_version(self):
         """
         Get version of constructor api. If function is not exist version 0 would be used
