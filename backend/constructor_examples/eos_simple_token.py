@@ -26,14 +26,14 @@ class Constructor(ConstructorInstance):
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 7,
-                    "pattern": "^[A-Z][A-Z0-9]+$"
+                    "pattern": "^[A-Z][A-Z0-5]+$"
                 },
 
                 "decimals": {
                     "title": "Decimals",
-                    "description": "Decimals",
+                    "description": "Token decimals (0..8)",
                     "type": "integer",
-                    "min": 1,
+                    "min": 0,
                     "max": 8
                 },
             }
@@ -65,9 +65,9 @@ class Constructor(ConstructorInstance):
                 'title': 'Transfer',
                 'description': 'Transfer tokens',
                 'inputs': [
-                    {'title': 'From'},
-                    {'title': 'To'},
-                    {'title': 'Quantity'}
+                    {'title': 'From', 'description': "Account to transfer tokens from"},
+                    {'title': 'To', 'description': "Account to transfer tokens"},
+                    {'title': 'Quantity', 'description': "Tokens quantity in format '123.456 TICKER'"}
                 ]
             },
 
@@ -75,8 +75,8 @@ class Constructor(ConstructorInstance):
                 'title': 'Issue',
                 'description': 'Issue new tokens',
                 'inputs': [
-                    {'title': 'To'},
-                    {'title': 'Quantity'}
+                    {'title': 'To', 'description': "Account to issue tokens for"},
+                    {'title': 'Quantity', 'description': "Tokens quantity in format '123.456 TICKER'"}
                 ]
             },
 

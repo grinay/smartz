@@ -79,7 +79,7 @@ class Auth {
     this.userProfile = null;
 
     if (data.blockchain === blockchains.eos && Eos.scatter) {
-      Eos.scatter.forgetIdentity();
+      Eos.scatter.forgetIdentity().catch(console.warn);
     }
 
     history.replace('/');
