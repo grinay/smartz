@@ -24,7 +24,10 @@ class ConstructorInstance(metaclass=ABCMeta):
 
         or throws exception.
         """
-        raise NotImplementedError()
+        return {
+            "result": "success",
+            "version": 1
+        }
 
     @abstractmethod
     def get_params(self):
