@@ -18,3 +18,13 @@ export const eosConstants = {
   // PROTOCOL: 'http',
   // HOST: 'dev.cryptolions.io'
 };
+
+export const contractProcessStatus = {
+  DEPLOY: 'deploy',
+  MINED: 'mined'
+};
+
+export const ethConstants = {
+  gas: 4400000,
+  gasPrice: 10e9
+};

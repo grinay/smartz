@@ -59,13 +59,21 @@ class Auth {
   }
 
   getProfile(cb) {
-    const profile = localStorage.getItem('access_token_decoded');
-    if (!profile) {
-      cb('No access token found', {});
+    let profile = localStorage.getItem('access_token_decoded');
+
+    if (profile !== null) {
+      try {
+        profile = JSON.parse(profile);
+
+        this.userProfile = profile;
+
+        return profile;
+      } catch (error) {
+        console.error(error);
+      }
     }
 
-    this.userProfile = JSON.parse(profile);
-    cb(false, JSON.parse(profile));
+    return null;
   }
 
   logout() {

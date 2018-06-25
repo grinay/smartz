@@ -10,7 +10,7 @@ import Store from './store/StoreContainer';
 import MyDapps from './my-dapps/MyDappsContainer';
 import Profile from './profile/Profile';
 import Deploy from './deploy/DeployContainer';
-import Login from "./auth/login/LoginContainer";
+import Login from './auth/login/LoginContainer';
 import CtorAdd from './ctor-add/CtorAdd';
 import Dashboard from './dashboard/DashboardContainer';
 import Instance from './instances/InstanceContainer';
@@ -25,7 +25,7 @@ import './App.less';
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props => {
+    render={(props) => {
       if (Auth.isAuthenticated()) {
         return <Component {...props} />;
       } else {
@@ -58,85 +58,93 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.Intercom("boot", {
-      app_id: "q0bwfagc"
+    window.Intercom('boot', {
+      app_id: 'q0bwfagc'
     });
   }
-
 
   render() {
     const { metamaskStatus } = this.state;
     const isAuthenticated = Auth.isAuthenticated();
     const { profile, setUserProfile } = this.props;
 
-    if (!isAuthenticated && profile) setUserProfile(null);
-    if (isAuthenticated && !profile) {
-      Auth.getProfile((err, newProfile) => {
-        setUserProfile(newProfile);
-      });
+    if (!isAuthenticated && profile) {
+      setUserProfile(null);
     }
 
+    if (isAuthenticated && !profile) {
+      const newProfile = Auth.getProfile();
+
+      if (newProfile) {
+        setUserProfile(newProfile);
+      }
+    }
 
     return (
       <main className="app">
-
         {/* Install extension */}
-        {metamaskStatus === 'noMetamask' &&
+        {metamaskStatus === 'noMetamask' && (
           // <InfoBlock className="install-block flex">
 
           // </InfoBlock>
           <InstallExtension />
-        }
+        )}
 
-        <Route render={(props) => (
-          <Header profile={profile} {...props} />
-        )} />
+        <Route render={(props) => <Header profile={profile} {...props} />} />
 
         <Switch>
-          <Route exact path="/" render={(props) => (
-            <Store metamaskStatus={metamaskStatus} {...props} />
-          )} />
-          <Route path="/login" render={(props) =>
-            <Login metamaskStatus={metamaskStatus} {...props} />
-          } />
+          <Route
+            exact
+            path="/"
+            render={(props) => <Store metamaskStatus={metamaskStatus} {...props} />}
+          />
+          <Route
+            path="/login"
+            render={(props) => <Login metamaskStatus={metamaskStatus} {...props} />}
+          />
 
           <Route path="/docs/:docUri?" component={Docs} />
 
-          <PrivateRoute path="/profile" component={props =>
-            <Profile profile={profile} {...props} />}
+          <PrivateRoute
+            path="/profile"
+            component={(props) => <Profile profile={profile} {...props} />}
           />
 
-          <PrivateRoute exact path="/deploy/:ctorId" component={props =>
-            <Redirect to={`/deploy/${props.match.params.ctorId}/${this.props.nextDeploy}`} />
-          } />
+          <PrivateRoute
+            exact
+            path="/deploy/:ctorId"
+            component={(props) => (
+              <Redirect to={`/deploy/${props.match.params.ctorId}/${this.props.nextDeploy}`} />
+            )}
+          />
 
-          <PrivateRoute path="/deploy/:ctorId/:deployId" component={props =>
-            <Deploy metamaskStatus={metamaskStatus} {...props} />
-          } />
+          <PrivateRoute
+            path="/deploy/:ctorId/:deployId"
+            component={(props) => <Deploy metamaskStatus={metamaskStatus} {...props} />}
+          />
 
-          <PrivateRoute path="/dashboard" component={props =>
-            <Dashboard metamaskStatus={metamaskStatus} {...props} />
-          } />
-          <Route path="/instance/:id" component={props =>
-            <Instance metamaskStatus={metamaskStatus} {...props} />
-          } />
+          <PrivateRoute
+            path="/dashboard"
+            component={(props) => <Dashboard metamaskStatus={metamaskStatus} {...props} />}
+          />
+          <Route
+            path="/instance/:id"
+            component={(props) => <Instance metamaskStatus={metamaskStatus} {...props} />}
+          />
 
-          <PrivateRoute path="/ctor-add" component={props =>
-            <CtorAdd {...props} />
-          } />
+          <PrivateRoute path="/ctor-add" component={(props) => <CtorAdd {...props} />} />
 
-          <PrivateRoute path="/constructors/:id/update" component={props =>
-            <CtorAdd {...props} />
-          } />
+          <PrivateRoute
+            path="/constructors/:id/update"
+            component={(props) => <CtorAdd {...props} />}
+          />
 
-          <PrivateRoute path="/my-dapps" component={props =>
-            <MyDapps metamaskStatus={metamaskStatus} {...props} />
-          } />
+          <PrivateRoute
+            path="/my-dapps"
+            component={(props) => <MyDapps metamaskStatus={metamaskStatus} {...props} />}
+          />
 
-          <Route component={props =>
-            <Page404 {...props} />
-          } />
-
+          <Route component={(props) => <Page404 {...props} />} />
         </Switch>
 
         <Route render={(props) => <Footer {...props} />} />
