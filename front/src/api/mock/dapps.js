@@ -1,7 +1,7 @@
-export const instanceList = [
+export const dappList = [
     {
-        "instance_id": "5ae1b6fd2a35e200093748d8",
-        "instance_title": "1212121",
+        "dapp_id": "5ae1b6fd2a35e200093748d8",
+        "dapp_title": "1212121",
         "network_id": 4,
         "ctor_id": "5ad9a507672dfe000a7e0a31",
         "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
@@ -3971,8 +3971,8 @@ export const instanceList = [
         ]
     },
     {
-        "instance_id": "5ae1b6fd2a35e200093748d7",
-        "instance_title": "1212121",
+        "dapp_id": "5ae1b6fd2a35e200093748d7",
+        "dapp_title": "1212121",
         "network_id": 4,
         "ctor_id": "5ad9a507672dfe000a7e0a31",
         "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
@@ -7914,8 +7914,8 @@ export const instanceList = [
         ]
     },
     {
-        "instance_id": "5ae1b6fd2a35e200093748d6",
-        "instance_title": "1212121",
+        "dapp_id": "5ae1b6fd2a35e200093748d6",
+        "dapp_title": "1212121",
         "network_id": 4,
         "ctor_id": "5ad9a507672dfe000a7e0a31",
         "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
@@ -11857,8 +11857,8 @@ export const instanceList = [
         ]
     },
     {
-        "instance_id": "5ae1b6fd2a35e200093748d5",
-        "instance_title": "1212121",
+        "dapp_id": "5ae1b6fd2a35e200093748d5",
+        "dapp_title": "1212121",
         "network_id": 4,
         "ctor_id": "5ad9a507672dfe000a7e0a31",
         "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
@@ -15800,8 +15800,8 @@ export const instanceList = [
         ]
     },
     {
-        "instance_id": "5ae1b6fd2a35e200093748d4",
-        "instance_title": "1212121",
+        "dapp_id": "5ae1b6fd2a35e200093748d4",
+        "dapp_title": "1212121",
         "network_id": 4,
         "ctor_id": "5ad9a507672dfe000a7e0a31",
         "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
@@ -19743,8 +19743,8 @@ export const instanceList = [
         ]
     },
     {
-        "instance_id": "5ae1b6fd2a35e200093748d3",
-        "instance_title": "1212121",
+        "dapp_id": "5ae1b6fd2a35e200093748d3",
+        "dapp_title": "1212121",
         "network_id": 4,
         "ctor_id": "5ad9a507672dfe000a7e0a31",
         "address": "0xd30f1771b7ffc33ab6631bf06a0787a67f8dfb93",
@@ -23688,7 +23688,7 @@ export const instanceList = [
 ]
 
 // error deploy step 1. Server validating
-export const instanceError = {
+export const dappError = {
     result: 'success',
     errors: {
         check_transfers: 'Cho thie',
@@ -23700,14 +23700,14 @@ export const instanceError = {
 };
 
 // error deploy step 1. Server validating. Global error
-export const instanceErrorGlobal = {
+export const dappErrorGlobal = {
     result: 'error',
     error_descr: 'Some problem',
 };
 
 // deploy step 2.
-export const instanceCode = {
-    "instance_id": "5ae1c7392a35e200093748da",
+export const dappCode = {
+    "dapp_id": "5ae1c7392a35e200093748da",
     "bin": "606060409081526005805460ff1916905560008054600160a060020a03338116600160a060020a03199283161783556001805483167385dd39c91a64167ba20732b228251e67caed1464179055600280549092167385dd39c91a64167ba20732b228251e67caed1462179182905560129391169163313ce5679151602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b15156100c557600080fd5b6102c65a03f115156100d657600080fd5b5050506040518051905060ff16111515156100f057600080fd5b600254600160a060020a031663313ce5676000604051602001526040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b151561015157600080fd5b6102c65a03f1151561016257600080fd5b5050506040518051905060ff16601203600a0a67a688906bd8b0000081151561018757fe5b046003556729a2241af62c0000600455600154600054600160a060020a03908116911614156101b257fe5b600254600160a060020a031615156101c657fe5b600354600090116101d357fe5b600454600090116101e057fe5b6107bb806101ef6000396000f30060606040526004361061008a5763ffffffff60e060020a6000350416630fbf3f6a81146100f85780631667b8851461011d578063590e1ae3146101305780637b352962146101435780638119c0651461016a578063a02018391461017d578063dc45111c146101ac578063e487fdb6146101bf578063e702701f146101d2578063ff75567b146101e5575b60055460ff161561009a57600080fd5b60015433600160a060020a039081169116146100b557600080fd5b6004543411156100f65733600160a060020a03166108fc60045434039081150290604051600060405180830381858888f1935050505015156100f657600080fd5b005b341561010357600080fd5b61010b6101f8565b60405190815260200160405180910390f35b341561012857600080fd5b61010b6101fe565b341561013b57600080fd5b6100f6610204565b341561014e57600080fd5b61015661039b565b604051901515815260200160405180910390f35b341561017557600080fd5b6100f66103a4565b341561018857600080fd5b6101906106da565b604051600160a060020a03909116815260200160405180910390f35b34156101b757600080fd5b6101906106e9565b34156101ca57600080fd5b61010b6106f8565b34156101dd57600080fd5b610190610772565b34156101f057600080fd5b61010b610781565b60045481565b60035481565b6000805433600160a060020a039081169116141561032757600254600160a060020a03166370a082313060006040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b151561027557600080fd5b6102c65a03f1151561028657600080fd5b50505060405180519150506000811161029e57600080fd5b60025460008054600160a060020a039283169263a9059cbb9291169084906040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b151561030657600080fd5b6102c65a03f1151561031757600080fd5b5050506040518051905050610398565b60015433600160a060020a0390811691161415610393576000600160a060020a033016311161035557600080fd5b600154600160a060020a039081169030163180156108fc0290604051600060405180830381858888f19350505050151561038e57600080fd5b610398565b600080fd5b50565b60055460ff1681565b600554600090819060ff16156103b957600080fd5b600454600160a060020a0330163110156103d257600080fd5b600254600160a060020a03166370a082313060006040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b151561042b57600080fd5b6102c65a03f1151561043c57600080fd5b5050506040518051600354909350831015905061045857600080fd5b6005805460ff191660019081179091556002549054600160a060020a03918216916370a08231911660006040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b15156104c757600080fd5b6102c65a03f115156104d857600080fd5b5050506040518051600254600154600354929450600160a060020a03918216935063a9059cbb9291169060006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b151561054e57600080fd5b6102c65a03f1151561055f57600080fd5b50505060405180519050151561057457600080fd5b6003548211156106115760025460008054600354600160a060020a039384169363a9059cbb93921691908603906040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b15156105eb57600080fd5b6102c65a03f115156105fc57600080fd5b50505060405180519050151561061157600080fd5b600054600160a060020a039081169030163180156108fc0290604051600060405180830381858888f19350505050151561064a57600080fd5b60035460025460015491830191600160a060020a03918216916370a08231911660006040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b15156106b157600080fd5b6102c65a03f115156106c257600080fd5b50505060405180519050101515156106d657fe5b5050565b600254600160a060020a031681565b600154600160a060020a031681565b600254600090600160a060020a03166370a0823130836040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b151561075357600080fd5b6102c65a03f1151561076457600080fd5b505050604051805191505090565b600054600160a060020a031681565b600160a060020a03301631905600a165627a7a7230582055b3b239de37829f5a9933fdb5bbc2dac31932dee08ad09adbb1d505fd63c8ed0029",
     "source": "\npragma solidity ^0.4.18;\n\n\n\n/**\n * @title ERC20Basic\n * @dev Simpler version of ERC20 interface\n * @dev see https://github.com/ethereum/EIPs/issues/179\n */\ncontract ERC20Basic {\n  uint8 public decimals;\n\n  uint256 public totalSupply;\n  function balanceOf(address who) public view returns (uint256);\n  function transfer(address to, uint256 value) public returns (bool);\n  event Transfer(address indexed from, address indexed to, uint256 value);\n}\n    \n\n/**\n * Copyright (C) 2018  Smartz, LLC\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\").\n * You may not use this file except in compliance with the License.\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND (express or implied).\n */\n \n/**\n * @title SwapTokenForEther\n * Swap tokens of participant1 for ether of participant2\n *\n * @author Vladimir Khramov <vladimir.khramov@smartz.io>\n */\ncontract Swap {\n\n    address public participant1;\n    address public participant2;\n\n    ERC20Basic public participant1Token;\n    uint256 public participant1TokensCount;\n\n    uint256 public participant2EtherCount;\n\n    bool public isFinished = false;\n\n\n    function Swap() public payable {\n\n        participant1 = msg.sender;\n        participant2 = 0x85dd39c91a64167ba20732b228251e67caed1464;\n\n        participant1Token = ERC20Basic(0x85dd39c91a64167ba20732b228251e67caed1462);\n        require(participant1Token.decimals() <= 18);\n        \n        participant1TokensCount = 12 ether / 10**(18-uint256(participant1Token.decimals()));\n\n        participant2EtherCount = 3 ether;\n        \n        assert(participant1 != participant2);\n        assert(participant1Token != address(0));\n        assert(participant1TokensCount > 0);\n        assert(participant2EtherCount > 0);\n        \n        \n    }\n\n    /**\n     * Ether accepted\n     */\n    function () external payable {\n        require(!isFinished);\n        require(msg.sender == participant2);\n\n        if (msg.value > participant2EtherCount) {\n            msg.sender.transfer(msg.value - participant2EtherCount);\n        }\n    }\n\n    /**\n     * Swap tokens for ether\n     */\n    function swap() external {\n        require(!isFinished);\n\n        require(this.balance >= participant2EtherCount);\n\n        uint256 tokensBalance = participant1Token.balanceOf(this);\n        require(tokensBalance >= participant1TokensCount);\n\n        isFinished = true;\n        \n        \n        //check transfer\n        uint token1Participant2InitialBalance = participant1Token.balanceOf(participant2);\n    \n\n        require(participant1Token.transfer(participant2, participant1TokensCount));\n        if (tokensBalance > participant1TokensCount) {\n            require(\n                participant1Token.transfer(participant1, tokensBalance - participant1TokensCount)\n            );\n        }\n\n        participant1.transfer(this.balance);\n        \n        \n        //check transfer\n        assert(participant1Token.balanceOf(participant2) >= token1Participant2InitialBalance+participant1TokensCount);\n    \n    }\n\n    /**\n     * Refund tokens or ether by participants\n     */\n    function refund() external {\n        if (msg.sender == participant1) {\n            uint256 tokensBalance = participant1Token.balanceOf(this);\n            require(tokensBalance>0);\n\n            participant1Token.transfer(participant1, tokensBalance);\n        } else if (msg.sender == participant2) {\n            require(this.balance > 0);\n            participant2.transfer(this.balance);\n        } else {\n            revert();\n        }\n    }\n    \n\n    /**\n     * Tokens count sent by participant #1\n     */\n    function participant1SentTokensCount() public view returns (uint256) {\n        return participant1Token.balanceOf(this);\n    }\n\n    /**\n     * Ether count sent by participant #2\n     */\n    function participant2SentEtherCount() public view returns (uint256) {\n        return this.balance;\n    }\n}\n    ",
     "price_eth": 0

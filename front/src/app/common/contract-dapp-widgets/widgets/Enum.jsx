@@ -7,7 +7,7 @@ export default class Enum extends BaseWidget {
 
     this.state = {
       fnDescription: props.fnDescription,
-      contractInstance: props.contractInstance
+      contractDapp: props.contractDapp
     }
   }
 

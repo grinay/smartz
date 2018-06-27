@@ -8,7 +8,7 @@ import './EthResult.less';
 
 export default class EthResult extends PureComponent {
   render() {
-    const { status, txHash, netId, instance, contractAddress, blockchain } = this.props;
+    const { status, txHash, netId, dapp, contractAddress, blockchain } = this.props;
 
     return (
       <div className="eth-result">
@@ -43,7 +43,7 @@ export default class EthResult extends PureComponent {
               </p>
               <p className="support-block__paragraph">
                 Now you can
-                <Link to={`/instance/${instance.instance_id}`}>manage your contract</Link> with
+                <Link to={`/dapp/${dapp.dapp_id}`}>manage your contract</Link> with
                 Smartz Platform!
               </p>
             </div>

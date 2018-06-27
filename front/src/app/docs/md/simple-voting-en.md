@@ -11,7 +11,7 @@ Voting, storage and counting of votes is carried out in the Ethereum blockchain,
 
 On Smartz.io platform, in the [Simple voting](https://smartz.io/deploy/5a9a4df0f5ec65000b80d293) page, you need to specify the token information:
 
-* **Instance name**: the name of the smart contract;
+* **Dapp name**: the name of the smart contract;
 * **Ballot name**: the name of the ballot;
 * **Variants**: answer variants.
 

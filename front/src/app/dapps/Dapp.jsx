@@ -10,11 +10,11 @@ import Transaction from './Transaction/Transaction';
 
 import FunctionButton from './function-button/FunctionButton';
 
-import './Instance.less';
-import renderInstanceWidget from '../common/contract-instance-widgets/ContractInstanceWidgets';
+import './Dapp.less';
+import renderDappWidget from '../common/contract-dapp-widgets/ContractDappWidgets';
 import { blockchains } from './../../constants/constants';
 
-class Instance extends Component {
+class Dapp extends Component {
   constructor(props) {
     super(props);
 
@@ -25,7 +25,7 @@ class Instance extends Component {
   }
 
   componentWillMount() {
-    api.getInstance(this.props.match.params.id);
+    api.getDapp(this.props.match.params.id);
   }
 
   componentDidMount() {
@@ -34,9 +34,9 @@ class Instance extends Component {
 
   componentDidUpdate() {
     // TODO: refactor this shit
-    const { instance, metamaskStatus } = this.props;
+    const { dapp, metamaskStatus } = this.props;
 
-    if (instance && instance.blockchain === blockchains.ethereum && !this.state.updateCycleActive) {
+    if (dapp && dapp.blockchain === blockchains.ethereum && !this.state.updateCycleActive) {
       if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
         return null;
       }
@@ -45,32 +45,32 @@ class Instance extends Component {
   }
 
   getConstants() {
-    const { instance, viewFuncResult } = this.props;
-    if (!instance) {
+    const { dapp, viewFuncResult } = this.props;
+    if (!dapp) {
       return;
     }
 
-    instance.functions.forEach((func) => {
+    dapp.functions.forEach((func) => {
       if (func.constant && func.inputs.minItems === 0) {
-        processControlForm(instance.abi, func, [], instance.address, (error, result) => {
+        processControlForm(dapp.abi, func, [], dapp.address, (error, result) => {
           if (error) {
             console.error(error);
           } else {
-            viewFuncResult(instance.instance_id, func.name, processResult(result));
+            viewFuncResult(dapp.dapp_id, func.name, processResult(result));
           }
         });
       }
     });
   }
 
-  getFunctionsByType(instance, type) {
+  getFunctionsByType(dapp, type) {
     const result = [];
-    if (!instance) {
+    if (!dapp) {
       return result;
     }
 
-    instance.functions &&
-      instance.functions.forEach((func) => {
+    dapp.functions &&
+      dapp.functions.forEach((func) => {
         switch (type) {
           case 'view':
             if (func.constant && func.inputs.minItems === 0) result.push(func);
@@ -88,11 +88,11 @@ class Instance extends Component {
   }
 
   render() {
-    const { metamaskStatus, instance, instanceError } = this.props;
+    const { metamaskStatus, dapp, dappError } = this.props;
 
     if (
-      instance &&
-      instance.blockchain === blockchains.ethereum &&
+      dapp &&
+      dapp.blockchain === blockchains.ethereum &&
       metamaskStatus !== 'okMetamask'
     ) {
       return (
@@ -102,7 +102,7 @@ class Instance extends Component {
       );
     }
 
-    const viewFunctions = this.getFunctionsByType(instance, 'view');
+    const viewFunctions = this.getFunctionsByType(dapp, 'view');
     let viewFunctionsElements =
       viewFunctions.length > 0
         ? viewFunctions.map((func, i) => (
@@ -112,7 +112,7 @@ class Instance extends Component {
           ))
         : [];
 
-    const askFunctions = this.getFunctionsByType(instance, 'ask');
+    const askFunctions = this.getFunctionsByType(dapp, 'ask');
     let askFunctionsElements =
       askFunctions.length > 0
         ? askFunctions.map((func, i) => (
@@ -124,7 +124,7 @@ class Instance extends Component {
           ))
         : [];
 
-    const writeFunctions = this.getFunctionsByType(instance, 'write');
+    const writeFunctions = this.getFunctionsByType(dapp, 'write');
     let writeFunctionsElements =
       writeFunctions.length > 0
         ? writeFunctions.map((func, i) => (
@@ -145,48 +145,48 @@ class Instance extends Component {
           Back
         </Link>
 
-        {instance && (
+        {dapp && (
           <aside>
             <section className="form-title flex">
               <img
                 className="form-title__img"
                 src={
-                  instance.constructor.image
-                    ? require(`../common/ctor-card/img/${instance.constructor.image}`)
+                  dapp.constructor.image
+                    ? require(`../common/ctor-card/img/${dapp.constructor.image}`)
                     : `https://lorempixel.com/640/400/?${Math.random()}`
                 }
-                alt={`${instance.constructor.name} contract`}
+                alt={`${dapp.constructor.name} contract`}
               />
               <div className={'form-title__title'}>
-                <h2>{instance.instance_title}</h2>
+                <h2>{dapp.dapp_title}</h2>
                 <p className="flex-v">
                   <span>Contract: </span>
-                  {instance.address && (
+                  {dapp.address && (
                     <span className="contract-controls__section-header  contract-controls__wallet-key">
-                      {makeEtherscanLink(instance.address, instance.network_id, true)}
+                      {makeEtherscanLink(dapp.address, dapp.network_id, true)}
                     </span>
                   )}
                 </p>
               </div>
             </section>
 
-            {instance.transactions && (
+            {dapp.transactions && (
               <section className="transactions">
                 <p className="transactions__header">Transactions:</p>
-                {instance.transactions
+                {dapp.transactions
                   .reverse()
                   .map((transaction, i) => (
                     <Transaction
                       transaction={transaction}
-                      contractInstance={instance}
-                      netId={instance.network_id}
+                      contractDapp={dapp}
+                      netId={dapp.network_id}
                       key={i}
                     />
                   ))}
               </section>
             )}
 
-            {instance.blockchain === blockchains.ethereum && (
+            {dapp.blockchain === blockchains.ethereum && (
               <section className="contract-functions">
                 <h2 className="contract-functions__header">View functions</h2>
                 <p className="contract-functions__description">
@@ -199,16 +199,16 @@ class Instance extends Component {
           </aside>
         )}
 
-        {instance && (
+        {dapp && (
           <section className="block  contract-controls">
             <div className="block__wrapper">
               {/* view functions block */}
-              {instance.blockchain === blockchains.ethereum && (
+              {dapp.blockchain === blockchains.ethereum && (
                 <div className="contract-controls__wrapper  contract-controls__wrapper--margin">
                   <table className="table  table--big">
                     <tbody className="table__tbody">
-                      {instance.functions &&
-                        instance.functions.map((func, i) => {
+                      {dapp.functions &&
+                        dapp.functions.map((func, i) => {
                           if (func.constant && func.inputs.minItems === 0) {
                             return (
                               <tr key={i} className="table__tr">
@@ -216,7 +216,7 @@ class Instance extends Component {
 
                                 <td className="table__data">
                                   <div className="table__inner">
-                                    <span>{renderInstanceWidget(func, instance)}</span>
+                                    <span>{renderDappWidget(func, dapp)}</span>
                                   </div>
                                 </td>
                               </tr>
@@ -253,7 +253,7 @@ class Instance extends Component {
 
               {/* function block */}
               <FunctionCard
-                instance={instance}
+                dapp={dapp}
                 func={this.state.funcActive || askFunctions[0] || writeFunctions[0]}
                 refresh={this.getConstants.bind(this)}
               />
@@ -265,4 +265,4 @@ class Instance extends Component {
   }
 }
 
-export default Instance;
+export default Dapp;

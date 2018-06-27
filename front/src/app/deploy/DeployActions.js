@@ -21,9 +21,9 @@ export const constructError = (deployId, errors) => ({
   deployId
 });
 
-export const constructSuccess = (deployId, instance) => ({
+export const constructSuccess = (deployId, dapp) => ({
   type: 'CONSTRUCT_SUCCESS',
-  instance,
+  dapp,
   deployId
 });
 

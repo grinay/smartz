@@ -9,7 +9,7 @@ interface IDeployStep3Props {
   status: any;
   txHash: any;
   netId: any;
-  instance: any;
+  dapp: any;
   contractAddress: any;
   blockchain: any;
 }
@@ -20,7 +20,7 @@ export default class DeployStep3 extends React.PureComponent<IDeployStep3Props, 
   }
 
   public render() {
-    const { status, txHash, netId, instance, contractAddress, blockchain } = this.props;
+    const { status, txHash, netId, dapp, contractAddress, blockchain } = this.props;
 
     let content;
 

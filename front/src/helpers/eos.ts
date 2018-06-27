@@ -16,7 +16,7 @@ declare global {
 
 class EosClass {
   private network: any;
-  private configEosInstance: any;
+  private configEosDapp: any;
   private eos: any;
   private identity: any;
   private accountName: any;
@@ -43,7 +43,7 @@ class EosClass {
     };
     this.url = eosConstants.PROTOCOL + '://' + eosConstants.HOST + ':' + eosConstants.PORT;
 
-    this.configEosInstance = {
+    this.configEosDapp = {
       binaryen,
       // mockTransactions: () => null,
     };
@@ -57,12 +57,12 @@ class EosClass {
 
   public setChainId() {
     return new Promise((resolve, reject) => {
-      if (!this.configEosInstance.chainId) {
+      if (!this.configEosDapp.chainId) {
         axios
           .get(this.url + '/v1/chain/get_info')
           .then((result) => {
             if (result.status === 200) {
-              this.configEosInstance.chainId = result.data.chain_id;
+              this.configEosDapp.chainId = result.data.chain_id;
               resolve();
             }
           })
@@ -95,13 +95,13 @@ class EosClass {
 
           // send smart-contract code
           return this.scatter
-            .eos(this.network, Eos, this.configEosInstance, this.network.protocol)
+            .eos(this.network, Eos, this.configEosDapp, this.network.protocol)
             .setcode(this.accountName, 0, 0, bin);
         })
         .then(() => {
           // send smart-contract abi
           return this.scatter
-            .eos(this.network, Eos, this.configEosInstance, this.network.protocol)
+            .eos(this.network, Eos, this.configEosDapp, this.network.protocol)
             .setabi(this.accountName, JSON.parse(abi));
         })
     );
@@ -121,7 +121,7 @@ class EosClass {
 
           let accountName = this.getAccountName(identity);
 
-          this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
+          this.eos = this.scatter.eos(this.network, Eos, this.configEosDapp);
 
           return this.eos.transaction(accountName, (contract) => {
             contract[func.name](...formData, { authorization: accountName });
@@ -142,7 +142,7 @@ class EosClass {
     return new Promise((resolve, reject) => {
       this.setChainId()
         .then(() => {
-          this.eos = this.scatter.eos(this.network, Eos, this.configEosInstance);
+          this.eos = this.scatter.eos(this.network, Eos, this.configEosDapp);
 
           return this.eos.getTableRows({
             json: true,

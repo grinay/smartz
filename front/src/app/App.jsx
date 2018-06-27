@@ -13,7 +13,7 @@ import Deploy from './deploy/DeployContainer';
 import Login from './auth/login/LoginContainer';
 import CtorAdd from './ctor-add/CtorAdd';
 import Dashboard from './dashboard/DashboardContainer';
-import Instance from './instances/InstanceContainer';
+import Dapp from './dapps/DappContainer';
 import Docs from './docs/Docs';
 import InfoBlock from './common/InfoBlock';
 import { checkMetaMask } from '../helpers/eth';
@@ -128,8 +128,8 @@ class App extends Component {
             component={(props) => <Dashboard metamaskStatus={metamaskStatus} {...props} />}
           />
           <Route
-            path="/instance/:id"
-            component={(props) => <Instance metamaskStatus={metamaskStatus} {...props} />}
+            path="/dapp/:id"
+            component={(props) => <Dapp metamaskStatus={metamaskStatus} {...props} />}
           />
 
           <PrivateRoute path="/ctor-add" component={(props) => <CtorAdd {...props} />} />

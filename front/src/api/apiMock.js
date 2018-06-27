@@ -1,10 +1,10 @@
 import * as constructors from './mock/constructors';
-import * as instances from './mock/instances';
+import * as dapps from './mock/dapps';
 
 export default function subscribeMockRequests(mockApi) {
   mockApi
     // .onAny('/constructors').reply(200, constructors.constructorListProd)
-    // .onAny('/instances').reply(200, instances.instanceList)
+    // .onAny('/dapps').reply(200, dapps.dappList)
     // go to deploy step 1 (request form)
     // .onAny(/\/constructors\/.{24}\/params/).reply(200, constructors.ctorAtomicSwap)
     // go to deploy step 2 (request code)
@@ -12,7 +12,7 @@ export default function subscribeMockRequests(mockApi) {
     .replyOnce(500)
 
     // .onAny(/\/constructors\/.{24}\/construct/)
-    // .replyOnce(200, instances.instanceCode)
+    // .replyOnce(200, dapps.dappCode)
 
     .onAny()
     .passThrough();

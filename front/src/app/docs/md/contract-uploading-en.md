@@ -14,9 +14,9 @@ Below we'll examine the constructor of smart contract we already have: simple vo
 First, you need to import the necessary functions and declare the class `Constructor`:
 
 ``` python
-from constructor_engine.api import ConstructorInstancefrom smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
+from constructor_engine.api import ConstructorDappfrom smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
-class Constructor(ConstructorInstance):
+class Constructor(ConstructorDapp):
 ```
 
 Next, you declare the method for page in the first step of deploying your contract – `get_params`.

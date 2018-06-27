@@ -9,10 +9,10 @@ import {
   fetchCtorParamsSuccess
 } from '../app/common/ctor-card/CtorsActions';
 import {
-  fetchInstancesRequest,
-  fetchInstancesFailure,
-  fetchInstancesSuccess
-} from '../app/instances/InstancesActions';
+  fetchDappsRequest,
+  fetchDappsFailure,
+  fetchDappsSuccess
+} from '../app/dapps/DappsActions';
 import {
   // initDeploy,
   setFormData,
@@ -93,49 +93,49 @@ export function addCtor(formData) {
 }
 
 // =============================================================================
-// Instances
+// Dapps
 // =============================================================================
 
-export function getInstances() {
+export function getDapps() {
   const result = fetch('/contracts', undefined, 'get');
 
-  dispatch(fetchInstancesRequest());
+  dispatch(fetchDappsRequest());
 
   result
     .then((response) => {
       if (response.status === 200) {
-        dispatch(fetchInstancesSuccess(response.data));
+        dispatch(fetchDappsSuccess(response.data));
       }
     })
     .catch((error) => {
-      dispatch(fetchInstancesFailure(error.message));
+      dispatch(fetchDappsFailure(error.message));
     });
 
   return result;
 }
 
-export function getInstance(id) {
+export function getDapp(id) {
   const result = fetch(`/contracts/${id}`, undefined, 'get');
 
-  dispatch(fetchInstancesRequest());
+  dispatch(fetchDappsRequest());
 
   result
     .then((response) => {
       if (response.status === 200 && !response.data.error) {
-        dispatch(fetchInstancesSuccess(response.data));
+        dispatch(fetchDappsSuccess(response.data));
       } else {
-        dispatch(fetchInstancesFailure(response.data.error ? response.data.error : 'error'));
+        dispatch(fetchDappsFailure(response.data.error ? response.data.error : 'error'));
       }
     })
     .catch((error) => {
-      dispatch(fetchInstancesFailure(error.message));
+      dispatch(fetchDappsFailure(error.message));
     });
 
   return result;
 }
 
-export function updateInstance(instanceId, data) {
-  const result = fetch(`/contracts/${instanceId}/update`, data, 'post');
+export function updateDapp(dappId, data) {
+  const result = fetch(`/contracts/${dappId}/update`, data, 'post');
 
   result.then((response) => {}).catch((error) => console.error(error));
 

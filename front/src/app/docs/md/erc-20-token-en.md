@@ -9,7 +9,7 @@ ERC20 describes the token functions that can be implemented in a smart contract 
 
 On Smartz.io platform, in the [ERC20 token](https://smartz.io/deploy/5aaa7a85ab3d71000bd0c69d/0) page, you need to specify:
 
-* **Instance name**: the name of the smart contract that will be displayed in the My contracts page;
+* **Dapp name**: the name of the smart contract that will be displayed in the My contracts page;
 * **Name of a token**: the name of the token;
 * **Token Symbol**: the token symbol;
 * **Decimals**: the number of decimal places;

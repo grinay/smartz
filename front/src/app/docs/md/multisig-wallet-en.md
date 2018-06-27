@@ -13,7 +13,7 @@ Use case: a family fund that consists of the husband and wife and a third-party 
 
 On Smartz.io platform, in the [Multisignature wallet](https://smartz.io/deploy/5aaa7aa2ab3d71000bd0c69f) page, you need to specify:
 
-* **Instance name**: the name of the smart contract;
+* **Dapp name**: the name of the smart contract;
 * **Signatures quorum**: the quorum of signatures required to withdraw funds or change signatures;
 * **Addresses of owners**: addresses (signatures) of the owners of the created wallet.
 

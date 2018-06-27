@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 
 interface IEosResultProps {
   status: any;
-  instance: any;
+  dapp: any;
   contractAddress: any;
 }
 
 export default class EosResult extends React.PureComponent<IEosResultProps, {}> {
   public render() {
-    const { status, instance, contractAddress } = this.props;
+    const { status, dapp, contractAddress } = this.props;
 
     return (
       <div className="eos-result">
@@ -27,7 +27,7 @@ export default class EosResult extends React.PureComponent<IEosResultProps, {}> 
             </p>
             <p className="support-block__paragraph">
               Now you can
-              <Link to={`/instance/${instance.instance_id}`}> manage your contract </Link>with
+              <Link to={`/dapp/${dapp.dapp_id}`}> manage your contract </Link>with
               Smartz Platform!
             </p>
           </div>

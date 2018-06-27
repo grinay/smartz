@@ -15,7 +15,7 @@ class Dashboard extends Component {
 
     this.state = {
       updateCycleActive: false,
-      filterInstances: [],
+      filterDapps: [],
       networkId: null
     };
   }
@@ -24,7 +24,7 @@ class Dashboard extends Component {
     const { metamaskStatus } = this.props;
 
     api.getConstructors();
-    api.getInstances();
+    api.getDapps();
 
     if (metamaskStatus !== 'noMetamask') {
       getNetworkId((networkId) => {
@@ -38,48 +38,48 @@ class Dashboard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { metamaskStatus, instances } = this.props;
-    let filterInstances = [];
+    const { metamaskStatus, dapps } = this.props;
+    let filterDapps = [];
 
     // const isEthContractExist =
-    //   typeof find(instances, { blockchain: blockchains.ethereum }) !== 'undefined';
+    //   typeof find(dapps, { blockchain: blockchains.ethereum }) !== 'undefined';
 
     // if (isEthContractExist && metamaskStatus !== 'noMetamask') {
     //     if (inst.network_id.toString() === networkId) {
-    //       console.log(filterInstances);
-    //       filterInstances.push(inst);
+    //       console.log(filterDapps);
+    //       filterDapps.push(inst);
     //     }
     // }
 
-    for (let i = 0; i < instances.length; i++) {
-      let inst = instances[i];
+    for (let i = 0; i < dapps.length; i++) {
+      let inst = dapps[i];
       switch (inst.blockchain) {
         case blockchains.ethereum:
           if (metamaskStatus !== 'noMetamask') {
             if (inst.network_id.toString() === this.state.networkId) {
-              filterInstances.push(inst);
+              filterDapps.push(inst);
             }
           }
           break;
         case blockchains.eos:
-          filterInstances.push(inst);
+          filterDapps.push(inst);
           break;
         default:
           break;
       }
     }
-    // console.log(filterInstances);
+    // console.log(filterDapps);
     this.setState({
-      filterInstances
+      filterDapps
     });
   }
 
   componentDidUpdate() {
-    const { ctors, instances, metamaskStatus } = this.props;
-    const { filterInstances } = this.state;
+    const { ctors, dapps, metamaskStatus } = this.props;
+    const { filterDapps } = this.state;
 
     if (
-      filterInstances.length &&
+      filterDapps.length &&
       ctors.length &&
       !this.state.updateCycleActive &&
       metamaskStatus !== 'noMetamask'
@@ -89,10 +89,10 @@ class Dashboard extends Component {
   }
 
   updateCycle() {
-    const { instances, viewFuncResult } = this.props;
+    const { dapps, viewFuncResult } = this.props;
 
-    instances.forEach((inst, j) => {
-      const { instance_id, abi, address, dashboard_functions, functions, blockchain } = inst;
+    dapps.forEach((inst, j) => {
+      const { dapp_id, abi, address, dashboard_functions, functions, blockchain } = inst;
 
       if (blockchain === blockchains.ethereum && dashboard_functions) {
         dashboard_functions.forEach((dFunc) => {
@@ -104,7 +104,7 @@ class Dashboard extends Component {
             if (error) {
               console.error(error);
             } else {
-              viewFuncResult(instance_id, dFunc, processResult(result));
+              viewFuncResult(dapp_id, dFunc, processResult(result));
             }
           });
         });
@@ -114,10 +114,10 @@ class Dashboard extends Component {
 
   render() {
     const { metamaskStatus } = this.props;
-    const { filterInstances } = this.state;
+    const { filterDapps } = this.state;
 
     if (
-      find(filterInstances, { blockchain: blockchains.ethereum }) &&
+      find(filterDapps, { blockchain: blockchains.ethereum }) &&
       metamaskStatus === 'noMetamask'
     ) {
       return (
@@ -127,27 +127,27 @@ class Dashboard extends Component {
       );
     }
 
-    const { ctors, ctorsError, instances, instancesError } = this.props;
+    const { ctors, ctorsError, dapps, dappsError } = this.props;
 
-    filterInstances.forEach((inst) => {
+    filterDapps.forEach((inst) => {
       inst.ctor = find(ctors, { ctor_id: inst.ctor_id }) || {};
     });
 
     return (
       <main className="page-main  page-main--my-contracts">
-        {(ctorsError || instancesError) && (
+        {(ctorsError || dappsError) && (
           <Alert>
             {ctorsError && <p>{ctorsError}</p>}
-            {instancesError && <p>{instancesError}</p>}
+            {dappsError && <p>{dappsError}</p>}
           </Alert>
         )}
 
         <section className="my-contracts">
           <ul className="my-contracts__list">
-            {filterInstances.length > 0 &&
-              filterInstances.map((inst, j) => (
+            {filterDapps.length > 0 &&
+              filterDapps.map((inst, j) => (
                 <li key={j} className="my-contracts__item">
-                  <Link to={`/instance/${inst.instance_id}`} className="my-contracts__link screen">
+                  <Link to={`/dapp/${inst.dapp_id}`} className="my-contracts__link screen">
                     <article className="my-contract">
                       <section className="contract-info  contract-info--contract-card">
                         <div className="contract-info__wrapper">
@@ -163,7 +163,7 @@ class Dashboard extends Component {
                             />
                           </div>
                           <p className="contract-info__info">
-                            <span className="contract-info__name">{inst.instance_title}</span>
+                            <span className="contract-info__name">{inst.dapp_title}</span>
                             <span className="contract-info__description">
                               {inst.ctor.ctor_name}
                             </span>

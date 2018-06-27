@@ -13,7 +13,7 @@ You receive ERC20 tokens with the possibility to choose their names, ticker, adj
 
 On the Smartz.io platform in [Simple ICO](https://smartz.io/deploy/5aaa7a76ab3d71000bd0c69c/0) page, you need to identify:
 
-* **Instance name**: smart contract name;
+* **Dapp name**: smart contract name;
 * **Name of a token**: name of a token;
 * **Token Symbol**: symbol of a token;
 * **“Is token burnable?” (marked with a check)**: you can mark whether owners can burn their tokens or not;

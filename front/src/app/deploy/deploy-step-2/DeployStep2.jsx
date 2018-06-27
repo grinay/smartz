@@ -30,11 +30,11 @@ class DeployStep2 extends PureComponent {
       deployTxError,
       deployTxMined,
       metamaskStatus,
-      instance,
+      dapp,
       ctor,
       publicAccess
     } = this.props;
-    const { bin, blockchain, abi, instance_id } = instance;
+    const { bin, blockchain, abi, dapp_id } = dapp;
     const { price_eth, ctor_id } = ctor;
 
     if (blockchain === blockchains.ethereum && metamaskStatus != 'okMetamask') {
@@ -69,7 +69,7 @@ class DeployStep2 extends PureComponent {
                 gasPrice: ethConstants.gasPrice,
                 txHash,
                 addressSender: getAccountAddress(),
-                instanceId: instance_id
+                dappId: dapp_id
               };
 
               getNetworkId((netId) => {
@@ -94,7 +94,7 @@ class DeployStep2 extends PureComponent {
                   // send event to gtm
                   sendStatusContractEvent({
                     status: contractProcessStatus.MINED,
-                    addressInstance: receipt.contractAddress,
+                    addressDapp: receipt.contractAddress,
                     ...dataEvent
                   });
                 }
@@ -109,13 +109,13 @@ class DeployStep2 extends PureComponent {
           ctorId: ctor_id,
           user: Auth.getProfile().user_id,
           blockchain,
-          instanceId: instance_id
+          dappId: dapp_id
         };
 
         // get chainId to set 'networkId'
         Eos.setChainId()
           .then(() => {
-            dataEvent.networkId = Eos.configEosInstance.chainId;
+            dataEvent.networkId = Eos.configEosDapp.chainId;
 
             // get identity to set addressSender
             return Eos.getIdentity();
@@ -130,7 +130,7 @@ class DeployStep2 extends PureComponent {
                 // send event to gtm
                 sendStatusContractEvent({
                   status: contractProcessStatus.MINED,
-                  addressInstance: result.transaction_id,
+                  addressDapp: result.transaction_id,
                   ...dataEvent
                 });
               })
@@ -141,7 +141,7 @@ class DeployStep2 extends PureComponent {
                 deployTxError(deployId, msgError);
               });
 
-            deployTxSent(deployId, Eos.configEosInstance.chainId, null, blockchain);
+            deployTxSent(deployId, Eos.configEosDapp.chainId, null, blockchain);
 
             // send event to gtm
             sendStatusContractEvent({
@@ -159,7 +159,7 @@ class DeployStep2 extends PureComponent {
   }
 
   render() {
-    const { deployId, ctor, instance, status, setPublicAccess, blockchain } = this.props;
+    const { deployId, ctor, dapp, status, setPublicAccess, blockchain } = this.props;
 
     return (
       <div>
@@ -193,7 +193,7 @@ class DeployStep2 extends PureComponent {
                         whiteSpace: 'pre',
                         fontFamily: 'monospace'
                       }}>
-                      {instance.source ||
+                      {dapp.source ||
                         "If you don't see source code here, perhaps something gone wrong"}
                     </div>
                   </div>

@@ -9,7 +9,7 @@ The Equity token is issued according to the ERC20 standard.
 
 On Smartz.io platform, you need to specify the token information in the [Equity token](https://smartz.io/deploy/5aaa7a92ab3d71000bd0c69e) page:
 
-* **Instance name**: the name of the smart contract;
+* **Dapp name**: the name of the smart contract;
 * **Name of a token**: the name of the token;
 * **Token Symbol**: the token symbol.
 

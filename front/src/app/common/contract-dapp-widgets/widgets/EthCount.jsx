@@ -11,7 +11,7 @@ export default class EthCount extends BaseWidget {
 
     this.state = {
       fnDescription: props.fnDescription,
-      contractInstance: props.contractInstance,
+      contractDapp: props.contractDapp,
       currency: null,
       symbol: null,
     }

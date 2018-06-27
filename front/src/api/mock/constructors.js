@@ -347,7 +347,7 @@ export const ctorCustom = {
     //     "file_hash": {
     //         "errors": "Noooooooooooooooo"
     //     },
-    //     "instance_title": {
+    //     "dapp_title": {
     //         "errors": "Noooooooooooooooo 3 characters"
     //     }
     // }

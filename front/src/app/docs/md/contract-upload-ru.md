@@ -14,10 +14,10 @@
 В самом начале нужно произвести импорт необходимых функций и объявить класс `Constructor`:
 
 ``` python
-from constructor_engine.api import ConstructorInstance
+from constructor_engine.api import ConstructorDapp
 from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
-class Constructor(ConstructorInstance):
+class Constructor(ConstructorDapp):
 ```
 
 Далее объявляется метод, который отвечает за страницу на первом шаге деплоя вашего контракта – `get_params(self)`.

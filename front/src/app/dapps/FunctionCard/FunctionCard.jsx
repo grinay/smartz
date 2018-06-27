@@ -23,27 +23,27 @@ class FunctionCard extends PureComponent {
       formData = [];
     }
 
-    const { func, instance, transactionNew } = this.props;
-    const { abi, address } = this.props.instance;
+    const { func, dapp, transactionNew } = this.props;
+    const { abi, address } = this.props.dapp;
 
-    switch (instance.blockchain) {
+    switch (dapp.blockchain) {
       case blockchains.ethereum:
         processControlForm(abi, func, formData, address, (error, result) => {
           if (!error) {
-            transactionNew(instance.instance_id, func, formData, result);
+            transactionNew(dapp.dapp_id, func, formData, result);
             if (/^0x([A-Fa-f0-9]{64})$/.test(result))
               // Check if result is tx hash
               this.getReceipt(result);
           } else {
             console.error(error);
-            transactionNew(instance.instance_id, func, formData, error);
+            transactionNew(dapp.dapp_id, func, formData, error);
           }
         });
         break;
       case blockchains.eos:
         Eos.executeFunc(abi, func, address, formData)
           .then((result) => {
-            transactionNew(instance.instance_id, func, formData, result);
+            transactionNew(dapp.dapp_id, func, formData, result);
             window.scrollTo(0, 0);
           })
           .catch((err) => {
@@ -52,7 +52,7 @@ class FunctionCard extends PureComponent {
 
             error = error.error.what || error.message || 'error';
 
-            transactionNew(instance.instance_id, func, formData, error);
+            transactionNew(dapp.dapp_id, func, formData, error);
             window.scrollTo(0, 0);
           });
         break;
@@ -63,7 +63,7 @@ class FunctionCard extends PureComponent {
   }
 
   getReceipt(tx) {
-    const { transactionReceipt, instance, refresh } = this.props;
+    const { transactionReceipt, dapp, refresh } = this.props;
 
     w3.eth.getTransactionReceipt(tx, (err, receipt) => {
       if (null == receipt)
@@ -71,14 +71,14 @@ class FunctionCard extends PureComponent {
           this.getReceipt(tx);
         }, 500);
       else {
-        transactionReceipt(instance.instance_id, tx, receipt);
+        transactionReceipt(dapp.dapp_id, tx, receipt);
         refresh();
       }
     });
   }
 
   render() {
-    const { func, instance } = this.props;
+    const { func, dapp } = this.props;
     if (!func) return null;
 
     // add field for ethCount in schema

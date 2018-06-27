@@ -102,7 +102,7 @@ export const processControlForm = (
 
   // calling/transacting
 
-  const CtorInstance = web3.eth.contract(contract_abi).at(contract_address);
+  const CtorDapp = web3.eth.contract(contract_abi).at(contract_address);
 
   // non-constant - there will be a transaction instead of a local call
   if (!function_abi.constant) {
@@ -113,7 +113,7 @@ export const processControlForm = (
 
   let result;
   try {
-    result = CtorInstance[function_spec.name](...args_converted2abi, callback);
+    result = CtorDapp[function_spec.name](...args_converted2abi, callback);
   } catch (e) {
     console.warn(e);
   }
@@ -282,11 +282,11 @@ export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
 /**
  * Return decoded event
  *
- * @param contractInstance
+ * @param contractDapp
  * @param log
  */
-export const decodeEventOfInstance = (contractInstance, log) => {
-  const abi = contractInstance.abi;
+export const decodeEventOfDapp = (contractDapp, log) => {
+  const abi = contractDapp.abi;
   let eventAbi = null;
 
   for (let i = 0; i < abi.length; i++) {

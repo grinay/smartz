@@ -42,7 +42,7 @@ class Deploy extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { netId, contractAddress, instance, publicAccess } = nextProps;
+    const { netId, contractAddress, dapp, publicAccess } = nextProps;
     if (netId && contractAddress) {
       const data = {
         address: contractAddress,
@@ -50,7 +50,7 @@ class Deploy extends PureComponent {
         public_access: publicAccess
       };
 
-      api.updateInstance(instance.instance_id, data);
+      api.updateDapp(dapp.dapp_id, data);
     }
   }
 
@@ -60,7 +60,7 @@ class Deploy extends PureComponent {
       ctor,
       status,
       errors,
-      instance,
+      dapp,
       netId,
       txHash,
       contractAddress,
@@ -79,7 +79,7 @@ class Deploy extends PureComponent {
     const step2Props = {
       deployId,
       ctor,
-      instance,
+      dapp,
       status,
       metamaskStatus,
       setPublicAccess,
@@ -93,7 +93,7 @@ class Deploy extends PureComponent {
       status,
       txHash,
       netId,
-      instance,
+      dapp,
       contractAddress,
       blockchain
     };

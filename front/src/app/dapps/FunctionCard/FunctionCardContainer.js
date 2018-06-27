@@ -5,7 +5,7 @@ import FunctionCard from './FunctionCard';
 
 import {
   transactionNew, transactionReceipt
-} from '../InstancesActions';
+} from '../DappsActions';
  
 const mapDispatchToProps = {
   transactionNew, transactionReceipt

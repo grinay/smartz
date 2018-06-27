@@ -3,11 +3,11 @@ import moment from 'moment';
 
 const initState = {
   fetchStatus: 'init',
-  instances: [],
+  dapps: [],
   error: null
 };
 
-const instances = (state = initState, action) => {
+const dapps = (state = initState, action) => {
   const nextState = cloneDeep(state);
 
   switch (action.type) {
@@ -24,41 +24,41 @@ const instances = (state = initState, action) => {
     case 'FETCH_INSTANCES_SUCCESS':
       nextState.fetchStatus = 'success';
       nextState.error = '';
-      if (!Array.isArray(action.instances)) {
-        action.instances = [action.instances];
+      if (!Array.isArray(action.dapps)) {
+        action.dapps = [action.dapps];
       }
 
-      action.instances.forEach(instance => {
-        const i = findIndex(nextState.instances, { instance_id: instance.instance_id });
+      action.dapps.forEach(dapp => {
+        const i = findIndex(nextState.dapps, { dapp_id: dapp.dapp_id });
         if (i >= 0) {
-          nextState.instances[i] = Object.assign(nextState.instances[i], instance);
+          nextState.dapps[i] = Object.assign(nextState.dapps[i], dapp);
         } else {
-          nextState.instances.push(instance);
+          nextState.dapps.push(dapp);
         }
       });
       return nextState;
 
     case 'VIEW_FUNC_RESULT':
-      const { instanceId, funcName, result } = action;
+      const { dappId, funcName, result } = action;
 
-      let instance = find(nextState.instances, { instance_id: instanceId });
-      if (instance) {
-        if (instance.funcResults && (instance.funcResults[funcName] === result)) {
+      let dapp = find(nextState.dapps, { dapp_id: dappId });
+      if (dapp) {
+        if (dapp.funcResults && (dapp.funcResults[funcName] === result)) {
           return state;
 
         } else {
-          if (!instance.funcResults) instance.funcResults = {};
-          instance.funcResults[funcName] = result;
+          if (!dapp.funcResults) dapp.funcResults = {};
+          dapp.funcResults[funcName] = result;
         }
       }
 
       return nextState;
 
     case 'TRANSACTION_NEW':
-      instance = find(nextState.instances, { instance_id: action.instanceId });
-      if (instance) {
-        if (!instance.transactions) instance.transactions = [];
-        instance.transactions.push({
+      dapp = find(nextState.dapps, { dapp_id: action.dappId });
+      if (dapp) {
+        if (!dapp.transactions) dapp.transactions = [];
+        dapp.transactions.push({
           func: action.func,
           time: moment(),
           formData: action.formData,
@@ -68,9 +68,9 @@ const instances = (state = initState, action) => {
       return nextState;
 
     case 'TRANSACTION_RECEIPT':
-      instance = find(nextState.instances, { instance_id: action.instanceId });
-      if (instance) {
-        const transaction = find(instance.transactions, { txHash: action.txHash });
+      dapp = find(nextState.dapps, { dapp_id: action.dappId });
+      if (dapp) {
+        const transaction = find(dapp.transactions, { txHash: action.txHash });
         if (transaction) {
           transaction.result = action.receipt;
           transaction.timeMined = moment();
@@ -83,4 +83,4 @@ const instances = (state = initState, action) => {
   }
 }
 
-export default instances;
+export default dapps;

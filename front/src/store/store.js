@@ -4,14 +4,14 @@ import { createStore } from 'redux';
 import app from '../app/AppReducer';
 import ctors from '../app/common/ctor-card/CtorsReducer';
 import deploy from '../app/deploy/DeployReducer';
-import instances from '../app/instances/InstancesReducer';
-import login from '../app/auth/login/LoginReducer'
+import dapps from '../app/dapps/DappsReducer';
+import login from '../app/auth/login/LoginReducer';
 
 const reducers = combineReducers({
   app,
   ctors,
   deploy,
-  instances,
+  dapps,
   login
 });
 

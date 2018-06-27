@@ -7,7 +7,7 @@ export default class UnixTime extends BaseWidget {
 
     this.state = {
       fnDescription: props.fnDescription,
-      contractInstance: props.contractInstance
+      contractDapp: props.contractDapp
     }
   }
 

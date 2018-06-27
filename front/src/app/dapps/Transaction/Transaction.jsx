@@ -4,14 +4,14 @@ import Spinner from '../../common/Spinner';
 import {
   processResult,
   makeEtherscanLink,
-  decodeEventOfInstance,
+  decodeEventOfDapp,
   makeTxEtherscanLink
 } from '../../../helpers/eth';
 
 class Transaction extends Component {
   render() {
     const { time, func, formData, txHash, result, timeMined } = this.props.transaction;
-    const { netId, contractInstance } = this.props;
+    const { netId, contractDapp } = this.props;
 
 
     return (
@@ -62,7 +62,7 @@ class Transaction extends Component {
             <li>
               <strong>Events:</strong>
               {result.logs.map((log, i) => {
-                let event = decodeEventOfInstance(contractInstance, log);
+                let event = decodeEventOfDapp(contractDapp, log);
 
                 if (!event) {
                   return ''
