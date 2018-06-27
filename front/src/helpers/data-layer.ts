@@ -1,5 +1,4 @@
 import { clickTypes, contractProcessStatus } from '../constants/constants';
-import Eos from './eos';
 
 
 // this funcs for push events to google tag manager
@@ -21,30 +20,20 @@ const pushToDataLayer = (data) => {
 
 // login event
 export const sendLoginEvent = (blockchain, user) => {
-  console.log({
+  pushToDataLayer({
     event: 'loginEvent',
-    blockchain,
     user,
+    blockchain,
   });
-  // pushToDataLayer({
-  //   event: 'loginEvent',
-  //   user: userName,
-  //   blockchain,
-  // });
 };
 
 // open contract event
 export const sendOpenContractEvent = (ctorId, user) => {
-  console.log({
+  pushToDataLayer({
     event: 'openContractEvent',
     ctorId,
     user,
   });
-  // pushToDataLayer({
-  //   event: 'openContractEvent',
-  //   ctorId,
-  //   user,
-  // });
 };
 
 // receive ctor code event
@@ -61,8 +50,7 @@ export const sendReceiveCtorCodeEvent = (ctorId, user, error = null) => {
     data['error'] = error;
   }
 
-  console.log(data);
-  // pushToDataLayer(data);
+  pushToDataLayer(data);
 };
 
 // deploy/mined contract event
@@ -74,8 +62,8 @@ export const sendStatusContractEvent = (data) => {
   }
 
   delete data.status;
-  console.log('data :', data);
-  // pushToDataLayer(data);
+
+  pushToDataLayer(data);
 };
 
 // click event
@@ -100,6 +88,5 @@ export const sendClickEvent = (target) => {
       break;
   }
 
-  console.log(data);
-  // pushToDataLayer(data);
+  pushToDataLayer(data);
 };

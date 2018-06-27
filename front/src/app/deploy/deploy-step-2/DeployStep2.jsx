@@ -67,7 +67,7 @@ class DeployStep2 extends PureComponent {
                 ethCount: price_eth,
                 gasLimit: ethConstants.gas,
                 gasPrice: ethConstants.gasPrice,
-                hash: txHash,
+                txHash,
                 addressSender: getAccountAddress(),
                 instanceId: instance_id
               };

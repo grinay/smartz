@@ -8,8 +8,11 @@ import { sendOpenContractEvent } from '../../../helpers/data-layer';
 
 class DeployStep1 extends PureComponent {
   componentDidMount() {
-    // send event 'openContract' to gtm
-    sendOpenContractEvent(this.props.ctor.ctor_id, Auth.getProfile().user_id);
+    const { errors } = this.props;
+    if (!errors) {
+      // send event 'openContract' to gtm
+      sendOpenContractEvent(this.props.ctor.ctor_id, Auth.getProfile().user_id);
+    }
   }
 
   submit({ formData }) {

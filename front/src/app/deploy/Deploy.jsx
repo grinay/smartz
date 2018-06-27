@@ -26,7 +26,6 @@ class Deploy extends PureComponent {
 
   componentDidMount() {
     window.Intercom('update');
-    console.log('cdm deploy');
   }
 
   componentWillMount() {
@@ -56,7 +55,6 @@ class Deploy extends PureComponent {
   }
 
   render() {
-    console.log('render deploy');
     const { deployId } = this.state;
     const {
       ctor,
@@ -76,7 +74,7 @@ class Deploy extends PureComponent {
       publicAccess
     } = this.props;
 
-    const step1Props = { deployId, ctor, formData };
+    const step1Props = { deployId, ctor, formData, errors };
 
     const step2Props = {
       deployId,
