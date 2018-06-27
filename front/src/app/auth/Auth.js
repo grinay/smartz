@@ -58,7 +58,7 @@ class Auth {
     return JSON.parse(accessToken);
   }
 
-  getProfile(cb) {
+  getProfile() {
     let profile = localStorage.getItem('access_token_decoded');
 
     if (profile !== null) {
@@ -77,18 +77,12 @@ class Auth {
   }
 
   logout() {
-    let data = this.getAccessTokenDecoded();
-
     // Clear access token and ID token from local storage
     localStorage.removeItem('access_token2');
     localStorage.removeItem('access_token_decoded');
     localStorage.removeItem('expires_at2');
 
     this.userProfile = null;
-
-    if (data.blockchain === blockchains.eos && Eos.scatter) {
-      Eos.scatter.forgetIdentity();
-    }
 
     history.replace('/');
   }

@@ -3,8 +3,15 @@ import Form from 'react-jsonschema-form';
 
 import * as api from '../../../api/apiRequests';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
+import Auth from '../../auth/Auth';
+import { sendOpenContractEvent } from '../../../helpers/data-layer';
 
 class DeployStep1 extends PureComponent {
+  componentDidMount() {
+    // send event 'openContract' to gtm
+    sendOpenContractEvent(this.props.ctor.ctor_id, Auth.getProfile().user_id);
+  }
+
   submit({ formData }) {
     this.formDataSaved = formData;
 

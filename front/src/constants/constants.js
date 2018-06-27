@@ -28,3 +28,10 @@ export const ethConstants = {
   gas: 4400000,
   gasPrice: 10e9
 };
+
+export const clickTypes = {
+  CUSTOM_CONTRACT: 'customContract',
+  UPLOAD_CONTRACT: 'uploadContract',
+  LEARN_MORE: 'learnMore',
+  JOIN_CHAT: 'joinChat'
+};

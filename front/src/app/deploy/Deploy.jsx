@@ -26,6 +26,7 @@ class Deploy extends PureComponent {
 
   componentDidMount() {
     window.Intercom('update');
+    console.log('cdm deploy');
   }
 
   componentWillMount() {
@@ -55,6 +56,7 @@ class Deploy extends PureComponent {
   }
 
   render() {
+    console.log('render deploy');
     const { deployId } = this.state;
     const {
       ctor,
@@ -70,7 +72,8 @@ class Deploy extends PureComponent {
       deployTxError,
       deployTxMined,
       formData,
-      blockchain
+      blockchain,
+      publicAccess
     } = this.props;
 
     const step1Props = { deployId, ctor, formData };
@@ -84,7 +87,8 @@ class Deploy extends PureComponent {
       setPublicAccess,
       deployTxSent,
       deployTxError,
-      deployTxMined
+      deployTxMined,
+      publicAccess
     };
 
     const step3Props = {
@@ -160,46 +164,9 @@ class Deploy extends PureComponent {
               </p>
             </div>
           )}
-          {/* <div className="contract-info__wrapper">
-              {ctor.ctor_name &&
-                <p className="contract-info__info  contract-info__info--column">
-                  <span className="contract-info__name">
-                    {ctor.ctor_name}
-                  </span>
-                </p>
-              }
-              {ctor.ctor_descr &&
-                <p className="contract-info__description">
-                  {ctor.ctor_descr}
-                </p>
-              }
-              {'price_eth' in ctor &&
-                <table className="table">
-                  <tbody className="table__tbody">
-                    <tr className="table__tr">
-                      <td className="table__label">Running price</td>
-                      <td className="table_data">
-                        <div className="table__inner">
-                          <span id="raiting-price">
-                            {ctor.price_eth
-                              ? `${ctor.price_eth} ETH`
-                              : 'Free'
-                            }
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              }
-            </div> */}
         </section>
         {/* </aside> */}
         <section className="block">
-          {/* <h2 className="block__header">
-            {ctor.ctor_name}
-          </h2> */}
-
           {ctor &&
             ctor.fetchStatus === 'request' && (
               <div className="block__wrapper  block__wrapper--top">

@@ -52,17 +52,10 @@ class EosClass {
     this.getAccountName = this.getAccountName.bind(this);
     this.setChainId = this.setChainId.bind(this);
     this.executeFunc = this.executeFunc.bind(this);
+    this.getIdentity = this.getIdentity.bind(this);
   }
 
-  private getAccountName(identity) {
-    if (identity.accounts && Array.isArray(identity.accounts) && identity.accounts.length > 0) {
-      return identity.accounts[0].name;
-    } else {
-      throw Error('Account not found!');
-    }
-  }
-
-  private setChainId() {
+  public setChainId() {
     return new Promise((resolve, reject) => {
       if (!this.configEosInstance.chainId) {
         axios
@@ -78,6 +71,14 @@ class EosClass {
         return resolve();
       }
     });
+  }
+
+  public getAccountName(identity) {
+    if (identity.accounts && Array.isArray(identity.accounts) && identity.accounts.length > 0) {
+      return identity.accounts[0].name;
+    } else {
+      throw Error('Account not found!');
+    }
   }
 
   public deployContract = (bin: string, abi: any) => {
@@ -106,7 +107,7 @@ class EosClass {
     );
   };
 
-  public checkAccount() {
+  public getIdentity() {
     return this.scatter.getIdentity({ accounts: [this.network] });
   }
 

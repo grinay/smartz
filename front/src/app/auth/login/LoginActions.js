@@ -3,23 +3,12 @@ export const loginErrorAction = (error) => ({
   error
 });
 
-export const startLoginAction = (blockchain, identity) => ({
-  type: 'START_LOGIN',
-  blockchain,
-  identity
-});
-
-export const startLoginSuccessAction = (startLoginData) => ({
+export const startLoginSuccessAction = ({ blockchain, description, identity, rand_data }) => ({
   type: 'START_LOGIN_SUCCESS',
-  startLoginData
-});
-
-
-export const finishLoginAction = (blockchain, identity, signedData) => ({
-  type: 'FINISH_LOGIN',
   blockchain,
+  description,
   identity,
-  signedData
+  rand_data
 });
 
 export const finishLoginSuccessAction = (token) => ({

@@ -1,13 +1,22 @@
 import React, { PureComponent } from 'react';
 
-import { web3 as w3, getNetworkId, getTxReceipt } from '../../../helpers/eth';
+import { web3 as w3, getNetworkId, getTxReceipt, getAccountAddress } from '../../../helpers/eth';
 import Eos from '../../../helpers/eos';
 import Spinner from '../../common/Spinner';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
-import { eosConstants } from '../../../constants/constants';
+import { ethConstants } from '../../../constants/constants';
 import { blockchains } from './../../../constants/constants';
+import { sendStatusContractEvent } from '../../../helpers/data-layer';
+import { contractProcessStatus } from '../../../constants/constants';
+import Auth from '../../auth/Auth';
 
 class DeployStep2 extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.deploy = this.deploy.bind(this);
+  }
+
   componentWillMount() {
     window.scrollTo(0, 0);
   }
@@ -15,71 +24,135 @@ class DeployStep2 extends PureComponent {
   deploy(e) {
     e.preventDefault();
 
-    const { bin, blockchain, abi } = this.props.instance;
-    const { price_eth } = this.props.ctor;
-    const { deployId, deployTxSent, deployTxError, deployTxMined, metamaskStatus } = this.props;
+    const {
+      deployId,
+      deployTxSent,
+      deployTxError,
+      deployTxMined,
+      metamaskStatus,
+      instance,
+      ctor,
+      publicAccess
+    } = this.props;
+    const { bin, blockchain, abi, instance_id } = instance;
+    const { price_eth, ctor_id } = ctor;
 
-    if (blockchain === blockchains.ethereum && metamaskStatus != 'okMetamask') return null;
-
-    const callback = (err, txHash) => {
-      if (err) {
-        let errMsg = '';
-        try {
-          errMsg = err.message.split('\n')[0];
-        } catch (error) {
-          errMsg = 'Unknown error';
-        }
-        deployTxError(deployId, errMsg);
-      } else {
-        getNetworkId((netId) => deployTxSent(deployId, netId, txHash, blockchain));
-
-        getTxReceipt(txHash, (receipt) => {
-          if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
-            deployTxError(deployId, 'Something went wrong!');
-          } else {
-            deployTxMined(deployId, receipt.contractAddress);
-          }
-        });
-      }
-    };
+    if (blockchain === blockchains.ethereum && metamaskStatus != 'okMetamask') {
+      return alert('Unlock metamask!');
+    }
 
     switch (blockchain) {
-      case 'ethereum':
+      case blockchains.ethereum:
         w3.eth.sendTransaction(
           {
             data: `0x${bin}`,
             value: w3.toWei(price_eth, 'ether'),
-            gas: 4400000,
-            gasPrice: 10e9
+            gas: ethConstants.gas,
+            gasPrice: ethConstants.gasPrice
           },
-          callback
+          (err, txHash) => {
+            if (err) {
+              let errMsg = '';
+              try {
+                errMsg = err.message.split('\n')[0];
+              } catch (error) {
+                errMsg = 'Unknown error';
+              }
+              deployTxError(deployId, errMsg);
+            } else {
+              const dataEvent = {
+                ctorId: ctor_id,
+                user: Auth.getProfile().user_id,
+                blockchain,
+                ethCount: price_eth,
+                gasLimit: ethConstants.gas,
+                gasPrice: ethConstants.gasPrice,
+                hash: txHash,
+                addressSender: getAccountAddress(),
+                instanceId: instance_id
+              };
+
+              getNetworkId((netId) => {
+                deployTxSent(deployId, netId, txHash, blockchain);
+
+                dataEvent.networkId = netId;
+
+                // send event to gtm
+                sendStatusContractEvent({
+                  status: contractProcessStatus.DEPLOY,
+                  publicAccess,
+                  ...dataEvent
+                });
+              });
+
+              getTxReceipt(txHash, (receipt) => {
+                if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
+                  deployTxError(deployId, 'Something went wrong!');
+                } else {
+                  deployTxMined(deployId, receipt.contractAddress);
+
+                  // send event to gtm
+                  sendStatusContractEvent({
+                    status: contractProcessStatus.MINED,
+                    addressInstance: receipt.contractAddress,
+                    ...dataEvent
+                  });
+                }
+              });
+            }
+          }
         );
         break;
-      case 'eos':
-        Eos.deployContract(bin, abi)
-          .then((result) => {
-            const identity = Eos.currentIdentity;
-            let accountName = '';
 
-            if (Array.isArray(identity.accounts) && identity.accounts.length > 0) {
-              accountName = identity.accounts[0].name;
-            }
+      case blockchains.eos:
+        const dataEvent = {
+          ctorId: ctor_id,
+          user: Auth.getProfile().user_id,
+          blockchain,
+          instanceId: instance_id
+        };
 
-            deployTxSent(
-              deployId,
-              Eos.configEosInstance.chainId,
-              result.transaction_id,
-              blockchain
-            );
-            deployTxMined(deployId, accountName);
+        // get chainId to set 'networkId'
+        Eos.setChainId()
+          .then(() => {
+            dataEvent.networkId = Eos.configEosInstance.chainId;
+
+            // get identity to set addressSender
+            return Eos.getIdentity();
           })
-          .catch((error) => {
-            console.error(error);
-            const msgError = error.message ? error.message : error;
+          .then((identity) => {
+            dataEvent.addressSender = identity.publicKey;
 
-            deployTxError(deployId, msgError);
-          });
+            Eos.deployContract(bin, abi)
+              .then((result) => {
+                deployTxMined(deployId, result.transaction_id);
+
+                // send event to gtm
+                sendStatusContractEvent({
+                  status: contractProcessStatus.MINED,
+                  addressInstance: result.transaction_id,
+                  ...dataEvent
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+                const msgError = error.message ? error.message : error;
+
+                deployTxError(deployId, msgError);
+              });
+
+            deployTxSent(deployId, Eos.configEosInstance.chainId, null, blockchain);
+
+            // send event to gtm
+            sendStatusContractEvent({
+              status: contractProcessStatus.DEPLOY,
+              publicAccess,
+              ...dataEvent
+            });
+          })
+          .catch((error) => console.error(error));
         break;
+
       default:
         break;
     }
@@ -156,7 +229,7 @@ class DeployStep2 extends PureComponent {
                   </div>
                 </fieldset>
               </fieldset>
-              <button className="button block__button" onClick={this.deploy.bind(this)}>
+              <button className="button block__button" onClick={this.deploy}>
                 {ctor.price_eth ? (
                   <span>Deploy now for {ctor.price_eth} ETH</span>
                 ) : (

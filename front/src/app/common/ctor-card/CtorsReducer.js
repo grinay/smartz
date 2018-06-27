@@ -21,7 +21,7 @@ const ctors = (state = initState, action) => {
 
     case 'FETCH_CTORS_SUCCESS':
       nextState.fetchStatus = 'success';
-      action.ctors.forEach(ctor => {
+      action.ctors.forEach((ctor) => {
         const i = findIndex(nextState.ctors, { ctor_id: ctor.ctor_id });
         if (i >= 0) {
           nextState.ctors[i] = Object.assign(nextState.ctors[i], ctor);
@@ -52,15 +52,11 @@ const ctors = (state = initState, action) => {
     case 'FETCH_CTOR_PARAMS_SUCCESS':
       let i = findIndex(nextState.ctors, { ctor_id: action.ctorId });
       if (i >= 0) {
-        nextState.ctors[i] = Object.assign(
-          nextState.ctors[i],
-          action.ctorParams,
-          {
-            ctor_id: action.ctorId,
-            fetchStatus: 'success',
-            image: action.ctorParams.image
-          }
-        );
+        nextState.ctors[i] = Object.assign(nextState.ctors[i], action.ctorParams, {
+          ctor_id: action.ctorId,
+          fetchStatus: 'success',
+          image: action.ctorParams.image
+        });
       }
       return nextState;
 

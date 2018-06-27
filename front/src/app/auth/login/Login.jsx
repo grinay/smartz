@@ -4,7 +4,9 @@ import Auth from '../Auth';
 import { find } from 'lodash';
 import { blockchains } from '../../../constants/constants';
 import { web3 } from '../../../helpers/eth';
-import { finishLogin, startLogin } from '../../../api/apiRequests';
+import { sendLoginEvent } from '../../../helpers/data-layer';
+
+import * as api from '../../../api/apiRequests';
 import Alert from '../../common/Alert';
 
 import store from '../../../store/store';
@@ -18,11 +20,11 @@ import './Login.less';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.startedLogins = {};
-    this.tokens = {};
+
+    this.stage = null;
 
     this.metamaskLogin = this.metamaskLogin.bind(this);
+    this.scatterLogin = this.scatterLogin.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +42,8 @@ class Login extends Component {
         alert('Install metamask first');
         return;
       case 'okMetamask':
-        startLogin(blockchains.ethereum, web3.eth.accounts[0]);
+        api.startLogin(blockchains.ethereum, web3.eth.accounts[0]);
+        this.stage = 1;
       default:
         break;
     }
@@ -55,66 +58,76 @@ class Login extends Component {
     Eos.scatter
       .getIdentity()
       .then((identity) => {
-        startLogin(blockchains.eos, identity.publicKey);
+        api.startLogin(blockchains.eos, identity.publicKey);
+        this.stage = 1;
       })
-      .catch((error) => {
-        console.warn(error);
-      });
+      .catch((error) => console.warn(error));
   }
 
-  componentDidUpdate() {
-    const { startLoginData, blockchain, identity, token } = this.props.login;
+  componentWillReceiveProps(nextProps) {
+    const { error, description, rand_data, blockchain, identity, token } = nextProps.login;
 
-    if (
-      startLoginData &&
-      (blockchain !== startLoginData.blockchain || identity !== startLoginData.identity)
-    ) {
-      return;
-    }
-
-    if (startLoginData && !this.startedLogins[startLoginData.rand_data]) {
-      const { description, rand_data, blockchain, identity } = startLoginData;
-      this.startedLogins[rand_data] = true;
-
+    if (this.stage === 1) {
       const signMsg = `${description}${rand_data}`;
 
-      if (blockchain === blockchains.ethereum) {
-        web3.personal.sign(web3.toHex(signMsg), identity, (error, signedMsg) => {
-          if (error) {
-            console.warn(error);
-            dispatch(loginErrorAction('Sign canceled'));
-          } else {
-            finishLogin(blockchain, identity, rand_data, signedMsg);
-          }
-        });
-      } else if (blockchain === blockchains.eos) {
-        Eos.scatter
-          .getArbitrarySignature(identity, signMsg, 'Login Authentication', false)
-          .then((signedMsg) => finishLogin(blockchain, identity, rand_data, signedMsg))
-          .catch((e) => dispatch(loginErrorAction('Sign canceled')));
-      } else {
-        alert('Something went wrong');
+      switch (blockchain) {
+        case blockchains.ethereum:
+          web3.personal.sign(web3.toHex(signMsg), identity, (error, signedMsg) => {
+            if (error) {
+              console.warn(error);
+              dispatch(loginErrorAction('Sign canceled'));
+              this.stage = null;
+            } else {
+              api.finishLogin(blockchain, identity, rand_data, signedMsg);
+              this.stage = 2;
+            }
+          });
+          break;
+
+        case blockchains.eos:
+          Eos.scatter
+            .getArbitrarySignature(identity, signMsg, 'Login Authentication', false)
+            .then((signedMsg) => {
+              api.finishLogin(blockchain, identity, rand_data, signedMsg);
+              this.stage = 2;
+            })
+            .catch((e) => {
+              dispatch(loginErrorAction('Sign canceled'));
+              this.stage = null;
+            });
+          break;
+
+        default:
+          alert('Something went wrong');
+          break;
       }
     }
 
-    if (token && !this.tokens[token]) {
-      this.tokens[token] = true;
+    if (this.stage === 2) {
       if (blockchain === blockchains.eos) {
-        Eos.scatter.forgetIdentity().then(() => Auth.handleAuthentication(token));
+        Eos.scatter.forgetIdentity().then(() => {
+          Auth.handleAuthentication(token);
+          sendLoginEvent(blockchain, Auth.getProfile().user_id);
+        });
       } else {
         Auth.handleAuthentication(token);
+        sendLoginEvent(blockchain, Auth.getProfile().user_id);
       }
+
+      this.stage = null;
     }
   }
 
   render() {
-    const { login } = this.props;
+    const { error, description, rand_data, blockchain, identity, token } = this.props.login;
 
-    if (Auth.isAuthenticated()) return <Redirect to="/profile" />;
+    if (Auth.isAuthenticated()) {
+      return <Redirect to="/profile" />;
+    }
 
     return (
       <main className="login-page flex">
-        {login && login.error && <Alert>{login.error}</Alert>}
+        {error && <Alert>{error}</Alert>}
 
         <button className="button block__button" onClick={this.metamaskLogin}>
           Login with your Ethereum signature
