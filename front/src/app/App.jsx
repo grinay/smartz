@@ -21,6 +21,9 @@ import InstallExtension from './common/install-extension/InstallExtension';
 import Page404 from './page-404/Page404';
 
 import './App.less';
+import { IS_MOBILE_OS } from '../helpers/detect-device';
+import { TRUST_URL } from '../constants/constants';
+import history from '../helpers/history';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -29,7 +32,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       if (Auth.isAuthenticated()) {
         return <Component {...props} />;
       } else {
-        Auth.login(window.location.pathname);
+        if (true) {
+          const REDIRECT_URL = `${TRUST_URL}${encodeURIComponent(window.location.href)}`;
+
+          window.location.href = REDIRECT_URL;
+        } else {
+          Auth.login(window.location.pathname);
+        }
 
         return <Callback {...props} />;
       }
@@ -83,12 +92,7 @@ class App extends Component {
     return (
       <main className="app">
         {/* Install extension */}
-        {metamaskStatus === 'noMetamask' && (
-          // <InfoBlock className="install-block flex">
-
-          // </InfoBlock>
-          <InstallExtension />
-        )}
+        {metamaskStatus === 'noMetamask' && <InstallExtension />}
 
         <Route render={(props) => <Header profile={profile} {...props} />} />
 

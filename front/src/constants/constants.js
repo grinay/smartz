@@ -35,3 +35,6 @@ export const clickTypes = {
   LEARN_MORE: 'learnMore',
   JOIN_CHAT: 'joinChat'
 };
+
+export const TRUST_URL =
+  'https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=';
