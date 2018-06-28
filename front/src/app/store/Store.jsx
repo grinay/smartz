@@ -37,11 +37,10 @@ class Store extends Component {
 
   render() {
     const { ctors } = this.props;
-    if (ctors.length === 0) {
-      return null;
-    }
+    const { blockchain } = this.state;
 
-    const filteredCtors = filter(this.props.ctors, { blockchain: this.state.blockchain });
+    const filteredCtors = filter(ctors, { blockchain });
+    console.log('filteredCtors :', filteredCtors);
 
     return (
       <main className="page-main  page-main--store">
@@ -52,12 +51,12 @@ class Store extends Component {
 
         {/* Sorting section */}
         <section className="sort-section">
-          <SortBlockchain onClick={this.setBlockchain} blockchain={this.state.blockchain} />
+          <SortBlockchain onClick={this.setBlockchain} blockchain={blockchain} />
         </section>
 
         {/* Contracts section */}
         <section className="ctor-section">
-          {filteredCtors && (
+          {filteredCtors.length > 0 && (
             <ul className="ctor-list">
               {filteredCtors.filter((el) => el.is_public).map((el, i) => (
                 <li key={i} className="ctor-item">
@@ -71,7 +70,7 @@ class Store extends Component {
             </ul>
           )}
 
-          {!filteredCtors && <Spinner text="Loading contracts" width="100" />}
+          {filteredCtors.length === 0 && <Spinner text="Loading contracts" />}
         </section>
 
         {/* Banner for developers section */}
