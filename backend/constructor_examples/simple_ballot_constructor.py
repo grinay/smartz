@@ -1,9 +1,15 @@
 
 from smartz.api.constructor_engine import ConstructorInstance
-from smartz.eth.contracts import make_generic_function_spec, merge_function_titles2specs
 
 
 class Constructor(ConstructorInstance):
+
+    def get_version(self):
+        return {
+            "result": "success",
+            "blockchain": "ethereum",
+            "version": 2
+        }
 
     def get_params(self):
         json_schema = {
@@ -20,7 +26,7 @@ class Constructor(ConstructorInstance):
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 200,
-                    "pattern": "^[a-zA-Z0-9,\.\? ]+$"
+                    "pattern": "^[a-zA-Z0-9,\.\? \:а-яА-Я]+$"
                 },
 
                 "variants": {
@@ -34,7 +40,7 @@ class Constructor(ConstructorInstance):
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 200,
-                        "pattern": "^[a-zA-Z0-9,\.\? ]+$"
+                        "pattern": "^[a-zA-Z0-9,\.\? а-яА-Я]+$"
                     }
                 }
 
@@ -145,7 +151,7 @@ class Constructor(ConstructorInstance):
 
         return {
             "result": "success",
-            'function_specs': merge_function_titles2specs(make_generic_function_spec(abi_array), function_titles),
+            'function_specs': function_titles,
             'dashboard_functions': ['ballotName', 'getWinningVariantId', 'getWinningVariantName', 'getWinningVariantVotesCount']
         }
 
