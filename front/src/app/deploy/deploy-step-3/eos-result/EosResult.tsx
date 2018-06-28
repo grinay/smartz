@@ -1,8 +1,10 @@
 import * as React from 'react';
-
-import Spinner from '../../../common/Spinner';
-import './EosResult.less';
 import { Link } from 'react-router-dom';
+
+import Loader from '../../../common/loader/Loader';
+
+import './EosResult.less';
+
 
 interface IEosResultProps {
   status: any;
@@ -17,7 +19,7 @@ export default class EosResult extends React.PureComponent<IEosResultProps, {}> 
     return (
       <div className="eos-result">
         {status === 'transaction_sent' && (
-          <Spinner text="Awaiting for contract to be placed in block by miners to get it address..." />
+          <Loader text="Awaiting for contract to be placed in block by miners to get it address..." />
         )}
 
         {status === 'transaction_mined' && (
@@ -27,8 +29,8 @@ export default class EosResult extends React.PureComponent<IEosResultProps, {}> 
             </p>
             <p className="support-block__paragraph">
               Now you can
-              <Link to={`/dapp/${dapp.instance_id}`}> manage your contract </Link>with
-              Smartz Platform!
+              <Link to={`/dapp/${dapp.instance_id}`}> manage your contract </Link>with Smartz
+              Platform!
             </p>
           </div>
         )}

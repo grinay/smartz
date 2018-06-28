@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import * as api from '../../api/apiRequests';
 import { transformObj2Flat } from '../../helpers/normalize';
 import Alert from '../common/Alert';
-import Spinner from '../common/Spinner';
+import Loader from '../common/loader/Loader';
 import DeployStep1 from './deploy-step-1/DeployStep1';
 import DeployStep2 from './deploy-step-2/DeployStep2';
 import DeployStep3 from './deploy-step-3/DeployStep3';
@@ -168,7 +168,7 @@ class Deploy extends PureComponent {
           {ctor &&
             ctor.fetchStatus === 'request' && (
               <div className="block__wrapper  block__wrapper--top">
-                <Spinner text="Fetching contract details..." />
+                <Loader text="Fetching contract details..." />
               </div>
             )}
 

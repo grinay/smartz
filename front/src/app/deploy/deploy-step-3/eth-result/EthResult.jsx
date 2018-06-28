@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getNetworkName, getNetworkEtherscanAddress } from '../../../../helpers/eth';
-import Spinner from '../../../common/Spinner';
+import Loader from '../../../common/loader/Loader';
 
 import './EthResult.less';
 
@@ -26,7 +26,7 @@ export default class EthResult extends PureComponent {
           )}
 
           {status === 'transaction_sent' && (
-            <Spinner text="Awaiting for contract to be placed in block by miners to get it address..." />
+            <Loader text="Awaiting for contract to be placed in block by miners to get it address..." />
           )}
 
           {status === 'transaction_mined' && (

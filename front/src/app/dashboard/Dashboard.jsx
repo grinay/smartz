@@ -68,14 +68,14 @@ class Dashboard extends Component {
           break;
       }
     }
-    // console.log(filterDapps);
+
     this.setState({
       filterDapps
     });
   }
 
   componentDidUpdate() {
-    const { ctors, dapps, metamaskStatus } = this.props;
+    const { ctors, metamaskStatus } = this.props;
     const { filterDapps } = this.state;
 
     if (
