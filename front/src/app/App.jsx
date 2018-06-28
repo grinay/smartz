@@ -32,15 +32,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         return <Component {...props} />;
       } else {
         // deep links for redirect to trust browser (mobile)
-        if (IS_MOBILE_OS && !(Web3 in window)) {
-          const REDIRECT_URL = `${TRUST_URL}${encodeURIComponent(window.location.href)}`;
-
-          window.location.href = REDIRECT_URL;
+        // trust detect as no-mobile browser!
+        if (IS_MOBILE_OS) {
+          window.location.href = `${TRUST_URL}${window.location.origin}/login`;
         } else {
           Auth.login(window.location.pathname);
-        }
 
-        return <Callback {...props} />;
+          return <Callback {...props} />;
+        }
       }
     }}
   />
