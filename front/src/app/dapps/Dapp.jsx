@@ -56,7 +56,7 @@ class Dapp extends Component {
           if (error) {
             console.error(error);
           } else {
-            viewFuncResult(dapp.dapp_id, func.name, processResult(result));
+            viewFuncResult(dapp.instance_id, func.name, processResult(result));
           }
         });
       }
@@ -90,11 +90,7 @@ class Dapp extends Component {
   render() {
     const { metamaskStatus, dapp, dappError } = this.props;
 
-    if (
-      dapp &&
-      dapp.blockchain === blockchains.ethereum &&
-      metamaskStatus !== 'okMetamask'
-    ) {
+    if (dapp && dapp.blockchain === blockchains.ethereum && metamaskStatus !== 'okMetamask') {
       return (
         <div className="container">
           <Alert standardAlert={metamaskStatus} />

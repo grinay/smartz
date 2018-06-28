@@ -49,8 +49,8 @@ class Deploy extends PureComponent {
         network_id: netId,
         public_access: publicAccess
       };
-
-      api.updateDapp(dapp.dapp_id, data);
+      //TODO: change instance_id
+      api.updateDapp(dapp.instance_id, data);
     }
   }
 

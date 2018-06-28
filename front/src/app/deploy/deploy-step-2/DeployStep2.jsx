@@ -34,7 +34,7 @@ class DeployStep2 extends PureComponent {
       ctor,
       publicAccess
     } = this.props;
-    const { bin, blockchain, abi, dapp_id } = dapp;
+    const { bin, blockchain, abi, instance_id } = dapp;
     const { price_eth, ctor_id } = ctor;
 
     if (blockchain === blockchains.ethereum && metamaskStatus != 'okMetamask') {
@@ -69,7 +69,7 @@ class DeployStep2 extends PureComponent {
                 gasPrice: ethConstants.gasPrice,
                 txHash,
                 addressSender: getAccountAddress(),
-                dappId: dapp_id
+                dappId: instance_id
               };
 
               getNetworkId((netId) => {
@@ -109,7 +109,7 @@ class DeployStep2 extends PureComponent {
           ctorId: ctor_id,
           user: Auth.getProfile().user_id,
           blockchain,
-          dappId: dapp_id
+          dappId: instance_id
         };
 
         // get chainId to set 'networkId'

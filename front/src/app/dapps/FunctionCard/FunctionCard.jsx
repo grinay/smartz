@@ -30,20 +30,20 @@ class FunctionCard extends PureComponent {
       case blockchains.ethereum:
         processControlForm(abi, func, formData, address, (error, result) => {
           if (!error) {
-            transactionNew(dapp.dapp_id, func, formData, result);
+            transactionNew(dapp.instance_id, func, formData, result);
             if (/^0x([A-Fa-f0-9]{64})$/.test(result))
               // Check if result is tx hash
               this.getReceipt(result);
           } else {
             console.error(error);
-            transactionNew(dapp.dapp_id, func, formData, error);
+            transactionNew(dapp.instance_id, func, formData, error);
           }
         });
         break;
       case blockchains.eos:
         Eos.executeFunc(abi, func, address, formData)
           .then((result) => {
-            transactionNew(dapp.dapp_id, func, formData, result);
+            transactionNew(dapp.instance_id, func, formData, result);
             window.scrollTo(0, 0);
           })
           .catch((err) => {
@@ -52,7 +52,7 @@ class FunctionCard extends PureComponent {
 
             error = error.error.what || error.message || 'error';
 
-            transactionNew(dapp.dapp_id, func, formData, error);
+            transactionNew(dapp.instance_id, func, formData, error);
             window.scrollTo(0, 0);
           });
         break;
@@ -71,7 +71,7 @@ class FunctionCard extends PureComponent {
           this.getReceipt(tx);
         }, 500);
       else {
-        transactionReceipt(dapp.dapp_id, tx, receipt);
+        transactionReceipt(dapp.instance_id, tx, receipt);
         refresh();
       }
     });

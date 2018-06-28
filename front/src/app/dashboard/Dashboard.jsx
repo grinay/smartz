@@ -92,7 +92,7 @@ class Dashboard extends Component {
     const { dapps, viewFuncResult } = this.props;
 
     dapps.forEach((inst, j) => {
-      const { dapp_id, abi, address, dashboard_functions, functions, blockchain } = inst;
+      const { instance_id, abi, address, dashboard_functions, functions, blockchain } = inst;
 
       if (blockchain === blockchains.ethereum && dashboard_functions) {
         dashboard_functions.forEach((dFunc) => {
@@ -104,7 +104,7 @@ class Dashboard extends Component {
             if (error) {
               console.error(error);
             } else {
-              viewFuncResult(dapp_id, dFunc, processResult(result));
+              viewFuncResult(instance_id, dFunc, processResult(result));
             }
           });
         });
@@ -147,7 +147,7 @@ class Dashboard extends Component {
             {filterDapps.length > 0 &&
               filterDapps.map((inst, j) => (
                 <li key={j} className="my-contracts__item">
-                  <Link to={`/dapp/${inst.dapp_id}`} className="my-contracts__link screen">
+                  <Link to={`/dapp/${inst.instance_id}`} className="my-contracts__link screen">
                     <article className="my-contract">
                       <section className="contract-info  contract-info--contract-card">
                         <div className="contract-info__wrapper">
