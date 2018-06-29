@@ -10,6 +10,7 @@ import DeployStep3 from './deploy-step-3/DeployStep3';
 import Auth from '../auth/Auth';
 
 import './Deploy.less';
+import DeployHeader from './deploy-header/DeployHeader';
 
 // TODO: refactor this file totally
 
@@ -140,30 +141,8 @@ class Deploy extends PureComponent {
 
     return (
       <main className="page-main page-main--contracts">
-        {/* <aside className="block-half"> */}
-        <section className="form-title flex">
-          {ctor.image && (
-            <div className="form-title__logo">
-              <img
-                className="form-title__img"
-                src={require(`../common/ctor-card/img/${ctor.image}`)}
-                alt={`${ctor.ctor_name} contract`}
-              />
-            </div>
-          )}
-          {ctor.ctor_name && (
-            <div className={'form-title__title'}>
-              <h2>{ctor.ctor_name}</h2>
-              <p>
-                <span>Contract: </span>
-                <a href={`${window.location.origin}/deploy/${ctor.ctor_id}`}>
-                  {`${window.location.origin}/deploy/${ctor.ctor_id}`}
-                </a>
-              </p>
-            </div>
-          )}
-        </section>
-        {/* </aside> */}
+        <DeployHeader ctor={ctor} />
+
         <section className="block">
           {ctor &&
             ctor.fetchStatus === 'request' && (
