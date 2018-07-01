@@ -95,7 +95,8 @@
       false
     ],
     "no-console": [
-      true
+      true,
+      "log"
     ],
     "callable-types": false,
     "member-ordering": [

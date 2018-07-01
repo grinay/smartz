@@ -1,0 +1,29 @@
+@import '../../../styles/variables.less';
+
+.popup-verify {
+    min-height: 80vh;
+
+    .contract-text:first-child, .contract-info:first-child {
+        margin-top: 0;
+    }
+
+    .block-text {
+        margin-right: 50px;
+
+        .contract-text {
+            font-family: @f-cera-pro-700;
+        }
+    }
+
+    .source-code {
+        overflow-y: auto;
+
+        height: 500px;
+        padding: 15px;
+
+        white-space: pre;
+
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+    }
+}

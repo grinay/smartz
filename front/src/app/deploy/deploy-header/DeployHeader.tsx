@@ -12,20 +12,20 @@ export default class DeployHeader extends React.PureComponent<IDeployHeaderProps
     const { ctor } = this.props;
 
     return (
-      <section className="form-title deploy-header flex">
+      <section className="deploy-header flex">
         {ctor.image && (
-          <div className="form-title__logo">
+          <div className="logo">
             <img
-              className="form-title__img"
+              className="img"
               src={require(`../../common/ctor-card/img/${ctor.image}`)}
               alt={`${ctor.ctor_name} contract`}
             />
           </div>
         )}
         {ctor.ctor_name && (
-          <div className={'form-title__title'}>
-            <h2>{ctor.ctor_name}</h2>
-            <p>
+          <div className={'title'}>
+            <h2 className="ctor-title">{ctor.ctor_name}</h2>
+            <p className="contract">
               <span>Contract: </span>
               <a href={`${window.location.origin}/deploy/${ctor.ctor_id}`}>
                 {`${window.location.origin}/deploy/${ctor.ctor_id}`}
