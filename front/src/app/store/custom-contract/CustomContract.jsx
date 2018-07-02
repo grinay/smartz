@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import CustomContractImg from '../../../assets/img/common/contract/custom-contract.png';
+import CustomContractImg from '../../../assets/img/common/dapp/custom-contract.png';
 
 import './CustomContract.less';
 import { sendClickEvent } from '../../../helpers/data-layer';

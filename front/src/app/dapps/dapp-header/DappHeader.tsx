@@ -61,7 +61,7 @@ export default class DappHeader extends React.PureComponent<IDappHeaderProps, ID
           {dapp.blockchain === blockchains.ethereum && (
             <span>
               <p className="code-verify" onClick={this.toggleModal}>
-                Source Code Verification
+                Etherscan verification info
               </p>
               <Modal isOpen={isOpenModal} onClose={this.toggleModal}>
                 <PopupVerify dapp={dapp} />

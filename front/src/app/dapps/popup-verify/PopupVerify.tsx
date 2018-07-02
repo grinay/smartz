@@ -17,7 +17,8 @@ export default class PopupVerify extends React.PureComponent<
     const { dapp } = this.props;
 
     return (
-      <div className="popup-verify">
+      <div className="popup-verify flex-h">
+        <h2 className="popup-verify-title">Etherscan verification info</h2>
         <div className="contract-description flex-v">
           <section className="block-text">
             <p className="contract-text">Contract address:</p>
