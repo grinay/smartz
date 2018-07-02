@@ -7,7 +7,7 @@ export default class Banner extends PureComponent {
     render() {
         return (
             <a
-                href="https://t.me/SmartzCommunityEn"
+                href="https://t.me/smartz_en"
                 target="_blanc"
                 className="banner-telegram flex-v">
                 <p className="description">Get the latest news, communicate with like-minded people and ask questions.</p>
