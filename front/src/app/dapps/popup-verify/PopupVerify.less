@@ -22,20 +22,47 @@
             margin-right: 50px;
 
             .contract-text {
+                height: 41px;
+                margin: 0;
+
                 font-family: @f-cera-pro-700;
+            }
+        }
+
+        .block-info {
+            .contract-info {
+                height: 41px;
+
+                p {
+                    display: inline-block;
+
+                    margin-right: 10px;
+                }
             }
         }
     }
 
     .source-code {
-        overflow-y: auto;
+        position: relative;
+
         flex: 1;
-
-        padding: 15px;
-
-        white-space: pre;
 
         border: 1px solid lightgrey;
         border-radius: 5px;
+
+        .source-btn {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+        }
+
+        .code {
+            overflow-y: auto;
+
+            height: 100%;
+            padding: 15px;
+
+            white-space: pre;
+        }
     }
 }
