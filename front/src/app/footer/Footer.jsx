@@ -150,12 +150,15 @@ class Footer extends Component {
               <br />Smartz is just a provider to conclude a smart contract.
             </p>
             <p className="page-footer__copyright">
-              <a href="/legal/Smartz_privacy-policy.pdf" target="_blank" rel="noopener noreferrer">
+              <a
+                href="/static/media/legal/Smartz_privacy-policy.pdf"
+                target="_blank"
+                rel="noopener noreferrer">
                 Privacy policy
               </a>
               &nbsp;&nbsp;&nbsp;
               <a
-                href="/legal/Smartz_terms-and-conditions.pdf"
+                href="/static/media/legal/Smartz_terms-and-conditions.pdf"
                 target="_blank"
                 rel="noopener noreferrer">
                 Terms & conditions
