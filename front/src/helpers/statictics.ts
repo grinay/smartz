@@ -10,6 +10,14 @@ declare global {
   }
 }
 
+export function getCtorUrl(ctorId: string) {
+  return `${window.location.origin}/constructor/${ctorId}`;
+}
+
+export function getDappUrl(dappId: string) {
+  return `${window.location.origin}/dapp/${dappId}`;
+}
+
 // login event
 export const sendLoginEvent = (blockchain: any) => {
   let extension: string;
@@ -33,38 +41,33 @@ export const sendLoginEvent = (blockchain: any) => {
 
 // open contract event
 export const sendOpenContractEvent = (ctorId: string) => {
-  const ctorUrl = `${window.location.origin}/deploy/${ctorId}`;
-
-  window.ga('send', 'event', 'constructor', 'view', ctorUrl);
+  window.ga('send', 'event', 'constructor', 'view', getCtorUrl(ctorId));
 };
 
 // receive ctor code event
 export const sendSuccessReceiveCtorCodeEvent = (ctorId: string) => {
-  const ctorUrl = `${window.location.origin}/deploy/${ctorId}`;
-
-  window.ga('send', 'event', 'constructor', 'compilationSuccess', ctorUrl);
+  window.ga('send', 'event', 'constructor', 'compilationSuccess', getCtorUrl(ctorId));
 };
 
 export const sendErrorReceiveCtorCodeEvent = (ctorId: string) => {
-  const ctorUrl = `${window.location.origin}/deploy/${ctorId}`;
-
-  window.ga('send', 'event', 'constructor', 'compilationError', ctorUrl);
+  window.ga('send', 'event', 'constructor', 'compilationError', getCtorUrl(ctorId));
 };
 
 // deploy/mined contract event
-export const sendStatusContractEvent = (dappId: string, data) => {
-  const dappUrl = `${window.location.origin}/dapp/${dappId}`;
+export const sendStatusContractEvent = (dappId: string, ctorId: string, data) => {
   let category: string;
 
   if (data.status === contractProcessStatus.DEPLOY) {
     category = 'deployTxSent';
   } else if (data.status === contractProcessStatus.MINED) {
     category = 'deployTxMined';
+
+    window.ga('send', 'event', 'constructor', 'deploySuccess', getCtorUrl(ctorId));
   }
 
   delete data.status;
 
-  window.ga('send', 'event', 'dapp', category, dappUrl, data);
+  window.ga('send', 'event', 'dapp', category, getDappUrl(dappId), data);
 };
 
 // click event

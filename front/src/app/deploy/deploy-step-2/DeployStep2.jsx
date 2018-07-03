@@ -6,7 +6,7 @@ import Spinner from '../../common/Spinner';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
 import { ethConstants } from '../../../constants/constants';
 import { blockchains } from './../../../constants/constants';
-import { sendStatusContractEvent } from '../../../helpers/statictics';
+import { sendStatusContractEvent, getCtorUrl } from '../../../helpers/statictics';
 import { contractProcessStatus } from '../../../constants/constants';
 
 class DeployStep2 extends PureComponent {
@@ -60,7 +60,7 @@ class DeployStep2 extends PureComponent {
               deployTxError(deployId, errMsg);
             } else {
               const dataEvent = {
-                dimension2: `${window.location.origin}/deploy/${ctor_id}`,
+                dimension2: getCtorUrl(ctor_id),
                 dimension4: blockchain,
                 metric1: price_eth,
                 metric2: ethConstants.gas,
@@ -72,7 +72,7 @@ class DeployStep2 extends PureComponent {
 
                 dataEvent.dimension5 = netId;
 
-                sendStatusContractEvent(instance_id, {
+                sendStatusContractEvent(instance_id, ctor_id, {
                   status: contractProcessStatus.DEPLOY,
                   ...dataEvent
                 });
@@ -84,7 +84,7 @@ class DeployStep2 extends PureComponent {
                 } else {
                   deployTxMined(deployId, receipt.contractAddress);
 
-                  sendStatusContractEvent(instance_id, {
+                  sendStatusContractEvent(instance_id, ctor_id, {
                     status: contractProcessStatus.MINED,
                     ...dataEvent
                   });
@@ -97,7 +97,7 @@ class DeployStep2 extends PureComponent {
 
       case blockchains.eos:
         const dataEvent = {
-          dimension2: `${window.location.origin}/deploy/${ctor_id}`,
+          dimension2: getCtorUrl(ctor_id),
           dimension4: blockchain
         };
 
@@ -114,7 +114,7 @@ class DeployStep2 extends PureComponent {
               .then((result) => {
                 deployTxMined(deployId, result.transaction_id);
 
-                sendStatusContractEvent(instance_id, {
+                sendStatusContractEvent(instance_id, ctor_id, {
                   status: contractProcessStatus.MINED,
                   ...dataEvent
                 });
@@ -128,8 +128,7 @@ class DeployStep2 extends PureComponent {
 
             deployTxSent(deployId, Eos.configEosDapp.chainId, null, blockchain);
 
-            // send event to gtm
-            sendStatusContractEvent(instance_id, {
+            sendStatusContractEvent(instance_id, ctor_id, {
               status: contractProcessStatus.DEPLOY,
               ...dataEvent
             });
