@@ -34,8 +34,8 @@ class DeployStep2 extends PureComponent {
       ctor,
       publicAccess
     } = this.props;
-    const { bin, blockchain, abi, instance_id } = dapp;
-    const { price_eth, ctor_id } = ctor;
+    const { bin, blockchain, abi, id } = dapp;
+    const { price, ctor_id } = ctor;
 
     if (blockchain === blockchains.ethereum && metamaskStatus != 'okMetamask') {
       return alert('Unlock metamask!');
@@ -46,7 +46,7 @@ class DeployStep2 extends PureComponent {
         w3.eth.sendTransaction(
           {
             data: `0x${bin}`,
-            value: w3.toWei(price_eth, 'ether'),
+            value: w3.toWei(price, 'ether'),
             gas: ethConstants.gas,
             gasPrice: ethConstants.gasPrice
           },
@@ -64,12 +64,12 @@ class DeployStep2 extends PureComponent {
                 ctorId: ctor_id,
                 user: Auth.getProfile().user_id,
                 blockchain,
-                ethCount: price_eth,
+                ethCount: price,
                 gasLimit: ethConstants.gas,
                 gasPrice: ethConstants.gasPrice,
                 txHash,
                 addressSender: getAccountAddress(),
-                dappId: instance_id
+                dappId: id
               };
 
               getNetworkId((netId) => {
@@ -109,7 +109,7 @@ class DeployStep2 extends PureComponent {
           ctorId: ctor_id,
           user: Auth.getProfile().user_id,
           blockchain,
-          dappId: instance_id
+          dappId: id
         };
 
         // get chainId to set 'networkId'
@@ -230,8 +230,8 @@ class DeployStep2 extends PureComponent {
                 </fieldset>
               </fieldset>
               <button className="button block__button" onClick={this.deploy}>
-                {ctor.price_eth ? (
-                  <span>Deploy now for {ctor.price_eth} ETH</span>
+                {ctor.price ? (
+                  <span>Deploy now for {ctor.price} ETH</span>
                 ) : (
                   <span>Deploy now for free</span>
                 )}

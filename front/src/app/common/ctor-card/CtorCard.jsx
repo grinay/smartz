@@ -34,7 +34,7 @@ class CtorCard extends Component {
               <div
                 onClick={() => history.replace(`/deploy/${ctor.ctor_id}`)}
                 className="btn ctor-card__price">
-                {ctor.price_eth ? `${ctor.price_eth} ETH` : 'Deploy free'}
+                {ctor.price ? `${ctor.price} ETH` : 'Deploy free'}
               </div>
 
               {isAuthenticated &&

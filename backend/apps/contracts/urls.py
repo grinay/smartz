@@ -6,6 +6,6 @@ from apps.contracts.views import DetailsView, \
 
 urlpatterns = [
     path('', ListView.as_view(), name='contracts-list'),
-    path('/<slug:instance_id>', DetailsView.as_view(), name='contracts-details'),
-    path('/<slug:instance_id>/update', UpdateView.as_view(), name='contracts-update'),
+    path('/<slug:id>', DetailsView.as_view(), name='contracts-details'),
+    path('/<slug:id>/update', UpdateView.as_view(), name='contracts-update'),
 ]

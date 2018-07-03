@@ -44,7 +44,7 @@ class ListView(View):
                 {
                     'ctor_id': constructor.slug,
                     'ctor_name': constructor.name,
-                    'price_eth': constructor.get_formatted_price(),
+                    'price': constructor.get_formatted_price(),
                     'ctor_descr': constructor.description,
                     'is_public': constructor.is_public,
                     'user_id': constructor.user_id,
@@ -63,7 +63,7 @@ class UploadView(View, WithEngine):
     def post(self, request):
         args = request.data
 
-        price_eth = str(args.get('price_eth', 0))
+        price = str(args.get('price', 0))
 
         if 'payment_address' in args:
             if not re.findall('^0x[0-9a-fA-F]{40}$', args['payment_address']):
@@ -71,7 +71,7 @@ class UploadView(View, WithEngine):
         else:
             args['payment_address'] = ''
 
-        if float(price_eth) and not args['payment_address']:
+        if float(price) and not args['payment_address']:
             return error_response("Payment address must be specified with price >0")
 
         user = auth(request)
@@ -114,7 +114,7 @@ class UploadView(View, WithEngine):
         else:
             return error_response("Constructor file is missing")
 
-        if float(price_eth):
+        if float(price):
             with open(filename) as f:
                 if not '%payment_code%' in f.read(): # todo check on deploy in source of contract?
                     return error_response("Payment code must be in contract constructor")
@@ -122,7 +122,7 @@ class UploadView(View, WithEngine):
         current_constructor.name = name
         current_constructor.description = descr
         current_constructor.payment_address = args['payment_address']
-        current_constructor.price_eth = Decimal(price_eth)
+        current_constructor.price = Decimal(price)
         current_constructor.is_public = is_public
         current_constructor.user = user
 
@@ -157,7 +157,7 @@ class GetParamsView(View):
         return JsonResponse({
             'ctor_name': constructor.name,
             'ctor_descr': constructor.description,
-            'price_eth': constructor.get_formatted_price(),
+            'price': constructor.get_formatted_price(),
             'schema': _process_ctor_schema(constructor.blockchain, constructor.get_schema()),
             'ui_schema': constructor.get_ui_schema(),
             'blockchain': constructor.blockchain,
@@ -188,9 +188,9 @@ class ConstructView(View, WithEngine):
         if isinstance(user, HttpResponse):
             return user
 
-        instance_title = args.get('instance_title')
-        if not instance_title or not isinstance(instance_title, str):
-            return error_response("Wrong 'instance_title' param")
+        dapp_title = args.get('dapp_title')
+        if not dapp_title or not isinstance(dapp_title, str):
+            return error_response("Wrong dapp title")
 
         constructor_schema = _process_ctor_schema(constructor.blockchain, constructor.get_schema())
 
@@ -223,7 +223,7 @@ class ConstructView(View, WithEngine):
 
 
         contract = Contract.create()
-        contract.title = instance_title
+        contract.title = dapp_title
         contract.abi = json.dumps(result['abi'])
         contract.source = result['source']
         contract.binary = result['bin']
@@ -234,7 +234,7 @@ class ConstructView(View, WithEngine):
         contract.compiler_version = result['compiler_version']
         contract.compiler_optimization = result['compiler_optimization']
         contract.contract_name = result['contract_name']
-        contract.deploy_price = constructor.price_eth
+        contract.deploy_price = constructor.price
         contract.save()
 
         return JsonResponse(contract_pub_info(contract))

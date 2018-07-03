@@ -124,11 +124,11 @@
 
             "input": {
                 "type": "object",
-                "required": ["instance_id", "address", "network_id"],
+                "required": ["id", "address", "network_id"],
                 "additionalProperties": false,
 
                 "properties": {
-                    "instance_id": { "$ref": "#/definitions/ObjectIdHex" },
+                    "id": { "$ref": "#/definitions/ObjectIdHex" },
                     "address": { "$ref": "#/definitions/address" },
                     "network_id": {"type": "integer", "minimum": 0}
                 }
@@ -141,10 +141,10 @@
 
             "input": {
                 "type": "object",
-                "required": ["instance_id"],
+                "required": ["id"],
                 "additionalProperties": false,
                 "properties": {
-                    "instance_id": { "$ref": "#/definitions/ObjectIdHex" }
+                    "id": { "$ref": "#/definitions/ObjectIdHex" }
                 }
             },
             "output": {
@@ -152,12 +152,12 @@
                     { "$ref": "#/definitions/resultError" },
                     {
                         "type": "object",
-                        "required": ["instance_id", "instance_title", "ctor_id", "address", "network_id", "abi", "functions", "dashboard_functions", "constructor", "blockchain"],
+                        "required": ["id", "title", "ctor_id", "address", "network_id", "abi", "functions", "dashboard_functions", "constructor", "blockchain"],
                         "additionalProperties": false,
 
                         "properties": {
-                            "instance_id": { "$ref": "#/definitions/ObjectIdHex" },
-                            "instance_title": {"type": "string"},
+                            "id": { "$ref": "#/definitions/ObjectIdHex" },
+                            "title": {"type": "string"},
                             "ctor_id": { "$ref": "#/definitions/ObjectIdHex" },
                             "address": { "type": "string"},
                             "network_id": {"type": "string"},
@@ -191,7 +191,7 @@
                             "compiler_version": { "type": "string" },
                             "compiler_optimization": { "type": "boolean" },
                             "contract_name": { "type": "string" },
-                            "price_eth": { "type": "number" }
+                            "price": { "type": "number" }
                         }
                     }
                 ]

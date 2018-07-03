@@ -101,10 +101,10 @@ class BaseContractProcessor(metaclass=ABCMeta):
 
 class EthereumContractProcessor(BaseContractProcessor):
     def process_source(self, constructor: Constructor, source: str, contract_name: str) -> str:
-        if not constructor.price_eth:
+        if not constructor.price:
             return source.replace('%payment_code%', '')
 
-        wei = int(constructor.price_eth * Decimal('1000000000000000000'))
+        wei = int(constructor.price * Decimal('1000000000000000000'))
 
         if constructor.payment_address:
             assert(settings.SMARTZ_COMMISSION < 1)

@@ -47,8 +47,7 @@ export default class DappHeader extends React.PureComponent<IDappHeaderProps, ID
           alt={`${dapp.constructor.name} contract`}
         />
         <div className="title">
-          {/* TODO: rename instance to dapp */}
-          <h2 className="dapp-title">{dapp.instance_title}</h2>
+          <h2 className="dapp-title">{dapp.title}</h2>
           <p className="contract flex-v">
             <span>Contract: </span>
             {dapp.address && (

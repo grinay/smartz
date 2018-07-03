@@ -29,7 +29,7 @@ const dapps = (state = initState, action) => {
       }
 
       action.dapps.forEach((dapp) => {
-        const i = findIndex(nextState.dapps, { instance_id: dapp.instance_id });
+        const i = findIndex(nextState.dapps, { id: dapp.id });
         if (i >= 0) {
           nextState.dapps[i] = Object.assign(nextState.dapps[i], dapp);
         } else {
@@ -41,7 +41,7 @@ const dapps = (state = initState, action) => {
     case 'VIEW_FUNC_RESULT':
       const { dappId, funcName, result } = action;
 
-      let dapp = find(nextState.dapps, { instance_id: dappId });
+      let dapp = find(nextState.dapps, { id: dappId });
       if (dapp) {
         if (dapp.funcResults && dapp.funcResults[funcName] === result) {
           return state;
@@ -54,7 +54,7 @@ const dapps = (state = initState, action) => {
       return nextState;
 
     case 'TRANSACTION_NEW':
-      dapp = find(nextState.dapps, { instance_id: action.dappId });
+      dapp = find(nextState.dapps, { id: action.dappId });
       if (dapp) {
         if (!dapp.transactions) dapp.transactions = [];
         dapp.transactions.push({
@@ -67,7 +67,7 @@ const dapps = (state = initState, action) => {
       return nextState;
 
     case 'TRANSACTION_RECEIPT':
-      dapp = find(nextState.dapps, { instance_id: action.dappId });
+      dapp = find(nextState.dapps, { id: action.dappId });
       if (dapp) {
         const transaction = find(dapp.transactions, { txHash: action.txHash });
         if (transaction) {

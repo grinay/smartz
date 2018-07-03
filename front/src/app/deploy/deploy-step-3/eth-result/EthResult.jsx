@@ -43,8 +43,7 @@ export default class EthResult extends PureComponent {
               </p>
               <p className="support-block__paragraph">
                 Now you can{' '}
-                {/* //TODO: change dapp */}
-                <Link to={`/dapp/${dapp.instance_id}`}>manage your contract</Link> with Smartz
+                <Link to={`/dapp/${dapp.id}`}>manage your contract</Link> with Smartz
                 Platform!
               </p>
             </div>

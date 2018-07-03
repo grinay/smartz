@@ -24,9 +24,9 @@ def _prepare_instance_details(contract: Contract) -> Dict:
 
 class DetailsView(View):
 
-    def get(self, request, instance_id):
+    def get(self, request, id):
         try:
-            contract = Contract.objects.prefetch_related('constructor').get(slug=instance_id)
+            contract = Contract.objects.prefetch_related('constructor').get(slug=id)
         except Contract.DoesNotExist:
             return error_response("Contract not found")
 
@@ -62,13 +62,13 @@ class ListView(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class UpdateView(View):
 
-    def post(self, request, instance_id):
+    def post(self, request, id):
         user = auth(request)
         if isinstance(user, HttpResponse):
             return user  # error
 
         try:
-            contract = Contract.objects.get(slug=instance_id, user=user)
+            contract = Contract.objects.get(slug=id, user=user)
         except Contract.DoesNotExist:
             return error_response("Contract not found")
 

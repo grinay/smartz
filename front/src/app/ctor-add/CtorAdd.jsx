@@ -52,7 +52,7 @@ class CtorAdd extends Component {
 
     const formSchema = {
       type: 'object',
-      required: ['ctor_name', 'ctor_descr', 'price_eth', 'ctor_file'],
+      required: ['ctor_name', 'ctor_descr', 'price', 'ctor_file'],
       additionalProperties: false,
       properties: {
         ctor_name: {
@@ -79,7 +79,7 @@ class CtorAdd extends Component {
           type: 'string',
           pattern: '^0x[0-9a-fA-F]{40}$'
         },
-        price_eth: {
+        price: {
           title: 'Price of deploy (in ETH or EOS)',
           description: '0 = free contract',
           type: 'number',

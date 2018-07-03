@@ -22,7 +22,7 @@ class Constructor(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     payment_address = models.CharField(max_length=42, blank=True)
-    price_eth = models.DecimalField(max_digits=30, decimal_places=18)
+    price = models.DecimalField(max_digits=30, decimal_places=18)
     is_public = models.BooleanField(default=False)
     auth0_user_id = models.CharField(max_length=200, blank=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
@@ -74,7 +74,7 @@ class Constructor(models.Model):
         return constructor
 
     def get_formatted_price(self):
-        return float(format(self.price_eth, 'f').rstrip('0').rstrip('.'))
+        return float(format(self.price, 'f').rstrip('0').rstrip('.'))
 
     def get_schema(self):
         return json.loads(self.schema)
@@ -86,7 +86,7 @@ class Constructor(models.Model):
         return self.name
 
     def clean(self, *args, **kwargs):
-        if self.price_eth > 0 and not is_address(self.payment_address):
+        if self.price > 0 and not is_address(self.payment_address):
             raise ValidationError('Correct payment address must be specified in constructor if price>0')
 
     def save(self, *args, **kwargs):

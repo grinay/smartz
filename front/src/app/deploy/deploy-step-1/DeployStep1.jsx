@@ -6,7 +6,6 @@ import FormWidgets from '../../common/form-widgets/FormWidgets';
 import Auth from '../../auth/Auth';
 import { sendOpenContractEvent } from '../../../helpers/data-layer';
 
-//TODO: change instance => dopp_title
 class DeployStep1 extends PureComponent {
   componentDidMount() {
     const { errors } = this.props;
@@ -23,11 +22,11 @@ class DeployStep1 extends PureComponent {
 
     const formDataOrigin = Object.assign({}, { ...formData });
 
-    const instTitle = formData.instance_title;
-    delete formData.instance_title;
+    const title = formData.dapp_title;
+    delete formData.dapp_title;
 
     const data = {
-      instance_title: instTitle,
+      dapp_title: title,
       fields: formData
     };
 
@@ -41,16 +40,16 @@ class DeployStep1 extends PureComponent {
     if (
       ctor &&
       ctor.schema &&
-      (!ctor.schema.properties || !ctor.schema.properties.instance_title)
+      (!ctor.schema.properties || !ctor.schema.properties.dapp_title)
     ) {
       if (!('properties' in ctor.schema)) {
         ctor.schema.properties = {};
       }
-      ctor.schema.properties.instance_title = {
-        title: 'Contract dapp name',
+      ctor.schema.properties.dapp_title = {
+        title: 'Dapp name',
         type: 'string',
         description:
-          'Name of contract dapp which you are now configuring and deploying. Will be used only in Smartz interfaces. Any string from 3 to 100 symbols',
+          'Name of dapp which you are now configuring and deploying. Will be used only in Smartz interfaces. Any string from 3 to 100 symbols',
         minLength: 3,
         maxLength: 100
       };
@@ -58,10 +57,10 @@ class DeployStep1 extends PureComponent {
       if (!('required' in ctor.schema)) {
         ctor.schema.required = [];
       }
-      ctor.schema.required.push('instance_title');
+      ctor.schema.required.push('dapp_title');
 
       if (ctor.ui_schema && 'ui:order' in ctor.ui_schema) {
-        ctor.ui_schema['ui:order'].unshift('instance_title');
+        ctor.ui_schema['ui:order'].unshift('dapp_title');
       } else {
         if (!ctor.ui_schema) ctor.ui_schema = {};
 

@@ -16,7 +16,7 @@ REST, GET|POST
 
 - /constructors/upload
     input:
-        {ctor_name: 'my ctor', ctor_descr: 'my ctor', price_eth: 0.01}
+        {ctor_name: 'my ctor', ctor_descr: 'my ctor', price: 0.01}
     дополнительное поле запроса - файл ctor_file
     output:
         {ok: true} || {error: 'foo'}
@@ -27,7 +27,7 @@ REST, GET|POST
         {
             ctor_id: 4,
             ctor_name: 'my ctor',
-            price_eth: 0.1,
+            price: 0.1,
             ctor_descr: 'my ctor',
             image: 'default.jpg'
         },
@@ -50,7 +50,7 @@ REST, GET|POST
     input:
         {
             ctor_id: 4,
-            instance_title: 'бабушкина копилка',
+            dapp_title: 'бабушкина копилка',
             # valid fields according to ctor's json-schema
             fields: {
                 hard_cap: 1000,
@@ -60,7 +60,7 @@ REST, GET|POST
     output:
         {
             result: 'success',
-            instance_id: 'dd353',
+            id: 'dd353',
             bin: '0xddd',
             source: 'pragma ...'
         }

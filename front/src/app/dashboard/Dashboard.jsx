@@ -15,7 +15,7 @@ class Dashboard extends Component {
 
     this.state = {
       updateCycleActive: false,
-      filterDapps: [],
+      filteredDapps: [],
       networkId: null
     };
   }
@@ -39,30 +39,20 @@ class Dashboard extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { metamaskStatus, dapps } = this.props;
-    let filterDapps = [];
-
-    // const isEthContractExist =
-    //   typeof find(dapps, { blockchain: blockchains.ethereum }) !== 'undefined';
-
-    // if (isEthContractExist && metamaskStatus !== 'noMetamask') {
-    //     if (inst.network_id.toString() === networkId) {
-    //       console.log(filterDapps);
-    //       filterDapps.push(inst);
-    //     }
-    // }
+    let filteredDapps = [];
 
     for (let i = 0; i < dapps.length; i++) {
-      let inst = dapps[i];
-      switch (inst.blockchain) {
+      let dapp = dapps[i];
+      switch (dapp.blockchain) {
         case blockchains.ethereum:
           if (metamaskStatus !== 'noMetamask') {
-            if (inst.network_id.toString() === this.state.networkId) {
-              filterDapps.push(inst);
+            if (dapp.network_id.toString() === this.state.networkId) {
+              filteredDapps.push(dapp);
             }
           }
           break;
         case blockchains.eos:
-          filterDapps.push(inst);
+          filteredDapps.push(dapp);
           break;
         default:
           break;
@@ -70,16 +60,16 @@ class Dashboard extends Component {
     }
 
     this.setState({
-      filterDapps
+      filteredDapps
     });
   }
 
   componentDidUpdate() {
     const { ctors, metamaskStatus } = this.props;
-    const { filterDapps } = this.state;
+    const { filteredDapps } = this.state;
 
     if (
-      filterDapps.length &&
+      filteredDapps.length &&
       ctors.length &&
       !this.state.updateCycleActive &&
       metamaskStatus !== 'noMetamask'
@@ -91,8 +81,8 @@ class Dashboard extends Component {
   updateCycle() {
     const { dapps, viewFuncResult } = this.props;
 
-    dapps.forEach((inst, j) => {
-      const { instance_id, abi, address, dashboard_functions, functions, blockchain } = inst;
+    dapps.forEach((dapp, j) => {
+      const { id, abi, address, dashboard_functions, functions, blockchain } = dapp;
 
       if (blockchain === blockchains.ethereum && dashboard_functions) {
         dashboard_functions.forEach((dFunc) => {
@@ -104,7 +94,7 @@ class Dashboard extends Component {
             if (error) {
               console.error(error);
             } else {
-              viewFuncResult(instance_id, dFunc, processResult(result));
+              viewFuncResult(id, dFunc, processResult(result));
             }
           });
         });
@@ -114,10 +104,10 @@ class Dashboard extends Component {
 
   render() {
     const { metamaskStatus } = this.props;
-    const { filterDapps } = this.state;
+    const { filteredDapps } = this.state;
 
     if (
-      find(filterDapps, { blockchain: blockchains.ethereum }) &&
+      find(filteredDapps, { blockchain: blockchains.ethereum }) &&
       metamaskStatus === 'noMetamask'
     ) {
       return (
@@ -129,8 +119,8 @@ class Dashboard extends Component {
 
     const { ctors, ctorsError, dapps, dappsError } = this.props;
 
-    filterDapps.forEach((inst) => {
-      inst.ctor = find(ctors, { ctor_id: inst.ctor_id }) || {};
+    filteredDapps.forEach((dapp) => {
+      dapp.ctor = find(ctors, { ctor_id: dapp.ctor_id }) || {};
     });
 
     return (
@@ -144,10 +134,10 @@ class Dashboard extends Component {
 
         <section className="my-contracts">
           <ul className="my-contracts__list">
-            {filterDapps.length > 0 &&
-              filterDapps.map((inst, j) => (
+            {filteredDapps.length > 0 &&
+              filteredDapps.map((dapp, j) => (
                 <li key={j} className="my-contracts__item">
-                  <Link to={`/dapp/${inst.instance_id}`} className="my-contracts__link screen">
+                  <Link to={`/dapp/${dapp.id}`} className="my-contracts__link screen">
                     <article className="my-contract">
                       <section className="contract-info  contract-info--contract-card">
                         <div className="contract-info__wrapper">
@@ -155,31 +145,31 @@ class Dashboard extends Component {
                             <img
                               className="contract-info__img"
                               src={
-                                inst.ctor.image
-                                  ? require(`../common/ctor-card/img/${inst.ctor.image}`)
+                                dapp.ctor.image
+                                  ? require(`../common/ctor-card/img/${dapp.ctor.image}`)
                                   : `https://lorempixel.com/640/400/?${Math.random()}`
                               }
                               alt="Contract"
                             />
                           </div>
                           <p className="contract-info__info">
-                            <span className="contract-info__name">{inst.dapp_title}</span>
+                            <span className="contract-info__name">{dapp.title}</span>
                             <span className="contract-info__description">
-                              {inst.ctor.ctor_name}
+                              {dapp.ctor.ctor_name}
                             </span>
                           </p>
                         </div>
-                        {inst.funcResults && (
+                        {dapp.funcResults && (
                           <ul className="function-list">
-                            {inst.dashboard_functions.map((func, k) => {
-                              const funcObj = find(inst.functions, { name: func });
+                            {dapp.dashboard_functions.map((func, k) => {
+                              const funcObj = find(dapp.functions, { name: func });
 
                               if (!funcObj) return null;
 
                               return (
                                 <li key={k} className="function-item">
                                   <p>{funcObj.title}</p>
-                                  <p>{inst.funcResults[func]}</p>
+                                  <p>{dapp.funcResults[func]}</p>
                                 </li>
                               );
                             })}

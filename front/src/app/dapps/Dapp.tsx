@@ -81,7 +81,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
           if (error) {
             console.error(error);
           } else {
-            viewFuncResult(dapp.instance_id, func.name, processResult(result));
+            viewFuncResult(dapp.id, func.name, processResult(result));
           }
         });
       }
