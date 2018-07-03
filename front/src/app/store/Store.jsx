@@ -51,7 +51,7 @@ class Store extends Component {
           <SortBlockchain onClick={this.setBlockchain} blockchain={this.state.blockchain} />
         </section>
 
-        {/* Contracts section */}
+        {/* Constructors section */}
         <section className="ctor-section">
           {filteredCtors.length > 0 && (
             <ul className="ctor-list">
@@ -67,7 +67,7 @@ class Store extends Component {
             </ul>
           )}
 
-          {filteredCtors.length === 0 && <Loader text="Loading contracts" />}
+          {filteredCtors.length === 0 && <Loader text="Loading constructors" />}
         </section>
 
         {/* Banner for developers section */}

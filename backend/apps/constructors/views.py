@@ -16,8 +16,8 @@ from jsonschema.validators import validator_for
 
 from apps.common.constants import BLOCKCHAINS
 from apps.constructors.models import Constructor
-from apps.contracts.models import Contract
-from apps.contracts.serializers import contract_pub_info
+from apps.dapps.models import Dapp
+from apps.dapps.serializers import dapp_pub_info
 from constructor_engine.engine import WithEngine
 from utils.common import auth, nonempty, args_string
 from utils.responses import  error_response, engine_error_response
@@ -222,19 +222,19 @@ class ConstructView(View, WithEngine):
             return engine_error_response(result)
 
 
-        contract = Contract.create()
-        contract.title = dapp_title
-        contract.abi = json.dumps(result['abi'])
-        contract.source = result['source']
-        contract.binary = result['bin']
-        contract.function_specs = json.dumps(result['function_specs'])
-        contract.dashboard_functions = json.dumps(result['dashboard_functions'])
-        contract.constructor = constructor
-        contract.user = user
-        contract.compiler_version = result['compiler_version']
-        contract.compiler_optimization = result['compiler_optimization']
-        contract.contract_name = result['contract_name']
-        contract.deploy_price = constructor.price
-        contract.save()
+        dapp = Dapp.create()
+        dapp.title = dapp_title
+        dapp.abi = json.dumps(result['abi'])
+        dapp.source = result['source']
+        dapp.binary = result['bin']
+        dapp.function_specs = json.dumps(result['function_specs'])
+        dapp.dashboard_functions = json.dumps(result['dashboard_functions'])
+        dapp.constructor = constructor
+        dapp.user = user
+        dapp.compiler_version = result['compiler_version']
+        dapp.compiler_optimization = result['compiler_optimization']
+        dapp.contract_name = result['contract_name']
+        dapp.deploy_price = constructor.price
+        dapp.save()
 
-        return JsonResponse(contract_pub_info(contract))
+        return JsonResponse(dapp_pub_info(dapp))

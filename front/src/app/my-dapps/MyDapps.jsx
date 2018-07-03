@@ -6,7 +6,6 @@ import Alert from '../common/Alert';
 import Loader from '../common/loader/Loader';
 import CtorCard from '../common/ctor-card/CtorCard';
 import Auth from '../auth/Auth';
-import DevBlock from './../common/dev-block/DevBlock';
 
 import './MyDapps.less';
 
@@ -39,7 +38,7 @@ class MyDapps extends Component {
             </ul>
           )}
 
-          {!ctors && <Loader text="Loading contracts" width="100" />}
+          {!ctors && <Loader text="Loading constructors" width="100" />}
         </div>
       </main>
     );

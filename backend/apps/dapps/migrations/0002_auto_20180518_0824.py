@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('contracts', '0001_initial'),
+        ('dapps', '0001_initial'),
     ]
 
     operations = [

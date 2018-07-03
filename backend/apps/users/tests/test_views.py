@@ -62,11 +62,11 @@ class LoginViewsIntegrationTests(WebTest):
         token = resp_finish.json['token']
 
 
-        resp = self.app.get('/api/contracts')
+        resp = self.app.get('/api/dapps')
         assert 'error' in resp.json
         assert resp.json['error'] == 'not authorized'
 
-        resp = self.app.get('/api/contracts', headers={'x-accesstoken': token})
+        resp = self.app.get('/api/dapps', headers={'x-accesstoken': token})
         assert 'error' not in resp.json
         assert resp.json == []
 

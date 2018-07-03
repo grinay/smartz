@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import Contract
+from .models import Dapp
 
 
-class ContractAdmin(admin.ModelAdmin):
+class DappAdmin(admin.ModelAdmin):
     list_display = ('title', 'created', 'constructor', 'network_id', 'address', 'user')
     list_filter = (
         'constructor',
@@ -15,4 +15,4 @@ class ContractAdmin(admin.ModelAdmin):
         return obj.created_at.strftime("%Y.%m.%d %H:%M:%S")
 
 
-admin.site.register(Contract, ContractAdmin)
+admin.site.register(Dapp, DappAdmin)

@@ -40,7 +40,7 @@ class Common(Configuration):
         'django_extensions',
 
         'apps.constructors',
-        'apps.contracts',
+        'apps.dapps',
         'apps.users',
         'apps.tools',
         'apps.common',

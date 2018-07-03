@@ -9,7 +9,7 @@ urlpatterns = [
         include([
             path('constructors', include('apps.constructors.urls')),
             path('users', include('apps.users.urls')),
-            path('contracts', include('apps.contracts.urls')),
+            path('dapps', include('apps.dapps.urls')),
         ])
     ),
     path('secret-admin/', admin.site.urls),

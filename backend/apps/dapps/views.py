@@ -6,16 +6,15 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
 
-from apps.contracts.models import Contract
-from apps.contracts.serializers import contract_pub_info
+from apps.dapps.models import Dapp
+from apps.dapps.serializers import dapp_pub_info
 from utils.common import auth
 from utils.responses import error_response
 from smartz.json_schema import load_schema, assert_conforms2schema_part
 
 
-
-def _prepare_instance_details(contract: Contract) -> Dict:
-    output = contract_pub_info(contract)
+def _prepare_instance_details(dapp: Dapp) -> Dict:
+    output = dapp_pub_info(dapp)
     assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
                                 'rpc_calls/get_instance_details/output')
 
@@ -26,22 +25,22 @@ class DetailsView(View):
 
     def get(self, request, id):
         try:
-            contract = Contract.objects.prefetch_related('constructor').get(slug=id)
-        except Contract.DoesNotExist:
-            return error_response("Contract not found")
+            dapp = Dapp.objects.prefetch_related('constructor').get(slug=id)
+        except Dapp.DoesNotExist:
+            return error_response("Dapp not found")
 
-        if not contract.has_public_access:
+        if not dapp.has_public_access:
             user = auth(request)
             if isinstance(user, HttpResponse):
                 return user  # error
 
-            if contract.user_id != user.pk:
-                return error_response('Contract not found')
+            if dapp.user_id != user.pk:
+                return error_response('Dapp not found')
 
-        if not contract.address:
-            return error_response('Contract is not yet deployed')
+        if not dapp.address:
+            return error_response('Dapp is not yet deployed')
 
-        return JsonResponse(_prepare_instance_details(contract))
+        return JsonResponse(_prepare_instance_details(dapp))
 
 
 class ListView(View):
@@ -51,10 +50,10 @@ class ListView(View):
         if isinstance(user, HttpResponse):
             return user  # error
 
-        contracts = Contract.objects.filter(user=user).exclude(address='').prefetch_related('constructor')
+        dapps = Dapp.objects.filter(user=user).exclude(address='').prefetch_related('constructor')
 
         return JsonResponse(
-            [_prepare_instance_details(i) for i in contracts],
+            [_prepare_instance_details(i) for i in dapps],
             safe=False
         )
 
@@ -68,14 +67,14 @@ class UpdateView(View):
             return user  # error
 
         try:
-            contract = Contract.objects.get(slug=id, user=user)
-        except Contract.DoesNotExist:
-            return error_response("Contract not found")
+            dapp = Dapp.objects.get(slug=id, user=user)
+        except Dapp.DoesNotExist:
+            return error_response("Dapp not found")
 
 
         # [TODO] refactor all checks (address and network_id validation should be somewhere near Instance() class
         # Later validation of Ethereum address will differ from EOS address, so Instance() class will have some "blockchain_id" member to
-        # differ parameters of contract instances on different blockchains
+        # differ parameters of dapps on different blockchains
 
         address = request.data.get('address')
         if address is None or not isinstance(address, str):
@@ -87,10 +86,10 @@ class UpdateView(View):
 
         public_access = bool(request.data.get('public_access'))
 
-        contract.address = address
-        contract.network_id = str(network_id)
-        contract.has_public_access = public_access
-        contract.save()
+        dapp.address = address
+        dapp.network_id = str(network_id)
+        dapp.has_public_access = public_access
+        dapp.save()
 
         return JsonResponse({'ok': True}) # todo
 

@@ -80,7 +80,7 @@ export function addCtor(formData) {
 // =============================================================================
 
 export function getDapps() {
-  const result = fetch('/contracts', undefined, 'get');
+  const result = fetch('/dapps', undefined, 'get');
 
   dispatch(fetchDappsRequest());
 
@@ -98,7 +98,7 @@ export function getDapps() {
 }
 
 export function getDapp(id) {
-  const result = fetch(`/contracts/${id}`, undefined, 'get');
+  const result = fetch(`/dapps/${id}`, undefined, 'get');
 
   dispatch(fetchDappsRequest());
 
@@ -118,7 +118,7 @@ export function getDapp(id) {
 }
 
 export function updateDapp(dappId, data) {
-  const result = fetch(`/contracts/${dappId}/update`, data, 'post');
+  const result = fetch(`/dapps/${dappId}/update`, data, 'post');
 
   result.then().catch((error) => console.error(error));
 

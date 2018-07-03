@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contracts', '0003_contract_created_at'),
+        ('dapps', '0003_contract_created_at'),
     ]
 
     operations = [

@@ -17,7 +17,6 @@ from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS, BLOCKCHAI
 from apps.constructors.models import Constructor
 from constructor_engine.services import BaseCompilerService, EosCompilerService, EthereumCompilerService, \
     BaseContractProcessor, EthereumContractProcessor, EosContractProcessor
-from smartz.eth.contracts import merge_function_titles2specs, make_generic_function_spec
 from smartz.json_schema import is_conforms2schema_part, load_schema
 from smartzcore.exceptions import PublicException
 from smartzcore.service_instances import WithLogger

@@ -43,17 +43,17 @@ class Constructor(models.Model):
         name_lower = self.name.lower()
 
         images = {
-            'simple ico': 'contract-ico.jpg',
-            'erc721 token': 'contract-erc721.png',
-            'erc20 token': 'contract-erc20.jpg',
-            'equity token': 'contract-equity.jpg',
-            'smartz token': 'contract-smartz-erc20.jpg',
-            'multisignature wallet': 'contract-multisig.jpg',
-            'simple voting': 'contract-voting.jpg',
-            'atomic swap for erc20': 'contract-swap.jpg',
-            'multitoken': 'contract-multitoken.jpg',
-            'booking': 'contract-booking.jpg',
-            'ledger': 'contract-ledger.jpg',
+            'simple ico': 'simple-ico.jpg',
+            'erc721 token': 'erc721.png',
+            'erc20 token': 'erc20.jpg',
+            'equity token': 'equity.jpg',
+            'smartz token': 'smartz-erc20.jpg',
+            'multisignature wallet': 'multisig.jpg',
+            'simple voting': 'simple-voting.jpg',
+            'atomic swap for erc20': 'atomic-swap-erc20.jpg',
+            'multitoken': 'multitoken.jpg',
+            'booking': 'booking.jpg',
+            'ledger': 'ledger.jpg',
             'smartz platform features': 'platform-features.jpg',
             'crowdfunding for erc20 token': 'crowdfunding-erc20.jpg'
         }

@@ -15,7 +15,7 @@ def init_time():
     return datetime(2018, 1, 1, tzinfo=pytz.timezone(settings.TIME_ZONE))
 
 
-class Contract(models.Model):
+class Dapp(models.Model):
     slug = models.CharField(max_length=24, unique=True)
     title = models.CharField(max_length=200)
     abi = models.TextField()
@@ -42,12 +42,12 @@ class Contract(models.Model):
 
     @classmethod
     def create(cls, **kwargs):
-        contract = cls(**kwargs)
-        contract.slug = ''.join(
+        dapp = cls(**kwargs)
+        dapp.slug = ''.join(
             random.SystemRandom().choice('abcdef' + string.digits) for _ in range(24)
         )
 
-        return contract
+        return dapp
 
     def __str__(self):
         return self.title
