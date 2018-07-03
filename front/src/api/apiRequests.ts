@@ -12,7 +12,7 @@ import {
 } from '../app/deploy/DeployActions';
 import {
     sendErrorReceiveCtorCodeEvent, sendSuccessReceiveCtorCodeEvent,
-} from '../helpers/data-layer';
+} from '../helpers/statictics';
 import store from '../store/store';
 import { fetch } from './api';
 

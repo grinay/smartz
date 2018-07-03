@@ -3,15 +3,15 @@ import Form from 'react-jsonschema-form';
 
 import * as api from '../../../api/apiRequests';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
-import { sendOpenContractEvent } from '../../../helpers/data-layer';
+import { sendOpenContractEvent } from '../../../helpers/statictics';
 
 //TODO: change instance => dopp_title
 class DeployStep1 extends PureComponent {
   componentDidMount() {
-    const { errors } = this.props;
+    const { errors, ctor } = this.props;
 
     if (!errors) {
-      sendOpenContractEvent(this.props.ctor.ctor_id);
+      sendOpenContractEvent(ctor.ctor_id);
     }
   }
 

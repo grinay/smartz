@@ -31,7 +31,9 @@ export const ethConstants = {
 
 export const clickTypes = {
   CUSTOM_CONTRACT: 'customContract',
-  UPLOAD_CONTRACT: 'uploadContract',
+  UPLOAD_CONTRACT: 'uploadForm',
+  UPLOAD_ATTEMPT: 'uploadAttempt',
+  UPLOAD_SUCCESS: 'uploadSuccess  ',
   LEARN_MORE: 'learnMore',
   JOIN_CHAT: 'joinChat'
 };

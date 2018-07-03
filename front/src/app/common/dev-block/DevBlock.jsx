@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import developersImg from '../../../assets/img/common/developers.jpg';
 
 import './DevBlock.less';
-import { sendClickEvent } from '../../../helpers/data-layer';
+import { sendClickEvent } from '../../../helpers/statictics';
 import { clickTypes } from '../../../constants/constants';
 
 export default class DevBlock extends PureComponent {

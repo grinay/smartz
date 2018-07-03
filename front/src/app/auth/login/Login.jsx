@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Auth from '../Auth';
 import { blockchains } from '../../../constants/constants';
 import { web3 } from '../../../helpers/eth';
-import { sendLoginEvent } from '../../../helpers/data-layer';
+import { sendLoginEvent } from '../../../helpers/statictics';
 
 import * as api from '../../../api/apiRequests';
 import Alert from '../../common/Alert';
