@@ -3,16 +3,15 @@ import Form from 'react-jsonschema-form';
 
 import * as api from '../../../api/apiRequests';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
-import Auth from '../../auth/Auth';
 import { sendOpenContractEvent } from '../../../helpers/data-layer';
 
 //TODO: change instance => dopp_title
 class DeployStep1 extends PureComponent {
   componentDidMount() {
     const { errors } = this.props;
+
     if (!errors) {
-      // send event 'openContract' to gtm
-      sendOpenContractEvent(this.props.ctor.ctor_id, Auth.getProfile().user_id);
+      sendOpenContractEvent(this.props.ctor.ctor_id);
     }
   }
 

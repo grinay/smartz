@@ -8,7 +8,6 @@ import { ethConstants } from '../../../constants/constants';
 import { blockchains } from './../../../constants/constants';
 import { sendStatusContractEvent } from '../../../helpers/data-layer';
 import { contractProcessStatus } from '../../../constants/constants';
-import Auth from '../../auth/Auth';
 
 class DeployStep2 extends PureComponent {
   constructor(props) {
@@ -61,26 +60,21 @@ class DeployStep2 extends PureComponent {
               deployTxError(deployId, errMsg);
             } else {
               const dataEvent = {
-                ctorId: ctor_id,
-                user: Auth.getProfile().user_id,
-                blockchain,
-                ethCount: price_eth,
-                gasLimit: ethConstants.gas,
-                gasPrice: ethConstants.gasPrice,
-                txHash,
-                addressSender: getAccountAddress(),
-                dappId: instance_id
+                dimension2: `${window.location.origin}/deploy/${ctor_id}`,
+                dimension3: `${window.location.origin}/dapp/${instance_id}`,
+                dimension4: blockchain,
+                metric1: price_eth,
+                metric2: ethConstants.gas,
+                metric3: ethConstants.gasPrice
               };
 
               getNetworkId((netId) => {
                 deployTxSent(deployId, netId, txHash, blockchain);
 
-                dataEvent.networkId = netId;
+                dataEvent.dimension5 = netId;
 
-                // send event to gtm
                 sendStatusContractEvent({
                   status: contractProcessStatus.DEPLOY,
-                  publicAccess,
                   ...dataEvent
                 });
               });
@@ -91,10 +85,8 @@ class DeployStep2 extends PureComponent {
                 } else {
                   deployTxMined(deployId, receipt.contractAddress);
 
-                  // send event to gtm
                   sendStatusContractEvent({
                     status: contractProcessStatus.MINED,
-                    addressDapp: receipt.contractAddress,
                     ...dataEvent
                   });
                 }
@@ -106,23 +98,20 @@ class DeployStep2 extends PureComponent {
 
       case blockchains.eos:
         const dataEvent = {
-          ctorId: ctor_id,
-          user: Auth.getProfile().user_id,
-          blockchain,
-          dappId: instance_id
+          dimension2: `${window.location.origin}/deploy/${ctor_id}`,
+          dimension3: `${window.location.origin}/dapp/${instance_id}`,
+          dimension4: blockchain
         };
 
         // get chainId to set 'networkId'
         Eos.setChainId()
           .then(() => {
-            dataEvent.networkId = Eos.configEosDapp.chainId;
+            dataEvent.dimension5 = Eos.configEosDapp.chainId;
 
             // get identity to set addressSender
             return Eos.getIdentity();
           })
           .then((identity) => {
-            dataEvent.addressSender = identity.publicKey;
-
             Eos.deployContract(bin, abi)
               .then((result) => {
                 deployTxMined(deployId, result.transaction_id);
@@ -130,7 +119,6 @@ class DeployStep2 extends PureComponent {
                 // send event to gtm
                 sendStatusContractEvent({
                   status: contractProcessStatus.MINED,
-                  addressDapp: result.transaction_id,
                   ...dataEvent
                 });
               })
@@ -146,7 +134,6 @@ class DeployStep2 extends PureComponent {
             // send event to gtm
             sendStatusContractEvent({
               status: contractProcessStatus.DEPLOY,
-              publicAccess,
               ...dataEvent
             });
           })

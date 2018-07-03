@@ -1,38 +1,21 @@
-import store from '../store/store';
-import { fetch } from './api';
+import Auth from '../app/auth/Auth';
 import {
-  fetchCtorsRequest,
-  fetchCtorsFailure,
-  fetchCtorsSuccess,
-  fetchCtorParamsRequest,
-  fetchCtorParamsFailure,
-  fetchCtorParamsSuccess
+    finishLoginSuccessAction, loginErrorAction, startLoginSuccessAction,
+} from '../app/auth/login/LoginActions';
+import {
+    fetchCtorParamsFailure, fetchCtorParamsRequest, fetchCtorParamsSuccess, fetchCtorsFailure,
+    fetchCtorsRequest, fetchCtorsSuccess,
 } from '../app/common/ctor-card/CtorsActions';
+import { fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess } from '../app/dapps/DappsActions';
 import {
-  fetchDappsRequest,
-  fetchDappsFailure,
-  fetchDappsSuccess
-} from '../app/dapps/DappsActions';
-import {
-  // initDeploy,
-  setFormData,
-  constructRequest,
-  constructError,
-  constructSuccess
-  // setPublicAccess,
-  // deployTxSent,
-  // deployTxError,
-  // deployTxMined
+    constructError, constructRequest, constructSuccess, setFormData,
 } from '../app/deploy/DeployActions';
 import {
-  finishLoginAction,
-  finishLoginSuccessAction,
-  loginErrorAction,
-  startLoginAction,
-  startLoginSuccessAction
-} from '../app/auth/login/LoginActions';
-import { sendReceiveCtorCodeEvent } from '../helpers/data-layer';
-import Auth from '../app/auth/Auth';
+    sendErrorReceiveCtorCodeEvent, sendSuccessReceiveCtorCodeEvent,
+} from '../helpers/data-layer';
+import store from '../store/store';
+import { fetch } from './api';
+
 
 const { dispatch } = store;
 
@@ -87,7 +70,7 @@ export function getConstructorParams(ctorId, deployId) {
 export function addCtor(formData) {
   const result = fetch('/constructors/upload', formData, 'post');
 
-  result.then((response) => {}).catch((error) => console.error('Error request: ', error));
+  result.then().catch((error) => console.error('Error request: ', error));
 
   return result;
 }
@@ -137,7 +120,7 @@ export function getDapp(id) {
 export function updateDapp(dappId, data) {
   const result = fetch(`/contracts/${dappId}/update`, data, 'post');
 
-  result.then((response) => {}).catch((error) => console.error(error));
+  result.then().catch((error) => console.error(error));
 
   return result;
 }
@@ -160,16 +143,16 @@ export function sendFormDataDeployStep1(ctorId, deployId, data, formData) {
         if (data.errors || data.result === 'error') {
           dispatch(constructError(deployId, data.errors || data.error_descr));
 
-          sendReceiveCtorCodeEvent(ctorId, Auth.getProfile().user_id, 'user_error');
+          sendErrorReceiveCtorCodeEvent(ctorId);
         } else {
           dispatch(constructSuccess(deployId, data));
 
-          sendReceiveCtorCodeEvent(ctorId, Auth.getProfile().user_id);
+          sendSuccessReceiveCtorCodeEvent(ctorId);
         }
       }
 
       if (status >= 500) {
-        sendReceiveCtorCodeEvent(ctorId, Auth.getProfile().user_id, 'system_error');
+        sendErrorReceiveCtorCodeEvent(ctorId);
       }
     })
     .catch((error) => {
@@ -184,11 +167,7 @@ export function sendFormDataDeployStep1(ctorId, deployId, data, formData) {
 // =============================================================================
 
 export function startLogin(blockchain, identity) {
-  const result = fetch(
-    `/users/login/start`,
-    { blockchain: blockchain, identity: identity },
-    'post'
-  );
+  const result = fetch(`/users/login/start`, { blockchain, identity }, 'post');
 
   result
     .then((response) => {
@@ -212,12 +191,12 @@ export function finishLogin(blockchain, identity, randData, signedData) {
   const result = fetch(
     `/users/login/finish`,
     {
-      blockchain: blockchain,
-      identity: identity,
+      blockchain,
+      identity,
       rand_data: randData,
-      signed_data: signedData
+      signed_data: signedData,
     },
-    'post'
+    'post',
   );
 
   result
