@@ -4,6 +4,8 @@ import Form from 'react-jsonschema-form';
 
 import Alert from '../common/Alert';
 import * as api from '../../api/apiRequests';
+import { sendClickEvent } from '../../helpers/statictics';
+import { clickTypes } from '../../constants/constants';
 
 class CtorAdd extends Component {
   constructor(props) {
@@ -25,6 +27,7 @@ class CtorAdd extends Component {
   }
 
   submit({ formData }) {
+    sendClickEvent(clickTypes.UPLOAD_ATTEMPT);
     // save form field after error
     this.setState({ formData });
 
@@ -41,6 +44,8 @@ class CtorAdd extends Component {
         if (response.data.error) {
           this.setState({ error: response.data.error });
         } else {
+          sendClickEvent(clickTypes.UPLOAD_SUCCESS);
+
           this.setState({ message: `Contract "${data.ctor_name}" uploaded.` });
         }
       })

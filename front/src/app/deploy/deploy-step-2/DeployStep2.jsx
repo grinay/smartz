@@ -6,9 +6,8 @@ import Loader from '../../common/loader/Loader';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
 import { ethConstants } from '../../../constants/constants';
 import { blockchains } from './../../../constants/constants';
-import { sendStatusContractEvent } from '../../../helpers/data-layer';
+import { sendStatusContractEvent, getCtorUrl } from '../../../helpers/statictics';
 import { contractProcessStatus } from '../../../constants/constants';
-import Auth from '../../auth/Auth';
 
 class DeployStep2 extends PureComponent {
   constructor(props) {
@@ -61,26 +60,20 @@ class DeployStep2 extends PureComponent {
               deployTxError(deployId, errMsg);
             } else {
               const dataEvent = {
-                ctorId: ctor_id,
-                user: Auth.getProfile().user_id,
-                blockchain,
-                ethCount: price,
-                gasLimit: ethConstants.gas,
-                gasPrice: ethConstants.gasPrice,
-                txHash,
-                addressSender: getAccountAddress(),
-                dappId: id
+                dimension2: getCtorUrl(ctor_id),
+                dimension4: blockchain,
+                metric1: price,
+                metric2: ethConstants.gas,
+                metric3: ethConstants.gasPrice
               };
 
               getNetworkId((netId) => {
                 deployTxSent(deployId, netId, txHash, blockchain);
 
-                dataEvent.networkId = netId;
+                dataEvent.dimension5 = netId;
 
-                // send event to gtm
-                sendStatusContractEvent({
+                sendStatusContractEvent(id, ctor_id, {
                   status: contractProcessStatus.DEPLOY,
-                  publicAccess,
                   ...dataEvent
                 });
               });
@@ -91,10 +84,8 @@ class DeployStep2 extends PureComponent {
                 } else {
                   deployTxMined(deployId, receipt.contractAddress);
 
-                  // send event to gtm
-                  sendStatusContractEvent({
+                  sendStatusContractEvent(id, ctor_id, {
                     status: contractProcessStatus.MINED,
-                    addressDapp: receipt.contractAddress,
                     ...dataEvent
                   });
                 }
@@ -106,31 +97,25 @@ class DeployStep2 extends PureComponent {
 
       case blockchains.eos:
         const dataEvent = {
-          ctorId: ctor_id,
-          user: Auth.getProfile().user_id,
-          blockchain,
-          dappId: id
+          dimension2: getCtorUrl(ctor_id),
+          dimension4: blockchain
         };
 
         // get chainId to set 'networkId'
         Eos.setChainId()
           .then(() => {
-            dataEvent.networkId = Eos.configEosDapp.chainId;
+            dataEvent.dimension5 = Eos.configEosDapp.chainId;
 
             // get identity to set addressSender
             return Eos.getIdentity();
           })
           .then((identity) => {
-            dataEvent.addressSender = identity.publicKey;
-
             Eos.deployContract(bin, abi)
               .then((result) => {
                 deployTxMined(deployId, result.transaction_id);
 
-                // send event to gtm
-                sendStatusContractEvent({
+                sendStatusContractEvent(instance_id, ctor_id, {
                   status: contractProcessStatus.MINED,
-                  addressDapp: result.transaction_id,
                   ...dataEvent
                 });
               })
@@ -143,10 +128,8 @@ class DeployStep2 extends PureComponent {
 
             deployTxSent(deployId, Eos.configEosDapp.chainId, null, blockchain);
 
-            // send event to gtm
-            sendStatusContractEvent({
+            sendStatusContractEvent(instance_id, ctor_id, {
               status: contractProcessStatus.DEPLOY,
-              publicAccess,
               ...dataEvent
             });
           })

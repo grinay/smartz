@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Auth from '../Auth';
-import { find } from 'lodash';
 import { blockchains } from '../../../constants/constants';
 import { web3 } from '../../../helpers/eth';
-import { sendLoginEvent } from '../../../helpers/data-layer';
+import { sendLoginEvent } from '../../../helpers/statictics';
 
 import * as api from '../../../api/apiRequests';
 import Alert from '../../common/Alert';
@@ -107,11 +106,11 @@ class Login extends Component {
       if (blockchain === blockchains.eos) {
         Eos.scatter.forgetIdentity().then(() => {
           Auth.handleAuthentication(token);
-          sendLoginEvent(blockchain, Auth.getProfile().user_id);
+          sendLoginEvent(blockchain);
         });
       } else {
         Auth.handleAuthentication(token);
-        sendLoginEvent(blockchain, Auth.getProfile().user_id);
+        sendLoginEvent(blockchain);
       }
 
       this.stage = null;
@@ -119,7 +118,7 @@ class Login extends Component {
   }
 
   render() {
-    const { error, description, rand_data, blockchain, identity, token } = this.props.login;
+    const { error } = this.props.login;
 
     if (Auth.isAuthenticated()) {
       return <Redirect to="/profile" />;

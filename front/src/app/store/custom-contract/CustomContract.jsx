@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import CustomContractImg from '../../../assets/img/common/dapp/custom-contract.png';
 
 import './CustomContract.less';
-import { sendClickEvent } from '../../../helpers/data-layer';
+import { sendClickEvent } from '../../../helpers/statictics';
 import { clickTypes } from '../../../constants/constants';
 
 export default class CustomContract extends PureComponent {
