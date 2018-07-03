@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../../auth/Auth';
 
+import history from '../../../helpers/history';
+
 import './CtorCard.less';
 
 class CtorCard extends Component {
@@ -28,22 +30,22 @@ class CtorCard extends Component {
             <p className="ctor-card__text">{ctor.ctor_descr}</p>
           </section>
           <section className="ctor-card__controls">
-            <p className="ctor-card__buttons">
-              <Link to={`/deploy/${ctor.ctor_id}`} className="btn ctor-card__price">
+            <div className="ctor-card__buttons">
+              <div
+                onClick={() => history.replace(`/deploy/${ctor.ctor_id}`)}
+                className="btn ctor-card__price">
                 {ctor.price_eth ? `${ctor.price_eth} ETH` : 'Deploy free'}
-              </Link>
+              </div>
 
               {isAuthenticated &&
                 ctor.user_id === userId && (
-                  <Link
-                    to={`/constructors/${ctor.ctor_id}/update`}
+                  <div
+                    onClick={() => history.replace(`/constructors/${ctor.ctor_id}/update`)}
                     className="btn ctor-card__price">
                     Update
-                  </Link>
+                  </div>
                 )}
-
-              {/*<span className="ctor-card__quantity">2510</span>*/}
-            </p>
+            </div>
           </section>
         </Link>
       </article>

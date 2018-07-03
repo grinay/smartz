@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 
 import { web3 as w3, getNetworkId, getTxReceipt, getAccountAddress } from '../../../helpers/eth';
 import Eos from '../../../helpers/eos';
-import Spinner from '../../common/Spinner';
+import Loader from '../../common/loader/Loader';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
 import { ethConstants } from '../../../constants/constants';
 import { blockchains } from './../../../constants/constants';
@@ -169,7 +169,7 @@ class DeployStep2 extends PureComponent {
 
         {status === 'construct_request' && (
           <div className="block__wrapper  block__wrapper--top">
-            <Spinner text="Preparing code, this can take some seconds..." />
+            <Loader text="Preparing code, this can take some seconds..." />
           </div>
         )}
 

@@ -1,0 +1,68 @@
+@import '../../../styles/variables.less';
+
+.popup-verify {
+    flex-direction: column;
+
+// height: 100%;
+
+    height: 70vh;
+
+    .popup-verify-title {
+        margin-top: 0;
+    }
+
+    .contract-text:first-child, .contract-info:first-child {
+        margin-top: 0;
+    }
+
+    .contract-description {
+        margin-bottom: 15px;
+
+        .block-text {
+            margin-right: 50px;
+
+            .contract-text {
+                height: 41px;
+                margin: 0;
+
+                font-family: @f-cera-pro-700;
+            }
+        }
+
+        .block-info {
+            .contract-info {
+                height: 41px;
+
+                p {
+                    display: inline-block;
+
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    .source-code {
+        position: relative;
+
+        flex: 1;
+
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+
+        .source-btn {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+        }
+
+        .code {
+            overflow-y: auto;
+
+            height: 100%;
+            padding: 15px;
+
+            white-space: pre;
+        }
+    }
+}

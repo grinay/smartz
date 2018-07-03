@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import * as api from '../../api/apiRequests';
 import Alert from '../common/Alert';
-import Spinner from '../common/Spinner';
+import Loader from '../common/loader/Loader';
 import CtorCard from '../common/ctor-card/CtorCard';
 import Auth from '../auth/Auth';
 import DevBlock from './../common/dev-block/DevBlock';
@@ -16,9 +16,8 @@ class MyDapps extends Component {
   }
 
   componentDidMount() {
-    window.Intercom("update");
+    window.Intercom('update');
   }
-
 
   render() {
     const { ctors, metamaskStatus } = this.props;
@@ -28,23 +27,19 @@ class MyDapps extends Component {
 
     return (
       <main className="page-main  my-dapps">
-        {metamaskStatus !== 'okMetamask' &&
-          <Alert standardAlert={metamaskStatus} />
-        }
+        {metamaskStatus !== 'okMetamask' && <Alert standardAlert={metamaskStatus} />}
         <div className="ctor-section">
-          {ctors &&
+          {ctors && (
             <ul className="ctor-list">
-              {ctors.filter(el => isAuthenticated && el.user_id === userId).map((el, i) =>
+              {ctors.filter((el) => isAuthenticated && el.user_id === userId).map((el, i) => (
                 <li key={i} className="ctor-item">
                   <CtorCard key={i} ctor={el} />
                 </li>
-              )}
+              ))}
             </ul>
-          }
+          )}
 
-          {!ctors &&
-            <Spinner text="Loading contracts" width="100" />
-          }
+          {!ctors && <Loader text="Loading contracts" width="100" />}
         </div>
       </main>
     );
