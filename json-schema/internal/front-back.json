@@ -167,6 +167,8 @@
                                     {"$ref": "#/definitions/EOSABI"}
                                 ]
                             },
+                            "source": { "type": "string" },
+                            "bin": { "type": "string" },
                             "blockchain": {"type": "string", "enum": ["eos", "ethereum"]},
                             "functions": {
                                 "type": "array",
@@ -185,7 +187,11 @@
                                     "description": {"type": "string"},
                                     "image": {"type": "string"}
                                 }
-                            }
+                            },
+                            "compiler_version": { "type": "string" },
+                            "compiler_optimization": { "type": "boolean" },
+                            "contract_name": { "type": "string" },
+                            "price_eth": { "type": "number" }
                         }
                     }
                 ]

@@ -19,12 +19,12 @@ from smartzcore.service_instances import WithLogger
 
 class BaseCompilerService(metaclass=ABCMeta):
     @abstractmethod
-    def compile(self, constructor: Constructor, source, contract_name) -> Tuple[str, str]:
+    def compile(self, constructor: Constructor, source, contract_name) -> Tuple[str, str, str, bool]:
         raise NotImplementedError()
 
 
 class EthereumCompilerService(BaseCompilerService):
-    def compile(self, constructor: Constructor, source, contract_name) -> Tuple[str, str]:
+    def compile(self, constructor: Constructor, source, contract_name) -> Tuple[str, str, str, bool]:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmpfile, tmpfilename = tempfile.mkstemp(dir=tmpdir)
             outsock = os.fdopen(tmpfile, 'w')
@@ -48,11 +48,11 @@ class EthereumCompilerService(BaseCompilerService):
             with open('{}.abi'.format(out_file)) as f:
                 abi = f.read()
 
-            return bin, abi
+            return bin, abi, '0.4.20', True  # todo
 
 
 class EosCompilerService(BaseCompilerService, WithLogger):
-    def compile(self, constructor: Constructor, source, contract_name) -> Tuple[str, str]:
+    def compile(self, constructor: Constructor, source, contract_name) -> Tuple[str, str, str, bool]:
         return self._call_compiler(source)
 
     def _call_compiler(self, source):
@@ -74,7 +74,7 @@ class EosCompilerService(BaseCompilerService, WithLogger):
                 or 'bin' not in res_json or 'abi' not in res_json:
             raise PublicException("Compilation error/2")
 
-        return res_json['bin'], res_json['abi']
+        return res_json['bin'], res_json['abi'], '', False
 
 
 ########################################################################################################################

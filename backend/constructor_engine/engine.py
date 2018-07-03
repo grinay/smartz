@@ -11,7 +11,7 @@ from decimal import Decimal
 
 import requests
 from django.conf import settings
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional, Any, Union
 
 from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS, BLOCKCHAINS
 from apps.constructors.models import Constructor
@@ -79,7 +79,7 @@ class BaseEngine(WithLogger):
         res = self._call_constructor_method(source, self.METHOD_GET_PARAMS)
         return res
 
-    def construct(self, constructor: Constructor, fields):
+    def construct(self, constructor: Constructor, fields: Dict) -> Dict:
         try:
             constructor_source = self._load_constructor_source(constructor.slug)
         except Exception:
@@ -95,13 +95,13 @@ class BaseEngine(WithLogger):
         source, contract_name = res['source'], res['contract_name']
 
         if re.findall('[^a-zA-Z0-9]', contract_name):
-            raise Exception
+            raise PublicException('Invalid contract name in constructor: {}'.format(contract_name))
 
         processor = self._require_contract_processor(constructor.blockchain)
         source = processor.process_source(constructor, source, contract_name)
 
         try:
-            bin, abi = self._compile(constructor, source, contract_name)
+            bin, abi, compiler_version, compiler_optimization = self._compile(constructor, source, contract_name)
             abi = json.loads(abi)
         except Exception as e:
             self.logger.warning("Compilation error. Ex: {}".format(str(e)))
@@ -125,7 +125,10 @@ class BaseEngine(WithLogger):
             'source': source,
             'abi': abi,
             'function_specs': post_construct_info['function_specs'],
-            'dashboard_functions': post_construct_info['dashboard_functions']
+            'dashboard_functions': post_construct_info['dashboard_functions'],
+            'compiler_version': compiler_version,
+            'compiler_optimization': compiler_optimization,
+            'contract_name': contract_name
         }
 
     @abc.abstractmethod
@@ -173,7 +176,7 @@ class BaseEngine(WithLogger):
                 "error_descr": "Something got wrong/1"
             }
 
-    def _compile(self, constructor: Constructor, source: str, contract_name: str) -> Tuple[str, str]:
+    def _compile(self, constructor: Constructor, source: str, contract_name: str) -> Tuple[str, str, str, bool]:
         """compiles source """
         compiler = self._require_compiler_service(constructor.blockchain)
         return compiler.compile(constructor, source, contract_name)
@@ -223,3 +226,13 @@ class SimpleStorageEngine(BaseEngine):
             raise Exception
 
         return os.path.join(self._datadir, str(id))
+
+
+class WithEngine:
+
+    @property
+    def constructor_engine(self) -> BaseEngine:
+        if not hasattr(self, '_constructor_engine'):
+            self._constructor_engine = SimpleStorageEngine({'datadir': settings.SMARTZ_CONSTRUCTOR_DATA_DIR})
+
+        return self._constructor_engine

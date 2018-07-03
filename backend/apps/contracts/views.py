@@ -1,6 +1,5 @@
-import json
+from typing import Dict
 
-from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -8,29 +7,15 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from apps.contracts.models import Contract
+from apps.contracts.serializers import contract_pub_info
 from utils.common import auth
 from utils.responses import error_response
 from smartz.json_schema import load_schema, assert_conforms2schema_part
 
 
 
-def _prepare_instance_details(contract: Contract):
-    output = {
-        "instance_id": contract.slug,
-        "instance_title": contract.title,
-        "network_id": str(contract.network_id),
-        "ctor_id": contract.constructor.slug,
-        "address": contract.address,
-        "abi": json.loads(contract.abi),
-        "functions": json.loads(contract.function_specs),
-        "dashboard_functions": json.loads(contract.dashboard_functions),
-        "blockchain": contract.constructor.blockchain,
-        "constructor": {
-            "name": contract.constructor.name,
-            "description": contract.constructor.description,
-            "image": contract.constructor.image
-        }
-    }
+def _prepare_instance_details(contract: Contract) -> Dict:
+    output = contract_pub_info(contract)
     assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
                                 'rpc_calls/get_instance_details/output')
 

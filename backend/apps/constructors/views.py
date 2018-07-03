@@ -4,9 +4,7 @@ import re
 import json
 import tempfile
 from decimal import Decimal
-from shutil import copy2
 
-from django.conf import settings
 from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
@@ -19,7 +17,8 @@ from jsonschema.validators import validator_for
 from apps.common.constants import BLOCKCHAINS
 from apps.constructors.models import Constructor
 from apps.contracts.models import Contract
-from smartzcore.service_instances import WithEngine
+from apps.contracts.serializers import contract_pub_info
+from constructor_engine.engine import WithEngine
 from utils.common import auth, nonempty, args_string
 from utils.responses import  error_response, engine_error_response
 from smartz.json_schema import load_schema, add_definitions
@@ -45,7 +44,7 @@ class ListView(View):
                 {
                     'ctor_id': constructor.slug,
                     'ctor_name': constructor.name,
-                    'price_eth': constructor.get_formatted_price_eth(),
+                    'price_eth': constructor.get_formatted_price(),
                     'ctor_descr': constructor.description,
                     'is_public': constructor.is_public,
                     'user_id': constructor.user_id,
@@ -158,7 +157,7 @@ class GetParamsView(View):
         return JsonResponse({
             'ctor_name': constructor.name,
             'ctor_descr': constructor.description,
-            'price_eth': constructor.get_formatted_price_eth(),
+            'price_eth': constructor.get_formatted_price(),
             'schema': _process_ctor_schema(constructor.blockchain, constructor.get_schema()),
             'ui_schema': constructor.get_ui_schema(),
             'blockchain': constructor.blockchain,
@@ -232,14 +231,10 @@ class ConstructView(View, WithEngine):
         contract.dashboard_functions = json.dumps(result['dashboard_functions'])
         contract.constructor = constructor
         contract.user = user
+        contract.compiler_version = result['compiler_version']
+        contract.compiler_optimization = result['compiler_optimization']
+        contract.contract_name = result['contract_name']
+        contract.deploy_price = constructor.price_eth
         contract.save()
 
-        return JsonResponse({
-            'instance_id': contract.slug,
-            'bin': result['bin'],
-            'source': result['source'],
-            'abi': contract.abi,
-            'blockchain': constructor.blockchain,
-            #todo
-            'price_eth': constructor.get_formatted_price_eth()
-        })
+        return JsonResponse(contract_pub_info(contract))
