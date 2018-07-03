@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import tlgImg from '../../../assets/img/common/telegram-baner.svg';
 
 import './Banner.less';
-import { sendClickEvent } from '../../../helpers/data-layer';
+import { sendClickEvent } from '../../../helpers/statictics';
 import { clickTypes } from '../../../constants/constants';
 
 export default class Banner extends PureComponent {
