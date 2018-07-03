@@ -28,7 +28,7 @@ export default class EosResult extends React.PureComponent<IEosResultProps, {}> 
               Congratulations! Your contract is deployed to EOS blockchain!<br />
             </p>
             <p className="support-block__paragraph">
-              Now you can
+              Now you can{' '}
               <Link to={`/dapp/${dapp.instance_id}`}> manage your contract </Link>with Smartz
               Platform!
             </p>

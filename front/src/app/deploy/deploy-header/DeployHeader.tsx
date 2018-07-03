@@ -26,7 +26,7 @@ export default class DeployHeader extends React.PureComponent<IDeployHeaderProps
           <div className={'title'}>
             <h2 className="ctor-title">{ctor.ctor_name}</h2>
             <p className="contract">
-              <span>Contract: </span>
+              <span>Constructor: </span>
               <a href={`${window.location.origin}/deploy/${ctor.ctor_id}`}>
                 {`${window.location.origin}/deploy/${ctor.ctor_id}`}
               </a>

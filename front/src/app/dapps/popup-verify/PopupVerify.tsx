@@ -53,7 +53,7 @@ export default class PopupVerify extends React.PureComponent<
               <CopyButton onClick={this.onClickCopy(dapp.compiler_version)} />
             </div>
             <div className="contract-info flex-v">
-              <p> {dapp.optimization.toString()}</p>
+              <p>{dapp.compiler_optimization ? 'Yes' : 'No'}</p>
             </div>
           </section>
         </div>
