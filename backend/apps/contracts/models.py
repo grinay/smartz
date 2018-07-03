@@ -34,6 +34,12 @@ class Contract(models.Model):
 
     created_at = models.DateTimeField(default=init_time)
 
+    contract_name = models.CharField(max_length=200, default='')
+    deploy_price = models.DecimalField(max_digits=30, decimal_places=18, default=0)
+
+    compiler_version = models.CharField(max_length=200, default="")
+    compiler_optimization = models.BooleanField(default=True)
+
     @classmethod
     def create(cls, **kwargs):
         contract = cls(**kwargs)

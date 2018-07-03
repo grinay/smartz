@@ -73,7 +73,7 @@ class Constructor(models.Model):
 
         return constructor
 
-    def get_formatted_price_eth(self):
+    def get_formatted_price(self):
         return float(format(self.price_eth, 'f').rstrip('0').rstrip('.'))
 
     def get_schema(self):
