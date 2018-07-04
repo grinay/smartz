@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import FunctionCard from '../function-card/FunctionCard';
 
-import { transactionNew, transactionReceipt } from '../DappsActions';
+import { transactionNew, transactionReceipt } from '../DappActions';
 
 const mapDispatchToProps = {
   transactionNew,

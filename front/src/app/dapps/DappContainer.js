@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { find } from 'lodash';
 
 import Dapp from './Dapp';
-import { viewFuncResult } from './DappsActions';
+import { viewFuncResult } from './DappActions';
 
 const mapStateToProps = (state, ownProps) => {
   const dapp = find(state.dapps.dapps, { id: ownProps.match.params.id });

@@ -2,7 +2,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Dashboard from './Dashboard';
-import { viewFuncResult } from '../dapps/DappsActions';
+import { viewFuncResult } from '../dapps/DappActions';
 
 const mapStateToProps = (state) => ({
   ctors: state.ctors.ctors,

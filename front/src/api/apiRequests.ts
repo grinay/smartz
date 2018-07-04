@@ -6,7 +6,7 @@ import {
     fetchCtorParamsFailure, fetchCtorParamsRequest, fetchCtorParamsSuccess, fetchCtorsFailure,
     fetchCtorsRequest, fetchCtorsSuccess,
 } from '../app/common/ctor-card/CtorsActions';
-import { fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess } from '../app/dapps/DappsActions';
+import { fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess } from '../app/dapps/DappActions';
 import {
     constructError, constructRequest, constructSuccess, setFormData,
 } from '../app/deploy/DeployActions';
