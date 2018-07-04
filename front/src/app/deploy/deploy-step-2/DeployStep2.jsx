@@ -60,17 +60,17 @@ class DeployStep2 extends PureComponent {
               deployTxError(deployId, errMsg);
             } else {
               const dataEvent = {
-                dimension2: getCtorUrl(ctor_id),
-                dimension4: blockchain,
-                metric1: price,
-                metric2: ethConstants.gas,
-                metric3: ethConstants.gasPrice
+                constructorId: getCtorUrl(ctor_id),
+                blockchain,
+                price,
+                gasLimit: ethConstants.gas,
+                gasPrice: ethConstants.gasPrice
               };
 
               getNetworkId((netId) => {
                 deployTxSent(deployId, netId, txHash, blockchain);
 
-                dataEvent.dimension5 = netId;
+                dataEvent.networkId = netId;
 
                 sendStatusDappEvent(id, ctor_id, {
                   status: dappProcessStatus.DEPLOY,
@@ -97,14 +97,14 @@ class DeployStep2 extends PureComponent {
 
       case blockchains.eos:
         const dataEvent = {
-          dimension2: getCtorUrl(ctor_id),
-          dimension4: blockchain
+          constructorId: getCtorUrl(ctor_id),
+          blockchain
         };
 
         // get chainId to set 'networkId'
         Eos.setChainId()
           .then(() => {
-            dataEvent.dimension5 = Eos.configEosDapp.chainId;
+            dataEvent.networkId = Eos.configEosDapp.chainId;
 
             // get identity to set addressSender
             return Eos.getIdentity();

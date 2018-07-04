@@ -56,6 +56,14 @@ export const sendErrorReceiveCtorCodeEvent = (ctorId: string) => {
 // deploy/mined dapp event
 export const sendStatusDappEvent = (dappId: string, ctorId: string, data) => {
   let category: string;
+  const dataGa = {
+    dimension2: data.constructorId,
+    dimension4: data.blockchain,
+    dimension5: data.networkId,
+    metric1: data.price ? data.price : null,
+    metric2: data.gasLimit ? data.gasLimit : null,
+    metric3: data.gasPrice ? data.gasPrice : null,
+  };
 
   if (data.status === dappProcessStatus.DEPLOY) {
     category = 'deployTxSent';
@@ -65,9 +73,7 @@ export const sendStatusDappEvent = (dappId: string, ctorId: string, data) => {
     window.ga('send', 'event', 'constructor', 'deploySuccess', getCtorUrl(ctorId));
   }
 
-  delete data.status;
-
-  window.ga('send', 'event', 'dapp', category, getDappUrl(dappId), data);
+  window.ga('send', 'event', 'dapp', category, getDappUrl(dappId), dataGa);
 };
 
 // click event
