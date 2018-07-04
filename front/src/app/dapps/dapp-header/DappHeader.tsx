@@ -44,11 +44,11 @@ export default class DappHeader extends React.PureComponent<IDappHeaderProps, ID
               ? require(`../../common/ctor-card/img/${dapp.constructor.image}`)
               : `https://lorempixel.com/640/400/?${Math.random()}`
           }
-          alt={`${dapp.constructor.name} contract`}
+          alt={`${dapp.constructor.name} dapp`}
         />
         <div className="title">
           <h2 className="dapp-title">{dapp.title}</h2>
-          <p className="contract flex-v">
+          <p className="dapp flex-v">
             <span>Contract: </span>
             {dapp.address && (
               <span className="contract-controls__section-header  contract-controls__wallet-key">

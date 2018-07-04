@@ -1,15 +1,15 @@
 // Fetching Dapps list
 export const fetchDappsRequest = () => ({
-  type: 'FETCH_INSTANCES_REQUEST'
+  type: 'FETCH_DAPPS_REQUEST'
 });
 
 export const fetchDappsFailure = (error) => ({
-  type: 'FETCH_INSTANCES_FAILURE',
+  type: 'FETCH_DAPPS_FAILURE',
   error
 });
 
 export const fetchDappsSuccess = (dapps) => ({
-  type: 'FETCH_INSTANCES_SUCCESS',
+  type: 'FETCH_DAPPS_SUCCESS',
   dapps
 });
 //

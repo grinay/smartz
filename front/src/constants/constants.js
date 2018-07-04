@@ -19,7 +19,7 @@ export const eosConstants = {
   // HOST: 'dev.cryptolions.io'
 };
 
-export const contractProcessStatus = {
+export const dappProcessStatus = {
   DEPLOY: 'deploy',
   MINED: 'mined'
 };

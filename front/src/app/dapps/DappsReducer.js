@@ -11,17 +11,17 @@ const dapps = (state = initState, action) => {
   const nextState = cloneDeep(state);
 
   switch (action.type) {
-    case 'FETCH_INSTANCES_REQUEST':
+    case 'FETCH_DAPPS_REQUEST':
       nextState.fetchStatus = 'request';
       nextState.error = '';
       return nextState;
 
-    case 'FETCH_INSTANCES_FAILURE':
+    case 'FETCH_DAPPS_FAILURE':
       nextState.fetchStatus = 'error';
       nextState.error = action.error;
       return nextState;
 
-    case 'FETCH_INSTANCES_SUCCESS':
+    case 'FETCH_DAPPS_SUCCESS':
       nextState.fetchStatus = 'success';
       nextState.error = '';
       if (!Array.isArray(action.dapps)) {

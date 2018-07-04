@@ -3,14 +3,14 @@ import Form from 'react-jsonschema-form';
 
 import * as api from '../../../api/apiRequests';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
-import { sendOpenContractEvent } from '../../../helpers/statictics';
+import { sendOpenDappEvent } from '../../../helpers/statictics';
 
 class DeployStep1 extends PureComponent {
   componentDidMount() {
     const { errors, ctor } = this.props;
 
     if (!errors) {
-      sendOpenContractEvent(ctor.ctor_id);
+      sendOpenDappEvent(ctor.ctor_id);
     }
   }
 
@@ -36,11 +36,7 @@ class DeployStep1 extends PureComponent {
     const { ctor, formData } = this.props;
 
     // Add dapp name field in the form beginning
-    if (
-      ctor &&
-      ctor.schema &&
-      (!ctor.schema.properties || !ctor.schema.properties.dapp_title)
-    ) {
+    if (ctor && ctor.schema && (!ctor.schema.properties || !ctor.schema.properties.dapp_title)) {
       if (!('properties' in ctor.schema)) {
         ctor.schema.properties = {};
       }

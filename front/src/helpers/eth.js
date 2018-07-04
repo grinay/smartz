@@ -4,10 +4,10 @@ import { decodeEvent } from 'ethjs-abi';
 export var web3 = window.Web3 ? new window.Web3(window.web3.currentProvider) : undefined;
 
 export const processControlForm = (
-  contract_abi /* abi array */,
+  dapp_abi /* abi array */,
   function_spec /* ETHFunctionSpec */,
   form_data /* data from react-jsonschema-form */,
-  contract_address,
+  dapp_address,
   callback
 ) => {
   // preparing args
@@ -67,7 +67,7 @@ export const processControlForm = (
         {
           ...transactionParameters,
           value,
-          to: contract_address
+          to: dapp_address
         },
         callback
       );
@@ -79,7 +79,7 @@ export const processControlForm = (
   }
 
   let function_abi;
-  contract_abi.forEach((info) => {
+  dapp_abi.forEach((info) => {
     if (info.type === 'function' && info.name === function_spec.name) function_abi = info;
   });
   if (!function_abi) throw new Error('not found abi of function ' + function_spec.name);
@@ -102,7 +102,7 @@ export const processControlForm = (
 
   // calling/transacting
 
-  const CtorDapp = web3.eth.contract(contract_abi).at(contract_address);
+  const CtorDapp = web3.eth.contract(dapp_abi).at(dapp_address);
 
   // non-constant - there will be a transaction instead of a local call
   if (!function_abi.constant) {
@@ -129,7 +129,7 @@ export const processControlForm = (
 
 // ALSO: for each function_spec
 //      if (function_spec.constant && !function_spec.payable && 0 === function_spec.inputs.length)
-//          processControlForm(contract_abi, function_spec, [], contract_address); // right away!
+//          processControlForm(dapp_abi, function_spec, [], dapp_address); // right away!
 
 // ALSO: render box with processControlForm() for each dashboard function
 
@@ -282,11 +282,11 @@ export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
 /**
  * Return decoded event
  *
- * @param contractDapp
+ * @param dapp
  * @param log
  */
-export const decodeEventOfDapp = (contractDapp, log) => {
-  const abi = contractDapp.abi;
+export const decodeEventOfDapp = (dapp, log) => {
+  const abi = dapp.abi;
   let eventAbi = null;
 
   for (let i = 0; i < abi.length; i++) {

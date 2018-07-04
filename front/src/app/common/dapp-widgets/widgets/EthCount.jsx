@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-import BaseWidget from "./BaseWidget";
-import { web3 } from "../../../../helpers/eth";
+import BaseWidget from './BaseWidget';
+import { web3 } from '../../../../helpers/eth';
 import { moneyAbbr2Symbol } from '../../../../helpers/localization';
-
 
 export default class EthCount extends BaseWidget {
   constructor(props) {
@@ -11,10 +10,10 @@ export default class EthCount extends BaseWidget {
 
     this.state = {
       fnDescription: props.fnDescription,
-      contractDapp: props.contractDapp,
+      dapp: props.dapp,
       currency: null,
-      symbol: null,
-    }
+      symbol: null
+    };
   }
 
   componentDidMount() {
@@ -26,8 +25,9 @@ export default class EthCount extends BaseWidget {
 
     const url = `https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=${showCurrency}`;
 
-    axios.get(url)
-      .then(response => {
+    axios
+      .get(url)
+      .then((response) => {
         const { data, status } = response;
 
         if (status === 200 && Array.isArray(data) && data.length > 0) {
@@ -40,7 +40,7 @@ export default class EthCount extends BaseWidget {
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.warn(error);
       });
   }
@@ -54,4 +54,4 @@ export default class EthCount extends BaseWidget {
       ? res.valueOf()
       : `${res.valueOf()} (${symbol} ${(currency * res.valueOf()).toFixed(2)})`;
   }
-};
+}

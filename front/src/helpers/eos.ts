@@ -81,7 +81,7 @@ class EosClass {
     }
   }
 
-  public deployContract = (bin: string, abi: any) => {
+  public deployDapp = (bin: string, abi: any) => {
     this.scatter.requireVersion(5.0);
 
     return (
@@ -123,8 +123,8 @@ class EosClass {
 
           this.eos = this.scatter.eos(this.network, Eos, this.configEosDapp);
 
-          return this.eos.transaction(accountName, (contract) => {
-            contract[func.name](...formData, { authorization: accountName });
+          return this.eos.transaction(accountName, (dapp) => {
+            dapp[func.name](...formData, { authorization: accountName });
           });
         })
         .then((result) => {

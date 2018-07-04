@@ -6,8 +6,8 @@ import Loader from '../../common/loader/Loader';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
 import { ethConstants } from '../../../constants/constants';
 import { blockchains } from './../../../constants/constants';
-import { sendStatusContractEvent, getCtorUrl } from '../../../helpers/statictics';
-import { contractProcessStatus } from '../../../constants/constants';
+import { sendStatusDappEvent, getCtorUrl } from '../../../helpers/statictics';
+import { dappProcessStatus } from '../../../constants/constants';
 
 class DeployStep2 extends PureComponent {
   constructor(props) {
@@ -72,8 +72,8 @@ class DeployStep2 extends PureComponent {
 
                 dataEvent.dimension5 = netId;
 
-                sendStatusContractEvent(id, ctor_id, {
-                  status: contractProcessStatus.DEPLOY,
+                sendStatusDappEvent(id, ctor_id, {
+                  status: dappProcessStatus.DEPLOY,
                   ...dataEvent
                 });
               });
@@ -82,10 +82,10 @@ class DeployStep2 extends PureComponent {
                 if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
                   deployTxError(deployId, 'Something went wrong!');
                 } else {
-                  deployTxMined(deployId, receipt.contractAddress);
+                  deployTxMined(deployId, receipt.dappAddress);
 
-                  sendStatusContractEvent(id, ctor_id, {
-                    status: contractProcessStatus.MINED,
+                  sendStatusDappEvent(id, ctor_id, {
+                    status: dappProcessStatus.MINED,
                     ...dataEvent
                   });
                 }
@@ -110,12 +110,12 @@ class DeployStep2 extends PureComponent {
             return Eos.getIdentity();
           })
           .then((identity) => {
-            Eos.deployContract(bin, abi)
+            Eos.deployDapp(bin, abi)
               .then((result) => {
                 deployTxMined(deployId, result.transaction_id);
 
-                sendStatusContractEvent(instance_id, ctor_id, {
-                  status: contractProcessStatus.MINED,
+                sendStatusDappEvent(id, ctor_id, {
+                  status: dappProcessStatus.MINED,
                   ...dataEvent
                 });
               })
@@ -128,8 +128,8 @@ class DeployStep2 extends PureComponent {
 
             deployTxSent(deployId, Eos.configEosDapp.chainId, null, blockchain);
 
-            sendStatusContractEvent(instance_id, ctor_id, {
-              status: contractProcessStatus.DEPLOY,
+            sendStatusDappEvent(id, ctor_id, {
+              status: dappProcessStatus.DEPLOY,
               ...dataEvent
             });
           })

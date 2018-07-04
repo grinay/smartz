@@ -8,7 +8,7 @@ import './EthResult.less';
 
 export default class EthResult extends PureComponent {
   render() {
-    const { status, txHash, netId, dapp, contractAddress, blockchain } = this.props;
+    const { status, txHash, netId, dapp, dappAddress } = this.props;
 
     return (
       <div className="eth-result">
@@ -35,15 +35,14 @@ export default class EthResult extends PureComponent {
                 Congratulations! Your contract is deployed to {getNetworkName(netId)} blockchain!<br />
                 Contract address is{' '}
                 <a
-                  href={getNetworkEtherscanAddress(netId) + '/address/' + contractAddress}
+                  href={getNetworkEtherscanAddress(netId) + '/address/' + dappAddress}
                   target="_blank"
                   rel="noopener noreferrer">
-                  {contractAddress}
+                  {dappAddress}
                 </a>.
               </p>
               <p className="support-block__paragraph">
-                Now you can{' '}
-                <Link to={`/dapp/${dapp.id}`}>manage your contract</Link> with Smartz
+                Now you can <Link to={`/dapp/${dapp.id}`}>manage your contract</Link> with Smartz
                 Platform!
               </p>
             </div>

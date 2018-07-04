@@ -9,12 +9,12 @@ import './EosResult.less';
 interface IEosResultProps {
   status: any;
   dapp: any;
-  contractAddress: any;
+  dappAddress: any;
 }
 
 export default class EosResult extends React.PureComponent<IEosResultProps, {}> {
   public render() {
-    const { status, dapp, contractAddress } = this.props;
+    const { status, dapp } = this.props;
 
     return (
       <div className="eos-result">
@@ -28,8 +28,7 @@ export default class EosResult extends React.PureComponent<IEosResultProps, {}> 
               Congratulations! Your contract is deployed to EOS blockchain!<br />
             </p>
             <p className="support-block__paragraph">
-              Now you can{' '}
-              <Link to={`/dapp/${dapp.id}`}>manage your contract</Link> with Smartz
+              Now you can <Link to={`/dapp/${dapp.id}`}>manage your contract</Link> with Smartz
               Platform!
             </p>
           </div>

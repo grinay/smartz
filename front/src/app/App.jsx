@@ -7,7 +7,7 @@ import Footer from './footer/Footer';
 import Auth from './auth/Auth';
 import Callback from './auth/callback/Callback';
 import Store from './store/StoreContainer';
-import MyDapps from './my-dapps/MyDappsContainer';
+import MyConstructors from './my-constructors/MyConstructorsContainer';
 import Profile from './profile/Profile';
 import Deploy from './deploy/DeployContainer';
 import Login from './auth/login/LoginContainer';
@@ -15,7 +15,6 @@ import CtorAdd from './ctor-add/CtorAdd';
 import Dashboard from './dashboard/DashboardContainer';
 import Dapp from './dapps/DappContainer';
 import Docs from './docs/Docs';
-import InfoBlock from './common/InfoBlock';
 import { checkMetaMask } from '../helpers/eth';
 import InstallExtension from './common/install-extension/InstallExtension';
 import Page404 from './page-404/Page404';
@@ -140,8 +139,8 @@ class App extends Component {
           />
 
           <PrivateRoute
-            path="/my-dapps"
-            component={(props) => <MyDapps metamaskStatus={metamaskStatus} {...props} />}
+            path="/my-constructors"
+            component={(props) => <MyConstructors metamaskStatus={metamaskStatus} {...props} />}
           />
 
           <Route component={(props) => <Page404 {...props} />} />

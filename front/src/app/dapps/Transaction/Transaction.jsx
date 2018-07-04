@@ -11,7 +11,7 @@ import {
 class Transaction extends Component {
   render() {
     const { time, func, formData, txHash, result, timeMined } = this.props.transaction;
-    const { netId, contractDapp } = this.props;
+    const { netId, dapp } = this.props;
 
     return (
       <div>
@@ -65,7 +65,7 @@ class Transaction extends Component {
               <li>
                 <strong>Events:</strong>
                 {result.logs.map((log, i) => {
-                  let event = decodeEventOfDapp(contractDapp, log);
+                  let event = decodeEventOfDapp(dapp, log);
 
                   if (!event) {
                     return '';

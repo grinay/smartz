@@ -1,16 +1,17 @@
 import * as React from 'react';
 
-import EthResult from './eth-result/EthResult';
 import EosResult from './eos-result/EosResult';
+import EthResult from './eth-result/EthResult';
 
 import './DeployStep3.less';
+
 
 interface IDeployStep3Props {
   status: any;
   txHash: any;
   netId: any;
   dapp: any;
-  contractAddress: any;
+  dappAddress: any;
   blockchain: any;
 }
 
@@ -20,7 +21,7 @@ export default class DeployStep3 extends React.PureComponent<IDeployStep3Props, 
   }
 
   public render() {
-    const { status, txHash, netId, dapp, contractAddress, blockchain } = this.props;
+    const { blockchain } = this.props;
 
     let content;
 

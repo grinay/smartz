@@ -18,7 +18,7 @@ class CtorCard extends Component {
         <Link to={`/deploy/${ctor.ctor_id}`} className="ctor-card__link screen">
           <div className="ctor-card__img flex">
             {ctor.image ? (
-              <img src={require(`./img/${ctor.image}`)} alt={`${ctor.ctor_name} contract`} />
+              <img src={require(`./img/${ctor.image}`)} alt={`${ctor.ctor_name} dapp`} />
             ) : (
               <div className="empty_img flex">
                 <p>{ctor.ctor_name.charAt(0).toUpperCase()}</p>

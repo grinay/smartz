@@ -48,8 +48,8 @@ export const deployTxError = (deployId, errors) => ({
   deployId
 });
 
-export const deployTxMined = (deployId, contractAddress) => ({
+export const deployTxMined = (deployId, dappAddress) => ({
   type: 'DEPLOY_TX_MINED',
-  contractAddress,
+  dappAddress,
   deployId
 });

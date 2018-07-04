@@ -1,5 +1,5 @@
-import BaseWidget from "./BaseWidget";
-import dateFormat from "dateformat"
+import BaseWidget from './BaseWidget';
+import dateFormat from 'dateformat';
 
 export default class UnixTime extends BaseWidget {
   constructor(props) {
@@ -7,8 +7,8 @@ export default class UnixTime extends BaseWidget {
 
     this.state = {
       fnDescription: props.fnDescription,
-      contractDapp: props.contractDapp
-    }
+      dapp: props.dapp
+    };
   }
 
   render() {
@@ -16,4 +16,4 @@ export default class UnixTime extends BaseWidget {
 
     return dateFormat(now, this.getOption('format', 'dd.mm.yyyy HH:MM:ss o'));
   }
-};
+}

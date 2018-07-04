@@ -6,10 +6,10 @@ import { blockchains } from '../../constants/constants';
 import { getFuncType } from '../../helpers/common';
 import { processControlForm, processResult } from '../../helpers/eth';
 import Alert from '../common/Alert';
-import renderDappWidget from '../common/contract-dapp-widgets/ContractDappWidgets';
+import renderDappWidget from '../common/dapp-widgets/DappWidgets';
 import DappHeader from './dapp-header/DappHeader';
 import FunctionButton from './function-button/FunctionButton';
-import FunctionCard from './FunctionCard/FunctionCardContainer';
+import FunctionCard from './function-card/FunctionCardContainer';
 import Transaction from './Transaction/Transaction';
 
 import './Dapp.less';
@@ -185,7 +185,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
               .map((transaction, i) => (
                 <Transaction
                   transaction={transaction}
-                  contractDapp={dapp}
+                  dapp={dapp}
                   netId={dapp.network_id}
                   key={i}
                 />

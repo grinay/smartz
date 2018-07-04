@@ -7,9 +7,9 @@ import Loader from '../common/loader/Loader';
 import CtorCard from '../common/ctor-card/CtorCard';
 import Auth from '../auth/Auth';
 
-import './MyDapps.less';
+import './MyConstructors.less';
 
-class MyDapps extends Component {
+class MyConstructors extends Component {
   componentWillMount() {
     api.getConstructors();
   }
@@ -45,4 +45,4 @@ class MyDapps extends Component {
   }
 }
 
-export default MyDapps;
+export default MyConstructors;

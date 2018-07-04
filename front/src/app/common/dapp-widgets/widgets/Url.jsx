@@ -1,5 +1,5 @@
-import BaseWidget from "./BaseWidget";
-import React  from 'react';
+import BaseWidget from './BaseWidget';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default class Url extends BaseWidget {
@@ -8,15 +8,15 @@ export default class Url extends BaseWidget {
 
     this.state = {
       fnDescription: props.fnDescription,
-      contractDapp: props.contractDapp
-    }
+      dapp: props.dapp
+    };
   }
 
   render() {
     return (
-        <Link to={this.getResult('/')} target="_blank">
-          {this.getResult('/')}
-        </Link>
-    )
+      <Link to={this.getResult('/')} target="_blank">
+        {this.getResult('/')}
+      </Link>
+    );
   }
-};
+}

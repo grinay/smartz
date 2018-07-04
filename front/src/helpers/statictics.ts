@@ -1,4 +1,4 @@
-import { blockchains, clickTypes, contractProcessStatus } from '../constants/constants';
+import { blockchains, clickTypes, dappProcessStatus } from '../constants/constants';
 
 
 // this funcs for push events to google tag manager
@@ -39,8 +39,8 @@ export const sendLoginEvent = (blockchain: any) => {
   window.ga('send', 'event', 'user', 'login', extension);
 };
 
-// open contract event
-export const sendOpenContractEvent = (ctorId: string) => {
+// open dapp event
+export const sendOpenDappEvent = (ctorId: string) => {
   window.ga('send', 'event', 'constructor', 'view', getCtorUrl(ctorId));
 };
 
@@ -53,13 +53,13 @@ export const sendErrorReceiveCtorCodeEvent = (ctorId: string) => {
   window.ga('send', 'event', 'constructor', 'compilationError', getCtorUrl(ctorId));
 };
 
-// deploy/mined contract event
-export const sendStatusContractEvent = (dappId: string, ctorId: string, data) => {
+// deploy/mined dapp event
+export const sendStatusDappEvent = (dappId: string, ctorId: string, data) => {
   let category: string;
 
-  if (data.status === contractProcessStatus.DEPLOY) {
+  if (data.status === dappProcessStatus.DEPLOY) {
     category = 'deployTxSent';
-  } else if (data.status === contractProcessStatus.MINED) {
+  } else if (data.status === dappProcessStatus.MINED) {
     category = 'deployTxMined';
 
     window.ga('send', 'event', 'constructor', 'deploySuccess', getCtorUrl(ctorId));
