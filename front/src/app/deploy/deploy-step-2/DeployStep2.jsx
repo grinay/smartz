@@ -7,7 +7,7 @@ import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMe
 import { ethConstants } from '../../../constants/constants';
 import { blockchains } from './../../../constants/constants';
 import { sendStatusDappEvent, getCtorUrl } from '../../../helpers/statictics';
-import { dappProcessStatus } from '../../../constants/constants';
+import { contractProcessStatus } from '../../../constants/constants';
 
 class DeployStep2 extends PureComponent {
   constructor(props) {
@@ -73,7 +73,7 @@ class DeployStep2 extends PureComponent {
                 dataEvent.networkId = netId;
 
                 sendStatusDappEvent(id, ctor_id, {
-                  status: dappProcessStatus.DEPLOY,
+                  status: contractProcessStatus.DEPLOY,
                   ...dataEvent
                 });
               });
@@ -85,7 +85,7 @@ class DeployStep2 extends PureComponent {
                   deployTxMined(deployId, receipt.contractAddress);
 
                   sendStatusDappEvent(id, ctor_id, {
-                    status: dappProcessStatus.MINED,
+                    status: contractProcessStatus.MINED,
                     ...dataEvent
                   });
                 }
@@ -110,12 +110,12 @@ class DeployStep2 extends PureComponent {
             return Eos.getIdentity();
           })
           .then((identity) => {
-            Eos.deployDapp(bin, abi)
+            Eos.deployContract(bin, abi)
               .then((result) => {
                 deployTxMined(deployId, result.transaction_id);
 
                 sendStatusDappEvent(id, ctor_id, {
-                  status: dappProcessStatus.MINED,
+                  status: contractProcessStatus.MINED,
                   ...dataEvent
                 });
               })
@@ -129,7 +129,7 @@ class DeployStep2 extends PureComponent {
             deployTxSent(deployId, Eos.configEosDapp.chainId, null, blockchain);
 
             sendStatusDappEvent(id, ctor_id, {
-              status: dappProcessStatus.DEPLOY,
+              status: contractProcessStatus.DEPLOY,
               ...dataEvent
             });
           })

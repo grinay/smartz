@@ -52,7 +52,7 @@ const deploy = (state = initState, action) => {
 
     case 'DEPLOY_TX_MINED':
       nextState[deployId].status = 'transaction_mined';
-      nextState[deployId].dappAddress = action.dappAddress;
+      nextState[deployId].contractAddress = action.contractAddress;
       return nextState;
 
     default:

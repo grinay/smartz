@@ -43,10 +43,10 @@ class Deploy extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { netId, dappAddress, dapp, publicAccess } = nextProps;
-    if (netId && dappAddress) {
+    const { netId, contractAddress, dapp, publicAccess } = nextProps;
+    if (netId && contractAddress) {
       const data = {
-        address: dappAddress,
+        address: contractAddress,
         network_id: netId,
         public_access: publicAccess
       };
@@ -63,7 +63,7 @@ class Deploy extends PureComponent {
       dapp,
       netId,
       txHash,
-      dappAddress,
+      contractAddress,
       metamaskStatus,
       setPublicAccess,
       deployTxSent,
@@ -94,7 +94,7 @@ class Deploy extends PureComponent {
       txHash,
       netId,
       dapp,
-      dappAddress,
+      contractAddress,
       blockchain
     };
 
@@ -125,8 +125,8 @@ class Deploy extends PureComponent {
           const listErr = Array.isArray(value) ? (
             value.map((item) => <li key={item}>{item}</li>)
           ) : (
-            <li key={errArr[err]}>{errArr[err]}</li>
-          );
+              <li key={errArr[err]}>{errArr[err]}</li>
+            );
 
           return (
             <span key={err}>
@@ -154,8 +154,8 @@ class Deploy extends PureComponent {
 
           {((status === 'configure' && ctor && ctor.fetchStatus === 'success') ||
             (status === 'construct_error' && ctor.fetchStatus === 'success')) && (
-            <DeployStep1 {...step1Props} />
-          )}
+              <DeployStep1 {...step1Props} />
+            )}
 
           {(status === 'construct_request' || status === 'construct_success') && (
             <DeployStep2 {...step2Props} />

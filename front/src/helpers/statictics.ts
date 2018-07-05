@@ -1,4 +1,4 @@
-import { blockchains, clickTypes, dappProcessStatus } from '../constants/constants';
+import { blockchains, clickTypes, contractProcessStatus } from '../constants/constants';
 
 
 // this funcs for push events to google tag manager
@@ -65,9 +65,9 @@ export const sendStatusDappEvent = (dappId: string, ctorId: string, data) => {
     metric3: data.gasPrice ? data.gasPrice : null,
   };
 
-  if (data.status === dappProcessStatus.DEPLOY) {
+  if (data.status === contractProcessStatus.DEPLOY) {
     category = 'deployTxSent';
-  } else if (data.status === dappProcessStatus.MINED) {
+  } else if (data.status === contractProcessStatus.MINED) {
     category = 'deployTxMined';
 
     window.ga('send', 'event', 'constructor', 'deploySuccess', getCtorUrl(ctorId));

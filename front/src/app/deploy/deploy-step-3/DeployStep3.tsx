@@ -11,7 +11,7 @@ interface IDeployStep3Props {
   txHash: any;
   netId: any;
   dapp: any;
-  dappAddress: any;
+  contractAddress: any;
   blockchain: any;
 }
 

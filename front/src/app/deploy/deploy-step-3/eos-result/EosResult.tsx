@@ -9,7 +9,7 @@ import './EosResult.less';
 interface IEosResultProps {
   status: any;
   dapp: any;
-  dappAddress: any;
+  contractAddress: any;
 }
 
 export default class EosResult extends React.PureComponent<IEosResultProps, {}> {
