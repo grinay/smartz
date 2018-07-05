@@ -7,7 +7,7 @@ from apps.dapps.models import Dapp
 
 
 class Command(BaseCommand):
-    help = 'Pupulate version and params from constructor to db'
+    help = 'Populate verification info'
 
     def handle(self, *args, **options):
         for dapp in Dapp.objects.filter(constructor__blockchain=BLOCKCHAIN_ETHEREUM):
