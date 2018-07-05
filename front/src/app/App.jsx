@@ -37,17 +37,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 class App extends Component {
-  componentWillMount() {
-    this.setState({});
+  constructor(props) {
+    super(props);
 
-    let metamaskStatus = false;
-
-    setInterval(() => {
-      if (metamaskStatus !== checkMetaMask()) {
-        metamaskStatus = checkMetaMask();
-        this.setState({ metamaskStatus });
-      }
-    }, 250);
+    this.state = {
+      metamaskStatus: checkMetaMask(),
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -57,6 +52,14 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const { metamaskStatus } = this.state;
+
+    setInterval(() => {
+      if (metamaskStatus !== checkMetaMask()) {
+        this.setState({ metamaskStatus });
+      }
+    }, 250);
+
     window.Intercom('boot', {
       app_id: 'q0bwfagc'
     });

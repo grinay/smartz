@@ -3,7 +3,7 @@ import moment from 'moment';
 
 const initState = {
   fetchStatus: 'init',
-  dapps: [],
+  dapps: null,
   error: null
 };
 
@@ -28,14 +28,19 @@ const dapps = (state = initState, action) => {
         action.dapps = [action.dapps];
       }
 
+      const dapps = [];
       action.dapps.forEach((dapp) => {
         const i = findIndex(nextState.dapps, { id: dapp.id });
+
         if (i >= 0) {
-          nextState.dapps[i] = Object.assign(nextState.dapps[i], dapp);
+          dapps.push(Object.assign(nextState.dapps[i], dapp));
         } else {
-          nextState.dapps.push(dapp);
+          dapps.push(dapp);
         }
       });
+
+      nextState.dapps = dapps;
+
       return nextState;
 
     case 'VIEW_FUNC_RESULT':

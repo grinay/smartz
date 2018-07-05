@@ -1,250 +1,227 @@
 .address-book__link {
-  .transitions(all, .1s);
-
-  .address-book__icon {
-    .transitions(fill, .1s);
-  }
-
-  &:hover {
-    .transitions(all, 0s);
+    .transitions(all, .1s);
 
     .address-book__icon {
-      .transitions(fill, 0s);
+        .transitions(fill, .1s);
     }
-  }
+
+    &:hover {
+        .transitions(all, 0s);
+
+        .address-book__icon {
+            .transitions(fill, 0s);
+        }
+    }
 }
 
 .form-field__label {
-  .transitions(background, box-shadow; .1s);
+    .transitions(background, box-shadow; .1s);
 
-  &:hover {
-    .transitions(background, box-shadow; 0s);
-  }
+    &:hover {
+        .transitions(background, box-shadow; 0s);
+    }
 }
 
-.form-field__label--radio .form-field__icon-off,
-.form-field__label--checkbox .form-field__icon-off {
-  .transitions(fill, .7s);
+.form-field__label--radio .form-field__icon-off, .form-field__label--checkbox .form-field__icon-off {
+    .transitions(fill, .7s);
 }
 
-.form-field__label--radio:hover .form-field__icon-off,
-.form-field__label--checkbox:hover .form-field__icon-off {
-  .transitions(fill, .1s);
+.form-field__label--radio:hover .form-field__icon-off, .form-field__label--checkbox:hover .form-field__icon-off {
+    .transitions(fill, .1s);
 }
 
 .page-main__link {
-  .transitions(color, .7s);
-
-  .page-main__icon {
-    .transitions(fill, .7s);
-  }
-
-  &:hover,
-  &:focus {
-    .transitions(color, .1s);
+    .transitions(color, .7s);
 
     .page-main__icon {
-      .transitions(fill, .1s);
+        .transitions(fill, .7s);
     }
-  }
+
+    &:hover, &:focus {
+        .transitions(color, .1s);
+
+        .page-main__icon {
+            .transitions(fill, .1s);
+        }
+    }
 }
 
 .btn {
-  .transitions(all, .7s);
-
-  .form-block__icon {
-    .transitions(fill, .7s);
-  }
-
-  &:hover,
-  &:focus {
-    .transitions(all, .1s);
+    .transitions(all, .7s);
 
     .form-block__icon {
-      .transitions(fill, .1s);
+        .transitions(fill, .7s);
     }
-  }
+
+    &:hover, &:focus {
+        .transitions(all, .1s);
+
+        .form-block__icon {
+            .transitions(fill, .1s);
+        }
+    }
 }
 
 .btn-square {
-  .transitions(color, box-shadow; .7s);
+    .transitions(color, box-shadow; .7s);
 
-  &:hover,
-  &:focus {
-    .transitions(color, box-shadow; .1s);
-  }
+    &:hover, &:focus {
+        .transitions(color, box-shadow; .1s);
+    }
 }
 
 .btn-contract {
-  .transitions(all, .7s);
+    .transitions(all, .7s);
 
-  &:hover,
-  &:focus {
-    .transitions(all, .1s);
-  }
+    &:hover, &:focus {
+        .transitions(all, .1s);
+    }
 }
 
-.contract-controls__link,
-.support-block__link,
-.table__link,
-.block__link {
-  .transitions(all, .7s);
-  transition-property: all;
-  transition-duration: .7s;
-
-  &::after {
+.contract-controls__link, .support-block__link, .table__link, .block__link {
     .transitions(all, .7s);
-    transition-property: all;
-    transition-duration: .7s;
-  }
 
-  &:hover,
-  &:focus {
-    .transitions(all, .1s);
+    transition-duration: .7s;
     transition-property: all;
-    transition-duration: .1s;
 
     &::after {
-      .transitions(all, .1s);
-      transition-property: all;
-      transition-duration: .1s;
+        .transitions(all, .7s);
+
+        transition-duration: .7s;
+        transition-property: all;
     }
-  }
+
+    &:hover, &:focus {
+        .transitions(all, .1s);
+
+        transition-duration: .1s;
+        transition-property: all;
+
+        &::after {
+            .transitions(all, .1s);
+
+            transition-duration: .1s;
+            transition-property: all;
+        }
+    }
 }
 
 .table__input {
-  .transitions(background, .7s);
+    .transitions(background, .7s);
 
-  &:hover {
-    .transitions(background, .1s);
-  }
+    &:hover {
+        .transitions(background, .1s);
+    }
 }
 
 .social__link .social__icon {
-  .transitions(fill, .7s);
+    .transitions(fill, .7s);
 }
 
-.social__link:hover .social__icon,
-.social__link:focus .social__icon {
-  .transitions(fill, .1s);
+.social__link:hover .social__icon, .social__link:focus .social__icon {
+    .transitions(fill, .1s);
 }
 
-.page-header__link:hover .page-header__logo,
-.page-header__link:focus .page-header__logo {
-  .transitions(fill, color; .1s);
+.page-header__link:hover .page-header__logo, .page-header__link:focus .page-header__logo {
+    .transitions(fill, color; .1s);
 }
 
 .page-header__logo {
-  .transitions(fill, color; .7s);
+    .transitions(fill, color; .7s);
 }
 
-.main-navigation__link,
-.user-block__link {
-  .transitions(color, opacity; .7s);
+.main-navigation__link, .user-block__link {
+    .transitions(color, opacity; .7s);
 
-  &[href]:hover,
-  &[href]:focus {
-    .transitions(color, opacity; .1s);
+    &[href]:hover, &[href]:focus {
+        .transitions(color, opacity; .1s);
 
-    .main-navigation__icon--running,
-    .main-navigation__icon--favourites,
-    .main-navigation__icon--archive,
-    .main-navigation__icon--search,
-    .user-block__icon {
-      .transitions(fill, .1s);
+        .main-navigation__icon--running, .main-navigation__icon--favourites, .main-navigation__icon--archive, .main-navigation__icon--search, .user-block__icon {
+            .transitions(fill, .1s);
+        }
     }
-  }
 }
 
-.main-navigation__icon--archive,
-.main-navigation__icon--favourites,
-.main-navigation__icon--running,
-.main-navigation__icon--search,
-.user-block__icon {
-  .transitions(fill, stroke; .7s);
+.main-navigation__icon--archive, .main-navigation__icon--favourites, .main-navigation__icon--running, .main-navigation__icon--search, .user-block__icon {
+    .transitions(fill, stroke; .7s);
 }
 
 .contract-card__link {
-  .transitions(all, .7s);
+    .transitions(all, .7s);
 
-  .contract-card__img {
-    transition: transform 1s ease-out;
-  }
+    .contract-card__img {
+        transition: transform 1s ease-out;
+    }
 
-  &:hover,
-  &:focus {
-    .transitions(all, .1s);
-  }
+    &:hover, &:focus {
+        .transitions(all, .1s);
+    }
 
-  &:hover .contract-card__header,
-  &:focus .contract-card__header {
-    .transitions(color, .1s);
-  }
+    &:hover .contract-card__header, &:focus .contract-card__header {
+        .transitions(color, .1s);
+    }
 
-  &:hover .contract-card__img,
-  &:focus .contract-card__img {
-    transform: scale(1.02);
-    transition: transform 0.5s ease-in-out;
-  }
+    &:hover .contract-card__img, &:focus .contract-card__img {
+        transition: transform .5s ease-in-out;
+        transform: scale(1.02);
+    }
 }
 
 .contract-card__header {
-  .transitions(color, .7s);
+    .transitions(color, .7s);
 }
 
-.contract-info__name {
-  .transitions(all, .7s);
-}
+// .contract-info__name {
+//     .transitions(all, .7s);
+// }
 
 .contract-preview {
-  .transitions(box-shadow, .7s);
+    .transitions(box-shadow, .7s);
 
-  &:hover {
-    .transitions(box-shadow, .1s);
-  }
+    &:hover {
+        .transitions(box-shadow, .1s);
+    }
 
-  &:hover .contract-preview__header {
-    .transitions(all, .1s);
-  }
+    &:hover .contract-preview__header {
+        .transitions(all, .1s);
+    }
 }
 
 .contract-preview__header {
-  .transitions(all, .7s);
+    .transitions(all, .7s);
 }
 
 .contracts-navigation__input:focus + .contracts-navigation__label {
-  .transitions(color, opacity; .1s);
+    .transitions(color, opacity; .1s);
 }
 
 .contracts-navigation__label {
-  .transitions(color, opacity; .7s);
+    .transitions(color, opacity; .7s);
 
-  &:hover {
-    .transitions(color, opacity; .1s);
-  }
-}
-
-.my-contracts__link {
-  .transitions(all, .7s);
-
-  &:hover,
-  &:focus {
-    .transitions(all, .1s);
-
-    .contract-info__name {
-      .transitions(all, .1s);
+    &:hover {
+        .transitions(color, opacity; .1s);
     }
-  }
 }
+
+// .my-contracts__link {
+//   .transitions(all, .7s);
+
+//   &:hover,
+//   &:focus {
+//     .transitions(all, .1s);
+
+//     .contract-info__name {
+//       .transitions(all, .1s);
+//     }
+//   }
+// }
 
 .page-footer {
+    a {
+        .transitions(color, opacity; .7s);
+    }
 
-  a {
-    .transitions(color, opacity; .7s);
-  }
-
-  a:hover,
-  a:focus {
-    .transitions(color, opacity; .1s);
-  }
+    a:hover, a:focus {
+        .transitions(color, opacity; .1s);
+    }
 }
