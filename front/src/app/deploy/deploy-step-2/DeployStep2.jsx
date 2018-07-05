@@ -82,7 +82,7 @@ class DeployStep2 extends PureComponent {
                 if (!receipt.status || receipt.status === '0x0' || receipt.status === '0') {
                   deployTxError(deployId, 'Something went wrong!');
                 } else {
-                  deployTxMined(deployId, receipt.dappAddress);
+                  deployTxMined(deployId, receipt.contractAddress);
 
                   sendStatusDappEvent(id, ctor_id, {
                     status: dappProcessStatus.MINED,
@@ -216,8 +216,8 @@ class DeployStep2 extends PureComponent {
                 {ctor.price ? (
                   <span>Deploy now for {ctor.price} ETH</span>
                 ) : (
-                  <span>Deploy now for free</span>
-                )}
+                    <span>Deploy now for free</span>
+                  )}
               </button>
             </div>
           </form>
