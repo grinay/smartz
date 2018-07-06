@@ -6,7 +6,7 @@ import tempfile
 from decimal import Decimal
 
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -16,6 +16,7 @@ from jsonschema.validators import validator_for
 
 from apps.common.constants import BLOCKCHAINS
 from apps.constructors.models import Constructor
+from apps.constructors.serializers import constructors_pub_info, constructor_pub_info
 from apps.dapps.models import Dapp
 from apps.dapps.serializers import dapp_pub_info
 from constructor_engine.engine import WithEngine
@@ -33,27 +34,15 @@ class ListView(View):
 
     def get(self, request, *args, **kwargs):
         user = auth(request)
+        constructors_query = Constructor.objects.order_by('sorting_order')\
+            .reverse().annotate(Count('dapps'))
+
         if isinstance(user, HttpResponse):  # todo
-            constructors_objects = Constructor.objects.order_by('sorting_order').reverse().filter(is_public=True)
+            constructors = constructors_query.filter(is_public=True)
         else:
-            constructors_objects = Constructor.objects.order_by('sorting_order').reverse().filter(Q(is_public=True) | Q(user=user))
+            constructors = constructors_query.filter(Q(is_public=True) | Q(user=user))
 
-        constructors = []
-        for constructor in constructors_objects:
-            constructors.append(
-                {
-                    'ctor_id': constructor.slug,
-                    'ctor_name': constructor.name,
-                    'price': constructor.get_formatted_price(),
-                    'ctor_descr': constructor.description,
-                    'is_public': constructor.is_public,
-                    'user_id': constructor.user_id,
-                    'image': constructor.image,
-                    'blockchain': constructor.blockchain
-                }
-            )
-
-        return JsonResponse(constructors, safe=False)
+        return JsonResponse(constructors_pub_info(constructors), safe=False)
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -78,8 +67,8 @@ class UploadView(View, WithEngine):
         if isinstance(user, HttpResponse):
             return user  # error
 
-        name = nonempty(args_string(args, 'ctor_name'))
-        descr = nonempty(args_string(args, 'ctor_descr')) if 'ctor_descr' in args else ''
+        name = nonempty(args_string(args, 'name'))
+        descr = nonempty(args_string(args, 'description')) if 'description' in args else ''
         filename = tempfile.mktemp('ctor')
 
         if 'constructor_id' in args:
@@ -154,15 +143,7 @@ class GetParamsView(View):
         except Constructor.DoesNotExist:
             return error_response("Constructor with id '{}' not found".format(constructor_id))
 
-        return JsonResponse({
-            'ctor_name': constructor.name,
-            'ctor_descr': constructor.description,
-            'price': constructor.get_formatted_price(),
-            'schema': _process_ctor_schema(constructor.blockchain, constructor.get_schema()),
-            'ui_schema': constructor.get_ui_schema(),
-            'blockchain': constructor.blockchain,
-            'image': constructor.image
-        })
+        return JsonResponse(constructor_pub_info(constructor))
 
 
 @method_decorator(csrf_exempt, name='dispatch')

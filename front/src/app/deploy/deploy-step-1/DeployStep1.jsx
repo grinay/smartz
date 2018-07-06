@@ -10,7 +10,7 @@ class DeployStep1 extends PureComponent {
     const { errors, ctor } = this.props;
 
     if (!errors) {
-      sendOpenDappEvent(ctor.ctor_id);
+      sendOpenDappEvent(ctor.id);
     }
   }
 
@@ -29,7 +29,7 @@ class DeployStep1 extends PureComponent {
       fields: formData
     };
 
-    api.sendFormDataDeployStep1(ctor.ctor_id, deployId, data, formDataOrigin);
+    api.sendFormDataDeployStep1(ctor.id, deployId, data, formDataOrigin);
   }
 
   render() {

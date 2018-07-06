@@ -14,7 +14,7 @@ import {
 const mapStateToProps = (state, ownProps) => {
   const { ctorId, deployId } = ownProps.match.params;
   return {
-    ctor: { ...find(state.ctors.ctors, { ctor_id: ctorId }) },
+    ctor: { ...find(state.ctors.ctors, { id: ctorId }) },
     ...state.deploy[deployId]
   };
 };
