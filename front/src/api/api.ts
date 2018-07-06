@@ -16,8 +16,8 @@ const TOKEN_EXPIRED_ERROR_MESSAGE = 'Token expired. Please log in again';
 
 
 function checkToken(promise) {
-  function wrapper(url, data, method, mock) {
-    const result = promise(url, data, method, mock);
+  function wrapper(url, data, method) {
+    const result = promise(url, data, method);
 
     result.then((response) => {
       const { data, status } = response;
@@ -32,7 +32,7 @@ function checkToken(promise) {
   return wrapper;
 }
 
-const apiNew = (url = '/', data = undefined, method = 'post', mock = requestsConfig.USE_MOCK) => {
+const apiNew = (url = '/', data = undefined, method = 'post') => {
   const accessToken = Auth.isAuthenticated() ? Auth.getAccessToken() : null;
 
   const config = {

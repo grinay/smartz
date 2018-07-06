@@ -2,8 +2,8 @@
 export function logFetch(promise, isUseMock: boolean, isCollapse: boolean) {
     console.clear();
 
-    function wrapper(url, data, method, mock) {
-        const result = promise(url, data, method, mock);
+    function wrapper(url, data, method) {
+        const result = promise(url, data, method);
 
         result
             .then((response) => {
