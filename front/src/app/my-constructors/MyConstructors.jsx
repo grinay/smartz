@@ -25,7 +25,7 @@ class MyConstructors extends Component {
     const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['user_id'] : '-1';
 
     return (
-      <main className="page-main  my-dapps">
+      <main className="page-main  my-constructors">
         {metamaskStatus !== 'okMetamask' && <Alert standardAlert={metamaskStatus} />}
         <div className="ctor-section">
           {ctors && (

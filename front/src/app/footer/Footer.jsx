@@ -31,7 +31,7 @@ class Footer extends Component {
             <Link className="nav-item" to="/dashboard">
               <li>Dashboard</li>
             </Link>
-            <Link className="nav-item" to="/my-dapps">
+            <Link className="nav-item" to="/my-constructors">
               <li>Developers</li>
             </Link>
             <a className="nav-item" href="https://wiki.smartz.io/en/contract-uploading">
