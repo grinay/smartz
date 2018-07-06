@@ -56,11 +56,11 @@ class SwaggerRequestValidationMiddleware(WithLogger):
         except ValidationError as err:
             if 'path' in err.detail and isinstance(err.detail['path'], collections.Iterable) \
                     and len(err.detail['path'])>0 and 'No paths found for' in str(err.detail['path'][0]):
-                self.logger.info(str(err.detail['path'][0]))
+                self.logger.debug(str(err.detail['path'][0]))
                 request.is_swagger_schema_validated = True
             else:
                 self.logger.warning(str(err))
-                return error_response(str(err))
+                return error_response("Invalid request", 500)
 
         return self.get_response(request)
 
