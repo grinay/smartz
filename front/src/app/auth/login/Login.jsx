@@ -62,7 +62,6 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('cwrp')
     const { description, rand_data, blockchain, identity, token } = nextProps.login;
 
     if (this.stage === 1) {

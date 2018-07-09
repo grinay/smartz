@@ -54,7 +54,7 @@ class App extends Component {
   componentDidMount() {
     setInterval(() => {
       const { metamaskStatus } = this.state;
-      const currentStatus = currentStatus;
+      const currentStatus = getMetamaskStatus();
 
       if (metamaskStatus !== currentStatus) {
         this.setState({ metamaskStatus: currentStatus });
