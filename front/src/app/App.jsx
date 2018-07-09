@@ -15,7 +15,7 @@ import CtorAdd from './ctor-add/CtorAdd';
 import Dashboard from './dashboard/DashboardContainer';
 import Dapp from './dapps/DappContainer';
 import Docs from './docs/Docs';
-import { checkMetaMask } from '../helpers/eth';
+import { getMetamaskStatus } from '../helpers/eth';
 import InstallExtension from './common/install-extension/InstallExtension';
 import Page404 from './page-404/Page404';
 
@@ -41,7 +41,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      metamaskStatus: checkMetaMask(),
+      metamaskStatus: getMetamaskStatus(),
     };
   }
 
@@ -52,11 +52,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { metamaskStatus } = this.state;
-
     setInterval(() => {
-      if (metamaskStatus !== checkMetaMask()) {
-        this.setState({ metamaskStatus });
+      const { metamaskStatus } = this.state;
+      const currentStatus = currentStatus;
+
+      if (metamaskStatus !== currentStatus) {
+        this.setState({ metamaskStatus: currentStatus });
       }
     }, 250);
 
@@ -86,9 +87,6 @@ class App extends Component {
       <main className="app">
         {/* Install extension */}
         {metamaskStatus === 'noMetamask' && (
-          // <InfoBlock className="install-block flex">
-
-          // </InfoBlock>
           <InstallExtension />
         )}
 
@@ -132,6 +130,14 @@ class App extends Component {
           <Route
             path="/dapp/:id"
             component={(props) => <Dapp metamaskStatus={metamaskStatus} {...props} />}
+          />
+
+          <Route
+            exact
+            path="/instance/:id"
+            component={(props) =>
+              <Redirect to={`/dapp/${props.match.params.id}`} />
+            }
           />
 
           <PrivateRoute path="/ctor-add" component={(props) => <CtorAdd {...props} />} />
