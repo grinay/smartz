@@ -165,7 +165,7 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
     }
 
     return (
-      <main className="page-main dashboard flex">
+      <main className="page-main dashboard">
         {content}
       </main>
     );
