@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-import fbImg from '../../assets/img/common/footer/fb.svg';
-import githubImg from '../../assets/img/common/footer/github.svg';
-import linkedinImg from '../../assets/img/common/footer/linkedin.svg';
-import mediumImg from '../../assets/img/common/footer/medium.svg';
-import telegramImg from '../../assets/img/common/footer/telegram.svg';
-import twitterImg from '../../assets/img/common/footer/twitter.svg';
-import youtubeImg from '../../assets/img/common/footer/youtube.svg';
-import searchImg from '../../assets/img/common/footer/search.svg';
-import logoImg from '../../assets/img/common/footer/logo.svg';
-import steemitImg from '../../assets/img/common/footer/steemit.svg';
+import InlineSVG from 'svg-inline-react';
 
 import './Footer.less';
 
@@ -20,7 +10,10 @@ class Footer extends Component {
       <footer className="page-footer">
         {/* Logo */}
         <section className="logo">
-          <img src={logoImg} alt="Logo" />
+          <InlineSVG
+            className="logo-img"
+            src={require('../../assets/img/common/footer/logo.svg')}
+          />
         </section>
         {/* Navigation */}
         <nav className="navigation">
@@ -54,7 +47,10 @@ class Footer extends Component {
                 href="https://t.me/smartz_en"
                 target="_blank"
                 rel="noopener noreferrer">
-                <img src={telegramImg} alt="telegram" />
+                <InlineSVG
+                  className="social-img"
+                  src={require('../../assets/img/common/footer/telegram.svg')}
+                />
               </a>
             </li>
             <li className="social__item">
@@ -63,7 +59,10 @@ class Footer extends Component {
                 target="_blank"
                 href="https://www.facebook.com/SmartzPlatform/"
                 rel="noopener noreferrer">
-                <img src={fbImg} alt="fb" />
+                <InlineSVG
+                  className="social-img"
+                  src={require('../../assets/img/common/footer/fb.svg')}
+                />
               </a>
             </li>
             <li className="social__item">
@@ -72,7 +71,10 @@ class Footer extends Component {
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
-                <img src={githubImg} alt="github" />
+                <InlineSVG
+                  className="social-img"
+                  src={require('../../assets/img/common/footer/github.svg')}
+                />
               </a>
             </li>
             <li className="social__item">
@@ -81,7 +83,10 @@ class Footer extends Component {
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
-                <img src={mediumImg} alt="medium" />
+                <InlineSVG
+                  className="social-img"
+                  src={require('../../assets/img/common/footer/medium.svg')}
+                />
               </a>
             </li>
             <li className="social__item">
@@ -90,7 +95,10 @@ class Footer extends Component {
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
-                <img src={steemitImg} alt="steemit" />
+                <InlineSVG
+                  className="social-img"
+                  src={require('../../assets/img/common/footer/steemit.svg')}
+                />
               </a>
             </li>
             <li className="social__item">
@@ -99,7 +107,10 @@ class Footer extends Component {
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
-                <img src={twitterImg} alt="twitter" />
+                <InlineSVG
+                  className="social-img"
+                  src={require('../../assets/img/common/footer/twitter.svg')}
+                />
               </a>
             </li>
             <li className="social__item">
@@ -108,7 +119,10 @@ class Footer extends Component {
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
-                <img src={youtubeImg} alt="youtube" />
+                <InlineSVG
+                  className="social-img"
+                  src={require('../../assets/img/common/footer/youtube.svg')}
+                />
               </a>
             </li>
             <li className="social__item">
@@ -117,7 +131,10 @@ class Footer extends Component {
                 className="social__link"
                 target="_blank"
                 rel="noopener noreferrer">
-                <img src={linkedinImg} alt="linkedin" />
+                <InlineSVG
+                  className="social-img"
+                  src={require('../../assets/img/common/footer/linkedin.svg')}
+                />
               </a>
             </li>
           </ul>
@@ -125,7 +142,10 @@ class Footer extends Component {
         {/* Search */}
         <section className="search">
           <div className="wrapper-input">
-            <img className="search-input" src={searchImg} alt="search" />
+            <InlineSVG
+              className="search-input"
+              src={require('../../assets/img/common/footer/search.svg')}
+            />
             <input placeholder="Contract name or address" type="text" className="search-field" />
           </div>
         </section>

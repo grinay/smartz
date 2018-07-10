@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import tlgImg from '../../../assets/img/common/telegram-baner.svg';
+import InlineSVG from 'svg-inline-react';
 
 import './Banner.less';
 import { sendClickEvent } from '../../../helpers/statictics';
@@ -16,7 +16,7 @@ export default class Banner extends PureComponent {
         <div className="bg-wrapper flex-v">
           <div className="bg" />
         </div>
-        <img src={tlgImg} alt="telegram" className="tlg" />
+        <InlineSVG className="tlg-img" src={require('../../../assets/img/common/telegram-baner.svg')} />
       </a>
     );
   }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import InlineSVG from 'svg-inline-react';
 
-import compilationCountImg from '../../../assets/img/common/constructor/compilation-count.svg';
 import history from '../../../helpers/history';
 import Auth from '../../auth/Auth';
 
@@ -54,8 +54,11 @@ class CtorCard extends React.Component<ICtorCardProps, {}> {
                   </div>
                 )}
 
-              <div className="ctor-card__comp-count">
-                <img src={compilationCountImg} alt="compilation count" />
+              <div className="ctor-card__comp-count flex">
+                <InlineSVG
+                  className="count-img flex"
+                  src={require('../../../assets/img/common/rocket.svg')}
+                />
                 <span>{'1987'}</span>
               </div>
             </div>

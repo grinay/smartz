@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Auth from '../auth/Auth';
-import telegramImg from '../../assets/img/common/menu/telegram.svg';
-import logoImg from '../../assets/img/common/menu/logo.svg';
+import InlineSVG from 'svg-inline-react';
 
 import './Header.less';
-import { sendFormDataDeployStep1 } from './../../api/apiRequests';
 
 class Header extends Component {
   constructor(props) {
@@ -50,9 +48,7 @@ class Header extends Component {
     } else {
       username = (
         <span>
-          <svg className="user-block__icon user-block__icon--lock" width="11" height="14">
-            <use href="#lock" />
-          </svg>
+          <InlineSVG className="lock-img" src={require('../../assets/img/common/header/lock.svg')} />
           <span className="user-block__login">Login</span>
         </span>
       );
@@ -61,7 +57,7 @@ class Header extends Component {
     return (
       <header className="page-header flex-v">
         <Link to="/" className="logo flex" onClick={this.setMenu('Store')}>
-          <img src={logoImg} alt="logo" />
+          <InlineSVG className="logo-img" src={require('../../assets/img/common/menu/logo.svg')} />
         </Link>
         <section className="title-main flex-v">
           <p>{selectedMenu}</p>
@@ -97,7 +93,7 @@ class Header extends Component {
               target="_blank"
               className="main-navigation__link">
               <li className={`main-navigation__item flex`}>
-                <img className={'tgm'} src={telegramImg} alt="telegram chat" />
+                <InlineSVG className="tgm-img" src={require('../../assets/img/common/menu/telegram.svg')} />
                 <p>Chat</p>
               </li>
             </a>

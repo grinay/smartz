@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import loadingImg from '../../../assets/img/common/loading.svg';
+import InlineSVG from 'svg-inline-react';
+
 import './Loader.less';
 
 class Loader extends Component {
@@ -8,7 +9,10 @@ class Loader extends Component {
 
     return (
       <div className="spinner flex">
-        <img src={loadingImg} alt={alt} style={{ maxWidth: width, maxHeight: width }} />
+        <InlineSVG
+          style={{ width, height: width }}
+          src={require('../../../assets/img/common/loading.svg')}
+        />
         <p className="support-block__paragraph">{text}</p>
       </div>
     );
