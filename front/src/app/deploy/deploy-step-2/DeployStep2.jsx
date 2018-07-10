@@ -111,8 +111,8 @@ class DeployStep2 extends PureComponent {
           })
           .then((identity) => {
             Eos.deployContract(bin, abi)
-              .then((result) => {
-                deployTxMined(deployId, result.transaction_id);
+              .then(() => {
+                deployTxMined(deployId, Eos.getAccountName(identity));
 
                 sendStatusDappEvent(id, constructor_id, {
                   status: contractProcessStatus.MINED,
