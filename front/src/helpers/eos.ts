@@ -102,7 +102,7 @@ class EosClass {
           // send smart-contract abi
           return this.scatter
             .eos(this.network, Eos, this.configEosDapp, this.network.protocol)
-            .setabi(this.accountName, JSON.parse(abi));
+            .setabi(this.accountName, abi);
         })
     );
   }
