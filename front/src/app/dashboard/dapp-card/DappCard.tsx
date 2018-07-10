@@ -33,7 +33,7 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
                         <p className="dapp-card__info">
                             <span className="dapp-card__name">{dapp.title}</span>
                             <span className="dapp-card__description">
-                                {dapp.ctor.ctor_name}
+                                {dapp.ctor.name}
                             </span>
                         </p>
                     </div>

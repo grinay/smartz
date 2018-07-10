@@ -10,7 +10,7 @@ def dapp_pub_info(dapp: Dapp) -> Dict:
         'id': dapp.slug,
         "title": dapp.title,
         "network_id": str(dapp.network_id),
-        "ctor_id": dapp.constructor.slug,
+        "constructor_id": dapp.constructor.slug,
         "address": dapp.address,
         'bin': dapp.binary,
         'source': dapp.source,

@@ -30,7 +30,7 @@ class Dapp(models.Model):
     network_id = models.CharField(max_length=200, default='')
     address = models.CharField(max_length=42, default='')
 
-    constructor = ForeignKey(Constructor, on_delete=models.PROTECT)
+    constructor = ForeignKey(Constructor, on_delete=models.PROTECT, related_name='dapps')
 
     created_at = models.DateTimeField(default=init_time)
 

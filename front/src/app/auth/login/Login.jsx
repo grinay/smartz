@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Auth from '../Auth';
 import { blockchains } from '../../../constants/constants';
-import { web3 } from '../../../helpers/eth';
+import { web3, getMetamaskStatus } from '../../../helpers/eth';
 import { sendLoginEvent } from '../../../helpers/statictics';
 
 import * as api from '../../../api/apiRequests';
@@ -31,15 +31,13 @@ class Login extends Component {
   }
 
   metamaskLogin() {
-    const { metamaskStatus } = this.props;
-
-    switch (metamaskStatus) {
+    switch (getMetamaskStatus()) {
       case 'unlockMetamask':
         alert('Unlock metamask first');
-        return;
+        break;
       case 'noMetamask':
         alert('Install metamask first');
-        return;
+        break;
       case 'okMetamask':
         api.startLogin(blockchains.ethereum, web3.eth.accounts[0]);
         this.stage = 1;
@@ -64,7 +62,7 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { error, description, rand_data, blockchain, identity, token } = nextProps.login;
+    const { description, rand_data, blockchain, identity, token } = nextProps.login;
 
     if (this.stage === 1) {
       const signMsg = `${description}${rand_data}`;
@@ -97,7 +95,6 @@ class Login extends Component {
           break;
 
         default:
-          alert('Something went wrong');
           break;
       }
     }

@@ -200,7 +200,7 @@ export const getNetworkEtherscanAddress = (netId) => {
   }
 };
 
-export const checkMetaMask = () => {
+export const getMetamaskStatus = () => {
   if (!window.Web3) {
     return 'noMetamask';
   }

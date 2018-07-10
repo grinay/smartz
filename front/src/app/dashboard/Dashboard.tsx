@@ -146,7 +146,7 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
       );
     } else {
       const elems = filteredDapps.map((dapp, i) => {
-        dapp.ctor = find(ctors, { ctor_id: dapp.ctor_id }) || {};
+        dapp.ctor = find(ctors, { id: dapp.constructor_id }) || {};
 
         return (
           <li key={i}>
@@ -165,7 +165,7 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
     }
 
     return (
-      <main className="page-main dashboard flex">
+      <main className="page-main dashboard">
         {content}
       </main>
     );

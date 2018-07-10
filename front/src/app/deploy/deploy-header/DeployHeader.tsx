@@ -18,17 +18,17 @@ export default class DeployHeader extends React.PureComponent<IDeployHeaderProps
             <img
               className="img"
               src={require(`../../common/ctor-card/img/${ctor.image}`)}
-              alt={`${ctor.ctor_name} contract`}
+              alt={`${ctor.name} contract`}
             />
           </div>
         )}
-        {ctor.ctor_name && (
+        {ctor.name && (
           <div className={'title'}>
-            <h2 className="ctor-title">{ctor.ctor_name}</h2>
+            <h2 className="ctor-title">{ctor.name}</h2>
             <p className="contract">
               <span>Constructor: </span>
-              <a href={`${window.location.origin}/deploy/${ctor.ctor_id}`}>
-                {`${window.location.origin}/deploy/${ctor.ctor_id}`}
+              <a href={`${window.location.origin}/deploy/${ctor.id}`}>
+                {`${window.location.origin}/deploy/${ctor.id}`}
               </a>
             </p>
           </div>
