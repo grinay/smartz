@@ -6,6 +6,7 @@ import { blockchains } from '../../constants/constants';
 import { getFuncType } from '../../helpers/common';
 import { processControlForm, processResult } from '../../helpers/eth';
 import Alert from '../common/Alert';
+import ColumnFunc from './column-func/ColumnFunc';
 import FunctionButton from './function-button/FunctionButton';
 import ViewFunc from './view-func/ViewFunc';
 
@@ -41,9 +42,6 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     };
 
     this.getConstants = this.getConstants.bind(this);
-    this.getFuncButtonElements = this.getFuncButtonElements.bind(this);
-    this.getFuncDescElements = this.getFuncDescElements.bind(this);
-    this.getFunctionsByType = this.getFunctionsByType.bind(this);
   }
 
   public componentWillMount() {
@@ -85,58 +83,6 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     });
   }
 
-  public getFunctionsByType(functions: any, type: any): any {
-    const result = [];
-
-    if (Array.isArray(functions) && functions.length > 0) {
-      functions.forEach((func) => {
-        if (type === getFuncType(func)) {
-          result.push(func);
-        }
-      });
-    }
-
-    return result;
-  }
-
-  public getFuncDescElements(functions: any): any {
-    const result: any = [];
-
-    if (Array.isArray(functions) && functions.length > 0) {
-      for (let i = 0; i < functions.length; i++) {
-        const func = functions[i];
-
-        result.push(
-          <p key={i} className="contract-functions__description">
-            <b>{func.title}</b> — {func.description}
-          </p>,
-        );
-      }
-    }
-
-    return result;
-  }
-
-  public getFuncButtonElements(functions: any): any {
-    const result = [];
-
-    if (Array.isArray(functions) && functions.length > 0) {
-      for (let i = 0; i < functions.length; i++) {
-        const func = functions[i];
-
-        result.push(
-          <FunctionButton
-            key={i}
-            title={func.title}
-            onClick={() => this.setState({ funcActive: func })}
-          />,
-        );
-      }
-    }
-
-    return result;
-  }
-
   public render() {
     const { metamaskStatus, dapp } = this.props;
 
@@ -152,124 +98,10 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       );
     }
 
-    const viewFunctions = this.getFunctionsByType(dapp.functions, 'view');
-    const viewFunctionDescription = this.getFuncDescElements(viewFunctions);
-
-    const askFunctions = this.getFunctionsByType(dapp.functions, 'ask');
-    const askFunctionDescription = this.getFuncDescElements(askFunctions);
-    const askFunctionButtons = this.getFuncButtonElements(askFunctions);
-
-    const writeFunctions = this.getFunctionsByType(dapp.functions, 'write');
-    const writeFunctionDescription = this.getFuncDescElements(writeFunctions);
-    const writeFunctionButtons = this.getFuncButtonElements(writeFunctions);
-
     return (
       <main className="page-main dapp">
         <ViewFunc dapp={dapp} />
-        <aside className="dapp-panel-functions">
-          <p>dsdf</p>
-        </aside>
-        {/* <Link to="/dashboard" className="page-main__link">
-          <svg className="page-main__icon" width="58" height="10" viewBox="0 0 58 10">
-            <use xlinkHref="#back" />
-          </svg>
-          Back
-        </Link>
-
-        <DappHeader dapp={dapp} />
-
-        {dapp.transactions && (
-          <section className="transactions">
-            <p className="transactions__header">Transactions:</p>
-            {dapp.transactions
-              .reverse()
-              .map((transaction, i) => (
-                <Transaction
-                  transaction={transaction}
-                  dapp={dapp}
-                  netId={dapp.network_id}
-                  key={i}
-                />
-              ))}
-          </section>
-        )}
-
-        {dapp.blockchain === blockchains.ethereum && (
-          <section className="contract-functions">
-            <h2 className="contract-functions__header">View functions</h2>
-            <p className="contract-functions__description">
-              This functions just provide an information about contract states and values. Results
-              of this functions are already shown below.
-            </p>
-            {viewFunctionDescription}
-          </section>
-        )}
-
-        <section className="contract-functions">
-          <h2 className="contract-functions__header">Ask functions</h2>
-          <p className="contract-functions__description" />
-          {askFunctionDescription}
-        </section>
-
-        <section className="contract-functions">
-          <h2 className="contract-functions__header">Write functions</h2>
-          <p className="contract-functions__description" />
-          {writeFunctionDescription}
-        </section>
-        <section className="block  contract-controls">
-          <div className="block__wrapper">
-            {dapp.blockchain === blockchains.ethereum && (
-              <div className="contract-controls__wrapper  contract-controls__wrapper--margin">
-                <table className="table  table--big">
-                  <tbody className="table__tbody">
-                    {dapp.functions &&
-                      dapp.functions.map((func, i) => {
-                        if (func.constant && func.inputs.minItems === 0) {
-                          return (
-                            <tr key={i} className="table__tr">
-                              <td className="table__label">{func.title}</td>
-
-                              <td className="table__data">
-                                <div className="table__inner">
-                                  <span>{renderDappWidget(func, dapp)}</span>
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        } else {
-                          return null;
-                        }
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-
-            {askFunctionButtons.length > 0 && (
-              <div className="contract-controls__wrapper">
-                <span className="contract-controls__section-header">Ask functions</span>
-
-                <ul className="contract-controls__list">{askFunctionButtons}</ul>
-              </div>
-            )}
-
-            {writeFunctionButtons.length > 0 && (
-              <div className="contract-controls__wrapper">
-                <span className="contract-controls__section-header">Write functions</span>
-
-                <ul className="contract-controls__list">
-                  {writeFunctionButtons}
-                </ul>
-              </div>
-            )}
-
-            <FunctionCard
-              dapp={dapp}
-              func={this.state.funcActive || askFunctions[0] || writeFunctions[0]}
-              refresh={this.getConstants}
-            />
-          </div>
-        </section> */}
+        <ColumnFunc dapp={dapp} />
       </main>
     );
   }

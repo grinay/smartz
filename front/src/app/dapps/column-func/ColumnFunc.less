@@ -1,0 +1,108 @@
+@import '../../../styles/variables.less';
+
+.column-func {
+    position: fixed;
+    top: 0;
+    right: 10px;
+    bottom: 10px;
+
+    width: 220px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+
+    border-radius: 8px;
+    background-color: #FFFFFF;
+
+    .dapp-header {
+        margin: 0;
+        padding-right: 25px;
+        padding-left: 25px;
+
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+
+        opacity: .5;
+        color: #0E1418;
+
+        font-family: @f-cera-pro-400;
+        font-size: 15px;
+        line-height: 19px;
+    }
+
+    .dapp-list {
+        overflow: hidden;
+
+        margin: 0;
+        padding: 10px 0 10px 0;
+
+        list-style: none;
+    }
+
+    .dapp-list + .dapp-list {
+        position: relative;
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 25px;
+
+            width: 100%;
+            height: 1px;
+
+            content: '';
+
+            opacity: .1;
+            background-color: #0E1418;
+        }
+    }
+
+    .dapp-btn {
+        position: relative;
+
+        display: block;
+
+        width: 100%;
+        padding: 12px 10px 12px 60px;
+
+        cursor: pointer;
+        text-align: left;
+
+        color: #000000;
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+
+        font-family: @f-cera-pro-700;
+        font-size: 13px;
+        line-height: 16px;
+
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 25px;
+
+            width: 13px;
+
+            transform: translateY(-50%);
+        }
+
+        &:hover, &:focus {
+            background-color: #E5E9F0;
+        }
+
+        &--more {
+            svg {
+                fill: #000000;
+            }
+
+            &:hover, &:focus {
+                color: #FFFFFF;
+                background-color: #0C7186;
+
+                svg {
+                    fill: #FFFFFF;
+                }
+            }
+        }
+    }
+}

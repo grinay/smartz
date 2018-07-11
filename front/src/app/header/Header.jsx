@@ -55,7 +55,7 @@ class Header extends Component {
     }
 
     return (
-      <header className="page-header flex-v">
+      <header id="js-header" className="page-header flex-v">
         <Link to="/" className="logo flex" onClick={this.setMenu('Store')}>
           <InlineSVG className="logo-img" src={require('../../assets/img/common/menu/logo.svg')} />
         </Link>
