@@ -2,6 +2,8 @@ import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
 import { getFunctionsByType } from '../../../helpers/common';
+import Modal from '../../common/modal/Modal';
+import ModalFunc from './modal-func/ModalFunc';
 
 import './ColumnFunc.less';
 
@@ -10,17 +12,41 @@ interface IColumnFuncProps {
   dapp: any;
 }
 
-interface IColumnFuncState { }
+interface IColumnFuncState {
+  isOpenModal: boolean;
+  selectedFunc: any;
+}
 
 export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IColumnFuncState> {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isOpenModal: false,
+      selectedFunc: null,
+    };
+
     this.changeHeight = this.changeHeight.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.getSection = this.getSection.bind(this);
+    this.selectFunc = this.selectFunc.bind(this);
   }
 
-  private changeHeight() {
-    // dynamic change height aside after scroll (depend. of header height)
+  private toggleModal() {
+    const { isOpenModal } = this.state;
+
+    this.setState({ isOpenModal: !isOpenModal });
+  }
+
+  private selectFunc(func: any) {
+    return () => this.setState({
+      isOpenModal: true,
+      selectedFunc: func,
+    });
+  }
+
+  // dynamic change height aside after scroll (depend. of header height)
+  private changeHeight(): void {
     const doc = document.documentElement;
     const col = document.getElementById('js-column-func');
 
@@ -30,6 +56,37 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     } else {
       col.style.top = `10px`;
     }
+  }
+
+  private getSection(funcType: string, title: string): JSX.Element {
+    const { dapp } = this.props;
+
+    let funcSectionElement: JSX.Element = null;
+    const functions: any[] = getFunctionsByType(dapp.functions, funcType);
+
+    if (functions.length > 0) {
+      funcSectionElement = (
+        <section>
+          <h2 className="dapp-header">{title}</h2>
+          <ul className="dapp-list">
+            {functions.map((func, i) => {
+              return (
+                <button
+                  key={i}
+                  className="dapp-btn"
+                  type="button"
+                  onClick={this.selectFunc(func)}
+                >
+                  {func.title}
+                </button>
+              );
+            })}
+          </ul>
+        </section>
+      );
+    }
+
+    return funcSectionElement;
   }
 
   public componentDidMount() {
@@ -46,58 +103,14 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
 
   public render() {
     const { dapp } = this.props;
+    const { isOpenModal, selectedFunc } = this.state;
 
     if (!dapp) {
       return null;
     }
 
-    let askFuncElement: JSX.Element;
-    const askFunctions: any[] = getFunctionsByType(dapp.functions, 'ask');
-
-    if (askFunctions.length > 0) {
-      askFuncElement = (
-        <section>
-          <h2 className="dapp-header">Ask</h2>
-          <ul className="dapp-list">
-            {askFunctions.map((func, i) => {
-              return (
-                <button
-                  key={i}
-                  className="dapp-btn"
-                  type="button"
-                >
-                  {func.title}
-                </button>
-              );
-            })}
-          </ul>
-        </section>
-      );
-    }
-
-    let writeFuncElement: JSX.Element;
-    const writeFunctions: any[] = getFunctionsByType(dapp.functions, 'write');
-
-    if (writeFunctions.length > 0) {
-      writeFuncElement = (
-        <section>
-          <h2 className="dapp-header">Write</h2>
-          <ul className="dapp-list">
-            {writeFunctions.map((func, i) => {
-              return (
-                <button
-                  key={i}
-                  className="dapp-btn"
-                  type="button"
-                >
-                  {func.title}
-                </button>
-              );
-            })}
-          </ul>
-        </section>
-      );
-    }
+    const askFuncElement = this.getSection('ask', 'Ask');
+    const writeFuncElement = this.getSection('write', 'Write');
 
     return (
       <aside id="js-column-func" className="column-func">
@@ -110,6 +123,9 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
           />
           More
       </button> */}
+        <Modal isOpen={isOpenModal} onClose={this.toggleModal}>
+          <ModalFunc func={selectedFunc} />
+        </Modal>
       </aside>
     );
   }
