@@ -6,11 +6,8 @@ import { blockchains } from '../../constants/constants';
 import { getFuncType } from '../../helpers/common';
 import { processControlForm, processResult } from '../../helpers/eth';
 import Alert from '../common/Alert';
-import renderDappWidget from '../common/dapp-widgets/DappWidgets';
-import DappHeader from './dapp-header/DappHeader';
 import FunctionButton from './function-button/FunctionButton';
-import FunctionCard from './function-card/FunctionCardContainer';
-import Transaction from './Transaction/Transaction';
+import ViewFunc from './view-func/ViewFunc';
 
 import './Dapp.less';
 
@@ -167,8 +164,12 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     const writeFunctionButtons = this.getFuncButtonElements(writeFunctions);
 
     return (
-      <main className="page-main  page-main--contracts  page-main--running-contract">
-        <Link to="/dashboard" className="page-main__link">
+      <main className="page-main dapp">
+        <ViewFunc dapp={dapp} />
+        <aside className="dapp-panel-functions">
+          <p>dsdf</p>
+        </aside>
+        {/* <Link to="/dashboard" className="page-main__link">
           <svg className="page-main__icon" width="58" height="10" viewBox="0 0 58 10">
             <use xlinkHref="#back" />
           </svg>
@@ -217,7 +218,6 @@ class Dapp extends React.Component<IDappProps, IDappState> {
         </section>
         <section className="block  contract-controls">
           <div className="block__wrapper">
-            {/* view functions block */}
             {dapp.blockchain === blockchains.ethereum && (
               <div className="contract-controls__wrapper  contract-controls__wrapper--margin">
                 <table className="table  table--big">
@@ -245,7 +245,6 @@ class Dapp extends React.Component<IDappProps, IDappState> {
               </div>
             )}
 
-            {/* ask functions block */}
             {askFunctionButtons.length > 0 && (
               <div className="contract-controls__wrapper">
                 <span className="contract-controls__section-header">Ask functions</span>
@@ -254,26 +253,23 @@ class Dapp extends React.Component<IDappProps, IDappState> {
               </div>
             )}
 
-            {/* write functions block */}
             {writeFunctionButtons.length > 0 && (
               <div className="contract-controls__wrapper">
                 <span className="contract-controls__section-header">Write functions</span>
 
                 <ul className="contract-controls__list">
                   {writeFunctionButtons}
-                  {/* {defaultFunctionElement} */}
                 </ul>
               </div>
             )}
 
-            {/* function block */}
             <FunctionCard
               dapp={dapp}
               func={this.state.funcActive || askFunctions[0] || writeFunctions[0]}
               refresh={this.getConstants}
             />
           </div>
-        </section>
+        </section> */}
       </main>
     );
   }

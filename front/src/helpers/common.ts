@@ -13,3 +13,17 @@ export const getFuncType = (func: any): any => {
 
   return null;
 };
+
+export const getFunctionsByType = (functions: any, type: any): any[] => {
+  const result = [];
+
+  if (Array.isArray(functions) && functions.length > 0) {
+    functions.forEach((func) => {
+      if (type === getFuncType(func)) {
+        result.push(func);
+      }
+    });
+  }
+
+  return result;
+};

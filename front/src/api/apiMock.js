@@ -1,12 +1,12 @@
 import * as constructors from './mock/constructors';
 import * as dapps from './mock/dapps';
+import * as dapp from './mock/currentDapp';
 
 export default function subscribeMockRequests(mockApi) {
   mockApi
     // .onAny('/constructors').reply(200, constructors.constructorListProd)
     // .onAny('/dapps').reply(200, dapps.dappList)
-    .onAny(/\/contracts\/.{24}/)
-    .reply(200, dapps.dappList)
+    .onAny(/\/dapps\/.{24}/).reply(200, dapp.currentDapp)
 
     // .onAny('/dapps')
     // .reply(200, dapps.dappList)

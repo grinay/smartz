@@ -1,0 +1,128 @@
+@import '../../../styles/variables.less';
+
+.view-func {
+    .card {
+        width: calc(100% - 220px);
+
+        border-radius: 8px;
+        background-color: #FFFFFF;
+
+        .card-body {
+            box-sizing: border-box;
+            padding: 20px 65px 20px 35px;
+
+            .card-header {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .card-intro:first-of-type {
+                margin-right: 45px;
+                margin-bottom: 20px;
+            }
+
+            .card-label {
+                display: flex;
+                align-items: center;
+                flex-shrink: 0;
+
+                box-sizing: border-box;
+                width: 190px;
+                margin: 0;
+                padding-right: 10px;
+
+                color: #000000;
+
+                font-family: @f-cera-pro-400;
+                font-size: 12px;
+                line-height: 16px;
+
+                .question-icon {
+                    height: 13px;
+
+                    svg {
+                        flex-shrink: 0;
+
+                        height: 13px;
+                        margin-left: 5px;
+                    }
+                }
+            }
+
+            .card-title {
+                margin: 0;
+
+                color: #191919;
+
+                font-family: @f-cera-pro-400;
+                font-size: 35px;
+                line-height: 44px;
+            }
+
+            .card-table {
+                margin: 0;
+                padding: 0;
+
+                list-style: none;
+            }
+
+            .card-row {
+                display: flex;
+                align-items: flex-start;
+
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            .card-row + .card-row {
+                border-top: 1px solid #E5E9F1;
+            }
+
+            .card-data {
+                margin: 0;
+
+                word-break: break-all;
+
+                color: #000000;
+
+                font-family: @f-cera-pro-700;
+                font-size: 15px;
+                line-height: 20px;
+            }
+        }
+
+        .card-button {
+            display: block;
+
+            width: 100%;
+            padding-top: 19px;
+            padding-bottom: 22px;
+
+            cursor: pointer;
+
+            opacity: .9;
+            color: #0C7186;
+            border: 0;
+            border-radius: 0 0 8px 8px;
+            outline: 0;
+            background-color: transparent;
+
+            font-family: @f-cera-pro-500;
+            font-size: 15px;
+            line-height: 19px;
+
+            svg {
+                fill: #0C7186;
+            }
+
+            &:hover, &:focus {
+                color: #FFFFFF;
+                background-color: #0C7186;
+
+                svg {
+                    fill: #FFFFFF;
+                }
+            }
+        }
+    }
+}
