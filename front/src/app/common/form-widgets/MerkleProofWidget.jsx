@@ -1,0 +1,175 @@
+import React, { PureComponent } from "react";
+import axios from 'axios';
+import { isAddress } from "../../../helpers/eth";
+import {sha256, keccak256 } from 'ethereumjs-util';
+import MerkleTree from "./helpers/MerkleTree";
+
+
+export default class MerkleProofWidget extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      msg: '',
+    }
+  }
+
+  validateLine(line) {
+    const { options } = this.props;
+    if (options.blockchain === 'eth') {
+      let els = line.split(' ');
+      if (els.length !== 2)
+        return 'Incorrect line format';
+
+      if (!isAddress(els[0]))
+        return 'Incorrect line format (address)';
+
+      if (!/[0-9]+/.test(els[1]))
+        return 'Incorrect line format (token amount)';
+
+      return null;
+    } else if (options.blockchain === 'eos') {
+      let els = line.split(' ');
+      if (els.length !== 2)
+        return 'Incorrect line format';
+
+      if (!/[a-z1-5.]/.test(els[0]))
+        return 'Incorrect line format (account name)';
+
+      if (!/[0-9]+/.test(els[1]))
+        return 'Incorrect line format (token amount)';
+
+      return null;
+    } else
+      return 'Incorrect blockchain';
+  }
+
+  fetchFile(url) {
+/*
+    let text = "awdwadawdaw 10000\nqwertfcawdaw 10000\nawddfawxdwa 10000\n";
+    return Promise.resolve({status: 200, data: text});
+*/
+    return axios.get(url, {
+      responseType: "text"
+    });
+  }
+
+  merkleProof(file, account) {
+    const { options } = this.props;
+
+    let data =file.split('\n').filter(line => line !== '');
+
+
+    let idx = data.findIndex(line => line.split(' ')[0] === account);
+    if (idx === -1)
+      throw 'Account not found in file';
+
+    let leafs = data.map(line => {
+      let err = this.validateLine(line);
+      if (err)
+        throw err;
+      return line.split(' ').join('');
+    });
+
+    let hasher = options.blockchain === 'eth' ? keccak256 : sha256;
+    if (options.hasher === 'keccak')
+      hasher = keccak256;
+    else if (options.hasher === 'sha256')
+      hasher = sha256;
+
+    return new MerkleTree(leafs, hasher).getHexProof(leafs[idx]);
+  }
+
+  onChange = event => {
+    const { onChange } = this.props;
+    const url = this.inputRef.value;
+    const account = this.inputAccountRef.value;
+
+    console.log(url, account);
+
+    this.fetchFile(url)
+      .then(reps => {
+        if (reps.status === 200) {
+          this.setState({msg: 'Building Merkle Proof...'});
+          try {
+            let proof = this.merkleProof(reps.data, account);
+
+            /*
+            let fc = Eos.modules.Fcbuffer([]);
+            console.log(fc);
+            let checksum256 = fc.types['fixed_bytes32'];
+            let vector = fc.types['vector'](checksum256(), false);
+
+            console.log(vector);
+            let obj = vector.fromObject(proof);
+
+            let buf = Eos.modules.Fcbuffer.toBuffer(vector, obj).toString('hex');
+            console.log(buf);
+            */
+
+            this.setState({msg: 'Proof successfully builded'}, onChange(proof.join(' ')));
+          }
+          catch (error) {
+            if (typeof error === "string")
+              this.setState({msg: error});
+            else {
+              console.log(error);
+              this.setState({msg: 'Something went wrong'});
+            }
+          }
+        }
+      })
+      .catch(error => {
+        if (error.response) {
+          if (error.response.code >= 400 && error.response.code < 500) {
+            this.setState({msg: 'File not found'}, onChange(null));
+          } else {
+            this.setState({msg: 'Something went wrong'}, onChange(null));
+          }
+        }
+      });
+  };
+
+  render() {
+    const { id, readonly, disabled, autofocus = false } = this.props;
+
+    return (
+      <div>
+        <p>
+          <input
+            ref={ref => (this.inputRef = ref)}
+            id={id}
+            type="text"
+            disabled={readonly || disabled}
+            defaultValue=""
+            autoFocus={autofocus}
+            multiple={false}
+            placeholder={"url to file consist airdrop list"}
+            className={"form-control"}
+          />
+          <input
+            ref={ref => (this.inputAccountRef = ref)}
+            id={id}
+            type="text"
+            disabled={readonly || disabled}
+            defaultValue=""
+            autoFocus={autofocus}
+            multiple={false}
+            placeholder={"account name for airdrop"}
+            className={"form-control"}
+          />
+          <input
+            id={id + '-button'}
+            type="button"
+            disabled={readonly || disabled}
+            value="Build Proof"
+            onClick={this.onChange}
+            className="button contract-controls__form-button"
+            style={{float: "right", marginTop: 10}}
+          />
+        </p>
+        <p>{this.state.msg}</p>
+      </div>
+    );
+  }
+};
