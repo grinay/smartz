@@ -3,6 +3,7 @@ import axios from 'axios';
 import { isAddress } from "../../../helpers/eth";
 import {sha256, keccak256 } from 'ethereumjs-util';
 import MerkleTree from "./helpers/MerkleTree";
+import { ipfsConstants } from '../../../constants/constants';
 
 
 export default class MerkleRootWidget extends PureComponent {
@@ -78,8 +79,7 @@ export default class MerkleRootWidget extends PureComponent {
   }
 
   uploadIpfs(data) {
- //   return Promise.resolve({headers: { location: "/ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn/airdrop_list.txt"}});
-    return axios.put('https://ipfs.smartz.io/ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn/airdrop_list.txt', data);
+    return axios.put(ipfsConstants.uploadUrl + '/' + ipfsConstants.emptyDir + '/airdrop_list.txt', data);
   }
 
   onChange = event => {
@@ -94,7 +94,7 @@ export default class MerkleRootWidget extends PureComponent {
           this.setState({ msg: 'Uploading to IPFS...' });
           this.uploadIpfs(data)
             .then((resp) => {
-              let url = 'https://ipfs.io' + resp.headers.location;
+              let url = ipfsConstants.downloadUrl + resp.headers.location;
               this.setState({ msg: 'Building Merkle Tree...', url: url });
               let root = this.merkleRoot(data);
               this.setState({ msg: root }, onChange(options.blockchain === "eos" ? root.substr(2): root));

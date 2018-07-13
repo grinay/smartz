@@ -45,10 +45,6 @@ export default class MerkleProofWidget extends PureComponent {
   }
 
   fetchFile(url) {
-/*
-    let text = "awdwadawdaw 10000\nqwertfcawdaw 10000\nawddfawxdwa 10000\n";
-    return Promise.resolve({status: 200, data: text});
-*/
     return axios.get(url, {
       responseType: "text"
     });
@@ -80,7 +76,7 @@ export default class MerkleProofWidget extends PureComponent {
     return new MerkleTree(leafs, hasher).getHexProof(leafs[idx]);
   }
 
-  onChange = event => {
+  onChange = () => {
     const { onChange } = this.props;
     const url = this.inputRef.value;
     const account = this.inputAccountRef.value;
@@ -93,19 +89,6 @@ export default class MerkleProofWidget extends PureComponent {
           this.setState({msg: 'Building Merkle Proof...'});
           try {
             let proof = this.merkleProof(reps.data, account);
-
-            /*
-            let fc = Eos.modules.Fcbuffer([]);
-            console.log(fc);
-            let checksum256 = fc.types['fixed_bytes32'];
-            let vector = fc.types['vector'](checksum256(), false);
-
-            console.log(vector);
-            let obj = vector.fromObject(proof);
-
-            let buf = Eos.modules.Fcbuffer.toBuffer(vector, obj).toString('hex');
-            console.log(buf);
-            */
 
             this.setState({msg: 'Proof successfully builded'}, onChange(proof.join(' ')));
           }
