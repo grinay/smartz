@@ -55,7 +55,6 @@ export default class MerkleProofWidget extends PureComponent {
 
     let data =file.split('\n').filter(line => line !== '');
 
-
     let idx = data.findIndex(line => line.split(' ')[0] === account);
     if (idx === -1)
       throw 'Account not found in file';
@@ -81,7 +80,8 @@ export default class MerkleProofWidget extends PureComponent {
     const url = this.inputRef.value;
     const account = this.inputAccountRef.value;
 
-    console.log(url, account);
+    if (!url.length || !account.length)
+      return this.setState({msg: 'Fill in all the input fields'});
 
     this.fetchFile(url)
       .then(reps => {
@@ -96,8 +96,7 @@ export default class MerkleProofWidget extends PureComponent {
             if (typeof error === "string")
               this.setState({msg: error});
             else {
-              console.log(error);
-              this.setState({msg: 'Something went wrong'});
+              this.setState({msg: 'Error an building merkle tree'});
             }
           }
         }
@@ -107,7 +106,7 @@ export default class MerkleProofWidget extends PureComponent {
           if (error.response.code >= 400 && error.response.code < 500) {
             this.setState({msg: 'File not found'}, onChange(null));
           } else {
-            this.setState({msg: 'Something went wrong'}, onChange(null));
+            this.setState({msg: 'Error an fetching file'}, onChange(null));
           }
         }
       });
@@ -132,7 +131,7 @@ export default class MerkleProofWidget extends PureComponent {
           />
           <input
             ref={ref => (this.inputAccountRef = ref)}
-            id={id}
+            id={id + '-account'}
             type="text"
             disabled={readonly || disabled}
             defaultValue=""

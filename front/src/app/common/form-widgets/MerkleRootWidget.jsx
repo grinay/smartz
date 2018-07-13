@@ -104,7 +104,7 @@ export default class MerkleRootWidget extends PureComponent {
           if (typeof error === "string")
             this.setState({msg: error});
           else {
-            this.setState({msg: 'Something went wrong'});
+            this.setState({msg: 'Error an building merkle tree'});
             console.log(error);
           }
         });

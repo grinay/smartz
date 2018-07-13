@@ -60,7 +60,6 @@ export default class MerkleTree {
     return Buffer.concat([...args].sort(Buffer.compare));
   }
 
-
   getProof (el) {
     let idx = this.bufIndexOf(el, this.elements);
 
