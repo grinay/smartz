@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import InlineSVG from 'svg-inline-react';
 
-import './Footer.less';
+import './FullFooter.less';
 
-class Footer extends Component {
-  render() {
+
+export default class FullFooter extends React.PureComponent<{}, {}> {
+  public render() {
     return (
-      <footer className="page-footer">
+      <footer className="page-footer full-footer">
         {/* Logo */}
         <section className="logo">
           <InlineSVG
             className="logo-img"
-            src={require('../../assets/img/common/footer/logo.svg')}
+            src={require('../../../assets/img/common/footer/logo.svg')}
           />
         </section>
         {/* Navigation */}
@@ -46,10 +47,11 @@ class Footer extends Component {
                 className="social__link"
                 href="https://t.me/smartz_en"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <InlineSVG
                   className="social-img"
-                  src={require('../../assets/img/common/footer/telegram.svg')}
+                  src={require('../../../assets/img/common/footer/telegram.svg')}
                 />
               </a>
             </li>
@@ -58,10 +60,11 @@ class Footer extends Component {
                 className="social__link"
                 target="_blank"
                 href="https://www.facebook.com/SmartzPlatform/"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <InlineSVG
                   className="social-img"
-                  src={require('../../assets/img/common/footer/fb.svg')}
+                  src={require('../../../assets/img/common/footer/fb.svg')}
                 />
               </a>
             </li>
@@ -70,10 +73,11 @@ class Footer extends Component {
                 href="https://github.com/smartzplatform"
                 className="social__link"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <InlineSVG
                   className="social-img"
-                  src={require('../../assets/img/common/footer/github.svg')}
+                  src={require('../../../assets/img/common/footer/github.svg')}
                 />
               </a>
             </li>
@@ -82,10 +86,11 @@ class Footer extends Component {
                 href="https://medium.com/smartz-blog"
                 className="social__link"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <InlineSVG
                   className="social-img"
-                  src={require('../../assets/img/common/footer/medium.svg')}
+                  src={require('../../../assets/img/common/footer/medium.svg')}
                 />
               </a>
             </li>
@@ -94,10 +99,11 @@ class Footer extends Component {
                 href="https://steemit.com/@smartz"
                 className="social__link"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <InlineSVG
                   className="social-img"
-                  src={require('../../assets/img/common/footer/steemit.svg')}
+                  src={require('../../../assets/img/common/footer/steemit.svg')}
                 />
               </a>
             </li>
@@ -106,10 +112,11 @@ class Footer extends Component {
                 href="https://twitter.com/SmartzPlatform"
                 className="social__link"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <InlineSVG
                   className="social-img"
-                  src={require('../../assets/img/common/footer/twitter.svg')}
+                  src={require('../../../assets/img/common/footer/twitter.svg')}
                 />
               </a>
             </li>
@@ -118,10 +125,11 @@ class Footer extends Component {
                 href="https://www.youtube.com/smartz"
                 className="social__link"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <InlineSVG
                   className="social-img"
-                  src={require('../../assets/img/common/footer/youtube.svg')}
+                  src={require('../../../assets/img/common/footer/youtube.svg')}
                 />
               </a>
             </li>
@@ -130,10 +138,11 @@ class Footer extends Component {
                 href="https://www.linkedin.com/company/smartzplatform/"
                 className="social__link"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <InlineSVG
                   className="social-img"
-                  src={require('../../assets/img/common/footer/linkedin.svg')}
+                  src={require('../../../assets/img/common/footer/linkedin.svg')}
                 />
               </a>
             </li>
@@ -144,7 +153,7 @@ class Footer extends Component {
           <div className="wrapper-input">
             <InlineSVG
               className="search-input"
-              src={require('../../assets/img/common/footer/search.svg')}
+              src={require('../../../assets/img/common/footer/search.svg')}
             />
             <input placeholder="Contract name or address" type="text" className="search-field" />
           </div>
@@ -157,7 +166,11 @@ class Footer extends Component {
           <a href="https://t.me/LoungerX">t.me/LoungerX</a>
           <p>
             Designed by{' '}
-            <a href="http://artdictators.ru/" target="_blank" rel="noopener noreferrer">
+            <a
+              href="http://artdictators.ru/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Artdictators
             </a>
           </p>
@@ -173,21 +186,24 @@ class Footer extends Component {
               <a
                 href="/static/media/legal/Smartz_privacy-policy.pdf"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 Privacy policy
               </a>
               &nbsp;&nbsp;&nbsp;
               <a
                 href="/static/media/legal/Smartz_terms-and-conditions.pdf"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 Terms & conditions
               </a>
               &nbsp;&nbsp;&nbsp;
               <a
                 href="https://github.com/smartzplatform/tech-docs/blob/master/Technical_WP_EN.md"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 Technical Whitepaper
               </a>
             </p>
@@ -197,5 +213,3 @@ class Footer extends Component {
     );
   }
 }
-
-export default Footer;

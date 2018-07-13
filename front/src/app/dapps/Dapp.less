@@ -2,7 +2,20 @@
 
 
 .dapp {
-    padding: 10px;
+    display: flex;
+    flex: 1;
+
+    .dapp-body {
+        display: flex;
+        flex-direction: column;
+
+        width: calc(100% - 220px - 10px);
+        padding: 10px;
+
+        .content {
+            flex: 1;
+        }
+    }
 }
 
 .page-main--running-contract {
