@@ -6,6 +6,10 @@ import './Modal.less';
 interface IModalProps {
   children: any;
   isOpen: boolean;
+  isCloser?: boolean;
+  overlayClassName?: string;
+  windowClassName?: string;
+  closerClassName?: string;
   onClose: () => void;
 }
 
@@ -17,7 +21,16 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
   }
 
   public render() {
-    const { children, isOpen, onClose } = this.props;
+    const {
+      children,
+      isOpen,
+      onClose,
+      isCloser = true,
+      overlayClassName,
+      windowClassName,
+      closerClassName,
+    } = this.props;
+
     const isDisableScroll: boolean = this.elem.classList.contains('modal-disable-scroll');
 
     if (!isOpen) {
@@ -33,14 +46,16 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
     }
 
     return (
-      <div className="modal flex">
-        <div className="window">
-          <span className="closer" onClick={onClose}>
-            &times;
-          </span>
+      <div className={`modal flex ${overlayClassName}`}>
+        <div className={`window ${windowClassName}`}>
+          {isCloser &&
+            <span className={`closer ${closerClassName}`} onClick={onClose}>
+              &times;
+          </span>}
           {children}
         </div>
       </div>
     );
   }
 }
+

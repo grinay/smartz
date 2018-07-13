@@ -2,7 +2,6 @@ import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
 import { getFunctionsByType } from '../../../helpers/common';
-import Modal from '../../common/modal/Modal';
 import ModalFunc from './modal-func/ModalFunc';
 
 import './ColumnFunc.less';
@@ -123,9 +122,12 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
           />
           More
       </button> */}
-        <Modal isOpen={isOpenModal} onClose={this.toggleModal}>
-          <ModalFunc func={selectedFunc} />
-        </Modal>
+        <ModalFunc
+          func={selectedFunc}
+          dapp={dapp}
+          isOpen={isOpenModal}
+          onClose={this.toggleModal}
+        />
       </aside>
     );
   }

@@ -1,0 +1,170 @@
+@import '../../../../styles/variables.less';
+
+.modal-func {
+    color: white;
+
+    .modal-window {
+        width: 635px;
+        padding: 30px 25px 45px;
+
+        color: white;
+        border-radius: 8px;
+        background-color: @color-components;
+
+        .title {
+            margin: 0;
+
+            font-family: @f-cera-pro-700;
+            font-size: 34px;
+            line-height: 43px;
+        }
+
+        .description {
+            display: inline-block;
+
+            width: 70%;
+            margin: 0;
+
+            opacity: .5;
+
+            font-family: @f-museo-sans-cyrl-500;
+            font-size: 12px;
+            line-height: 17px;
+        }
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+
+        display: flex;
+
+        width: 36px;
+        height: 36px;
+        padding: 0;
+
+        cursor: pointer;
+
+        border: 0;
+        border-radius: 50%;
+        outline: 0;
+        background-color: rgba(255, 255, 255, .2);
+
+        &:hover, &:focus {
+            background-color: rgba(255, 255, 255, .4);
+        }
+
+        .x-icon {
+            width: 15px;
+            height: 15px;
+            margin: auto;
+        }
+    }
+}
+
+.function-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.function-form > div.form-group.field.field-array {
+    order: 10;
+}
+
+.function-form > .function-form__button {
+    order: 20;
+
+    margin-top: 35px;
+
+    .button-base {
+        height: 50px;
+        padding: 0 38px;
+
+        background-color: @color-components-secondary;
+
+        font-family: @f-museo-sans-cyrl-700;
+        font-size: 16px;
+    }
+}
+
+.function-form fieldset {
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+}
+
+.function-form .form-block__header {
+    margin: 0;
+
+    opacity: .9;
+    color: #0F1418;
+
+    font-family: 'Cera Pro 700', Arial, sans-serif;
+    font-size: 15px;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 29px;
+}
+
+.function-form .array-item {
+    margin-top: 25px;
+}
+
+.function-form .control-label {
+    opacity: .9;
+    outline: none;
+
+    font-family: @f-museo-sans-cyrl-700;
+    font-size: 15px;
+    line-height: 18px;
+}
+
+.function-form .field-description {
+    display: block;
+
+    margin: 3px 0;
+
+    opacity: .5;
+
+    font-family: @f-museo-sans-cyrl-500;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.function-form input.form-control {
+    display: block;
+
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px 17px 16px 17px;
+
+    border: 1px solid #4A4A4A;
+    border-radius: 4px;
+    outline: 0;
+    background-color: #383838;
+
+    font-family: 'Cera Pro 300', Arial, sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+
+    -webkit-appearance: none;
+}
+
+.function-form input.form-control:focus {
+    box-shadow: inset 0 0 0 2px rgba(79,108,255,1);
+}
+
+.function-form .field-error input {
+    box-shadow: inset 0 0 0 2px rgba(255,78,89,1);
+}
+
+.function-form .error-detail {
+    padding-left: 0;
+
+    list-style-type: none;
+
+    color: rgba(255,78,89,1);
+}
