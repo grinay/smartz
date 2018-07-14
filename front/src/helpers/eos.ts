@@ -107,6 +107,71 @@ class EosClass {
     );
   }
 
+  public setPermissions = (permissions: any) => {
+    this.scatter.requireVersion(5.0);
+
+    return (
+      this.setChainId()
+      // accept current network
+        .then(() => this.scatter.suggestNetwork(this.network))
+        .then(() => this.scatter.getIdentity({accounts: [this.network]}))
+        .then((identity) => {
+          this.currentIdentity = identity;
+          this.accountName = this.getAccountName(identity);
+
+          // obtain current permissions
+          return this.scatter
+            .eos(this.network, Eos, this.configEosDapp, this.network.protocol)
+            .getAccount({account_name: this.accountName});
+        })
+        .then((account) => {
+          let perms = permissions.map((p: any) => {
+            return {
+              permission: {
+                actor: !p.actor ? this.accountName : this.accountName,
+                permission: p.name,
+              },
+              weight: 1,
+            };
+          });
+
+          let payload = {
+            parent: 'owner',
+            permission: 'active',
+            account: this.accountName,
+            auth: account.permissions[0].required_auth,
+          };
+
+          let hasPermission = (perm: any) => {
+            for (let i = 0; i < payload.auth.accounts.length; ++i) {
+              if (payload.auth.accounts[i].permission.actor === perm.permission.actor &&
+                payload.auth.accounts[i].permission.permission === perm.permission.permission
+              )
+                return true;
+            }
+            return false;
+          };
+
+          let needUpdate = false;
+          perms.forEach((perm: any) => {
+            if (!hasPermission(perm)) {
+              payload.auth.accounts.push(perm);
+              needUpdate = true;
+            }
+          });
+
+          if (!needUpdate)
+            return Promise.resolve();
+
+          return this.scatter
+            .eos(this.network, Eos, this.configEosDapp, this.network.protocol)
+            .transaction('eosio', (system) => {
+              system.updateauth(payload, {authorization: this.accountName});
+            });
+        })
+    );
+  }
+
   public getIdentity() {
     return this.scatter.getIdentity({ accounts: [this.network] });
   }
