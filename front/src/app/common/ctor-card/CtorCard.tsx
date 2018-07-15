@@ -39,7 +39,6 @@ class CtorCard extends React.Component<ICtorCardProps, {}> {
             <div className="ctor-card__buttons">
               <div
                 className="btn ctor-card__price"
-                onClick={() => history.replace(`/deploy/${ctor.id}`)}
               >
                 {ctor.price ? `${ctor.price} ETH` : 'Deploy free'}
               </div>
@@ -48,7 +47,7 @@ class CtorCard extends React.Component<ICtorCardProps, {}> {
                 ctor.user_id === userId && (
                   <div
                     className="btn ctor-card__price"
-                    onClick={() => history.replace(`/constructors/${ctor.id}/update`)}
+                    onClick={(e) => {history.replace(`/constructors/${ctor.id}/update`); e.preventDefault();}}
                   >
                     Update
                   </div>
