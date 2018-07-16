@@ -10,8 +10,11 @@ https://smartz.io/
 
 ## Running local server
 ```
+# run server
 docker-compose build
 docker-compose up [-d] [--build]
+
+# migrations
 docker exec -it smartz_backend /bin/sh
 source .venv/bin/activate
 python3 manage.py migrate
