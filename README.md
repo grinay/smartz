@@ -2,23 +2,21 @@
 
 ![](https://travis-ci.com/mixbytes/smartz.svg?token=npMVUXhKXPw1Mau9yKyL&branch=master)
 
-Smart contract constructors marketplace.
+Multi-chain smart contracts management system
+
+https://smartz.io/
 
 ## Development
 
-### Install deps
-
-    pip3 install -r requirements-dev.txt
-
-### Test
-
-    # Backend tests
-    pytest
-
-## Docker-compose commands
+## Running local server
 ```
 docker-compose build
 docker-compose up [-d] [--build]
+docker exec -it smartz_backend /bin/sh
+source .venv/bin/activate
+python3 manage.py migrate
+
+# stop server
 docker-compose down
 ```
 ## Service variables (smartzplatform.env):
@@ -26,18 +24,3 @@ docker-compose down
 * ENVIRONMENT=dev
 
 **Container environment (dev, prod, stage)**
-
-
-### [Stage URL](https://staging.smartz.io)
-
-## Update service (stage, prod)
-
-setup ECS profile in ~/.ecs directory
-```
-sudo cp -r /root/.ecs .
-sudo chown -R $USER .ecs/
-git clone https://github.com/mixbytes/smartz
-```
-```
-sh deploy.sh latest|branch_master|commit_xxxxxxx|-i|--info
-```
