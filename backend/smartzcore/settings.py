@@ -44,6 +44,7 @@ class Common(Configuration):
         'apps.users',
         'apps.tools',
         'apps.common',
+        'apps.contracts_uis'
     ]
 
     MIDDLEWARE = [
