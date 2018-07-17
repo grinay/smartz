@@ -101,7 +101,7 @@ export default class MerkleTree {
 
     // Convert element to 32 byte hash if it is not one already
     if (el.length !== 32 || !Buffer.isBuffer(el)) {
-      hash = sha256(el);
+      hash = this.hasher(el);
     } else {
       hash = el;
     }

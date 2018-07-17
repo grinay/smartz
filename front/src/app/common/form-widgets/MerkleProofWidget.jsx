@@ -140,17 +140,17 @@ export default class MerkleProofWidget extends PureComponent {
             placeholder={"account name for airdrop"}
             className={"form-control"}
           />
-          <input
-            id={id + '-button'}
-            type="button"
-            disabled={readonly || disabled}
-            value="Build Proof"
-            onClick={this.onChange}
-            className="button contract-controls__form-button"
-            style={{float: "right", marginTop: 10}}
-          />
         </p>
         <p>{this.state.msg}</p>
+        <input
+          id={id + '-button'}
+          type="button"
+          disabled={readonly || disabled}
+          value="Build Proof"
+          onClick={this.onChange}
+          className="button contract-controls__form-button"
+          style={{float: "right", marginTop: 10, marginLeft: '100%'}}
+        />
       </div>
     );
   }
