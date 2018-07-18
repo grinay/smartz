@@ -29,6 +29,14 @@ export const transactionNew = (dappId, func, formData, result) => ({
   result
 });
 
+export const requestNew = (dappId, func, formData, result) => ({
+  type: 'REQUEST_NEW',
+  dappId,
+  func,
+  formData,
+  result
+});
+
 export const transactionReceipt = (dappId, txHash, receipt) => ({
   type: 'TRANSACTION_RECEIPT',
   dappId,

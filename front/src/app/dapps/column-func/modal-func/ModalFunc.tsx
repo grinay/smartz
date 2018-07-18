@@ -7,9 +7,10 @@ import { blockchains } from '../../../../constants/constants';
 import { getFuncType } from '../../../../helpers/common';
 import Eos from '../../../../helpers/eos';
 import { processControlForm, web3 as w3 } from '../../../../helpers/eth';
+import store from '../../../../store/store';
 import FormWidgets from '../../../common/form-widgets/FormWidgets';
 import Modal from '../../../common/modal/Modal';
-import { transactionNew, transactionReceipt } from '../../DappActions';
+import { requestNew, transactionNew, transactionReceipt } from '../../DappActions';
 
 import './ModalFunc.less';
 
@@ -42,26 +43,29 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
 
     switch (dapp.blockchain) {
       case blockchains.ethereum:
-        processControlForm(dapp.abi, func, formData, dapp.address, (error, result) => {
-          if (!error) {
-            transactionNew(dapp.id, func, formData, result);
-            if (/^0x([A-Fa-f0-9]{64})$/.test(result)) {
-              // Check if result is tx hash
-              this.getReceipt(result);
+        processControlForm(dapp.abi, func, formData, dapp.address,
+          (error, response) => {
+            const funcType = getFuncType(func);
+
+            if (funcType === 'ask') {
+              const result: any = error === null ? response : error;
+
+              store.dispatch(requestNew(dapp.id, func, formData, result));
+            } else if (funcType === 'write') {
+              const result: any = error === null ? response : error;
+
+              store.dispatch(transactionNew(dapp.id, func, formData, result));
+              this.getReceipt(response);
             }
 
+            // close modal window after execute function
             onClose();
-          } else {
-            console.error(error);
-            transactionNew(dapp.id, func, formData, error);
-          }
-        });
+          });
         break;
       case blockchains.eos:
         Eos.executeFunc(dapp.abi, func, dapp.address, formData)
           .then((result) => {
-            transactionNew(dapp.id, func, formData, result);
-            onClose();
+            store.dispatch(transactionNew(dapp.id, func, formData, result));
           })
           .catch((err) => {
             console.error(err);
@@ -69,9 +73,11 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
 
             error = error.error.what || error.message || 'error';
 
-            transactionNew(dapp.id, func, formData, error);
-            window.scrollTo(0, 0);
+            store.dispatch(transactionNew(dapp.id, func, formData, error));
           });
+
+        // close modal window after execute function
+        onClose();
         break;
 
       default:
@@ -83,12 +89,10 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
     const { dapp } = this.props;
 
     w3.eth.getTransactionReceipt(tx, (err, receipt) => {
-      if (null == receipt)
-        window.setTimeout(() => {
-          this.getReceipt(tx);
-        }, 500);
-      else {
-        transactionReceipt(dapp.id, tx, receipt);
+      if (null == receipt) {
+        window.setTimeout(() => this.getReceipt(tx), 500);
+      } else {
+        store.dispatch(transactionReceipt(dapp.id, tx, receipt));
 
         // refresh 'view' functions
         // processControlForm(dapp.abi, func, [], dapp.address, (error, result) => {

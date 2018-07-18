@@ -35,6 +35,9 @@ const dapps = (state = initState, action) => {
         if (i >= 0) {
           dapps.push(Object.assign(nextState.dapps[i], dapp));
         } else {
+          dapp.requests = [];
+          dapp.transactions = [];
+
           dapps.push(dapp);
         }
       });
@@ -61,8 +64,20 @@ const dapps = (state = initState, action) => {
     case 'TRANSACTION_NEW':
       dapp = find(nextState.dapps, { id: action.dappId });
       if (dapp) {
-        if (!dapp.transactions) dapp.transactions = [];
         dapp.transactions.push({
+          func: action.func,
+          time: moment(),
+          formData: action.formData,
+          [/^0x([A-Fa-f0-9]{64})$/.test(action.result) ? 'txHash' : 'result']: action.result
+        });
+      }
+      return nextState;
+
+    case 'REQUEST_NEW':
+      dapp = find(nextState.dapps, { id: action.dappId });
+      if (dapp) {
+        if (!dapp.requests) dapp.requests = [];
+        dapp.requests.push({
           func: action.func,
           time: moment(),
           formData: action.formData,
