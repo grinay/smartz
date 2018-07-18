@@ -20,6 +20,8 @@ rlp = "==0.6.0" # temporary https://github.com/ethereum/pyethereum/issues/868
 coincurve = "==7.1.0"
 eth-utils = "==1.0.3"
 "base58" = "==1.0.0"
+djangorestframework = "==3.8.2"
+drf-yasg = "==1.9.1"
 
 [dev-packages]
 pytest = "*"

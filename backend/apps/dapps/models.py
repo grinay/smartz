@@ -4,6 +4,7 @@ from datetime import datetime
 
 import pytz
 from django.conf import settings
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import ForeignKey
 
@@ -67,13 +68,18 @@ class Transaction(models.Model):
     execution_datetime = models.DateTimeField()
     mining_datetime = models.DateTimeField()
 
-    function_name = models.CharField(max_length=255)
+    initiator_address = models.CharField(max_length=42)
+
+    function_name = models.CharField(max_length=255, blank=True)
     function_title = models.CharField(max_length=255)
     function_description = models.CharField(max_length=1000)
-    function_arguments = models.TextField()
-    info = models.TextField()
+    function_arguments = JSONField()  # todo validation
+    info = JSONField()  # todo validation
     is_success = models.BooleanField()
-    error = models.CharField(max_length=255)
+    error = models.CharField(max_length=255, blank=True)
+
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    dapp = models.ForeignKey(Dapp, on_delete=models.PROTECT)
 
     class Meta:
         indexes = [
@@ -87,15 +93,20 @@ class Transaction(models.Model):
 class Request(models.Model):
     blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50, default=BLOCKCHAIN_ETHEREUM)
 
+    initiator_address = models.CharField(max_length=42)
+
     execution_datetime = models.DateTimeField()
     function_name = models.CharField(max_length=255)
     function_title = models.CharField(max_length=255)
     function_description = models.CharField(max_length=1000)
-    function_arguments = models.TextField()
-    result = models.TextField()
+    function_arguments = JSONField()
+    result = JSONField()
 
     is_success = models.BooleanField()
-    error = models.CharField(max_length=255)
+    error = models.CharField(max_length=255, blank=True)
+
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    dapp = models.ForeignKey(Dapp, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.function_name
@@ -103,6 +114,7 @@ class Request(models.Model):
 
 class Log(models.Model):
     name = models.CharField(max_length=255)
-    data = models.TextField()
+    created_at = models.DateTimeField()
+    data = JSONField()
 
     tx = models.ForeignKey(Transaction, on_delete=models.PROTECT, related_name='logs')
