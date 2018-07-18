@@ -63,7 +63,7 @@ export default class MerkleProofWidget extends PureComponent {
       let err = this.validateLine(line);
       if (err)
         throw err;
-      return line.split(' ').join('');
+      return line.split(' ').join(' ');
     });
 
     let hasher = options.blockchain === 'eth' ? keccak256 : sha256;
