@@ -26,11 +26,13 @@ class FunctionCard extends PureComponent {
     const { func, dapp, transactionNew } = this.props;
     const { abi, address } = this.props.dapp;
 
-    func.inputs.items.forEach((inp, idx) => {
-      if (inp.realtype === "array") {
-        formData[idx] = formData[idx].split(" ");
-      }
-    });
+    if (func.inputs && func.inputs.items) {
+        func.inputs.items.forEach((inp, idx) => {
+          if (inp.realtype === "array") {
+            formData[idx] = formData[idx].split(" ");
+          }
+        });
+    }
 
     switch (dapp.blockchain) {
       case blockchains.ethereum:
