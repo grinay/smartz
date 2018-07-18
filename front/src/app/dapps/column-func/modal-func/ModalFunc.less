@@ -1,15 +1,20 @@
 @import '../../../../styles/variables.less';
 
+@padding-left-right: 25px;
+@padding-bottom: 45px;
+
 .modal-func {
     color: white;
 
     .modal-window {
-        width: 635px;
-        padding: 30px 25px 45px;
+        overflow: hidden;
 
-        color: white;
-        border-radius: 8px;
-        background-color: @color-components;
+        width: 635px;
+        padding: 30px @padding-left-right @padding-bottom;
+
+        color: #0E1418;
+        border-radius: 24px;
+        background-color: white;
 
         .title {
             margin: 0;
@@ -27,7 +32,7 @@
 
             opacity: .5;
 
-            font-family: @f-museo-sans-cyrl-500;
+            font-family: @f-cera-pro-500;
             font-size: 12px;
             line-height: 17px;
         }
@@ -49,16 +54,22 @@
         border: 0;
         border-radius: 50%;
         outline: 0;
-        background-color: rgba(255, 255, 255, .2);
+        background-color: #E5E9F0;
 
         &:hover, &:focus {
-            background-color: rgba(255, 255, 255, .4);
+            background-color: darken(#E5E9F0, 5);
         }
 
         .x-icon {
             width: 15px;
             height: 15px;
             margin: auto;
+
+            svg {
+                polygon {
+                    fill: black;
+                }
+            }
         }
     }
 }
@@ -75,16 +86,26 @@
 .function-form > .function-form__button {
     order: 20;
 
-    margin-top: 35px;
+    height: 105px;
+    margin: 35px -@padding-left-right -@padding-bottom;
+    padding: @padding-left-right;
+
+    background-color: #CED6E0;
 
     .button-base {
         height: 50px;
         padding: 0 38px;
 
-        background-color: @color-components-secondary;
+        color: white;
+        background: linear-gradient(270deg, #16738C 0%, #46A7B7 37.98%, #46A7B7 60.78%, #16738C 100%);
 
-        font-family: @f-museo-sans-cyrl-700;
+        font-family: @f-cera-pro-700;
         font-size: 16px;
+
+        &:hover, &:active, &:focus {
+            color: black;
+            background-color: #FFFFFF;
+        }
     }
 }
 
@@ -101,7 +122,7 @@
     opacity: .9;
     color: #0F1418;
 
-    font-family: 'Cera Pro 700', Arial, sans-serif;
+    font-family: @f-cera-pro-700;
     font-size: 15px;
     font-size: 24px;
     font-weight: normal;
@@ -116,7 +137,7 @@
     opacity: .9;
     outline: none;
 
-    font-family: @f-museo-sans-cyrl-700;
+    font-family: @f-cera-pro-700;
     font-size: 15px;
     line-height: 18px;
 }
@@ -128,7 +149,7 @@
 
     opacity: .5;
 
-    font-family: @f-museo-sans-cyrl-500;
+    font-family: @f-cera-pro-500;
     font-size: 12px;
     line-height: 15px;
 }
@@ -141,12 +162,14 @@
     margin-top: 10px;
     padding: 14px 17px 16px 17px;
 
-    border: 1px solid #4A4A4A;
+// border: 1px solid #4A4A4A;
+
+    border: none;
     border-radius: 4px;
     outline: 0;
-    background-color: #383838;
+    background-color: #E5E9F0;
 
-    font-family: 'Cera Pro 300', Arial, sans-serif;
+    font-family: @f-cera-pro-300;
     font-size: 20px;
     line-height: 24px;
 
