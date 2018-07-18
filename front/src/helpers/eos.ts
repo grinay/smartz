@@ -128,7 +128,7 @@ class EosClass {
           let perms = permissions.map((p: any) => {
             return {
               permission: {
-                actor: !p.actor ? this.accountName : this.accountName,
+                actor: !p.actor ? this.accountName : p.actor,
                 permission: p.name,
               },
               weight: 1,
