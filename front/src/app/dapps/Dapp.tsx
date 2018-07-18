@@ -9,6 +9,7 @@ import Alert from '../common/Alert';
 import ColumnFunc from './column-func/ColumnFunc';
 import FunctionButton from './function-button/FunctionButton';
 import MinimalFooter from './minimal-footer/MinimalFooter';
+import Transactions from './transactions/Transactions';
 import ViewFunc from './view-func/ViewFunc';
 
 import './Dapp.less';
@@ -106,6 +107,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
         <section className="dapp-body">
           <div className="content">
             <ViewFunc dapp={dapp} />
+            <Transactions dapp={dapp} />
           </div>
           <MinimalFooter ctorId={dapp.constructor_id} />
         </section>
