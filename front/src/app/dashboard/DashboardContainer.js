@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
   ctors: state.ctors.ctors,
   ctorsError: state.ctors.error,
   ctorsFetchStatus: state.ctors.fetchStatus,
-  dapps: state.dapps.dapps,
+  dapps: state.dapps.dappList,
   dappsError: state.dapps.error,
   dappsFetchStatus: state.dapps.fetchStatus
 });

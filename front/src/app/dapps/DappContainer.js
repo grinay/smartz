@@ -6,7 +6,7 @@ import Dapp from './Dapp';
 import { viewFuncResult } from './DappActions';
 
 const mapStateToProps = (state, ownProps) => {
-  const dapp = find(state.dapps.dapps, { id: ownProps.match.params.id });
+  const dapp = find(state.dapps.dappList, { id: ownProps.match.params.id });
 
   return {
     dapp: dapp,

@@ -3,7 +3,11 @@ import moment from 'moment';
 
 const initState = {
   fetchStatus: 'init',
-  dapps: null,
+  dappList: [],
+  currentDapp: {
+    id: null,
+    selectedTransaction: null
+  },
   error: null
 };
 
@@ -28,28 +32,25 @@ const dapps = (state = initState, action) => {
         action.dapps = [action.dapps];
       }
 
-      const dapps = [];
       action.dapps.forEach((dapp) => {
-        const i = findIndex(nextState.dapps, { id: dapp.id });
+        const i = findIndex(nextState.dappList, { id: dapp.id });
 
         if (i >= 0) {
-          dapps.push(Object.assign(nextState.dapps[i], dapp));
+          nextState.dappList[i] = Object.assign(nextState.dappList[i], dapp);
         } else {
           dapp.requests = [];
           dapp.transactions = [];
 
-          dapps.push(dapp);
+          nextState.dappList.push(dapp);
         }
       });
-
-      nextState.dapps = dapps;
 
       return nextState;
 
     case 'VIEW_FUNC_RESULT':
       const { dappId, funcName, result } = action;
 
-      let dapp = find(nextState.dapps, { id: dappId });
+      let dapp = find(nextState.dappList, { id: dappId });
       if (dapp) {
         if (dapp.funcResults && dapp.funcResults[funcName] === result) {
           return state;
@@ -62,7 +63,7 @@ const dapps = (state = initState, action) => {
       return nextState;
 
     case 'TRANSACTION_NEW':
-      dapp = find(nextState.dapps, { id: action.dappId });
+      dapp = find(nextState.dappList, { id: action.dappId });
       if (dapp) {
         dapp.transactions.push({
           func: action.func,
@@ -74,7 +75,7 @@ const dapps = (state = initState, action) => {
       return nextState;
 
     case 'REQUEST_NEW':
-      dapp = find(nextState.dapps, { id: action.dappId });
+      dapp = find(nextState.dappList, { id: action.dappId });
       if (dapp) {
         if (!dapp.requests) dapp.requests = [];
         dapp.requests.push({
@@ -87,7 +88,7 @@ const dapps = (state = initState, action) => {
       return nextState;
 
     case 'TRANSACTION_RECEIPT':
-      dapp = find(nextState.dapps, { id: action.dappId });
+      dapp = find(nextState.dappList, { id: action.dappId });
       if (dapp) {
         const transaction = find(dapp.transactions, { txHash: action.txHash });
         if (transaction) {
