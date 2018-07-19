@@ -52,7 +52,7 @@ class TransactionsCRUDIntegrationTests(WebTest):
                     {
                         'name': 'call',
                         'created_at': '2018-08-01T22:01:00+03:00',
-                        'data': ['123', '456']
+                        'data': [{'name': 'param1', 'value': 'val1'}]
                     }
                 ]
             },

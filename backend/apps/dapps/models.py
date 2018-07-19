@@ -10,6 +10,7 @@ from django.db.models import ForeignKey
 
 from apps.common.constants import BLOCKCHAINS, BLOCKCHAIN_ETHEREUM
 from apps.constructors.models import Constructor
+from apps.dapps.validators import validate_function_args, validate_tx_info, validate_log_data
 from apps.users.models import User
 
 
@@ -73,8 +74,8 @@ class Transaction(models.Model):
     function_name = models.CharField(max_length=255, blank=True)
     function_title = models.CharField(max_length=255)
     function_description = models.CharField(max_length=1000)
-    function_arguments = JSONField()  # todo validation
-    info = JSONField()  # todo validation
+    function_arguments = JSONField(validators=[validate_function_args])
+    info = JSONField(validators=[validate_tx_info])
     is_success = models.BooleanField()
     error = models.CharField(max_length=255, blank=True)
 
@@ -99,7 +100,7 @@ class Request(models.Model):
     function_name = models.CharField(max_length=255)
     function_title = models.CharField(max_length=255)
     function_description = models.CharField(max_length=1000)
-    function_arguments = JSONField()
+    function_arguments = JSONField(validators=[validate_function_args])
     result = JSONField()
 
     is_success = models.BooleanField()
@@ -115,6 +116,6 @@ class Request(models.Model):
 class Log(models.Model):
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField()
-    data = JSONField()
+    data = JSONField(validators=[validate_log_data])
 
     tx = models.ForeignKey(Transaction, on_delete=models.PROTECT, related_name='logs')

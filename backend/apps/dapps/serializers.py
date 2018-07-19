@@ -37,6 +37,11 @@ class LogSerializer(serializers.ModelSerializer):
         model = Log
         fields = ('name', 'created_at', 'data')
 
+    def validate(self, attrs):
+        instance = Log(**attrs)
+        instance.clean()
+        return attrs
+
 
 class TransactionSerializer(serializers.ModelSerializer):
     logs = LogSerializer(many=True)
@@ -44,7 +49,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = (
-            'pk', 'tx_id', 'blockchain', 'execution_datetime', 'mining_datetime', 'initiator_address',
+            'id', 'tx_id', 'blockchain', 'execution_datetime', 'mining_datetime', 'initiator_address',
             'function_name', 'function_title', 'function_description', 'function_arguments',
             'info', 'is_success', 'error', 'logs'
         )
@@ -62,15 +67,27 @@ class TransactionSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         raise NotImplementedError
 
+    def validate(self, attrs):
+        copy_attrs = attrs.copy()
+        logs_attrs = copy_attrs.pop('logs')
+        instance = Transaction(**copy_attrs)
+        instance.clean()
+        return attrs
+
 
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
         fields = (
-            'pk', 'blockchain', 'execution_datetime', 'initiator_address',
+            'id', 'blockchain', 'execution_datetime', 'initiator_address',
             'function_name', 'function_title', 'function_description', 'function_arguments',
             'result', 'is_success', 'error'
         )
 
     def update(self, instance, validated_data):
         raise NotImplementedError
+
+    def validate(self, attrs):
+        instance = Request(**attrs)
+        instance.clean()
+        return attrs
