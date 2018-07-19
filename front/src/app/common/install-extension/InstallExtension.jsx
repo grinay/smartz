@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
+import InlineSVG from 'svg-inline-react';
 
 import { IS_MOBILE_OS, IS_ANDROID } from '../../../helpers/detect-device';
-import appStoreBadgeImg from '../../../assets/img/common/app-store-badge.svg';
-import googlePlayBadgeImg from '../../../assets/img/common/google-play-badge.svg';
 import metamaskImg from '../../../assets/img/common/metamask.png';
 import trustImg from '../../../assets/img/common/trust-icon.png';
 
@@ -31,7 +30,10 @@ export default class InstallExtension extends PureComponent {
                 text = 'To use Smartz on mobile please use Trust wallet browser';
                 link = {
                     href: 'https://play.google.com/store/apps/details?id=com.wallet.crypto.trustapp',
-                    content: <img src={googlePlayBadgeImg} />
+                    content: <InlineSVG
+                        className="badge-img"
+                        src={require('../../../assets/img/common/google-play-badge.svg')}
+                    />
                 }
             } else {
                 className = 'install-trust';
@@ -42,7 +44,10 @@ export default class InstallExtension extends PureComponent {
                 text = 'To use Smartz on mobile please use Trust wallet browser';
                 link = {
                     href: 'https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409?mt=8',
-                    content: <img src={appStoreBadgeImg} />
+                    content: <InlineSVG
+                        className="badge-img"
+                        src={require('../../../assets/img/common/app-store-badge.svg')}
+                    />
                 }
             }
         } else {

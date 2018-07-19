@@ -152,13 +152,13 @@
                     { "$ref": "#/definitions/resultError" },
                     {
                         "type": "object",
-                        "required": ["id", "title", "ctor_id", "address", "network_id", "abi", "functions", "dashboard_functions", "constructor", "blockchain"],
+                        "required": ["id", "title", "constructor_id", "address", "network_id", "abi", "functions", "dashboard_functions", "constructor", "blockchain"],
                         "additionalProperties": false,
 
                         "properties": {
                             "id": { "$ref": "#/definitions/ObjectIdHex" },
                             "title": {"type": "string"},
-                            "ctor_id": { "$ref": "#/definitions/ObjectIdHex" },
+                            "constructor_id": { "$ref": "#/definitions/ObjectIdHex" },
                             "address": { "type": "string"},
                             "network_id": {"type": "string"},
                             "abi": {

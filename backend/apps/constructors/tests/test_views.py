@@ -21,8 +21,8 @@ class ConstructViewTests(TestCase):
             reverse('constructor-upload'),
             json.dumps({
                 "payment_address": "0x0000000000000000000000000000000000000001",
-                "ctor_name": "ctor",
-                "ctor_descr": "ctor",
+                "name": "ctor",
+                "description": "ctor",
                 "ctor_file": ""
             }),
             content_type='application/json'

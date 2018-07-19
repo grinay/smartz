@@ -46,7 +46,7 @@ class CtorAdd extends Component {
         } else {
           sendClickEvent(clickTypes.UPLOAD_SUCCESS);
 
-          this.setState({ message: `Contract "${data.ctor_name}" uploaded.` });
+          this.setState({ message: `Contract "${data.name}" uploaded.` });
         }
       })
       .catch((error) => this.setState({ error }));
@@ -57,10 +57,10 @@ class CtorAdd extends Component {
 
     const formSchema = {
       type: 'object',
-      required: ['ctor_name', 'ctor_descr', 'price', 'ctor_file'],
+      required: ['name', 'description', 'price', 'ctor_file'],
       additionalProperties: false,
       properties: {
-        ctor_name: {
+        name: {
           title: 'Public name of the smart contract (3..100 chars)',
           type: 'string',
           minLength: 3,
@@ -72,7 +72,7 @@ class CtorAdd extends Component {
           type: 'string',
           format: 'data-url'
         },
-        ctor_descr: {
+        description: {
           title: 'Description of the smart contract (3..300 chars)',
           type: 'string',
           minLength: 3,
@@ -96,10 +96,10 @@ class CtorAdd extends Component {
     };
 
     const uiSchema = {
-      ctor_name: {
+      name: {
         'ui:placeholder': 'My ever best contract'
       },
-      ctor_descr: {
+      description: {
         'ui:widget': 'textarea',
         'ui:placeholder': 'Some sentences about contract purposes and functions'
       }

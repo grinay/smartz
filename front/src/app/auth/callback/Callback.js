@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
-import maskSvg from './mask.svg';
-import carpetPng from './carpet.png';
+import InlineSVG from 'svg-inline-react';
 
 import './Callback.less';
 
@@ -9,8 +7,8 @@ class Callback extends Component {
   render() {
     return (
       <div className="loader">
-        <img className="loader__mask" src={maskSvg} />
-        <img className="loader__carpet" src={carpetPng} />
+        <InlineSVG className="loader__mask" src={require('./mask.svg')} />
+        <img className="loader__carpet" src={require('./carpet.png')} />
       </div>
     );
   }

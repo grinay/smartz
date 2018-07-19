@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import NetworkItem from './network-item/NetworkItem';
+import InlineSVG from 'svg-inline-react';
 
 import './SortBlockchain.less';
 import { blockchains } from './../../../constants/constants';
@@ -14,8 +15,12 @@ export default class SortBlockchain extends PureComponent {
         name: 'Ethereum',
         select: blockchain === blockchains.ethereum,
         img: {
-          on: 'ethereum-on.svg',
-          off: 'ethereum-off.svg'
+          on: <InlineSVG 
+          className="blch-img"
+           src={require('../../../assets/img/common/blockchain/ethereum-on.svg')} />,
+          off: <InlineSVG 
+          className="blch-img"
+           src={require('../../../assets/img/common/blockchain/ethereum-off.svg')} />
         },
         onClick: onClick(blockchains.ethereum)
       },
@@ -23,8 +28,12 @@ export default class SortBlockchain extends PureComponent {
         name: 'EOS',
         select: blockchain === blockchains.eos,
         img: {
-          on: 'EOS-on.svg',
-          off: 'EOS-off.svg'
+          on: <InlineSVG 
+          className="blch-img"
+           src={require('../../../assets/img/common/blockchain/EOS-on.svg')} />,
+          off: <InlineSVG 
+          className="blch-img"
+           src={require('../../../assets/img/common/blockchain/EOS-off.svg')} />
         },
         onClick: onClick(blockchains.eos)
       }

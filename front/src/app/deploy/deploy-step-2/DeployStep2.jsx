@@ -34,7 +34,7 @@ class DeployStep2 extends PureComponent {
       publicAccess
     } = this.props;
     const { bin, blockchain, abi, id } = dapp;
-    const { price, ctor_id } = ctor;
+    const { price, id: constructor_id } = ctor;
 
     if (blockchain === blockchains.ethereum && metamaskStatus != 'okMetamask') {
       return alert('Unlock metamask!');
@@ -60,7 +60,7 @@ class DeployStep2 extends PureComponent {
               deployTxError(deployId, errMsg);
             } else {
               const dataEvent = {
-                constructorId: getCtorUrl(ctor_id),
+                constructorId: getCtorUrl(constructor_id),
                 blockchain,
                 price,
                 gasLimit: ethConstants.gas,
@@ -72,7 +72,7 @@ class DeployStep2 extends PureComponent {
 
                 dataEvent.networkId = netId;
 
-                sendStatusDappEvent(id, ctor_id, {
+                sendStatusDappEvent(id, constructor_id, {
                   status: contractProcessStatus.DEPLOY,
                   ...dataEvent
                 });
@@ -84,7 +84,7 @@ class DeployStep2 extends PureComponent {
                 } else {
                   deployTxMined(deployId, receipt.contractAddress);
 
-                  sendStatusDappEvent(id, ctor_id, {
+                  sendStatusDappEvent(id, constructor_id, {
                     status: contractProcessStatus.MINED,
                     ...dataEvent
                   });
@@ -97,7 +97,7 @@ class DeployStep2 extends PureComponent {
 
       case blockchains.eos:
         const dataEvent = {
-          constructorId: getCtorUrl(ctor_id),
+          constructorId: getCtorUrl(constructor_id),
           blockchain
         };
 
@@ -114,7 +114,7 @@ class DeployStep2 extends PureComponent {
               .then(() => {
                 deployTxMined(deployId, Eos.getAccountName(identity));
 
-                sendStatusDappEvent(id, ctor_id, {
+                sendStatusDappEvent(id, constructor_id, {
                   status: contractProcessStatus.MINED,
                   ...dataEvent
                 });
@@ -128,7 +128,7 @@ class DeployStep2 extends PureComponent {
 
             deployTxSent(deployId, Eos.configEosDapp.chainId, null, blockchain);
 
-            sendStatusDappEvent(id, ctor_id, {
+            sendStatusDappEvent(id, constructor_id, {
               status: contractProcessStatus.DEPLOY,
               ...dataEvent
             });
