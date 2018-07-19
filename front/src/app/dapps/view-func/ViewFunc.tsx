@@ -1,9 +1,11 @@
 import * as React from 'react';
+import * as ReactTooltip from 'react-tooltip';
 import InlineSVG from 'svg-inline-react';
 
 import { blockchains } from '../../../constants/constants';
 import { getFunctionsByType } from '../../../helpers/common';
 import renderDappWidget from '../../common/dapp-widgets/DappWidgets';
+import Tooltip from '../../common/tooltip/Tooltip';
 import AddressBar from './address-bar/AddressBar';
 
 import './ViewFunc.less';
@@ -44,8 +46,9 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
               return (
                 <li key={i} className="card-row">
                   <p className="card-label">
-                    {func.title}
+                    <span className="card-text">{func.title}</span>
                     <InlineSVG
+                      data-tip={func.description}
                       className="question-icon"
                       src={require('../../../assets/img/common/question-icon.svg')}
                     />
@@ -64,8 +67,8 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
         <section className="dapp-content">
           <div className="card">
             <AddressBar dapp={dapp} />
-
             {viewFuncElement}
+            <ReactTooltip place={'bottom'} />
           </div>
         </section>
       </div>

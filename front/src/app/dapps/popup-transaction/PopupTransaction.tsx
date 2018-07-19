@@ -75,7 +75,7 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
                 src={require('../../../assets/img/common/v-double.svg')}
               />
               <span>Mined</span>
-              <time datetime="2018-09-29 22:12:11">22:12:11</time>
+              {/* <time datetime="2018-09-29 22:12:11">22:12:11</time> */}
             </div>
           </div>
         </div>

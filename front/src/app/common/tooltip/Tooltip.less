@@ -1,0 +1,47 @@
+.tooltip {
+    position: relative;
+
+    cursor: pointer;
+
+
+    .is-visible {
+        position: absolute;
+        top: calc(100% + 14px);
+        left: 50%;
+
+        display: flex;
+
+        max-width: 200px;
+        padding: 8px 10px;
+
+        transform: translateX(-50%);
+
+        color: white;
+        border-radius: 6px;
+        background-color: black;
+
+        .tooltip-text {
+            margin: 0;
+        }
+
+        &:after {
+            position: absolute;
+            z-index: -1;
+            bottom: 100%;
+            left: 50%;
+
+            width: 0;
+            height: 0;
+
+            content: '';
+            transform: translateX(-50%);
+
+            border: 10px solid transparent;
+            border-bottom-color: black;
+        }
+    }
+
+    .is-hidden {
+        display: none;
+    }
+}
