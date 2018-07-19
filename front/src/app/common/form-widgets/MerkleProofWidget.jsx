@@ -76,7 +76,7 @@ export default class MerkleProofWidget extends PureComponent {
   }
 
   onChange = () => {
-    const { onChange } = this.props;
+    const { onChange, options } = this.props;
     const url = this.inputRef.value;
     const account = this.inputAccountRef.value;
 
@@ -89,6 +89,9 @@ export default class MerkleProofWidget extends PureComponent {
           this.setState({msg: 'Building Merkle Proof...'});
           try {
             let proof = this.merkleProof(reps.data, account);
+
+            if (options.blockchain === 'eth')
+                proof = proof.map(p => '0x' + p);
 
             this.setState({msg: 'Proof successfully builded'}, onChange(proof.join(' ')));
           }
