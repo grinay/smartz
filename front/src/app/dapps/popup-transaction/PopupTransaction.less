@@ -1,0 +1,208 @@
+@import '../../../styles/variables.less';
+
+.popup-transaction {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+
+    width: calc(100% - 3*@dapp-padding - @dapp-column-width);
+    height: 300px;
+    padding: 35px 35px 25px;
+
+    border-radius: 8px 8px 0 0;
+    background-color: black;
+
+    .event {
+        margin-bottom: 15px;
+    }
+
+    .event-name {
+        display: flex;
+        align-items: center;
+
+        margin: 0 0 10px 0;
+
+        letter-spacing: .2px;
+
+        color: #E4FF33;
+
+        font-family: @f-cera-pro-700;
+        font-size: 24px;
+        line-height: 30px;
+
+        svg {
+            width: 24px;
+            height: 21px;
+            margin-right: 10px;
+
+            fill: #E4FF33;
+        }
+    }
+
+    .event-extra {
+        align-self: flex-start;
+
+        margin-left: 10px;
+
+        opacity: .5;
+        color: #FFFFFF;
+
+        font-family: @f-cera-pro-400;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .event-description {
+        margin: 0;
+
+        opacity: .5;
+        color: #FFFFFF;
+
+        font-family: @f-cera-pro-400;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .event-list {
+        margin: 0 0 40px 0;
+        padding: 0;
+
+        list-style: none;
+    }
+
+    .event-item + .event-item {
+        border-top: 1px solid rgba(229, 233, 241, .23);
+    }
+
+    .event-item {
+        display: flex;
+        align-items: center;
+
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        color: #FFFFFF;
+    }
+
+    .event-id {
+        width: 170px;
+        margin: 0;
+
+        font-family: @f-cera-pro-400;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .event-value {
+        margin: 0;
+
+        font-family: @f-cera-pro-500;
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .event-result {
+        margin-bottom: 15px;
+    }
+
+    .result-id {
+        margin: 0 0 15px 0;
+
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+        color: #FFFFFF;
+
+        font-family: @f-cera-pro-700;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .result-status {
+        margin: 0;
+
+        color: #E4FF33;
+
+        font-family: @f-cera-pro-500;
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .event-info {
+        width: 380px;
+        margin-left: auto;
+
+        color: #FFFFFF;
+
+        font-family: @f-cera-pro-400;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .event-time {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 7px;
+    }
+
+    .event-data {
+        display: flex;
+        align-items: center;
+
+        color: rgba(255, 255, 255, .5);
+
+        .x-icon {
+            height: 11px;
+
+            svg {
+                height: 11px;
+                margin-right: 5px;
+            }
+        }
+
+
+        span {
+            margin-right: 5px;
+        }
+
+        span, time {
+            opacity: .5;
+        }
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+
+        display: flex;
+
+        width: 36px;
+        height: 36px;
+        padding: 0;
+
+        cursor: pointer;
+
+        border: 0;
+        border-radius: 50%;
+        outline: 0;
+        background-color: #E5E9F0;
+
+        &:hover, &:focus {
+            background-color: darken(#E5E9F0, 5);
+        }
+
+        .x-icon {
+            width: 15px;
+            height: 15px;
+            margin: auto;
+
+            svg {
+                polygon {
+                    fill: black;
+                }
+            }
+        }
+    }
+}

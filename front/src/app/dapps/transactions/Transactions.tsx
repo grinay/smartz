@@ -17,6 +17,8 @@ interface ITransactionsProps {
   dapp: any;
   netId?: any;
   transaction?: any;
+  onSelectRequest?: (request: any) => void;
+  onSelectTransaction?: () => void;
 }
 
 interface ITransactionsState {
@@ -56,7 +58,7 @@ export default class Transactions extends React.PureComponent<ITransactionsProps
 
   public render() {
     console.log('render');
-    const { dapp } = this.props;
+    const { dapp, onSelectRequest } = this.props;
     // const { netId, dapp, transaction } = this.props;
     // const { time, func, formData, txHash, result, timeMined } = transaction;
     const { tab, isShowAll } = this.state;
@@ -85,7 +87,10 @@ export default class Transactions extends React.PureComponent<ITransactionsProps
             console.log('dappIndex: ', dappListLength - i);
             r.push(
               <li key={i} className="transaction-item progress">
-                <RequestRow request={dapp.requests[dappListLength - i]} />
+                <RequestRow
+                  request={dapp.requests[dappListLength - i]}
+                  onClick={onSelectRequest}
+                />
               </li>,
             );
           }
@@ -100,21 +105,24 @@ export default class Transactions extends React.PureComponent<ITransactionsProps
           //   );
           // });
         } else {
-          tabContent = <p>Empty</p>;
+          tabContent = <p className="empty">The DApp has no requests</p>;
         }
         break;
 
       case Tab.Transactions:
         if (dapp.transactions.length > 0) {
-          tabContent = dapp.requests.map((transaction, i) => {
+          tabContent = dapp.transactions.map((transaction, i) => {
             return (
               <li key={i} className="transaction-item progress">
-                <TransactionRow transaction={transaction} />
+                <TransactionRow
+                  transaction={transaction}
+                  onClick={onSelectRequest}
+                />
               </li>
             );
           });
         } else {
-          tabContent = <p>Empty</p>;
+          tabContent = <p className="empty">The DApp has no transactions</p>;
         }
         break;
 

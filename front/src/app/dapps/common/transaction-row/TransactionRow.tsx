@@ -8,20 +8,27 @@ import './TransactionRow.less';
 
 interface ITransactionRowProps {
   transaction: any;
+  onClick: (request: any) => any;
 }
 
 export default class TransactionRow extends React.PureComponent<ITransactionRowProps, {}> {
   public render() {
-    let time = new Date().getTime();
+    const { transaction, onClick } = this.props;
 
+    const diffTime = (new Date().getTime()) - transaction.time.format('x');
+    const dayTimeInMs = 24 * 60 * 60 * 1000;
+
+    const timeFormated = diffTime < dayTimeInMs
+      ? transaction.time.format('HH:mm:ss')
+      : transaction.time.format('MMM DD');
 
     return (
-      <div className="transaction-row">
-        <p className="transaction-time">01:54:50</p>
-        <p className="transaction-description">Vote by ID</p>
-        {/* <p className="transaction-hash"> */}
-        <AddressString str={'0x3bbff17a094367ea63272d698586cc'} />
-        {/* </p> */}
+      <div className="transaction-row" onClick={onClick(transaction)}>
+        <p className="transaction-time">{timeFormated}</p>
+        <p className="transaction-description">{transaction.func.title}</p>
+        <p className="transaction-hash">
+          <AddressString str={transaction.txHash} />
+        </p>
         <p className="transaction-buttons">
           <button className="round-btn copy-btn flex" type="button" aria-label="Copy">
             <InlineSVG

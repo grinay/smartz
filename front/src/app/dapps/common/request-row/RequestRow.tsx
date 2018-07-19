@@ -6,11 +6,12 @@ import './RequestRow.less';
 
 interface IRequestRowProps {
   request: any;
+  onClick: (request: any) => any;
 }
 
 export default class RequestRow extends React.PureComponent<IRequestRowProps, {}> {
   public render() {
-    const { request } = this.props;
+    const { request, onClick } = this.props;
 
     const diffTime = (new Date().getTime()) - request.time.format('x');
     const dayTimeInMs = 24 * 60 * 60 * 1000;
@@ -20,7 +21,7 @@ export default class RequestRow extends React.PureComponent<IRequestRowProps, {}
       : request.time.format('MMM DD');
 
     return (
-      <div className="transaction-row">
+      <div className="transaction-row" onClick={onClick(request)}>
         <p className="transaction-time">{timeFormated}</p>
         <p className="transaction-description">{request.func.title}</p>
         <p className="transaction-buttons">

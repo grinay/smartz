@@ -6,8 +6,10 @@ import { blockchains } from '../../constants/constants';
 import { getFuncType } from '../../helpers/common';
 import { processControlForm, processResult } from '../../helpers/eth';
 import Alert from '../common/Alert';
+import Modal from '../common/modal/Modal';
 import ColumnFunc from './column-func/ColumnFunc';
 import MinimalFooter from './minimal-footer/MinimalFooter';
+import PopupTransaction from './popup-transaction/PopupTransaction';
 import Transactions from './transactions/Transactions';
 import ViewFunc from './view-func/ViewFunc';
 
@@ -31,6 +33,7 @@ interface IDappProps {
 interface IDappState {
   updateCycleActive: any;
   funcActive: any;
+  selectedRequest: any;
 }
 
 class Dapp extends React.Component<IDappProps, IDappState> {
@@ -40,9 +43,20 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     this.state = {
       updateCycleActive: false,
       funcActive: null,
+      selectedRequest: null,
     };
 
     this.getConstants = this.getConstants.bind(this);
+    this.onSelectRequest = this.onSelectRequest.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
+  }
+
+  private onSelectRequest(request: any) {
+    return () => this.setState({ selectedRequest: request });
+  }
+
+  private onCloseModal() {
+    this.setState({ selectedRequest: null });
   }
 
   public componentWillMount() {
@@ -86,7 +100,8 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
   public render() {
     const { metamaskStatus, dapp } = this.props;
-
+    const { selectedRequest } = this.state;
+    console.log(this.state.selectedRequest);
     if (!dapp) {
       return null;
     }
@@ -106,10 +121,20 @@ class Dapp extends React.Component<IDappProps, IDappState> {
         <section className="dapp-body">
           <div className="content">
             <ViewFunc dapp={dapp} />
-            <Transactions dapp={dapp} />
+            <Transactions
+              dapp={dapp}
+              onSelectRequest={this.onSelectRequest}
+            />
           </div>
           <MinimalFooter ctorId={dapp.constructor_id} />
         </section>
+
+        {/* modals */}
+        <PopupTransaction
+          isOpen={selectedRequest != null ? true : false}
+          onClose={this.onCloseModal}
+          request={selectedRequest}
+        />
       </main>
     );
   }
