@@ -1,7 +1,7 @@
 from django.urls import path
 
-from apps.contracts_uis.views import ListView
+from apps.contracts_uis.views import ContractUIsList
 
 urlpatterns = [
-    path('', ListView.as_view(), name='contracts-uis-list')
+    path('', ContractUIsList.as_view(), name='contracts-uis-list')
 ]

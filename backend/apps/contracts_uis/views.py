@@ -1,14 +1,18 @@
-from django.http import JsonResponse
-from django.views.generic.base import View
+from rest_framework.generics import GenericAPIView
+from rest_framework.response import Response
 
 from apps.contracts_uis.models import ContractUI
-from apps.contracts_uis.serializers import contracts_uis_pub_info
+from apps.contracts_uis.serializers import ContractUISerializer
 
 
-class ListView(View):
+class ContractUIsList(GenericAPIView):
+    """
+    List of contract uis
+    """
+
+    serializer_class = ContractUISerializer
 
     def get(self, request):
-        uis = ContractUI.objects.order_by('sorting_order')\
-            .reverse().all()
-
-        return JsonResponse(contracts_uis_pub_info(uis), safe=False)
+        uis = ContractUI.objects.all()
+        serializer = ContractUISerializer(uis, many=True)
+        return Response(serializer.data)

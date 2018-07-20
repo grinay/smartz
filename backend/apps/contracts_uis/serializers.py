@@ -1,29 +1,20 @@
-from typing import Dict, List
+from rest_framework import serializers
 
 from apps.contracts_uis.models import ContractUI
 
 
-def contract_ui_pub_info(ui: ContractUI) -> Dict:
+class ContractUISerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContractUI
+        fields = '__all__'
 
-    res = {
-        'id': ui.slug,
-        'name': ui.name,
-        'blockchain': ui.blockchain,
-        'address': ui.address,
-        'description': ui.description,
+    def create(self, validated_data):
+        raise NotImplementedError
 
-        'functions': ui.get_functions(),
-        'user_id': ui.user_id,
-    }
+    def update(self, instance, validated_data):
+        raise NotImplementedError
 
-    return res
-
-
-def contracts_uis_pub_info(uis: List[ContractUI]) -> List[Dict]:
-    res = []
-    for ui in uis:
-        res.append(
-            contract_ui_pub_info(ui)
-        )
-
-    return res
+    def validate(self, attrs):
+        instance = ContractUI(**attrs)
+        instance.clean()
+        return attrs

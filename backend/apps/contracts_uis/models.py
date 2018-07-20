@@ -1,16 +1,15 @@
-import json
 import random
 import string
 from datetime import datetime
 
 import pytz
 from django.conf import settings
+from django.contrib.postgres.fields import JSONField
 from django.db import models
-from jsonschema import ValidationError
 
 from apps.common.constants import BLOCKCHAINS, BLOCKCHAIN_ETHEREUM
+from apps.contracts_uis.validators import validate_functions
 from apps.users.models import User
-from smartz.json_schema import load_schema, is_conforms2schema_part
 
 
 class ContractUI(models.Model):
@@ -22,7 +21,7 @@ class ContractUI(models.Model):
 
     description = models.TextField()
 
-    functions = models.TextField()
+    functions = JSONField(validators=[validate_functions])
 
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
@@ -39,17 +38,8 @@ class ContractUI(models.Model):
 
         return ui
 
-    def get_functions(self):
-        return json.loads(self.functions)
-
     def __str__(self):
         return self.name
-
-    def clean(self, *args, **kwargs):
-        if not is_conforms2schema_part(
-                    self.get_functions(), load_schema('public/constructor.json'), 'definitions/ETHFunctionAdditionalDescriptions'
-                ):
-            raise ValidationError('Invalid functions descriptions')
 
     def save(self, *args, **kwargs):
         if not self.id:

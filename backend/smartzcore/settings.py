@@ -38,6 +38,8 @@ class Common(Configuration):
         'django.contrib.staticfiles',   # admin dependency
 
         'django_extensions',
+        'rest_framework',
+        'drf_yasg',
 
         'apps.constructors',
         'apps.dapps',
@@ -167,7 +169,14 @@ class Common(Configuration):
         }
     }
 
-
+    REST_FRAMEWORK = {
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+        ),
+        'DEFAULT_PARSER_CLASSES': (
+            'rest_framework.parsers.JSONParser',
+        )
+    }
 
     AUTH_USER_MODEL = 'users.User'
 
@@ -214,6 +223,16 @@ class Development(Common):
     #    'debug_toolbar.middleware.DebugToolbarMiddleware'
     ]
 
+    REST_FRAMEWORK = {
+        'DEFAULT_RENDERER_CLASSES': (
+            'rest_framework.renderers.JSONRenderer',
+            'rest_framework.renderers.BrowsableAPIRenderer',
+        ),
+        'DEFAULT_PARSER_CLASSES': (
+            'rest_framework.parsers.JSONParser',
+        )
+    }
+
 
 class DevelopmentLocal(Development):
     """
@@ -222,7 +241,6 @@ class DevelopmentLocal(Development):
 
     # local machine paths
     SMARTZ_SOLC_PATH = 'solc'
-
 
 
 class Staging(Common):
@@ -255,6 +273,7 @@ class Production(Staging):
 
     pass
 
+
 class Testing(DevelopmentLocal):
     """
     The tests settings.
@@ -262,9 +281,7 @@ class Testing(DevelopmentLocal):
 
     IS_TESTING = True
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'mydatabase',
-        }
-    }
+    DATABASES = values.DatabaseURLValue(
+        'postgresql://{}:{}@{}/{}'.format(Common.DB_USER, Common.DB_PASS, Common.DB_HOST, Common.DB_NAME+"_test")
+    )
+
