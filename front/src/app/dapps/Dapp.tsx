@@ -5,6 +5,8 @@ import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
 import { getFuncType } from '../../helpers/common';
 import { processControlForm, processResult } from '../../helpers/eth';
+import store from '../../store/store';
+import { setHeaderTitle } from '../AppActions';
 import Alert from '../common/Alert';
 import Modal from '../common/modal/Modal';
 import ColumnFunc from './column-func/ColumnFunc';
@@ -67,6 +69,20 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     window.Intercom('update');
   }
 
+  public componentWillReceiveProps(nextProps: any) {
+    const { dapp } = nextProps;
+
+    if (!dapp) {
+      return;
+    }
+
+    store.dispatch(setHeaderTitle({
+      title: dapp.title,
+      id: dapp.id,
+      type: 'dapp',
+    }));
+  }
+
   public componentDidUpdate() {
     // TODO: refactor this shit
     const { dapp, metamaskStatus } = this.props;
@@ -101,7 +117,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
   public render() {
     const { metamaskStatus, dapp } = this.props;
     const { selectedRequest } = this.state;
-    console.log(this.state.selectedRequest);
+
     if (!dapp) {
       return null;
     }

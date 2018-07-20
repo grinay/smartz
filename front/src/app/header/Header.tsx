@@ -1,35 +1,52 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import Auth from '../auth/Auth';
 import InlineSVG from 'svg-inline-react';
+
+import store from '../../store/store';
+import { setHeaderTitle } from '../AppActions';
+import Auth from '../auth/Auth';
+import EditableTitle from './editable-title/EditableTitle';
 
 import './Header.less';
 
-class Header extends Component {
+
+interface IHeaderProps {
+  profile: any;
+  header: any;
+}
+
+interface IHeaderState {
+  selectedMenu: any;
+}
+
+export default class Header extends React.Component<IHeaderProps, IHeaderState> {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedMenu: 'Store'
+      selectedMenu: 'Store',
     };
   }
 
-  goTo(route) {
-    this.props.history.replace(`/${route}`);
-  }
-
-  logout() {
+  public logout() {
     Auth.logout();
   }
 
-  setMenu(item) {
-    return () => this.setState({ selectedMenu: item });
+  public setMenu(item) {
+    return () => store.dispatch(setHeaderTitle({
+      title: item,
+      type: 'simple',
+      id: null,
+    }));
   }
 
-  render() {
-    const { profile, location } = this.props;
+  public render() {
+    const { profile, header } = this.props;
     const { selectedMenu } = this.state;
+    console.log(this.props);
 
+
+    // set profile
     let username;
     if (Auth.isAuthenticated()) {
       let profileName = profile && profile.last_name ? profile.last_name : 'Profile';
@@ -55,12 +72,12 @@ class Header extends Component {
     }
 
     return (
-      <header id="js-header" className="page-header flex-v">
+      <header id="js-header" className="page-header flex-s">
         <Link to="/" className="logo flex" onClick={this.setMenu('Store')}>
           <InlineSVG className="logo-img" src={require('../../assets/img/common/menu/logo.svg')} />
         </Link>
-        <section className="title-main flex-v">
-          <p>{selectedMenu}</p>
+        <section className="title-main flex-s">
+          <EditableTitle header={header} />
         </section>
         <nav className="main-navigation flex-v">
           <ul className="main-navigation__list flex-v">
@@ -106,5 +123,3 @@ class Header extends Component {
     );
   }
 }
-
-export default Header;

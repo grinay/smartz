@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 
-import Header from './header/Header';
+import Header from './header/HeaderContainer';
 import Footer from './footer/Footer';
 import Auth from './auth/Auth';
 import Callback from './auth/callback/Callback';
