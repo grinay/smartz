@@ -1,6 +1,7 @@
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
+import { getNetworkEtherscanAddress } from '../../../../helpers/eth';
 import { copyTextToClipboard } from '../../../../helpers/utils';
 import Modal from '../../../common/modal/Modal';
 import PopupVerify from '../../popup-verify/PopupVerify';
@@ -51,6 +52,16 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
             <span className="wallet-number">{dapp.address}</span>
           </div>
           <div className="wallet-buttons">
+            <a
+              className="round-btn flex link"
+              href={`${getNetworkEtherscanAddress(dapp.network_id)}/address/${dapp.address}`}
+              target="_blank"
+            >
+              <InlineSVG
+                className="etherscan-icon"
+                src={require('../../../../assets/img/common/etherscan.svg')}
+              />
+            </a>
             <button
               className="round-btn flex copy-btn"
               onClick={this.onClickCopyBtn}
@@ -62,15 +73,13 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
               />
               Copy
               </button>
-            <a
-              className="round-btn flex link"
+            <button
+              className="round-btn flex verify-btn"
               onClick={this.toggleModal}
+              type="button"
             >
-              <InlineSVG
-                className="etherscan-icon"
-                src={require('../../../../assets/img/common/etherscan.svg')}
-              />
-            </a>
+              Verify this DApp
+            </button>
           </div>
         </div>
         <Modal isOpen={isOpenModal} onClose={this.toggleModal}>
