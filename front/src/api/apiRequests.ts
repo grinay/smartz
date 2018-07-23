@@ -125,6 +125,16 @@ export function updateDapp(dappId, data) {
   return result;
 }
 
+export function updateTitleDapp(dappId, title) {
+  const result = fetch(`/dapps/update-title`, { title, id: dappId }, 'post');
+
+  result
+    .then(() => getDapp(dappId))
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
 // =============================================================================
 // Deploy
 // =============================================================================

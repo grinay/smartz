@@ -43,8 +43,6 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
   public render() {
     const { profile, header } = this.props;
     const { selectedMenu } = this.state;
-    console.log(this.props);
-
 
     // set profile
     let username;

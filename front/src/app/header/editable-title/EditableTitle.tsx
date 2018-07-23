@@ -1,6 +1,8 @@
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
+import * as api from '../../../api/apiRequests';
+
 import './EditableTitle.less';
 
 
@@ -32,10 +34,15 @@ export default class EditableTitle extends React.PureComponent
   }
 
   private onUnfocused(): void {
+    const { header: { title, id } } = this.props;
+
     this.setState({ focus: false });
 
     const newTitle: string = this.ref.innerText;
-    //TODO: send title to backend
+
+    if (newTitle.length > 0 && newTitle !== title) {
+      api.updateTitleDapp(id, newTitle);
+    }
   }
 
   public render() {
