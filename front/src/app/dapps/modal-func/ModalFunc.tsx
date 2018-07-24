@@ -3,14 +3,14 @@ import * as React from 'react';
 import Form from 'react-jsonschema-form';
 import InlineSVG from 'svg-inline-react';
 
-import { blockchains } from '../../../../constants/constants';
-import { getFuncType } from '../../../../helpers/common';
-import Eos from '../../../../helpers/eos';
-import { processControlForm, web3 as w3 } from '../../../../helpers/eth';
-import store from '../../../../store/store';
-import FormWidgets from '../../../common/form-widgets/FormWidgets';
-import Modal from '../../../common/modal/Modal';
-import { requestNew, transactionNew, transactionReceipt } from '../../DappActions';
+import { blockchains } from '../../../constants/constants';
+import { getFuncType } from '../../../helpers/common';
+import Eos from '../../../helpers/eos';
+import { processControlForm, web3 as w3 } from '../../../helpers/eth';
+import store from '../../../store/store';
+import FormWidgets from '../../common/form-widgets/FormWidgets';
+import Modal from '../../common/modal/Modal';
+import { requestNew, transactionNew, transactionReceipt } from '../DappActions';
 
 import './ModalFunc.less';
 
@@ -197,7 +197,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
           >
             <InlineSVG
               className="x-icon"
-              src={require('../../../../assets/img/common/x-icon.svg')}
+              src={require('../../../assets/img/common/x-icon.svg')}
             />
           </button>
           <h1 className="title">{func.title}</h1>

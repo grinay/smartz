@@ -8,6 +8,7 @@ interface IPopupTransactionProps {
   isOpen: boolean;
   onClose: () => void;
   request: any;
+  transaction: any;
 }
 
 interface IPopupTransactionState { }

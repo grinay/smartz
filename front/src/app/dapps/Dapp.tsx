@@ -8,9 +8,9 @@ import { processControlForm, processResult } from '../../helpers/eth';
 import store from '../../store/store';
 import { setHeaderTitle } from '../AppActions';
 import Alert from '../common/Alert';
-import Modal from '../common/modal/Modal';
 import ColumnFunc from './column-func/ColumnFunc';
 import MinimalFooter from './minimal-footer/MinimalFooter';
+import ModalFunc from './modal-func/ModalFunc';
 import PopupTransaction from './popup-transaction/PopupTransaction';
 import Transactions from './transactions/Transactions';
 import ViewFunc from './view-func/ViewFunc';
@@ -36,6 +36,8 @@ interface IDappState {
   updateCycleActive: any;
   funcActive: any;
   selectedRequest: any;
+  selectedTransaction: any;
+  selectedFunc: any;
 }
 
 class Dapp extends React.Component<IDappProps, IDappState> {
@@ -46,19 +48,46 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       updateCycleActive: false,
       funcActive: null,
       selectedRequest: null,
+      selectedTransaction: null,
+      selectedFunc: null,
     };
 
     this.getConstants = this.getConstants.bind(this);
     this.onSelectRequest = this.onSelectRequest.bind(this);
-    this.onCloseModal = this.onCloseModal.bind(this);
+    this.onSelectTransaction = this.onSelectTransaction.bind(this);
+    this.selectFunc = this.selectFunc.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   private onSelectRequest(request: any) {
     return () => this.setState({ selectedRequest: request });
   }
 
-  private onCloseModal() {
-    this.setState({ selectedRequest: null });
+  private onSelectTransaction(transaction: any) {
+    return () => this.setState({ selectedTransaction: transaction });
+  }
+
+  private selectFunc(func: any) {
+    return () => {
+      // const funcType = getFuncType(func);
+
+      // if (funcType === 'ask') {
+      //   this.setState({ selectedRequest: func });
+      // } else if (funcType === 'write') {
+      //   this.setState({ selectedTransaction: func });
+      // }
+      this.setState({ selectedFunc: func });
+    };
+  }
+
+  private onClose(type: 'popup' | 'modal') {
+    return () => {
+      if (type === 'popup') {
+        this.setState({ selectedRequest: null });
+      } else {
+        this.setState({ selectedFunc: null });
+      }
+    };
   }
 
   public componentWillMount() {
@@ -76,11 +105,25 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       return;
     }
 
+    //show last executed
+    if (dapp.requests.length !== this.props.dapp.requests.length) {
+      const lastFuncExec = dapp.requests[dapp.requests.length - 1];
+      const funcType = getFuncType(lastFuncExec.func);
+
+      if (funcType === 'ask') {
+        this.setState({ selectedRequest: lastFuncExec });
+      } else if (funcType === 'write') {
+        this.setState({ selectedTransaction: lastFuncExec });
+      }
+    }
+
+    // if (dapp.title !== this.props.dapp.title) {
     store.dispatch(setHeaderTitle({
       title: dapp.title,
       id: dapp.id,
       type: 'dapp',
     }));
+    // }
   }
 
   public componentDidUpdate() {
@@ -114,9 +157,10 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     });
   }
 
+
   public render() {
     const { metamaskStatus, dapp } = this.props;
-    const { selectedRequest } = this.state;
+    const { selectedRequest, selectedTransaction, selectedFunc } = this.state;
 
     if (!dapp) {
       return null;
@@ -132,24 +176,37 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
     return (
       <main className="dapp">
-        <ColumnFunc dapp={dapp} />
+        <ColumnFunc
+          onSelectFunc={this.selectFunc}
+          dapp={dapp}
+        />
 
         <section className="dapp-body">
-          <div className="content">
-            <ViewFunc dapp={dapp} />
-            <Transactions
-              dapp={dapp}
-              onSelectRequest={this.onSelectRequest}
-            />
+          <div className="wrapper">
+            <div className="content">
+              <ViewFunc dapp={dapp} />
+              <Transactions
+                dapp={dapp}
+                onSelectRequest={this.onSelectRequest}
+                onSelectTransaction={this.onSelectTransaction}
+              />
+            </div>
+            <MinimalFooter ctorId={dapp.constructor_id} />
           </div>
-          <MinimalFooter ctorId={dapp.constructor_id} />
         </section>
 
-        {/* modals */}
+        <ModalFunc
+          func={selectedFunc}
+          dapp={dapp}
+          isOpen={selectedFunc != null ? true : false}
+          onClose={this.onClose('modal')}
+        />
+
         <PopupTransaction
-          isOpen={selectedRequest != null ? true : false}
-          onClose={this.onCloseModal}
+          isOpen={selectedFunc === null && selectedRequest != null ? true : false}
+          onClose={this.onClose('popup')}
           request={selectedRequest}
+          transaction={selectedTransaction}
         />
       </main>
     );

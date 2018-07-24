@@ -1,4 +1,4 @@
-export const getFuncType = (func: any): any => {
+export const getFuncType = (func: any): 'view' | 'ask' | 'write' | null => {
   if (func.constant && func.inputs.minItems === 0) {
     return 'view';
   }

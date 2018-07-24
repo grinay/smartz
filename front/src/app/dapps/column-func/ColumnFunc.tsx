@@ -2,13 +2,13 @@ import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
 import { getFunctionsByType } from '../../../helpers/common';
-import ModalFunc from './modal-func/ModalFunc';
 
 import './ColumnFunc.less';
 
 
 interface IColumnFuncProps {
   dapp: any;
+  onSelectFunc: (func: any) => void;
 }
 
 interface IColumnFuncState {
@@ -28,20 +28,12 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     this.changeHeight = this.changeHeight.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.getSection = this.getSection.bind(this);
-    this.selectFunc = this.selectFunc.bind(this);
   }
 
   private toggleModal() {
     const { isOpenModal } = this.state;
 
     this.setState({ isOpenModal: !isOpenModal });
-  }
-
-  private selectFunc(func: any) {
-    return () => this.setState({
-      isOpenModal: true,
-      selectedFunc: func,
-    });
   }
 
   // dynamic change height aside after scroll (depend. of header height)
@@ -58,7 +50,7 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
   }
 
   private getSection(funcType: string, title: string): JSX.Element {
-    const { dapp } = this.props;
+    const { dapp, onSelectFunc } = this.props;
 
     let funcSectionElement: JSX.Element = null;
     const functions: any[] = getFunctionsByType(dapp.functions, funcType);
@@ -74,7 +66,7 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
                   key={i}
                   className="dapp-btn"
                   type="button"
-                  onClick={this.selectFunc(func)}
+                  onClick={onSelectFunc(func)}
                 >
                   {func.title}
                 </button>
@@ -122,12 +114,6 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
           />
           More
       </button> */}
-        <ModalFunc
-          func={selectedFunc}
-          dapp={dapp}
-          isOpen={isOpenModal}
-          onClose={this.toggleModal}
-        />
       </aside>
     );
   }

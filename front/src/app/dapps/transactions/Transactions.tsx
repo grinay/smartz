@@ -18,7 +18,7 @@ interface ITransactionsProps {
   netId?: any;
   transaction?: any;
   onSelectRequest?: (request: any) => void;
-  onSelectTransaction?: () => void;
+  onSelectTransaction?: (transaction: any) => void;
 }
 
 interface ITransactionsState {
@@ -28,13 +28,11 @@ interface ITransactionsState {
 
 export default class Transactions extends React.PureComponent<ITransactionsProps, ITransactionsState> {
   private readonly showCountItems: number;
-  public show: boolean;
 
   constructor(props) {
     super(props);
 
     this.showCountItems = 5;
-    this.show = true;
 
     this.state = {
       tab: Tab.Request,
@@ -50,77 +48,70 @@ export default class Transactions extends React.PureComponent<ITransactionsProps
   }
 
   private onClickShowMore() {
-    this.show = true;
-    console.log(this.show);
-    // this.setState({});
-    this.forceUpdate();
+    this.setState({ isShowAll: true });
   }
 
   public render() {
-    console.log('render');
     const { dapp, onSelectRequest } = this.props;
-    // const { netId, dapp, transaction } = this.props;
-    // const { time, func, formData, txHash, result, timeMined } = transaction;
     const { tab, isShowAll } = this.state;
 
+    let isVisibleButton: boolean = false;
+
     let tabContent: any;
-    // let tabContent: JSX.Element;
     switch (tab) {
       case Tab.Request:
-        const dappListLength = dapp.requests.length;
-        let r = [];
+        const requestListLength = dapp.requests.length;
 
-        if (dappListLength > 0) {
-          if (dappListLength > 5) {
-            this.show = false;
+        if (requestListLength > 0) {
+          tabContent = [];
+
+          if (requestListLength > this.showCountItems) {
+            isVisibleButton = true;
           }
-          //   this.show = false;
 
-          // }
-
-          for (let i = 1; i <= dappListLength; i++) {
-            console.log(i);
-            if (i > 5 && !this.show) {
+          for (let i = 1; i <= requestListLength; i++) {
+            if (i > this.showCountItems && !isShowAll) {
               continue;
             }
 
-            console.log('dappIndex: ', dappListLength - i);
-            r.push(
+            tabContent.push(
               <li key={i} className="transaction-item progress">
                 <RequestRow
-                  request={dapp.requests[dappListLength - i]}
+                  request={dapp.requests[requestListLength - i]}
                   onClick={onSelectRequest}
                 />
               </li>,
             );
           }
-
-          tabContent = r;
-
-          // tabContent = dapp.requests.map((request, i) => {
-          //   return (
-          //     <li key={i} className="transaction-item progress">
-          //       <RequestRow request={request} />
-          //     </li>
-          //   );
-          // });
         } else {
           tabContent = <p className="empty">The DApp has no requests</p>;
         }
         break;
 
       case Tab.Transactions:
-        if (dapp.transactions.length > 0) {
-          tabContent = dapp.transactions.map((transaction, i) => {
-            return (
+        const transactionListLength = dapp.transactions.length;
+
+        if (transactionListLength > 0) {
+          tabContent = [];
+
+          if (transactionListLength > this.showCountItems) {
+            isVisibleButton = true;
+          }
+
+          for (let i = 1; i <= transactionListLength; i++) {
+            if (i > this.showCountItems && !isShowAll) {
+              continue;
+            }
+
+            tabContent.push(
               <li key={i} className="transaction-item progress">
                 <TransactionRow
-                  transaction={transaction}
+                  transaction={dapp.transactions[transactionListLength - i]}
                   onClick={onSelectRequest}
                 />
-              </li>
+              </li>,
             );
-          });
+          }
         } else {
           tabContent = <p className="empty">The DApp has no transactions</p>;
         }
@@ -129,7 +120,6 @@ export default class Transactions extends React.PureComponent<ITransactionsProps
       default:
         break;
     }
-    // console.log(tabContent);
 
     return (
       <div className="transaction">
@@ -150,7 +140,7 @@ export default class Transactions extends React.PureComponent<ITransactionsProps
             {tabContent}
           </ul>
         </div>
-        {!this.show && <ShowMoreBtn onClick={this.onClickShowMore} />}
+        {isVisibleButton && !isShowAll && <ShowMoreBtn onClick={this.onClickShowMore} />}
       </div>
     );
   }
