@@ -75,7 +75,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
           <InlineSVG className="logo-img" src={require('../../assets/img/common/menu/logo.svg')} />
         </Link>
         <section className="title-main flex-s">
-          <EditableTitle header={header} />
+          {/* <EditableTitle header={header} /> */}
         </section>
         <nav className="main-navigation flex-v">
           <ul className="main-navigation__list flex-v">

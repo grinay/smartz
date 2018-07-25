@@ -62,14 +62,16 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
           <ul className="dapp-list">
             {functions.map((func, i) => {
               return (
-                <button
-                  key={i}
-                  className="dapp-btn"
-                  type="button"
-                  onClick={onSelectFunc(func)}
-                >
-                  {func.title}
-                </button>
+                <div key={i} className="dapp-func flex-v">
+                  <i className={`mdi ${func.icon.name !== null ? `mdi-${func.icon.name}` : ''} mdi-icon`} />
+                  <button
+                    className="dapp-btn"
+                    type="button"
+                  // onClick={onSelectFunc(func)}
+                  >
+                    {func.title}
+                  </button>
+                </div>
               );
             })}
           </ul>

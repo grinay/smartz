@@ -1,6 +1,6 @@
 export const currentDapp = {
   "id": "fe75f0dafa1d8d23096ed9bb",
-  "title": "sdfsf`",
+  "title": "Mock dapp`",
   "network_id": "4",
   "constructor_id": "5ad9a507672dfe000a7e0a31",
   "address": "0x2b298d0c0870ab70e6dfc6cb60efebe9333f5896",
@@ -411,139 +411,9 @@ export const currentDapp = {
           }
         }
       },
-      "description": "Human-friendly name of the token."
-    },
-    {
-      "name": "name",
-      "constant": true,
-      "payable": false,
-      "title": "Token name",
-      "inputs": {
-        "type": "array",
-        "minItems": 0,
-        "maxItems": 0
-      },
-      "outputs": {
-        "type": "array",
-        "minItems": 1,
-        "maxItems": 1,
-        "items": [
-          {
-            "type": "string",
-            "title": ""
-          }
-        ],
-        "definitions": {
-          "address": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
-          },
-          "addressArray": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/address"
-            }
-          },
-          "unixTime": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 2147483647
-          },
-          "fileHash": {
-            "$comment": "deprecated, use hash instead",
-            "type": "string",
-            "pattern": "^0x[0-9a-fA-F]{64}$"
-          },
-          "hash": {
-            "type": "string",
-            "pattern": "^0x[0-9a-fA-F]{64}$"
-          },
-          "addressMappingEntry": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": [
-              {
-                "$ref": "#/definitions/address"
-              },
-              {}
-            ]
-          },
-          "addressMapping": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/addressMappingEntry"
-            }
-          },
-          "uintMappingEntry": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": [
-              {
-                "$ref": "#/definitions/uint"
-              },
-              {}
-            ]
-          },
-          "uintMapping": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/uintMappingEntry"
-            }
-          },
-          "uint256": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 78,
-            "pattern": "^[0-9]+$"
-          },
-          "uint": {
-            "$ref": "#/definitions/uint256"
-          },
-          "bytes32": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
-          },
-          "bytes": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
-          },
-          "uint8": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 255
-          },
-          "uint16": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 65535
-          },
-          "uint32": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 4294967295
-          },
-          "uint64": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 18446744073709552000
-          },
-          "uint128": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 39,
-            "pattern": "^[0-9]+$"
-          },
-          "ethCount": {
-            "type": "string",
-            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
-          },
-          "ethCountPositive": {
-            "type": "string",
-            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
-          }
-        }
+      "icon": {
+        "pack": "google",
+        "name": null
       },
       "description": "Human-friendly name of the token."
     },
@@ -679,139 +549,9 @@ export const currentDapp = {
           }
         }
       },
-      "description": "Human-friendly name of the token."
-    },
-    {
-      "name": "name",
-      "constant": true,
-      "payable": false,
-      "title": "Token name",
-      "inputs": {
-        "type": "array",
-        "minItems": 0,
-        "maxItems": 0
-      },
-      "outputs": {
-        "type": "array",
-        "minItems": 1,
-        "maxItems": 1,
-        "items": [
-          {
-            "type": "string",
-            "title": ""
-          }
-        ],
-        "definitions": {
-          "address": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
-          },
-          "addressArray": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/address"
-            }
-          },
-          "unixTime": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 2147483647
-          },
-          "fileHash": {
-            "$comment": "deprecated, use hash instead",
-            "type": "string",
-            "pattern": "^0x[0-9a-fA-F]{64}$"
-          },
-          "hash": {
-            "type": "string",
-            "pattern": "^0x[0-9a-fA-F]{64}$"
-          },
-          "addressMappingEntry": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": [
-              {
-                "$ref": "#/definitions/address"
-              },
-              {}
-            ]
-          },
-          "addressMapping": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/addressMappingEntry"
-            }
-          },
-          "uintMappingEntry": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": [
-              {
-                "$ref": "#/definitions/uint"
-              },
-              {}
-            ]
-          },
-          "uintMapping": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/uintMappingEntry"
-            }
-          },
-          "uint256": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 78,
-            "pattern": "^[0-9]+$"
-          },
-          "uint": {
-            "$ref": "#/definitions/uint256"
-          },
-          "bytes32": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
-          },
-          "bytes": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
-          },
-          "uint8": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 255
-          },
-          "uint16": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 65535
-          },
-          "uint32": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 4294967295
-          },
-          "uint64": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 18446744073709552000
-          },
-          "uint128": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 39,
-            "pattern": "^[0-9]+$"
-          },
-          "ethCount": {
-            "type": "string",
-            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
-          },
-          "ethCountPositive": {
-            "type": "string",
-            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
-          }
-        }
+      "icon": {
+        "pack": "google",
+        "name": null
       },
       "description": "Human-friendly name of the token."
     },
@@ -947,139 +687,9 @@ export const currentDapp = {
           }
         }
       },
-      "description": "Human-friendly name of the token."
-    },
-    {
-      "name": "name",
-      "constant": true,
-      "payable": false,
-      "title": "Token name",
-      "inputs": {
-        "type": "array",
-        "minItems": 0,
-        "maxItems": 0
-      },
-      "outputs": {
-        "type": "array",
-        "minItems": 1,
-        "maxItems": 1,
-        "items": [
-          {
-            "type": "string",
-            "title": ""
-          }
-        ],
-        "definitions": {
-          "address": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
-          },
-          "addressArray": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/address"
-            }
-          },
-          "unixTime": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 2147483647
-          },
-          "fileHash": {
-            "$comment": "deprecated, use hash instead",
-            "type": "string",
-            "pattern": "^0x[0-9a-fA-F]{64}$"
-          },
-          "hash": {
-            "type": "string",
-            "pattern": "^0x[0-9a-fA-F]{64}$"
-          },
-          "addressMappingEntry": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": [
-              {
-                "$ref": "#/definitions/address"
-              },
-              {}
-            ]
-          },
-          "addressMapping": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/addressMappingEntry"
-            }
-          },
-          "uintMappingEntry": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": [
-              {
-                "$ref": "#/definitions/uint"
-              },
-              {}
-            ]
-          },
-          "uintMapping": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/uintMappingEntry"
-            }
-          },
-          "uint256": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 78,
-            "pattern": "^[0-9]+$"
-          },
-          "uint": {
-            "$ref": "#/definitions/uint256"
-          },
-          "bytes32": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
-          },
-          "bytes": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
-          },
-          "uint8": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 255
-          },
-          "uint16": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 65535
-          },
-          "uint32": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 4294967295
-          },
-          "uint64": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 18446744073709552000
-          },
-          "uint128": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 39,
-            "pattern": "^[0-9]+$"
-          },
-          "ethCount": {
-            "type": "string",
-            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
-          },
-          "ethCountPositive": {
-            "type": "string",
-            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
-          }
-        }
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
       },
       "description": "Human-friendly name of the token."
     },
@@ -1214,6 +824,424 @@ export const currentDapp = {
             "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
           }
         }
+      },
+      "icon": {
+        "pack": "google",
+        "name": null
+      },
+      "description": "Human-friendly name of the token."
+    },
+    {
+      "name": "name",
+      "constant": true,
+      "payable": false,
+      "title": "Token name",
+      "inputs": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 0
+      },
+      "outputs": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "items": [
+          {
+            "type": "string",
+            "title": ""
+          }
+        ],
+        "definitions": {
+          "address": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+          },
+          "addressArray": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/address"
+            }
+          },
+          "unixTime": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "fileHash": {
+            "$comment": "deprecated, use hash instead",
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "addressMappingEntry": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+              {
+                "$ref": "#/definitions/address"
+              },
+              {}
+            ]
+          },
+          "addressMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/addressMappingEntry"
+            }
+          },
+          "uintMappingEntry": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+              {
+                "$ref": "#/definitions/uint"
+              },
+              {}
+            ]
+          },
+          "uintMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/uintMappingEntry"
+            }
+          },
+          "uint256": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 78,
+            "pattern": "^[0-9]+$"
+          },
+          "uint": {
+            "$ref": "#/definitions/uint256"
+          },
+          "bytes32": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+          },
+          "bytes": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+          },
+          "uint8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "uint16": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535
+          },
+          "uint32": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "uint64": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709552000
+          },
+          "uint128": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 39,
+            "pattern": "^[0-9]+$"
+          },
+          "ethCount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+          },
+          "ethCountPositive": {
+            "type": "string",
+            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+          }
+        }
+      },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
+      },
+      "description": "Human-friendly name of the token."
+    },
+    {
+      "name": "name",
+      "constant": true,
+      "payable": false,
+      "title": "Token name",
+      "inputs": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 0
+      },
+      "outputs": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "items": [
+          {
+            "type": "string",
+            "title": ""
+          }
+        ],
+        "definitions": {
+          "address": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+          },
+          "addressArray": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/address"
+            }
+          },
+          "unixTime": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "fileHash": {
+            "$comment": "deprecated, use hash instead",
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "addressMappingEntry": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+              {
+                "$ref": "#/definitions/address"
+              },
+              {}
+            ]
+          },
+          "addressMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/addressMappingEntry"
+            }
+          },
+          "uintMappingEntry": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+              {
+                "$ref": "#/definitions/uint"
+              },
+              {}
+            ]
+          },
+          "uintMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/uintMappingEntry"
+            }
+          },
+          "uint256": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 78,
+            "pattern": "^[0-9]+$"
+          },
+          "uint": {
+            "$ref": "#/definitions/uint256"
+          },
+          "bytes32": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+          },
+          "bytes": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+          },
+          "uint8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "uint16": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535
+          },
+          "uint32": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "uint64": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709552000
+          },
+          "uint128": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 39,
+            "pattern": "^[0-9]+$"
+          },
+          "ethCount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+          },
+          "ethCountPositive": {
+            "type": "string",
+            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+          }
+        }
+      },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
+      },
+      "description": "Human-friendly name of the token."
+    },
+    {
+      "name": "name",
+      "constant": true,
+      "payable": false,
+      "title": "Token name",
+      "inputs": {
+        "type": "array",
+        "minItems": 0,
+        "maxItems": 0
+      },
+      "outputs": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1,
+        "items": [
+          {
+            "type": "string",
+            "title": ""
+          }
+        ],
+        "definitions": {
+          "address": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+          },
+          "addressArray": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/address"
+            }
+          },
+          "unixTime": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "fileHash": {
+            "$comment": "deprecated, use hash instead",
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "addressMappingEntry": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+              {
+                "$ref": "#/definitions/address"
+              },
+              {}
+            ]
+          },
+          "addressMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/addressMappingEntry"
+            }
+          },
+          "uintMappingEntry": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+              {
+                "$ref": "#/definitions/uint"
+              },
+              {}
+            ]
+          },
+          "uintMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/uintMappingEntry"
+            }
+          },
+          "uint256": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 78,
+            "pattern": "^[0-9]+$"
+          },
+          "uint": {
+            "$ref": "#/definitions/uint256"
+          },
+          "bytes32": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{64}$"
+          },
+          "bytes": {
+            "type": "string",
+            "pattern": "^(?:0[Xx])?[0-9a-fA-F]+$"
+          },
+          "uint8": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "uint16": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535
+          },
+          "uint32": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "uint64": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709552000
+          },
+          "uint128": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 39,
+            "pattern": "^[0-9]+$"
+          },
+          "ethCount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+          },
+          "ethCountPositive": {
+            "type": "string",
+            "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
+          }
+        }
+      },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
       },
       "description": "Human-friendly name of the token."
     },
@@ -1230,11 +1258,19 @@ export const currentDapp = {
           {
             "$ref": "#/definitions/address",
             "title": "Address",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Address to allow to spend tokens."
           },
           {
             "$ref": "#/definitions/uint256",
             "title": "Amount",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Amount must be specified in the smallest units of the token."
           }
         ],
@@ -1472,6 +1508,10 @@ export const currentDapp = {
             "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
           }
         }
+      },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
       },
       "description": "Allow some amount of your tokens to be spent by specified address."
     },
@@ -1607,6 +1647,10 @@ export const currentDapp = {
           }
         }
       },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
+      },
       "description": "Current total amount of the token. Specified in the smallest units of the token."
     },
     {
@@ -1622,16 +1666,28 @@ export const currentDapp = {
           {
             "$ref": "#/definitions/address",
             "title": "From",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Subtract tokens from this account."
           },
           {
             "$ref": "#/definitions/address",
             "title": "To",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Transfer tokens to this account."
           },
           {
             "$ref": "#/definitions/uint256",
             "title": "Amount",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Amount must be specified in the smallest units of the token."
           }
         ],
@@ -1869,6 +1925,10 @@ export const currentDapp = {
             "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
           }
         }
+      },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
       },
       "description": "Transfers from one account to another. Account which tokens are transferred has to approve this spending."
     },
@@ -2004,6 +2064,10 @@ export const currentDapp = {
           }
         }
       },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
+      },
       "description": "Allowed digits in fractional part of the token. E.g. decimal places of US dollar is 2."
     },
     {
@@ -2019,11 +2083,19 @@ export const currentDapp = {
           {
             "$ref": "#/definitions/address",
             "title": "Address",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Address which was allowed to spend tokens."
           },
           {
             "$ref": "#/definitions/uint256",
             "title": "Amount",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Amount must be specified in the smallest units of the token."
           }
         ],
@@ -2261,6 +2333,10 @@ export const currentDapp = {
             "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
           }
         }
+      },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
       },
       "description": "Decreases amount of your tokens which are allowed to be spent by specified address."
     },
@@ -2513,6 +2589,10 @@ export const currentDapp = {
           }
         }
       },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
+      },
       "description": "Gets the token balance of any address. Return value is specified in the smallest units of the token."
     },
     {
@@ -2647,6 +2727,10 @@ export const currentDapp = {
           }
         }
       },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
+      },
       "description": "Abbreviated name of the token used on exchanges etc."
     },
     {
@@ -2662,11 +2746,19 @@ export const currentDapp = {
           {
             "$ref": "#/definitions/address",
             "title": "To",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Recipient address."
           },
           {
             "$ref": "#/definitions/uint256",
             "title": "Amount",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Amount must be specified in the smallest units of the token."
           }
         ],
@@ -2904,6 +2996,10 @@ export const currentDapp = {
             "pattern": "^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$"
           }
         }
+      },
+      "icon": {
+        "pack": "google",
+        "name": null
       },
       "description": "Transfers some amount of your tokens to another address."
     },
@@ -2920,11 +3016,19 @@ export const currentDapp = {
           {
             "$ref": "#/definitions/address",
             "title": "Address",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Address which was allowed to spend tokens."
           },
           {
             "$ref": "#/definitions/uint256",
             "title": "Amount",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Amount must be specified in the smallest units of the token."
           }
         ],
@@ -3163,6 +3267,10 @@ export const currentDapp = {
           }
         }
       },
+      "icon": {
+        "pack": "google",
+        "name": null
+      },
       "description": "Increases amount of your tokens which are allowed to be spent by specified address."
     },
     {
@@ -3178,11 +3286,19 @@ export const currentDapp = {
           {
             "$ref": "#/definitions/address",
             "title": "Address of owner",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Address which allowed to spend his tokens."
           },
           {
             "$ref": "#/definitions/address",
             "title": "Address of spender",
+            "icon": {
+              "pack": "google",
+              "name": "bell-sleep"
+            },
             "description": "Address which was allowed to spend tokens."
           }
         ],
@@ -3420,6 +3536,10 @@ export const currentDapp = {
           }
         }
       },
+      "icon": {
+        "pack": "google",
+        "name": "bell-sleep"
+      },
       "description": "View amount of tokens which some token holder allowed to spend by another address."
     }
   ],
@@ -3433,6 +3553,10 @@ export const currentDapp = {
   "contract_name": "",
   "constructor": {
     "name": "ERC20 Token",
+    "icon": {
+      "pack": "google",
+      "name": "bell-sleep"
+    },
     "description": "Standard ERC20 token with custom name, ticker and optional minting, burning, emission limit, premint and pause functions.",
     "image": "erc20.jpg"
   }
