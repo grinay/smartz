@@ -6,7 +6,7 @@ export const blockchains = {
 export const eosConstants = {
   BLOCKCHAIN: 'eos',
 
-  HOST: 'api.komododragon.eosbp.mixbytes.io',
+  HOST: 'jungle.eos.smartz.io',
   PORT: '443',
   PROTOCOL: 'https'
 
