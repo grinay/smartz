@@ -176,7 +176,7 @@ class EosClass {
     return this.scatter.getIdentity({ accounts: [this.network] });
   }
 
-  public sendTransaction(func: any, formData: any) {
+  public sendTransaction(address: any, func: any, formData: any) {
     return new Promise((resolve, reject) => {
       this.setChainId()
         .then(() => this.scatter.suggestNetwork(this.network))
@@ -188,7 +188,7 @@ class EosClass {
 
           this.eos = this.scatter.eos(this.network, Eos, this.configEosDapp);
 
-          return this.eos.transaction(accountName, (contract) => {
+          return this.eos.transaction(address, (contract) => {
             contract[func.name](...formData, { authorization: accountName });
           });
         })
@@ -234,7 +234,7 @@ class EosClass {
     return new Promise((resolve, reject) => {
       switch (getFuncType(func)) {
         case 'write':
-          this.sendTransaction(func, formData)
+          this.sendTransaction(address, func, formData)
             .then(() => resolve('success'))
             .catch((error) => reject(error));
           break;
