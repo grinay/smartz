@@ -10,7 +10,8 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     dapp: dapp,
-    dappError: state.dapps.error
+    dappError: state.dapps.error,
+    user: state.app.profile.user_id
   };
 };
 

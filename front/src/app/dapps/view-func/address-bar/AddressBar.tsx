@@ -1,6 +1,7 @@
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
+import * as api from '../../../../api/apiRequests';
 import { getNetworkEtherscanAddress } from '../../../../helpers/eth';
 import { copyTextToClipboard } from '../../../../helpers/utils';
 import Modal from '../../../common/modal/Modal';
@@ -11,6 +12,7 @@ import './AddressBar.less';
 
 interface IAddressBarProps {
   dapp: any;
+  user: any;
 }
 
 interface IAddressBarState {
@@ -28,6 +30,7 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
 
     this.onClickCopyBtn = this.onClickCopyBtn.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.onClickAddToDashBtn = this.onClickAddToDashBtn.bind(this);
   }
 
   private toggleModal() {
@@ -40,9 +43,38 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
     copyTextToClipboard(this.props.dapp.address);
   }
 
+  private onClickAddToDashBtn() {
+    const { dapp, user } = this.props;
+
+    api.addDappToDash(dapp.id, user);
+  }
+
   public render() {
-    const { dapp } = this.props;
+    const { dapp, user } = this.props;
     const { isOpenModal } = this.state;
+
+    let btn: JSX.Element;
+    if (user.toString() === dapp.user_id) {
+      btn = (
+        <button
+          className="round-btn flex verify-btn"
+          onClick={this.toggleModal}
+          type="button"
+        >
+          Verify this DApp
+            </button>
+      );
+    } else {
+      btn = (
+        <button
+          className="round-btn flex add-to-btn"
+          onClick={this.onClickAddToDashBtn}
+          type="button"
+        >
+          Add to Dashboard
+            </button>
+      );
+    }
 
     return (
       <div className="address-bar">
@@ -73,13 +105,7 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
               />
               Copy
               </button>
-            <button
-              className="round-btn flex verify-btn"
-              onClick={this.toggleModal}
-              type="button"
-            >
-              Verify this DApp
-            </button>
+            {btn}
           </div>
         </div>
         <Modal isOpen={isOpenModal} onClose={this.toggleModal}>

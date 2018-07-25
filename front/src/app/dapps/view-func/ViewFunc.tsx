@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 import * as ReactTooltip from 'react-tooltip';
 import InlineSVG from 'svg-inline-react';
@@ -5,7 +6,6 @@ import InlineSVG from 'svg-inline-react';
 import { blockchains } from '../../../constants/constants';
 import { getFunctionsByType } from '../../../helpers/common';
 import renderDappWidget from '../../common/dapp-widgets/DappWidgets';
-import Tooltip from '../../common/tooltip/Tooltip';
 import AddressBar from './address-bar/AddressBar';
 
 import './ViewFunc.less';
@@ -13,36 +13,49 @@ import './ViewFunc.less';
 
 interface IViewFuncProps {
   dapp: any;
+  user: any;
 }
 
 interface IViewFuncState { }
 
 export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewFuncState> {
   public render() {
-    const { dapp } = this.props;
+    const { dapp, user } = this.props;
 
     let viewFuncElement: JSX.Element;
     if (dapp.blockchain === blockchains.ethereum) {
       const viewFunctions: any[] = getFunctionsByType(dapp.functions, 'view');
 
+      let viewFuncStandart: any[] = [];
+      let viewFuncPresentable: any[] = [];
+
+      for (let i = 0; i < viewFunctions.length; i++) {
+        const func = viewFunctions[i];
+
+        if (dapp.dashboard_functions.indexOf(func.name) === -1) {
+          viewFuncStandart.push(func);
+        } else {
+          viewFuncPresentable.push(func);
+        }
+      }
+
       viewFuncElement = (
-        <div className="card-body">
-          {/* <div className="card-header">
-                <div className="card-intro">
-                  <p className="card-label">
-                    Winning variant name
-                  </p>
-                  <p className="card-title">Laura González</p>
+        <div className={classNames('card-body', { 'bg-bottom': viewFuncStandart.length <= 3 })}>
+          <div className="card-header">
+
+            {viewFuncPresentable.map((func, i) => {
+              return (
+                <div key={i} className="card-intro">
+                  <p className="card-label">{func.title}</p>
+                  <p className="card-title">{renderDappWidget(func, dapp)}</p>
                 </div>
-                <div className="card-intro">
-                  <p className="card-label">
-                    Winning variant votes count
-                  </p>
-                  <p className="card-title">9 256 100</p>
-                </div>
-              </div> */}
+              );
+            })}
+
+          </div>
           <ul className="card-table">
-            {viewFunctions.map((func, i) => {
+
+            {viewFuncStandart.map((func, i) => {
               return (
                 <li key={i} className="card-row">
                   <p className="card-label">
@@ -57,6 +70,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
                 </li>
               );
             })}
+
           </ul>
         </div>
       );
@@ -66,7 +80,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
       <div className="view-func">
         <section className="dapp-content">
           <div className="card">
-            <AddressBar dapp={dapp} />
+            <AddressBar dapp={dapp} user={user} />
             {viewFuncElement}
             <ReactTooltip place={'bottom'} />
           </div>

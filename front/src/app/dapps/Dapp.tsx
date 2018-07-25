@@ -28,6 +28,7 @@ declare global {
 interface IDappProps {
   match: any;
   dapp: any;
+  user: any;
   metamaskStatus: any;
   viewFuncResult: any;
 }
@@ -105,6 +106,10 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       return;
     }
 
+    if (!this.props.dapp) {
+      return;
+    }
+
     //show last executed
     if (dapp.requests.length !== this.props.dapp.requests.length) {
       const lastFuncExec = dapp.requests[dapp.requests.length - 1];
@@ -159,7 +164,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
 
   public render() {
-    const { metamaskStatus, dapp } = this.props;
+    const { metamaskStatus, dapp, user } = this.props;
     const { selectedRequest, selectedTransaction, selectedFunc } = this.state;
 
     if (!dapp) {
@@ -184,7 +189,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
         <section className="dapp-body">
           <div className="wrapper">
             <div className="content">
-              <ViewFunc dapp={dapp} />
+              <ViewFunc dapp={dapp} user={user} />
               <Transactions
                 dapp={dapp}
                 onSelectRequest={this.onSelectRequest}

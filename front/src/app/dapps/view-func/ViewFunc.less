@@ -4,12 +4,22 @@
     width: 100%;
 
     .card {
+        overflow: hidden;
+
         border-radius: 8px;
         background-color: #FFFFFF;
 
         .card-body {
             box-sizing: border-box;
+            min-height: 350px;
             padding: 20px 65px 20px 35px;
+
+            &.bg-bottom {
+                background-image: url('../../../assets/img/common/dapp/dapp-bg.png');
+                background-repeat: no-repeat;
+                background-position: bottom;
+                background-size: contain;
+            }
 
             .card-header {
                 display: flex;
@@ -59,9 +69,9 @@
 
                 color: #191919;
 
-                font-family: @f-cera-pro-400;
-                font-size: 35px;
-                line-height: 44px;
+                font-family: @f-cera-pro-500;
+                font-size: 24px;
+                line-height: 30px;
             }
 
             .card-table {

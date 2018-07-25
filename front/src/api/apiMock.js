@@ -7,6 +7,7 @@ export default function subscribeMockRequests(mockApi) {
     // .onAny('/constructors').reply(200, constructors.constructorListProd)
     // .onAny('/dapps').reply(200, dapps.dappList)
     .onAny(/\/dapps\/.{24}/).reply(200, dapp.currentDapp)
+    .onAny('/dapps/add-to-dashbord').reply(dapp.addToDashboard)
 
     // .onAny('/dapps')
     // .reply(200, dapps.dappList)

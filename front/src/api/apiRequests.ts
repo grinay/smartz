@@ -135,6 +135,16 @@ export function updateTitleDapp(dappId, title) {
   return result;
 }
 
+export function addDappToDash(dappId, userId) {
+  const result = fetch(`/dapps/add-to-dashbord`, { id: dappId, user_id: userId }, 'post');
+
+  result
+    .then(() => getDapp(dappId))
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
 // =============================================================================
 // Deploy
 // =============================================================================
