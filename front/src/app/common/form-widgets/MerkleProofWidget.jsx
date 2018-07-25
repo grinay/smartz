@@ -1,7 +1,5 @@
 import React, { PureComponent } from "react";
 import axios from 'axios';
-import { isAddress } from "../../../helpers/eth";
-import {sha256, keccak256 } from 'ethereumjs-util';
 import MerkleTree from "./helpers/MerkleTree";
 
 
@@ -14,36 +12,6 @@ export default class MerkleProofWidget extends PureComponent {
     }
   }
 
-  validateLine(line) {
-    const { options } = this.props;
-    if (options.blockchain === 'eth') {
-      let els = line.split(' ');
-      if (els.length !== 2)
-        return 'Incorrect line format';
-
-      if (!isAddress(els[0]))
-        return 'Incorrect line format (address)';
-
-      if (!/[0-9]+/.test(els[1]))
-        return 'Incorrect line format (token amount)';
-
-      return null;
-    } else if (options.blockchain === 'eos') {
-      let els = line.split(' ');
-      if (els.length !== 2)
-        return 'Incorrect line format';
-
-      if (!/[a-z1-5.]/.test(els[0]))
-        return 'Incorrect line format (account name)';
-
-      if (!/[0-9]+/.test(els[1]))
-        return 'Incorrect line format (token amount)';
-
-      return null;
-    } else
-      return 'Incorrect blockchain';
-  }
-
   fetchFile(url) {
     return axios.get(url, {
       responseType: "text"
@@ -53,30 +21,17 @@ export default class MerkleProofWidget extends PureComponent {
   merkleProof(file, account) {
     const { options } = this.props;
 
-    let data =file.split('\n').filter(line => line !== '');
+    let leafs = MerkleTree.leafsFromFile(file, options.blockchain);
 
-    let idx = data.findIndex(line => line.split(' ')[0] === account);
+    let idx = leafs.findIndex(line => line.split(' ')[0] === account);
     if (idx === -1)
       throw 'Account not found in file';
 
-    let leafs = data.map(line => {
-      let err = this.validateLine(line);
-      if (err)
-        throw err;
-      return line.split(' ').join(' ');
-    });
-
-    let hasher = options.blockchain === 'eth' ? keccak256 : sha256;
-    if (options.hasher === 'keccak')
-      hasher = keccak256;
-    else if (options.hasher === 'sha256')
-      hasher = sha256;
-
-    return new MerkleTree(leafs, hasher).getHexProof(leafs[idx]);
+    return new MerkleTree(leafs, options.hasher, options.blockchain).getHexProof(leafs[idx]);
   }
 
   onChange = () => {
-    const { onChange, options } = this.props;
+    const { onChange } = this.props;
     const url = this.inputRef.value;
     const account = this.inputAccountRef.value;
 
@@ -89,9 +44,6 @@ export default class MerkleProofWidget extends PureComponent {
           this.setState({msg: 'Building Merkle Proof...'});
           try {
             let proof = this.merkleProof(reps.data, account);
-
-            if (options.blockchain === 'eth')
-                proof = proof.map(p => '0x' + p);
 
             this.setState({msg: 'Proof successfully builded'}, onChange(proof.join(' ')));
           }

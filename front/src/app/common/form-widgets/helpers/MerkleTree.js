@@ -1,8 +1,53 @@
-const {sha256, bufferToHex } = require('ethereumjs-util');
+import {isAddress} from "../../../../helpers/eth";
+import { blockchains } from '../../../../constants/constants';
+import {keccak256, sha256} from "ethereumjs-util";
+
+const { bufferToHex } = require('ethereumjs-util');
+
+
+const fileLineValidators = {
+  [blockchains.ethereum]: function (line) {
+    let els = line.split(' ');
+    if (els.length !== 2)
+      return 'Incorrect line format';
+
+    if (!isAddress(els[0]))
+      return 'Incorrect line format (address)';
+
+    if (els[0].toLowerCase() !== els[0])
+      return 'Incorrect line format (address must be in lower case)';
+
+    if (!/[0-9]+/.test(els[1]))
+      return 'Incorrect line format (token amount)';
+
+    return null;
+  },
+  [blockchains.eos]: function (line) {
+    let els = line.split(' ');
+    if (els.length !== 2)
+      return 'Incorrect line format';
+
+    if (!/[a-z1-5.]/.test(els[0]))
+      return 'Incorrect line format (account name)';
+
+    if (!/[0-9]+/.test(els[1]))
+      return 'Incorrect line format (token amount)';
+
+    return null;
+  }
+};
+
 
 export default class MerkleTree {
-  constructor(elements, hasher = sha256) {
-    this.hasher = hasher;
+  constructor(elements, hasher, blockchain) {
+    this.hasher = blockchain === blockchains.ethereum ? keccak256 : sha256;
+    if (hasher === 'keccak')
+      this.hasher = keccak256;
+    else if (hasher === 'sha256')
+      this.hasher = sha256;
+
+    // need hex '0x' prefix
+    this.needHexPrefix = blockchain === blockchains.ethereum;
 
     // Filter empty strings and hash elements
     this.elements = elements.map(el => this.hasher(el));
@@ -53,7 +98,8 @@ export default class MerkleTree {
   }
 
   getHexRoot () {
-    return bufferToHex(this.getRoot());
+    let hex = bufferToHex(this.getRoot());
+    return (this.needHexPrefix ? hex : hex.substr(2));
   }
 
   sortAndConcat (...args) {
@@ -120,6 +166,25 @@ export default class MerkleTree {
       throw new Error('Array is not an array of buffers');
     }
 
-    return arr.map(el => el.toString('hex'));
+    return arr.map(el => (this.needHexPrefix ? '0x' : '') + el.toString('hex'));
+  }
+
+  static validateFileLine(line, blockchain) {
+    if (blockchain in fileLineValidators)
+      return fileLineValidators[blockchain](line);
+
+    return 'Incorrect blockchain, support only: ' + Object.keys(fileLineValidators).join(', ');
+  }
+
+  static leafsFromFile(file, blockchain) {
+    let leafs = file.split('\n').filter(line => line.length);
+
+    leafs.forEach(line => {
+      let err = this.validateFileLine(line, blockchain);
+      if (err)
+        throw err;
+    });
+
+    return leafs;
   }
 }

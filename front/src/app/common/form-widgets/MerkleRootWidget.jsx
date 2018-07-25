@@ -1,7 +1,5 @@
 import React, { PureComponent } from "react";
 import axios from 'axios';
-import { isAddress } from "../../../helpers/eth";
-import {sha256, keccak256 } from 'ethereumjs-util';
 import MerkleTree from "./helpers/MerkleTree";
 import { ipfsConstants } from '../../../constants/constants';
 
@@ -16,54 +14,12 @@ export default class MerkleRootWidget extends PureComponent {
     }
   }
 
-  validateLine(line) {
-    const { options } = this.props;
-    if (options.blockchain === 'eth') {
-      let els = line.split(' ');
-      if (els.length !== 2)
-        return 'Incorrect line format';
-
-      if (!isAddress(els[0]))
-        return 'Incorrect line format (address)';
-
-      if (!/[0-9]+/.test(els[1]))
-        return 'Incorrect line format (token amount)';
-
-      return null;
-    } else if (options.blockchain === 'eos') {
-      let els = line.split(' ');
-      if (els.length !== 2)
-        return 'Incorrect line format';
-
-      if (!/[a-z1-5.]/.test(els[0]))
-        return 'Incorrect line format (account name)';
-
-      if (!/[0-9]+/.test(els[1]))
-        return 'Incorrect line format (token amount)';
-
-      return null;
-    } else
-      return 'Incorrect blockchain';
-  }
-
   merkleRoot(file) {
     const { options } = this.props;
 
-    let data =file.split('\n').filter(line => line !== '');
-    let leafs = data.map(line => {
-      let err = this.validateLine(line);
-      if (err)
-        throw err;
-      return line.split(' ').join(' ');
-    });
+    let leafs = MerkleTree.leafsFromFile(file, options.blockchain);
 
-    let hasher = options.blockchain === 'eth' ? keccak256 : sha256;
-    if (options.hasher === 'keccak')
-      hasher = keccak256;
-    else if (options.hasher === 'sha256')
-      hasher = sha256;
-
-    return new MerkleTree(leafs, hasher).getHexRoot();
+    return new MerkleTree(leafs, options.hasher, options.blockchain).getHexRoot();
   }
 
   readFile(file) {
@@ -83,7 +39,7 @@ export default class MerkleRootWidget extends PureComponent {
   }
 
   onChange = event => {
-    const { onChange, options } = this.props;
+    const { onChange } = this.props;
     const file = event.target.files[0];
 
     if (!file) {
@@ -91,14 +47,15 @@ export default class MerkleRootWidget extends PureComponent {
     } else {
       this.readFile(file)
         .then(data => {
+          this.data = data;
           this.setState({ msg: 'Uploading to IPFS...' });
-          this.uploadIpfs(data)
-            .then((resp) => {
-              let url = ipfsConstants.downloadUrl + resp.headers.location;
-              this.setState({ msg: 'Building Merkle Tree...', url: url });
-              let root = this.merkleRoot(data);
-              this.setState({ msg: root }, onChange(options.blockchain === "eos" ? root.substr(2): root));
-            });
+          return this.uploadIpfs(data)
+        })
+        .then(resp => {
+          let url = ipfsConstants.downloadUrl + resp.headers.location;
+          this.setState({ msg: 'Building Merkle Tree...', url: url });
+          let root = this.merkleRoot(this.data);
+          this.setState({ msg: root }, onChange(root));
         })
         .catch(error => {
           if (typeof error === "string")
