@@ -7,7 +7,6 @@ import { getFuncType } from '../../helpers/common';
 import { processControlForm, processResult } from '../../helpers/eth';
 import Alert from '../common/Alert';
 import ColumnFunc from './column-func/ColumnFunc';
-import FunctionButton from './function-button/FunctionButton';
 import MinimalFooter from './minimal-footer/MinimalFooter';
 import Transactions from './transactions/Transactions';
 import ViewFunc from './view-func/ViewFunc';
