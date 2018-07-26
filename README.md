@@ -1,6 +1,6 @@
 # Smartz
 
-![](https://travis-ci.com/mixbytes/smartz.svg?token=npMVUXhKXPw1Mau9yKyL&branch=master)
+![](https://api.travis-ci.org/smartzplatform/smartz.svg)
 
 Multi-chain smart contracts management system
 
@@ -10,6 +10,14 @@ https://smartz.io/
 
 ## Running local server
 ```
+# run dependencies
+# https://github.com/smartzplatform/constructor_call_service
+# https://github.com/smartzplatform/eos_compilation_service
+
+# change url of services in smartzplatform.env
+# CONSTRUCTOR_CALL_SERVICE_URL=http://your_external_ip:5000/call
+# EOS_COMPILATION_SERVICE_URL=http://your_external_ip:5001/compile
+
 # run server
 docker-compose build
 docker-compose up [-d] [--build]
@@ -24,6 +32,8 @@ docker-compose down
 ```
 ## Service variables (smartzplatform.env):
 
-* ENVIRONMENT=dev
+- ENVIRONMENT=dev
+- CONSTRUCTOR_CALL_SERVICE_URL=http://service.host:port/call
+- EOS_COMPILATION_SERVICE_URL=http://service.host:port/compile
 
 **Container environment (dev, prod, stage)**
