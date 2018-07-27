@@ -42,26 +42,28 @@ export default class MerkleRootWidget extends PureComponent {
     const { onChange } = this.props;
     const file = event.target.files[0];
 
+    this.setState({ url: null });
+
     if (!file) {
       this.setState({ msg: null }, onChange(null));
     } else {
       this.readFile(file)
         .then(data => {
           this.data = data;
-          this.setState({ msg: 'Uploading to IPFS...' });
+          this.setState({ msg: 'Uploading to IPFS (about 1 minute per 1m addresses)' });
           return this.uploadIpfs(data)
         })
         .then(resp => {
           let url = ipfsConstants.downloadUrl + resp.headers.location;
           this.setState({ msg: 'Building Merkle Tree...', url: url });
           let root = this.merkleRoot(this.data);
-          this.setState({ msg: root }, onChange(root));
+          this.setState({ msg: 'MerkleRoot: ' + root }, onChange(root));
         })
         .catch(error => {
           if (typeof error === "string")
-            this.setState({msg: error});
+            this.setState({msg: 'Error: ' + error});
           else {
-            this.setState({msg: 'Error an building merkle tree'});
+            this.setState({msg: 'Error: building merkle tree failed'});
             console.log(error);
           }
         });
@@ -87,7 +89,7 @@ export default class MerkleRootWidget extends PureComponent {
             onChange={this.onChange}
           />
         </p>
-        {this.state.url ? (<p>{this.state.url}</p>) : null}
+        {this.state.url ? (<p>File uploaded: <a href={this.state.url}>{this.state.url}</a></p>) : null}
         <p>{this.state.msg}</p>
       </div>
     );

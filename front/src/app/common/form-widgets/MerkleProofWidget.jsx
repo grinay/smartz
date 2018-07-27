@@ -38,6 +38,7 @@ export default class MerkleProofWidget extends PureComponent {
     if (!url.length || !account.length)
       return this.setState({msg: 'Fill in all the input fields'});
 
+    this.setState({msg: 'Loading file from IPFS (about 30 seconds per 1m addresses)'});
     this.fetchFile(url)
       .then(reps => {
         if (reps.status === 200) {
@@ -49,9 +50,9 @@ export default class MerkleProofWidget extends PureComponent {
           }
           catch (error) {
             if (typeof error === "string")
-              this.setState({msg: error});
+              this.setState({msg: 'Error: ' + error});
             else {
-              this.setState({msg: 'Error an building merkle tree'});
+              this.setState({msg: 'Error: building merkle tree failed'});
             }
           }
         }
@@ -59,9 +60,9 @@ export default class MerkleProofWidget extends PureComponent {
       .catch(error => {
         if (error.response) {
           if (error.response.code >= 400 && error.response.code < 500) {
-            this.setState({msg: 'File not found'}, onChange(null));
+            this.setState({msg: 'Error: file not found'}, onChange(null));
           } else {
-            this.setState({msg: 'Error an fetching file'}, onChange(null));
+            this.setState({msg: 'Error: file fetching failed'}, onChange(null));
           }
         }
       });
