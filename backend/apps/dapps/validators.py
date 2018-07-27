@@ -4,12 +4,22 @@ from smartz.json_schema import is_conforms2schema_part, load_schema, is_conforms
 
 
 def validate_function_args(value):
-    is_valid = is_conforms2schema_part(
-        value,
-        load_schema('public/constructor.json'),
-        'definitions/ETHFunctionAdditionalDescription/properties/inputs'
-    )
-    if not is_valid:
+    schema = {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Function argument",
+        "type": "array",
+        "items": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "value": {"type": "string"}
+            }
+        }
+    }
+
+    if not is_conforms2schema(value, schema):
         raise ValidationError("Incorrect function arguments")
 
 

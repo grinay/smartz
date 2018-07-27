@@ -45,7 +45,7 @@ class TransactionsCRUDIntegrationTests(WebTest):
                 'function_name': 'call_this',
                 'function_title': 'Call this',
                 'function_description': 'Call this please',
-                'function_arguments': [{"title": "arg1"}],
+                'function_arguments': [{"title": "arg1", 'description': 'descr', 'value': 'val'}],
                 'info': {"ethereum": {"gas_price": 1000}},
                 'is_success': True,
                 'logs': [
@@ -103,7 +103,7 @@ class RequestsCRUDIntegrationTests(WebTest):
                 'function_name': 'call_this',
                 'function_title': 'Call this',
                 'function_description': 'Call this please',
-                'function_arguments': [{"title": "arg1"}],
+                'function_arguments': [{"title": "arg1", 'description': 'descr', 'value': 'val'}],
                 'result': 55,
                 'is_success': True,
             },
