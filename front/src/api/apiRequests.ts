@@ -97,8 +97,8 @@ export function getDapps() {
   return result;
 }
 
-export function getDapp(id) {
-  const result = fetch(`/dapps/${id}`, undefined, 'get');
+export function getDapp(dappId) {
+  const result = fetch(`/dapps/${dappId}`, undefined, 'get');
 
   dispatch(fetchDappsRequest());
 
@@ -130,6 +130,64 @@ export function updateTitleDapp(dappId, title) {
 
   result
     .then(() => getDapp(dappId))
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function sendDappTransaction(dappId, data: object) {
+  const result = fetch(`/dapps/${dappId}/transactions`, data, 'post');
+
+  result
+    .then((response) => {
+      if (response.status === 200) {
+        console.log('eeeeeeeeeeeeeeeeeeee');
+        getDappTransactions(dappId);
+      }
+    })
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function getDappTransactions(dappId: any) {
+  const result = fetch(`/dapps/${dappId}/transactions`, undefined, 'get');
+
+  result
+    .then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+      }
+    })
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function sendDappRequest(dappId, data: object) {
+  const result = fetch(`/dapps/${dappId}/requests`, data, 'post');
+
+  result
+    .then((response) => {
+      if (response.status === 200) {
+        console.log('errrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+        getDappRequests(dappId);
+      }
+    })
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function getDappRequests(dappId: any) {
+  const result = fetch(`/dapps/${dappId}/requests`, undefined, 'get');
+
+  result
+    .then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+      }
+    })
     .catch((error) => console.error(error));
 
   return result;

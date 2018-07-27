@@ -62,18 +62,6 @@ const dapps = (state = initState, action) => {
 
       return nextState;
 
-    case 'TRANSACTION_NEW':
-      dapp = find(nextState.dappList, { id: action.dappId });
-      if (dapp) {
-        dapp.transactions.push({
-          func: action.func,
-          time: moment(),
-          formData: action.formData,
-          [/^0x([A-Fa-f0-9]{64})$/.test(action.result) ? 'txHash' : 'result']: action.result
-        });
-      }
-      return nextState;
-
     case 'REQUEST_NEW':
       dapp = find(nextState.dappList, { id: action.dappId });
       if (dapp) {
@@ -87,16 +75,30 @@ const dapps = (state = initState, action) => {
       }
       return nextState;
 
-    case 'TRANSACTION_RECEIPT':
+    case 'TRANSACTION_NEW':
       dapp = find(nextState.dappList, { id: action.dappId });
       if (dapp) {
-        const transaction = find(dapp.transactions, { txHash: action.txHash });
-        if (transaction) {
-          transaction.result = action.receipt;
-          transaction.timeMined = moment();
-        }
+        dapp.transactions.push({
+          func: action.func,
+          time: moment(),
+          formData: action.formData,
+          txHash: action.result,
+          status: 'process'
+        });
       }
       return nextState;
+
+    // case 'TRANSACTION_RECEIPT':
+    //   dapp = find(nextState.dappList, { id: action.dappId });
+    //   if (dapp) {
+    //     const transaction = find(dapp.transactions, { txHash: action.txHash });
+    //     if (transaction) {
+    //       transaction.status = 'mined';
+    //       transaction.result = action.receipt;
+    //       transaction.timeMined = moment();
+    //     }
+    //   }
+    //   return nextState;
 
     default:
       return state;

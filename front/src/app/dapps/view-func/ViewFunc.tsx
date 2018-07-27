@@ -13,14 +13,14 @@ import './ViewFunc.less';
 
 interface IViewFuncProps {
   dapp: any;
-  user: any;
+  profile: any;
 }
 
 interface IViewFuncState { }
 
 export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewFuncState> {
   public render() {
-    const { dapp, user } = this.props;
+    const { dapp, profile } = this.props;
 
     let viewFuncElement: JSX.Element;
     if (dapp.blockchain === blockchains.ethereum) {
@@ -80,7 +80,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
       <div className="view-func">
         <section className="dapp-content">
           <div className="card">
-            <AddressBar dapp={dapp} user={user} />
+            <AddressBar dapp={dapp} profile={profile} />
             {viewFuncElement}
             <ReactTooltip place={'bottom'} />
           </div>

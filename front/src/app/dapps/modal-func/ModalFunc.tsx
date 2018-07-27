@@ -1,12 +1,16 @@
 import { find } from 'lodash';
+import * as moment from 'moment';
 import * as React from 'react';
 import Form from 'react-jsonschema-form';
 import InlineSVG from 'svg-inline-react';
 
-import { blockchains } from '../../../constants/constants';
+import * as api from '../../../api/apiRequests';
+import { blockchains, ethConstants } from '../../../constants/constants';
 import { getFuncType } from '../../../helpers/common';
+import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import Eos from '../../../helpers/eos';
-import { processControlForm, web3 as w3 } from '../../../helpers/eth';
+import { processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
+import { valToString } from '../../../helpers/normalize';
 import store from '../../../store/store';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
 import Modal from '../../common/modal/Modal';
@@ -16,8 +20,9 @@ import './ModalFunc.less';
 
 
 interface IModalFuncProps {
-  func: any;
-  dapp: any;
+  func: IFunction;
+  dapp: IDapp;
+  profile: any;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -31,15 +36,71 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
 
     this.submit = this.submit.bind(this);
     this.getReceipt = this.getReceipt.bind(this);
+    this.formatArguments = this.formatArguments.bind(this);
+    this.formatResult = this.formatResult.bind(this);
+  }
+
+  private formatArguments(func: IFunction, formData: any[]) {
+    const arrOfArgs: any[] = [];
+
+    for (let i = 0; i < formData.length; i++) {
+      const arg = formData[i];
+      const data = func.inputs.items[i];
+
+      arrOfArgs.push({
+        title: data.title,
+        description: 'description' in data ? data.description : '',
+        value: arg,
+      });
+    }
+
+    return arrOfArgs;
+  }
+
+  private formatResult(func: IFunction, result: any) {
+    const arrOfArgs: any[] = [];
+
+    if (Array.isArray(result)) {
+      for (let i = 0; i < result.length; i++) {
+        const arg = result[i];
+        const data = func.outputs.items[i];
+
+        arrOfArgs.push({
+          title: data.title,
+          description: 'description' in data ? data.description : '',
+          value: valToString(arg, data.type),
+        });
+      }
+    } else {
+      const data = func.outputs.items[0];
+
+      arrOfArgs.push({
+        title: data.title,
+        description: 'description' in data ? data.description : '',
+        value: valToString(result, data.type),
+      });
+    }
+
+    return arrOfArgs;
   }
 
   private submit({ formData }) {
+    const { func, dapp, onClose, profile } = this.props;
+
     //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
     if (typeof formData === 'object' && !Object.keys(formData).length) {
       formData = [];
     }
 
-    const { func, dapp, onClose } = this.props;
+    const dataFetch = {
+      blockchain: dapp.blockchain,
+      initiator_address: profile.last_name,
+      execution_datetime: (new Date()).toISOString(),
+      function_name: func.name,
+      function_title: func.title,
+      function_description: func.description,
+      function_arguments: this.formatArguments(func, formData),
+    };
 
     switch (dapp.blockchain) {
       case blockchains.ethereum:
@@ -47,15 +108,28 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
           (error, response) => {
             const funcType = getFuncType(func);
 
+            let result: any;
+
+            if (error !== null) {
+              dataFetch['is_success'] = false;
+              dataFetch['error'] = error.toString();
+
+              result = error;
+            } else {
+              dataFetch['is_success'] = true;
+
+              result = response;
+            }
+
             if (funcType === 'ask') {
-              const result: any = error === null ? response : error;
-
+              dataFetch['result'] = this.formatResult(func, response);
               store.dispatch(requestNew(dapp.id, func, formData, result));
-            } else if (funcType === 'write') {
-              const result: any = error === null ? response : error;
 
+              api.sendDappRequest(dapp.id, dataFetch);
+
+            } else if (funcType === 'write') {
               store.dispatch(transactionNew(dapp.id, func, formData, result));
-              this.getReceipt(response);
+              this.getReceipt(response, dataFetch);
             }
 
             // close modal window after execute function
@@ -85,14 +159,28 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
     }
   }
 
-  private getReceipt(tx) {
+  private getReceipt(tx: string, dataFetch: any) {
     const { dapp } = this.props;
 
     w3.eth.getTransactionReceipt(tx, (err, receipt) => {
       if (null == receipt) {
-        window.setTimeout(() => this.getReceipt(tx), 500);
+        window.setTimeout(() => this.getReceipt(tx, dataFetch), 500);
       } else {
-        store.dispatch(transactionReceipt(dapp.id, tx, receipt));
+        dataFetch['mining_datetime'] = (new Date()).toISOString();
+        dataFetch['tx_id'] = tx;
+        dataFetch['logs'] = receipt.logs;
+        dataFetch['info'] = {
+          ethereum: {
+            gas_price: ethConstants.gasPrice,
+            gas_limit: ethConstants.gas,
+            block: receipt.blockNumber,
+            block_hash: receipt.blockHash,
+            gas_used: receipt.gasUsed,
+          },
+        };
+
+        api.sendDappTransaction(dapp.id, dataFetch);
+        // store.dispatch(transactionReceipt(dapp.id, tx, receipt));
 
         // refresh 'view' functions
         // processControlForm(dapp.abi, func, [], dapp.address, (error, result) => {
@@ -212,12 +300,6 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
             onError={(e) => console.warn('I have', e, 'errors to fix')}
             showErrorList={false}
           >
-            {/* <h3 className="form-block__header">
-              {func.title || func.name}
-              {func.title && func.name && func.title !== func.name && <span> ({func.name})</span>}
-            </h3>
-            {func.description && <span className="form-block__description">{func.description}</span>} */}
-
             <div className="function-form__button">
               <button
                 className="button-base"

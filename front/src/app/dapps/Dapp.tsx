@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
 import { getFuncType } from '../../helpers/common';
+import { IDapp, IFunction } from '../../helpers/entities/dapp';
 import { processControlForm, processResult } from '../../helpers/eth';
 import store from '../../store/store';
 import { setHeaderTitle } from '../AppActions';
@@ -27,15 +28,15 @@ declare global {
 
 interface IDappProps {
   match: any;
-  dapp: any;
-  user: any;
+  dapp: IDapp;
+  profile: any;
   metamaskStatus: any;
   viewFuncResult: any;
 }
 
 interface IDappState {
   updateCycleActive: any;
-  funcActive: any;
+  funcActive: IFunction;
   selectedRequest: any;
   selectedTransaction: any;
   selectedFunc: any;
@@ -68,7 +69,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     return () => this.setState({ selectedTransaction: transaction });
   }
 
-  private selectFunc(func: any) {
+  private selectFunc(func: any): any {
     return () => {
       // const funcType = getFuncType(func);
 
@@ -164,7 +165,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
 
   public render() {
-    const { metamaskStatus, dapp, user } = this.props;
+    const { metamaskStatus, dapp, profile } = this.props;
     const { selectedRequest, selectedTransaction, selectedFunc } = this.state;
 
     if (!dapp) {
@@ -189,7 +190,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
         <section className="dapp-body">
           <div className="wrapper">
             <div className="content">
-              <ViewFunc dapp={dapp} user={user} />
+              <ViewFunc dapp={dapp} profile={profile} />
               <Transactions
                 dapp={dapp}
                 onSelectRequest={this.onSelectRequest}
@@ -203,6 +204,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
         <ModalFunc
           func={selectedFunc}
           dapp={dapp}
+          profile={profile}
           isOpen={selectedFunc != null ? true : false}
           onClose={this.onClose('modal')}
         />

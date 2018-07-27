@@ -29,3 +29,7 @@ export function findTitle(schema, field) {
         }
     });
 }
+
+export function valToString(value, type) {
+    return value.toString();
+}

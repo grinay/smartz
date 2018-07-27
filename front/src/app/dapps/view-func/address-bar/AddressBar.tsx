@@ -2,6 +2,8 @@ import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
 import * as api from '../../../../api/apiRequests';
+import { blockchains } from '../../../../constants/constants';
+import { IDapp } from '../../../../helpers/entities/dapp';
 import { getNetworkEtherscanAddress } from '../../../../helpers/eth';
 import { copyTextToClipboard } from '../../../../helpers/utils';
 import Modal from '../../../common/modal/Modal';
@@ -11,8 +13,8 @@ import './AddressBar.less';
 
 
 interface IAddressBarProps {
-  dapp: any;
-  user: any;
+  dapp: IDapp;
+  profile: any;
 }
 
 interface IAddressBarState {
@@ -44,36 +46,39 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
   }
 
   private onClickAddToDashBtn() {
-    const { dapp, user } = this.props;
+    const { dapp, profile } = this.props;
 
-    api.addDappToDash(dapp.id, user);
+    api.addDappToDash(dapp.id, profile.user_id);
   }
 
   public render() {
-    const { dapp, user } = this.props;
+    const { dapp, profile } = this.props;
     const { isOpenModal } = this.state;
 
+    // check who owner this dapp
     let btn: JSX.Element;
-    if (user.toString() === dapp.user_id) {
-      btn = (
-        <button
-          className="round-btn flex verify-btn"
-          onClick={this.toggleModal}
-          type="button"
-        >
-          Verify this DApp
+    if (profile) {
+      if (profile.user_id.toString() === dapp.user_id) {
+        btn = (
+          <button
+            className="round-btn flex verify-btn"
+            onClick={this.toggleModal}
+            type="button"
+          >
+            Verify this DApp
             </button>
-      );
-    } else {
-      btn = (
-        <button
-          className="round-btn flex add-to-btn"
-          onClick={this.onClickAddToDashBtn}
-          type="button"
-        >
-          Add to Dashboard
+        );
+      } else {
+        btn = (
+          <button
+            className="round-btn flex add-to-btn"
+            onClick={this.onClickAddToDashBtn}
+            type="button"
+          >
+            Add to Dashboard
             </button>
-      );
+        );
+      }
     }
 
     return (
@@ -84,16 +89,18 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
             <span className="wallet-number">{dapp.address}</span>
           </div>
           <div className="wallet-buttons">
-            <a
-              className="round-btn flex link"
-              href={`${getNetworkEtherscanAddress(dapp.network_id)}/address/${dapp.address}`}
-              target="_blank"
-            >
-              <InlineSVG
-                className="etherscan-icon"
-                src={require('../../../../assets/img/common/etherscan.svg')}
-              />
-            </a>
+            {dapp.blockchain === blockchains.ethereum &&
+              <a
+                className="round-btn flex link"
+                href={`${getNetworkEtherscanAddress(dapp.network_id)}/address/${dapp.address}`}
+                target="_blank"
+              >
+                <InlineSVG
+                  className="etherscan-icon"
+                  src={require('../../../../assets/img/common/etherscan.svg')}
+                />
+              </a>
+            }
             <button
               className="round-btn flex copy-btn"
               onClick={this.onClickCopyBtn}

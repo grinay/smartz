@@ -2,18 +2,19 @@ import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
 import { getFunctionsByType } from '../../../helpers/common';
+import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 
 import './ColumnFunc.less';
 
 
 interface IColumnFuncProps {
-  dapp: any;
-  onSelectFunc: (func: any) => void;
+  dapp: IDapp;
+  onSelectFunc: (func: IFunction) => any;
 }
 
 interface IColumnFuncState {
   isOpenModal: boolean;
-  selectedFunc: any;
+  selectedFunc: IFunction;
 }
 
 export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IColumnFuncState> {
@@ -53,7 +54,7 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     const { dapp, onSelectFunc } = this.props;
 
     let funcSectionElement: JSX.Element = null;
-    const functions: any[] = getFunctionsByType(dapp.functions, funcType);
+    const functions: IFunction[] = getFunctionsByType(dapp.functions, funcType);
 
     if (functions.length > 0) {
       funcSectionElement = (
@@ -61,13 +62,24 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
           <h2 className="dapp-header">{title}</h2>
           <ul className="dapp-list">
             {functions.map((func, i) => {
+
+              // mock TODO: remove after backend icon-task done!
+              if (!('icon' in func)) {
+                func['icon'] = {
+                  name: null,
+                };
+              }
+
               return (
-                <div key={i} className="dapp-func flex-v">
+                <div
+                  key={i}
+                  className="dapp-func flex-v"
+                  onClick={onSelectFunc(func)}
+                >
                   <i className={`mdi ${func.icon.name !== null ? `mdi-${func.icon.name}` : ''} mdi-icon`} />
                   <button
                     className="dapp-btn"
                     type="button"
-                  // onClick={onSelectFunc(func)}
                   >
                     {func.title}
                   </button>

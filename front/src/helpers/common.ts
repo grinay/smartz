@@ -1,4 +1,7 @@
-export const getFuncType = (func: any): 'view' | 'ask' | 'write' | null => {
+import { IFunction } from './entities/dapp';
+
+
+export const getFuncType = (func: IFunction): 'view' | 'ask' | 'write' | null => {
   if (func.constant && func.inputs.minItems === 0) {
     return 'view';
   }
@@ -14,7 +17,7 @@ export const getFuncType = (func: any): 'view' | 'ask' | 'write' | null => {
   return null;
 };
 
-export const getFunctionsByType = (functions: any, type: any): any[] => {
+export const getFunctionsByType = (functions: IFunction[], type: any): any[] => {
   const result = [];
 
   if (Array.isArray(functions) && functions.length > 0) {
