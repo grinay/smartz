@@ -13,26 +13,51 @@ class DappsCRUDIntegrationTests(WebTest):
 
         self.constructor = Constructor.create(price=0)
         self.constructor.save()
-        self.dapp = Dapp.create(constructor=self.constructor, user=self.user)
-        self.dapp.save()
+
 
         self.auth_header = {'X_ACCESSTOKEN':  UsersService().generate_token(self.user, 'ethereum')}
 
     def test_update(self):
+        dapp = Dapp.create(constructor=self.constructor, user=self.user)
+        dapp.save()
 
         fields = {'address': '0x00', 'network_id': '2', 'has_public_access': True, 'title': 'new title'}
         for field, val in fields.items():
             resp = self.app.post_json(
-                '/api/dapps/{}/update'.format(self.dapp.slug),
+                '/api/dapps/{}/update'.format(dapp.slug),
                 params={field: val},
                 headers=self.auth_header
             )
             assert resp.status_code == 200
-            assert getattr(self.dapp, field) != val, "field {} mustn't be equal {}".format(field, val)
-            self.dapp.refresh_from_db()
-            assert getattr(self.dapp, field) == val, "field {} must be equal {}".format(field, val)
+            assert getattr(dapp, field) != val, "field {} mustn't be equal {}".format(field, val)
+            dapp.refresh_from_db()
+            assert getattr(dapp, field) == val, "field {} must be equal {}".format(field, val)
 
+    def test_add_to_dashboard(self):
+        user2 = User()
+        user2.username = 'username'
+        user2.save()
 
+        dapp = Dapp.create(constructor=self.constructor, user=user2)
+        dapp.has_public_access = True
+        dapp.title = 'titl'
+        dapp.save()
+
+        assert Dapp.objects.count() == 1
+
+        resp = self.app.post_json(
+            '/api/dapps/{}/add-to-dashboard'.format(dapp.slug),
+            headers=self.auth_header
+        )
+        assert resp.status_code == 200
+        assert 'ok' in resp.json
+
+        assert Dapp.objects.count() == 2
+        dapps = Dapp.objects.order_by('created_at').all()
+        assert dapps[0].pk == dapp.pk
+        assert dapps[1].title == dapp.title
+        assert dapps[1].user_id == self.user.pk
+        assert dapps[1].created_at != dapps[0].created_at
 
 
 class TransactionsCRUDIntegrationTests(WebTest):

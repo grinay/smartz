@@ -106,6 +106,27 @@ class UpdateView(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
+class AddToDashboardView(View):
+
+    def post(self, request, id):
+        user = auth(request)
+        if isinstance(user, HttpResponse):
+            return user  # error
+
+        try:
+            dapp = Dapp.objects.get(slug=id, has_public_access=True)
+        except Dapp.DoesNotExist:
+            return error_response("Dapp not found")
+
+        dapp.slug = Dapp.create().slug
+        dapp.pk = None
+        dapp.user = user
+        dapp.save()
+
+        return JsonResponse({'ok': True})  # todo
+
+
+@method_decorator(csrf_exempt, name='dispatch')
 class TransactionsList(GenericAPIView, WithLogger):
     """
     List dapp transactions, or save new transaction.

@@ -56,7 +56,7 @@ class Dapp(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.id:
+        if not self.pk:
             self.created_at = datetime.now(pytz.timezone(settings.TIME_ZONE))
 
         return super().save(*args, **kwargs)
