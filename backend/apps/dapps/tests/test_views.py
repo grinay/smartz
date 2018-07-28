@@ -6,6 +6,35 @@ from apps.users.models import User
 from apps.users.services import UsersService
 
 
+class DappsCRUDIntegrationTests(WebTest):
+    def setUp(self):
+        self.user = User()
+        self.user.save()
+
+        self.constructor = Constructor.create(price=0)
+        self.constructor.save()
+        self.dapp = Dapp.create(constructor=self.constructor, user=self.user)
+        self.dapp.save()
+
+        self.auth_header = {'X_ACCESSTOKEN':  UsersService().generate_token(self.user, 'ethereum')}
+
+    def test_update(self):
+
+        fields = {'address': '0x00', 'network_id': '2', 'has_public_access': True, 'title': 'new title'}
+        for field, val in fields.items():
+            resp = self.app.post_json(
+                '/api/dapps/{}/update'.format(self.dapp.slug),
+                params={field: val},
+                headers=self.auth_header
+            )
+            assert resp.status_code == 200
+            assert getattr(self.dapp, field) != val, "field {} mustn't be equal {}".format(field, val)
+            self.dapp.refresh_from_db()
+            assert getattr(self.dapp, field) == val, "field {} must be equal {}".format(field, val)
+
+
+
+
 class TransactionsCRUDIntegrationTests(WebTest):
 
     def setUp(self):

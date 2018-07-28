@@ -81,21 +81,28 @@ class UpdateView(View):
         # differ parameters of dapps on different blockchains
 
         address = request.data.get('address')
-        if address is None or not isinstance(address, str):
-            return error_response("Param 'address' is empty or not string")
+        if address is not None:
+            if not isinstance(address, str):
+                return error_response("Param 'address' is empty or not string")
+            dapp.address = address
 
         network_id = request.data.get('network_id')
-        if network_id is None or type(network_id) not in (int, str):
-            return error_response("Param 'network_id' is empty or not int")
+        if network_id is not None:
+            if type(network_id) not in (int, str):
+                return error_response("Param 'network_id' is empty or not int")
+            dapp.network_id = str(network_id)
 
-        public_access = bool(request.data.get('public_access'))
+        has_public_access = request.data.get('has_public_access')
+        if has_public_access is not None:
+            dapp.has_public_access = bool(has_public_access)
 
-        dapp.address = address
-        dapp.network_id = str(network_id)
-        dapp.has_public_access = public_access
+        title = request.data.get('title')
+        if title is not None:
+            dapp.title = title
+
         dapp.save()
 
-        return JsonResponse({'ok': True}) # todo
+        return JsonResponse({'ok': True})  # todo
 
 
 @method_decorator(csrf_exempt, name='dispatch')
