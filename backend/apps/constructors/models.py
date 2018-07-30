@@ -55,7 +55,9 @@ class Constructor(models.Model):
             'booking': 'booking.jpg',
             'ledger': 'ledger.jpg',
             'smartz platform features': 'platform-features.jpg',
-            'crowdfunding for erc20 token': 'crowdfunding-erc20.jpg'
+            'crowdfunding for erc20 token': 'crowdfunding-erc20.jpg',
+            'merkle airdrop': 'airdrop.png',
+            'merkle airdrop for eos': 'airdrop-eos.png',
         }
 
         if name_lower in images:
