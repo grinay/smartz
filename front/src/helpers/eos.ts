@@ -62,6 +62,7 @@ class EosClass {
           .get(this.url + '/v1/chain/get_info')
           .then((result) => {
             if (result.status === 200) {
+              this.network.chainId = result.data.chain_id;
               this.configEosDapp.chainId = result.data.chain_id;
               resolve();
             }
@@ -87,6 +88,7 @@ class EosClass {
     return (
       this.setChainId()
         // accept current network
+        .then(() => this.scatter.forgetIdentity())
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
         .then((identity) => {
@@ -113,6 +115,7 @@ class EosClass {
     return (
       this.setChainId()
       // accept current network
+        .then(() => this.scatter.forgetIdentity())
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({accounts: [this.network]}))
         .then((identity) => {
@@ -179,6 +182,7 @@ class EosClass {
   public sendTransaction(address: any, func: any, formData: any) {
     return new Promise((resolve, reject) => {
       this.setChainId()
+        .then(() => this.scatter.forgetIdentity())
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
         .then((identity) => {
