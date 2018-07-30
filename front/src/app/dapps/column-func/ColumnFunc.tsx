@@ -13,36 +13,45 @@ interface IColumnFuncProps {
 }
 
 interface IColumnFuncState {
-  isOpenModal: boolean;
-  selectedFunc: IFunction;
+  isHidden: boolean;
 }
 
 export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IColumnFuncState> {
+  private ref: HTMLElement;
+
   constructor(props) {
     super(props);
 
     this.state = {
-      isOpenModal: false,
-      selectedFunc: null,
+      isHidden: true,
     };
 
     this.changeHeight = this.changeHeight.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
     this.getSection = this.getSection.bind(this);
+    this.togglePanel = this.togglePanel.bind(this);
   }
 
-  private toggleModal() {
-    const { isOpenModal } = this.state;
+  private togglePanel() {
+    const { isHidden } = this.state;
+    console.log(this.ref.style);
 
-    this.setState({ isOpenModal: !isOpenModal });
+    if (isHidden) {
+      this.ref.style.right = '10px';
+    } else {
+      this.ref.style.right = '-220px';
+    }
+
+    this.setState({ isHidden: !isHidden });
   }
 
   // dynamic change height aside after scroll (depend. of header height)
   private changeHeight(): void {
     const doc = document.documentElement;
-    const col = document.getElementById('js-column-func');
+    const col = this.ref;
 
+    // const headerHeight = 70;
     const headerHeight = document.getElementById('js-header').offsetHeight;
+    // console.log('headerHeight :', headerHeight);
     if (doc.scrollTop < headerHeight) {
       col.style.top = `${headerHeight - doc.scrollTop + 10}px`;
     } else {
@@ -108,7 +117,7 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
 
   public render() {
     const { dapp } = this.props;
-    const { isOpenModal, selectedFunc } = this.state;
+    const { isHidden } = this.state;
 
     if (!dapp) {
       return null;
@@ -118,16 +127,28 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     const writeFuncElement = this.getSection('write', 'Write');
 
     return (
-      <aside id="js-column-func" className="column-func">
-        {askFuncElement}
-        {writeFuncElement}
-        {/* <button className="dapp-btn dapp-btn--more" type="button">
+      <aside
+        className="column-func"
+        ref={(ref) => this.ref = ref}
+      >
+        <div className="wrapper">
+          {askFuncElement}
+          {writeFuncElement}
+          {/* <button className="dapp-btn dapp-btn--more" type="button">
           <InlineSVG
             className="three-dot"
             src={require('../../../assets/img/common/three-dot.svg')}
           />
           More
       </button> */}
+        </div>
+        {isHidden &&
+          <div
+            onClick={this.togglePanel}
+            className="toggle-btn"
+          />
+        }
+        {!isHidden && <div onClick={this.togglePanel} className="column-func-overlay" />}
       </aside>
     );
   }

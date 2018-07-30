@@ -1,5 +1,5 @@
 export const currentDapp = {
-  "id": "fe75f0dafa1d8d23096ed9bb",
+  "id": "468aa826ff59e3a5cba0bdf3",
   "title": "Mock dapp`",
   "network_id": "4",
   "constructor_id": "5ad9a507672dfe000a7e0a31",
@@ -3568,4 +3568,78 @@ export function addToDashboard() {
   dapp.user_id = '25';
 
   return [200, dapp];
+}
+
+export function getRequests() {
+  return [200, [
+    {
+      "blockchain": "ethereum",
+      "initiator_address": "0x0e5f3ade12b0920ab44318cf7bef19cd823bf1c0",
+      "execution_datetime": "2018-07-27T11:35:32.726Z",
+      "function_name": "getVotesCount",
+      "function_title": "Get votes count",
+      "function_description": "Get votes count by variant ID",
+      "function_arguments": [
+        {
+          "title": "Variant ID",
+          "description": "",
+          "value": "1"
+        }
+      ],
+      "is_success": true,
+      "result": [
+        {
+          "title": "",
+          "description": "",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "blockchain": "ethereum",
+      "initiator_address": "0x0e5f3ade12b0920ab44318cf7bef19cd823bf1c0",
+      "execution_datetime": "2018-07-27T11:35:32.726Z",
+      "function_name": "getVotesCount",
+      "function_title": "Get votes count",
+      "function_description": "Get votes count by variant ID",
+      "function_arguments": [
+        {
+          "title": "Variant ID",
+          "description": "",
+          "value": "1"
+        }
+      ],
+      "is_success": true,
+      "result": [
+        {
+          "title": "",
+          "description": "",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "blockchain": "ethereum",
+      "initiator_address": "0x0e5f3ade12b0920ab44318cf7bef19cd823bf1c0",
+      "execution_datetime": "2018-07-27T11:35:32.726Z",
+      "function_name": "getVotesCount",
+      "function_title": "Get votes count",
+      "function_description": "Get votes count by variant ID",
+      "function_arguments": [
+        {
+          "title": "Variant ID",
+          "description": "",
+          "value": "1"
+        }
+      ],
+      "is_success": true,
+      "result": [
+        {
+          "title": "",
+          "description": "",
+          "value": "1"
+        }
+      ]
+    }
+  ]]
 }

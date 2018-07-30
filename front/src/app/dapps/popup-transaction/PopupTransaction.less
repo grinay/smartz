@@ -3,9 +3,9 @@
 .popup-transaction {
     position: fixed;
     bottom: 0;
-    left: 10px;
 
-    width: calc(100% - 3*@dapp-padding - @dapp-column-width);
+    width: calc(100% - 20px);
+    max-width: @dapp-content-max-width;
     height: 300px;
     padding: 35px 35px 25px;
 
@@ -90,7 +90,7 @@
 
         font-family: @f-cera-pro-400;
         font-size: 12px;
-        line-height: 15px;
+        line-height: 20px;
     }
 
     .event-value {
@@ -141,7 +141,7 @@
 
     .event-time {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
 
         margin-bottom: 7px;
     }
@@ -151,6 +151,10 @@
         align-items: center;
 
         color: rgba(255, 255, 255, .5);
+
+        &:last-child {
+            margin-left: 10px;
+        }
 
         .x-icon {
             height: 11px;
@@ -206,3 +210,4 @@
         }
     }
 }
+

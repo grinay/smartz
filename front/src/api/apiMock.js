@@ -6,6 +6,8 @@ export default function subscribeMockRequests(mockApi) {
   mockApi
     // .onAny('/constructors').reply(200, constructors.constructorListProd)
     // .onAny('/dapps').reply(200, dapps.dappList)
+    .onGet(/\/dapps\/.{24}\/requests/).reply(dapp.getRequests)
+    .onPost(/\/dapps\/.{24}\/requests/).reply(dapp.getRequests)
     .onAny(/\/dapps\/.{24}/).reply(200, dapp.currentDapp)
     .onAny('/dapps/add-to-dashbord').reply(dapp.addToDashboard)
 

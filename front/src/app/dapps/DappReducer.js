@@ -18,12 +18,16 @@ const dapps = (state = initState, action) => {
     case 'FETCH_DAPPS_REQUEST':
       nextState.fetchStatus = 'request';
       nextState.error = '';
+
       return nextState;
+
 
     case 'FETCH_DAPPS_FAILURE':
       nextState.fetchStatus = 'error';
       nextState.error = action.error;
+
       return nextState;
+
 
     case 'FETCH_DAPPS_SUCCESS':
       nextState.fetchStatus = 'success';
@@ -38,14 +42,15 @@ const dapps = (state = initState, action) => {
         if (i >= 0) {
           nextState.dappList[i] = Object.assign(nextState.dappList[i], dapp);
         } else {
-          dapp.requests = [];
-          dapp.transactions = [];
+          dapp.requests = null;
+          dapp.transactions = null;
 
           nextState.dappList.push(dapp);
         }
       });
 
       return nextState;
+
 
     case 'VIEW_FUNC_RESULT':
       const { dappId, funcName, result } = action;
@@ -62,30 +67,56 @@ const dapps = (state = initState, action) => {
 
       return nextState;
 
-    case 'REQUEST_NEW':
+
+    case 'ADD_REQUESTS':
       dapp = find(nextState.dappList, { id: action.dappId });
+
       if (dapp) {
-        if (!dapp.requests) dapp.requests = [];
-        dapp.requests.push({
-          func: action.func,
-          time: moment(),
-          formData: action.formData,
-          [/^0x([A-Fa-f0-9]{64})$/.test(action.result) ? 'txHash' : 'result']: action.result
-        });
+        dapp.requests = action.requests;
       }
+
       return nextState;
+
+
+    case 'ADD_TRANSACTIONS':
+      dapp = find(nextState.dappList, { id: action.dappId });
+
+      if (dapp) {
+        if (dapp.transactions === null) {
+          dapp.transactions = []
+        }
+
+        dapp.transactions = [
+          ...dapp.transactions,
+          ...action.transactions
+        ];
+      }
+
+      return nextState;
+
 
     case 'TRANSACTION_NEW':
       dapp = find(nextState.dappList, { id: action.dappId });
+      // if (dapp) {
+      //   dapp.transactions.push({
+      //     func: action.func,
+      //     time: moment(),
+      //     formData: action.formData,
+      //     txHash: action.result,
+      //     status: 'process'
+      //   });
+      // }
       if (dapp) {
+        if (dapp.transactions === null) {
+          dapp.transactions = []
+        }
+
         dapp.transactions.push({
-          func: action.func,
-          time: moment(),
-          formData: action.formData,
-          txHash: action.result,
-          status: 'process'
+          status: 'process',
+          ...action.result
         });
       }
+
       return nextState;
 
     // case 'TRANSACTION_RECEIPT':

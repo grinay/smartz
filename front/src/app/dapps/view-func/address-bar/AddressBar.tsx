@@ -46,9 +46,9 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
   }
 
   private onClickAddToDashBtn() {
-    const { dapp, profile } = this.props;
+    const { dapp } = this.props;
 
-    api.addDappToDash(dapp.id, profile.user_id);
+    api.addDappToDash(dapp.id);
   }
 
   public render() {

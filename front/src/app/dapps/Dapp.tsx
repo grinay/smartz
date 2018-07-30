@@ -13,7 +13,7 @@ import ColumnFunc from './column-func/ColumnFunc';
 import MinimalFooter from './minimal-footer/MinimalFooter';
 import ModalFunc from './modal-func/ModalFunc';
 import PopupTransaction from './popup-transaction/PopupTransaction';
-import Transactions from './transactions/Transactions';
+import Records from './records/Records';
 import ViewFunc from './view-func/ViewFunc';
 
 import './Dapp.less';
@@ -29,6 +29,8 @@ declare global {
 interface IDappProps {
   match: any;
   dapp: IDapp;
+  dappStatus: any;
+  dappError: any;
   profile: any;
   metamaskStatus: any;
   viewFuncResult: any;
@@ -37,8 +39,7 @@ interface IDappProps {
 interface IDappState {
   updateCycleActive: any;
   funcActive: IFunction;
-  selectedRequest: any;
-  selectedTransaction: any;
+  selectedRecord: any;
   selectedFunc: any;
 }
 
@@ -49,24 +50,18 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     this.state = {
       updateCycleActive: false,
       funcActive: null,
-      selectedRequest: null,
-      selectedTransaction: null,
+      selectedRecord: null,
       selectedFunc: null,
     };
 
     this.getConstants = this.getConstants.bind(this);
-    this.onSelectRequest = this.onSelectRequest.bind(this);
-    this.onSelectTransaction = this.onSelectTransaction.bind(this);
+    this.onSelectRecord = this.onSelectRecord.bind(this);
     this.selectFunc = this.selectFunc.bind(this);
     this.onClose = this.onClose.bind(this);
   }
 
-  private onSelectRequest(request: any) {
-    return () => this.setState({ selectedRequest: request });
-  }
-
-  private onSelectTransaction(transaction: any) {
-    return () => this.setState({ selectedTransaction: transaction });
+  private onSelectRecord(selectedRecord: any) {
+    return () => this.setState({ selectedRecord });
   }
 
   private selectFunc(func: any): any {
@@ -85,7 +80,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
   private onClose(type: 'popup' | 'modal') {
     return () => {
       if (type === 'popup') {
-        this.setState({ selectedRequest: null });
+        this.setState({ selectedRecord: null });
       } else {
         this.setState({ selectedFunc: null });
       }
@@ -101,32 +96,30 @@ class Dapp extends React.Component<IDappProps, IDappState> {
   }
 
   public componentWillReceiveProps(nextProps: any) {
-    const { dapp } = nextProps;
+    const dappNext = nextProps.dapp;
+    const dappLast = this.props.dapp;
 
-    if (!dapp) {
+    if (!dappNext || !dappLast) {
       return;
     }
 
-    if (!this.props.dapp) {
-      return;
-    }
+    //show last 'ask' function executed
+    if (dappNext.requests !== null && dappLast.requests !== null) {
+      if (dappNext.requests.length !== dappLast.requests.length) {
+        const lastExec = dappNext.requests[0];
 
-    //show last executed
-    if (dapp.requests.length !== this.props.dapp.requests.length) {
-      const lastFuncExec = dapp.requests[dapp.requests.length - 1];
-      const funcType = getFuncType(lastFuncExec.func);
-
-      if (funcType === 'ask') {
-        this.setState({ selectedRequest: lastFuncExec });
-      } else if (funcType === 'write') {
-        this.setState({ selectedTransaction: lastFuncExec });
+        // check lastExec is 'ask' func
+        if (!lastExec.tx_id) {
+          this.setState({ selectedRecord: lastExec });
+        }
       }
     }
 
-    // if (dapp.title !== this.props.dapp.title) {
+    // update name of dapp after change
+    // if (dappNext.title !== dappLast.title) {
     store.dispatch(setHeaderTitle({
-      title: dapp.title,
-      id: dapp.id,
+      title: dappNext.title,
+      id: dappNext.id,
       type: 'dapp',
     }));
     // }
@@ -163,15 +156,22 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     });
   }
 
-
   public render() {
-    const { metamaskStatus, dapp, profile } = this.props;
-    const { selectedRequest, selectedTransaction, selectedFunc } = this.state;
+    const { metamaskStatus, dapp, profile, dappStatus, dappError } = this.props;
+    const { selectedRecord, selectedFunc } = this.state;
+
+    if (dappStatus === 'error' && dappError !== null) {
+      return (
+        <div className="dapp-error flex">
+          <p className="dapp-error-text">{dappError}</p>
+        </div>
+      );
+    }
 
     if (!dapp) {
       return null;
     }
-
+    console.log(dapp);
     if (dapp.blockchain === blockchains.ethereum && metamaskStatus !== 'okMetamask') {
       return (
         <div className="container">
@@ -182,24 +182,29 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
     return (
       <main className="dapp">
-        <ColumnFunc
-          onSelectFunc={this.selectFunc}
-          dapp={dapp}
-        />
 
         <section className="dapp-body">
           <div className="wrapper">
             <div className="content">
               <ViewFunc dapp={dapp} profile={profile} />
-              <Transactions
+              <Records
                 dapp={dapp}
-                onSelectRequest={this.onSelectRequest}
-                onSelectTransaction={this.onSelectTransaction}
+                onSelectRecord={this.onSelectRecord}
               />
             </div>
             <MinimalFooter ctorId={dapp.constructor_id} />
+            <PopupTransaction
+              isOpen={selectedFunc === null && selectedRecord != null ? true : false}
+              onClose={this.onClose('popup')}
+              record={selectedRecord}
+            />
           </div>
         </section>
+
+        <ColumnFunc
+          onSelectFunc={this.selectFunc}
+          dapp={dapp}
+        />
 
         <ModalFunc
           func={selectedFunc}
@@ -209,12 +214,6 @@ class Dapp extends React.Component<IDappProps, IDappState> {
           onClose={this.onClose('modal')}
         />
 
-        <PopupTransaction
-          isOpen={selectedFunc === null && selectedRequest != null ? true : false}
-          onClose={this.onClose('popup')}
-          request={selectedRequest}
-          transaction={selectedTransaction}
-        />
       </main>
     );
   }

@@ -1,3 +1,4 @@
+import * as dateFormat from 'dateformat';
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
@@ -13,25 +14,26 @@ export default class RequestRow extends React.PureComponent<IRequestRowProps, {}
   public render() {
     const { request, onClick } = this.props;
 
-    const diffTime = (new Date().getTime()) - request.time.format('x');
+    const dataFromIso = new Date(request.execution_datetime);
+    const diffTime = (new Date().getTime()) - dataFromIso.getTime();
     const dayTimeInMs = 24 * 60 * 60 * 1000;
 
     const timeFormated = diffTime < dayTimeInMs
-      ? request.time.format('HH:mm:ss')
-      : request.time.format('MMM DD');
+      ? dateFormat(dataFromIso, 'HH:mm:ss')
+      : dateFormat(dataFromIso, 'mmm dd');
 
     return (
-      <div className="transaction-row" onClick={onClick(request)}>
-        <p className="transaction-time">{timeFormated}</p>
-        <p className="transaction-description">{request.func.title}</p>
-        <p className="transaction-buttons">
+      <div className="request-row" onClick={onClick(request)}>
+        <p className="request-time">{timeFormated}</p>
+        <p className="request-description">{request.function_title}</p>
+        {/* <p className="request-buttons">
           <button className="round-btn copy-btn flex" type="button" aria-label="Copy">
             <InlineSVG
               className="copy-icon"
               src={require('../../../../assets/img/common/components/copy.svg')}
             />
           </button>
-        </p>
+        </p> */}
       </div>
     );
   }

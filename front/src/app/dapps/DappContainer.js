@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     dapp: dapp,
     dappError: state.dapps.error,
+    dappStatus: state.dapps.fetchStatus,
     profile: state.app.profile
   };
 };

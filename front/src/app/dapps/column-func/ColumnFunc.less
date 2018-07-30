@@ -6,105 +6,168 @@
     right: 10px;
     bottom: 10px;
 
+    display: flex;
+
     width: 220px;
-    padding-top: 30px;
-    padding-bottom: 20px;
 
-    border-radius: 8px;
-    background-color: #FFFFFF;
+    transition: right .4s ease-out 0s;
 
-    .dapp-header {
-        margin: 0;
-        padding-right: 25px;
-        padding-left: 25px;
+    // height: 400px;
 
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
 
-        opacity: .5;
-        color: #0E1418;
+    .wrapper {
+        flex: 1;
 
-        font-family: @f-cera-pro-400;
-        font-size: 15px;
-        line-height: 19px;
-    }
+        padding-top: 30px;
+        padding-bottom: 20px;
 
-    .dapp-list {
-        overflow: hidden;
+        border-radius: 8px;
+        background-color: #FFFFFF;
 
-        margin: 0;
-        padding: 10px 0 10px 0;
+        .dapp-header {
+            margin: 0;
+            padding-right: 25px;
+            padding-left: 25px;
 
-        list-style: none;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
 
-        .dapp-func {
-            height: 37px;
-            padding: 0 26px;
+            opacity: .5;
+            color: #0E1418;
 
-            cursor: pointer;
+            font-family: @f-cera-pro-400;
+            font-size: 15px;
+            line-height: 19px;
+        }
 
-            &:hover, &:focus {
-                background-color: #E5E9F0;
-            }
+        .dapp-list {
+            overflow: hidden;
 
-            .mdi-icon {
-                display: inline-block;
+            margin: 0;
+            padding: 10px 0 10px 0;
 
-                width: 22px;
-                margin-right: 11px;
+            list-style: none;
 
-                font-size: 20px;
-                line-height: 20px;
-            }
-
-            .dapp-btn {
-                display: block;
+            .dapp-func {
+                height: 37px;
+                padding: 0 26px;
 
                 cursor: pointer;
-                text-align: left;
 
-                color: #000000;
-                border: 0;
-                outline: 0;
-                background-color: transparent;
+                &:hover, &:focus {
+                    background-color: #E5E9F0;
+                }
 
-                font-family: @f-cera-pro-700;
-                font-size: 13px;
-                line-height: 16px;
+                .mdi-icon {
+                    display: inline-block;
 
-                &--more {
-                    svg {
-                        fill: #000000;
-                    }
+                    width: 22px;
+                    margin-right: 11px;
 
-                    &:hover, &:focus {
-                        color: #FFFFFF;
-                        background-color: #0C7186;
+                    font-size: 20px;
+                    line-height: 20px;
+                }
 
+                .dapp-btn {
+                    display: block;
+
+                    cursor: pointer;
+                    text-align: left;
+
+                    color: #000000;
+                    border: 0;
+                    outline: 0;
+                    background-color: transparent;
+
+                    font-family: @f-cera-pro-700;
+                    font-size: 13px;
+                    line-height: 16px;
+
+                    &--more {
                         svg {
-                            fill: #FFFFFF;
+                            fill: #000000;
+                        }
+
+                        &:hover, &:focus {
+                            color: #FFFFFF;
+                            background-color: #0C7186;
+
+                            svg {
+                                fill: #FFFFFF;
+                            }
                         }
                     }
                 }
             }
         }
+
+        .dapp-list + .dapp-list {
+            position: relative;
+
+            &::before {
+                position: absolute;
+                top: 0;
+                left: 25px;
+
+                width: 100%;
+                height: 1px;
+
+                content: '';
+
+                opacity: .1;
+                background-color: #0E1418;
+            }
+        }
     }
 
-    .dapp-list + .dapp-list {
-        position: relative;
+    .toggle-btn {
+        position: fixed;
+        right: 19px;
+        bottom: 99px;
 
-        &::before {
-            position: absolute;
+        visibility: hidden;
+
+        width: 63px;
+        height: 63px;
+
+        cursor: pointer;
+
+        border-radius: 50%;
+        background-color: #0C7186;
+    }
+}
+
+
+@media (max-width: @dapp-width-min) {
+    .column-func {
+        position: fixed;
+
+// z-index: 1000;
+        top: 0;
+        right: -220px;
+        bottom: 10px;
+
+        width: 220px;
+
+        .wrapper {
+            z-index: 1000;
+        }
+
+        .toggle-btn {
+            z-index: 10000;
+
+            visibility: visible;
+        }
+
+        .column-func-overlay {
+            position: fixed;
+            z-index: 100;
             top: 0;
-            left: 25px;
+            right: 0;
+            bottom: 0;
+            left: 0;
 
-            width: 100%;
-            height: 1px;
-
-            content: '';
-
-            opacity: .1;
-            background-color: #0E1418;
+            background-color: rgba(0, 0, 0, .5);
         }
     }
 }

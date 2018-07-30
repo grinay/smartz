@@ -123,12 +123,14 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
 
             if (funcType === 'ask') {
               dataFetch['result'] = this.formatResult(func, response);
-              store.dispatch(requestNew(dapp.id, func, formData, result));
+              // store.dispatch(requestNew(dapp.id, func, formData, result));
 
               api.sendDappRequest(dapp.id, dataFetch);
 
             } else if (funcType === 'write') {
-              store.dispatch(transactionNew(dapp.id, func, formData, result));
+              dataFetch['tx_id'] = response;
+
+              store.dispatch(transactionNew(dapp.id, dataFetch));
               this.getReceipt(response, dataFetch);
             }
 
@@ -139,7 +141,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
       case blockchains.eos:
         Eos.executeFunc(dapp.abi, func, dapp.address, formData)
           .then((result) => {
-            store.dispatch(transactionNew(dapp.id, func, formData, result));
+            store.dispatch(transactionNew(dapp.id, dataFetch));
           })
           .catch((err) => {
             console.error(err);
@@ -147,7 +149,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
 
             error = error.error.what || error.message || 'error';
 
-            store.dispatch(transactionNew(dapp.id, func, formData, error));
+            store.dispatch(transactionNew(dapp.id, dataFetch));
           });
 
         // close modal window after execute function
@@ -167,15 +169,14 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
         window.setTimeout(() => this.getReceipt(tx, dataFetch), 500);
       } else {
         dataFetch['mining_datetime'] = (new Date()).toISOString();
-        dataFetch['tx_id'] = tx;
         dataFetch['logs'] = receipt.logs;
         dataFetch['info'] = {
           ethereum: {
             gas_price: ethConstants.gasPrice,
             gas_limit: ethConstants.gas,
             block: receipt.blockNumber,
-            block_hash: receipt.blockHash,
-            gas_used: receipt.gasUsed,
+            // block_hash: receipt.blockHash,
+            // gas_used: receipt.gasUsed,
           },
         };
 

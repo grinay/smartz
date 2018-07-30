@@ -1,0 +1,154 @@
+@import '../../../../styles/variables.less';
+
+.request-row {
+    display: flex;
+    align-items: center;
+
+    height: 29px;
+    padding: 0 20px;
+
+    cursor: pointer;
+
+    color: #000000;
+    border-radius: 4px;
+
+    font-family: @f-cera-pro-400;
+    font-size: 13px;
+    line-height: 17px;
+
+    &:hover {
+        background-color: #E6E9F0;
+    }
+
+    .request-description {
+        &::before {
+            position: absolute;
+            top: 50%;
+            left: 0;
+
+            display: block;
+
+            width: 13px;
+            height: 13px;
+
+            content: '';
+            transform: translateY(-50%);
+
+            // background: url('../img/status-loader.svg') no-repeat center;
+        }
+    }
+
+    &.error {
+        .request-description {
+            color: #E18F9C;
+
+            &::before {
+                position: absolute;
+                top: 50%;
+                left: 0;
+
+                display: block;
+
+                width: 13px;
+                height: 13px;
+
+                content: '';
+                transform: translateY(-50%);
+
+                // background: url('../img/status-error.svg') no-repeat center;
+            }
+        }
+    }
+
+    .request-time {
+        width: 80px;
+        margin: 0 10px 0 0;
+    }
+
+    .request-description {
+        box-sizing: border-box;
+        // width: 130px;
+        margin: 0 10px 0 0;
+        padding-left: 20px;
+    }
+
+    .request-buttons {
+        display: flex;
+        align-items: stretch;
+
+        margin: 0 0 0 auto;
+    }
+
+    .round-btn {
+        padding: 0;
+
+        cursor: pointer;
+
+        border: 0;
+        border-radius: 6px;
+        outline: 0;
+        background-color: #F2F3F7;
+
+        &:hover, &:focus {
+            box-shadow: 0 0 10px 0 rgba(12, 113, 134, .4);
+        }
+    }
+
+    .copy-btn {
+        width: 26px;
+        height: 23px;
+        margin-right: 7px;
+
+        .copy-icon {
+            width: 10px;
+            height: 12px;
+
+            svg {
+                width: 10px;
+                height: 12px;
+
+                path {
+                    fill: black;
+                }
+            }
+        }
+    }
+
+    .copy-icon {
+        fill: #0C7186;
+    }
+
+    .request-button {
+        display: block;
+
+        width: 100%;
+        padding-top: 19px;
+        padding-bottom: 22px;
+
+        cursor: pointer;
+
+        opacity: .9;
+        color: #0C7186;
+        border: 0;
+        border-radius: 0 0 8px 8px;
+        outline: 0;
+        background-color: transparent;
+
+        font-family: @f-cera-pro-500;
+        font-size: 15px;
+        line-height: 19px;
+
+        svg {
+            fill: #0C7186;
+        }
+
+        &:hover, &:focus {
+            color: #FFFFFF;
+            background-color: #0C7186;
+
+            svg {
+                fill: #FFFFFF;
+            }
+        }
+    }
+}

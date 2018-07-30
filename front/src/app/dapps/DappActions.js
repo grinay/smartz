@@ -21,20 +21,30 @@ export const viewFuncResult = (dappId, funcName, result) => ({
   result
 });
 
-export const transactionNew = (dappId, func, formData, result) => ({
+export const transactionNew = (dappId, result) => ({
   type: 'TRANSACTION_NEW',
   dappId,
-  func,
-  formData,
   result
 });
 
-export const requestNew = (dappId, func, formData, result) => ({
-  type: 'REQUEST_NEW',
+// export const requestNew = (dappId, func, formData, result) => ({
+//   type: 'REQUEST_NEW',
+//   dappId,
+//   func,
+//   formData,
+//   result
+// });
+
+export const requestAdd = (dappId, requests) => ({
+  type: 'ADD_REQUESTS',
   dappId,
-  func,
-  formData,
-  result
+  requests
+});
+
+export const transactionAdd = (dappId, transactions) => ({
+  type: 'ADD_TRANSACTIONS',
+  dappId,
+  transactions
 });
 
 export const transactionReceipt = (dappId, txHash, receipt) => ({
