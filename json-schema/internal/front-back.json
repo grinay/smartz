@@ -207,7 +207,8 @@
                             "compiler_version": { "type": "string" },
                             "compiler_optimization": { "type": "boolean" },
                             "contract_name": { "type": "string" },
-                            "price": { "type": "number" }
+                            "price": { "type": "number" },
+                            "user_id": { "type": "number" }
                         }
                     }
                 ]

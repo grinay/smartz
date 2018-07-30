@@ -37,7 +37,9 @@ def validate_tx_info(value):
                 "properties": {
                     "gas_price": {"type": "number"},
                     "gas_limit": {"type": "number"},
-                    "block": {"type": "number"}
+                    "gas_used": {"type": "number"},
+                    "block": {"type": "number"},
+                    "block_hash": {"type": "string"},
                 }
             },
             "eos": {

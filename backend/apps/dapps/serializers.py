@@ -24,6 +24,7 @@ def dapp_pub_info(dapp: Dapp) -> Dict:
         "compiler_version": dapp.compiler_version,
         "compiler_optimization": dapp.compiler_optimization,
         "contract_name": dapp.contract_name,
+        "user_id": dapp.user_id,
         "constructor": {
             "name": dapp.constructor.name,
             "description": dapp.constructor.description,
