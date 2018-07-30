@@ -171,7 +171,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     if (!dapp) {
       return null;
     }
-    console.log(dapp);
+
     if (dapp.blockchain === blockchains.ethereum && metamaskStatus !== 'okMetamask') {
       return (
         <div className="container">

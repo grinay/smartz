@@ -101,20 +101,6 @@ const dapps = (state = initState, action) => {
           } else {
             dapp.transactions.set(trans.tx_id, { ...trans, status: 'done' })
           }
-
-          // if (find(dapp.transactions, { tx_id: trans.tx_id })) {
-          //   continue;
-          // } else {
-          //   let trIndex = dapp.transactions.findIndex((tr) => {
-          //     tr.execution_datetime === trans.execution_datetime
-          //   });
-
-          //   if (trIndex != -1) {
-          //     dapp.transactions.splice(trIndex, 1, trans)
-          //   } else {
-          //     dapp.transactions.push(trans)
-          //   }
-          // }
         }
       }
 

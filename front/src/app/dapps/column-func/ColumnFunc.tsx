@@ -33,7 +33,6 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
 
   private togglePanel() {
     const { isHidden } = this.state;
-    console.log(this.ref.style);
 
     if (isHidden) {
       this.ref.style.right = '10px';
@@ -51,7 +50,7 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
 
     // const headerHeight = 70;
     const headerHeight = document.getElementById('js-header').offsetHeight;
-    // console.log('headerHeight :', headerHeight);
+
     if (doc.scrollTop < headerHeight) {
       col.style.top = `${headerHeight - doc.scrollTop + 10}px`;
     } else {

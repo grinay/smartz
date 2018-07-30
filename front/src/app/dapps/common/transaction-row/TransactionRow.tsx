@@ -4,6 +4,7 @@ import InlineSVG from 'svg-inline-react';
 
 import { formatTime } from '../../../../helpers/normalize';
 import AddressString from '../../../common/address-string/AddressString';
+import Loader from '../../../common/loader/Loader';
 
 import './TransactionRow.less';
 
@@ -20,8 +21,13 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
     return (
       <div className="transaction-row" onClick={onClick(transaction)}>
         <p className="transaction-time">{formatTime(transaction.execution_datetime)}</p>
-        {'status' in transaction && transaction.status === 'process' &&
-          <p>Proces!!!s</p>
+        {transaction.status === 'process' &&
+          <div className="transaction-icon">
+            <Loader
+              className={'tx-icon'}
+              width={'17px'}
+            />
+          </div>
         }
         <p className="transaction-description">{transaction.function_title}</p>
         <p className="transaction-hash">

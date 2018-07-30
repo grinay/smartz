@@ -21,10 +21,6 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
       return null;
     }
 
-    // let elem = document.getElementsByTagName('body');
-    // console.log('elem :', elem);
-    // elem.scrollTop = -200;
-
     window.scrollTo(0, 300);
     let isTransaction: boolean = 'tx_id' in record ? true : false;
 
@@ -64,7 +60,7 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
         </ul>
         <div className="event-result">
           <p className="result-id">Result</p>
-          {record.result.map((result, i) =>
+          {!isTransaction && record.result.map((result, i) =>
             <p
               key={i}
               className="result-status"

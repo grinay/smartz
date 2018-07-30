@@ -18,7 +18,7 @@ export default class AddressString extends React.PureComponent<IAddressStringPro
       const otherChars = str.slice(0, -endCharNumber);
 
       return (
-        <div className={`address-string flex ${className}`}>
+        <div className={`address-string flex-v ${className}`}>
           <p className="text text-ellipsis">{otherChars}</p>
           <p className="text">{lastChars}</p>
         </div>

@@ -4,7 +4,7 @@
     position: fixed;
     bottom: 0;
 
-    width: calc(100% - 20px);
+    width: calc(100% - 3*@dapp-padding - @dapp-column-width);
     max-width: @dapp-content-max-width;
     height: 300px;
     padding: 35px 35px 25px;
@@ -208,6 +208,12 @@
                 }
             }
         }
+    }
+}
+
+@media (max-width: @dapp-width-min) {
+    .popup-transaction {
+        width: calc(100% - 2*@dapp-padding);
     }
 }
 

@@ -14,7 +14,7 @@ import { valToString } from '../../../helpers/normalize';
 import store from '../../../store/store';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
 import Modal from '../../common/modal/Modal';
-import { requestNew, transactionNew, transactionReceipt } from '../DappActions';
+import { transactionNew } from '../DappActions';
 
 import './ModalFunc.less';
 
@@ -113,6 +113,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
             if (error !== null) {
               dataFetch['is_success'] = false;
               dataFetch['error'] = error.toString();
+              console.error('Error: ', error);
 
               result = error;
             } else {
@@ -123,7 +124,6 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
 
             if (funcType === 'ask') {
               dataFetch['result'] = this.formatResult(func, response);
-              // store.dispatch(requestNew(dapp.id, func, formData, result));
 
               api.sendDappRequest(dapp.id, dataFetch);
 
@@ -165,6 +165,10 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
     const { dapp } = this.props;
 
     w3.eth.getTransactionReceipt(tx, (err, receipt) => {
+      if (err) {
+        console.log('err :', err);
+      }
+
       if (null == receipt) {
         window.setTimeout(() => this.getReceipt(tx, dataFetch), 500);
       } else {
