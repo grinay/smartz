@@ -140,7 +140,7 @@ class TransactionsList(GenericAPIView, WithLogger):
         if isinstance(user, HttpResponse): # todo (error)
             return Response([])
 
-        transactions = Transaction.objects.filter(dapp__slug=dapp_slug, user=user)
+        transactions = Transaction.objects.order_by('execution_datetime').filter(dapp__slug=dapp_slug, user=user)
         serializer = TransactionSerializer(transactions, many=True)
         return Response(serializer.data)
 
@@ -177,7 +177,7 @@ class RequestsList(GenericAPIView, WithLogger):
         if isinstance(user, HttpResponse): # todo (error)
             return Response([])
 
-        requests = Request.objects.filter(dapp__slug=dapp_slug, user=user)
+        requests = Request.objects.order_by('execution_datetime').filter(dapp__slug=dapp_slug, user=user)
         serializer = RequestSerializer(requests, many=True)
         return Response(serializer.data)
 
