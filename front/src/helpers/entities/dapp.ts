@@ -34,6 +34,6 @@ export interface IDapp {
   requests: any[];
   source: string;
   title: string;
-  transactions: any[];
+  transactions: any;
   user_id: any;
 }

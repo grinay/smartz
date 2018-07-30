@@ -125,7 +125,7 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
 
       case Tab.Transactions:
         if (dapp.transactions !== null) {
-          const transactionListLength = dapp.transactions.length;
+          const transactionListLength = dapp.transactions.size;
 
           if (transactionListLength > 0) {
             tabContent = [];
@@ -134,20 +134,40 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
               isVisibleButton = true;
             }
 
-            for (let i = 0; i < transactionListLength; i++) {
-              if (i > this.showCountItems && !isShowAll) {
-                continue;
+            // for (let i = 0; i < transactionListLength; i++) {
+            //   if (i > this.showCountItems && !isShowAll) {
+            //     continue;
+            //   }
+
+            //   tabContent.push(
+            //     <li key={i} className="transaction-item progress">
+            //       <TransactionRow
+            //         transaction={dapp.transactions[i]}
+            //         onClick={onSelectRecord}
+            //       />
+            //     </li>,
+            //   );
+            // }
+
+            let counter = 0;
+            dapp.transactions.forEach((elem, key) => {
+              counter += 1;
+
+              if (counter > this.showCountItems && !isShowAll) {
+                return;
               }
 
               tabContent.push(
-                <li key={i} className="transaction-item progress">
+                <li key={counter} className="transaction-item progress">
                   <TransactionRow
-                    transaction={dapp.transactions[i]}
+                    transaction={elem}
                     onClick={onSelectRecord}
                   />
                 </li>,
               );
-            }
+
+            });
+
           } else {
             tabContent = <p className="empty">The DApp has no transactions</p>;
           }

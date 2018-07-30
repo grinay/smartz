@@ -83,13 +83,39 @@ const dapps = (state = initState, action) => {
 
       if (dapp) {
         if (dapp.transactions === null) {
-          dapp.transactions = []
+          dapp.transactions = new Map();
         }
 
-        dapp.transactions = [
-          ...dapp.transactions,
-          ...action.transactions
-        ];
+        for (let i = 0; i < action.transactions.length; i++) {
+          const trans = action.transactions[i];
+
+          if (dapp.transactions.has(trans.tx_id)) {
+            const transaction = dapp.transactions.get(trans.tx_id);
+
+            if (transaction.status === 'process') {
+              dapp.transactions.set(trans.tx_id, { ...trans, status: 'done' });
+            } else {
+              continue;
+            }
+
+          } else {
+            dapp.transactions.set(trans.tx_id, { ...trans, status: 'done' })
+          }
+
+          // if (find(dapp.transactions, { tx_id: trans.tx_id })) {
+          //   continue;
+          // } else {
+          //   let trIndex = dapp.transactions.findIndex((tr) => {
+          //     tr.execution_datetime === trans.execution_datetime
+          //   });
+
+          //   if (trIndex != -1) {
+          //     dapp.transactions.splice(trIndex, 1, trans)
+          //   } else {
+          //     dapp.transactions.push(trans)
+          //   }
+          // }
+        }
       }
 
       return nextState;
@@ -97,39 +123,19 @@ const dapps = (state = initState, action) => {
 
     case 'TRANSACTION_NEW':
       dapp = find(nextState.dappList, { id: action.dappId });
-      // if (dapp) {
-      //   dapp.transactions.push({
-      //     func: action.func,
-      //     time: moment(),
-      //     formData: action.formData,
-      //     txHash: action.result,
-      //     status: 'process'
-      //   });
-      // }
+
       if (dapp) {
         if (dapp.transactions === null) {
-          dapp.transactions = []
+          dapp.transactions = new Map();
         }
 
-        dapp.transactions.push({
+        dapp.transactions.set(action.result.tx_id, {
+          ...action.result,
           status: 'process',
-          ...action.result
         });
       }
 
       return nextState;
-
-    // case 'TRANSACTION_RECEIPT':
-    //   dapp = find(nextState.dappList, { id: action.dappId });
-    //   if (dapp) {
-    //     const transaction = find(dapp.transactions, { txHash: action.txHash });
-    //     if (transaction) {
-    //       transaction.status = 'mined';
-    //       transaction.result = action.receipt;
-    //       transaction.timeMined = moment();
-    //     }
-    //   }
-    //   return nextState;
 
     default:
       return state;
