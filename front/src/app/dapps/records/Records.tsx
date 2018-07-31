@@ -106,7 +106,7 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
               }
 
               tabContent.push(
-                <li key={i} className="transaction-item progress">
+                <li key={i} className="record-item">
                   <RequestRow
                     request={dapp.requests[i]}
                     onClick={onSelectRecord}
@@ -134,21 +134,6 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
               isVisibleButton = true;
             }
 
-            // for (let i = 0; i < transactionListLength; i++) {
-            //   if (i > this.showCountItems && !isShowAll) {
-            //     continue;
-            //   }
-
-            //   tabContent.push(
-            //     <li key={i} className="transaction-item progress">
-            //       <TransactionRow
-            //         transaction={dapp.transactions[i]}
-            //         onClick={onSelectRecord}
-            //       />
-            //     </li>,
-            //   );
-            // }
-
             let counter = 0;
             dapp.transactions.forEach((elem, key) => {
               counter += 1;
@@ -158,14 +143,13 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
               }
 
               tabContent.push(
-                <li key={counter} className="transaction-item progress">
+                <li key={counter} className="record-item">
                   <TransactionRow
                     transaction={elem}
                     onClick={onSelectRecord}
                   />
                 </li>,
               );
-
             });
 
           } else {
@@ -182,21 +166,21 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
     }
 
     return (
-      <div className="transaction">
-        <div className="transaction-wrapper">
-          <div className="transaction-top">
+      <div className="record">
+        <div className="record-wrapper">
+          <div className="record-top">
             <button
               onClick={this.onSelectTab(Tab.Request)}
-              className={classNames('transaction-btn-tab', { active: tab === Tab.Request })}
+              className={classNames('record-btn-tab', { active: tab === Tab.Request })}
               type="button"
             >Requests</button>
             <button
               onClick={this.onSelectTab(Tab.Transactions)}
-              className={classNames('transaction-btn-tab', { active: tab === Tab.Transactions })}
+              className={classNames('record-btn-tab', { active: tab === Tab.Transactions })}
               type="button"
             >Transactions</button>
           </div>
-          <ul id="js-trans-list" className="transaction-list">
+          <ul id="js-trans-list" className="record-list">
             {tabContent}
           </ul>
         </div>

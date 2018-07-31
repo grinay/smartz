@@ -1,6 +1,6 @@
 @import '../../../styles/variables.less';
 
-.transaction {
+.record {
     overflow: hidden;
 
     box-sizing: border-box;
@@ -9,18 +9,18 @@
     border-radius: 8px;
     background-color: #FFFFFF;
 
-    .transaction-wrapper {
+    .record-wrapper {
         box-sizing: border-box;
         padding: 0 21px;
     }
 
-    .transaction-top {
+    .record-top {
         display: flex;
 
         margin-bottom: 10px;
     }
 
-    .transaction-btn-tab {
+    .record-btn-tab {
         display: block;
 
         padding: 25px 20px 5px 20px;
@@ -47,7 +47,7 @@
         }
     }
 
-    .transaction-list {
+    .record-list {
         margin: 0;
         padding: 0 0 15px;
 
@@ -61,81 +61,14 @@
             font-size: 17px;
             line-height: 17px;
         }
-
-        // border-top: 1px solid #E5E9F1;
-        // border-bottom: 1px solid #E5E9F1;
     }
-
-    // .transaction-item + .transaction-item {
-    //     border-top: 1px solid #E5E9F1;
-    // }
 }
 
-// @media (min-width: 900px) {
-//     .transaction {
-//         border-radius: 8px;
 
-//         .transaction-wrapper {
-//             padding-right: 30px;
-//             padding-left: 35px;
-//         }
-
-//         .transaction-top {
-//             margin-bottom: 15px;
-//         }
-
-//         .transaction-btn {
-//             padding: 25px 15px 5px 15px;
-
-//             color: #0C7186;
-//         }
-
-//         .transaction-list {
-//             border: 0;
-//         }
-
-//         .transaction-item + .transaction-item {
-//             border: 0;
-//         }
-
-//         .transaction-item {
-//             flex-wrap: wrap;
-
-//             padding: 3px 15px 3px 15px;
-
-//             &:hover {
-//                 background-color: #E6E9F0;
-//             }
-//         }
-
-//         .transaction-description {
-//             width: 215px;
-//         }
-
-//         .transaction-hash {
-//             // width: 490px;
-//         }
-
-//         .round-btn {
-//             width: 27px;
-//             height: 23px;
-
-//             border-radius: 4px;
-//             background-color: #F2F3F7;
-//         }
-
-//         .copy-icon {
-//             width: 10px;
-//             height: 12px;
-//         }
-
-//         .etherscan-icon {
-//             width: 13px;
-//             height: 10px;
-//         }
-
-//         .copy-icon, .etherscan-icon {
-//             fill: #191919;
-//         }
-//     }
-// }
+@media (max-width: @dapp-mobile-width-min) {
+    .record {
+        .record-wrapper {
+            padding: 0;
+        }
+    }
+}

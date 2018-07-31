@@ -6,6 +6,7 @@ import { blockchains } from '../../../../constants/constants';
 import { IDapp } from '../../../../helpers/entities/dapp';
 import { getNetworkEtherscanAddress } from '../../../../helpers/eth';
 import { copyTextToClipboard } from '../../../../helpers/utils';
+import AddressString from '../../../common/address-string/AddressString';
 import Modal from '../../../common/modal/Modal';
 import PopupVerify from '../../popup-verify/PopupVerify';
 
@@ -86,7 +87,9 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
         <div className="wallet">
           <div className="wallet-address">
             <span className="wallet-title">Address</span>
-            <span className="wallet-number">{dapp.address}</span>
+            <p className={'wallet-number'}>
+              <AddressString str={dapp.address} />
+            </p>
           </div>
           <div className="wallet-buttons">
             {dapp.blockchain === blockchains.ethereum &&

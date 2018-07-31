@@ -20,19 +20,21 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
 
     return (
       <div className="transaction-row" onClick={onClick(transaction)}>
-        <p className="transaction-time">{formatTime(transaction.execution_datetime)}</p>
-        {transaction.status === 'process' &&
-          <div className="transaction-icon">
-            <Loader
-              className={'tx-icon'}
-              width={'17px'}
-            />
-          </div>
-        }
-        <p className="transaction-description">{transaction.function_title}</p>
-        <p className="transaction-hash">
-          <AddressString str={transaction.tx_id} />
-        </p>
+        <div className="transaction-row-wrapper flex-v">
+          <p className="transaction-time">{formatTime(transaction.execution_datetime)}</p>
+          {transaction.status === 'process' &&
+            <div className="transaction-icon">
+              <Loader
+                className={'tx-icon'}
+                width={'17px'}
+              />
+            </div>
+          }
+          <p className="transaction-description">{transaction.function_title}</p>
+          <p className="transaction-hash">
+            <AddressString str={transaction.tx_id} />
+          </p>
+        </div>
         <p className="transaction-buttons">
           <button className="round-btn copy-btn flex" type="button" aria-label="Copy">
             <InlineSVG
