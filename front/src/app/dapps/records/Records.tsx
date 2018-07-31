@@ -96,12 +96,12 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
           if (requestListLength > 0) {
             tabContent = [];
 
-            if (requestListLength > this.showCountItems) {
+            if (requestListLength >= this.showCountItems) {
               isVisibleButton = true;
             }
 
             for (let i = 0; i < requestListLength; i++) {
-              if (i > this.showCountItems && !isShowAll) {
+              if (i >= this.showCountItems && !isShowAll) {
                 continue;
               }
 
@@ -135,7 +135,9 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
             }
 
             let counter = 0;
-            dapp.transactions.forEach((elem, key) => {
+            let transactions = new Map([...dapp.transactions].reverse());
+
+            transactions.forEach((elem, key) => {
               counter += 1;
 
               if (counter > this.showCountItems && !isShowAll) {
@@ -143,7 +145,7 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
               }
 
               tabContent.push(
-                <li key={counter} className="record-item">
+                <li key={key.toString()} className="record-item">
                   <TransactionRow
                     transaction={elem}
                     onClick={onSelectRecord}

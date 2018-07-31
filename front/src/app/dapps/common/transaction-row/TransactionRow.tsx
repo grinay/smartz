@@ -19,8 +19,8 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
     const { transaction, onClick } = this.props;
 
     return (
-      <div className="transaction-row" onClick={onClick(transaction)}>
-        <div className="transaction-row-wrapper flex-v">
+      <div className="transaction-row">
+        <div className="transaction-row-wrapper flex-v" onClick={onClick(transaction)}>
           <p className="transaction-time">{formatTime(transaction.execution_datetime)}</p>
           {transaction.status === 'process' &&
             <div className="transaction-icon">
