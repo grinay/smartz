@@ -1,5 +1,4 @@
 import { find } from 'lodash';
-import * as moment from 'moment';
 import * as React from 'react';
 import Form from 'react-jsonschema-form';
 import InlineSVG from 'svg-inline-react';
@@ -11,6 +10,7 @@ import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import Eos from '../../../helpers/eos';
 import { processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
 import { valToString } from '../../../helpers/normalize';
+import { getUiSchemaFromFunc } from '../../../helpers/schema';
 import store from '../../../store/store';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
 import Modal from '../../common/modal/Modal';
@@ -23,14 +23,10 @@ interface IModalFuncProps {
   func: IFunction;
   dapp: IDapp;
   profile: any;
-  isOpen: boolean;
   onClose: () => void;
 }
 
-interface IModalFuncState { }
-
-
-export default class ModalFunc extends React.PureComponent<IModalFuncProps, IModalFuncState> {
+export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> {
   constructor(props) {
     super(props);
 
@@ -179,13 +175,12 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
             gas_price: ethConstants.gasPrice,
             gas_limit: ethConstants.gas,
             block: receipt.blockNumber,
-            // block_hash: receipt.blockHash,
-            // gas_used: receipt.gasUsed,
+            block_hash: receipt.blockHash,
+            gas_used: receipt.gasUsed,
           },
         };
 
         api.sendDappTransaction(dapp.id, dataFetch);
-        // store.dispatch(transactionReceipt(dapp.id, tx, receipt));
 
         // refresh 'view' functions
         // processControlForm(dapp.abi, func, [], dapp.address, (error, result) => {
@@ -200,88 +195,64 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
   }
 
   public render() {
-    const { func, isOpen, onClose } = this.props;
+    const { func, onClose } = this.props;
 
-    if (!func) {
-      return null;
-    }
-
-    // add field for ethCount in schema
-    if (func.payable) {
-      // if function is 'default function'
-      if (func.name === '') {
-        func.type = 'fallback';
-        func.title = func.title ? func.title : 'Send ether';
-        func.description = func.description ? func.description : 'Send ether to contract';
-      }
-
-      if (func.inputs.items === undefined) func.inputs.items = [];
-
-      const payableTitle =
-        func.payable_details && func.payable_details.title
-          ? func.payable_details.title
-          : 'Ether amount';
-
-      const payableDescription =
-        func.payable_details && func.payable_details.description
-          ? func.payable_details.description
-          : func.name === '' // if 'default function'
-            ? 'This ether amount will be sent to the contract'
-            : 'This ether amount will be sent with the function call';
-
-      const existValue = find(func.inputs.items, { title: payableTitle });
-
-      if (!existValue) {
-        func.inputs.minItems += 1;
-        func.inputs.maxItems += 1;
-
-        func.inputs.items.push({
-          type: 'number',
-          minLength: 1,
-          maxLength: 78,
-          pattern: '^[0-9]+$',
-          title: payableTitle,
-          description: payableDescription,
-          'ui:widget': 'ethCount',
-        });
-      }
-    }
-
-    //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
-    if (!func.constant && func.inputs.minItems === 0) {
-      func.inputs = {
-        $schema: 'http://json-schema.org/draft-06/schema#',
-        type: 'object',
-        properties: {},
-      };
-    }
-
-    // build uiSchema from func
-    let uiSchema = { items: [] };
-    if (func.inputs && func.inputs.items) {
-      for (let input of func.inputs.items) {
-        let item = {};
-        if (typeof input === 'object' && 'ui:widget' in input) {
-          item = {
-            'ui:widget': input['ui:widget'],
-          };
-          if ('ui:options' in input) {
-            item['ui:options'] = input['ui:options'];
-          }
+    let content: any;
+    if (func) {
+      // add field for ethCount in schema
+      if (func.payable) {
+        // if function is 'default function'
+        if (func.name === '') {
+          func.type = 'fallback';
+          func.title = func.title ? func.title : 'Send ether';
+          func.description = func.description ? func.description : 'Send ether to contract';
         }
-        uiSchema.items.push(item);
-      }
-    }
 
-    return (
-      <div className="modal-func">
-        <Modal
-          isOpen={isOpen}
-          isCloser={false}
-          onClose={onClose}
-          windowClassName="modal-window"
-          closerClassName="modal-closer flex"
-        >
+        if (func.inputs.items === undefined) func.inputs.items = [];
+
+        const payableTitle =
+          func.payable_details && func.payable_details.title
+            ? func.payable_details.title
+            : 'Ether amount';
+
+        const payableDescription =
+          func.payable_details && func.payable_details.description
+            ? func.payable_details.description
+            : func.name === '' // if 'default function'
+              ? 'This ether amount will be sent to the contract'
+              : 'This ether amount will be sent with the function call';
+
+        const existValue = find(func.inputs.items, { title: payableTitle });
+
+        if (!existValue) {
+          func.inputs.minItems += 1;
+          func.inputs.maxItems += 1;
+
+          func.inputs.items.push({
+            type: 'number',
+            minLength: 1,
+            maxLength: 78,
+            pattern: '^[0-9]+$',
+            title: payableTitle,
+            description: payableDescription,
+            'ui:widget': 'ethCount',
+          });
+        }
+      }
+
+      //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
+      if (!func.constant && func.inputs.minItems === 0) {
+        func.inputs = {
+          $schema: 'http://json-schema.org/draft-06/schema#',
+          type: 'object',
+          properties: {},
+        };
+      }
+
+      const uiSchema = getUiSchemaFromFunc(func);
+
+      content = (
+        <div>
           <button
             className="close"
             type="button"
@@ -315,6 +286,20 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, IMod
           </button>
             </div>
           </Form>
+        </div>
+      );
+    }
+
+    return (
+      <div className="modal-func">
+        <Modal
+          isOpen={func != null ? true : false}
+          isCloser={false}
+          onClose={onClose}
+          windowClassName="modal-window"
+          closerClassName="modal-closer flex"
+        >
+          {content}
         </Modal>
       </div>
     );

@@ -11,8 +11,6 @@ interface IPopupTransactionProps {
   record: any;
 }
 
-interface IPopupTransactionState { }
-
 export default class PopupTransaction extends React.PureComponent<IPopupTransactionProps, {}> {
   public render() {
     const { onClose, isOpen, record } = this.props;

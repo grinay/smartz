@@ -65,16 +65,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
   }
 
   private selectFunc(func: any): any {
-    return () => {
-      // const funcType = getFuncType(func);
-
-      // if (funcType === 'ask') {
-      //   this.setState({ selectedRequest: func });
-      // } else if (funcType === 'write') {
-      //   this.setState({ selectedTransaction: func });
-      // }
-      this.setState({ selectedFunc: func });
-    };
+    return () => this.setState({ selectedFunc: func });
   }
 
   private onClose(type: 'popup' | 'modal') {
@@ -210,7 +201,6 @@ class Dapp extends React.Component<IDappProps, IDappState> {
           func={selectedFunc}
           dapp={dapp}
           profile={profile}
-          isOpen={selectedFunc != null ? true : false}
           onClose={this.onClose('modal')}
         />
 
