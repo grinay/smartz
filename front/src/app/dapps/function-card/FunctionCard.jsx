@@ -149,7 +149,7 @@ class FunctionCard extends PureComponent {
           input.type = "string";
           input.realtype = "array";
           input.minLength = 1;
-          input.maxLength = 1000;
+          input.maxLength = 5000;
         }
 
         if (typeof input === 'object' && 'ui:widget' in input) {
