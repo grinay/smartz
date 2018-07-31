@@ -5,6 +5,7 @@ import { find } from 'lodash';
 
 import { eosConstants } from '../constants/constants';
 import { getFuncType } from './common';
+import {log} from 'util';
 
 
 declare global {
@@ -82,13 +83,35 @@ class EosClass {
     }
   }
 
+  public forgetIdentity() {
+    return new Promise((resolve) => {
+      if (this.scatter.identity)
+        this.scatter.forgetIdentity()
+          .then(() => resolve());
+      else
+        resolve();
+    });
+  }
+
+  public chooseIdentity() {
+    this.scatter.requireVersion(5.0);
+
+    return (
+      this.setChainId()
+      // accept current network
+        .then(() => this.forgetIdentity())
+        .then(() => this.scatter.suggestNetwork(this.network))
+        .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
+    );
+  }
+
   public deployContract = (bin: string, abi: any) => {
     this.scatter.requireVersion(5.0);
 
     return (
       this.setChainId()
         // accept current network
-        .then(() => this.scatter.forgetIdentity())
+        .then(() => this.forgetIdentity())
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
         .then((identity) => {
@@ -115,7 +138,7 @@ class EosClass {
     return (
       this.setChainId()
       // accept current network
-        .then(() => this.scatter.forgetIdentity())
+        .then(() => this.forgetIdentity())
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({accounts: [this.network]}))
         .then((identity) => {
@@ -182,7 +205,7 @@ class EosClass {
   public sendTransaction(address: any, func: any, formData: any) {
     return new Promise((resolve, reject) => {
       this.setChainId()
-        .then(() => this.scatter.forgetIdentity())
+        .then(() => this.forgetIdentity())
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
         .then((identity) => {
