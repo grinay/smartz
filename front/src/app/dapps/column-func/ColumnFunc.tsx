@@ -51,7 +51,9 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     const doc = document.documentElement;
     const col = this.ref;
 
-    const headerHeight = document.getElementById('js-header').offsetHeight;
+    //TODO:fix after remove title
+    let headerHeight = document.getElementById('js-header').offsetHeight;
+    headerHeight = headerHeight > 150 ? 70 : headerHeight;
 
     if (doc.scrollTop < headerHeight) {
       col.style.top = `${headerHeight - doc.scrollTop + 10}px`;
