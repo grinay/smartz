@@ -52,8 +52,10 @@ def assert_conforms2definition(data, full_schema, definition_name):
 def assert_conforms2schema_part(data, full_schema, schema_pointer):
     assert_conforms2schema(data, _get_fragment_schema(full_schema, schema_pointer))
 
+
 def is_conforms2schema_part(data, full_schema, schema_pointer):
     return is_conforms2schema(data, _get_fragment_schema(full_schema, schema_pointer))
+
 
 def _get_fragment_schema(full_schema, schema_pointer):
     fragment_schema = deepcopy(_resolve_fragment(full_schema, schema_pointer))

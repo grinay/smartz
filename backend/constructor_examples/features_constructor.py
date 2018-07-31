@@ -190,7 +190,11 @@ class Constructor(ConstructorInstance):
                 'sorting_order': 10,
                 'inputs': [
                     {'title': 'some int', 'description': 'to be cubed'}
-                ]
+                ],
+                "icon": {
+                    "pack": "materialdesignicons",
+                    "name": "cube-outline"
+                }
             },
 
             'widgetFeatures': {
@@ -218,7 +222,11 @@ class Constructor(ConstructorInstance):
                     {'title': 'string hash'},
                     {'title': 'file hash'},
                     {'title': 'unix timestamp + 3'}
-                ]
+                ],
+                "icon": {
+                    "pack": "materialdesignicons",
+                    "name": "battery-charging-100"
+                }
             },
 
             'ethCount': {

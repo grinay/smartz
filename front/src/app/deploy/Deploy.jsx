@@ -48,7 +48,7 @@ class Deploy extends PureComponent {
       const data = {
         address: contractAddress,
         network_id: netId,
-        public_access: publicAccess
+        has_public_access: publicAccess
       };
       api.updateDapp(dapp.id, data);
     }

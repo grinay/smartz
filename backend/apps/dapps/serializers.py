@@ -1,7 +1,9 @@
 import json
 from typing import Dict
 
-from apps.dapps.models import Dapp
+from rest_framework import serializers
+
+from apps.dapps.models import Dapp, Transaction, Log, Request
 
 
 # todo how to do better?
@@ -22,6 +24,7 @@ def dapp_pub_info(dapp: Dapp) -> Dict:
         "compiler_version": dapp.compiler_version,
         "compiler_optimization": dapp.compiler_optimization,
         "contract_name": dapp.contract_name,
+        "user_id": dapp.user_id,
         "constructor": {
             "name": dapp.constructor.name,
             "description": dapp.constructor.description,
@@ -29,3 +32,63 @@ def dapp_pub_info(dapp: Dapp) -> Dict:
         }
     }
 
+
+class LogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Log
+        fields = ('name', 'created_at', 'data')
+
+    def validate(self, attrs):
+        instance = Log(**attrs)
+        instance.clean()
+        return attrs
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+    logs = LogSerializer(many=True)
+
+    class Meta:
+        model = Transaction
+        fields = (
+            'id', 'tx_id', 'blockchain', 'execution_datetime', 'mining_datetime', 'initiator_address',
+            'function_name', 'function_title', 'function_description', 'function_arguments',
+            'info', 'is_success', 'error', 'logs'
+        )
+        depth = 1
+
+    def create(self, validated_data):
+        logs_data = validated_data.pop('logs')
+        tx = super().create(validated_data)
+
+        for log_data in logs_data:
+            Log.objects.create(tx=tx, **log_data)
+
+        return tx
+
+    def update(self, instance, validated_data):
+        raise NotImplementedError
+
+    def validate(self, attrs):
+        copy_attrs = attrs.copy()
+        logs_attrs = copy_attrs.pop('logs')
+        instance = Transaction(**copy_attrs)
+        instance.clean()
+        return attrs
+
+
+class RequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Request
+        fields = (
+            'id', 'blockchain', 'execution_datetime', 'initiator_address',
+            'function_name', 'function_title', 'function_description', 'function_arguments',
+            'result', 'is_success', 'error'
+        )
+
+    def update(self, instance, validated_data):
+        raise NotImplementedError
+
+    def validate(self, attrs):
+        instance = Request(**attrs)
+        instance.clean()
+        return attrs
