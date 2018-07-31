@@ -2,9 +2,9 @@
 
 .column-func {
     position: fixed;
-    top: 0;
-    right: 10px;
-    bottom: 10px;
+    top: @dapp-padding;
+    right: @dapp-padding;
+    bottom: @dapp-padding;
 
     display: flex;
 
@@ -141,11 +141,7 @@
 @media (max-width: @dapp-width-min) {
     .column-func {
         position: fixed;
-
-// z-index: 1000;
-        top: 0;
         right: -220px;
-        bottom: 10px;
 
         width: 220px;
 

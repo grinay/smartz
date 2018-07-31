@@ -18,6 +18,7 @@ interface IColumnFuncState {
 
 export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IColumnFuncState> {
   private ref: HTMLElement;
+  private mode: 'minimal' | 'full';
 
   constructor(props) {
     super(props);
@@ -25,6 +26,8 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     this.state = {
       isHidden: true,
     };
+
+    this.mode = document.body.clientWidth > 920 ? 'full' : 'minimal';
 
     this.changeHeight = this.changeHeight.bind(this);
     this.getSection = this.getSection.bind(this);
@@ -48,7 +51,6 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     const doc = document.documentElement;
     const col = this.ref;
 
-    // const headerHeight = 70;
     const headerHeight = document.getElementById('js-header').offsetHeight;
 
     if (doc.scrollTop < headerHeight) {
@@ -103,14 +105,18 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
   }
 
   public componentDidMount() {
-    window.addEventListener('scroll', this.changeHeight);
+    if (this.mode === 'full') {
+      window.addEventListener('scroll', this.changeHeight);
 
-    // set initial height, do it async (after DOM rendered)
-    setTimeout(() => this.changeHeight(), 0);
+      // set initial height, do it async (after DOM rendered)
+      setTimeout(() => this.changeHeight(), 0);
+    }
   }
 
   public componentWillUnmount() {
-    window.removeEventListener('scroll', this.changeHeight);
+    if (this.mode === 'full') {
+      window.removeEventListener('scroll', this.changeHeight);
+    }
   }
 
 
