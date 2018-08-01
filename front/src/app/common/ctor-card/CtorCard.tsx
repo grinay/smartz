@@ -13,6 +13,15 @@ interface ICtorCardProps {
 }
 
 class CtorCard extends React.Component<ICtorCardProps, {}> {
+
+  public tryRequire(path: string) {
+    try {
+     return require(`${path}`);
+    } catch (err) {
+     return null;
+    }
+  };
+
   public render() {
     const { ctor } = this.props;
 
@@ -23,7 +32,7 @@ class CtorCard extends React.Component<ICtorCardProps, {}> {
       <article className="ctor-card">
         <Link to={`/deploy/${ctor.id}`} className="ctor-card__link screen">
           <div className="ctor-card__img flex">
-            {ctor.image ? (
+            {ctor.image && this.tryRequire(`./img/${ctor.image}`) ? (
               <img src={require(`./img/${ctor.image}`)} alt={`${ctor.name} dapp`} />
             ) : (
                 <div className="empty_img flex">
