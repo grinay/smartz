@@ -22,7 +22,7 @@ def abi_arguments2schema(abi_args_array):
                 "default": False
             }
 
-        elif abi_type in ('account_name', 'name', 'asset', 'uint32', 'uint64'):  # todo why name instead of account_name ?
+        elif abi_type in ('account_name', 'name', 'asset', 'uint32', 'uint64', 'checksum256'):  # todo why name instead of account_name ?
             result = {
                 "$ref": "#/definitions/" + abi_type
             }

@@ -105,11 +105,19 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
   }
 
   private submit({ formData }) {
-    const { func, dapp, onClose, profile } = this.props;
+    const { func, dapp, onClose } = this.props;
 
     //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
     if (typeof formData === 'object' && !Object.keys(formData).length) {
       formData = [];
+    }
+
+    if (func.inputs && func.inputs.items) {
+      func.inputs.items.forEach((inp, idx) => {
+        if (inp.realtype === 'array') {
+          formData[idx] = formData[idx].split(' ');
+        }
+      });
     }
 
     const dataFetch = {

@@ -94,7 +94,7 @@
                             "ui:widget": {
                                 "description": "Widget for input",
                                 "type": "string",
-                                "enum": ["stringHash", "fileHash", "unixTime", "myAddress", "ethCount"]
+                                "enum": ["stringHash", "fileHash", "unixTime", "myAddress", "ethCount", "merkleRoot", "merkleProof"]
                             },
                             "ui:options": {
                                 "description": "Ui options",

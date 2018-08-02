@@ -132,6 +132,9 @@ class DeployStep2 extends PureComponent {
               status: contractProcessStatus.DEPLOY,
               ...dataEvent
             });
+
+            if (this.props.ctor.schema.eosProps && this.props.ctor.schema.eosProps.permissions)
+              return Eos.setPermissions(this.props.ctor.schema.eosProps.permissions);
           })
           .catch((error) => console.error(error));
         break;
