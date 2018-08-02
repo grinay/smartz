@@ -23,6 +23,7 @@ urlpatterns = [
             path('users', include('apps.users.urls')),
             path('dapps', include('apps.dapps.urls')),
             path('contracts_uis', include('apps.contracts_uis.urls')),
+            path('search', include('apps.search.urls')),
 
             path('swagger.yaml', schema_view.without_ui(cache_timeout=None), name='schema-yaml'),
             path('swagger', schema_view.with_ui('swagger', cache_timeout=None), name='schema-swagger-ui'),
