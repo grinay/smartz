@@ -72,8 +72,8 @@ class Transaction(models.Model):
     initiator_address = models.CharField(max_length=42)
 
     function_name = models.CharField(max_length=255, blank=True)
-    function_title = models.CharField(max_length=255)
-    function_description = models.CharField(max_length=1000)
+    function_title = models.CharField(max_length=255, blank=True)
+    function_description = models.CharField(max_length=1000, blank=True)
     function_arguments = JSONField(validators=[validate_function_args])
     info = JSONField(validators=[validate_tx_info])
     is_success = models.BooleanField()
@@ -98,8 +98,8 @@ class Request(models.Model):
 
     execution_datetime = models.DateTimeField()
     function_name = models.CharField(max_length=255)
-    function_title = models.CharField(max_length=255)
-    function_description = models.CharField(max_length=1000)
+    function_title = models.CharField(max_length=255, blank=True)
+    function_description = models.CharField(max_length=1000, blank=True)
     function_arguments = JSONField(validators=[validate_function_args])
     result = JSONField()
 
