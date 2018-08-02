@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as dateFormat from 'dateformat';
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
@@ -19,7 +20,17 @@ export default class RequestRow extends React.PureComponent<IRequestRowProps, {}
     return (
       <div className="request-row" onClick={onClick(request)}>
         <p className="request-time">{formatTime(request.execution_datetime)}</p>
-        <p className="request-description">{request.function_title}</p>
+        {!request.is_success &&
+          < div className="request-icon">
+            <InlineSVG
+              className="error-icon"
+              src={require('../../../../assets/img/common/dapp/status-error.svg')}
+            />
+          </div>
+        }
+        <p className={classNames('request-description', { error: !request.is_success })}>
+          {request.function_title}
+        </p>
         {/* <p className="request-buttons">
           <button className="round-btn copy-btn flex" type="button" aria-label="Copy">
             <InlineSVG
@@ -28,7 +39,7 @@ export default class RequestRow extends React.PureComponent<IRequestRowProps, {}
             />
           </button>
         </p> */}
-      </div>
+      </div >
     );
   }
 }

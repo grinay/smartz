@@ -19,9 +19,9 @@ class EosClass {
   private configEosDapp: any;
   private eos: any;
   private identity: any;
-  private accountName: any;
   private url: string;
 
+  public accountName: any;
   public scatter: any = window.scatter;
   public currentIdentity: any;
 
@@ -63,6 +63,8 @@ class EosClass {
           .then((result) => {
             if (result.status === 200) {
               this.configEosDapp.chainId = result.data.chain_id;
+              this.network['chainId'] = result.data.chain_id;
+
               resolve();
             }
           })
@@ -119,21 +121,15 @@ class EosClass {
         .then((identity) => {
           this.currentIdentity = identity;
 
-          let accountName = this.getAccountName(identity);
+          this.accountName = this.getAccountName(identity);
 
           this.eos = this.scatter.eos(this.network, Eos, this.configEosDapp);
 
-          return this.eos.transaction(accountName, (contract) => {
-            contract[func.name](...formData, { authorization: accountName });
+          return this.eos.transaction(this.accountName, (contract) => {
+            contract[func.name](...formData, { authorization: this.accountName });
           });
         })
-        .then((result) => {
-          resolve({
-            result,
-            func,
-            formData,
-          });
-        })
+        .then((response) => resolve(response))
         .catch((error) => reject(error));
     });
   }
@@ -141,7 +137,10 @@ class EosClass {
   public readTable(address: any, tableKey: any, func: any, formData: any) {
     return new Promise((resolve, reject) => {
       this.setChainId()
-        .then(() => {
+        .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
+        .then((identity) => {
+          this.accountName = this.getAccountName(identity);
+
           this.eos = this.scatter.eos(this.network, Eos, this.configEosDapp);
 
           return this.eos.getTableRows({
@@ -170,7 +169,7 @@ class EosClass {
       switch (getFuncType(func)) {
         case 'write':
           this.sendTransaction(func, formData)
-            .then(() => resolve('success'))
+            .then((result) => resolve(result))
             .catch((error) => reject(error));
           break;
         case 'ask':
@@ -181,15 +180,13 @@ class EosClass {
             .then((data: any) => {
               const rows = data.result.rows;
 
-              let result =
-                rows.length > 0 && data.formData[0].toString() === rows[0][tableKey].toString()
-                  ? data.result.rows[0]
-                  : 'Not found';
-
-              let strString = JSON.stringify(result);
-              strString = strString.substr(1, strString.length - 2);
-
-              resolve(strString);
+              if (rows.length > 0 && data.formData[0].toString() === rows[0][tableKey].toString()) {
+                resolve(data.result.rows[0]);
+              } else {
+                throw {
+                  error: { what: 'Not found' },
+                };
+              }
             })
             .catch((error) => reject(error));
           break;

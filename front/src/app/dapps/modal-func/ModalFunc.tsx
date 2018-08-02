@@ -8,9 +8,9 @@ import { blockchains, ethConstants } from '../../../constants/constants';
 import { getFuncType } from '../../../helpers/common';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import Eos from '../../../helpers/eos';
-import { processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
-import { valToString } from '../../../helpers/normalize';
+import { getAccountAddress, processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
 import { getUiSchemaFromFunc } from '../../../helpers/schema';
+import { tryParce } from '../../../helpers/utils';
 import store from '../../../store/store';
 import FormWidgets from '../../common/form-widgets/FormWidgets';
 import Modal from '../../common/modal/Modal';
@@ -33,7 +33,8 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
     this.submit = this.submit.bind(this);
     this.getReceipt = this.getReceipt.bind(this);
     this.formatArguments = this.formatArguments.bind(this);
-    this.formatResult = this.formatResult.bind(this);
+    this.formatResultEth = this.formatResultEth.bind(this);
+    this.formatResultEos = this.formatResultEos.bind(this);
   }
 
   private formatArguments(func: IFunction, formData: any[]) {
@@ -53,7 +54,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
     return arrOfArgs;
   }
 
-  private formatResult(func: IFunction, result: any) {
+  private formatResultEth(func: IFunction, result: any) {
     const arrOfArgs: any[] = [];
 
     if (Array.isArray(result)) {
@@ -64,7 +65,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
         arrOfArgs.push({
           title: data.title,
           description: 'description' in data ? data.description : '',
-          value: valToString(arg, data.type),
+          value: arg.toString(),
         });
       }
     } else {
@@ -73,8 +74,31 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
       arrOfArgs.push({
         title: data.title,
         description: 'description' in data ? data.description : '',
-        value: valToString(result, data.type),
+        value: result.toString(),
       });
+    }
+
+    return arrOfArgs;
+  }
+
+  private formatResultEos(func: IFunction, response: object) {
+    const arrOfArgs: any[] = [];
+
+    if (typeof response === 'object') {
+      const items: any[] = func.outputs.items;
+
+      for (let i = 0; i < items.length; i++) {
+        const titleItem = items[i].title;
+
+        const arg = response[titleItem];
+        const data = items[i];
+
+        arrOfArgs.push({
+          title: titleItem,
+          description: 'description' in data ? data.description : '',
+          value: arg.toString(),
+        });
+      }
     }
 
     return arrOfArgs;
@@ -90,36 +114,32 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
 
     const dataFetch = {
       blockchain: dapp.blockchain,
-      initiator_address: profile.last_name,
       execution_datetime: (new Date()).toISOString(),
       function_name: func.name,
       function_title: func.title,
-      function_description: func.description,
+      function_description: 'description' in func ? func.description : '',
       function_arguments: this.formatArguments(func, formData),
     };
 
     switch (dapp.blockchain) {
       case blockchains.ethereum:
+        dataFetch['initiator_address'] = getAccountAddress();
+
         processControlForm(dapp.abi, func, formData, dapp.address,
           (error, response) => {
             const funcType = getFuncType(func);
 
-            let result: any;
-
             if (error !== null) {
               dataFetch['is_success'] = false;
               dataFetch['error'] = error.toString();
-              console.error('Error: ', error);
 
-              result = error;
+              console.error('Error: ', error);
             } else {
               dataFetch['is_success'] = true;
-
-              result = response;
             }
 
             if (funcType === 'ask') {
-              dataFetch['result'] = this.formatResult(func, response);
+              dataFetch['result'] = this.formatResultEth(func, response);
 
               api.sendDappRequest(dapp.id, dataFetch);
 
@@ -135,17 +155,48 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
           });
         break;
       case blockchains.eos:
+
         Eos.executeFunc(dapp.abi, func, dapp.address, formData)
-          .then((result) => {
-            store.dispatch(transactionNew(dapp.id, dataFetch));
+          .then((response: any) => {
+            dataFetch['initiator_address'] = Eos.accountName;
+            const funcType = getFuncType(func);
+
+            dataFetch['is_success'] = true;
+
+            if (funcType === 'ask') {
+              dataFetch['result'] = this.formatResultEos(func, response);
+
+              api.sendDappRequest(dapp.id, dataFetch);
+
+            } else if (funcType === 'write') {
+              dataFetch['tx_id'] = response.transaction_id;
+              dataFetch['mining_datetime'] = (new Date()).toISOString();
+              dataFetch['logs'] = [];
+              dataFetch['info'] = {};
+
+              store.dispatch(transactionNew(dapp.id, dataFetch));
+
+              api.sendDappTransaction(dapp.id, dataFetch);
+            }
           })
           .catch((err) => {
-            console.error(err);
-            let error = JSON.parse(err);
+            console.warn(err);
+            dataFetch['is_success'] = false;
+            dataFetch['initiator_address'] = Eos.accountName;
+            dataFetch['result'] = [];
 
-            error = error.error.what || error.message || 'error';
+            if (typeof err === 'string') {
+              const errObj = tryParce(err);
+              dataFetch['mining_datetime'] = (new Date()).toISOString();
+              dataFetch['error'] = errObj.error.what;
 
-            store.dispatch(transactionNew(dapp.id, dataFetch));
+              store.dispatch(transactionNew(dapp.id, dataFetch));
+
+            } else if (typeof err === 'object') {
+              dataFetch['error'] = err.error.what;
+
+              api.sendDappRequest(dapp.id, dataFetch);
+            }
           });
 
         // close modal window after execute function
@@ -162,7 +213,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
 
     w3.eth.getTransactionReceipt(tx, (err, receipt) => {
       if (err) {
-        console.log('err :', err);
+        console.error('err :', err);
       }
 
       if (null == receipt) {

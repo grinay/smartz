@@ -87,9 +87,9 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
         <div className="wallet">
           <div className="wallet-address">
             <span className="wallet-title">Address</span>
-            <p className={'wallet-number'}>
+            <div className="wallet-number">
               <AddressString str={dapp.address} />
-            </p>
+            </div>
           </div>
           <div className="wallet-buttons">
             {dapp.blockchain === blockchains.ethereum &&

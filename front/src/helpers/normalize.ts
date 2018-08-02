@@ -33,10 +33,6 @@ export function findTitle(schema, field) {
     });
 }
 
-export function valToString(value, type) {
-    return value.toString();
-}
-
 export function formatTime(timeISO) {
     const dataFromIso = new Date(timeISO);
     const diffTime = (new Date().getTime()) - dataFromIso.getTime();

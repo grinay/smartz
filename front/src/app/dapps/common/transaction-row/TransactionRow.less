@@ -1,10 +1,12 @@
 @import '../../../../styles/variables.less';
 
 .transaction-row {
+    @height: 29px;
+
     display: flex;
     align-items: center;
 
-    height: 29px;
+    height: @height;
     padding: 0 20px;
 
     cursor: pointer;
@@ -24,6 +26,8 @@
         overflow: hidden;
         flex: 1;
 
+        height: @height;
+
         .transaction-icon {
             position: relative;
 
@@ -33,6 +37,14 @@
                 position: absolute;
                 top: -8.5px;
                 right: 6px;
+            }
+
+            .error-icon {
+                position: absolute;
+                top: -6.5px;
+                right: 6px;
+
+                width: 12px;
             }
         }
 
@@ -45,6 +57,10 @@
             box-sizing: border-box;
             width: 130px;
             margin: 0 10px 0 0;
+
+            &.error {
+                color: @color-error;
+            }
         }
 
         .transaction-hash {

@@ -1,4 +1,4 @@
-import * as dateFormat from 'dateformat';
+import * as classNames from 'classnames';
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
@@ -18,22 +18,36 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
   public render() {
     const { transaction, onClick } = this.props;
 
+    let icon;
+    if (transaction.status === 'process') {
+      icon = (
+        <div className="transaction-icon">
+          <Loader
+            className="tx-icon"
+            width={'17px'}
+          />
+        </div>
+      );
+    } else if (transaction.status === 'error') {
+      icon = (
+        <div className="transaction-icon">
+          <InlineSVG
+            className="error-icon"
+            src={require('../../../../assets/img/common/dapp/status-error.svg')}
+          />
+        </div>
+      );
+    }
+
     return (
       <div className="transaction-row">
         <div className="transaction-row-wrapper flex-v" onClick={onClick(transaction)}>
           <p className="transaction-time">{formatTime(transaction.execution_datetime)}</p>
-          {transaction.status === 'process' &&
-            <div className="transaction-icon">
-              <Loader
-                className={'tx-icon'}
-                width={'17px'}
-              />
-            </div>
-          }
-          <p className="transaction-description">{transaction.function_title}</p>
-          <p className="transaction-hash">
-            <AddressString str={transaction.tx_id} />
-          </p>
+          {icon}
+          <p className={classNames('transaction-description', { error: transaction.status === 'error' })}>{transaction.function_title}</p>
+          <div className="transaction-hash">
+            <AddressString str={'tx_id' in transaction ? transaction.tx_id : '-----'} />
+          </div>
         </div>
         <p className="transaction-buttons">
           <button className="round-btn copy-btn flex" type="button" aria-label="Copy">
@@ -53,3 +67,4 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
     );
   }
 }
+

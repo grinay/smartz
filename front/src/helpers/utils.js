@@ -1,8 +1,8 @@
-export function generateId() {
+export function generateId(count = 5) {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (let i = 0; i < 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+  for (let i = 0; i < count; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
 
   return text;
 }
@@ -25,6 +25,14 @@ export function copyTextToClipboard(text) {
   } else {
     navigator.clipboard
       .writeText(text)
-      .then(() => {}, (err) => console.error('Async: Could not copy text: ', err));
+      .then(() => { }, (err) => console.error('Async: Could not copy text: ', err));
+  }
+}
+
+export function tryParce(str) {
+  try {
+    return JSON.parse(str)
+  } catch (error) {
+    return null;
   }
 }

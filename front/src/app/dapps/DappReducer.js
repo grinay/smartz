@@ -1,5 +1,5 @@
 import { find, findIndex, cloneDeep } from 'lodash';
-import moment from 'moment';
+import { generateId } from '../../helpers/utils';
 
 const initState = {
   fetchStatus: 'init',
@@ -115,10 +115,18 @@ const dapps = (state = initState, action) => {
           dapp.transactions = new Map();
         }
 
-        dapp.transactions.set(action.result.tx_id, {
-          ...action.result,
-          status: 'process',
-        });
+        let status;
+        let key;
+
+        if (action.result.is_success) {
+          key = action.result.tx_id;
+          status = 'process';
+        } else {
+          key = generateId(20);
+          status = 'error';
+        }
+
+        dapp.transactions.set(key, { ...action.result, status })
       }
 
       return nextState;

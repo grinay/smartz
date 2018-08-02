@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as dateFormat from 'dateformat';
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
@@ -22,6 +23,30 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
     window.scrollTo(0, 300);
     let isTransaction: boolean = 'tx_id' in record ? true : false;
 
+    let result: any;
+    if (isTransaction) {
+      result = record.is_success
+        ? < p className="result-status" >Success</p >
+        : <p className="result-status error">{record.error}</p>;
+    } else {
+      result = record.is_success
+        ? (
+          <div>
+            {record.result.map((result, i) =>
+              <p
+                key={i}
+                className="result-status"
+              >
+                <span>{result.title}</span>
+                <span>{result.value}</span>
+              </p>,
+            )}
+          </div>
+        )
+        : <p className="result-status error">{record.error}</p>;
+
+    }
+
     return (
       <div className="popup-transaction">
 
@@ -40,7 +65,10 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
 
         {/* content */}
         <div className="event">
-          <p className="event-name">
+          <p className={classNames('event-name', {
+            error: !record.is_success,
+            ok: record.is_success,
+          })}>
             {record.function_title}
             <sup className="event-extra">{record.function_title}</sup>
           </p>
@@ -58,15 +86,7 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
         </ul>
         <div className="event-result">
           <p className="result-id">Result</p>
-          {!isTransaction && record.result.map((result, i) =>
-            <p
-              key={i}
-              className="result-status"
-            >
-              <span>{result.title}</span>
-              <span>{result.value}</span>
-            </p>,
-          )}
+          {result}
         </div>
         <div className="event-info">
           <div className="event-time">
@@ -86,7 +106,7 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
                   src={require('../../../assets/img/common/v-double.svg')}
                 />
                 <p className="executed-time">
-                  Mined {dateFormat(new Date(record.execution_datetime), 'h:MM:ss')}
+                  Mined {dateFormat(new Date(record.mining_datetime), 'h:MM:ss')}
                 </p>
               </div>
             }
