@@ -46,7 +46,8 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
     }
 
     return (
-      <div className={`modal flex ${overlayClassName}`}>
+      <div className="modal flex">
+        <div className={`overlay ${overlayClassName}`} onClick={onClose} />
         <div className={`window ${windowClassName}`}>
           {isCloser &&
             <span className={`closer ${closerClassName}`} onClick={onClose}>
@@ -54,7 +55,7 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
           </span>}
           {children}
         </div>
-      </div>
+      </div >
     );
   }
 }
