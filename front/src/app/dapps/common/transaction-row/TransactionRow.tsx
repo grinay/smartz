@@ -3,6 +3,7 @@ import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
 import { formatTime } from '../../../../helpers/normalize';
+import { copyTextToClipboard } from '../../../../helpers/utils';
 import AddressString from '../../../common/address-string/AddressString';
 import Loader from '../../../common/loader/Loader';
 
@@ -50,13 +51,23 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
           </div>
         </div>
         <p className="transaction-buttons">
-          <button className="round-btn copy-btn flex" type="button" aria-label="Copy">
+          <button
+            onClick={() => copyTextToClipboard(transaction.tx_id)}
+            className="round-btn copy-btn flex"
+            type="button"
+            aria-label="Copy"
+          >
             <InlineSVG
               className="copy-icon"
               src={require('../../../../assets/img/common/components/copy.svg')}
             />
           </button>
-          <a className="round-btn link flex" href="#" target="_blank" aria-label="Search etherscan">
+          <a
+            className="round-btn link flex"
+            // href={`${getNetworkEtherscanAddress(dapp.network_id)}/tx/${transaction.tx_id}`}
+            target="_blank"
+            aria-label="Search etherscan"
+          >
             <InlineSVG
               className="etherscan-icon"
               src={require('../../../../assets/img/common/etherscan.svg')}
