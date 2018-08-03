@@ -24,7 +24,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
     super(props);
 
     this.state = {
-      selectedMenu: 'Store',
+      selectedMenu: 'DApps',
     };
   }
 
@@ -71,7 +71,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
 
     return (
       <header id="js-header" className="page-header flex-s">
-        <Link to="/" className="logo flex" onClick={this.setMenu('Store')}>
+        <Link to="/" className="logo flex" onClick={this.setMenu('DApps')}>
           <InlineSVG className="logo-img" src={require('../../assets/img/common/menu/logo.svg')} />
         </Link>
         <section className="title-main flex-s">
@@ -83,10 +83,10 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
               to="/"
               exact={true}
               className="main-navigation__link"
-              onClick={this.setMenu('Store')}
+              onClick={this.setMenu('DApps')}
               activeClassName="active">
               <li className="main-navigation__item flex-v">
-                <p>Store</p>
+                <p>DApps</p>
               </li>
             </NavLink>
             <NavLink

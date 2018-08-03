@@ -1,6 +1,6 @@
 const initState = {
   header: {
-    title: 'Store',
+    title: 'DApps',
     type: 'simple',
     id: null
   }

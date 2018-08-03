@@ -59,6 +59,7 @@ export default class EditableTitle extends React.PureComponent
             onFocus={this.onFocus}
             ref={(ref) => this.ref = ref}
             contentEditable={true}
+            suppressContentEditableWarning={true}
           >
             {header.title}
           </div>
