@@ -60,15 +60,19 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
     let btn: JSX.Element;
     if (profile) {
       if (profile.user_id === dapp.user_id) {
-        btn = (
-          <button
-            className="round-btn flex verify-btn"
-            onClick={this.toggleModal}
-            type="button"
-          >
-            Verify this DApp
-            </button>
-        );
+        if (dapp.blockchain === blockchains.ethereum) {
+          btn = (
+            <button
+              className="round-btn flex verify-btn"
+              onClick={this.toggleModal}
+              type="button"
+            >
+              Verify this DApp
+              </button>
+          );
+        } else {
+          btn = null;
+        }
       } else {
         btn = (
           <button
