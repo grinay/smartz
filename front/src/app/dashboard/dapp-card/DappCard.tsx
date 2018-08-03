@@ -2,6 +2,8 @@ import { find } from 'lodash';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import ImageDefault from '../../common/image-default/ImageDefault';
+
 import './DappCard.less';
 
 
@@ -22,13 +24,15 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
                 <article className="">
                     <div className="dapp-card__wrapper">
                         <div className="dapp-card__logo">
-                            <img
+                            {/* <img
                                 className="dapp-card__img"
                                 alt="Dapp"
                                 src={dapp.ctor.image
                                     ? require(`../../common/ctor-card/img/${dapp.ctor.image}`)
                                     : `https://lorempixel.com/640/400/?${Math.random()}`}
-                            />
+                            /> */}
+
+                            <ImageDefault src={dapp.ctor.image} />
                         </div>
                         <p className="dapp-card__info">
                             <span className="dapp-card__name">{dapp.title}</span>

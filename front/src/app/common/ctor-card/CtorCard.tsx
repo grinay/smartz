@@ -4,6 +4,7 @@ import InlineSVG from 'svg-inline-react';
 
 import history from '../../../helpers/history';
 import Auth from '../../auth/Auth';
+import ImageDefault from '../image-default/ImageDefault';
 
 import './CtorCard.less';
 
@@ -16,11 +17,11 @@ class CtorCard extends React.Component<ICtorCardProps, {}> {
 
   public tryRequire(path: string) {
     try {
-     return require(`${path}`);
+      return require(`${path}`);
     } catch (err) {
-     return null;
+      return null;
     }
-  };
+  }
 
   public render() {
     const { ctor } = this.props;
@@ -32,13 +33,14 @@ class CtorCard extends React.Component<ICtorCardProps, {}> {
       <article className="ctor-card">
         <Link to={`/deploy/${ctor.id}`} className="ctor-card__link screen">
           <div className="ctor-card__img flex">
-            {ctor.image && this.tryRequire(`./img/${ctor.image}`) ? (
+            {/* {ctor.image && this.tryRequire(`./img/${ctor.image}`) ? (
               <img src={require(`./img/${ctor.image}`)} alt={`${ctor.name} dapp`} />
             ) : (
                 <div className="empty_img flex">
                   <p>{ctor.name.charAt(0).toUpperCase()}</p>
                 </div>
-              )}
+              )} */}
+            <ImageDefault src={ctor.image} name={ctor.name} />
           </div>
           <section className="ctor-card__description">
             <h2 className="ctor-card__header">{ctor.name}</h2>
@@ -56,7 +58,7 @@ class CtorCard extends React.Component<ICtorCardProps, {}> {
                 ctor.user_id === userId && (
                   <div
                     className="btn ctor-card__price"
-                    onClick={(e) => {history.replace(`/constructors/${ctor.id}/update`); e.preventDefault();}}
+                    onClick={(e) => { history.replace(`/constructors/${ctor.id}/update`); e.preventDefault(); }}
                   >
                     Update
                   </div>

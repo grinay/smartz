@@ -2,7 +2,6 @@ import axios from 'axios';
 import * as binaryen from 'binaryen';
 import * as Eos from 'eosjs';
 import { find } from 'lodash';
-import { log } from 'util';
 
 import { eosConstants } from '../constants/constants';
 import { getFuncType } from './common';
