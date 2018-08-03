@@ -2,7 +2,7 @@ import * as classNames from 'classnames';
 import * as React from 'react';
 
 import * as api from '../../../api/apiRequests';
-import { IDapp } from '../../../helpers/entities/dapp';
+import { IDapp, Tab } from '../../../helpers/entities/dapp';
 import Loader from '../../common/loader/Loader';
 import RequestRow from '../common/request-row/RequestRow';
 import ShowMoreBtn from '../common/show-more-btn/ShowMoreBtn';
@@ -11,20 +11,14 @@ import TransactionRow from '../common/transaction-row/TransactionRow';
 import './Records.less';
 
 
-enum Tab {
-  Request,
-  Transactions,
-}
-
 interface IRecordsProps {
   dapp: IDapp;
-  netId?: any;
-  transaction?: any;
+  tab: Tab;
+  onChangeTab: (tab: Tab) => void;
   onSelectRecord?: (record: any) => void;
 }
 
 interface IRecordsState {
-  tab: Tab;
   isShowAll: boolean;
 }
 
@@ -37,7 +31,6 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
     this.showCountItems = 5;
 
     this.state = {
-      tab: Tab.Request,
       isShowAll: false,
     };
 
@@ -62,11 +55,9 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
 
   private onSelectTab(currentTab: Tab): any {
     return () => {
-      const { dapp } = this.props;
+      const { onChangeTab } = this.props;
 
-      this.setState({ tab: currentTab });
-
-      this.fetch(currentTab, dapp);
+      onChangeTab(currentTab);
     };
   }
 
@@ -75,15 +66,22 @@ export default class Records extends React.PureComponent<IRecordsProps, IRecords
   }
 
   public componentDidMount() {
-    const { tab } = this.state;
-    const { dapp } = this.props;
+    const { dapp, tab } = this.props;
 
     this.fetch(tab, dapp);
   }
 
+  public componentWillReceiveProps(nextProps: any) {
+    const { dapp } = this.props;
+
+    if (nextProps.tab !== this.props.tab) {
+      this.fetch(nextProps.tab, dapp);
+    }
+  }
+
   public render() {
-    const { dapp, onSelectRecord } = this.props;
-    const { tab, isShowAll } = this.state;
+    const { dapp, onSelectRecord, tab } = this.props;
+    const { isShowAll } = this.state;
 
     let isVisibleButton: boolean = false;
 

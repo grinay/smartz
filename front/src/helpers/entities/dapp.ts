@@ -37,3 +37,8 @@ export interface IDapp {
   transactions: any;
   user_id: any;
 }
+
+export enum Tab {
+  Request,
+  Transactions,
+}

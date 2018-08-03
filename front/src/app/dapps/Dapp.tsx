@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
 import { getFuncType } from '../../helpers/common';
-import { IDapp, IFunction } from '../../helpers/entities/dapp';
+import { IDapp, IFunction, Tab } from '../../helpers/entities/dapp';
 import { processControlForm, processResult } from '../../helpers/eth';
 import store from '../../store/store';
 import { setHeaderTitle } from '../AppActions';
@@ -41,6 +41,7 @@ interface IDappState {
   funcActive: IFunction;
   selectedRecord: any;
   selectedFunc: any;
+  selectedTab: Tab;
 }
 
 class Dapp extends React.Component<IDappProps, IDappState> {
@@ -52,12 +53,18 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       funcActive: null,
       selectedRecord: null,
       selectedFunc: null,
+      selectedTab: Tab.Request,
     };
 
     this.getConstants = this.getConstants.bind(this);
     this.onSelectRecord = this.onSelectRecord.bind(this);
     this.selectFunc = this.selectFunc.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.onChangeTab = this.onChangeTab.bind(this);
+  }
+
+  private onChangeTab(tab: Tab) {
+    this.setState({ selectedTab: tab });
   }
 
   private onSelectRecord(selectedRecord: any) {
@@ -95,15 +102,24 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     }
 
     //show last 'ask' function executed
-    if (dappNext.requests !== null && dappLast.requests !== null) {
-      if (dappNext.requests.length !== dappLast.requests.length) {
-        const lastExec = dappNext.requests[0];
+    if (dappNext.requests !== null && dappLast.requests !== null
+      && dappNext.requests.length !== dappLast.requests.length) {
 
-        // check lastExec is 'ask' func
-        if (!lastExec.tx_id) {
-          this.setState({ selectedRecord: lastExec });
-        }
-      }
+      // set last executed func
+      this.setState({
+        selectedRecord: dappNext.requests[0],
+        selectedTab: Tab.Request,
+      });
+    }
+
+    // if change transactions count
+    if (dappNext.transactions !== null && dappLast.transactions !== null
+      && dappNext.transactions.size !== dappLast.transactions.size) {
+
+      // set transaction tab
+      this.setState({
+        selectedTab: Tab.Transactions,
+      });
     }
 
     // update name of dapp after change
@@ -149,7 +165,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
   public render() {
     const { metamaskStatus, dapp, profile, dappStatus, dappError } = this.props;
-    const { selectedRecord, selectedFunc } = this.state;
+    const { selectedRecord, selectedFunc, selectedTab } = this.state;
 
     if (dappStatus === 'error' && dappError !== null) {
       return (
@@ -180,6 +196,8 @@ class Dapp extends React.Component<IDappProps, IDappState> {
               <ViewFunc dapp={dapp} profile={profile} />
               <Records
                 dapp={dapp}
+                tab={selectedTab}
+                onChangeTab={this.onChangeTab}
                 onSelectRecord={this.onSelectRecord}
               />
             </div>
