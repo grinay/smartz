@@ -3,6 +3,8 @@ import * as dateFormat from 'dateformat';
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
+import Loader from '../../common/loader/Loader';
+
 import './PopupTransaction.less';
 
 
@@ -24,27 +26,35 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
     let isTransaction: boolean = 'tx_id' in record ? true : false;
 
     let result: any;
-    if (isTransaction) {
-      result = record.is_success
-        ? < p className="result-status" >Success</p >
-        : <p className="result-status error">{record.error}</p>;
-    } else {
-      result = record.is_success
-        ? (
-          <div>
-            {record.result.map((result, i) =>
-              <p
-                key={i}
-                className="result-status"
-              >
-                <span>{result.title}</span>
-                <span>{result.value}</span>
-              </p>,
-            )}
-          </div>
-        )
-        : <p className="result-status error">{record.error}</p>;
+    switch (record.status) {
+      case 'done':
+        result = isTransaction
+          ? <p className="result-status">Success</p>
+          : (
+            <div>
+              {record.result.map((result, i) =>
+                <p
+                  key={i}
+                  className="result-status"
+                >
+                  <span>{result.title}</span>
+                  <span>{result.value}</span>
+                </p>,
+              )}
+            </div>
+          );
+        break;
 
+      case 'error':
+        result = <p className="result-status error">{record.error}</p>;
+        break;
+
+      case 'process':
+        result = <p className="result-status">Mining</p>;
+        break;
+
+      default:
+        break;
     }
 
     return (
@@ -99,7 +109,7 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
                 Executed {dateFormat(new Date(record.execution_datetime), 'dddd d, yyyy "at" hh:MM:ss')}
               </p>
             </div>
-            {isTransaction &&
+            {isTransaction && record.status === 'done' &&
               <div className="event-data">
                 <InlineSVG
                   className="x-icon"

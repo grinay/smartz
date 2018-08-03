@@ -72,7 +72,13 @@ const dapps = (state = initState, action) => {
       dapp = find(nextState.dappList, { id: action.dappId });
 
       if (dapp) {
-        dapp.requests = action.requests.reverse();
+        let arr = action.requests;
+
+        for (let i = 0; i < arr.length; i++) {
+          arr[i].status = 'done';
+        }
+
+        dapp.requests = arr.reverse();
       }
 
       return nextState;
