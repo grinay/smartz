@@ -91,23 +91,19 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
         <div className="wallet">
           <div className="wallet-address">
             <span className="wallet-title">Address</span>
-            <div className="wallet-number">
+            <a
+              className="wallet-number flex"
+              href={`${getNetworkEtherscanAddress(dapp.network_id)}/address/${dapp.address}`}
+              target="_blank"
+            >
               <AddressString str={dapp.address} />
-            </div>
+              <InlineSVG
+                className="etherscan-icon link"
+                src={require('../../../../assets/img/common/etherscan.svg')}
+              />
+            </a>
           </div>
           <div className="wallet-buttons">
-            {dapp.blockchain === blockchains.ethereum &&
-              <a
-                className="round-btn flex link"
-                href={`${getNetworkEtherscanAddress(dapp.network_id)}/address/${dapp.address}`}
-                target="_blank"
-              >
-                <InlineSVG
-                  className="etherscan-icon"
-                  src={require('../../../../assets/img/common/etherscan.svg')}
-                />
-              </a>
-            }
             <button
               className="round-btn flex copy-btn"
               onClick={this.onClickCopyBtn}

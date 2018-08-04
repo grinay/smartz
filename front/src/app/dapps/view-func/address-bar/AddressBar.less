@@ -15,8 +15,6 @@
         .wallet-address {
             display: flex;
             align-items: center;
-// flex-wrap: wrap;
-            // margin-right: 55px;
             flex: 1;
 
             min-width: 180px;
@@ -36,22 +34,26 @@
 
             .wallet-number {
                 overflow: hidden;
-                flex: 1;
 
                 margin: 0;
 
+                cursor: pointer;
+                text-decoration: none;
                 word-break: break-all;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                .link {
+                    margin-left: 5px;
+                }
             }
         }
 
         .wallet-buttons {
             display: flex;
             align-items: stretch;
-
-            .link {
-                width: 38px;
-                margin-right: 5px;
-            }
         }
 
         .round-btn {
