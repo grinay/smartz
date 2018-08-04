@@ -40,7 +40,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
       }
 
       viewFuncElement = (
-        <div className={classNames('card-body', { 'bg-bottom': viewFuncStandart.length <= 3 })}>
+        <div className={classNames('card-body', { 'bg-bottom': viewFuncStandart.length === 0 })}>
           <div className="card-header">
 
             {viewFuncPresentable.map((func, i) => {
