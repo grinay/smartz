@@ -249,53 +249,55 @@ export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
   if (isAddress(hash)) {
     return (
       <span>
-        <a href={`${explorerAddress}/address/${hash}`} target="_blank">
+        <a href={`${explorerAddress}/address/${hash}`
+        } target="_blank" >
           {hash}
-        </a>
-        {showNetworkName && ` (${networkName})`}
-      </span>
-    );
+          < /a>
+  {showNetworkName && ` (${networkName})`}
+  </span>
+        );
   } else {
-    return hash;
-  }
-};
-
+  return hash;
+      }
+      };
+      
 export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
   if (!hash || !netId) return hash;
-
-  const explorerAddress = getNetworkEtherscanAddress(netId);
-  const networkName = getNetworkName(netId);
+      
+        const explorerAddress = getNetworkEtherscanAddress(netId);
+        const networkName = getNetworkName(netId);
   if (isTx(hash)) {
     return (
       <span>
-        <a href={`${explorerAddress}/tx/${hash}`} target="_blank">
-          {hash}
-        </a>
-        {showNetworkName && ` (${networkName})`}
-      </span>
-    );
+          <a href={`${explorerAddress}/tx/${hash}`
+          } target="_blank" >
+            {hash}
+            < /a>
+  {showNetworkName && ` (${networkName})`}
+  </span>
+          );
   } else {
-    return hash;
-  }
-};
-
-/**
- * Return decoded event
- *
- * @param contract
- * @param log
- */
+  return hash;
+        }
+        };
+        
+        /**
+         * Return decoded event
+         *
+         * @param contract
+         * @param log
+         */
 export const decodeEventOfDapp = (contract, log) => {
   const abi = contract.abi;
-  let eventAbi = null;
-
+          let eventAbi = null;
+        
   for (let i = 0; i < abi.length; i++) {
-    let item = abi[i];
-    if (item.type !== 'event') continue;
-    let signature =
-      item.name +
-      '(' +
-      item.inputs
+            let item = abi[i];
+          if (item.type !== 'event') continue;
+          let signature =
+            item.name +
+            '(' +
+            item.inputs
         .map(function (input) {
           return input.type;
         })
@@ -303,35 +305,35 @@ export const decodeEventOfDapp = (contract, log) => {
       ')';
     let hash = web3.sha3(signature);
     if (hash === log.topics[0]) {
-      eventAbi = item;
-      break;
-    }
-  }
-
+            eventAbi = item;
+          break;
+        }
+      }
+    
   if (!eventAbi) {
     return false;
-  }
-
-  let decodedEvent;
-
+        }
+      
+        let decodedEvent;
+      
   try {
-    decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
-  } catch (e) {
+            decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
+          } catch (e) {
     return false;
-  }
+        }
   let event = {
-    params: {},
-    name: decodedEvent._eventName
-  };
+            params: {},
+          name: decodedEvent._eventName
+        };
   for (let prop in decodedEvent) {
     if (!decodedEvent.hasOwnProperty(prop)) {
       continue;
-    }
-
+        }
+    
     if (prop !== '_eventName') {
-      event.params[prop] = decodedEvent[prop];
-    }
-  }
-
-  return event;
-};
+            event.params[prop] = decodedEvent[prop];
+          }
+        }
+      
+        return event;
+      };
