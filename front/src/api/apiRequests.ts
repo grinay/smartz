@@ -5,7 +5,6 @@ import {
 import {
     fetchCtorParamsFailure, fetchCtorParamsRequest, fetchCtorParamsSuccess, fetchCtorsFailure,
     fetchCtorsRequest, fetchCtorsSuccess,
-    fetchCtorSavedParamValues, fetchCtorSavedParamValuesFailure, fetchCtorSavedParamValuesSuccess,
 } from '../app/common/ctor-card/CtorsActions';
 import { fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess } from '../app/dapps/DappActions';
 import {
@@ -53,7 +52,7 @@ export function getConstructorParams(ctorId, deployId) {
 
       if (status === 200) {
         if (data.error) {
-          dispatch(constructError(deployId, data.error));
+          if (deployId !== null) dispatch(constructError(deployId, data.error));
           dispatch(fetchCtorParamsFailure(ctorId, data.error));
         } else {
           dispatch(fetchCtorParamsSuccess(ctorId, data));
@@ -61,39 +60,8 @@ export function getConstructorParams(ctorId, deployId) {
       }
     })
     .catch((error) => {
-      dispatch(constructError(deployId, error.message));
+      if (deployId !== null) dispatch(constructError(deployId, error.message));
       dispatch(fetchCtorParamsFailure(ctorId, error.message));
-    });
-
-  return result;
-}
-
-export function getConstructorSavedParamValues(ctorId) {
-  const result = fetch(`/constructors/${ctorId}/formdefaults`, undefined, 'get');
-
-  dispatch(fetchCtorSavedParamValues(ctorId));
-
-  result
-    .then((response) => {
-      const { data, status } = response;
-
-      if (status === 200) {
-        if (data.error) {
-          dispatch(fetchCtorSavedParamValuesFailure(ctorId, data.error));
-        } else {
-          dispatch(fetchCtorSavedParamValuesSuccess(ctorId, data.formData));
-        }
-      } else {
-        dispatch(fetchCtorSavedParamValuesFailure(ctorId, "status " + status));
-      }
-    })
-    .catch((error) => {
-      // FIXME: Restore error handling after API implemented in backend
-      //dispatch(fetchCtorSavedParamValuesFailure(ctorId, error.message));
-      //
-      // Temporary mock starts
-      dispatch(fetchCtorSavedParamValuesSuccess(ctorId, {}));
-      // Temporary mock ends
     });
 
   return result;

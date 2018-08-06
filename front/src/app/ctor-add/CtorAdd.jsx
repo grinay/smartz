@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 import Loader from '../common/loader/Loader';
+import {fetchCtorParamsSuccess} from '../../app/common/ctor-card/CtorsActions';
+import store from '../../store/store';
 
 import Alert from '../common/Alert';
 import * as api from '../../api/apiRequests';
@@ -19,7 +21,7 @@ class CtorAdd extends Component {
   }
 
   componentWillMount() {
-    if (this.id) api.getConstructorSavedParamValues(this.id);
+    if (this.id) api.getConstructorParams(this.id, null);
   }
 
   componentDidMount() {
@@ -28,8 +30,8 @@ class CtorAdd extends Component {
 
   submit({ formData }) {
     sendClickEvent(clickTypes.UPLOAD_ATTEMPT);
-    //// save form field after error
-    //this.setState({ formData }); // FIXME: dispatch?
+    // save form field after error
+    store.dispatch(fetchCtorParamsSuccess(this.id, formData));
 
     // clean alerts before new submit
     if (this.state.message) {this.setState({message: null});}
