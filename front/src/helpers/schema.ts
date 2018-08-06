@@ -10,6 +10,13 @@ export function getUiSchemaFromFunc(func: IFunction) {
     for (let input of func.inputs.items) {
       let item = {};
 
+      if (input.type === 'array' && 'ui:widget' in input) {
+        input.type = 'string';
+        input.realtype = 'array';
+        input.minLength = 1;
+        input.maxLength = 5000;
+      }
+
       if (typeof input === 'object' && 'ui:widget' in input) {
         item = {
           'ui:widget': input['ui:widget'],
