@@ -89,7 +89,7 @@ export default class MerkleRootWidget extends PureComponent {
             onChange={this.onChange}
           />
         </p>
-        {this.state.url ? (<p>File uploaded: <a href={this.state.url}>{this.state.url}</a></p>) : null}
+        {this.state.url ? (<p>File uploaded (<b style={{color: "red"}}>SAVE THIS LINK!</b>): <a href={this.state.url}>{this.state.url}</a></p>) : null}
         <p>{this.state.msg}</p>
       </div>
     );
