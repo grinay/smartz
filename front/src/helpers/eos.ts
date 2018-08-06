@@ -16,11 +16,11 @@ declare global {
 
 class EosClass {
   private network: any;
-  private configEosDapp: any;
   private eos: any;
   private identity: any;
   private url: string;
 
+  public configEosDapp: any;
   public accountName: any;
   public scatter: any = window.scatter;
   public currentIdentity: any;
