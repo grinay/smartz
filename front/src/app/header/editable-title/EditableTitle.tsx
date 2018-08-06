@@ -41,7 +41,8 @@ export default class EditableTitle extends React.PureComponent
     const newTitle: string = this.ref.innerText;
 
     if (newTitle.length > 0 && newTitle !== title) {
-      api.updateDapp(id, { title: newTitle });
+      api.updateDapp(id, { title: newTitle })
+        .then(() => api.getDapp(id));
     }
   }
 

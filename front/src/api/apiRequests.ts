@@ -123,7 +123,7 @@ export function updateDapp(dappId, data) {
   const result = fetch(`/dapps/${dappId}/update`, data, 'post');
 
   result
-    .then(() => getDapp(dappId))
+    .then()
     .catch((error) => console.error(error));
 
   return result;
