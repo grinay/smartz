@@ -36,3 +36,42 @@ export function tryParce(str) {
     return null;
   }
 }
+
+export function goToDocsRoute(route) {
+  switch (route) {
+    case 'contract-uploading-en':
+      return 'en/contract-uploading';
+
+    case 'simple-ico-contract-en':
+      return 'en/simple-ico';
+
+    case 'erc-20-token-en':
+      return 'en/erc-20-token';
+
+    case 'multisig-wallet-en':
+      return 'en/multisignature-wallet';
+
+    case 'simple-voting-en':
+      return 'en/simple-voting';
+
+    case 'contract-deploy-ru':
+      return 'simple-ico';
+
+    case 'contract-upload-ru':
+      return 'contract-upload';
+
+    case 'erc-20-token-ru':
+      return 'erc-20-token';
+
+    case 'multisignature-wallet-ru':
+      return 'multisignature-wallet';
+
+    case 'simple-voting-ru':
+      return 'simple-voting';
+
+    case 'equity-contract-ru':
+    case 'equity-contract-en':
+    default:
+      return '';
+  }
+}

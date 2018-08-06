@@ -13,6 +13,7 @@ import Deploy from './deploy/DeployContainer';
 import Login from './auth/login/LoginContainer';
 import CtorAdd from './ctor-add/CtorAdd';
 import Dashboard from './dashboard/DashboardContainer';
+import { goToDocsRoute } from '../helpers/utils';
 import Dapp from './dapps/DappContainer';
 import Docs from './docs/Docs';
 import { getMetamaskStatus } from '../helpers/eth';
@@ -103,7 +104,13 @@ class App extends Component {
             render={(props) => <Login metamaskStatus={metamaskStatus} {...props} />}
           />
 
-          <Route path="/docs/:docUri?" component={Docs} />
+          <Route
+            path="/docs/:docUri?"
+            component={(props) => {
+              window.location = `https://wiki.smartz.io/${goToDocsRoute(props.match.params.docUri)}`;
+            }
+            }
+          />
 
           <PrivateRoute
             path="/profile"
