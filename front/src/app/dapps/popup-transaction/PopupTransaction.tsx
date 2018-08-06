@@ -26,8 +26,9 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
     let isTransaction: boolean = 'tx_id' in record ? true : false;
 
     let result: any;
-    switch (record.status) {
-      case 'done':
+
+    if ('is_success' in record) {
+      if (record.is_success) {
         result = isTransaction
           ? <p className="result-status">Success</p>
           : (
@@ -43,18 +44,11 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
               )}
             </div>
           );
-        break;
-
-      case 'error':
+      } else {
         result = <p className="result-status error">{record.error}</p>;
-        break;
-
-      case 'process':
-        result = <p className="result-status">Mining</p>;
-        break;
-
-      default:
-        break;
+      }
+    } else {
+      result = <p className="result-status">Mining</p>;
     }
 
     return (
@@ -76,8 +70,7 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
         {/* content */}
         <div className="event">
           <p className={classNames('event-name', {
-            error: !record.is_success,
-            ok: record.is_success,
+            error: 'is_success' in record && !record.is_success,
           })}>
             {record.function_title}
             <sup className="event-extra">{record.function_title}</sup>

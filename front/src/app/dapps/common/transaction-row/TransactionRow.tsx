@@ -20,21 +20,25 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
     const { transaction, onClick } = this.props;
 
     let icon;
-    if (transaction.status === 'process') {
+    if ('is_success' in transaction) {
+      if (transaction.is_success) {
+        icon = null;
+      } else {
+        icon = (
+          <div className="transaction-icon">
+            <InlineSVG
+              className="error-icon"
+              src={require('../../../../assets/img/common/dapp/status-error.svg')}
+            />
+          </div>
+        );
+      }
+    } else {
       icon = (
         <div className="transaction-icon">
           <Loader
             className="tx-icon"
             width={'17px'}
-          />
-        </div>
-      );
-    } else if (transaction.status === 'error') {
-      icon = (
-        <div className="transaction-icon">
-          <InlineSVG
-            className="error-icon"
-            src={require('../../../../assets/img/common/dapp/status-error.svg')}
           />
         </div>
       );
@@ -45,7 +49,9 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
         <div className="transaction-row-wrapper flex-v" onClick={onClick(transaction)}>
           <p className="transaction-time">{formatTime(transaction.execution_datetime)}</p>
           {icon}
-          <p className={classNames('transaction-description', { error: transaction.status === 'error' })}>{transaction.function_title}</p>
+          <p className={classNames('transaction-description', {
+            error: 'is_success' in transaction && !transaction.is_success,
+          })}>{transaction.function_title}</p>
           <div className="transaction-hash">
             <AddressString str={'tx_id' in transaction ? transaction.tx_id : '-----'} />
           </div>

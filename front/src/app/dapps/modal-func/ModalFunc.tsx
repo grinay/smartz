@@ -142,20 +142,21 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
               dataFetch['error'] = error.toString();
 
               console.error('Error: ', error);
-            } else {
-              dataFetch['is_success'] = true;
-            }
-
-            if (funcType === 'ask') {
-              dataFetch['result'] = this.formatResultEth(func, response);
-
-              api.sendDappRequest(dapp.id, dataFetch);
-
-            } else if (funcType === 'write') {
-              dataFetch['tx_id'] = response;
 
               store.dispatch(transactionNew(dapp.id, dataFetch));
-              this.getReceipt(response, dataFetch);
+            } else {
+              if (funcType === 'ask') {
+                dataFetch['is_success'] = true;
+                dataFetch['result'] = this.formatResultEth(func, response);
+
+                api.sendDappRequest(dapp.id, dataFetch);
+
+              } else if (funcType === 'write') {
+                dataFetch['tx_id'] = response;
+
+                store.dispatch(transactionNew(dapp.id, dataFetch));
+                this.getReceipt(response, dataFetch);
+              }
             }
 
             // close modal window after execute function
@@ -227,6 +228,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
       if (null == receipt) {
         window.setTimeout(() => this.getReceipt(tx, dataFetch), 500);
       } else {
+        dataFetch['is_success'] = true;
         dataFetch['mining_datetime'] = (new Date()).toISOString();
         dataFetch['logs'] = receipt.logs;
         dataFetch['info'] = {
@@ -238,6 +240,11 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
             gas_used: receipt.gasUsed,
           },
         };
+
+        if (receipt.status === '0x0') {
+          dataFetch['is_success'] = false;
+          dataFetch['error'] = 'Fail';
+        }
 
         api.sendDappTransaction(dapp.id, dataFetch);
 
