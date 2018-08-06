@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { IS_ANDROID, IS_MOBILE_OS } from '../../helpers/detect-device';

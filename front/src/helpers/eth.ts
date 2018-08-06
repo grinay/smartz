@@ -1,21 +1,31 @@
-import React from 'react';
 import { decodeEvent } from 'ethjs-abi';
 
-export var web3 = window.Web3 ? new window.Web3(window.web3.currentProvider) : undefined;
+
+// tslint:disable:variable-name
+
+declare global {
+  // tslint:disable-next-line:interface-name
+  interface Window {
+    web3: any;
+    Web3: any;
+  }
+}
+
+export let web3 = window.Web3 ? new window.Web3(window.web3.currentProvider) : undefined;
 
 export const processControlForm = (
   contract_abi /* abi array */,
   function_spec /* ETHFunctionSpec */,
   form_data /* data from react-jsonschema-form */,
   contract_address,
-  callback
+  callback,
 ) => {
   // preparing args
 
   const transactionParameters = {
     // value: ???,     // amount of ether to send with
     // gas: ???,       // amount of gas
-    gasPrice: 5e9
+    gasPrice: 5e9,
   };
 
   // converts user input to web3-compatible value
@@ -54,7 +64,8 @@ export const processControlForm = (
   if (!(form_data instanceof Array)) throw new Error('form_data is not an array');
 
   if (function_spec.type !== undefined && function_spec.type === 'fallback') {
-    let result, value;
+    let value;
+    let result;
 
     if (form_data.length === 1) {
       value = form_data[0];
@@ -67,9 +78,9 @@ export const processControlForm = (
         {
           ...transactionParameters,
           value,
-          to: contract_address
+          to: contract_address,
         },
-        callback
+        callback,
       );
     } catch (e) {
       console.error(e);
@@ -85,8 +96,8 @@ export const processControlForm = (
   if (!function_abi) throw new Error('not found abi of function ' + function_spec.name);
 
   // get then delete 'Ether amount'(ethCount) prop from form_data
-  let form_data_arr = [],
-    value = '';
+  let form_data_arr = [];
+  let value = '';
   if (form_data.length > 0 && function_spec.payable) {
     // always last element in arr
     value = form_data[form_data.length - 1];
@@ -106,7 +117,7 @@ export const processControlForm = (
 
   // non-constant - there will be a transaction instead of a local call
   if (!function_abi.constant) {
-    if (value !== '') transactionParameters.value = value;
+    if (value !== '') transactionParameters['value'] = value;
 
     args_converted2abi.push(transactionParameters);
   }
@@ -133,7 +144,7 @@ export const processControlForm = (
 
 // ALSO: render box with processControlForm() for each dashboard function
 
-export const processResult = (res, outputs) => {
+export const processResult = (res?, outputs?) => {
   switch (typeof res) {
     case 'object':
       if (Array.isArray(res)) {
@@ -147,7 +158,7 @@ export const processResult = (res, outputs) => {
           resultText +=
             outputs && outputs[i] && outputs[i].title
               ? `${outputs[i].title}: ${res[i]}\n`
-              : res[[i]] + '\n';
+              : res[[i].toString()] + '\n';
         }
 
         return resultText;
@@ -165,7 +176,9 @@ export const processResult = (res, outputs) => {
 
 export const getNetworkId = (cb) => {
   web3.version.getNetwork((err, netId) => {
+    // tslint:disable-next-line:no-unused-expression
     err && console.error(err);
+    // tslint:disable-next-line:no-unused-expression
     netId && cb(netId);
   });
 };
@@ -241,63 +254,43 @@ export const getAccountAddress = () => {
   return web3.eth.defaultAccount;
 };
 
-export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
-  if (!hash || !netId) return hash;
+// export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
+//   if (!hash || !netId) return hash;
 
-  const explorerAddress = getNetworkEtherscanAddress(netId);
-  const networkName = getNetworkName(netId);
-  if (isAddress(hash)) {
-    return (
-      <span>
-        <a href={`${explorerAddress}/address/${hash}`
-        } target="_blank" >
-          {hash}
-          < /a>
-  {showNetworkName && ` (${networkName})`}
-  </span>
-        );
-  } else {
-  return hash;
-      }
-      };
-      
-export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
-  if (!hash || !netId) return hash;
-      
-        const explorerAddress = getNetworkEtherscanAddress(netId);
-        const networkName = getNetworkName(netId);
-  if (isTx(hash)) {
-    return (
-      <span>
-          <a href={`${explorerAddress}/tx/${hash}`
-          } target="_blank" >
-            {hash}
-            < /a>
-  {showNetworkName && ` (${networkName})`}
-  </span>
-          );
-  } else {
-  return hash;
-        }
-        };
-        
-        /**
-         * Return decoded event
-         *
-         * @param contract
-         * @param log
-         */
+//   const explorerAddress = getNetworkEtherscanAddress(netId);
+//   const networkName = getNetworkName(netId);
+//   if (isTx(hash)) {
+//     return (
+//       <span>
+//       <a href= {`${explorerAddress}/tx/${hash}`
+//   } target = "_blank" >
+//     { hash }
+//     < /a>
+//   { showNetworkName && ` (${networkName})` }
+//   </span>
+//     );
+//   } else {
+//   return hash;
+// }
+// };
+
+/**
+ * Return decoded event
+ *
+ * @param contract
+ * @param log
+ */
 export const decodeEventOfDapp = (contract, log) => {
   const abi = contract.abi;
-          let eventAbi = null;
-        
+  let eventAbi = null;
+
   for (let i = 0; i < abi.length; i++) {
-            let item = abi[i];
-          if (item.type !== 'event') continue;
-          let signature =
-            item.name +
-            '(' +
-            item.inputs
+    let item = abi[i];
+    if (item.type !== 'event') continue;
+    let signature =
+      item.name +
+      '(' +
+      item.inputs
         .map(function (input) {
           return input.type;
         })
@@ -305,35 +298,35 @@ export const decodeEventOfDapp = (contract, log) => {
       ')';
     let hash = web3.sha3(signature);
     if (hash === log.topics[0]) {
-            eventAbi = item;
-          break;
-        }
-      }
-    
+      eventAbi = item;
+      break;
+    }
+  }
+
   if (!eventAbi) {
     return false;
-        }
-      
-        let decodedEvent;
-      
+  }
+
+  let decodedEvent;
+
   try {
-            decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
-          } catch (e) {
+    decodedEvent = decodeEvent(eventAbi, log.data, log.topics, false);
+  } catch (e) {
     return false;
-        }
+  }
   let event = {
-            params: {},
-          name: decodedEvent._eventName
-        };
+    params: {},
+    name: decodedEvent._eventName,
+  };
   for (let prop in decodedEvent) {
     if (!decodedEvent.hasOwnProperty(prop)) {
       continue;
-        }
-    
+    }
+
     if (prop !== '_eventName') {
-            event.params[prop] = decodedEvent[prop];
-          }
-        }
-      
-        return event;
-      };
+      event.params[prop] = decodedEvent[prop];
+    }
+  }
+
+  return event;
+};

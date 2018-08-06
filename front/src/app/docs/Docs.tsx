@@ -1,5 +1,5 @@
 import axios from 'axios';
-import classNames from 'classnames';
+import * as classNames from 'classnames';
 import * as React from 'react';
 import * as ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';

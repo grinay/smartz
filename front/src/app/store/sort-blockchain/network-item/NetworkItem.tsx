@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import './NetworkItem.less';
@@ -6,7 +6,7 @@ import './NetworkItem.less';
 
 interface INetworkItemProps {
   name: any;
-  select: any;
+  select: boolean;
   img: any;
   onClick: () => void;
 }

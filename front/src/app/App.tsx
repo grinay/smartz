@@ -2,7 +2,7 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { getMetamaskStatus } from '../helpers/eth.js';
+import { getMetamaskStatus } from '../helpers/eth';
 import Auth from './auth/Auth';
 import Callback from './auth/callback/Callback';
 import Login from './auth/login/LoginContainer';
