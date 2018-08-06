@@ -11,7 +11,7 @@ import MyConstructors from './my-constructors/MyConstructorsContainer';
 import Profile from './profile/Profile';
 import Deploy from './deploy/DeployContainer';
 import Login from './auth/login/LoginContainer';
-import CtorAdd from './ctor-add/CtorAdd';
+import CtorAdd from './ctor-add/CtorAddContainer';
 import Dashboard from './dashboard/DashboardContainer';
 import Dapp from './dapps/DappContainer';
 import Docs from './docs/Docs';

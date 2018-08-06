@@ -31,4 +31,22 @@ export const fetchCtorParamsSuccess = (ctorId, ctorParams) => ({
   ctorId,
   ctorParams
 });
+
+// Fetching constructor's saved parameter values
+export const fetchCtorSavedParamValues = (ctorId) => ({
+  type: 'FETCH_CTOR_VALUES_REQUEST',
+  ctorId
+});
+
+export const fetchCtorSavedParamValuesFailure = (ctorId, error) => ({
+  type: 'FETCH_CTOR_VALUES_FAILURE',
+  ctorId,
+  error
+});
+
+export const fetchCtorSavedParamValuesSuccess = (ctorId, ctorParamValues) => ({
+  type: 'FETCH_CTOR_VALUES_SUCCESS',
+  ctorId,
+  ctorParamValues
+});
 //
