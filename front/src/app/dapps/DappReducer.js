@@ -124,12 +124,13 @@ const dapps = (state = initState, action) => {
         let status;
         let key;
 
-        if (action.result.is_success) {
+
+        if ('is_success' in action.result) {
+          key = generateId(20);
+          status = action.result.is_success ? 'process' : 'error';
+        } else {
           key = action.result.tx_id;
           status = 'process';
-        } else {
-          key = generateId(20);
-          status = 'error';
         }
 
         dapp.transactions.set(key, { ...action.result, status })

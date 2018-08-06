@@ -68,9 +68,9 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
               src={require('../../../../assets/img/common/components/copy.svg')}
             />
           </button>
-          <a
+          {/* <a
             className="round-btn link flex"
-            // href={`${getNetworkEtherscanAddress(dapp.network_id)}/tx/${transaction.tx_id}`}
+            href={`${getNetworkEtherscanAddress(dapp.network_id)}/tx/${transaction.tx_id}`}
             target="_blank"
             aria-label="Search etherscan"
           >
@@ -78,7 +78,7 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
               className="etherscan-icon"
               src={require('../../../../assets/img/common/etherscan.svg')}
             />
-          </a>
+          </a> */}
         </p>
       </div>
     );
