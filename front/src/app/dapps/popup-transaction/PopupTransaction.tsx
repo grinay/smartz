@@ -15,6 +15,30 @@ interface IPopupTransactionProps {
 }
 
 export default class PopupTransaction extends React.PureComponent<IPopupTransactionProps, {}> {
+  constructor(props) {
+    super(props);
+
+    this.onKeyDown = this.onKeyDown.bind(this);
+  }
+
+  public onKeyDown(event) {
+    const { isOpen, onClose } = this.props;
+
+    if (event.keyCode === 27 && isOpen) {
+      onClose();
+      return;
+    }
+  }
+
+  public componentWillMount() {
+    document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  public componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
+  }
+
+
   public render() {
     const { onClose, isOpen, record } = this.props;
 
