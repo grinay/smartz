@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import InlineSVG from 'svg-inline-react';
 
+import { IS_MOBILE_OS } from '../../../helpers/detect-device';
 import history from '../../../helpers/history';
 import Auth from '../../auth/Auth';
 import ImageDefault from '../image-default/ImageDefault';
@@ -11,35 +12,38 @@ import './CtorCard.less';
 
 interface ICtorCardProps {
   ctor: any;
+  onClick: () => void;
 }
 
-class CtorCard extends React.Component<ICtorCardProps, {}> {
 
-  public tryRequire(path: string) {
-    try {
-      return require(`${path}`);
-    } catch (err) {
-      return null;
-    }
+export default class CtorCard extends React.Component<ICtorCardProps, {}> {
+  constructor(props) {
+    super(props);
+
+    // this.goToDeploy = this.goToDeploy.bind(this);
   }
 
+  // public goToDeploy() {
+  //   const { ctor } = this.props;
+
+  //   if (IS_MOBILE_OS) {
+
+  //   }
+
+  //   history.push(`/deploy/${ctor.id}`);
+  // }
+
   public render() {
-    const { ctor } = this.props;
+    const { ctor, onClick } = this.props;
 
     const isAuthenticated = Auth.isAuthenticated();
     const userId = isAuthenticated && Auth.userProfile ? Auth.userProfile['user_id'] : -1;
 
     return (
-      <article className="ctor-card">
-        <Link to={`/deploy/${ctor.id}`} className="ctor-card__link screen">
+      <article className="ctor-card" onClick={onClick}>
+        <div className="ctor-card__link screen">
+          {/* <Link to={`/deploy/${ctor.id}`} className="ctor-card__link screen"> */}
           <div className="ctor-card__img flex">
-            {/* {ctor.image && this.tryRequire(`./img/${ctor.image}`) ? (
-              <img src={require(`./img/${ctor.image}`)} alt={`${ctor.name} dapp`} />
-            ) : (
-                <div className="empty_img flex">
-                  <p>{ctor.name.charAt(0).toUpperCase()}</p>
-                </div>
-              )} */}
             <ImageDefault src={ctor.image} name={ctor.name} />
           </div>
           <section className="ctor-card__description">
@@ -73,10 +77,9 @@ class CtorCard extends React.Component<ICtorCardProps, {}> {
               </div>
             </div>
           </section>
-        </Link>
+          {/* </Link> */}
+        </div>
       </article>
     );
   }
 }
-
-export default CtorCard;

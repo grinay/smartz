@@ -42,7 +42,7 @@ export default class MyConstructors extends React.Component
             <ul className="ctor-list">
               {ctors.filter((el) => isAuthenticated && el.user_id === userId).map((el, i) => (
                 <li key={i} className="ctor-item">
-                  <CtorCard key={i} ctor={el} />
+                  <CtorCard key={i} ctor={el} onClick={() => 'df'} />
                 </li>
               ))}
             </ul>

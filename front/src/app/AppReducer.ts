@@ -4,6 +4,7 @@ const initState = {
     type: 'simple',
     id: null,
   },
+  trustPopup: null,
 };
 
 const app = (state = initState, action) => {

@@ -1,13 +1,16 @@
 import { filter } from 'lodash';
 import * as React from 'react';
 
+import { duration } from '../../../node_modules/moment';
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
 import CtorCard from '../common/ctor-card/CtorCard';
 import DevBlock from '../common/dev-block/DevBlock';
 import Loader from '../common/loader/Loader';
+import PopupContainer from '../common/popup/PopupContainer';
 import Banner from './banner/Banner';
 import CustomContract from './custom-contract/CustomContract';
+import PopupTrust from './popup-trust/PopupTrust';
 import SortBlockchain from './sort-blockchain/SortBlockchain';
 
 import './Store.less';
@@ -19,6 +22,7 @@ interface IStoreProps {
 
 interface IStoreState {
   blockchain: any;
+  isOpenPopup: boolean;
 }
 
 export default class Store extends React.Component<IStoreProps, IStoreState> {
@@ -27,12 +31,31 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
 
     this.state = {
       blockchain: blockchains.ethereum,
+      isOpenPopup: false,
     };
 
     this.setBlockchain = this.setBlockchain.bind(this);
+    this.goToDeploy = this.goToDeploy.bind(this);
+    this.closePopup = this.closePopup.bind(this);
   }
 
-  public setBlockchain(blockchain) {
+  private goToDeploy(ctorId: any) {
+    return () => {
+      this.setState({ isOpenPopup: true });
+
+    };
+    // if (IS_MOBILE_OS) {
+
+    // }
+
+    // history.push(`/deploy/${ctor.id}`);
+  }
+
+  private closePopup() {
+    this.setState({ isOpenPopup: false });
+  }
+
+  private setBlockchain(blockchain) {
     return () => {
       this.setState({ blockchain });
     };
@@ -66,7 +89,7 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
             <ul className="ctor-list">
               {filteredCtors.filter((el) => el.is_public).map((el, i) => (
                 <li key={i} className="ctor-item">
-                  <CtorCard ctor={el} />
+                  <CtorCard ctor={el} onClick={this.goToDeploy(el.id)} />
                 </li>
               ))}
               {/* Add custom contract */}
@@ -83,7 +106,27 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
         <section className="dev-section">
           <DevBlock />
         </section>
-      </main>
-    );
+
+        {/* Popup */}
+        {/* {this.state.isOpenPopup && */}
+        <PopupContainer
+          isOpen={this.state.isOpenPopup}
+          onClose={this.closePopup}
+          blur={{
+            size: 5,
+            block: 'js-app',
+          }}
+          animationWindow={{
+            duration: 500,
+            classStart: 'popup-trust-start',
+            classEnd: 'popup-trust-end',
+          }
+          }
+        >
+          <PopupTrust />
+        </PopupContainer>;
+    {/* } */}
+      </main > ;
+    )
   }
 }

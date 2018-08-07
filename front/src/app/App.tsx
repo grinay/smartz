@@ -96,7 +96,7 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     return (
-      <main className="app">
+      <main className="app" id="js-app">
         {/* Install extension */}
         {metamaskStatus === 'noMetamask' && (
           <InstallExtension />
