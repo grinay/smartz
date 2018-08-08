@@ -1,4 +1,3 @@
-import { find } from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -7,7 +6,10 @@ import { viewFuncResult } from './DappActions';
 
 
 const mapStateToProps = (state, ownProps) => {
-  const dapp = find(state.dapps.dappList, { id: ownProps.match.params.id });
+  let dapp = null;
+  if (state.dapps.dappList != null) {
+    dapp = state.dapps.dappList.get(ownProps.match.params.id);
+  }
 
   return {
     dapp,

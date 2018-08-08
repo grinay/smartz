@@ -1,11 +1,12 @@
 import { cloneDeep, find, findIndex } from 'lodash';
 
+import { dappList } from '../../api/mock/dapps';
 import { generateId } from '../../helpers/utils';
 
 
 const initState = {
   fetchStatus: 'init',
-  dappList: [],
+  dappList: null,
   currentDapp: {
     id: null,
     selectedTransaction: null,
@@ -34,20 +35,26 @@ const dapps = (state = initState, action) => {
     case 'FETCH_DAPPS_SUCCESS':
       nextState.fetchStatus = 'success';
       nextState.error = '';
+
+      if (nextState.dappList === null) {
+        nextState.dappList = new Map();
+      }
+
       if (!Array.isArray(action.dapps)) {
         action.dapps = [action.dapps];
       }
 
       action.dapps.forEach((dapp) => {
-        const i = findIndex(nextState.dappList, { id: dapp.id });
-
-        if (i >= 0) {
-          nextState.dappList[i] = Object.assign(nextState.dappList[i], dapp);
+        if (nextState.dappList.has(dapp.id)) {
+          nextState.dappList.set(dapp.id, {
+            ...nextState.dappList.get(dapp.id),
+            ...dapp,
+          });
         } else {
           dapp.requests = null;
           dapp.transactions = null;
 
-          nextState.dappList.push(dapp);
+          nextState.dappList.set(dapp.id, dapp);
         }
       });
 
@@ -57,12 +64,16 @@ const dapps = (state = initState, action) => {
     case 'VIEW_FUNC_RESULT':
       const { dappId, funcName, result } = action;
 
-      let dapp = find(nextState.dappList, { id: dappId });
-      if (dapp) {
+      if (nextState.dappList.has(dappId)) {
+        let dapp = nextState.dappList.get(dappId);
+
         if (dapp.funcResults && dapp.funcResults[funcName] === result) {
           return state;
         } else {
-          if (!dapp.funcResults) dapp.funcResults = {};
+          if (!dapp.funcResults) {
+            dapp.funcResults = {};
+          }
+
           dapp.funcResults[funcName] = result;
         }
       }
@@ -71,9 +82,9 @@ const dapps = (state = initState, action) => {
 
 
     case 'ADD_REQUESTS':
-      dapp = find(nextState.dappList, { id: action.dappId });
+      if (nextState.dappList.has(action.dappId)) {
+        let dapp = nextState.dappList.get(action.dappId);
 
-      if (dapp) {
         let arr = action.requests;
 
         for (let i = 0; i < arr.length; i++) {
@@ -87,9 +98,9 @@ const dapps = (state = initState, action) => {
 
 
     case 'ADD_TRANSACTIONS':
-      dapp = find(nextState.dappList, { id: action.dappId });
+      if (nextState.dappList.has(action.dappId)) {
+        let dapp = nextState.dappList.get(action.dappId);
 
-      if (dapp) {
         if (dapp.transactions === null) {
           dapp.transactions = new Map();
         }
@@ -116,9 +127,9 @@ const dapps = (state = initState, action) => {
 
 
     case 'TRANSACTION_NEW':
-      dapp = find(nextState.dappList, { id: action.dappId });
+      if (nextState.dappList.has(action.dappId)) {
+        let dapp = nextState.dappList.get(action.dappId);
 
-      if (dapp) {
         if (dapp.transactions === null) {
           dapp.transactions = new Map();
         }

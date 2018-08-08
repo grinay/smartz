@@ -59,9 +59,7 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
     if (dapps) {
       let filteredDapps = [];
 
-      for (let i = 0; i < dapps.length; i++) {
-        let dapp = dapps[i];
-
+      dapps.forEach((dapp) => {
         switch (dapp.blockchain) {
           case blockchains.ethereum:
             if (metamaskStatus !== 'noMetamask') {
@@ -76,11 +74,9 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
           default:
             break;
         }
-      }
-
-      this.setState({
-        filteredDapps,
       });
+
+      this.setState({ filteredDapps });
     }
   }
 
