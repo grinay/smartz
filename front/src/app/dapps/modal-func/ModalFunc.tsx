@@ -47,7 +47,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
       arrOfArgs.push({
         title: data.title,
         description: 'description' in data ? data.description : '',
-        value: arg,
+        value: arg.toString(),
       });
     }
 
@@ -226,7 +226,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
       }
 
       if (null == receipt) {
-        window.setTimeout(() => this.getReceipt(tx, dataFetch), 500);
+        window.setTimeout(() => this.getReceipt(tx, dataFetch), 5000);
       } else {
         dataFetch['is_success'] = true;
         dataFetch['mining_datetime'] = (new Date()).toISOString();
