@@ -58,7 +58,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
             {viewFuncStandart.map((func, i) => {
               return (
                 <li key={i} className="card-row">
-                  <p className="card-label">
+                  <p className="card-label standart">
                     <span className="card-text">{func.title}</span>
                     <InlineSVG
                       data-tip={func.description}
