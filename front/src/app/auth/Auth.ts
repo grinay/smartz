@@ -8,6 +8,8 @@ class Auth {
   public redirectUri: string;
 
   constructor() {
+    this.redirectUri = null;
+
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);

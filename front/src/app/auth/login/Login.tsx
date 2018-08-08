@@ -124,7 +124,7 @@ class Login extends React.Component<ILoginProps, {}> {
     const { error } = this.props.login;
 
     if (Auth.isAuthenticated()) {
-      return <Redirect to={`${Auth.redirectUri}`} />;
+      return <Redirect to={Auth.redirectUri != null ? `${Auth.redirectUri}` : '/'} />;
     }
 
     return (
