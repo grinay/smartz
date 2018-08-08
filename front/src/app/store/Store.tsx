@@ -4,6 +4,7 @@ import * as React from 'react';
 import { duration } from '../../../node_modules/moment';
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
+import history from '../../helpers/history';
 import CtorCard from '../common/ctor-card/CtorCard';
 import DevBlock from '../common/dev-block/DevBlock';
 import Loader from '../common/loader/Loader';
@@ -41,14 +42,14 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
 
   private goToDeploy(ctorId: any) {
     return () => {
-      this.setState({ isOpenPopup: true });
+      history.push(`/deploy/${ctorId}`);
+      // this.setState({ isOpenPopup: true });
 
     };
     // if (IS_MOBILE_OS) {
 
     // }
 
-    // history.push(`/deploy/${ctor.id}`);
   }
 
   private closePopup() {
