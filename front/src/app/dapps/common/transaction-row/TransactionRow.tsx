@@ -21,18 +21,18 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
 
     let icon;
     if ('is_success' in transaction) {
-      if (transaction.is_success) {
-        icon = null;
-      } else {
-        icon = (
-          <div className="transaction-icon">
-            <InlineSVG
-              className="error-icon"
-              src={require('../../../../assets/img/common/dapp/status-error.svg')}
-            />
-          </div>
-        );
-      }
+      const path = transaction.is_success
+        ? require('../../../../assets/img/common/dapp/status-green.svg')
+        : require('../../../../assets/img/common/dapp/status-red.svg');
+
+      icon = (
+        <div className="transaction-icon">
+          <InlineSVG
+            className="error-icon"
+            src={path}
+          />
+        </div>
+      );
     } else {
       icon = (
         <div className="transaction-icon">

@@ -46,7 +46,6 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
       return null;
     }
 
-    window.scrollTo(0, 300);
     let isTransaction: boolean = 'tx_id' in record ? true : false;
 
     let result: any;
@@ -72,7 +71,12 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
         result = <p className="result-status error">{record.error}</p>;
       }
     } else {
-      result = <p className="result-status">Mining</p>;
+      result = (
+        <div className="flex-v">
+          <Loader className="loader-result" width={'17px'} />
+          <p className="result-status" > Waiting for miners...</p >
+        </div>
+      );
     }
 
     return (
