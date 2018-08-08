@@ -121,13 +121,11 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
             duration: 500,
             classStart: 'popup-trust-start',
             classEnd: 'popup-trust-end',
-          }
-          }
+          }}
         >
           <PopupTrust />
-        </PopupContainer>;
-    {/* } */}
-      </main > ;
-    )
+        </PopupContainer>
+      </main >
+    );
   }
 }
