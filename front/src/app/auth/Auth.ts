@@ -5,6 +5,7 @@ const jwtDecode = require('jwt-decode');
 class Auth {
   // todo maybe do in another way?
   public userProfile;
+  public redirectUri: string;
 
   constructor() {
     this.login = this.login.bind(this);
@@ -17,7 +18,8 @@ class Auth {
 
   public login(redirectUri = '/') {
     // set redirect route after login
-    localStorage.setItem('route_after_login', redirectUri);
+    this.redirectUri = redirectUri;
+
     history.replace('/login');
   }
 
@@ -37,8 +39,6 @@ class Auth {
     localStorage.setItem('access_token2', token);
     localStorage.setItem('access_token_decoded', JSON.stringify(authResult));
     localStorage.setItem('expires_at2', JSON.stringify(authResult.expires_at * 1000));
-    // navigate to the redirect route
-    history.replace(localStorage.getItem('route_after_login'));
   }
 
   public getAccessToken() {
