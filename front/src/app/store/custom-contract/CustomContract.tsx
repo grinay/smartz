@@ -23,7 +23,6 @@ export default class CustomContract extends React.PureComponent {
           // send click event
           sendClickEvent(clickTypes.CUSTOM_CONTRACT);
 
-          /* tslint:disable */
           window.location.href = 'mailto:hello@smartz.io';
         }}>
         <div className="ctor-card__link screen">

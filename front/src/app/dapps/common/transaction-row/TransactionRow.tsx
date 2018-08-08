@@ -52,7 +52,7 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
           <p className={classNames('transaction-description', {
             error: 'is_success' in transaction && !transaction.is_success,
           })}>{transaction.function_title}</p>
-          <div className="transaction-hash">
+          <div className="transaction-hash flex-v">
             <AddressString str={'tx_id' in transaction ? transaction.tx_id : '-----'} />
           </div>
         </div>
