@@ -21,7 +21,11 @@ export interface IDapp {
   blockchain: string;
   compiler_optimization: boolean;
   compiler_version: string;
-  constructor: object;
+  constructor: {
+    name: string;
+    description: string;
+    image: string;
+  };
   constructor_id: string;
   contract_name: string;
   ctor: object;

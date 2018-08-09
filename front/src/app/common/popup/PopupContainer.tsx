@@ -13,11 +13,17 @@ interface IPopupContainerProps {
   blur?: {
     size: number;
     block: string;
+    duration: number;
   };
   animationWindow?: {
     duration: number;
-    classStart: string;
-    classEnd: string;
+    styleStart: object;
+    styleEnd: object;
+  };
+  animationBackdrop?: {
+    duration: number;
+    styleStart: object;
+    styleEnd: object;
   };
 }
 
@@ -29,7 +35,10 @@ export default class PopupContainer extends React.PureComponent<IPopupContainerP
     return (
       <Transition
         in={isOpen}
-        timeout={animationWindow.duration}
+        timeout={{
+          enter: 0,
+          exit: animationWindow.duration,
+        }}
         unmountOnExit={true}
       >
         {(state) => <Popup state={state} {...this.props} />}

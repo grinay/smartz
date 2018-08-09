@@ -2,24 +2,26 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import InlineSVG from 'svg-inline-react';
 
+import { IDapp } from '../../../helpers/entities/dapp';
+
 import './MinimalFooter.less';
 
 
 interface IMinimalFooterProps {
-  ctorId: any;
+  dapp: IDapp;
 }
 
 
 export default class MinimalFooter extends React.PureComponent<IMinimalFooterProps, {}> {
   public render() {
-    const { ctorId } = this.props;
+    const { dapp } = this.props;
 
     return (
       <footer className="minimal-footer">
         <section className="contract-data">
           <p className="contract-data-top">
-            <span className="contract-name">Simple Voting contract</span>
-            <Link to={`/deploy/${ctorId}`} className="contract-link">
+            <span className="contract-name">{`${dapp.constructor.name} contract`}</span>
+            <Link to={`/deploy/${dapp.constructor_id}`} className="contract-link">
               <button
                 className="contract-add"
                 type="button"

@@ -33,7 +33,7 @@ export default class PopupTrust extends React.PureComponent<{}, {}> {
         <p className="description">
           To use Smartz on mobile please open it through Trust wallet browser.
     </p>
-        <a className="link" href="#" aria-label="Click to install app">
+        <a className="link" href={link} aria-label="Click to install app">
           <InlineSVG
             src={pic}
           />

@@ -1,7 +1,6 @@
 import { filter } from 'lodash';
 import * as React from 'react';
 
-import { duration } from '../../../node_modules/moment';
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
 import history from '../../helpers/history';
@@ -42,8 +41,8 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
 
   private goToDeploy(ctorId: any) {
     return () => {
-      history.push(`/deploy/${ctorId}`);
-      // this.setState({ isOpenPopup: true });
+      // history.push(`/deploy/${ctorId}`);
+      this.setState({ isOpenPopup: true });
 
     };
     // if (IS_MOBILE_OS) {
@@ -109,18 +108,23 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
         </section>
 
         {/* Popup */}
-        {/* {this.state.isOpenPopup && */}
         <PopupContainer
           isOpen={this.state.isOpenPopup}
           onClose={this.closePopup}
           blur={{
             size: 5,
             block: 'js-app',
+            duration: 300,
           }}
           animationWindow={{
-            duration: 500,
-            classStart: 'popup-trust-start',
-            classEnd: 'popup-trust-end',
+            duration: 300,
+            styleStart: { bottom: '-360px' },
+            styleEnd: { bottom: 0 },
+          }}
+          animationBackdrop={{
+            duration: 300,
+            styleStart: { opacity: 0 },
+            styleEnd: { opacity: 1 },
           }}
         >
           <PopupTrust />

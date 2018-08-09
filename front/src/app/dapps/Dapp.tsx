@@ -201,7 +201,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
                 onSelectRecord={this.onSelectRecord}
               />
             </div>
-            <MinimalFooter ctorId={dapp.constructor_id} />
+            <MinimalFooter dapp={dapp} />
             <PopupTransaction
               isOpen={selectedFunc === null && selectedRecord != null ? true : false}
               onClose={this.onClose('popup')}
