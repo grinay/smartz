@@ -43,13 +43,7 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
   private goToDeploy(ctorId: any) {
     return () => {
       history.push(`/deploy/${ctorId}`);
-      // this.setState({ isOpenPopup: true });
-
     };
-    // if (IS_MOBILE_OS) {
-
-    // }
-
   }
 
   private closePopup() {
@@ -90,7 +84,7 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
             <ul className="ctor-list">
               {filteredCtors.filter((el) => el.is_public).map((el, i) => (
                 <li key={i} className="ctor-item">
-                  <CtorCard ctor={el} onClick={this.goToDeploy(el.id)} />
+                  <CtorCard ctor={el} />
                 </li>
               ))}
               {/* Add custom contract */}

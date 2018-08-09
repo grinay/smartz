@@ -6,14 +6,6 @@ import { sendClickEvent } from '../../../helpers/statictics';
 import './CustomContract.less';
 
 
-// declare global {
-//   // tslint:disable-next-line:interface-name
-//   interface Window {
-//     location: any;
-//   }
-// }
-
-
 export default class CustomContract extends React.PureComponent {
   public render() {
     return (

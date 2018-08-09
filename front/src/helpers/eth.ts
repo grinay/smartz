@@ -254,27 +254,6 @@ export const getAccountAddress = () => {
   return web3.eth.defaultAccount;
 };
 
-// export const makeTxEtherscanLink = (hash, netId, showNetworkName = false) => {
-//   if (!hash || !netId) return hash;
-
-//   const explorerAddress = getNetworkEtherscanAddress(netId);
-//   const networkName = getNetworkName(netId);
-//   if (isTx(hash)) {
-//     return (
-//       <span>
-//       <a href= {`${explorerAddress}/tx/${hash}`
-//   } target = "_blank" >
-//     { hash }
-//     < /a>
-//   { showNetworkName && ` (${networkName})` }
-//   </span>
-//     );
-//   } else {
-//   return hash;
-// }
-// };
-
-
 /**
  * Return decoded event
  *

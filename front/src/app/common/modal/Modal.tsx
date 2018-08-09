@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { Key } from '../../../types/enums';
+
 import './Modal.less';
 
 
@@ -25,7 +27,7 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
   public onKeyDown(event) {
     const { isOpen, onClose } = this.props;
 
-    if (event.keyCode === 27 && isOpen) {
+    if (event.keyCode === Key.ESC && isOpen) {
       onClose();
       return;
     }
