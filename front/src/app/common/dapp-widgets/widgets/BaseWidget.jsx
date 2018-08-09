@@ -1,6 +1,29 @@
 import { PureComponent } from 'react';
+import React from 'react';
 
-import { makeEtherscanLink } from '../../../../helpers/eth';
+import {
+  getNetworkEtherscanAddress, getNetworkName, isAddress
+} from '../../../../helpers/eth';
+
+export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
+  if (!hash || !netId) return hash;
+
+  const explorerAddress = getNetworkEtherscanAddress(netId);
+  const networkName = getNetworkName(netId);
+  if (isAddress(hash)) {
+    return (
+      <span>
+        <a href={`${explorerAddress}/address/${hash}`} target="_blank" >
+          {hash}
+        </a>
+        {showNetworkName && ` (${networkName})`}
+      </span>
+    );
+  } else {
+    return hash;
+  }
+};
+
 
 export default class BaseWidget extends PureComponent {
   constructor(props) {

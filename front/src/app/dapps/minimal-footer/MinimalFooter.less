@@ -1,0 +1,153 @@
+@import '../../../styles/variables.less';
+
+.minimal-footer {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    padding: 27px 0 30px;
+
+    .info {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        padding-top: 11px;
+
+        border-top: 1px solid rgba(0, 0, 0, .1);
+
+        font-family: @f-cera-pro-400;
+        font-size: 12px;
+        line-height: 16px;
+
+        .copyright {
+            margin: 0 20px 0 0;
+
+            color: #171718;
+        }
+
+        & > a {
+            text-decoration: none;
+
+            font-family: inherit;
+        }
+
+        .mail {
+            color: #0C7186;
+
+            &:hover, &:focus {
+                color: #0A3740;
+            }
+        }
+
+        .design {
+            margin: 0 0 0 auto;
+
+            color: #171718;
+
+            a {
+                position: relative;
+
+                text-decoration: none;
+
+                color: inherit;
+
+                font: inherit;
+
+                &::after {
+                    position: absolute;
+                    bottom: -2px;
+                    left: 0;
+
+                    display: block;
+
+                    width: 100%;
+                    height: 1px;
+
+                    content: '';
+
+                    background-color: rgba(12, 113, 134, .3);
+                }
+
+                &:hover::after, &:focus::after {
+                    background-color: #0A3740;
+                }
+            }
+        }
+    }
+
+
+    .contract-data {
+        padding-bottom: 19px;
+        .contract-data-top, .contract-data-version {
+            margin: 0;
+        }
+
+        .contract-data-top {
+            display: flex;
+            align-items: center;
+
+            margin-bottom: 5px;
+
+            font-family: @f-cera-pro-700;
+
+            .contract-name {
+                opacity: .9;
+                color: #000000;
+
+                font-size: 16px;
+                line-height: 20px;
+            }
+
+            .contract-link {
+                text-decoration: none;
+
+                .contract-add {
+                    display: flex;
+                    align-items: center;
+
+                    margin-left: 15px;
+                    padding: 0 5px;
+
+                    cursor: pointer;
+
+                    color: #0C7186;
+                    border: 0;
+                    outline: 0;
+                    background-color: transparent;
+
+                    font-family: inherit;
+                    font-size: 13px;
+                    line-height: 20px;
+
+                    .plus-icon {
+                        width: 14px;
+                        height: 14px;
+                        margin-right: 5px;
+
+                        svg {
+                            fill: #0C7186;
+                        }
+                    }
+
+                    &:hover, &:focus {
+                        color: #0A3740;
+
+                        svg {
+                            fill: #0A3740;
+                        }
+                    }
+                }
+            }
+        }
+
+        .contract-data-version {
+            opacity: .5;
+            color: #000000;
+
+            font-family: @f-cera-pro-400;
+            font-size: 12px;
+            line-height: 16px;
+        }
+    }
+}

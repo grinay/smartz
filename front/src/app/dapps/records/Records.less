@@ -1,0 +1,74 @@
+@import '../../../styles/variables.less';
+
+.record {
+    overflow: hidden;
+
+    box-sizing: border-box;
+    margin-top: 12px;
+
+    border-radius: 8px;
+    background-color: #FFFFFF;
+
+    .record-wrapper {
+        box-sizing: border-box;
+        padding: 0 21px;
+    }
+
+    .record-top {
+        display: flex;
+
+        margin-bottom: 10px;
+    }
+
+    .record-btn-tab {
+        display: block;
+
+        padding: 25px 20px 5px 20px;
+
+        cursor: pointer;
+        text-align: left;
+
+        color: lighten(#0C7186, 10);
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+
+        font-family: @f-cera-pro-500;
+        font-size: 15px;
+        line-height: 19px;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &.active {
+            color: #000000;
+            background-color: #E6F0F2;
+        }
+    }
+
+    .record-list {
+        margin: 0;
+        padding: 0 0 15px;
+
+        list-style: none;
+
+        .empty {
+            text-align: center;
+
+            color: lightgray;
+
+            font-size: 17px;
+            line-height: 17px;
+        }
+    }
+}
+
+
+@media (max-width: @dapp-mobile-width-min) {
+    .record {
+        .record-wrapper {
+            padding: 0;
+        }
+    }
+}
