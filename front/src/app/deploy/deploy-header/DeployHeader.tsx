@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import ImageDefault from '../../common/image-default/ImageDefault';
+
 import './DeployHeader.less';
 
 
@@ -13,15 +15,12 @@ export default class DeployHeader extends React.PureComponent<IDeployHeaderProps
 
     return (
       <section className="deploy-header flex">
-        {ctor.image && (
-          <div className="logo">
-            <img
-              className="img"
-              src={require(`../../common/ctor-card/img/${ctor.image}`)}
-              alt={`${ctor.name} contract`}
-            />
-          </div>
-        )}
+        <div className="logo">
+          {<ImageDefault
+            src={ctor.image}
+            name={ctor.name}
+          />}
+        </div>
         {ctor.name && (
           <div className={'title'}>
             <h2 className="ctor-title">{ctor.name}</h2>

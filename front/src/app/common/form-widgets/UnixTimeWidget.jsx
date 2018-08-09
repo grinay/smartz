@@ -17,7 +17,7 @@ export default class UnixTimeWidget extends Component {
 
             this.props.onChange(formatDate);
         } catch (error) {
-            this.val = 'choose date'
+            this.val = valueMoment;
 
             this.props.onChange(this.val);
         }

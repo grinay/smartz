@@ -1,7 +1,9 @@
 @import '../../styles/variables.less';
 
 .page-header {
-    height: @header-height;
+    flex-wrap: wrap;
+
+    min-height: @header-height;
 
     background-color: white;
     box-shadow: inset 0 -1px #DDDDDD;
@@ -21,7 +23,7 @@
     .title-main {
         flex: 1;
 
-        padding-left: 20px;
+        padding: 6px 7px;
 
         text-align: left;
         white-space: nowrap;
@@ -38,7 +40,7 @@
     .main-navigation {
         overflow-x: auto;
 
-        height: 100%;
+        height: 70px;
 
         .main-navigation__list {
             flex: 1;
@@ -90,10 +92,14 @@
                         color: rgba(0,0,0,.8);
                     }
 
-                    .lock-img > svg {
-                        width: 11px;
-                        height: 14px;
-                        margin-right: 4px;
+                    .lock-img {
+                        display: inline-block;
+
+                        svg {
+                            width: 11px;
+                            height: 14px;
+                            margin-right: 4px;
+                        }
                     }
                 }
 
@@ -107,22 +113,22 @@
     }
 }
 
-@media (max-width: @screen-lg) {
-    .page-header {
-        flex-wrap: wrap;
+// @media (max-width: 100px) {
+//     .page-header {
+//         flex-wrap: wrap;
 
-        height: @header-height*2;
+//         height: @header-height*2;
 
-        .main-navigation {
-            flex-basis: 100%;
-            order: 3;
+//         .main-navigation {
+//             flex-basis: 100%;
+//             order: 3;
 
-            height: 78px;
-        }
+//             height: 78px;
+//         }
 
-        .user-block {
-            order: 2;
-        }
-    }
-}
+//         .user-block {
+//             order: 2;
+//         }
+//     }
+// }
 

@@ -7,6 +7,6 @@ export const requestsConfig = {
   API_URL:
     process.env.NODE_ENV === 'development'
       ? // look for this const in .env file
-        `${process.env.API_URL_DEV}`
+      `${process.env.API_URL_DEV}`
       : window.location.origin + '/api'
 };

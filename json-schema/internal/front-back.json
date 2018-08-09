@@ -113,7 +113,23 @@
                 "constant": { "type": "boolean" },
                 "payable": { "type": "boolean" },
                 "inputs": { "$ref": "#/definitions/ETHFunctionArgumentList" },
-                "outputs": { "$ref": "#/definitions/ETHFunctionArgumentList" }
+                "outputs": { "$ref": "#/definitions/ETHFunctionArgumentList" },
+                "icon": {
+                    "title": "Function icon",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "pack": {
+                            "type": "string",
+                            "enum": [
+                                "materialdesignicons"
+                            ]
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
         }
     },
@@ -191,7 +207,8 @@
                             "compiler_version": { "type": "string" },
                             "compiler_optimization": { "type": "boolean" },
                             "contract_name": { "type": "string" },
-                            "price": { "type": "number" }
+                            "price": { "type": "number" },
+                            "user_id": { "type": "number" }
                         }
                     }
                 ]

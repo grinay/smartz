@@ -1,0 +1,234 @@
+@import '../../../../styles/variables.less';
+
+.transaction-row {
+    @height: 29px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    cursor: pointer;
+
+    color: #000000;
+    border-radius: 4px;
+
+    font-family: @f-cera-pro-400;
+    font-size: 13px;
+    line-height: 17px;
+
+    &:hover {
+        background-color: #E6E9F0;
+    }
+
+    .transaction-row-wrapper {
+        overflow: hidden;
+        flex: 1;
+
+
+        .transaction-icon {
+            position: relative;
+
+            width: 0;
+
+            .tx-icon {
+                position: absolute;
+                top: -8.5px;
+                right: 6px;
+            }
+
+            .error-icon {
+                position: absolute;
+                top: -6.5px;
+                right: 6px;
+
+                width: 12px;
+            }
+        }
+
+        .transaction-time {
+            width: 70px;
+            margin: 0 10px 0 0;
+        }
+
+        .transaction-description {
+            box-sizing: border-box;
+            width: 230px;
+            margin: 0 10px 0 0;
+            &.error {
+                color: @color-error;
+            }
+        }
+
+        .transaction-hash {
+            overflow: hidden;
+            flex: 1;
+
+            height: @height;
+            margin: 0 20px 0 0;
+        }
+    }
+
+
+    .transaction-buttons {
+        display: flex;
+        align-items: stretch;
+
+        margin: 0 0 0 auto;
+    }
+
+    .round-btn {
+        padding: 0;
+
+        cursor: pointer;
+
+        border: 0;
+        border-radius: 6px;
+        outline: 0;
+        background-color: #F2F3F7;
+
+        &:hover, &:focus {
+            box-shadow: 0 0 10px 0 rgba(12, 113, 134, .4);
+        }
+    }
+
+    .copy-btn {
+        width: 26px;
+        height: 23px;
+        margin-right: 7px;
+
+        .copy-icon {
+            width: 10px;
+            height: 12px;
+
+            svg {
+                width: 10px;
+                height: 12px;
+
+                path {
+                    fill: black;
+                }
+            }
+        }
+    }
+
+    .link {
+        width: 28px;
+        height: 23px;
+
+        .etherscan-icon {
+            width: 13px;
+            height: 13px;
+
+            svg {
+                width: 13px;
+                height: 13px;
+
+                fill: black;
+            }
+        }
+    }
+
+
+
+    .copy-icon, .etherscan-icon {
+        fill: #0C7186;
+    }
+
+    .transaction-button {
+        display: block;
+
+        width: 100%;
+        padding-top: 19px;
+        padding-bottom: 22px;
+
+        cursor: pointer;
+
+        opacity: .9;
+        color: #0C7186;
+        border: 0;
+        border-radius: 0 0 8px 8px;
+        outline: 0;
+        background-color: transparent;
+
+        font-family: @f-cera-pro-500;
+        font-size: 15px;
+        line-height: 19px;
+
+        svg {
+            fill: #0C7186;
+        }
+
+        &:hover, &:focus {
+            color: #FFFFFF;
+            background-color: #0C7186;
+
+            svg {
+                fill: #FFFFFF;
+            }
+        }
+    }
+}
+
+@media (max-width: @dapp-mobile-width-min) {
+    .transaction-row {
+        height: auto;
+        padding: 28px 20px;
+
+        border-bottom: 1px solid lightgray;
+        border-radius: 0px;
+
+        .transaction-row-wrapper {
+            flex-wrap: wrap;
+
+            .transaction-hash {
+                min-width: 120px;
+            }
+        }
+
+        .transaction-buttons {
+            @size-btn: 40px;
+            @size-icon: 17px;
+
+            margin-left: 20px;
+
+            .copy-btn {
+                width: @size-btn;
+                height: @size-btn;
+
+                .copy-icon {
+                    width: @size-icon;
+                    height: @size-icon;
+
+                    svg {
+                        width: @size-icon;
+                        height: @size-icon;
+
+                        path {
+                            fill: @color-primary;
+                        }
+                    }
+                }
+            }
+
+            .link {
+                width: @size-btn;
+                height: @size-btn;
+
+                .etherscan-icon {
+                    width: @size-icon;
+                    height: @size-icon;
+
+                    svg {
+                        width: @size-icon;
+                        height: @size-icon;
+
+                        g {
+                            fill: @color-primary;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

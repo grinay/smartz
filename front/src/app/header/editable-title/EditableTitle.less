@@ -1,0 +1,60 @@
+@import '../../../styles/variables.less';
+
+.editable-title {
+    width: 100%;
+
+    background-color: #FFFFFF;
+
+
+    .editable-title-field {
+        position: relative;
+
+        padding: 0 36px 0 10px;
+
+        word-break: break-all;
+
+        color: #191919;
+        border-radius: 4px;
+
+        font-family: @f-cera-pro-400;
+        font-size: 35px;
+        line-height: 44px;
+
+
+        &:hover {
+            cursor: pointer;
+
+            color: #0C7186;
+            background-color: #F2F3F7;
+        }
+
+        &:focus {
+            width: 100%;
+
+            color: #191919;
+            outline: none;
+            background-color: transparent;
+            box-shadow: 0 0 0 1.5px #4F6CFF;
+
+            &.edit-pensil {
+                display: none;
+            }
+        }
+    }
+
+    .edit-pensil {
+        width: 14px;
+
+        transform: translateX(-27px);
+
+        svg {
+            width: 14px;
+            height: 14px;
+            margin-top: 6px;
+        }
+
+        &.is-hidden {
+            display: none;
+        }
+    }
+}
