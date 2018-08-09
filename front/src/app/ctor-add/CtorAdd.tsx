@@ -3,17 +3,22 @@ import { Button } from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import * as api from '../../api/apiRequests';
+import { fetchCtorParamsSuccess } from '../../app/common/ctor-card/CtorsActions';
 import { clickTypes } from '../../constants/constants';
 import { sendClickEvent } from '../../helpers/statictics';
+import store from '../../store/store';
 import Alert from '../common/Alert';
+import Loader from '../common/loader/Loader';
 
 
 interface ICtorAddProps {
   match: any;
+  formData: any;
+  fetchStatus: any;
+  fetchErrorMessage: any;
 }
 
 interface ICtorAddState {
-  formData: any;
   error: any;
   message: any;
 }
@@ -25,7 +30,6 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
     super(props);
 
     this.state = {
-      formData: null,
       error: null,
       message: null,
     };
@@ -35,16 +39,27 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
     this.submit = this.submit.bind(this);
   }
 
+  public componentWillMount() {
+    if (this.id) {
+      api.getConstructorParams(this.id, null);
+    }
+  }
+
   public componentDidMount() {
     window.Intercom('update');
   }
 
   public submit({ formData }) {
     sendClickEvent(clickTypes.UPLOAD_ATTEMPT);
-    // save form field after error
-    this.setState({ formData });
 
-    // clean error msgs
+    // save form field after error
+    store.dispatch(fetchCtorParamsSuccess(this.id, formData));
+
+    // clean alerts before new submit
+    if (this.state.message) {
+      this.setState({ message: null });
+    }
+
     if (this.state.error) {
       this.setState({ error: null });
     }
@@ -66,7 +81,18 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
   }
 
   public render() {
-    const { message, error, formData } = this.state;
+    const { formData, fetchStatus, fetchErrorMessage } = this.props;
+    const { message, error } = this.state;
+
+    if (this.id) {
+      if (fetchStatus === 'request') {
+        return <Loader text="Loading constructor data" width="100" />;
+      }
+
+      if (fetchStatus === 'error') {
+        return <Alert>Constructor data not loaded: {fetchErrorMessage}</Alert>;
+      }
+    }
 
     const formSchema = {
       type: 'object',

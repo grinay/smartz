@@ -54,7 +54,7 @@ export function getConstructorParams(ctorId, deployId) {
 
       if (status === 200) {
         if (data.error) {
-          dispatch(constructError(deployId, data.error));
+          if (deployId !== null) dispatch(constructError(deployId, data.error));
           dispatch(fetchCtorParamsFailure(ctorId, data.error));
         } else {
           dispatch(fetchCtorParamsSuccess(ctorId, data));
@@ -62,7 +62,7 @@ export function getConstructorParams(ctorId, deployId) {
       }
     })
     .catch((error) => {
-      dispatch(constructError(deployId, error.message));
+      if (deployId !== null) dispatch(constructError(deployId, error.message));
       dispatch(fetchCtorParamsFailure(ctorId, error.message));
     });
 
