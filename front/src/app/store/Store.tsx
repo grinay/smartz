@@ -3,7 +3,10 @@ import * as React from 'react';
 
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
+import { IS_MOBILE_OS } from '../../helpers/detect-device';
 import history from '../../helpers/history';
+import store from '../../store/store';
+import { setTrustBanner } from '../AppActions';
 import CtorCard from '../common/ctor-card/CtorCard';
 import DevBlock from '../common/dev-block/DevBlock';
 import Loader from '../common/loader/Loader';
@@ -23,6 +26,7 @@ interface IStoreProps {
 interface IStoreState {
   blockchain: any;
   isOpenPopup: boolean;
+  refLink: string;
 }
 
 export default class Store extends React.Component<IStoreProps, IStoreState> {
@@ -32,6 +36,7 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
     this.state = {
       blockchain: blockchains.ethereum,
       isOpenPopup: false,
+      refLink: '',
     };
 
     this.setBlockchain = this.setBlockchain.bind(this);
@@ -39,15 +44,21 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
     this.closePopup = this.closePopup.bind(this);
   }
 
-  private goToDeploy(ctorId: any) {
+  private goToDeploy(path: string) {
     return () => {
-      // history.push(`/deploy/${ctorId}`);
-      this.setState({ isOpenPopup: true });
-
+      if (IS_MOBILE_OS) {
+        this.setState({
+          isOpenPopup: true,
+          refLink: `${window.location.origin}${path}`,
+        });
+      } else {
+        history.push(`${path}`);
+      }
     };
   }
 
   private closePopup() {
+    store.dispatch(setTrustBanner());
     this.setState({ isOpenPopup: false });
   }
 
@@ -85,7 +96,7 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
             <ul className="ctor-list">
               {filteredCtors.filter((el) => el.is_public).map((el, i) => (
                 <li key={i} className="ctor-item">
-                  <CtorCard ctor={el} />
+                  <CtorCard ctor={el} onClick={this.goToDeploy(`/deploy/${el.id}`)} />
                 </li>
               ))}
               {/* Add custom contract */}
@@ -123,7 +134,9 @@ export default class Store extends React.Component<IStoreProps, IStoreState> {
             styleEnd: { opacity: 1 },
           }}
         >
-          <PopupTrust />
+          <PopupTrust
+            onClose={this.closePopup}
+            refLink={'https://smartz.io/deploy/5aaa7a85ab3d71000bd0c69d/'} />
         </PopupContainer>
       </main >
     );

@@ -1,21 +1,28 @@
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
+import { trust } from '../../../constants/constants';
 import { IS_ANDROID, IS_IOS } from '../../../helpers/detect-device';
 
 import './PopupTrust.less';
 
 
-export default class PopupTrust extends React.PureComponent<{}, {}> {
+interface IPopupTrustProps {
+  refLink: string;
+  onClose: () => void;
+}
+
+export default class PopupTrust extends React.PureComponent<IPopupTrustProps, {}> {
   public render() {
+    const { onClose, refLink } = this.props;
 
     let pic;
     let link;
     if (IS_IOS) {
       pic = require('../../../assets/img/common/app-store-badge.svg');
-      link = 'https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409?mt=8';
+      link = `${trust.link}${refLink}`;
     } else if (IS_ANDROID) {
-      link = 'https://play.google.com/store/apps/details?id=com.wallet.crypto.trustapp';
+      link = `${trust.link}${refLink}`;
       pic = require('../../../assets/img/common/google-play-badge.svg');
     }
 
@@ -33,12 +40,21 @@ export default class PopupTrust extends React.PureComponent<{}, {}> {
         <p className="description">
           To use Smartz on mobile please open it through Trust wallet browser.
     </p>
-        <a className="link" href={link} aria-label="Click to install app">
+        <a
+          className="link"
+          href={link}
+          target="_blanc"
+          aria-label="Click to install app"
+        >
           <InlineSVG
             src={pic}
           />
         </a>
-        <button className="popup-trust-button" type="button">
+        <button
+          className="popup-trust-button"
+          type="button"
+          onClick={onClose}
+        >
           Thank you, I know better what I should do
     </button>
       </div>

@@ -7,6 +7,7 @@ import { setUserProfile } from './AppActions';
 
 const mapStateToProps = (state) => ({
   profile: state.app.profile,
+  app: state.app,
   nextDeploy: state.deploy.length,
 });
 

@@ -4,7 +4,7 @@ const initState = {
     type: 'simple',
     id: null,
   },
-  trustPopup: null,
+  trustBanner: false,
 };
 
 const app = (state = initState, action) => {
@@ -17,6 +17,10 @@ const app = (state = initState, action) => {
 
     case 'SET_HEADER_TITLE':
       nextState.header = action.header;
+      return nextState;
+
+    case 'SET_TRUST_BANNER':
+      nextState.trustBanner = true;
       return nextState;
 
     default:
