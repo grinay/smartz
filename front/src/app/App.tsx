@@ -8,7 +8,7 @@ import Auth from './auth/Auth';
 import Callback from './auth/callback/Callback';
 import Login from './auth/login/LoginContainer';
 import InstallExtension from './common/install-extension/InstallExtension';
-import CtorAdd from './ctor-add/CtorAdd';
+import CtorAdd from './ctor-add/CtorAddContainer';
 import Dapp from './dapps/DappContainer';
 import Dashboard from './dashboard/DashboardContainer';
 import Deploy from './deploy/DeployContainer';

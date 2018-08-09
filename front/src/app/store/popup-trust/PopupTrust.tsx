@@ -11,7 +11,7 @@ export default class PopupTrust extends React.PureComponent<{}, {}> {
 
     let pic;
     let link;
-    if (true) {
+    if (IS_IOS) {
       pic = require('../../../assets/img/common/app-store-badge.svg');
       link = 'https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409?mt=8';
     } else if (IS_ANDROID) {
