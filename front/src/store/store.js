@@ -6,10 +6,12 @@ import ctors from '../app/common/ctor-card/CtorsReducer';
 import deploy from '../app/deploy/DeployReducer';
 import dapps from '../app/dapps/DappReducer';
 import login from '../app/auth/login/LoginReducer';
+import ctoredit from '../app/common/ctor-card/CtorEditReducer';
 
 const reducers = combineReducers({
   app,
   ctors,
+  ctoredit,
   deploy,
   dapps,
   login

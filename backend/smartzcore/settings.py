@@ -176,8 +176,12 @@ class Common(Configuration):
         ),
         'DEFAULT_PARSER_CLASSES': (
             'rest_framework.parsers.JSONParser',
+        ),
+        'DEFAULT_AUTHENTICATION_CLASSES': (
         )
     }
+
+
 
     AUTH_USER_MODEL = 'users.User'
 
@@ -231,6 +235,8 @@ class Development(Common):
         ),
         'DEFAULT_PARSER_CLASSES': (
             'rest_framework.parsers.JSONParser',
+        ),
+        'DEFAULT_AUTHENTICATION_CLASSES': (
         )
     }
 
@@ -282,7 +288,7 @@ class Testing(DevelopmentLocal):
 
     IS_TESTING = True
 
+
     DATABASES = values.DatabaseURLValue(
         'postgresql://{}:{}@{}/{}'.format(Common.DB_USER, Common.DB_PASS, Common.DB_HOST, Common.DB_NAME+"_test")
     )
-

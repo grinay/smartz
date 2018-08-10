@@ -1,0 +1,118 @@
+@import '../../../../styles/variables.less';
+
+.address-bar {
+    .wallet {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        padding: 5px 5px 5px 30px;
+
+        border-radius: 8px 8px 0 0;
+        background-color: #E6E9F0;
+
+        .wallet-address {
+            display: flex;
+            align-items: center;
+            flex: 1;
+
+            min-width: 180px;
+            margin: 7px 20px 7px 0;
+
+            color: #000000;
+
+            font-family: @f-cera-pro-500;
+            font-size: 12px;
+            line-height: 16px;
+
+            .wallet-title {
+                margin-right: 5px;
+
+                opacity: .5;
+            }
+
+            .wallet-number {
+                overflow: hidden;
+
+                margin: 0;
+
+                cursor: pointer;
+                text-decoration: none;
+                word-break: break-all;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                .link {
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        .wallet-buttons {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .round-btn {
+            height: 33px;
+
+            cursor: pointer;
+
+            color: #191919;
+            border: 0;
+            border-radius: 4px;
+            outline: 0;
+            background-color: #F2F3F7;
+
+            font-family: @f-cera-pro-500;
+            font-size: 13px;
+            line-height: 16px;
+
+            &:hover, &:focus {
+                box-shadow: 0 0 10px 0 rgba(12, 113, 134, .4);
+            }
+
+            &:disabled {
+                color: rgba(25, 25, 25, .2);
+                background-color: #E6E9F0;
+                box-shadow: none;
+            }
+        }
+
+        .verify-btn {
+            padding: 0 15px;
+        }
+
+        .add-to-btn {
+            padding: 0 15px;
+
+            color: white;
+            background-color: @color-primary;
+        }
+
+        .copy-btn {
+            width: 71px;
+            margin-right: 5px;
+
+
+            .copy-icon {
+                margin-right: 5px;
+            }
+        }
+
+        .copy-icon, .etherscan-icon {
+            height: 13px;
+
+            svg {
+                height: 13px;
+
+                path {
+                    fill: #191919;
+                }
+            }
+        }
+    }
+}

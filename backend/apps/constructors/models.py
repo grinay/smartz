@@ -37,32 +37,7 @@ class Constructor(models.Model):
     created_at = models.DateTimeField(default=init_time)
     updated_at = models.DateTimeField(default=init_time)
 
-    @property
-    def image(self):
-        """todo kill this with file uploading"""
-        name_lower = self.name.lower()
-
-        images = {
-            'simple ico': 'simple-ico.jpg',
-            'erc721 token': 'erc721.png',
-            'erc20 token': 'erc20.jpg',
-            'equity token': 'equity.jpg',
-            'smartz token': 'smartz-erc20.jpg',
-            'multisignature wallet': 'multisig.jpg',
-            'simple voting': 'simple-voting.jpg',
-            'atomic swap for erc20': 'atomic-swap-erc20.jpg',
-            'multitoken': 'multitoken.jpg',
-            'booking': 'booking.jpg',
-            'ledger': 'ledger.jpg',
-            'smartz platform features': 'platform-features.jpg',
-            'crowdfunding for erc20 token': 'crowdfunding-erc20.jpg'
-        }
-
-        if name_lower in images:
-            return images[name_lower]
-        else:
-            return 'default.jpg'
-
+    image = models.CharField(max_length=200, default='', blank=True)
 
     @classmethod
     def create(cls, **kwargs):

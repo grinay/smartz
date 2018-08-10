@@ -3,10 +3,16 @@ export const blockchains = {
   eos: 'eos'
 };
 
+export const ipfsConstants = {
+  emptyDir: 'QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn',
+  uploadUrl: 'https://ipfs.smartz.io/ipfs',
+  downloadUrl: 'https://ipfs.io'
+};
+
 export const eosConstants = {
   BLOCKCHAIN: 'eos',
 
-  HOST: 'api.komododragon.eosbp.mixbytes.io',
+  HOST: 'jungle.eos.smartz.io',
   PORT: '443',
   PROTOCOL: 'https'
 

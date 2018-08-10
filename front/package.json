@@ -1,5 +1,5 @@
 {
-  "name": "Smart-contract-constructors-marketplace-front-end",
+  "name": "smart-contract-constructors-marketplace-front-end",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -45,7 +45,8 @@
     "webpack-cli": "^3.0.1",
     "webpack-config-utils": "^2.3.0",
     "webpack-dev-server": "^3.1.4",
-    "webpack-dotenv-extended-plugin": "^1.0.0"
+    "webpack-dotenv-extended-plugin": "^1.0.0",
+    "less": "^3.0.4"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -54,15 +55,14 @@
     "classnames": "^2.2.5",
     "dateformat": "^3.0.3",
     "eosjs": "^14.1.0",
+    "ethereumjs-util": "^5.2.0",
     "ethjs": "^0.3.1",
     "ethjs-contract": "^0.1.9",
     "ethjs-query": "^0.3.2",
     "js-sha256": "^0.9.0",
     "jwt-decode": "^2.2.0",
-    "less": "^3.0.4",
     "lodash": "^4.17.5",
     "moment": "^2.22.2",
-    "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",
     "react-datetime": "^2.12.0",
@@ -71,6 +71,8 @@
     "react-redux": "^5.0.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-tooltip": "^3.6.1",
+    "react-transition-group": "^2.4.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.3.0"
   }

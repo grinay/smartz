@@ -9,7 +9,7 @@ import subscribeMockRequests from './apiMock';
 
 
 if (requestsConfig.USE_MOCK) {
-  subscribeMockRequests(new MockAdapter(axios));
+  subscribeMockRequests(new MockAdapter(axios, { delayResponse: 2000 }));
 }
 
 const TOKEN_EXPIRED_ERROR_MESSAGE = 'Token expired. Please log in again';
