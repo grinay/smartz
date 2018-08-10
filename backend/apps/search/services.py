@@ -22,7 +22,8 @@ class AbstractSearchService(metaclass=ABCMeta):
     def supports(self, query: str, context: dict) -> bool:
         """
         context = {
-            network_id,
+            ethereum_network_id,
+            eos_network_id,
             abi
         }
 
@@ -84,13 +85,13 @@ class AbstractAddressSearchService(AbstractSearchService):
         }
 
     def _get_dapp(self, address: str, context: dict) -> Optional[Dapp]:
-        if 'network_id' not in context:
+        if self._get_network_id_key() not in context:
             return None
 
         try:
             dapp = Dapp.objects.get(
                 address=address,
-                network_id=str(context['network_id']),
+                network_id=str(context[self._get_network_id_key()]),
                 constructor__blockchain=self.get_blockchain()
             )
         except Dapp.DoesNotExist:
@@ -99,12 +100,12 @@ class AbstractAddressSearchService(AbstractSearchService):
         return dapp
 
     def _get_uis(self, address: str, context: dict) -> List[ContractUI]:
-        if 'network_id' not in context:
+        if self._get_network_id_key() not in context:
             return []
 
         return ContractUI.objects.filter(
             address=address,
-            network_id=str(context['network_id']),
+            network_id=str(context[self._get_network_id_key()]),
             blockchain=self.get_blockchain()
         )
 
@@ -132,6 +133,10 @@ class AbstractAddressSearchService(AbstractSearchService):
 
     @abstractmethod
     def _get_abi_fn_names(self, abi) -> Set[str]:
+        raise NotImplementedError()
+
+    @abstractmethod
+    def _get_network_id_key(self) -> str:
         raise NotImplementedError()
 
 
@@ -184,6 +189,9 @@ class EthereumAddressSearchService(AbstractAddressSearchService):
 
         return abi_names
 
+    def _get_network_id_key(self) -> str:
+        return 'ethereum_network_id'
+
 
 class EosAddressSearchService(AbstractAddressSearchService):
 
@@ -200,6 +208,10 @@ class EosAddressSearchService(AbstractAddressSearchService):
         abi_names = {fn['name'] for fn in abi['actions'] if 'name' in fn}
 
         return abi_names
+
+    def _get_network_id_key(self) -> str:
+        return 'eos_network_id'
+
 
 class SearchServiceManager:
     _services = [

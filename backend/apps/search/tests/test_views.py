@@ -34,7 +34,7 @@ class SearchTest(WebTest):
             '/api/search',
             params={
                 'query':'0x0123456789012345678901234567890123456789',
-                'network_id': '1'
+                'ethereum_network_id': '1'
             }
         )
 
@@ -51,7 +51,7 @@ class SearchTest(WebTest):
         ui = self.__create_contract_ui()
         resp = self.app.post_json(
             '/api/search',
-            params={'query': ui.address, "network_id": "1"}
+            params={'query': ui.address, "ethereum_network_id": "1"}
         )
         self.assertIn('address', resp.json)
         self.assertIn('type', resp.json['address'])
