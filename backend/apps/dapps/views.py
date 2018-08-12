@@ -54,7 +54,7 @@ class ListView(View):
         if isinstance(user, HttpResponse):
             return user  # error
 
-        dapps = Dapp.objects.filter(user=user).exclude(address='').prefetch_related('constructor')
+        dapps = Dapp.objects.filter(user=user).exclude(address='').order_by('-created_at').prefetch_related('constructor')
 
         return JsonResponse(
             [_prepare_instance_details(i) for i in dapps],
