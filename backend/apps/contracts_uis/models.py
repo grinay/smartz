@@ -8,7 +8,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from apps.common.constants import BLOCKCHAINS, BLOCKCHAIN_ETHEREUM
-from apps.contracts_uis.validators import validate_functions, validate_abi
+from apps.contracts_uis.validators import validate_functions, validate_abi, \
+    validate_dashboard_functions, validate_functions_specs
 from apps.users.models import User
 
 
@@ -25,6 +26,9 @@ class ContractUI(models.Model):
 
     abi = JSONField(validators=[validate_abi], default=[], blank=True)
     functions = JSONField(validators=[validate_functions])
+
+    function_specs = JSONField(validators=[validate_functions_specs], blank=True, default=[])
+    dashboard_functions = JSONField(validators=[validate_dashboard_functions], blank=True, default=[])
 
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
