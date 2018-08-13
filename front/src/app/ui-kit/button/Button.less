@@ -1,0 +1,42 @@
+@import '../../../styles/variables.less';
+
+.component-button {
+    padding: 10px 17px;
+
+    cursor: pointer;
+
+    border: none;
+    border-radius: 4px;
+    outline: none;
+
+    font-family: @f-cera-pro-500;
+    font-size: 14px;
+    line-height: 18px;
+
+    &.component-button-white {
+        color: black;
+        background-color: white;
+
+
+        &:hover {
+            background-color: #E5E9F0;
+        }
+
+        &:active {
+            background-color: #CED6E0;
+        }
+    }
+
+    &.component-button-gray {
+        color: black;
+        background-color: #E6E9F0;
+
+        &:hover {
+            background-color: #CED6E0;
+        }
+
+        &:active {
+            background-color: #BEC8D4;
+        }
+    }
+}

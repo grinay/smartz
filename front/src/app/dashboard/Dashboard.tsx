@@ -6,7 +6,10 @@ import { blockchains } from '../../constants/constants';
 import { getNetworkId, processControlForm, processResult } from '../../helpers/eth';
 import Alert from '../common/Alert';
 import Loader from '../common/loader/Loader';
+import Modal from '../common/modal/Modal';
+import Button from '../ui-kit/button/Button';
 import DappCard from './dapp-card/DappCard';
+import DappCustom from './dapp-custom/DappCustom';
 
 import './Dashboard.less';
 
@@ -24,9 +27,10 @@ interface IDashboardState {
   updateCycleActive: boolean;
   networkId: any;
   filteredDapps: any;
+  isOpenModal: boolean;
 }
 
-class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
+export default class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
   constructor(props) {
     super(props);
 
@@ -34,7 +38,14 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
       updateCycleActive: false,
       networkId: null,
       filteredDapps: null,
+      isOpenModal: false,
     };
+
+    this.onToggleModal = this.onToggleModal.bind(this);
+  }
+
+  private onToggleModal(action: boolean) {
+    return () => this.setState({ isOpenModal: action });
   }
 
 
@@ -124,7 +135,7 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
 
   public render() {
     const { metamaskStatus, dapps, ctors, ctorsError, dappsError } = this.props;
-    const { filteredDapps } = this.state;
+    const { filteredDapps, isOpenModal } = this.state;
 
     let content: any;
 
@@ -166,10 +177,20 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
 
     return (
       <main className="page-main dashboard">
+        <Button
+          className="dashboard-add-btn"
+          type="gray"
+          content="Add custom dapp"
+          onClick={this.onToggleModal(true)}
+        />
         {content}
+        <Modal
+          isOpen={isOpenModal}
+          onClose={this.onToggleModal(false)}
+        >
+          <DappCustom />
+        </Modal>
       </main>
     );
   }
 }
-
-export default Dashboard;
