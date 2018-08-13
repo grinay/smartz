@@ -16,12 +16,12 @@ declare global {
 
 class EosClass {
   private network: any;
-  private configEosDapp: any;
   private eos: any;
   private identity: any;
-  private accountName: any;
   private url: string;
 
+  public configEosDapp: any;
+  public accountName: any;
   public scatter: any = window.scatter;
   public currentIdentity: any;
 
@@ -62,7 +62,10 @@ class EosClass {
           .get(this.url + '/v1/chain/get_info')
           .then((result) => {
             if (result.status === 200) {
+              this.network.chainId = result.data.chain_id;
               this.configEosDapp.chainId = result.data.chain_id;
+              this.network['chainId'] = result.data.chain_id;
+
               resolve();
             }
           })
@@ -81,12 +84,35 @@ class EosClass {
     }
   }
 
+  public forgetIdentity() {
+    return new Promise((resolve) => {
+      if (this.scatter.identity)
+        this.scatter.forgetIdentity()
+          .then(() => resolve());
+      else
+        resolve();
+    });
+  }
+
+  public chooseIdentity() {
+    this.scatter.requireVersion(5.0);
+
+    return (
+      this.setChainId()
+        // accept current network
+        .then(() => this.forgetIdentity())
+        .then(() => this.scatter.suggestNetwork(this.network))
+        .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
+    );
+  }
+
   public deployContract = (bin: string, abi: any) => {
     this.scatter.requireVersion(5.0);
 
     return (
       this.setChainId()
         // accept current network
+        .then(() => this.forgetIdentity())
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
         .then((identity) => {
@@ -107,33 +133,94 @@ class EosClass {
     );
   }
 
+  public setPermissions = (permissions: any) => {
+    this.scatter.requireVersion(5.0);
+
+    return (
+      this.setChainId()
+        // accept current network
+        .then(() => this.forgetIdentity())
+        .then(() => this.scatter.suggestNetwork(this.network))
+        .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
+        .then((identity) => {
+          this.currentIdentity = identity;
+          this.accountName = this.getAccountName(identity);
+
+          // obtain current permissions
+          return this.scatter
+            .eos(this.network, Eos, this.configEosDapp, this.network.protocol)
+            .getAccount({ account_name: this.accountName });
+        })
+        .then((account) => {
+          let perms = permissions.map((p: any) => {
+            return {
+              permission: {
+                actor: !p.actor ? this.accountName : p.actor,
+                permission: p.name,
+              },
+              weight: 1,
+            };
+          });
+
+          let payload = {
+            parent: 'owner',
+            permission: 'active',
+            account: this.accountName,
+            auth: account.permissions[0].required_auth,
+          };
+
+          let hasPermission = (perm: any) => {
+            for (let i = 0; i < payload.auth.accounts.length; ++i) {
+              if (payload.auth.accounts[i].permission.actor === perm.permission.actor &&
+                payload.auth.accounts[i].permission.permission === perm.permission.permission
+              )
+                return true;
+            }
+            return false;
+          };
+
+          let needUpdate = false;
+          perms.forEach((perm: any) => {
+            if (!hasPermission(perm)) {
+              payload.auth.accounts.push(perm);
+              needUpdate = true;
+            }
+          });
+
+          if (!needUpdate)
+            return Promise.resolve();
+
+          return this.scatter
+            .eos(this.network, Eos, this.configEosDapp, this.network.protocol)
+            .transaction('eosio', (system) => {
+              system.updateauth(payload, { authorization: this.accountName });
+            });
+        })
+    );
+  }
+
   public getIdentity() {
     return this.scatter.getIdentity({ accounts: [this.network] });
   }
 
-  public sendTransaction(func: any, formData: any) {
+  public sendTransaction(address: any, func: any, formData: any) {
     return new Promise((resolve, reject) => {
       this.setChainId()
+        .then(() => this.forgetIdentity())
         .then(() => this.scatter.suggestNetwork(this.network))
         .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
         .then((identity) => {
           this.currentIdentity = identity;
 
-          let accountName = this.getAccountName(identity);
+          this.accountName = this.getAccountName(identity);
 
           this.eos = this.scatter.eos(this.network, Eos, this.configEosDapp);
 
-          return this.eos.transaction(accountName, (contract) => {
-            contract[func.name](...formData, { authorization: accountName });
+          return this.eos.transaction(address, (contract) => {
+            contract[func.name](...formData, { authorization: this.accountName });
           });
         })
-        .then((result) => {
-          resolve({
-            result,
-            func,
-            formData,
-          });
-        })
+        .then((response) => resolve(response))
         .catch((error) => reject(error));
     });
   }
@@ -141,7 +228,10 @@ class EosClass {
   public readTable(address: any, tableKey: any, func: any, formData: any) {
     return new Promise((resolve, reject) => {
       this.setChainId()
-        .then(() => {
+        .then(() => this.scatter.getIdentity({ accounts: [this.network] }))
+        .then((identity) => {
+          this.accountName = this.getAccountName(identity);
+
           this.eos = this.scatter.eos(this.network, Eos, this.configEosDapp);
 
           return this.eos.getTableRows({
@@ -169,8 +259,8 @@ class EosClass {
     return new Promise((resolve, reject) => {
       switch (getFuncType(func)) {
         case 'write':
-          this.sendTransaction(func, formData)
-            .then(() => resolve('success'))
+          this.sendTransaction(address, func, formData)
+            .then((result) => resolve(result))
             .catch((error) => reject(error));
           break;
         case 'ask':
@@ -181,15 +271,13 @@ class EosClass {
             .then((data: any) => {
               const rows = data.result.rows;
 
-              let result =
-                rows.length > 0 && data.formData[0].toString() === rows[0][tableKey].toString()
-                  ? data.result.rows[0]
-                  : 'Not found';
-
-              let strString = JSON.stringify(result);
-              strString = strString.substr(1, strString.length - 2);
-
-              resolve(strString);
+              if (rows.length > 0 && data.formData[0].toString() === rows[0][tableKey].toString()) {
+                resolve(data.result.rows[0]);
+              } else {
+                throw {
+                  error: { what: 'Not found' },
+                };
+              }
             })
             .catch((error) => reject(error));
           break;

@@ -6,7 +6,9 @@ import {
     fetchCtorParamsFailure, fetchCtorParamsRequest, fetchCtorParamsSuccess, fetchCtorsFailure,
     fetchCtorsRequest, fetchCtorsSuccess,
 } from '../app/common/ctor-card/CtorsActions';
-import { fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess } from '../app/dapps/DappActions';
+import {
+    fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess, requestAdd, transactionAdd,
+} from '../app/dapps/DappActions';
 import {
     constructError, constructRequest, constructSuccess, setFormData,
 } from '../app/deploy/DeployActions';
@@ -52,7 +54,7 @@ export function getConstructorParams(ctorId, deployId) {
 
       if (status === 200) {
         if (data.error) {
-          dispatch(constructError(deployId, data.error));
+          if (deployId !== null) dispatch(constructError(deployId, data.error));
           dispatch(fetchCtorParamsFailure(ctorId, data.error));
         } else {
           dispatch(fetchCtorParamsSuccess(ctorId, data));
@@ -60,7 +62,7 @@ export function getConstructorParams(ctorId, deployId) {
       }
     })
     .catch((error) => {
-      dispatch(constructError(deployId, error.message));
+      if (deployId !== null) dispatch(constructError(deployId, error.message));
       dispatch(fetchCtorParamsFailure(ctorId, error.message));
     });
 
@@ -97,8 +99,8 @@ export function getDapps() {
   return result;
 }
 
-export function getDapp(id) {
-  const result = fetch(`/dapps/${id}`, undefined, 'get');
+export function getDapp(dappId) {
+  const result = fetch(`/dapps/${dappId}`, undefined, 'get');
 
   dispatch(fetchDappsRequest());
 
@@ -120,7 +122,75 @@ export function getDapp(id) {
 export function updateDapp(dappId, data) {
   const result = fetch(`/dapps/${dappId}/update`, data, 'post');
 
-  result.then().catch((error) => console.error(error));
+  result
+    .then()
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function sendDappTransaction(dappId, data: object) {
+  const result = fetch(`/dapps/${dappId}/transactions`, data, 'post');
+
+  result
+    .then((response) => {
+      if (response.status === 201) {
+        getDappTransactions(dappId);
+      }
+    })
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function getDappTransactions(dappId: any) {
+  const result = fetch(`/dapps/${dappId}/transactions`, undefined, 'get');
+
+  result
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(transactionAdd(dappId, response.data));
+      }
+    })
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function sendDappRequest(dappId, data: object) {
+  const result = fetch(`/dapps/${dappId}/requests`, data, 'post');
+
+  result
+    .then((response) => {
+      if (response.status === 201) {
+        getDappRequests(dappId);
+      }
+    })
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function getDappRequests(dappId: any) {
+  const result = fetch(`/dapps/${dappId}/requests`, undefined, 'get');
+
+  result
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(requestAdd(dappId, response.data));
+      }
+    })
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function addDappToDash(dappId) {
+  const result = fetch(`/dapps/${dappId}/add-to-dashbord`, undefined, 'post');
+
+  result
+    .then(() => getDapp(dappId))
+    .catch((error) => console.error(error));
 
   return result;
 }

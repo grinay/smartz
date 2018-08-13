@@ -1,0 +1,49 @@
+@import '../../../../styles/variables.less';
+
+.show-more-btn {
+    width: 100%;
+    height: 56px;
+
+    cursor: pointer;
+
+    border: none;
+    outline: none;
+    background-color: #FFFFFF;
+
+
+    .text {
+        display: block;
+
+        margin-right: 7px;
+
+        color: #0C7186;
+
+        font-family: @f-cera-pro-500;
+        font-size: 15px;
+        line-height: 19px;
+    }
+
+    .arrow-down-icon {
+        height: 9px;
+
+        svg {
+            height: 9px;
+
+            fill: #0C7186;
+        }
+    }
+
+    &:hover {
+        background-color: #0C7186;
+
+        .text {
+            color: white;
+        }
+
+        .arrow-down-icon {
+            svg {
+                fill: white;
+            }
+        }
+    }
+}

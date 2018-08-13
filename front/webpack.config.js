@@ -213,10 +213,10 @@ module.exports = (env) => {
         }
       })),
       ifProduction(new MiniCssExtractPlugin({
-        filename: 'static/css/bundle.css'
+        filename: 'static/css/bundle-[hash:8].css'
       })),
       ifDevelopment(new MiniCssExtractPlugin({
-        filename: 'bundle.css'
+        filename: 'bundle-[hash:8].css'
       })),
       new HtmlWebpackPlugin(removeEmpty({
         path: propIf(env == 'development', appPath, buildPath),

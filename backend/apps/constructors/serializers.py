@@ -19,6 +19,7 @@ def constructor_pub_info(constructor: Constructor) -> Dict:
         'image': constructor.image,
         'is_public': constructor.is_public,
         'user_id': constructor.user_id,
+        'payment_address': constructor.payment_address,
     }
 
     if hasattr(constructor, 'dapps__count'):

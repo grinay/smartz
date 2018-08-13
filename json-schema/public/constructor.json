@@ -94,7 +94,7 @@
                             "ui:widget": {
                                 "description": "Widget for input",
                                 "type": "string",
-                                "enum": ["stringHash", "fileHash", "unixTime", "myAddress", "ethCount"]
+                                "enum": ["stringHash", "fileHash", "unixTime", "myAddress", "ethCount", "merkleRoot", "merkleProof"]
                             },
                             "ui:options": {
                                 "description": "Ui options",
@@ -113,6 +113,22 @@
                         "properties": {
                             "title": {"type": "string"},
                             "description": {"type": "string"}
+                        }
+                    }
+                },
+                "icon": {
+                    "title": "Function icon",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "pack": {
+                            "type": "string",
+                            "enum": [
+                                "materialdesignicons"
+                            ]
+                        },
+                        "name": {
+                            "type": "string"
                         }
                     }
                 }

@@ -1,125 +1,51 @@
 @import '../../styles/variables.less';
 
-.page-main--running-contract {
-    position: relative;
 
-    width: 70%;
-    margin: 0 auto;
-    padding-top: 40px;
+.dapp {
+    display: flex;
+    flex: 1;
 
-    .page-main__link {
-        position: absolute;
-        top: 40px;
-        left: 15px;
+    .dapp-body {
+        display: flex;
+        justify-content: center;
 
-        display: block;
+        width: calc(100% - 220px - 10px);
+        padding: 10px;
 
-        text-decoration: none;
-        letter-spacing: 1px;
-        text-transform: uppercase;
+        .wrapper {
+            display: flex;
+            flex-direction: column;
 
-        color: @interactive-element-color;
+            width: 100%;
+            max-width: @dapp-content-max-width;
 
-        font-family: 'Cera Pro 700', Arial, sans-serif;
-        font-size: 13px;
-        line-height: 15px;
-    }
-
-    .page-main__icon {
-        fill: @interactive-element-color;
-    }
-
-    .page-main__link:hover, .page-main__link:focus {
-        color: @link-hover;
-    }
-
-    .page-main__link:hover .page-main__icon, .page-main__link:focus .page-main__icon {
-        fill: @link-hover;
-    }
-
-    .contract-functions {
-        margin: 20px 0;
-        padding: 25px;
-
-        border-radius: 8px;
-        background-color: #FFFFFF;
-    }
-
-    .block {
-        margin-top: 25px;
-        padding: 25px;
+            .content {
+                flex: 1;
+            }
+        }
     }
 }
 
-@media (min-width: 1000px) {
-    // .block-half .contract-functions {
-    //     display: block;
-    // }
-}
+.dapp-error {
+    flex: 1;
 
-
-
-.transactions .transactions__header {
-    font-family: 'Cera Pro 700';
-    font-size: 15px;
-}
-
-.transactions > div {
-    margin-bottom: 20px;
-    padding: 0 10px;
-    padding: 10px 0;
-
-    background: #F2F3F7;
-}
-
-.transactions > div ul {
-    flex-grow: 1;
-
-    margin: 0;
-    padding: 0 0 0 20px;
-
-    list-style: none;
-}
-
-.transactions .spinner {
-    padding: 10px 0;
-}
-
-.transactions .spinner img {
-    height: 80px;
-}
-
-.transactions .func-name, .transactions .tx-result {
-    font-family: 'Cera Pro 700';
-}
-
-.transactions .tx-link {
-    font-size: 90%;
-}
-
-.transactions .tx-params {
-    padding: 8px 0;
-}
-
-.transactions .support-block__paragraph {
-    margin: 0;
-
-    font-size: 12px;
-}
-
-.contract-controls__wrapper .table__inner {
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    max-width: 280px;
-}
-
-@media (min-width: 600px) {
-    .contract-controls__wrapper .table__inner {
-        max-width: 500px;
+    .dapp-error-text {
+        font-size: 23px;
     }
 }
 
-.contract-controls__wrapper .table__inner a {
-    font-size: 18px;
+@media (max-width: @dapp-width-min) {
+    .dapp {
+        .dapp-body {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: @dapp-mobile-width-min) {
+    .dapp {
+        .dapp-body {
+            padding: 0;
+        }
+    }
 }

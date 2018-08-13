@@ -14,7 +14,6 @@ COPY backend/apps/ apps/
 COPY backend/pythonlib/ pythonlib/
 COPY backend/utils/ utils/
 COPY backend/constructor_engine/ constructor_engine/
-COPY backend/constructor_examples/ constructor_examples/
 COPY backend/manage.py manage.py
 COPY docker/backend/entrypoint.sh .
 
