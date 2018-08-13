@@ -43,3 +43,12 @@ export const clickTypes = {
   LEARN_MORE: 'learnMore',
   JOIN_CHAT: 'joinChat'
 };
+
+export const trust = {
+  link: 'https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url='
+}
+
+export const mobileApps = {
+  ios: "https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409?mt=8",
+  android: 'https://play.google.com/store/apps/details?id=com.wallet.crypto.trustapp'
+}

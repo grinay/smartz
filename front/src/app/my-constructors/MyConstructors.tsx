@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import * as api from '../../api/apiRequests';
+import history from '../../helpers/history';
 import Auth from '../auth/Auth';
 import Alert from '../common/Alert';
 import CtorCard from '../common/ctor-card/CtorCard';
@@ -19,6 +19,15 @@ interface IMyConstructorsState { }
 
 export default class MyConstructors extends React.Component
   <IMyConstructorsProps, IMyConstructorsState> {
+  constructor(props) {
+    super(props);
+
+    this.goToDeploy = this.goToDeploy.bind(this);
+  }
+
+  private goToDeploy(path: string) {
+    return () => history.push(`${path}`);
+  }
 
   public componentWillMount() {
     api.getConstructors();
@@ -42,7 +51,7 @@ export default class MyConstructors extends React.Component
             <ul className="ctor-list">
               {ctors.filter((el) => isAuthenticated && el.user_id === userId).map((el, i) => (
                 <li key={i} className="ctor-item">
-                  <CtorCard key={i} ctor={el} />
+                  <CtorCard key={i} ctor={el} onClick={this.goToDeploy(`/deploy/${el.id}`)} />
                 </li>
               ))}
             </ul>

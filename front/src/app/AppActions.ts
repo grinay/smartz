@@ -7,3 +7,7 @@ export const setHeaderTitle = (header) => ({
   type: 'SET_HEADER_TITLE',
   header,
 });
+
+export const setTrustBanner = () => ({
+  type: 'SET_TRUST_BANNER',
+});
