@@ -27,7 +27,7 @@ class ContractUI(models.Model):
     abi = JSONField(validators=[validate_abi], default=[], blank=True)
     functions = JSONField(validators=[validate_functions])
 
-    function_specs = JSONField(validators=[validate_functions_specs], blank=True, default=[])
+    function_specs = JSONField(validators=[validate_functions_specs], blank=True, default={})
     dashboard_functions = JSONField(validators=[validate_dashboard_functions], blank=True, default=[])
 
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)

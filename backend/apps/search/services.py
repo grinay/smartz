@@ -10,6 +10,7 @@ from apps.contracts_uis.models import ContractUI
 from apps.contracts_uis.serializers import ContractUISerializer
 from apps.dapps.models import Dapp
 from apps.dapps.serializers import dapp_pub_info
+from constructor_engine.services import WithContractProcessorManager
 
 SEARCH_RESULT_TYPE_DAPP = 'dapp'
 SEARCH_RESULT_TYPE_CONTRACT_UI = 'contract_ui'
@@ -35,7 +36,7 @@ class AbstractSearchService(metaclass=ABCMeta):
         raise NotImplementedError()
 
 
-class AbstractAddressSearchService(AbstractSearchService):
+class AbstractAddressSearchService(AbstractSearchService, WithContractProcessorManager):
     @abstractmethod
     def get_blockchain(self) -> str:
         raise NotImplementedError()
@@ -73,7 +74,8 @@ class AbstractAddressSearchService(AbstractSearchService):
                     'address': {
                         'type': SEARCH_RESULT_TYPE_ABI,
                         'abi': abi,
-                        'uis': ContractUISerializer(uis, many=True).data
+                        'uis': ContractUISerializer(uis, many=True).data,
+                        'function_specs': self._get_fn_specs(abi, uis)
                     }
                 }
 
@@ -130,6 +132,13 @@ class AbstractAddressSearchService(AbstractSearchService):
         )
 
         return uis[:10]
+
+    def _get_fn_specs(self, abi, uis: List[ContractUI]):
+        processor = self.contracts_processors_manager.require_contract_processor(self.get_blockchain())
+        return [
+            processor.process_functions_specs(abi, ui.function_specs)
+            for ui in uis
+        ]
 
     @abstractmethod
     def _get_abi_fn_names(self, abi) -> Set[str]:
