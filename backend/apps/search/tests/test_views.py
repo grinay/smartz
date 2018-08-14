@@ -121,7 +121,7 @@ class SearchTest(WebTest):
             functions={
                 'fake': {'title': 'arg1'},
             },
-            abi=[]
+            abi={}
         )
         ui.full_clean(exclude=['abi', 'created_at', 'updated_at', 'user'])
         ui.save()
@@ -132,7 +132,7 @@ class SearchTest(WebTest):
                 'transfer': {'title': 'arg1'},
                 'issue': {'title': 'arg1'},
             },
-            abi=[]
+            abi={}
         )
         ui.full_clean(exclude=['abi', 'created_at', 'updated_at', 'user'])
         ui.save()
@@ -142,7 +142,7 @@ class SearchTest(WebTest):
             functions={
                 'transfer': { 'title': 'arg1' },
             },
-            abi=[]
+            abi={}
         )
         ui.full_clean(exclude=['abi', 'created_at', 'updated_at', 'user'])
         ui.save()

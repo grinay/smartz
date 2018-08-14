@@ -11,6 +11,7 @@ from apps.common.constants import BLOCKCHAINS, BLOCKCHAIN_ETHEREUM
 from apps.contracts_uis.validators import validate_functions, validate_abi, \
     validate_dashboard_functions, validate_functions_specs
 from apps.users.models import User
+from constructor_engine.services import ContractsProcessorsManager
 
 
 class ContractUI(models.Model):
@@ -36,6 +37,8 @@ class ContractUI(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
+    image = models.CharField(max_length=200, default='', blank=True)
+
     @classmethod
     def create(cls, **kwargs):
         ui = cls(**kwargs)
@@ -52,5 +55,8 @@ class ContractUI(models.Model):
         if not self.id:
             self.created_at = datetime.now(pytz.timezone(settings.TIME_ZONE))
         self.updated_at = datetime.now(pytz.timezone(settings.TIME_ZONE))
+
+        self.function_specs = ContractsProcessorsManager().require_contract_processor(self.blockchain)\
+            .process_functions_specs(self.abi, self.functions)
 
         return super().save(*args, **kwargs)

@@ -10,6 +10,7 @@ from django.db.models import ForeignKey
 
 from apps.common.constants import BLOCKCHAINS, BLOCKCHAIN_ETHEREUM
 from apps.constructors.models import Constructor
+from apps.contracts_uis.models import ContractUI
 from apps.dapps.validators import validate_function_args, validate_tx_info, validate_log_data
 from apps.users.models import User
 
@@ -30,10 +31,12 @@ class Dapp(models.Model):
     auth0_user_id = models.CharField(max_length=200, blank=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
+    blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50, default=BLOCKCHAIN_ETHEREUM)
     network_id = models.CharField(max_length=200, default='')
     address = models.CharField(max_length=42, default='')
 
-    constructor = ForeignKey(Constructor, on_delete=models.PROTECT, related_name='dapps')
+    constructor = ForeignKey(Constructor, on_delete=models.PROTECT, related_name='dapps', null=True, default=None)
+    contract_ui = ForeignKey(ContractUI, on_delete=models.PROTECT, related_name='dapps', null=True, default=None)
 
     created_at = models.DateTimeField(default=init_time)
 

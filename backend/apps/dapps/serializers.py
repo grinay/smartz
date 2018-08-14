@@ -12,12 +12,13 @@ def dapp_pub_info(dapp: Dapp) -> Dict:
         'id': dapp.slug,
         "title": dapp.title,
         "network_id": str(dapp.network_id),
-        "constructor_id": dapp.constructor.slug,
+        "constructor_id": dapp.constructor.slug if dapp.constructor else None,
+        "contract_ui_id": dapp.contract_ui.slug if dapp.contract_ui else None,
         "address": dapp.address,
         'bin': dapp.binary,
         'source': dapp.source,
         'abi': json.loads(dapp.abi),
-        'blockchain': dapp.constructor.blockchain,
+        'blockchain': dapp.blockchain,
         "functions": json.loads(dapp.function_specs),
         "dashboard_functions": json.loads(dapp.dashboard_functions),
         'price': float(format(dapp.deploy_price, 'f').rstrip('0').rstrip('.')),
@@ -29,7 +30,12 @@ def dapp_pub_info(dapp: Dapp) -> Dict:
             "name": dapp.constructor.name,
             "description": dapp.constructor.description,
             "image": dapp.constructor.image
-        }
+        } if dapp.constructor else None,
+        "contract_ui": {
+            "name": dapp.contract_ui.name,
+            "description": dapp.contract_ui.description,
+            "image": dapp.contract_ui.image
+        } if dapp.contract_ui else None,
     }
 
 

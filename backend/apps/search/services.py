@@ -136,7 +136,7 @@ class AbstractAddressSearchService(AbstractSearchService, WithContractProcessorM
     def _get_fn_specs(self, abi, uis: List[ContractUI]):
         processor = self.contracts_processors_manager.require_contract_processor(self.get_blockchain())
         return [
-            processor.process_functions_specs(abi, ui.function_specs)
+            processor.process_functions_specs(abi, ui.functions)
             for ui in uis
         ]
 

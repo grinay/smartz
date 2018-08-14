@@ -211,6 +211,7 @@ class ConstructView(View, WithEngine):
         dapp.function_specs = json.dumps(result['function_specs'])
         dapp.dashboard_functions = json.dumps(result['dashboard_functions'])
         dapp.constructor = constructor
+        dapp.blockchain = constructor.blockchain
         dapp.user = user
         dapp.compiler_version = result['compiler_version']
         dapp.compiler_optimization = result['compiler_optimization']
