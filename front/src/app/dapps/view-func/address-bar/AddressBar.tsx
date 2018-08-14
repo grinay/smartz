@@ -7,7 +7,7 @@ import { IDapp } from '../../../../helpers/entities/dapp';
 import { getNetworkEtherscanAddress } from '../../../../helpers/eth';
 import { copyTextToClipboard } from '../../../../helpers/utils';
 import AddressString from '../../../common/address-string/AddressString';
-import Modal from '../../../common/modal/Modal';
+import ModalContainer from '../../../common/modal/ModalContainer';
 import PopupVerify from '../../popup-verify/PopupVerify';
 
 import './AddressBar.less';
@@ -118,9 +118,13 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
             {btn}
           </div>
         </div>
-        <Modal isOpen={isOpenModal} onClose={this.toggleModal}>
+        <ModalContainer
+          isOpen={isOpenModal}
+          className="verify-modal"
+          onClose={this.toggleModal}
+        >
           <PopupVerify dapp={dapp} />
-        </Modal>
+        </ModalContainer>
       </div>
     );
   }

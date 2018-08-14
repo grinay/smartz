@@ -6,7 +6,7 @@ import { blockchains } from '../../constants/constants';
 import { getNetworkId, processControlForm, processResult } from '../../helpers/eth';
 import Alert from '../common/Alert';
 import Loader from '../common/loader/Loader';
-import Modal from '../common/modal/Modal';
+import ModalContainer from '../common/modal/ModalContainer';
 import Button from '../ui-kit/button/Button';
 import DappCard from './dapp-card/DappCard';
 import DappCustom from './dapp-custom/DappCustom';
@@ -175,17 +175,18 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
       <main className="page-main dashboard">
         <Button
           className="dashboard-add-btn"
-          type="gray"
-          content="Add custom dapp"
+          type="white"
+          content="Add an exiting contract"
           onClick={this.onToggleModal(true)}
         />
         {content}
-        <Modal
+        <ModalContainer
           isOpen={isOpenModal}
+          className="dashboard-modal"
           onClose={this.onToggleModal(false)}
         >
           <DappCustom />
-        </Modal>
+        </ModalContainer>
       </main>
     );
   }

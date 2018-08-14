@@ -9,6 +9,7 @@ import { processControlForm, processResult } from '../../helpers/eth';
 import store from '../../store/store';
 import { setHeaderTitle } from '../AppActions';
 import Alert from '../common/Alert';
+import ModalContainer from '../common/modal/ModalContainer';
 import ColumnFunc from './column-func/ColumnFunc';
 import MinimalFooter from './minimal-footer/MinimalFooter';
 import ModalFunc from './modal-func/ModalFunc';
@@ -215,12 +216,21 @@ class Dapp extends React.Component<IDappProps, IDappState> {
           dapp={dapp}
         />
 
-        <ModalFunc
-          func={selectedFunc}
-          dapp={dapp}
-          profile={profile}
+
+        {/* <ModalContainer
+          isOpen={selectedFunc != null ? true : false}
+          // isCloser={false}
+          className="func-modal"
           onClose={this.onClose('modal')}
-        />
+        >
+          <ModalFunc
+            func={selectedFunc}
+            dapp={dapp}
+            profile={profile}
+            onClose={this.onClose('modal')}
+          />
+          <p>d</p>
+        </ModalContainer> */}
 
       </main>
     );

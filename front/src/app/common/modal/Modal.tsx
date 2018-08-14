@@ -1,4 +1,7 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import InlineSVG from 'svg-inline-react';
 
 import { Key } from '../../../types/enums';
 
@@ -6,81 +9,166 @@ import './Modal.less';
 
 
 interface IModalProps {
-  children: any;
-  isOpen: boolean;
-  isCloser?: boolean;
-  overlayClassName?: string;
-  windowClassName?: string;
-  closerClassName?: string;
+  state: any;
   onClose: () => void;
+  isCloseEsc?: boolean;
+  className?: string;
+  isBackdrop?: boolean;
+  isCloser?: boolean;
+  blur?: {
+    size: number;
+    block: string;
+    duration: number;
+  };
+  animationWindow?: {
+    duration: number;
+    styleStart: object;
+    styleEnd: object;
+  };
+  animationBackdrop?: {
+    duration: number;
+    styleStart: object;
+    styleEnd: object;
+  };
 }
 
 export default class Modal extends React.PureComponent<IModalProps, {}> {
-  private elem: HTMLElement;
+  private node: HTMLDivElement;
 
   constructor(props) {
     super(props);
 
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.getStyle = this.getStyle.bind(this);
   }
 
-  public onKeyDown(event) {
-    const { isOpen, onClose } = this.props;
+  private onKeyDown(event) {
+    const { onClose, isCloseEsc = true } = this.props;
 
-    if (event.keyCode === Key.ESC && isOpen) {
+    if (event.keyCode === Key.ESC && isCloseEsc) {
       onClose();
       return;
     }
   }
 
-  public componentWillMount() {
-    document.addEventListener('keydown', this.onKeyDown);
+  private getStyle(settings: object, state: string): object {
+    if (settings != null) {
+      const transitionStyles = {
+        entering: settings['styleStart'],
+        entered: settings['styleEnd'],
+        exiting: settings['styleStart'],
+      };
 
-    this.elem = document.getElementsByTagName('body')[0];
+      return {
+        transition: `all ${settings['duration']}ms ease-out`,
+        ...transitionStyles[state],
+      };
+    } else {
+      return null;
+    }
+  }
+
+  public componentWillMount() {
+    // create dom-element and inject to dom
+    this.node = document.createElement('div');
+    this.node.setAttribute('id', 'component-modal');
+    document.body.appendChild(this.node);
+
+  }
+
+  public componentDidMount() {
+    const { isCloseEsc = true } = this.props;
+
+    if (isCloseEsc) {
+      document.addEventListener('keydown', this.onKeyDown);
+    }
   }
 
   public componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDown);
+    const { isCloseEsc = true } = this.props;
+
+    if (isCloseEsc) {
+      document.removeEventListener('keydown', this.onKeyDown);
+    }
+
+    document.body.removeChild(this.node);
   }
 
 
   public render() {
     const {
-      children,
-      isOpen,
       onClose,
+      children,
       isCloser = true,
-      overlayClassName,
-      windowClassName,
-      closerClassName,
+      isBackdrop = true,
+      state,
+      blur = null,
+      animationWindow = null,
+      animationBackdrop = null,
+      className = null,
     } = this.props;
 
-    const isDisableScroll: boolean = this.elem.classList.contains('modal-disable-scroll');
+    // set blur effect on div block
+    if (blur != null) {
+      const elem = document.getElementById(blur.block);
 
-    if (!isOpen) {
-      if (isDisableScroll) {
-        this.elem.classList.remove('modal-disable-scroll');
+      if (elem !== undefined) {
+        elem.style.transition = `filter ${blur.duration}ms ease-out`;
+
+        switch (state) {
+          case 'entered':
+          case 'entering':
+            elem.style.filter = `blur(${blur.size}px)`;
+            break;
+
+          case 'exiting':
+          case 'exited':
+            elem.style.filter = `blur(0px)`;
+            break;
+
+          default:
+            break;
+        }
       }
-
-      return null;
     }
 
-    if (!isDisableScroll) {
-      this.elem.classList.add('modal-disable-scroll');
-    }
+    const content = (
+      <div
+        className={classNames('component-modal flex', className)}
+        style={this.getStyle(animationWindow, state)}>
 
-    return (
-      <div className="modal flex" >
-        <div className={`overlay ${overlayClassName}`} onClick={onClose} />
-        <div className={`window ${windowClassName}`}>
+        {/* backDrop */}
+        {isBackdrop &&
+          <div
+            className="component-modal-backdrop"
+            style={this.getStyle(animationBackdrop, state)}
+          />
+        }
+
+        <div className="component-modal-window">
+
+          {/* closer */}
           {isCloser &&
-            <span className={`closer ${closerClassName}`} onClick={onClose}>
-              &times;
-          </span>}
+            <button
+              className="component-modal-close"
+              type="button"
+              aria-label="Close"
+              onClick={onClose}
+            >
+              <InlineSVG
+                className="x-icon"
+                src={require('../../../assets/img/common/x-icon.svg')}
+              />
+            </button>
+          }
+
+          {/* content */}
           {children}
         </div>
-      </ div >
+      </div>
     );
+
+    return ReactDOM.createPortal(content, this.node);
   }
 }
 
