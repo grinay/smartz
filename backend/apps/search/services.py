@@ -53,7 +53,7 @@ class AbstractAddressSearchService(AbstractSearchService, WithContractProcessorM
             return {
                 'address': {
                     'type': SEARCH_RESULT_TYPE_DAPP,
-                    'dapp': dapp_pub_info(dapp)
+                    'dapp': dapp_pub_info(dapp) if dapp.has_public_access else None
                 }
             }
 

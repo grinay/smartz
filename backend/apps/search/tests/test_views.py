@@ -21,12 +21,12 @@ class SearchTest(WebTest):
         constructor.save()
         dapp_testnet = Dapp.create(
             address='0x0123456789012345678901234567890123456789', constructor=constructor,
-            abi='[]', function_specs='{}', dashboard_functions='[]', network_id='3'
+            abi='[]', function_specs='{}', dashboard_functions='[]', network_id='3', has_public_access=True
         )
         dapp_testnet.save()
         dapp = Dapp.create(
             address='0x0123456789012345678901234567890123456789', constructor=constructor,
-            abi='[]', function_specs='{}', dashboard_functions='[]', network_id='1'
+            abi='[]', function_specs='{}', dashboard_functions='[]', network_id='1', has_public_access=True
         )
         dapp.save()
 
