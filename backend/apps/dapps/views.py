@@ -19,8 +19,6 @@ from utils.common import auth
 
 def _prepare_instance_details(dapp: Dapp) -> Dict:
     output = dapp_pub_info(dapp)
-    assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
-                                'rpc_calls/get_instance_details/output')
 
     return output
 
