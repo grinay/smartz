@@ -26,7 +26,7 @@ class ContractUI(models.Model):
     description = models.TextField()
 
     abi = JSONField(validators=[validate_abi], default=[], blank=True)
-    functions = JSONField(validators=[validate_functions])
+    functions = JSONField(validators=[validate_functions], blank=True, default={})
 
     function_specs = JSONField(validators=[validate_functions_specs], blank=True, default={})
     dashboard_functions = JSONField(validators=[validate_dashboard_functions], blank=True, default=[])
