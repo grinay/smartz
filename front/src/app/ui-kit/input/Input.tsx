@@ -1,4 +1,6 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
+import InlineSVG from 'svg-inline-react';
 
 import { Key } from '../../../types/enums';
 
@@ -9,6 +11,7 @@ interface IInputProps {
   className?: string;
   onSubmit: (value: string) => void;
   onValidate?: (value: string) => boolean;
+  autofocus?: boolean;
 }
 
 interface IInputState {
@@ -40,12 +43,16 @@ export default class Input extends React.PureComponent<IInputProps, IInputState>
       if (onValidate != null) {
         if (onValidate(value)) {
           onSubmit(value);
+          this.setState({ stateInput: 'ok' });
         } else {
           this.setState({ stateInput: 'error' });
         }
       } else {
         onSubmit(value);
+        this.setState({ stateInput: 'ok' });
       }
+
+      this.ref.blur();
     }
   }
 
@@ -64,15 +71,28 @@ export default class Input extends React.PureComponent<IInputProps, IInputState>
   }
 
   public render() {
-    const { value } = this.state;
+    const { value, stateInput } = this.state;
+    const { className = null, autofocus = false } = this.props;
 
     return (
-      <input
-        onKeyPress={this.onKeyPress}
-        onChange={this.onChange}
-        value={value}
-        className="component-input"
-      />
+      <div className="component-input-container">
+        <input
+          onKeyPress={this.onKeyPress}
+          onChange={this.onChange}
+          value={value}
+          className={classNames('component-input', className, {
+            error: stateInput === 'error',
+          })}
+          ref={(r) => this.ref = r}
+          autoFocus={autofocus}
+        />
+        <InlineSVG
+          className={classNames('component-input-icon', {
+            ok: stateInput === 'ok',
+          })}
+          src={require('../../../assets/img/common/components/input-done.svg')}
+        />
+      </div>
     );
   }
 }

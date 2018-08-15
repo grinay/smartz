@@ -14,7 +14,11 @@ declare global {
   }
 }
 
-class EosClass {
+export class EosClass {
+  public static isAddress(str: string): boolean {
+    return /^EOS([A-Za-z0-9]{50})$/.test(str);
+  }
+
   private network: any;
   private eos: any;
   private identity: any;

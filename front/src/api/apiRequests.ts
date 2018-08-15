@@ -286,3 +286,29 @@ export function finishLogin(blockchain, identity, randData, signedData) {
 
   return result;
 }
+
+// =============================================================================
+// Auth
+// =============================================================================
+
+export function getSearchData(data: object) {
+  const result = fetch(`/search`, data, 'post');
+
+  // result
+  //   .then((response) => {
+  //     const { data, status } = response;
+
+  //     if (status === 200 && !data.error) {
+  //       console.log(data);
+  //       //   dispatch(startLoginSuccessAction(data));
+  //     } else {
+  //       //   let errorMsg = data.error ? data.error : 'Login error';
+  //       //   dispatch(loginErrorAction(errorMsg));
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     dispatch(loginErrorAction('Login error'));
+  //   });
+
+  return result;
+}

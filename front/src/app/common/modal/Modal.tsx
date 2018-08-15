@@ -133,19 +133,21 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
     }
 
     const content = (
-      <div
-        className={classNames('component-modal flex', className)}
-        style={this.getStyle(animationWindow, state)}>
+      <div className={classNames('component-modal flex', className)} >
 
         {/* backDrop */}
         {isBackdrop &&
           <div
             className="component-modal-backdrop"
+            onClick={onClose}
             style={this.getStyle(animationBackdrop, state)}
           />
         }
 
-        <div className="component-modal-window">
+        <div
+          className="component-modal-window"
+          style={this.getStyle(animationWindow, state)}
+        >
 
           {/* closer */}
           {isCloser &&

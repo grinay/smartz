@@ -184,6 +184,22 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
           isOpen={isOpenModal}
           className="dashboard-modal"
           onClose={this.onToggleModal(false)}
+          animationWindow={{
+            duration: 300,
+            styleStart: {
+              opacity: 0,
+              transform: 'scale(.9,.9)',
+            },
+            styleEnd: {
+              opacity: 1,
+              transform: 'scale(1,1)',
+            },
+          }}
+          animationBackdrop={{
+            duration: 300,
+            styleStart: { opacity: 0 },
+            styleEnd: { opacity: 1 },
+          }}
         >
           <DappCustom />
         </ModalContainer>
