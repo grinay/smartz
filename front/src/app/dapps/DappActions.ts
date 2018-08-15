@@ -14,10 +14,9 @@ export const fetchDappsSuccess = (dapps) => ({
 });
 //
 
-export const viewFuncResult = (dappId, funcName, result) => ({
+export const viewFuncResult = (dappId, result) => ({
   type: 'VIEW_FUNC_RESULT',
   dappId,
-  funcName,
   result,
 });
 
@@ -26,14 +25,6 @@ export const transactionNew = (dappId, result) => ({
   dappId,
   result,
 });
-
-// export const requestNew = (dappId, func, formData, result) => ({
-//   type: 'REQUEST_NEW',
-//   dappId,
-//   func,
-//   formData,
-//   result
-// });
 
 export const requestAdd = (dappId, requests) => ({
   type: 'ADD_REQUESTS',

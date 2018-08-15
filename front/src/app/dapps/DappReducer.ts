@@ -62,20 +62,12 @@ const dapps = (state = initState, action) => {
 
 
     case 'VIEW_FUNC_RESULT':
-      const { dappId, funcName, result } = action;
+      const { dappId, result } = action;
 
       if (nextState.dappList.has(dappId)) {
         let dapp = nextState.dappList.get(dappId);
 
-        if (dapp.funcResults && dapp.funcResults[funcName] === result) {
-          return state;
-        } else {
-          if (!dapp.funcResults) {
-            dapp.funcResults = {};
-          }
-
-          dapp.funcResults[funcName] = result;
-        }
+        dapp.funcResults = result;
       }
 
       return nextState;

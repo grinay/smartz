@@ -1,4 +1,5 @@
-import { IFunction } from './entities/dapp';
+import { IDapp, IFunction } from './entities/dapp';
+import { processControlForm } from './eth';
 
 
 export const getFuncType = (func: IFunction): 'view' | 'ask' | 'write' | null => {
@@ -29,4 +30,31 @@ export const getFunctionsByType = (functions: IFunction[], type: any): any[] => 
   }
 
   return result;
+};
+
+export const getViewFunctionConstants = (dapp: IDapp) => {
+  const { abi, address, dashboard_functions, functions } = dapp;
+  const promises = [];
+
+  dashboard_functions.forEach((dFunc) => {
+    const fSpec = functions.find((func) => func.name === dFunc);
+
+    if (fSpec) {
+      promises.push(processControlForm(abi, fSpec, [], address));
+    }
+  });
+
+  return new Promise((resolve, reject) => {
+
+    // wait all request to blockchain
+    Promise.all(promises)
+      .then((results) => {
+        const commonResult = {};
+
+        dashboard_functions.forEach((dFunc, i) => commonResult[dFunc] = results[i]);
+
+        resolve(commonResult);
+      })
+      .catch((error) => reject(error));
+  });
 };

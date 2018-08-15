@@ -18,7 +18,6 @@ export const processControlForm = (
   function_spec /* ETHFunctionSpec */,
   form_data /* data from react-jsonschema-form */,
   contract_address,
-  callback,
 ) => {
   // preparing args
 
@@ -73,20 +72,24 @@ export const processControlForm = (
       throw new Error('Incorrect form-data');
     }
 
-    try {
-      result = web3.eth.sendTransaction(
-        {
+
+    return new Promise((resolve, reject) => {
+      try {
+        web3.eth.sendTransaction({
           ...transactionParameters,
           value,
           to: contract_address,
-        },
-        callback,
-      );
-    } catch (e) {
-      console.error(e);
-    }
-
-    return result;
+        }, (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   let function_abi;
@@ -113,7 +116,7 @@ export const processControlForm = (
 
   // calling/transacting
 
-  const CtorDapp = web3.eth.contract(contract_abi).at(contract_address);
+  const сtorDapp = web3.eth.contract(contract_abi).at(contract_address);
 
   // non-constant - there will be a transaction instead of a local call
   if (!function_abi.constant) {
@@ -122,14 +125,21 @@ export const processControlForm = (
     args_converted2abi.push(transactionParameters);
   }
 
-  let result;
-  try {
-    result = CtorDapp[function_spec.name](...args_converted2abi, callback);
-  } catch (e) {
-    console.warn(e);
-  }
 
-  return result;
+  return new Promise((resolve, reject) => {
+    try {
+      сtorDapp[function_spec.name](...args_converted2abi, (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
   /*
   if (function_abi.constant) {
       // show in UI

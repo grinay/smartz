@@ -133,38 +133,35 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
       case blockchains.ethereum:
         dataFetch['initiator_address'] = getAccountAddress();
 
-        processControlForm(dapp.abi, func, formData, dapp.address,
-          (error, response) => {
+        processControlForm(dapp.abi, func, formData, dapp.address)
+          .then((result: string) => {
             const funcType = getFuncType(func);
 
-            if (error !== null) {
-              dataFetch['is_success'] = false;
-              dataFetch['error'] = error.toString();
+            if (funcType === 'ask') {
+              dataFetch['is_success'] = true;
+              dataFetch['result'] = this.formatResultEth(func, result);
 
-              console.error('Error: ', error);
+              api.sendDappRequest(dapp.id, dataFetch);
+
+            } else if (funcType === 'write') {
+              dataFetch['tx_id'] = result;
 
               store.dispatch(transactionNew(dapp.id, dataFetch));
-            } else {
-              if (funcType === 'ask') {
-                dataFetch['is_success'] = true;
-                dataFetch['result'] = this.formatResultEth(func, response);
-
-                api.sendDappRequest(dapp.id, dataFetch);
-
-              } else if (funcType === 'write') {
-                dataFetch['tx_id'] = response;
-
-                store.dispatch(transactionNew(dapp.id, dataFetch));
-                this.getReceipt(response, dataFetch);
-              }
+              this.getReceipt(result, dataFetch);
             }
+          })
+          .catch((error) => {
+            dataFetch['is_success'] = false;
+            dataFetch['error'] = error.toString();
 
-            // close modal window after execute function
-            onClose();
+            console.error('Error: ', error);
+
+            store.dispatch(transactionNew(dapp.id, dataFetch));
+
           });
         break;
-      case blockchains.eos:
 
+      case blockchains.eos:
         Eos.executeFunc(dapp.abi, func, dapp.address, formData)
           .then((response: any) => {
             dataFetch['initiator_address'] = Eos.accountName;
@@ -207,14 +204,14 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
               api.sendDappRequest(dapp.id, dataFetch);
             }
           });
-
-        // close modal window after execute function
-        onClose();
         break;
 
       default:
         break;
     }
+
+    // close modal window after execute function
+    onClose();
   }
 
   private getReceipt(tx: string, dataFetch: any) {

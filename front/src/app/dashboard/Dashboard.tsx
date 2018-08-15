@@ -91,44 +91,6 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
     }
   }
 
-  public componentDidUpdate() {
-    const { ctors, metamaskStatus } = this.props;
-    const { filteredDapps, updateCycleActive } = this.state;
-
-    if (filteredDapps !== null &&
-      filteredDapps.length &&
-      ctors.length &&
-      !updateCycleActive &&
-      metamaskStatus !== 'noMetamask') {
-      this.updateCycle();
-    }
-  }
-
-  public updateCycle() {
-    const { filteredDapps } = this.state;
-    const { viewFuncResult } = this.props;
-
-    filteredDapps.forEach((dapp, j) => {
-      const { id, abi, address, dashboard_functions, functions, blockchain } = dapp;
-
-      if (blockchain === blockchains.ethereum && dashboard_functions) {
-        dashboard_functions.forEach((dFunc) => {
-          const fSpec = find(functions, { name: dFunc });
-          if (!fSpec) {
-            return;
-          }
-          processControlForm(abi, fSpec, [], address, (error, result) => {
-            if (error) {
-              console.error(error);
-            } else {
-              viewFuncResult(id, dFunc, processResult(result));
-            }
-          });
-        });
-      }
-    });
-  }
-
   public render() {
     const { metamaskStatus, dapps, ctors, ctorsError, dappsError } = this.props;
     const { filteredDapps, isOpenModal } = this.state;

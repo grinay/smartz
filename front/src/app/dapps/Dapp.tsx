@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
-import { getFuncType } from '../../helpers/common';
+import { getFuncType, getViewFunctionConstants } from '../../helpers/common';
 import { IDapp, IFunction, Tab } from '../../helpers/entities/dapp';
 import { processControlForm, processResult } from '../../helpers/eth';
 import store from '../../store/store';
@@ -38,7 +38,7 @@ interface IDappProps {
 }
 
 interface IDappState {
-  updateCycleActive: any;
+  isUpdateCycle: boolean;
   funcActive: IFunction;
   selectedRecord: any;
   selectedFunc: any;
@@ -50,14 +50,13 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     super(props);
 
     this.state = {
-      updateCycleActive: false,
+      isUpdateCycle: true,
       funcActive: null,
       selectedRecord: null,
       selectedFunc: null,
       selectedTab: Tab.Request,
     };
 
-    this.getConstants = this.getConstants.bind(this);
     this.onSelectRecord = this.onSelectRecord.bind(this);
     this.selectFunc = this.selectFunc.bind(this);
     this.onClose = this.onClose.bind(this);
@@ -135,33 +134,17 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
   public componentDidUpdate() {
     // TODO: refactor this shit
-    const { dapp, metamaskStatus } = this.props;
+    const { dapp, metamaskStatus, viewFuncResult } = this.props;
 
-    if (dapp && dapp.blockchain === blockchains.ethereum && !this.state.updateCycleActive) {
+    if (dapp && dapp.blockchain === blockchains.ethereum && this.state.isUpdateCycle) {
       if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
         return null;
       }
-      this.getConstants();
-    }
-  }
 
-  public getConstants() {
-    const { dapp, viewFuncResult } = this.props;
-    if (!dapp) {
-      return;
+      getViewFunctionConstants(dapp)
+        .then((result) => store.dispatch(viewFuncResult(dapp.id, result)))
+        .catch((error) => console.error(error));
     }
-
-    dapp.functions.forEach((func) => {
-      if (func.constant && func.inputs.minItems === 0) {
-        processControlForm(dapp.abi, func, [], dapp.address, (error, result) => {
-          if (error) {
-            console.error(error);
-          } else {
-            viewFuncResult(dapp.id, func.name, processResult(result));
-          }
-        });
-      }
-    });
   }
 
   public render() {

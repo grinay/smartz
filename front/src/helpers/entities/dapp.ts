@@ -28,7 +28,10 @@ export interface IDapp {
   };
   constructor_id: string;
   contract_name: string;
-  ctor: object;
+  ctor: {
+    image?: any;
+    name?: any;
+  };
   dashboard_functions: string[];
   funcResults: any;
   functions: IFunction[];
