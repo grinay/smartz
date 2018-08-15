@@ -35,8 +35,8 @@ class Dapp(models.Model):
     network_id = models.CharField(max_length=200, default='')
     address = models.CharField(max_length=42, default='')
 
-    constructor = ForeignKey(Constructor, on_delete=models.PROTECT, related_name='dapps', null=True, default=None)
-    contract_ui = ForeignKey(ContractUI, on_delete=models.PROTECT, related_name='dapps', null=True, default=None)
+    constructor = ForeignKey(Constructor, on_delete=models.PROTECT, related_name='dapps', null=True, default=None, blank=True)
+    contract_ui = ForeignKey(ContractUI, on_delete=models.PROTECT, related_name='dapps', null=True, default=None, blank=True)
 
     created_at = models.DateTimeField(default=init_time)
 
