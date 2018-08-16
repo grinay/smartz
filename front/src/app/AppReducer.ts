@@ -5,6 +5,11 @@ const initState = {
     id: null,
   },
   trustBanner: false,
+  search: {
+    status: null,
+    data: null,
+    error: null,
+  },
 };
 
 const app = (state = initState, action) => {
@@ -21,6 +26,22 @@ const app = (state = initState, action) => {
 
     case 'SET_TRUST_BANNER':
       nextState.trustBanner = true;
+      return nextState;
+
+    case 'FETCH_SEARCH_REQUEST':
+      nextState.search.status = 'loading';
+      nextState.search.error = null;
+      return nextState;
+
+    case 'FETCH_SEARCH_FAILURE':
+      nextState.search.status = 'error';
+      nextState.search.error = action.error;
+      return nextState;
+
+    case 'FETCH_SEARCH_SUCCESS':
+      nextState.search.error = null;
+      nextState.search.status = null;
+      nextState.search.data = action.data;
       return nextState;
 
     default:

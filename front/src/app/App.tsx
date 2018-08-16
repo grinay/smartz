@@ -27,7 +27,7 @@ interface IAppProps {
   profile: any;
   setUserProfile: any;
   nextDeploy: any;
-  app: any;
+  trustBanner: any;
 }
 
 interface IAppState {
@@ -82,7 +82,7 @@ class App extends React.Component<IAppProps, IAppState> {
   public render() {
     const { metamaskStatus } = this.state;
     const isAuthenticated = Auth.isAuthenticated();
-    const { profile, setUserProfile, app } = this.props;
+    const { profile, setUserProfile, trustBanner } = this.props;
 
     if (!isAuthenticated && profile) {
       setUserProfile(null);
@@ -100,7 +100,7 @@ class App extends React.Component<IAppProps, IAppState> {
       <main className="app" id="js-app">
         {/* Install extension */}
         {metamaskStatus === 'noMetamask' && (
-          <InstallExtension trustBanner={app.trustBanner} />
+          <InstallExtension trustBanner={trustBanner} />
         )}
 
         <Route render={(props) => <Header profile={profile} {...props} />} />

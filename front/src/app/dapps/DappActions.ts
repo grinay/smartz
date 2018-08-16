@@ -12,7 +12,6 @@ export const fetchDappsSuccess = (dapps) => ({
   type: 'FETCH_DAPPS_SUCCESS',
   dapps,
 });
-//
 
 export const viewFuncResult = (dappId, result) => ({
   type: 'VIEW_FUNC_RESULT',

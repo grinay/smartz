@@ -9,7 +9,7 @@ import Loader from '../common/loader/Loader';
 import ModalContainer from '../common/modal/ModalContainer';
 import Button from '../ui-kit/button/Button';
 import DappCard from './dapp-card/DappCard';
-import DappCustom from './dapp-custom/DappCustom';
+import DappCustom from './dapp-custom/DappCustomContainer';
 
 import './Dashboard.less';
 

@@ -4,27 +4,26 @@ import * as api from '../../../api/apiRequests';
 import { EosClass } from '../../../helpers/eos';
 import { isAddress } from '../../../helpers/eth';
 import Loader from '../../common/loader/Loader';
+import Message from '../../common/message/Message';
+import TitleContentWrapper from '../../common/title-content-wrapper/TitleContentWrapper';
 import Input from '../../ui-kit/input/Input';
 import Text from '../../ui-kit/text/Text';
 import Title from '../../ui-kit/title/Title';
+import DappCard from '../dapp-card/DappCard';
+import BtnPanel from './BtnPanel/BtnPanel';
+import PrivateDapp from './private-dapp/PrivateDapp';
 
 import './DappCustom.less';
 
 
-interface IDappCustomState {
-  response: any;
-  loading: boolean;
+interface IDappCustomProps {
+  search: any;
+  dapps: any;
 }
 
-
-export default class DappCustom extends React.PureComponent<{}, IDappCustomState> {
+export default class DappCustom extends React.PureComponent<IDappCustomProps, {}> {
   constructor(props) {
     super(props);
-
-    this.state = {
-      response: null,
-      loading: false,
-    };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.validateString = this.validateString.bind(this);
@@ -33,21 +32,24 @@ export default class DappCustom extends React.PureComponent<{}, IDappCustomState
   private onSubmit(value: string): void {
     api.getSearchData({
       query: value,
-      ethereum_network_id: '4', //TODO: get id
+      ethereum_network_id: '1', //TODO: get id
     })
       .then((response) => {
         const { data, status } = response;
 
         if (status === 200) {
           console.log(data);
-          //   dispatch(startLoginSuccessAction(data));
-        } else {
 
+
+          this.setState({ response: data.address, loading: false });
         }
       })
       .catch((error) => {
         console.error(error);
       });
+
+    this.setState({ loading: true });
+
   }
 
   private validateString(value: string): boolean {
@@ -55,43 +57,79 @@ export default class DappCustom extends React.PureComponent<{}, IDappCustomState
   }
 
   public render() {
-    const { loading, response } = this.state;
+    const { search, dapps } = this.props;
+
+    if (!search || !dapps) {
+      return null;
+    }
 
     let content;
-    if (loading) {
+    if ('status' in search && search.status === 'loading') {
       content = <Loader />;
-    } else if (response != null) {
-      switch (response.type) {
+    } else if ('error' in search && search.error != null) {
+      content = <p>Error: {search.error}</p>;
+    } else if ('data' in search && search.data != null) {
+      console.log(search.data);
+      switch (search.data.type) {
         case 'dapp':
+          content = (
+            <div className="dapp-custom-preview">
+              <TitleContentWrapper title="Preview">
+                {search.data.dapp === null
+                  ? <PrivateDapp />
+                  : <DappCard dapp={dapps.get(search.data.dapp)} className="dapp-card-custom" />}
+              </TitleContentWrapper>
+            </div >);
           break;
+
         case 'contract_ui':
+          console.log('here');
+          content = (
+            <div>
+              <div className="dapp-custom-warning">
+                <div className="divider" />
+                <TitleContentWrapper title="Warning">
+                  <Message >
+                    This third-party contract isn’t from Smartz, but we seem to have guessed his type. You can try to use it, but without any guarantee.
+                </Message>
+                </TitleContentWrapper>
+              </div>
+              <TitleContentWrapper className="dapp-custom-type" title="Type">
+                <p>Select</p>
+              </TitleContentWrapper>
+            </div >);
           break;
+
         case 'abi':
           break;
         case 'no_abi':
           break;
         default:
+          content = <Loader />;
           break;
       }
     }
 
     return (
       <div className="dapp-custom">
-        <Title type="medium">Add an existing contract</Title>
-        <Text type="caption" className="dapp-custom-description">
-          Add an existing contract by its address in the blockchain. You can add both Smartz and third-party contracts, Etehreum or EOS.
+        <div className="dapp-custom-container">
+          <Title type="medium">Add an existing contract</Title>
+          <Text type="caption" className="dapp-custom-description">
+            Add an existing contract by its address in the blockchain. You can add both Smartz and third-party contracts, Etehreum or EOS.
         </Text>
-        <Title type="small">Contract address</Title>
-        <Text type="caption">For example:</Text>
-        <Text type="caption">- Ethereum: 0x40ae4acd08e65714b093bf2495fd7941aedfa231</Text>
-        <Text type="caption">- EOS: EOS82LzjXdnBPTwgJCxiUiRcVsxdiawn8MiAgVTfFZV41a4X7aMuI</Text>
-        <Input
-          onValidate={this.validateString}
-          className="dapp-custom-input"
-          onSubmit={this.onSubmit}
-          autofocus={true}
-        />
-        <Loader />
+          <Title type="small">Contract address</Title>
+          <Text type="caption">For example:</Text>
+          <Text type="caption">- Ethereum: 0x40ae4acd08e65714b093bf2495fd7941aedfa231</Text>
+          <Text type="caption">- EOS: EOS82LzjXdnBPTwgJCxiUiRcVsxdiawn8MiAgVTfFZV41a4X7aMuI</Text>
+          <Input
+            onValidate={this.validateString}
+            className="dapp-custom-input"
+            onSubmit={this.onSubmit}
+            autofocus={true}
+          />
+        </div>
+        {content}
+        <BtnPanel onClickBtn={() => { }} isDisabled={false} />
       </div >
     );
   }

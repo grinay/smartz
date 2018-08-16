@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
-import { getFuncType, getViewFunctionConstants } from '../../helpers/common';
 import { IDapp, IFunction, Tab } from '../../helpers/entities/dapp';
-import { processControlForm, processResult } from '../../helpers/eth';
 import store from '../../store/store';
 import { setHeaderTitle } from '../AppActions';
 import Alert from '../common/Alert';
@@ -124,27 +121,12 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
     // update name of dapp after change
     // if (dappNext.title !== dappLast.title) {
-    store.dispatch(setHeaderTitle({
-      title: dappNext.title,
-      id: dappNext.id,
-      type: 'dapp',
-    }));
+    // store.dispatch(setHeaderTitle({
+    //   title: dappNext.title,
+    //   id: dappNext.id,
+    //   type: 'dapp',
+    // }));
     // }
-  }
-
-  public componentDidUpdate() {
-    // TODO: refactor this shit
-    const { dapp, metamaskStatus, viewFuncResult } = this.props;
-
-    if (dapp && dapp.blockchain === blockchains.ethereum && this.state.isUpdateCycle) {
-      if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
-        return null;
-      }
-
-      getViewFunctionConstants(dapp)
-        .then((result) => store.dispatch(viewFuncResult(dapp.id, result)))
-        .catch((error) => console.error(error));
-    }
   }
 
   public render() {

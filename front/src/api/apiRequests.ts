@@ -1,3 +1,4 @@
+import { fetchSearchFailure, fetchSearchRequest, fetchSearchSuccess } from '../app/AppActions';
 import Auth from '../app/auth/Auth';
 import {
     finishLoginSuccessAction, loginErrorAction, startLoginSuccessAction,
@@ -288,27 +289,44 @@ export function finishLogin(blockchain, identity, randData, signedData) {
 }
 
 // =============================================================================
-// Auth
+// Search
 // =============================================================================
 
 export function getSearchData(data: object) {
   const result = fetch(`/search`, data, 'post');
 
-  // result
-  //   .then((response) => {
-  //     const { data, status } = response;
+  dispatch(fetchSearchRequest());
 
-  //     if (status === 200 && !data.error) {
-  //       console.log(data);
-  //       //   dispatch(startLoginSuccessAction(data));
-  //     } else {
-  //       //   let errorMsg = data.error ? data.error : 'Login error';
-  //       //   dispatch(loginErrorAction(errorMsg));
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     dispatch(loginErrorAction('Login error'));
-  //   });
+  result
+    .then((response) => {
+      const { data: { address }, status } = response;
+
+      if (status === 200) {
+
+        switch (address.type) {
+          case 'dapp':
+            if (address.dapp != null) {
+              dispatch(fetchDappsSuccess(address.dapp));
+              dispatch(fetchSearchSuccess({
+                type: address.type,
+                dapp: address.dapp.id,
+              }));
+            } else {
+              dispatch(fetchSearchSuccess(address));
+            }
+            break;
+
+          default:
+            dispatch(fetchSearchSuccess(address));
+            break;
+        }
+      } else {
+        dispatch(fetchSearchFailure('Something wrong!'));
+      }
+    })
+    .catch((error) => {
+      dispatch(fetchSearchFailure('Something wrong!'));
+    });
 
   return result;
 }

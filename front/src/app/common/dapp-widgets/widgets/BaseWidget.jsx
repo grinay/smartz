@@ -41,7 +41,7 @@ export default class BaseWidget extends PureComponent {
       return defaultValue ? defaultValue : '';
     }
 
-    return dapp.funcResults[fnDescription.name];
+    return dapp.funcResults[fnDescription.name].toString();
   }
 
   getOption(optionName, defaultValue) {

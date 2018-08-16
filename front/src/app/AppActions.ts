@@ -11,3 +11,17 @@ export const setHeaderTitle = (header) => ({
 export const setTrustBanner = () => ({
   type: 'SET_TRUST_BANNER',
 });
+
+export const fetchSearchRequest = () => ({
+  type: 'FETCH_SEARCH_REQUEST',
+});
+
+export const fetchSearchFailure = (error) => ({
+  type: 'FETCH_SEARCH_FAILURE',
+  error,
+});
+
+export const fetchSearchSuccess = (data) => ({
+  type: 'FETCH_SEARCH_SUCCESS',
+  data,
+});

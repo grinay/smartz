@@ -1,6 +1,5 @@
-import { cloneDeep, find, findIndex } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 
-import { dappList } from '../../api/mock/dapps';
 import { generateId } from '../../helpers/utils';
 
 
@@ -67,7 +66,16 @@ const dapps = (state = initState, action) => {
       if (nextState.dappList.has(dappId)) {
         let dapp = nextState.dappList.get(dappId);
 
-        dapp.funcResults = result;
+        if ('funcResults' in dapp) {
+          if (isEqual(result, dapp.funcResults)) {
+            console.log('no diff');
+            return state;
+          } else {
+            dapp.funcResults = result;
+          }
+        } else {
+          dapp.funcResults = result;
+        }
       }
 
       return nextState;

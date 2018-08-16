@@ -4,21 +4,32 @@ import * as ReactTooltip from 'react-tooltip';
 import InlineSVG from 'svg-inline-react';
 
 import { blockchains } from '../../../constants/constants';
-import { getFunctionsByType } from '../../../helpers/common';
+import { getFunctionsByType, getViewFunctionConstants } from '../../../helpers/common';
+import { IDapp } from '../../../helpers/entities/dapp';
+import store from '../../../store/store';
 import renderDappWidget from '../../common/dapp-widgets/DappWidgets';
+import { viewFuncResult } from '../DappActions';
 import AddressBar from './address-bar/AddressBar';
 
 import './ViewFunc.less';
 
 
 interface IViewFuncProps {
-  dapp: any;
+  dapp: IDapp;
   profile: any;
 }
 
 interface IViewFuncState { }
 
 export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewFuncState> {
+  public componentDidMount() {
+    const { dapp } = this.props;
+
+    getViewFunctionConstants(dapp)
+      .then((result) => store.dispatch(viewFuncResult(dapp.id, result)))
+      .catch((error) => console.error(error));
+  }
+
   public render() {
     const { dapp, profile } = this.props;
 
