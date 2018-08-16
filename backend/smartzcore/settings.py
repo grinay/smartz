@@ -254,7 +254,7 @@ class Staging(Common):
     The in-staging settings.
     """
 
-    ALLOWED_HOSTS = ['staging.smartz.io','stage.smartz.io','*.stage.smartz.io']
+    ALLOWED_HOSTS = ['staging.smartz.io','stage.smartz.io','.stage.smartz.io']
 
     # Security
     SESSION_COOKIE_SECURE = values.BooleanValue(True)
