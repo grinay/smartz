@@ -32,11 +32,15 @@ export const getFunctionsByType = (functions: IFunction[], type: any): any[] => 
   return result;
 };
 
-export const getViewFunctionConstants = (dapp: IDapp) => {
-  const { abi, address, dashboard_functions, functions } = dapp;
+export const getViewFunctionConstants = (
+  abi: any,
+  address: any,
+  dashboardFunctions: any,
+  functions: any,
+) => {
   const promises = [];
 
-  dashboard_functions.forEach((dFunc) => {
+  dashboardFunctions.forEach((dFunc) => {
     const fSpec = functions.find((func) => func.name === dFunc);
 
     if (fSpec) {
@@ -51,7 +55,7 @@ export const getViewFunctionConstants = (dapp: IDapp) => {
       .then((results) => {
         const commonResult = {};
 
-        dashboard_functions.forEach((dFunc, i) => commonResult[dFunc] = results[i]);
+        dashboardFunctions.forEach((dFunc, i) => commonResult[dFunc] = results[i]);
 
         resolve(commonResult);
       })

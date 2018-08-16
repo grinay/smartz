@@ -1,83 +1,39 @@
-import * as classNames from 'classnames';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
-import { blockchains } from '../../../constants/constants';
-import { getViewFunctionConstants } from '../../../helpers/common';
 import { IDapp } from '../../../helpers/entities/dapp';
-import store from '../../../store/store';
-import renderDappWidget from '../../common/dapp-widgets/DappWidgets';
-import ImageDefault from '../../common/image-default/ImageDefault';
-import Loader from '../../common/loader/Loader';
-import { viewFuncResult } from '../../dapps/DappActions';
+import ContractUi from './contract-ui/ContractUi';
+import DappUi from './dapp-ui/DappUi';
 
 import './DappCard.less';
 
 
 interface IDappCardProps {
-    dapp: IDapp;
-    className: string;
+    dapp?: IDapp;
+    contractUi?: any;
+    className?: string;
 }
 
-interface IDappCardState {
-
-}
-
-export default class DappCard extends React.PureComponent<IDappCardProps, IDappCardState> {
-    public componentDidMount() {
-        const { dapp } = this.props;
-
-        getViewFunctionConstants(dapp)
-            .then((result) => store.dispatch(viewFuncResult(dapp.id, result)))
-            .catch((error) => console.error(error));
-    }
-
+export default class DappCard extends React.PureComponent<IDappCardProps, {}> {
     public render() {
-        const { dapp, className = null } = this.props;
+        const { dapp = null, contractUi = null } = this.props;
 
-        let viewFuncContent;
-        if (dapp.blockchain === blockchains.ethereum) {
+        if (!dapp && !contractUi) {
+            return null;
+        }
 
-            viewFuncContent = (
-                <ul className="dapp-card__function-list">
-                    {dapp.dashboard_functions.map((dFuncName, i) => {
-                        const funcObj = dapp.functions.find((func) => func.name === dFuncName);
+        let content;
+        if (dapp) {
+            content = <DappUi dapp={dapp} {...this.props} />;
+        }
 
-                        if (!funcObj) {
-                            return null;
-                        }
-
-                        return (
-                            <li key={i} className="dapp-card__function-item">
-                                <p>{funcObj.title}</p>
-                                {'funcResults' in dapp
-                                    ? <p>{renderDappWidget(dapp.functions.find(
-                                        (func) => func.name === dFuncName), dapp)}</p>
-                                    : <Loader size={20} />}
-                            </li>
-                        );
-                    })}
-                </ul>
-            );
+        if (contractUi) {
+            content = <ContractUi contract={contractUi} {...this.props} />;
         }
 
         return (
-            <Link to={`/dapp/${dapp.id}`} className={classNames('dapp-card', className)}>
-                <article className="">
-                    <div className="dapp-card__wrapper">
-                        <div className="dapp-card__logo">
-                            <ImageDefault src={dapp.constructor.image} name={dapp.title} />
-                        </div>
-                        <p className="dapp-card__info">
-                            <span className="dapp-card__name">{dapp.title}</span>
-                            <span className="dapp-card__description">
-                                {dapp.constructor.name}
-                            </span>
-                        </p>
-                    </div>
-                    {viewFuncContent}
-                </article>
-            </Link>
+            <div className="dapp-card-container">
+                {content}
+            </div>
         );
     }
 }

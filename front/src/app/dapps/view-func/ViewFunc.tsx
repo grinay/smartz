@@ -25,7 +25,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
   public componentDidMount() {
     const { dapp } = this.props;
 
-    getViewFunctionConstants(dapp)
+    getViewFunctionConstants(dapp.abi, dapp.address, dapp.dashboard_functions, dapp.functions)
       .then((result) => store.dispatch(viewFuncResult(dapp.id, result)))
       .catch((error) => console.error(error));
   }
