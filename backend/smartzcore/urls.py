@@ -12,7 +12,7 @@ schema_view = get_schema_view(
       default_version='v1',
    ),
    public=True,
-   permission_classes=(permissions.IsAdminUser,),
+   permission_classes=[] if settings.SMARTZ_SHOW_SWAGGER_SCHEMA else (permissions.IsAdminUser,),
 )
 
 urlpatterns = [

@@ -5,11 +5,12 @@ import tempfile
 from abc import ABCMeta, abstractmethod
 from copy import deepcopy
 from decimal import Decimal
-from typing import  Tuple
+from typing import Tuple, Dict, Optional
 
 import requests
 from django.conf import settings
 
+from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS
 from apps.constructors.models import Constructor
 from smartz.eth import contracts as eth_contracts
 from smartz.eos import contracts as eos_contracts
@@ -86,8 +87,8 @@ class BaseContractProcessor(metaclass=ABCMeta):
     def process_source(self, constructor: Constructor, source: str, contract_name: str) -> str:
         raise NotImplementedError()
 
-    def process_functions_specs(self, constructor: Constructor, abi, functions_specs):
-        new_functions_specs = self._specific_process_functions_specs(constructor, abi, functions_specs)
+    def process_functions_specs(self,  abi, functions_specs, constructor: Optional[Constructor]=None):
+        new_functions_specs = self._specific_process_functions_specs(abi, functions_specs, constructor)
         new_functions_specs = sorted(
             new_functions_specs,
             key=lambda x: x['sorting_order'] if 'sorting_order' in x else sys.maxsize
@@ -124,9 +125,9 @@ class EthereumContractProcessor(BaseContractProcessor):
 
         return source.replace('%payment_code%', payment_code)
 
-    def _specific_process_functions_specs(self, constructor: Constructor, abi, functions_specs):
+    def _specific_process_functions_specs(self, abi, functions_specs, constructor: Optional[Constructor]=None):
         new_functions_specs = deepcopy(functions_specs)
-        if constructor.version>0:
+        if constructor is None or constructor.version > 0:
             new_functions_specs = eth_contracts.merge_function_titles2specs(
                 eth_contracts.make_generic_function_spec(abi), new_functions_specs
             )
@@ -138,11 +139,35 @@ class EosContractProcessor(BaseContractProcessor):
     def process_source(self, constructor: Constructor, source: str, contract_name: str) -> str:
         return source
 
-    def _specific_process_functions_specs(self, constructor: Constructor, abi, functions_specs):
+    def _specific_process_functions_specs(self, abi, functions_specs, constructor: Optional[Constructor]=None):
         new_functions_specs = deepcopy(functions_specs)
-        if constructor.version>0:
+        if constructor is None or constructor.version > 0:
             new_functions_specs = eos_contracts.merge_function_titles2specs(
                 eos_contracts.make_generic_function_spec(abi), new_functions_specs
             )
 
         return new_functions_specs
+
+
+class ContractsProcessorsManager:
+
+    _contract_processors: Dict[str, BaseContractProcessor] = {
+        BLOCKCHAIN_ETHEREUM: EthereumContractProcessor(),
+        BLOCKCHAIN_EOS: EosContractProcessor()
+    }
+
+    def require_contract_processor(self, blockchain):
+        if blockchain not in ContractsProcessorsManager._contract_processors:
+            raise PublicException("Blockchain '{}' is not supported".format(blockchain))
+
+        return self._contract_processors[blockchain]
+
+
+class WithContractProcessorManager:
+
+    @property
+    def contracts_processors_manager(self) -> ContractsProcessorsManager:
+        if not hasattr(self, '_contract_processors_manager'):
+            self._contracts_processors_manager = ContractsProcessorsManager()
+
+        return self._contracts_processors_manager

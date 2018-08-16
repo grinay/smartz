@@ -1,28 +1,23 @@
 import abc
+import json
+import os.path
 import re
 import shutil
-import sys
-
-import os.path
-import tempfile
-import json
-import subprocess
-from decimal import Decimal
+from typing import Dict, Tuple
 
 import requests
 from django.conf import settings
-from typing import Dict, Tuple, Optional, Any, Union
 
 from apps.common.constants import BLOCKCHAIN_ETHEREUM, BLOCKCHAIN_EOS, BLOCKCHAINS
 from apps.constructors.models import Constructor
 from constructor_engine.services import BaseCompilerService, EosCompilerService, EthereumCompilerService, \
-    BaseContractProcessor, EthereumContractProcessor, EosContractProcessor
+    WithContractProcessorManager
 from smartz.json_schema import is_conforms2schema_part, load_schema
 from smartzcore.exceptions import PublicException
 from smartzcore.service_instances import WithLogger
 
 
-class BaseEngine(WithLogger):
+class BaseEngine(WithLogger, WithContractProcessorManager):
 
     METHOD_GET_VERSION    = 'get_version'
     METHOD_GET_PARAMS     = 'get_params'
@@ -37,10 +32,7 @@ class BaseEngine(WithLogger):
         BLOCKCHAIN_EOS: EosCompilerService()
     }
 
-    _contract_processors: Dict[str, BaseContractProcessor] = {
-        BLOCKCHAIN_ETHEREUM: EthereumContractProcessor(),
-        BLOCKCHAIN_EOS: EosContractProcessor()
-    }
+
 
     def __init__(self, engine_settings):
         self._settings = engine_settings
@@ -96,7 +88,7 @@ class BaseEngine(WithLogger):
         if re.findall('[^a-zA-Z0-9]', contract_name):
             raise PublicException('Invalid contract name in constructor: {}'.format(contract_name))
 
-        processor = self._require_contract_processor(constructor.blockchain)
+        processor = self.contracts_processors_manager.require_contract_processor(constructor.blockchain)
         source = processor.process_source(constructor, source, contract_name)
 
         try:
@@ -115,7 +107,7 @@ class BaseEngine(WithLogger):
             return post_construct_info
 
         post_construct_info['function_specs'] = processor.process_functions_specs(
-            constructor, abi, post_construct_info['function_specs']
+            abi, post_construct_info['function_specs'], constructor
         )
 
         return {
@@ -185,12 +177,6 @@ class BaseEngine(WithLogger):
             raise PublicException("Blockchain '{}' is not supported".format(blockchain))
 
         return self._compiler_services[blockchain]
-
-    def _require_contract_processor(self, blockchain):
-        if blockchain not in self._contract_processors:
-            raise PublicException("Blockchain '{}' is not supported".format(blockchain))
-
-        return self._contract_processors[blockchain]
 
 
 class SimpleStorageEngine(BaseEngine):

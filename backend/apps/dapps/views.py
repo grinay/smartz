@@ -19,8 +19,6 @@ from utils.common import auth
 
 def _prepare_instance_details(dapp: Dapp) -> Dict:
     output = dapp_pub_info(dapp)
-    assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
-                                'rpc_calls/get_instance_details/output')
 
     return output
 
@@ -54,7 +52,7 @@ class ListView(View):
         if isinstance(user, HttpResponse):
             return user  # error
 
-        dapps = Dapp.objects.filter(user=user).exclude(address='').prefetch_related('constructor')
+        dapps = Dapp.objects.filter(user=user).exclude(address='').order_by('-created_at').prefetch_related('constructor')
 
         return JsonResponse(
             [_prepare_instance_details(i) for i in dapps],

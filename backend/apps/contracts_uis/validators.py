@@ -14,7 +14,7 @@ def validate_functions(value):
 
 def validate_abi(value):
     # todo abi validation
-    if type(value) is not dict:
+    if type(value) is not dict and type(value) is not list:
         raise ValidationError('Invalid abi')
 
 
