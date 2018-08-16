@@ -6,6 +6,7 @@ import './Button.less';
 
 interface IButtonProps {
   content?: string;
+  children?: any;
   className?: string;
   disabled?: boolean;
   type?: 'green' | 'white' | 'lightgreen' | 'gray' | 'small' | 'large';
@@ -19,6 +20,7 @@ export default class Button extends React.PureComponent<IButtonProps, {}> {
       className = null,
       onClick = null,
       type = null,
+      children = null,
     } = this.props;
 
     return (
@@ -36,6 +38,7 @@ export default class Button extends React.PureComponent<IButtonProps, {}> {
         type="button"
       >
         {content}
+        {children}
       </button >
     );
   }
