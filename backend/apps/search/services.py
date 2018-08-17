@@ -15,6 +15,7 @@ from constructor_engine.services import WithContractProcessorManager
 SEARCH_RESULT_TYPE_DAPP = 'dapp'
 SEARCH_RESULT_TYPE_CONTRACT_UI = 'contract_ui'
 SEARCH_RESULT_TYPE_ABI = 'abi'
+SEARCH_RESULT_TYPE_ABI_NO_TYPE = 'abi_no_type'
 SEARCH_RESULT_TYPE_NO_ABI = 'no_abi'
 
 
@@ -69,15 +70,14 @@ class AbstractAddressSearchService(AbstractSearchService, WithContractProcessorM
         abi = self._get_abi(address, context)
         if abi:
             uis = self._get_uis_by_abi(abi)
-            if uis:
-                return {
-                    'address': {
-                        'type': SEARCH_RESULT_TYPE_ABI,
-                        'abi': abi,
-                        'uis': ContractUISerializer(uis, many=True).data,
-                        'function_specs': self._get_fn_specs(abi, uis)
-                    }
+            return {
+                'address': {
+                    'type': SEARCH_RESULT_TYPE_ABI,
+                    'abi': abi,
+                    'uis': ContractUISerializer(uis, many=True).data,
+                    'raw_abi_function_specs': self._get_fn_specs(abi)
                 }
+            }
 
         return {
             'address': {
@@ -125,6 +125,7 @@ class AbstractAddressSearchService(AbstractSearchService, WithContractProcessorM
         abi_names = self._get_abi_fn_names(abi)
 
         uis = ContractUI.objects.filter(blockchain=self.get_blockchain())
+        uis = [ui for ui in uis if len(abi_names & {name for name in ui.functions})]
         uis = sorted(
             uis,
             key=lambda ui: len(abi_names & {name for name in ui.functions}),
@@ -133,12 +134,9 @@ class AbstractAddressSearchService(AbstractSearchService, WithContractProcessorM
 
         return uis[:10]
 
-    def _get_fn_specs(self, abi, uis: List[ContractUI]):
+    def _get_fn_specs(self, abi):
         processor = self.contracts_processors_manager.require_contract_processor(self.get_blockchain())
-        return [
-            processor.process_functions_specs(abi, ui.functions)
-            for ui in uis
-        ]
+        return processor.process_functions_specs(abi, {})
 
     @abstractmethod
     def _get_abi_fn_names(self, abi) -> Set[str]:
@@ -151,6 +149,13 @@ class AbstractAddressSearchService(AbstractSearchService, WithContractProcessorM
 
 class EthereumAddressSearchService(AbstractAddressSearchService):
 
+    etherscan_api_hosts = {
+        '1': 'https://api.etherscan.io',
+        '3': 'https://api-ropsten.etherscan.io',
+        '4': 'https://api-rinkeby.etherscan.io',
+        '42': 'https://api-kovan.etherscan.io',
+    }
+
     def get_blockchain(self):
         return BLOCKCHAIN_ETHEREUM
 
@@ -162,17 +167,25 @@ class EthereumAddressSearchService(AbstractAddressSearchService):
         if abi:
             return abi
 
-        abi = self._get_abi_from_etherscan(address)
+        abi = self._get_abi_from_etherscan(address, context)
         if abi:
             return abi
 
         return None
 
-    def _get_abi_from_etherscan(self, address: str):
+    def _get_abi_from_etherscan(self, address: str, context: dict):
         abi = None
 
+        network_id = str(context[self._get_network_id_key()])
+        if network_id not in self.etherscan_api_hosts:
+            return abi
+
+        api_host = self.etherscan_api_hosts[network_id]
         try:
-            resp = requests.get('https://api.etherscan.io/api?module=contract&action=getabi&address={}'.format(address))
+            resp = requests.get(
+                '{}/api?module=contract&action=getabi&address={}'.format(api_host, address),
+                timeout=10
+            )
             resp_json = resp.json()
         except Exception:
             resp_json = None
