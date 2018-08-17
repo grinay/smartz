@@ -42,9 +42,7 @@ export default class ContractUi extends React.PureComponent<IContractUiProps, IC
       contract.dashboard_functions,
       contract.function_specs,
     )
-      .then((result) =>,
-        // store.dispatch(viewFuncResult(dapp.id, result))
-      )
+      .then()
       .catch((error) => console.error(error));
   }
 
@@ -69,7 +67,7 @@ export default class ContractUi extends React.PureComponent<IContractUiProps, IC
                 <p>{funcObj.title}</p>
                 {funcResult != null
                   ? <p>{renderDappWidget(contract.function_specs.find(
-                    (func) => func.name === dFuncName), dapp)}</p>
+                    (func) => func.name === dFuncName), {})}</p>
                   : <Loader size={20} />}
               </li>
             );
