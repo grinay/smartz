@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -8,8 +10,6 @@ from rest_framework.response import Response
 from apps.contracts_uis.models import ContractUI
 from apps.contracts_uis.serializers import ContractUISerializer
 from apps.dapps.models import Dapp
-from apps.users.models import User
-from apps.users.services import UsersService
 from constructor_engine.services import WithContractProcessorManager
 from smartzcore.http import error_response
 from utils.common import auth
@@ -29,7 +29,7 @@ class ContractUIsList(GenericAPIView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class AddToDashboardView(View, WithContractProcessorManager):
+class AddToDashboard(View, WithContractProcessorManager):
 
     def post(self, request, id):
         if 'address' not in request.data or type(request.data['address']) is not str or not request.data['address']:
@@ -54,13 +54,19 @@ class AddToDashboardView(View, WithContractProcessorManager):
         dapp.network_id = request.data['network_id']
 
         dapp.title = contract_ui.name
-        dapp.abi = contract_ui.abi if 'abi' not in request.data else request.data['abi']
+
+        abi = contract_ui.abi if 'abi' not in request.data else request.data['abi']
+        dapp.abi = json.dumps(abi)
+
         dapp.source = ''
         dapp.binary = ''
-        dapp.function_specs = self.contracts_processors_manager.require_contract_processor(contract_ui.blockchain)\
-            .process_functions_specs(dapp.abi, contract_ui.functions)
-        dapp.dashboard_functions = contract_ui.dashboard_functions
+        dapp.function_specs = json.dumps(
+            self.contracts_processors_manager.require_contract_processor(contract_ui.blockchain)
+                .process_functions_specs(abi, contract_ui.functions)
+        )
+        dapp.dashboard_functions = json.dumps(contract_ui.dashboard_functions)
         dapp.contract_ui = contract_ui
+        dapp.has_public_access = False
 
         dapp.save()
 

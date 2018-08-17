@@ -9,9 +9,10 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
+from apps.common.constants import BLOCKCHAINS
 from apps.dapps.models import Dapp, Transaction, Request
 from apps.dapps.serializers import dapp_pub_info, TransactionSerializer, RequestSerializer
-from smartz.json_schema import load_schema, assert_conforms2schema_part
+from constructor_engine.services import WithContractProcessorManager
 from smartzcore.http import error_response
 from smartzcore.service_instances import WithLogger
 from utils.common import auth
@@ -104,7 +105,7 @@ class UpdateView(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class AddToDashboardView(View):
+class AddToDashboard(View):
 
     def post(self, request, id):
         user = auth(request)
@@ -119,6 +120,48 @@ class AddToDashboardView(View):
         dapp.slug = Dapp.create().slug
         dapp.pk = None
         dapp.user = user
+        dapp.save()
+
+        return JsonResponse({'ok': True})  # todo
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CreateFromAbi(View, WithContractProcessorManager):
+
+    def post(self, request):
+        user = auth(request)
+        if isinstance(user, HttpResponse):
+            return user  # error
+
+        if 'address' not in request.data or type(request.data['address']) is not str or not request.data['address']:
+            return error_response("Address is missing")
+
+        if 'network_id' not in request.data or type(request.data['network_id']) is not str or not request.data['network_id']:
+            return error_response("Network id is missing")
+
+        if 'abi' not in request.data:
+            return error_response('Abi not specified')
+
+        if 'blockchain' not in request.data or request.data['blockchain'] not in dict(BLOCKCHAINS):
+            return error_response('Invalid blockchain')
+
+        dapp = Dapp.create()
+
+        dapp.blockchain = request.data['blockchain']
+        dapp.address = request.data['address']
+        dapp.network_id = request.data['network_id']
+
+        dapp.title = 'Dapp'
+        dapp.abi = json.dumps(request.data['abi'])
+        dapp.source = ''
+        dapp.binary = ''
+        dapp.function_specs = json.dumps(
+            self.contracts_processors_manager.require_contract_processor(dapp.blockchain)\
+            .process_functions_specs(request.data['abi'], {})
+        )
+        dapp.dashboard_functions = json.dumps([])
+        dapp.has_public_access = False
+
         dapp.save()
 
         return JsonResponse({'ok': True})  # todo

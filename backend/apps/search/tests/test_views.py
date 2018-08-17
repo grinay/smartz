@@ -155,10 +155,9 @@ class SearchTest(WebTest):
             }
         )
         self.assertIn('address', resp.json)
-        self.assertEqual(3, len(resp.json['address']['uis']))
+        self.assertEqual(2, len(resp.json['address']['uis']))
         self.assertEqual('erc201', resp.json['address']['uis'][0]['slug'])
         self.assertEqual('erc202', resp.json['address']['uis'][1]['slug'])
-        self.assertEqual('erc20', resp.json['address']['uis'][2]['slug'])
 
     def test_search_no_abi(self):
         ui = self.__create_contract_ui()
