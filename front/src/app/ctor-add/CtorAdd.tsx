@@ -86,7 +86,7 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
 
     if (this.id) {
       if (fetchStatus === 'request') {
-        return <Loader text="Loading constructor data" width="100" />;
+        return <Loader text="Loading constructor data" size={100} />;
       }
 
       if (fetchStatus === 'error') {

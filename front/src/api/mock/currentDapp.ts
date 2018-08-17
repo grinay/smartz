@@ -1,5 +1,6 @@
+/* tslint:disable */
 export const currentDapp = {
-  "id": "8bb5131150166082650c26c7",
+  "id": '8bb5131150166082650c26c7',
   "title": "testing",
   "network_id": "4",
   "constructor_id": "5ad9a527672dfe000a7e0a33",
@@ -19,202 +20,202 @@ export const currentDapp = {
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function"
+      "type": 'function'
     },
     {
-      "constant": true,
-      "inputs": [
+      'constant': true,
+      'inputs': [
         {
-          "name": "_variantId",
-          "type": "uint256"
+          'name': '_variantId',
+          'type': 'uint256'
         }
       ],
-      "name": "getVotesCount",
-      "outputs": [
+      'name': 'getVotesCount',
+      'outputs': [
         {
-          "name": "",
-          "type": "uint256"
+          'name': '',
+          'type': 'uint256'
         }
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
+      'payable': false,
+      'stateMutability': 'view',
+      'type': 'function',
     },
     {
-      "constant": true,
-      "inputs": [],
-      "name": "ballotName",
-      "outputs": [
+      'constant': true,
+      'inputs': [],
+      'name': 'ballotName',
+      'outputs': [
         {
-          "name": "",
-          "type": "string"
-        }
+          'name': '',
+          'type': 'string'
+        },
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
+      'payable': false,
+      'stateMutability': 'view',
+      'type': 'function',
     },
     {
-      "constant": true,
-      "inputs": [
+      'constant': true,
+      'inputs': [
         {
-          "name": "_variantName",
-          "type": "string"
-        }
+          'name': '_variantName',
+          'type': 'string',
+        },
       ],
-      "name": "getVotesCountByName",
-      "outputs": [
+      'name': 'getVotesCountByName',
+      'outputs': [
         {
-          "name": "",
-          "type": "uint256"
-        }
+          'name': '',
+          'type': 'uint256',
+        },
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
+      'payable': false,
+      'stateMutability': 'view',
+      'type': 'function',
     },
     {
-      "constant": true,
-      "inputs": [],
-      "name": "getWinningVariantId",
-      "outputs": [
+      'constant': true,
+      'inputs': [],
+      'name': 'getWinningVariantId',
+      'outputs': [
         {
-          "name": "id",
-          "type": "uint256"
-        }
+          'name': 'id',
+          'type': 'uint256',
+        },
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
+      'payable': false,
+      'stateMutability': 'view',
+      'type': 'function',
     },
     {
-      "constant": true,
-      "inputs": [],
-      "name": "getWinningVariantVotesCount",
-      "outputs": [
+      'constant': true,
+      'inputs': [],
+      'name': 'getWinningVariantVotesCount',
+      'outputs': [
         {
-          "name": "",
-          "type": "uint256"
-        }
+          'name': '',
+          'type': 'uint256',
+        },
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
+      'payable': false,
+      'stateMutability': 'view',
+      'type': 'function',
     },
     {
-      "constant": true,
-      "inputs": [
+      'constant': true,
+      'inputs': [
         {
-          "name": "",
-          "type": "uint256"
-        }
+          'name': '',
+          'type': 'uint256',
+        },
       ],
-      "name": "variants",
-      "outputs": [
+      'name': 'variants',
+      'outputs': [
         {
-          "name": "",
-          "type": "string"
-        }
+          'name': '',
+          'type': 'string',
+        },
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
+      'payable': false,
+      'stateMutability': 'view',
+      'type': 'function',
     },
     {
-      "constant": false,
-      "inputs": [
+      'constant': false,
+      'inputs': [
         {
-          "name": "_variantName",
-          "type": "string"
-        }
+          'name': '_variantName',
+          'type': 'string',
+        },
       ],
-      "name": "voteByName",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
+      'name': 'voteByName',
+      'outputs': [],
+      'payable': false,
+      'stateMutability': 'nonpayable',
+      'type': 'function',
     },
     {
-      "constant": true,
-      "inputs": [],
-      "name": "getWinningVariantName",
-      "outputs": [
+      'constant': true,
+      'inputs': [],
+      'name': 'getWinningVariantName',
+      'outputs': [
         {
-          "name": "",
-          "type": "string"
-        }
+          'name': '',
+          'type': 'string',
+        },
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
+      'payable': false,
+      'stateMutability': 'view',
+      'type': 'function',
     },
     {
-      "constant": true,
-      "inputs": [
+      'constant': true,
+      'inputs': [
         {
-          "name": "",
-          "type": "address"
-        }
+          'name': '',
+          'type': 'address',
+        },
       ],
-      "name": "isVoted",
-      "outputs": [
+      'name': 'isVoted',
+      'outputs': [
         {
-          "name": "",
-          "type": "bool"
-        }
+          'name': '',
+          'type': 'bool',
+        },
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
+      'payable': false,
+      'stateMutability': 'view',
+      'type': 'function',
     },
     {
-      "inputs": [],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "constructor"
-    }
+      'inputs': [],
+      'payable': true,
+      'stateMutability': 'payable',
+      'type': 'constructor',
+    },
   ],
-  "blockchain": "ethereum",
-  "functions": [
+  'blockchain': 'ethereum',
+  'functions': [
     {
-      "name": "vote",
-      "constant": false,
-      "payable": false,
-      "title": "Vote by ID",
-      "inputs": {
-        "type": "array",
-        "minItems": 1,
-        "maxItems": 1,
-        "items": [
+      'name': 'vote',
+      'constant': false,
+      'payable': false,
+      'title': 'Vote by ID',
+      'inputs': {
+        'type': 'array',
+        'minItems': 1,
+        'maxItems': 1,
+        'items': [
           {
-            "$ref": "#/definitions/uint256",
-            "title": "Variant ID"
-          }
+            '$ref': '#/definitions/uint256',
+            'title': 'Variant ID',
+          },
         ],
-        "definitions": {
-          "address": {
-            "type": "string",
-            "pattern": "^(?:0[Xx])?[0-9a-fA-F]{40}$"
+        'definitions': {
+          'address': {
+            'type': 'string',
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{40}$',
           },
-          "addressArray": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/address"
-            }
+          'addressArray': {
+            'type': 'array',
+            'items': {
+              '$ref': '#/definitions/address',
+            },
           },
-          "unixTime": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 2147483647
+          'unixTime': {
+            'type': 'integer',
+            'minimum': 1,
+            'maximum': 2147483647,
           },
-          "fileHash": {
+          'fileHash': {
             '$comment': 'deprecated, use hash instead',
             'type': 'string',
-            'pattern': '^0x[0-9a-fA-F]{64}$'
+            'pattern': '^0x[0-9a-fA-F]{64}$',
           },
           'hash': {
             'type': 'string',
-            'pattern': '^0x[0-9a-fA-F]{64}$'
+            'pattern': '^0x[0-9a-fA-F]{64}$',
           },
           'addressMappingEntry': {
             'type': 'array',
@@ -222,16 +223,16 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
-            ]
+              {},
+            ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
-            }
+              '$ref': '#/definitions/addressMappingEntry',
+            },
           },
           'uintMappingEntry': {
             'type': 'array',
@@ -239,76 +240,76 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
-            ]
+              {},
+            ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
-            }
+              '$ref': '#/definitions/uintMappingEntry',
+            },
           },
           'uint256': {
             'type': 'string',
             'minLength': 1,
             'maxLength': 78,
-            'pattern': '^[0-9]+$'
+            'pattern': '^[0-9]+$',
           },
           'uint': {
-            '$ref': '#/definitions/uint256'
+            '$ref': '#/definitions/uint256',
           },
           'bytes32': {
             'type': 'string',
-            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{64}$'
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{64}$',
           },
           'bytes': {
             'type': 'string',
-            'pattern': '^(?:0[Xx])?[0-9a-fA-F]+$'
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]+$',
           },
           'uint8': {
             'type': 'integer',
             'minimum': 0,
-            'maximum': 255
+            'maximum': 255,
           },
           'uint16': {
             'type': 'integer',
             'minimum': 0,
-            'maximum': 65535
+            'maximum': 65535,
           },
           'uint32': {
             'type': 'integer',
             'minimum': 0,
-            'maximum': 4294967295
+            'maximum': 4294967295,
           },
           'uint64': {
             'type': 'integer',
             'minimum': 0,
-            'maximum': 18446744073709552000
+            'maximum': 18446744073709552000,
           },
           'uint128': {
             'type': 'string',
             'minLength': 1,
             'maxLength': 39,
-            'pattern': '^[0-9]+$'
+            'pattern': '^[0-9]+$',
           },
           'ethCount': {
             'type': 'string',
-            'pattern': '^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$'
+            'pattern': '^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$',
           },
           'ethCountPositive': {
             'type': 'string',
-            'pattern': '^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$'
-          }
-        }
+            'pattern': '^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$',
+          },
+        },
       },
       'outputs': {
         'type': 'array',
         'minItems': 0,
-        'maxItems': 0
+        'maxItems': 0,
       },
-      'description': 'Vote by variant ID'
+      'description': 'Vote by variant ID',
     },
     {
       'name': 'getVotesCount',
@@ -322,33 +323,33 @@ export const currentDapp = {
         'items': [
           {
             '$ref': '#/definitions/uint256',
-            'title': 'Variant ID'
-          }
+            'title': 'Variant ID',
+          },
         ],
         'definitions': {
           'address': {
             'type': 'string',
-            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{40}$'
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{40}$',
           },
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
-            }
+              '$ref': '#/definitions/address',
+            },
           },
           'unixTime': {
             'type': 'integer',
             'minimum': 1,
-            'maximum': 2147483647
+            'maximum': 2147483647,
           },
           'fileHash': {
             '$comment': 'deprecated, use hash instead',
             'type': 'string',
-            'pattern': '^0x[0-9a-fA-F]{64}$'
+            'pattern': '^0x[0-9a-fA-F]{64}$',
           },
           'hash': {
             'type': 'string',
-            'pattern': '^0x[0-9a-fA-F]{64}$'
+            'pattern': '^0x[0-9a-fA-F]{64}$',
           },
           'addressMappingEntry': {
             'type': 'array',
@@ -356,16 +357,16 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
-            ]
+              {},
+            ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
-            }
+              '$ref': '#/definitions/addressMappingEntry',
+            },
           },
           'uintMappingEntry': {
             'type': 'array',
@@ -373,170 +374,48 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
-            ]
-          },
-          'uintMapping': {
-            'type': 'array',
-            'items': {
-              '$ref': '#/definitions/uintMappingEntry'
-            }
-          },
-          'uint256': {
-            'type': 'string',
-            'minLength': 1,
-            'maxLength': 78,
-            'pattern': '^[0-9]+$'
-          },
-          'uint': {
-            '$ref': '#/definitions/uint256'
-          },
-          'bytes32': {
-            'type': 'string',
-            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{64}$'
-          },
-          'bytes': {
-            'type': 'string',
-            'pattern': '^(?:0[Xx])?[0-9a-fA-F]+$'
-          },
-          'uint8': {
-            'type': 'integer',
-            'minimum': 0,
-            'maximum': 255
-          },
-          'uint16': {
-            'type': 'integer',
-            'minimum': 0,
-            'maximum': 65535
-          },
-          'uint32': {
-            'type': 'integer',
-            'minimum': 0,
-            'maximum': 4294967295
-          },
-          'uint64': {
-            'type': 'integer',
-            'minimum': 0,
-            'maximum': 18446744073709552000
-          },
-          'uint128': {
-            'type': 'string',
-            'minLength': 1,
-            'maxLength': 39,
-            'pattern': '^[0-9]+$'
-          },
-          'ethCount': {
-            'type': 'string',
-            'pattern': '^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$',
-          },
-          'ethCountPositive': {
-            'type': 'string',
-            'pattern': '^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$'
-          }
-        },
-      },
-      'outputs': {
-        'type': 'array',
-        'minItems': 1,
-        'maxItems': 1,
-        'items': [
-          {
-            '$ref': '#/definitions/uint256',
-            'title': ''
-          },
-        ],
-        'definitions': {
-          'address': {
-            'type': 'string',
-            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{40}$'
-          },
-          'addressArray': {
-            'type': 'array',
-            'items': {
-              '$ref': '#/definitions/address'
-            }
-          },
-          'unixTime': {
-            'type': 'integer',
-            'minimum': 1,
-            'maximum': 2147483647
-          },
-          'fileHash': {
-            '$comment': 'deprecated, use hash instead',
-            'type': 'string',
-            'pattern': '^0x[0-9a-fA-F]{64}$'
-          },
-          'hash': {
-            'type': 'string',
-            'pattern': '^0x[0-9a-fA-F]{64}$'
-          },
-          'addressMappingEntry': {
-            'type': 'array',
-            'minItems': 2,
-            'maxItems': 2,
-            'items': [
-              {
-                '$ref': '#/definitions/address'
-              },
-              {}
-            ]
-          },
-          'addressMapping': {
-            'type': 'array',
-            'items': {
-              '$ref': '#/definitions/addressMappingEntry'
-            }
-          },
-          'uintMappingEntry': {
-            'type': 'array',
-            'minItems': 2,
-            'maxItems': 2,
-            'items': [
-              {
-                '$ref': '#/definitions/uint'
-              },
-              {}
-            ]
+              {},
+            ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
               '$ref': '#/definitions/uintMappingEntry',
-            }
+            },
           },
           'uint256': {
             'type': 'string',
             'minLength': 1,
             'maxLength': 78,
-            'pattern': '^[0-9]+$'
+            'pattern': '^[0-9]+$',
           },
           'uint': {
-            '$ref': '#/definitions/uint256'
+            '$ref': '#/definitions/uint256',
           },
           'bytes32': {
             'type': 'string',
-            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{64}$'
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{64}$',
           },
           'bytes': {
             'type': 'string',
-            'pattern': '^(?:0[Xx])?[0-9a-fA-F]+$'
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]+$',
           },
           'uint8': {
             'type': 'integer',
             'minimum': 0,
-            'maximum': 255
+            'maximum': 255,
           },
           'uint16': {
             'type': 'integer',
             'minimum': 0,
-            'maximum': 65535
+            'maximum': 65535,
           },
           'uint32': {
             'type': 'integer',
             'minimum': 0,
-            'maximum': 4294967295
+            'maximum': 4294967295,
           },
           'uint64': {
             'type': 'integer',
@@ -547,15 +426,137 @@ export const currentDapp = {
             'type': 'string',
             'minLength': 1,
             'maxLength': 39,
-            'pattern': '^[0-9]+$'
+            'pattern': '^[0-9]+$',
           },
           'ethCount': {
             'type': 'string',
-            'pattern': '^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$'
+            'pattern': '^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$',
           },
           'ethCountPositive': {
             'type': 'string',
-            'pattern': '^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$'
+            'pattern': '^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$',
+          },
+        },
+      },
+      'outputs': {
+        'type': 'array',
+        'minItems': 1,
+        'maxItems': 1,
+        'items': [
+          {
+            '$ref': '#/definitions/uint256',
+            'title': '',
+          },
+        ],
+        'definitions': {
+          'address': {
+            'type': 'string',
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{40}$',
+          },
+          'addressArray': {
+            'type': 'array',
+            'items': {
+              '$ref': '#/definitions/address',
+            },
+          },
+          'unixTime': {
+            'type': 'integer',
+            'minimum': 1,
+            'maximum': 2147483647,
+          },
+          'fileHash': {
+            '$comment': 'deprecated, use hash instead',
+            'type': 'string',
+            'pattern': '^0x[0-9a-fA-F]{64}$',
+          },
+          'hash': {
+            'type': 'string',
+            'pattern': '^0x[0-9a-fA-F]{64}$',
+          },
+          'addressMappingEntry': {
+            'type': 'array',
+            'minItems': 2,
+            'maxItems': 2,
+            'items': [
+              {
+                '$ref': '#/definitions/address',
+              },
+              {},
+            ],
+          },
+          'addressMapping': {
+            'type': 'array',
+            'items': {
+              '$ref': '#/definitions/addressMappingEntry',
+            },
+          },
+          'uintMappingEntry': {
+            'type': 'array',
+            'minItems': 2,
+            'maxItems': 2,
+            'items': [
+              {
+                '$ref': '#/definitions/uint',
+              },
+              {},
+            ],
+          },
+          'uintMapping': {
+            'type': 'array',
+            'items': {
+              '$ref': '#/definitions/uintMappingEntry',
+            },
+          },
+          'uint256': {
+            'type': 'string',
+            'minLength': 1,
+            'maxLength': 78,
+            'pattern': '^[0-9]+$',
+          },
+          'uint': {
+            '$ref': '#/definitions/uint256',
+          },
+          'bytes32': {
+            'type': 'string',
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]{64}$',
+          },
+          'bytes': {
+            'type': 'string',
+            'pattern': '^(?:0[Xx])?[0-9a-fA-F]+$',
+          },
+          'uint8': {
+            'type': 'integer',
+            'minimum': 0,
+            'maximum': 255,
+          },
+          'uint16': {
+            'type': 'integer',
+            'minimum': 0,
+            'maximum': 65535,
+          },
+          'uint32': {
+            'type': 'integer',
+            'minimum': 0,
+            'maximum': 4294967295,
+          },
+          'uint64': {
+            'type': 'integer',
+            'minimum': 0,
+            'maximum': 18446744073709552000,
+          },
+          'uint128': {
+            'type': 'string',
+            'minLength': 1,
+            'maxLength': 39,
+            'pattern': '^[0-9]+$',
+          },
+          'ethCount': {
+            'type': 'string',
+            'pattern': '^(0|[1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$',
+          },
+          'ethCountPositive': {
+            'type': 'string',
+            'pattern': '^([1-9][0-9]{0,54}|[0-9]{1,55}\\.[0-9]{0,17}[1-9])$',
           },
         },
       },
@@ -612,7 +613,7 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
               {},
             ],
@@ -629,7 +630,7 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
               {},
             ],
@@ -718,7 +719,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -741,15 +742,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -758,15 +759,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -840,7 +841,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -863,15 +864,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -880,15 +881,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -974,7 +975,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -997,15 +998,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -1014,15 +1015,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -1108,7 +1109,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -1131,15 +1132,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -1148,15 +1149,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -1237,7 +1238,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -1260,15 +1261,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -1277,15 +1278,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -1359,7 +1360,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -1382,15 +1383,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -1399,15 +1400,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -1488,7 +1489,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -1511,15 +1512,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -1528,15 +1529,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -1627,7 +1628,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -1650,15 +1651,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -1667,15 +1668,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -1756,7 +1757,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -1779,15 +1780,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -1796,15 +1797,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -1879,7 +1880,7 @@ export const currentDapp = {
           'addressArray': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/address'
+              '$ref': '#/definitions/address',
             },
           },
           'unixTime': {
@@ -1902,15 +1903,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/address'
+                '$ref': '#/definitions/address',
               },
-              {}
+              {},
             ],
           },
           'addressMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/addressMappingEntry'
+              '$ref': '#/definitions/addressMappingEntry',
             },
           },
           'uintMappingEntry': {
@@ -1919,15 +1920,15 @@ export const currentDapp = {
             'maxItems': 2,
             'items': [
               {
-                '$ref': '#/definitions/uint'
+                '$ref': '#/definitions/uint',
               },
-              {}
+              {},
             ],
           },
           'uintMapping': {
             'type': 'array',
             'items': {
-              '$ref': '#/definitions/uintMappingEntry'
+              '$ref': '#/definitions/uintMappingEntry',
             },
           },
           'uint256': {
@@ -2007,7 +2008,7 @@ export const currentDapp = {
 export function addToDashboard() {
   const dapp = currentDapp;
 
-  dapp.user_id = '25';
+  dapp.user_id = 25;
 
   return [200, dapp];
 }
