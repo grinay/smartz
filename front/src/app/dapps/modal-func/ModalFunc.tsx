@@ -355,7 +355,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
 
     return (
       <div className="modal-func">
-        <Modal
+        {/* <Modal
           isOpen={func != null ? true : false}
           isCloser={false}
           onClose={onClose}
@@ -363,7 +363,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
           closerClassName="modal-closer flex"
         >
           {content}
-        </Modal>
+        </Modal> */}
       </div>
     );
   }

@@ -57,7 +57,7 @@ export default class MyConstructors extends React.Component
             </ul>
           )}
 
-          {!ctors && <Loader text="Loading constructors" width="100" />}
+          {!ctors && <Loader text="Loading constructors" size={100} />}
         </div>
       </main>
     );

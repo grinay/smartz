@@ -38,7 +38,7 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
         <div className="transaction-icon">
           <Loader
             className="tx-icon"
-            width={'17px'}
+            size={17}
           />
         </div>
       );

@@ -73,7 +73,7 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
     } else {
       result = (
         <div className="flex-v">
-          <Loader className="loader-result" width={'17px'} />
+          <Loader className="loader-result" size={17} />
           <p className="result-status" > Waiting for miners...</p >
         </div>
       );
