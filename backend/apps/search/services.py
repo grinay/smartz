@@ -176,6 +176,9 @@ class EthereumAddressSearchService(AbstractAddressSearchService):
     def _get_abi_from_etherscan(self, address: str, context: dict):
         abi = None
 
+        if self._get_network_id_key() not in context:
+            return abi
+
         network_id = str(context[self._get_network_id_key()])
         if network_id not in self.etherscan_api_hosts:
             return abi
