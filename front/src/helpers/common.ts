@@ -62,3 +62,24 @@ export const getViewFunctionConstants = (
       .catch((error) => reject(error));
   });
 };
+
+export const getOption = (optionName, fnDescription, defaultValue) {
+  if (
+    typeof fnDescription === 'object' &&
+    'ui:widget_options' in fnDescription &&
+    typeof fnDescription['ui:widget_options'] === 'object' &&
+    optionName in fnDescription['ui:widget_options']
+  ) {
+    return fnDescription['ui:widget_options'][optionName];
+  }
+
+  return defaultValue ? defaultValue : undefined;
+};
+
+export const getResult = (funcResult, defaultValue) {
+  if (typeof funcResult === 'undefined') {
+    return defaultValue ? defaultValue : '';
+  }
+
+  return funcResult.toString();
+};
