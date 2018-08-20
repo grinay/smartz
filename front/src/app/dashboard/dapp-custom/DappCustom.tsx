@@ -132,7 +132,7 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, {}
           />
         </div>
         {content}
-        <BtnPanel onClickBtn={() => { }} isDisabled={false} />
+        <BtnPanel onClickBtn={() => console.log('msg')} isDisabled={false} />
       </div >
     );
   }
