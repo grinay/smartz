@@ -68,7 +68,6 @@ const dapps = (state = initState, action) => {
 
         if ('funcResults' in dapp) {
           if (isEqual(result, dapp.funcResults)) {
-            console.log('no diff');
             return state;
           } else {
             dapp.funcResults = result;

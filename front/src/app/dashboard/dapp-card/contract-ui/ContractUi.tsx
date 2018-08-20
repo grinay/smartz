@@ -7,9 +7,9 @@ import { getViewFunctionConstants } from '../../../../helpers/common';
 import { IContractUi } from '../../../../helpers/entities/contract-ui';
 import { IDapp } from '../../../../helpers/entities/dapp';
 import store from '../../../../store/store';
-import renderDappWidget from '../../../common/dapp-widgets/DappWidgets';
 import ImageDefault from '../../../common/image-default/ImageDefault';
 import Loader from '../../../common/loader/Loader';
+import TypeDisplay from '../../../common/type-display/TypeDisplay';
 import { viewFuncResult } from '../../../dapps/DappActions';
 
 import './ContractUi.less';
@@ -39,10 +39,10 @@ export default class ContractUi extends React.PureComponent<IContractUiProps, IC
     getViewFunctionConstants(
       contract.abi,
       contract.address,
-      contract.dashboard_functions,
       contract.function_specs,
+      contract.dashboard_functions,
     )
-      .then()
+      .then((result) => this.setState({ funcResult: result }))
       .catch((error) => console.error(error));
   }
 
@@ -66,8 +66,11 @@ export default class ContractUi extends React.PureComponent<IContractUiProps, IC
               <li key={i} className="dapp-card__function-item">
                 <p>{funcObj.title}</p>
                 {funcResult != null
-                  ? <p>{renderDappWidget(contract.function_specs.find(
-                    (func) => func.name === dFuncName), {})}</p>
+                  ? <p><TypeDisplay
+                    fnDescription={contract.function_specs.find(
+                      (func) => func.name === dFuncName)}
+                    fnResult={funcResult[dFuncName]}
+                  /></p>
                   : <Loader size={20} />}
               </li>
             );

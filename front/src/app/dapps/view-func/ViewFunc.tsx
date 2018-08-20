@@ -7,7 +7,8 @@ import { blockchains } from '../../../constants/constants';
 import { getFunctionsByType, getViewFunctionConstants } from '../../../helpers/common';
 import { IDapp } from '../../../helpers/entities/dapp';
 import store from '../../../store/store';
-import renderDappWidget from '../../common/dapp-widgets/DappWidgets';
+import Loader from '../../common/loader/Loader';
+import TypeDisplay from '../../common/type-display/TypeDisplay';
 import { viewFuncResult } from '../DappActions';
 import AddressBar from './address-bar/AddressBar';
 
@@ -25,7 +26,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
   public componentDidMount() {
     const { dapp } = this.props;
 
-    getViewFunctionConstants(dapp.abi, dapp.address, dapp.dashboard_functions, dapp.functions)
+    getViewFunctionConstants(dapp.abi, dapp.address, dapp.functions)
       .then((result) => store.dispatch(viewFuncResult(dapp.id, result)))
       .catch((error) => console.error(error));
   }
@@ -54,11 +55,17 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
         <div className={classNames('card-body', { 'bg-bottom': viewFuncStandart.length === 0 })}>
           <div className="card-header">
 
-            {viewFuncPresentable.map((func, i) => {
+            {viewFuncPresentable.map((viewFunc, i) => {
               return (
                 <div key={i} className="card-intro">
-                  <p className="card-label">{func.title}</p>
-                  <p className="card-title">{renderDappWidget(func, dapp)}</p>
+                  <p className="card-label">{viewFunc.title}</p>
+                  <p className="card-title">{'funcResults' in dapp
+                    ? <TypeDisplay
+                      fnDescription={dapp.functions.find(
+                        (func) => func.name === viewFunc.name)}
+                      fnResult={dapp.funcResults[viewFunc.name]}
+                    />
+                    : <Loader size={20} />}</p>
                 </div>
               );
             })}
@@ -66,18 +73,26 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
           </div>
           <ul className="card-table">
 
-            {viewFuncStandart.map((func, i) => {
+            {viewFuncStandart.map((viewFunc, i) => {
               return (
                 <li key={i} className="card-row">
                   <p className="card-label standart">
-                    <span className="card-text">{func.title}</span>
+                    <span className="card-text">{viewFunc.title}</span>
                     <InlineSVG
-                      data-tip={func.description}
+                      data-tip={viewFunc.description}
                       className="question-icon"
                       src={require('../../../assets/img/common/question-icon.svg')}
                     />
                   </p>
-                  <p className="card-data">{renderDappWidget(func, dapp)}</p>
+                  <p className="card-data">
+                    {'funcResults' in dapp
+                      ? <TypeDisplay
+                        fnDescription={dapp.functions.find(
+                          (func) => func.name === viewFunc.name)}
+                        fnResult={dapp.funcResults[viewFunc.name]}
+                      />
+                      : <Loader size={20} />}
+                  </p>
                 </li>
               );
             })}

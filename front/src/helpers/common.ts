@@ -18,7 +18,7 @@ export const getFuncType = (func: IFunction): 'view' | 'ask' | 'write' | null =>
   return null;
 };
 
-export const getFunctionsByType = (functions: IFunction[], type: any): any[] => {
+export const getFunctionsByType = (functions: IFunction[], type: 'view' | 'ask' | 'write'): any[] => {
   const result = [];
 
   if (Array.isArray(functions) && functions.length > 0) {
@@ -35,18 +35,25 @@ export const getFunctionsByType = (functions: IFunction[], type: any): any[] => 
 export const getViewFunctionConstants = (
   abi: any,
   address: any,
-  dashboardFunctions: any,
   functions: any,
+  dashboardFunctions?: any,
 ) => {
   const promises = [];
 
-  dashboardFunctions.forEach((dFunc) => {
-    const fSpec = functions.find((func) => func.name === dFunc);
+  if (dashboardFunctions) {
+    dashboardFunctions.forEach((dFunc) => {
+      const fSpec = functions.find((func) => func.name === dFunc);
 
-    if (fSpec) {
-      promises.push(processControlForm(abi, fSpec, [], address));
-    }
-  });
+      if (fSpec) {
+        promises.push(processControlForm(abi, fSpec, [], address));
+      }
+    });
+  } else {
+    getFunctionsByType(functions, 'view').forEach((func) =>
+      promises.push(processControlForm(abi, func, [], address)),
+    );
+  }
+
 
   return new Promise((resolve, reject) => {
 
@@ -55,7 +62,13 @@ export const getViewFunctionConstants = (
       .then((results) => {
         const commonResult = {};
 
-        dashboardFunctions.forEach((dFunc, i) => commonResult[dFunc] = results[i]);
+        if (dashboardFunctions) {
+          dashboardFunctions.forEach((dFunc, i) => commonResult[dFunc] = results[i]);
+        } else {
+          getFunctionsByType(functions, 'view').forEach((func, i) =>
+            commonResult[func.name] = results[i],
+          );
+        }
 
         resolve(commonResult);
       })

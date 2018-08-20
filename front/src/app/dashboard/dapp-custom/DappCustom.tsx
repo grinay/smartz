@@ -11,6 +11,7 @@ import Text from '../../ui-kit/text/Text';
 import Title from '../../ui-kit/title/Title';
 import DappCard from '../dapp-card/DappCard';
 import BtnPanel from './BtnPanel/BtnPanel';
+import PreviewContainer from './preview-container/PreviewContainer';
 import PrivateDapp from './private-dapp/PrivateDapp';
 
 import './DappCustom.less';
@@ -73,13 +74,12 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, {}
       switch (search.data.type) {
         case 'dapp':
           content = (
-            <div className="dapp-custom-preview">
-              <TitleContentWrapper title="Preview">
-                {search.data.dapp === null
-                  ? <PrivateDapp />
-                  : <DappCard dapp={dapps.get(search.data.dapp)} className="dapp-card-custom" />}
-              </TitleContentWrapper>
-            </div >);
+            <PreviewContainer>
+              {search.data.dapp === null
+                ? <PrivateDapp />
+                : <DappCard dapp={dapps.get(search.data.dapp)} className="dapp-card-custom" />}
+            </PreviewContainer>
+          );
           break;
 
         case 'contract_ui':
@@ -97,6 +97,9 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, {}
               <TitleContentWrapper className="dapp-custom-type" title="Type">
                 <p>Select</p>
               </TitleContentWrapper>
+              <PreviewContainer>
+                <DappCard contractUi={search.data.uis[0]} />
+              </PreviewContainer>
             </div >);
           break;
 

@@ -6,9 +6,9 @@ import { blockchains } from '../../../../constants/constants';
 import { getViewFunctionConstants } from '../../../../helpers/common';
 import { IDapp } from '../../../../helpers/entities/dapp';
 import store from '../../../../store/store';
-import renderDappWidget from '../../../common/dapp-widgets/DappWidgets';
 import ImageDefault from '../../../common/image-default/ImageDefault';
 import Loader from '../../../common/loader/Loader';
+import TypeDisplay from '../../../common/type-display/TypeDisplay';
 import { viewFuncResult } from '../../../dapps/DappActions';
 
 import './DappUi.less';
@@ -23,7 +23,7 @@ export default class DappUi extends React.PureComponent<IDappUiProps, {}> {
   public componentDidMount() {
     const { dapp } = this.props;
 
-    getViewFunctionConstants(dapp.abi, dapp.address, dapp.dashboard_functions, dapp.functions)
+    getViewFunctionConstants(dapp.abi, dapp.address, dapp.functions, dapp.dashboard_functions)
       .then((result) => store.dispatch(viewFuncResult(dapp.id, result)))
       .catch((error) => console.error(error));
   }
@@ -47,8 +47,11 @@ export default class DappUi extends React.PureComponent<IDappUiProps, {}> {
               <li key={i} className="dapp-card__function-item">
                 <p>{funcObj.title}</p>
                 {'funcResults' in dapp
-                  ? <p>{renderDappWidget(dapp.functions.find(
-                    (func) => func.name === dFuncName), dapp)}</p>
+                  ? <p><TypeDisplay
+                    fnDescription={dapp.functions.find(
+                      (func) => func.name === dFuncName)}
+                    fnResult={dapp.funcResults[dFuncName]}
+                  /></p>
                   : <Loader size={20} />}
               </li>
             );
