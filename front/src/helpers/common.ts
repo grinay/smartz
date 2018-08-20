@@ -18,7 +18,7 @@ export const getFuncType = (func: IFunction): 'view' | 'ask' | 'write' | null =>
   return null;
 };
 
-export const getFunctionsByType = (functions: IFunction[], type: 'view' | 'ask' | 'write'): any[] => {
+export const getFunctionsByType = (functions: IFunction[], type: string): any[] => {
   const result = [];
 
   if (Array.isArray(functions) && functions.length > 0) {
