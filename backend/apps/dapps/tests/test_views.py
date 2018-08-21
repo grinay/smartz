@@ -149,8 +149,38 @@ class TransactionsCRUDIntegrationTests(WebTest):
                     {
                         'name': 'call',
                         'created_at': '2018-08-01T22:01:00+03:00',
-                        'data': [{'name': 'param1', 'value': 'val1'}]
-                    }
+                        'data': {
+                            "address": "0x5f05e3af35ffe0a7114a7228603e2246d5aaf610",
+                            "topics": [
+                                "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d"
+                            ],
+                            "data": "0x000000000000000000000000dbec39384a8d892589add4646c6e111d24ee049d000000000000000000000000000000000000000000000000016345785d8a0000",
+                            "blockNumber": 2852892,
+                            "transactionHash": "0x2958d29230816aa6f4a4f7860e191de2377be32ef2ff66120c591d74b1229a44",
+                            "transactionIndex": 6,
+                            "blockHash": "0x7d7a163a5d8261d283ae01f2203f97f53b567bdc39de988b7e7507a9eff378ba",
+                            "logIndex": 6,
+                            "removed": False
+                        },
+                    },
+                    {
+                        'name': 'call',
+                        'created_at': '2018-08-01T22:01:00+03:00',
+                        'data': {
+                            "address": "0x5f05e3af35ffe0a7114a7228603e2246d5aaf610",
+                            "topics": [
+                                "0x884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a9424364"
+                            ],
+                            "data": "0x000000000000000000000000dbec39384a8d892589add4646c6e111d24ee049d000000000000000000000000000000000000000000000000016345785d8a0000",
+                            "blockNumber": 2852892,
+                            "transactionHash": "0x2958d29230816aa6f4a4f7860e191de2377be32ef2ff66120c591d74b1229a44",
+                            "transactionIndex": 6,
+                            "blockHash": "0x7d7a163a5d8261d283ae01f2203f97f53b567bdc39de988b7e7507a9eff378ba",
+                            "logIndex": 7,
+                            "removed": False
+                        },
+                    },
+
                 ]
             },
             headers=self.auth_header,

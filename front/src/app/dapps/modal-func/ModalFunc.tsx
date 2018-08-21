@@ -8,7 +8,7 @@ import { blockchains, ethConstants } from '../../../constants/constants';
 import { getFuncType } from '../../../helpers/common';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import Eos from '../../../helpers/eos';
-import { getAccountAddress, processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
+import { decodeEventOfContract, getAccountAddress, processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
 import { getUiSchemaFromFunc } from '../../../helpers/schema';
 import { tryParce } from '../../../helpers/utils';
 import store from '../../../store/store';
@@ -227,7 +227,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
       } else {
         dataFetch['is_success'] = true;
         dataFetch['mining_datetime'] = (new Date()).toISOString();
-        dataFetch['logs'] = receipt.logs;
+        dataFetch['logs'] = this.processLogs(dapp.abi, receipt.logs);
         dataFetch['info'] = {
           ethereum: {
             gas_price: ethConstants.gasPrice,
@@ -255,6 +255,25 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
         // });
       }
     });
+  }
+
+  private processLogs(abi: any, logs: any[]) {
+    let processedLogs: any[] = [];
+
+    logs.forEach(
+      (log: any) => {
+
+        const decodedEvent = decodeEventOfContract(abi, log);
+
+        processedLogs.push({
+          name: decodedEvent ? decodedEvent.name : '',
+          created_at: (new Date()).toISOString(),
+          data: log,
+        });
+      },
+    );
+
+    return processedLogs;
   }
 
   public render() {
