@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Button from '../../../ui-kit/button/Button';
+import Button from '../../../../ui-kit/button/Button';
 
 import './BtnPanel.less';
 

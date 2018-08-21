@@ -120,7 +120,7 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
         </div>
         <ModalContainer
           isOpen={isOpenModal}
-          className="verify-modal"
+          classNameWindow="verify-modal"
           onClose={this.toggleModal}
         >
           <PopupVerify dapp={dapp} />

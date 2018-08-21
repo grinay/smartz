@@ -7,7 +7,7 @@ import Modal from './Modal';
 interface IModalContainerProps {
   isOpen: boolean;
   onClose: () => void;
-  className?: string;
+  classNameWindow?: string;
   isCloseEsc?: boolean;
   isBackdrop?: boolean;
   isCloser?: boolean;

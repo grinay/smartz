@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
+import TitleContentWrapper from '../../../../common/title-content-wrapper/TitleContentWrapper';
 
 import './PreviewContainer.less';
 

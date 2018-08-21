@@ -7,6 +7,7 @@ import './ImageDefault.less';
 interface IImageDefaultProps {
   src: string;
   name?: string;
+  fontSize?: number;
   classNameImg?: string;
 }
 
@@ -26,7 +27,7 @@ export default class ImageDefault extends React.PureComponent<IImageDefaultProps
   }
 
   public render() {
-    const { src, name = '', classNameImg = '' } = this.props;
+    const { src, name = '', classNameImg = '', fontSize = 45 } = this.props;
 
     const image = this.tryRequire(src);
 
@@ -34,7 +35,7 @@ export default class ImageDefault extends React.PureComponent<IImageDefaultProps
       <div className={classNames('image-default flex', { char: image === null })}>
         {image != null
           ? <img className={classNameImg} src={image} alt={`${name ? name : ''} dapp`} />
-          : <p className="empty-img">{name ? name.charAt(0).toUpperCase() : 'D'}</p>
+          : <p className="empty-img" style={{ fontSize }}>{name ? name.charAt(0).toUpperCase() : 'D'}</p>
         }
       </div>
     );

@@ -4,15 +4,12 @@ import * as api from '../../../api/apiRequests';
 import { EosClass } from '../../../helpers/eos';
 import { isAddress } from '../../../helpers/eth';
 import Loader from '../../common/loader/Loader';
-import Message from '../../common/message/Message';
-import TitleContentWrapper from '../../common/title-content-wrapper/TitleContentWrapper';
 import Input from '../../ui-kit/input/Input';
 import Text from '../../ui-kit/text/Text';
 import Title from '../../ui-kit/title/Title';
-import DappCard from '../dapp-card/DappCard';
-import BtnPanel from './BtnPanel/BtnPanel';
-import PreviewContainer from './preview-container/PreviewContainer';
-import PrivateDapp from './private-dapp/PrivateDapp';
+import BtnPanel from './common/BtnPanel/BtnPanel';
+import ContentContractAbi from './content-contract-abi/ContentContractAbi';
+import ContentDapp from './content-dapp/ContentDapp';
 
 import './DappCustom.less';
 
@@ -22,43 +19,50 @@ interface IDappCustomProps {
   dapps: any;
 }
 
-export default class DappCustom extends React.PureComponent<IDappCustomProps, {}> {
+interface IDappCustomState {
+  selectedValue: any;
+  address: string;
+}
+
+export default class DappCustom extends React.PureComponent<IDappCustomProps, IDappCustomState> {
   constructor(props) {
     super(props);
 
+    this.state = {
+      selectedValue: null,
+      address: null,
+    };
+
     this.onSubmit = this.onSubmit.bind(this);
     this.validateString = this.validateString.bind(this);
+    this.selectChange = this.selectChange.bind(this);
   }
 
   private onSubmit(value: string): void {
+
+    this.setState({ address: value });
+
     api.getSearchData({
       query: value,
       ethereum_network_id: '1', //TODO: get id
     })
-      .then((response) => {
-        const { data, status } = response;
-
-        if (status === 200) {
-          console.log(data);
-
-
-          this.setState({ response: data.address, loading: false });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+      .then(() => {
+        this.forceUpdate();
       });
-
-    this.setState({ loading: true });
-
   }
 
   private validateString(value: string): boolean {
     return isAddress(value) || EosClass.isAddress(value);
   }
 
+  private selectChange(selected) {
+    this.setState({ selectedValue: selected });
+  }
+
   public render() {
+    console.log('render');
     const { search, dapps } = this.props;
+    const { address } = this.state;
 
     if (!search || !dapps) {
       return null;
@@ -70,41 +74,27 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, {}
     } else if ('error' in search && search.error != null) {
       content = <p>Error: {search.error}</p>;
     } else if ('data' in search && search.data != null) {
-      console.log(search.data);
+      // console.log(search.data);
       switch (search.data.type) {
         case 'dapp':
-          content = (
-            <PreviewContainer>
-              {search.data.dapp === null
-                ? <PrivateDapp />
-                : <DappCard dapp={dapps.get(search.data.dapp)} className="dapp-card-custom" />}
-            </PreviewContainer>
-          );
+          content = <ContentDapp dapps={dapps} data={search.data} />;
           break;
 
         case 'contract_ui':
-          console.log('here');
-          content = (
-            <div>
-              <div className="dapp-custom-warning">
-                <div className="divider" />
-                <TitleContentWrapper title="Warning">
-                  <Message >
-                    This third-party contract isn’t from Smartz, but we seem to have guessed his type. You can try to use it, but without any guarantee.
-                </Message>
-                </TitleContentWrapper>
-              </div>
-              <TitleContentWrapper className="dapp-custom-type" title="Type">
-                <p>Select</p>
-              </TitleContentWrapper>
-              <PreviewContainer>
-                <DappCard contractUi={search.data.uis[0]} />
-              </PreviewContainer>
-            </div >);
+          content = <ContentContractAbi data={search.data} address={address} />;
+          break;
+        case 'abi':
+          content = <ContentContractAbi data={search.data} address={address} />;
           break;
 
-        case 'abi':
-          break;
+        // case 'abi':
+        //   if (search.data.uis.length > 0) {
+
+        //   } else {
+
+        //   }
+        //   break;
+
         case 'no_abi':
           break;
         default:

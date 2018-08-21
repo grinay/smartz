@@ -1,6 +1,6 @@
 export const requestsConfig = {
   // use fake data from './api/mock'
-  USE_MOCK: false,
+  USE_MOCK: true,
   // collapsed log group (summary view)
   COLLAPSED_LOG_REQUESTS: true,
   // set url

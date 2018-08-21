@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
-import { getNetworkId, processControlForm, processResult } from '../../helpers/eth';
+import { getNetworkId } from '../../helpers/eth';
 import Alert from '../common/Alert';
 import Loader from '../common/loader/Loader';
 import ModalContainer from '../common/modal/ModalContainer';
@@ -144,7 +144,7 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
         {content}
         <ModalContainer
           isOpen={isOpenModal}
-          className="dashboard-modal"
+          classNameWindow="dashboard-modal"
           onClose={this.onToggleModal(false)}
           animationWindow={{
             duration: 300,

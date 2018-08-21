@@ -1,7 +1,7 @@
 import * as constructors from './mock/constructors';
 import { addToDashboard, currentDapp, getRequests } from './mock/currentDapp';
 import { dappList } from './mock/dapps';
-import { search } from './mock/search';
+import { search, searchAbi, searchContractUi, searchAbiNoType } from './mock/search';
 
 
 export default function subscribeMockRequests(mockApi) {
@@ -13,6 +13,7 @@ export default function subscribeMockRequests(mockApi) {
     .onAny(/\/dapps\/.{24}/).reply(200, currentDapp)
     // .onAny('/dapps').reply(200, dappList)
     .onAny('/dapps/add-to-dashbord').reply(addToDashboard)
+    .onAny('/search').reply(searchAbiNoType)
     // .onAny('/search').reply(200, search)
 
     // .onAny('/dapps')

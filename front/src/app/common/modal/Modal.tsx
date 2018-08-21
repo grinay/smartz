@@ -12,7 +12,7 @@ interface IModalProps {
   state: any;
   onClose: () => void;
   isCloseEsc?: boolean;
-  className?: string;
+  classNameWindow?: string;
   isBackdrop?: boolean;
   isCloser?: boolean;
   blur?: {
@@ -34,6 +34,7 @@ interface IModalProps {
 
 export default class Modal extends React.PureComponent<IModalProps, {}> {
   private node: HTMLDivElement;
+  private body: HTMLBodyElement;
 
   constructor(props) {
     super(props);
@@ -74,6 +75,7 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
     this.node.setAttribute('id', 'component-modal');
     document.body.appendChild(this.node);
 
+    this.body = document.getElementsByTagName('body')[0];
   }
 
   public componentDidMount() {
@@ -82,6 +84,8 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
     if (isCloseEsc) {
       document.addEventListener('keydown', this.onKeyDown);
     }
+
+    this.body.classList.add('modal-disable-scroll');
   }
 
   public componentWillUnmount() {
@@ -89,6 +93,10 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
 
     if (isCloseEsc) {
       document.removeEventListener('keydown', this.onKeyDown);
+    }
+
+    if (this.body.classList.contains('modal-disable-scroll')) {
+      this.body.classList.remove('modal-disable-scroll');
     }
 
     document.body.removeChild(this.node);
@@ -105,7 +113,7 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
       blur = null,
       animationWindow = null,
       animationBackdrop = null,
-      className = null,
+      classNameWindow = null,
     } = this.props;
 
     // set blur effect on div block
@@ -133,7 +141,7 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
     }
 
     const content = (
-      <div className={classNames('component-modal flex', className)} >
+      <div className="component-modal flex-h" >
 
         {/* backDrop */}
         {isBackdrop &&
@@ -145,7 +153,7 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
         }
 
         <div
-          className="component-modal-window"
+          className={classNames('component-modal-window', classNameWindow)}
           style={this.getStyle(animationWindow, state)}
         >
 

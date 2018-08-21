@@ -6,7 +6,7 @@ import './Message.less';
 
 interface IMessageProps {
   children: any;
-  type?: 'green' | 'red';
+  type?: 'green' | 'red' | 'gray';
 }
 
 export default class Message extends React.PureComponent<IMessageProps, {}> {
@@ -17,6 +17,7 @@ export default class Message extends React.PureComponent<IMessageProps, {}> {
       <div className={classNames('component-message', {
         green: type === 'green',
         red: type === 'red',
+        gray: type === 'gray',
       })}>
         {children}
       </div>
