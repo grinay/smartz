@@ -29,7 +29,9 @@ class Dapp(models.Model):
     dashboard_functions = models.TextField()
     has_public_access = models.BooleanField(default=False)
     auth0_user_id = models.CharField(max_length=200, blank=True)
+
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    users = models.ManyToManyField(User, through='UserDapp', related_name='dapps')
 
     blockchain = models.CharField(choices=BLOCKCHAINS, max_length=50, default=BLOCKCHAIN_ETHEREUM)
     network_id = models.CharField(max_length=200, default='')
@@ -57,6 +59,25 @@ class Dapp(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.created_at = datetime.now(pytz.timezone(settings.TIME_ZONE))
+
+        return super().save(*args, **kwargs)
+
+
+class UserDapp(models.Model):
+    dapp = ForeignKey(Dapp, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    created_at = models.DateTimeField(default=init_time)
+    title = models.CharField(max_length=200)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['dapp', 'user']),
+        ]
 
     def save(self, *args, **kwargs):
         if not self.pk:

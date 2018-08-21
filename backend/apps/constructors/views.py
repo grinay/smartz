@@ -17,7 +17,7 @@ from jsonschema.validators import validator_for
 from apps.common.constants import BLOCKCHAINS
 from apps.constructors.models import Constructor
 from apps.constructors.serializers import constructors_pub_info, constructor_pub_info
-from apps.dapps.models import Dapp
+from apps.dapps.models import Dapp, UserDapp
 from apps.dapps.serializers import dapp_pub_info
 from constructor_engine.engine import WithEngine
 from utils.common import auth, nonempty, args_string
@@ -149,6 +149,7 @@ class GetParamsView(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class ConstructView(View, WithEngine):
 
+    @transaction.atomic
     def post(self, request, constructor_id):
         # parsed input data POST JSON payload
         args = request.data
@@ -212,11 +213,13 @@ class ConstructView(View, WithEngine):
         dapp.dashboard_functions = json.dumps(result['dashboard_functions'])
         dapp.constructor = constructor
         dapp.blockchain = constructor.blockchain
-        dapp.user = user
         dapp.compiler_version = result['compiler_version']
         dapp.compiler_optimization = result['compiler_optimization']
         dapp.contract_name = result['contract_name']
         dapp.deploy_price = constructor.price
         dapp.save()
 
-        return JsonResponse(dapp_pub_info(dapp))
+        UserDapp.objects.create(dapp=dapp, user=user, title=dapp_title)
+
+
+        return JsonResponse(dapp_pub_info(dapp, True))
