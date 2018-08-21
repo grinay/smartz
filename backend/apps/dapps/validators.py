@@ -60,17 +60,7 @@ def validate_log_data(value):
     schema = {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "title": "Transaction additional info",
-        "type": "array",
-
-        "items": {
-            "type": "object",
-            "additionalProperties": False,
-            "required": ["name", "value"],
-            "properties": {
-                "name": {"type": "string"},
-                "value": {"type": "string"}
-            },
-        }
+        "type": "object"
     }
 
     if not is_conforms2schema(value, schema):
