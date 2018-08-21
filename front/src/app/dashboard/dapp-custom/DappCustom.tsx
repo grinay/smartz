@@ -10,6 +10,7 @@ import Title from '../../ui-kit/title/Title';
 import BtnPanel from './common/BtnPanel/BtnPanel';
 import ContentContractAbi from './content-contract-abi/ContentContractAbi';
 import ContentDapp from './content-dapp/ContentDapp';
+import ContentNoAbi from './content-no-abi/ContentNoAbi';
 
 import './DappCustom.less';
 
@@ -87,16 +88,10 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, ID
           content = <ContentContractAbi data={search.data} address={address} />;
           break;
 
-        // case 'abi':
-        //   if (search.data.uis.length > 0) {
-
-        //   } else {
-
-        //   }
-        //   break;
-
         case 'no_abi':
+          content = <ContentNoAbi data={search.data} />;
           break;
+
         default:
           content = <Loader />;
           break;

@@ -20242,3 +20242,14 @@ export function searchAbiNoType() {
 
   return [200, response];
 }
+
+export function searchNoAbi() {
+  const response = {
+    'address': {
+      'type': 'no_abi',
+      'uis': uis,
+    },
+  };
+
+  return [200, response];
+}
