@@ -19,7 +19,7 @@ def abi_arguments2schema(abi_args_array):
                 "default": False
             }
 
-        elif abi_type in ('address', 'uint', 'uint256', 'uint8', 'uint16', 'uint32', 'uint64', 'uint128'
+        elif abi_type in ('address', 'uint', 'uint256', 'uint8', 'uint16', 'uint32', 'uint64', 'uint128',
                           'bytes1', 'bytes2', 'bytes3', 'bytes4', 'bytes5', 'bytes6', 'bytes7', 'bytes8',
                           'bytes9', 'bytes10', 'bytes11', 'bytes12', 'bytes13', 'bytes14', 'bytes15', 'bytes16',
                           'bytes17', 'bytes18', 'bytes19', 'bytes20', 'bytes21', 'bytes22', 'bytes23', 'bytes24',
