@@ -79,6 +79,9 @@ class UserDapp(models.Model):
             models.Index(fields=['dapp', 'user']),
         ]
 
+    def __str__(self):
+        return "{} - {}".format(self.dapp.title, self.user.username)
+
     def save(self, *args, **kwargs):
         if not self.pk:
             self.created_at = datetime.now(pytz.timezone(settings.TIME_ZONE))
