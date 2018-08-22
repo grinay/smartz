@@ -3,7 +3,7 @@ import json
 from django_webtest import WebTest
 
 from apps.constructors.models import Constructor
-from apps.dapps.models import Dapp
+from apps.dapps.models import Dapp, UserDapp
 from apps.users.models import User
 from apps.users.services import UsersService
 
@@ -20,10 +20,11 @@ class DappsCRUDIntegrationTests(WebTest):
         self.auth_header = {'X_ACCESSTOKEN':  UsersService().generate_token(self.user, 'ethereum')}
 
     def test_update(self):
-        dapp = Dapp.create(constructor=self.constructor, user=self.user)
+        dapp = Dapp.create(constructor=self.constructor)
         dapp.save()
+        UserDapp.objects.create(user=self.user, dapp=dapp, title=dapp.title)
 
-        fields = {'address': '0x00', 'network_id': '2', 'has_public_access': True, 'title': 'new title'}
+        fields = {'address': '0x00', 'network_id': '2', 'has_public_access': True}
         for field, val in fields.items():
             resp = self.app.post_json(
                 '/api/dapps/{}/update'.format(dapp.slug),
@@ -35,15 +36,39 @@ class DappsCRUDIntegrationTests(WebTest):
             dapp.refresh_from_db()
             assert getattr(dapp, field) == val, "field {} must be equal {}".format(field, val)
 
+        user_dapp = UserDapp.objects.get(user=self.user, dapp=dapp)
+        resp = self.app.post_json(
+            '/api/dapps/{}/update'.format(dapp.slug),
+            params={'title': 'new title'},
+            headers=self.auth_header
+        )
+        assert resp.status_code == 200
+        self.assertNotEqual(user_dapp.title, 'new title')
+        user_dapp.refresh_from_db()
+        self.assertEqual(user_dapp.title, 'new title')
+
+    def test_list_cust_title(self):
+        dapp = Dapp.create(constructor=self.constructor, address="addr", abi='[]', function_specs=[], dashboard_functions=[])
+        dapp.save()
+        UserDapp.objects.create(user=self.user, dapp=dapp, title='cust_title')
+
+        resp = self.app.get(
+            '/api/dapps'.format(dapp.slug),
+            headers=self.auth_header
+        )
+        assert resp.status_code == 200
+        self.assertEqual(resp.json[0]['title'], 'cust_title')
+
     def test_add_to_dashboard(self):
         user2 = User()
         user2.username = 'username'
         user2.save()
 
-        dapp = Dapp.create(constructor=self.constructor, user=user2)
+        dapp = Dapp.create(constructor=self.constructor)
         dapp.has_public_access = True
         dapp.title = 'titl'
         dapp.save()
+        UserDapp.objects.create(user=user2, dapp=dapp, title=dapp.title)
 
         assert Dapp.objects.count() == 1
 
@@ -54,12 +79,11 @@ class DappsCRUDIntegrationTests(WebTest):
         assert resp.status_code == 200
         assert 'ok' in resp.json
 
-        assert Dapp.objects.count() == 2
+        self.assertEqual(1, Dapp.objects.count())
         dapps = Dapp.objects.order_by('created_at').all()
         assert dapps[0].pk == dapp.pk
-        assert dapps[1].title == dapp.title
-        assert dapps[1].user_id == self.user.pk
-        assert dapps[1].created_at != dapps[0].created_at
+        self.assertIn(self.user, dapps[0].users.all())
+        self.assertIn(user2, dapps[0].users.all())
 
     def test_create_from_abi(self):
         resp = self.app.post_json(
@@ -125,8 +149,38 @@ class TransactionsCRUDIntegrationTests(WebTest):
                     {
                         'name': 'call',
                         'created_at': '2018-08-01T22:01:00+03:00',
-                        'data': [{'name': 'param1', 'value': 'val1'}]
-                    }
+                        'data': {
+                            "address": "0x5f05e3af35ffe0a7114a7228603e2246d5aaf610",
+                            "topics": [
+                                "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d"
+                            ],
+                            "data": "0x000000000000000000000000dbec39384a8d892589add4646c6e111d24ee049d000000000000000000000000000000000000000000000000016345785d8a0000",
+                            "blockNumber": 2852892,
+                            "transactionHash": "0x2958d29230816aa6f4a4f7860e191de2377be32ef2ff66120c591d74b1229a44",
+                            "transactionIndex": 6,
+                            "blockHash": "0x7d7a163a5d8261d283ae01f2203f97f53b567bdc39de988b7e7507a9eff378ba",
+                            "logIndex": 6,
+                            "removed": False
+                        },
+                    },
+                    {
+                        'name': 'call',
+                        'created_at': '2018-08-01T22:01:00+03:00',
+                        'data': {
+                            "address": "0x5f05e3af35ffe0a7114a7228603e2246d5aaf610",
+                            "topics": [
+                                "0x884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a9424364"
+                            ],
+                            "data": "0x000000000000000000000000dbec39384a8d892589add4646c6e111d24ee049d000000000000000000000000000000000000000000000000016345785d8a0000",
+                            "blockNumber": 2852892,
+                            "transactionHash": "0x2958d29230816aa6f4a4f7860e191de2377be32ef2ff66120c591d74b1229a44",
+                            "transactionIndex": 6,
+                            "blockHash": "0x7d7a163a5d8261d283ae01f2203f97f53b567bdc39de988b7e7507a9eff378ba",
+                            "logIndex": 7,
+                            "removed": False
+                        },
+                    },
+
                 ]
             },
             headers=self.auth_header,

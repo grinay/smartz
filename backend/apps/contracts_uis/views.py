@@ -9,7 +9,7 @@ from rest_framework.response import Response
 
 from apps.contracts_uis.models import ContractUI
 from apps.contracts_uis.serializers import ContractUISerializer
-from apps.dapps.models import Dapp
+from apps.dapps.models import Dapp, UserDapp
 from constructor_engine.services import WithContractProcessorManager
 from smartzcore.http import error_response
 from utils.common import auth
@@ -69,5 +69,7 @@ class AddToDashboard(View, WithContractProcessorManager):
         dapp.has_public_access = False
 
         dapp.save()
+
+        UserDapp.objects.create(dapp=dapp, user=user, title=contract_ui.name)
 
         return JsonResponse({'ok': True})  # todo

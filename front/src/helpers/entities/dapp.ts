@@ -42,7 +42,7 @@ export interface IDapp {
   source: string;
   title: string;
   transactions: any;
-  user_id: any;
+  owned_by_current_user: boolean
 }
 
 export enum Tab {

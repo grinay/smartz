@@ -267,11 +267,10 @@ export const getAccountAddress = () => {
 /**
  * Return decoded event
  *
- * @param contract
+ * @param abi
  * @param log
  */
-export const decodeEventOfDapp = (contract, log) => {
-  const abi = contract.abi;
+export const decodeEventOfContract = (abi, log) => {
   let eventAbi = null;
 
   for (let i = 0; i < abi.length; i++) {

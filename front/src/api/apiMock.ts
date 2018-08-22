@@ -12,7 +12,7 @@ export default function subscribeMockRequests(mockApi) {
     .onPost(/\/dapps\/.{24}\/requests/).reply(getRequests)
     .onAny(/\/dapps\/.{24}/).reply(200, currentDapp)
     // .onAny('/dapps').reply(200, dappList)
-    .onAny('/dapps/add-to-dashbord').reply(addToDashboard)
+    .onAny('/dapps/add-to-dashboard').reply(addToDashboard)
     .onAny('/search').reply(searchNoAbi)
     // .onAny('/search').reply(200, search)
 

@@ -59,8 +59,8 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
     // check who owner this dapp
     let btn: JSX.Element;
     if (profile) {
-      if (profile.user_id === dapp.user_id) {
-        if (dapp.blockchain === blockchains.ethereum) {
+      if (dapp.owned_by_current_user) {
+        if (dapp.blockchain === blockchains.ethereum && dapp.source) {
           btn = (
             <button
               className="round-btn flex verify-btn"
