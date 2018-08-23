@@ -7,18 +7,24 @@ import './BtnPanel.less';
 
 interface IBtnPanelProps {
   onClickBtn: () => void;
-  isDisabled: boolean;
+  isDisabled?: boolean;
+  content?: string;
 }
 
 interface IBtnPanelState { }
 
 export default class BtnPanel extends React.PureComponent<IBtnPanelProps, {}> {
   public render() {
-    const { onClickBtn, isDisabled } = this.props;
+    const { onClickBtn, isDisabled, content = 'Add to dashboard' } = this.props;
 
     return (
       <div className="btn-panel">
-        <Button type="large" onClick={onClickBtn} content="Add to dashboard" />
+        <Button
+          type="large"
+          onClick={onClickBtn}
+          content={content}
+          isDisabled={isDisabled}
+        />
       </div>
     );
   }

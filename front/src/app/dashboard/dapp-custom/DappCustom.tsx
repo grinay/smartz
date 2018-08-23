@@ -1,14 +1,16 @@
 import * as React from 'react';
 
 import * as api from '../../../api/apiRequests';
+import { getBlockchainByAddress, isBlockchainAddress } from '../../../helpers/blockchain';
+import { Blockchain } from '../../../helpers/entities/types';
 import { EosClass } from '../../../helpers/eos';
-import { isAddress } from '../../../helpers/eth';
+import { getNetworkIdSync, isAddress } from '../../../helpers/eth';
 import Loader from '../../common/loader/Loader';
 import Input from '../../ui-kit/input/Input';
 import Text from '../../ui-kit/text/Text';
 import Title from '../../ui-kit/title/Title';
-import BtnPanel from './common/BtnPanel/BtnPanel';
-import ContentContractAbi from './content-contract-abi/ContentContractAbi';
+import ContentAbi from './content-abi/ContentAbi';
+import ContentContract from './content-contract/ContentContract';
 import ContentDapp from './content-dapp/ContentDapp';
 import ContentNoAbi from './content-no-abi/ContentNoAbi';
 
@@ -21,8 +23,9 @@ interface IDappCustomProps {
 }
 
 interface IDappCustomState {
-  selectedValue: any;
   address: string;
+  networkId: string;
+  blockchain: Blockchain;
 }
 
 export default class DappCustom extends React.PureComponent<IDappCustomProps, IDappCustomState> {
@@ -30,40 +33,41 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, ID
     super(props);
 
     this.state = {
-      selectedValue: null,
       address: null,
+      networkId: getNetworkIdSync(),
+      blockchain: null,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
-    this.validateString = this.validateString.bind(this);
-    this.selectChange = this.selectChange.bind(this);
   }
 
   private onSubmit(value: string): void {
+    const { networkId } = this.state;
 
-    this.setState({ address: value });
+    const blockchain = getBlockchainByAddress(value);
 
-    api.getSearchData({
+    const request = {
       query: value,
-      ethereum_network_id: '1', //TODO: get id
-    })
+    };
+
+    if (blockchain === 'ethereum') {
+      request['ethereum_network_id'] = networkId; //TODO: get id
+    }
+
+    this.setState({
+      address: value,
+      blockchain,
+    });
+
+    api.getSearchData(request)
       .then(() => {
         this.forceUpdate();
       });
   }
 
-  private validateString(value: string): boolean {
-    return isAddress(value) || EosClass.isAddress(value);
-  }
-
-  private selectChange(selected) {
-    this.setState({ selectedValue: selected });
-  }
-
   public render() {
-    console.log('render');
     const { search, dapps } = this.props;
-    const { address } = this.state;
+    const { address, networkId, blockchain } = this.state;
 
     if (!search || !dapps) {
       return null;
@@ -75,21 +79,41 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, ID
     } else if ('error' in search && search.error != null) {
       content = <p>Error: {search.error}</p>;
     } else if ('data' in search && search.data != null) {
-      // console.log(search.data);
       switch (search.data.type) {
         case 'dapp':
           content = <ContentDapp dapps={dapps} data={search.data} />;
           break;
 
         case 'contract_ui':
-          content = <ContentContractAbi data={search.data} address={address} />;
+          content = (
+            <ContentContract
+              data={search.data}
+              address={address}
+              networkId={networkId}
+              blockchain={blockchain}
+            />
+          );
           break;
+
         case 'abi':
-          content = <ContentContractAbi data={search.data} address={address} />;
+          content = (
+            <ContentAbi
+              data={search.data}
+              address={address}
+              networkId={networkId}
+              blockchain={blockchain}
+            />
+          );
           break;
 
         case 'no_abi':
-          content = <ContentNoAbi data={search.data} />;
+          content = (
+            <ContentNoAbi
+              data={search.data}
+              networkId={networkId}
+              blockchain={blockchain}
+            />
+          );
           break;
 
         default:
@@ -110,14 +134,13 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, ID
           <Text type="caption">- Ethereum: 0x40ae4acd08e65714b093bf2495fd7941aedfa231</Text>
           <Text type="caption">- EOS: EOS82LzjXdnBPTwgJCxiUiRcVsxdiawn8MiAgVTfFZV41a4X7aMuI</Text>
           <Input
-            onValidate={this.validateString}
+            onValidate={isBlockchainAddress}
             className="dapp-custom-input"
             onSubmit={this.onSubmit}
             autofocus={true}
           />
         </div>
         {content}
-        <BtnPanel onClickBtn={() => console.log('msg')} isDisabled={false} />
       </div >
     );
   }

@@ -31,11 +31,11 @@ export default class ContractUi extends React.PureComponent<IContractUiProps, IC
     this.state = {
       funcResult: null,
     };
+
+    this.updateConstants = this.updateConstants.bind(this);
   }
 
-  public componentDidMount() {
-    const { contract } = this.props;
-
+  private updateConstants(contract: any) {
     getViewFunctionConstants(
       contract.abi,
       contract.address,
@@ -44,6 +44,21 @@ export default class ContractUi extends React.PureComponent<IContractUiProps, IC
     )
       .then((result) => this.setState({ funcResult: result }))
       .catch((error) => console.error(error));
+  }
+
+  public componentDidMount() {
+    const { contract } = this.props;
+
+    this.updateConstants(contract);
+  }
+
+  public componentWillReceiveProps(nextProps: any) {
+    if (nextProps.contract.id !== this.props.contract.id) {
+      this.updateConstants(nextProps.contract);
+
+      // clear old value
+      this.setState({ funcResult: null });
+    }
   }
 
   public render() {

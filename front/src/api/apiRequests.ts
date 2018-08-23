@@ -330,3 +330,23 @@ export function getSearchData(data: object) {
 
   return result;
 }
+
+export function addContractUiToDash(contractUiId: any, data: any) {
+  const result = fetch(`/contracts_uis/${contractUiId}/add-to-dashboard`, data, 'post');
+
+  result
+    .then()
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function createDappFromAbi(data: any) {
+  const result = fetch(`/dapps/create-from-abi`, data, 'post');
+
+  result
+    .then()
+    .catch((error) => console.error(error));
+
+  return result;
+}

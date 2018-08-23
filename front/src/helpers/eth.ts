@@ -186,11 +186,16 @@ export const processResult = (res?, outputs?) => {
 
 export const getNetworkId = (cb) => {
   web3.version.getNetwork((err, netId) => {
-    // tslint:disable-next-line:no-unused-expression
-    err && console.error(err);
-    // tslint:disable-next-line:no-unused-expression
-    netId && cb(netId);
+    if (!err) {
+      console.error(err);
+    } else if (netId) {
+      cb(netId);
+    }
   });
+};
+
+export const getNetworkIdSync = (): string => {
+  return web3.version.network;
 };
 
 export const getNetworkName = (netId) => {

@@ -8,7 +8,7 @@ interface IButtonProps {
   content?: string;
   children?: any;
   className?: string;
-  disabled?: boolean;
+  isDisabled?: boolean;
   type?: 'green' | 'white' | 'lightgreen' | 'gray' | 'small' | 'large';
   onClick?: () => void;
 }
@@ -19,8 +19,9 @@ export default class Button extends React.PureComponent<IButtonProps, {}> {
       content = null,
       className = null,
       onClick = null,
-      type = null,
+      type = 'green',
       children = null,
+      isDisabled = false,
     } = this.props;
 
     return (
@@ -34,6 +35,7 @@ export default class Button extends React.PureComponent<IButtonProps, {}> {
             'component-button-gray': type === 'gray',
             'component-button-small': type === 'small',
             'component-button-large': type === 'large',
+            'component-button-disabled': isDisabled,
           })}
         type="button"
       >

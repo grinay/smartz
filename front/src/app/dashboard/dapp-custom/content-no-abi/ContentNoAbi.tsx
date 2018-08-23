@@ -1,19 +1,26 @@
 import * as React from 'react';
 import Select from 'react-select';
 
+import * as api from '../../../../api/apiRequests';
+import { Blockchain } from '../../../../helpers/entities/types';
 import ImageDefault from '../../../common/image-default/ImageDefault';
 import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
+import BtnPanel from '../common/BtnPanel/BtnPanel';
 
 import './ContentNoAbi.less';
 
 
 interface IContentNoAbiProps {
   data: any;
+  blockchain: Blockchain;
+  networkId: string;
 }
 
 interface IContentNoAbiState {
   selectedValue: any;
+  options: any[];
+  abi: string;
 }
 
 export default class ContentNoAbi extends React.PureComponent
@@ -25,13 +32,64 @@ export default class ContentNoAbi extends React.PureComponent
 
     this.state = {
       selectedValue: null,
+      options: null,
+      abi: null,
     };
 
     this.changeSelect = this.changeSelect.bind(this);
+    this.submitData = this.submitData.bind(this);
+    this.inputAbi = this.inputAbi.bind(this);
   }
 
   private changeSelect(selectedValue: any) {
     this.setState({ selectedValue });
+  }
+
+  private inputAbi() {
+    const { selectedValue, options } = this.state;
+    const text = this.contentEditable.innerText;
+
+    if (text.length > 25) {
+      this.setState({
+        abi: text,
+        selectedValue: null,
+      });
+    } else if (selectedValue === null) {
+      this.setState({ selectedValue: options[0] });
+    }
+  }
+
+  private submitData() {
+    const { data, blockchain, networkId } = this.props;
+    const { selectedValue, abi } = this.state;
+
+    const dataSearch = {};
+
+    dataSearch['abi'] = abi != null
+      ? abi
+      : data.uis.find((ui) => ui.id === selectedValue.value).abi;
+
+    if (blockchain === 'ethereum') {
+      dataSearch['ethereum_network_id'] = networkId;
+    }
+
+    api.getSearchData(dataSearch);
+  }
+
+  public componentDidMount() {
+    const { data } = this.props;
+
+    // set options(select items) and default value before render
+    const options = data.uis.map((ui) => ({
+      value: ui.id,
+      label: ui.name,
+      image: ui.image,
+    }));
+
+    this.setState({
+      options,
+      selectedValue: options[0],
+    });
   }
 
   public render() {
@@ -64,7 +122,6 @@ export default class ContentNoAbi extends React.PureComponent
               }}
               value={selectedValue}
               onChange={this.changeSelect}
-              defaultValue={options[1]}
               options={options}
             />
           </TitleContentWrapper>
@@ -75,11 +132,12 @@ export default class ContentNoAbi extends React.PureComponent
             // onBlur={this.onUnfocused}
             // onFocus={this.onFocus}
             ref={(ref) => this.contentEditable = ref}
-            onInput={(e) => { console.log(this.contentEditable.innerText); }}
+            onInput={this.inputAbi}
             contentEditable={true}
             suppressContentEditableWarning={true}
           />
         </TitleContentWrapper>
+        <BtnPanel onClickBtn={this.submitData} content="Add ABI" />
       </div>
     );
   }
