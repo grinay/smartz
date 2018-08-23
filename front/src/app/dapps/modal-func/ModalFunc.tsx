@@ -286,12 +286,6 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
     if (func) {
       // add field for ethCount in schema
       if (func.payable) {
-        // if function is 'default function'
-        if (func.name === '') {
-          func.type = 'fallback';
-          func.title = func.title ? func.title : 'Send ether';
-          func.description = func.description ? func.description : 'Send ether to contract';
-        }
 
         if (func.inputs.items === undefined) func.inputs.items = [];
 

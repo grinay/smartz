@@ -1,7 +1,7 @@
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
-import { getFunctionsByType } from '../../../helpers/common';
+import {getFunctionsByType, getFuncType} from '../../../helpers/common';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 
 import './ColumnFunc.less';
@@ -62,11 +62,38 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     }
   }
 
+  private prepareFunctions(functions: IFunction[]) {
+    let result: IFunction[] = [];
+
+    if (Array.isArray(functions) && functions.length > 0) {
+      functions.forEach((func) => {
+        if (func.name === '') {
+          if ( !func.payable) {
+            return;
+          }
+
+          func.type = 'fallback';
+          func.icon = {
+            pack: 'materialdesignicons',
+            name: 'arrow-right-bold',
+          };
+          func.title = func.title ? func.title : 'Send ether';
+          func.description = func.title ? func.description : 'Send ether to contract';
+        }
+
+        result.push(func);
+      });
+    }
+
+    return result;
+  }
+
   private getSection(funcType: string, title: string): JSX.Element {
     const { dapp, onSelectFunc } = this.props;
 
     let funcSectionElement: JSX.Element = null;
-    const functions: IFunction[] = getFunctionsByType(dapp.functions, funcType);
+    let functions: IFunction[] = getFunctionsByType(dapp.functions, funcType);
+    functions = this.prepareFunctions(functions);
 
     if (functions.length > 0) {
       funcSectionElement = (
