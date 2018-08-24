@@ -186,7 +186,7 @@ export const processResult = (res?, outputs?) => {
 
 export const getNetworkId = (cb) => {
   web3.version.getNetwork((err, netId) => {
-    if (!err) {
+    if (err) {
       console.error(err);
     } else if (netId) {
       cb(netId);

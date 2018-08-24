@@ -108,29 +108,25 @@ export default class ContentNoAbi extends React.PureComponent
               </Message>
           </TitleContentWrapper>
         </div>
-        {options.length > 0 &&
-          <TitleContentWrapper className="dapp-custom-type" title="Type">
-            <Select
-              components={{
-                Option: ({ innerProps, innerRef, data }) =>
-                  <div ref={innerRef} {...innerProps} className="item-select flex-v">
-                    <div className="item-select-img">
-                      <ImageDefault src={data.image} name={data.label} fontSize={15} />
-                    </div>
-                    <p className="item-select-text">{data.label}</p>
-                  </div>,
-              }}
-              value={selectedValue}
-              onChange={this.changeSelect}
-              options={options}
-            />
-          </TitleContentWrapper>
-        }
+        <TitleContentWrapper className="dapp-custom-type" title="Type">
+          <Select
+            components={{
+              Option: ({ innerProps, innerRef, data }) =>
+                <div ref={innerRef} {...innerProps} className="item-select flex-v">
+                  <div className="item-select-img">
+                    <ImageDefault src={data.image} name={data.label} fontSize={15} />
+                  </div>
+                  <p className="item-select-text">{data.label}</p>
+                </div>,
+            }}
+            value={selectedValue}
+            onChange={this.changeSelect}
+            options={options}
+          />
+        </TitleContentWrapper>
         <TitleContentWrapper className="dapp-custom-type" title="Upload your ABI">
           <div
             className="abi-str-field"
-            // onBlur={this.onUnfocused}
-            // onFocus={this.onFocus}
             ref={(ref) => this.contentEditable = ref}
             onInput={this.inputAbi}
             contentEditable={true}
