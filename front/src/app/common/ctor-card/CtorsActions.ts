@@ -1,4 +1,8 @@
 // Fetching constructors list
+export const ctorParamsReset = () => ({
+  type: 'CTOR_PARAM_RESET',
+});
+
 export const fetchCtorsRequest = () => ({
   type: 'FETCH_CTORS_REQUEST',
 });

@@ -8,6 +8,9 @@ const edit = (state = initState, action) => {
   const nextState = { ...state };
 
   switch (action.type) {
+    case 'CTOR_PARAM_RESET':
+      return {...initState};
+
     case 'FETCH_CTOR_PARAMS_REQUEST':
       nextState.fetchStatus = 'request';
       return nextState;
