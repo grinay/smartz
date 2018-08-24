@@ -23,8 +23,9 @@ const edit = (state = initState, action) => {
         name: action.ctorParams.name, 
         description: action.ctorParams.description, 
         price: action.ctorParams.price, 
-        payment_address: action.ctorParams.payment_address,
       };
+      const pa = action.ctorParams.payment_address;
+      if (pa) nextState.ctor.payment_address = pa;
       return nextState;
 
     default:
