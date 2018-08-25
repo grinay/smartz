@@ -15,6 +15,7 @@ interface IContentNoAbiProps {
   data: any;
   blockchain: Blockchain;
   networkId: string;
+  address: string;
 }
 
 interface IContentNoAbiState {
@@ -60,14 +61,22 @@ export default class ContentNoAbi extends React.PureComponent
   }
 
   private submitData() {
-    const { data, blockchain, networkId } = this.props;
+    const { data, blockchain, networkId, address } = this.props;
     const { selectedValue, abi } = this.state;
 
-    const dataSearch = {};
+    const dataSearch = {
+      query: address,
+    };
 
-    dataSearch['abi'] = abi != null
-      ? abi
-      : data.uis.find((ui) => ui.id === selectedValue.value).abi;
+    if (abi != null) {
+      try {
+        dataSearch['abi'] = JSON.parse(abi);
+      } catch (error) {
+        console.error('Parse error!');
+      }
+    } else {
+      dataSearch['abi'] = data.uis.find((ui) => ui.id === selectedValue.value).abi;
+    }
 
     if (blockchain === 'ethereum') {
       dataSearch['ethereum_network_id'] = networkId;

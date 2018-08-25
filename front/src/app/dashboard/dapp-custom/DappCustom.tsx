@@ -112,6 +112,7 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, ID
               data={search.data}
               networkId={networkId}
               blockchain={blockchain}
+              address={address}
             />
           );
           break;
