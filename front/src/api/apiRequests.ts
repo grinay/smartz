@@ -1,20 +1,20 @@
 import { fetchSearchFailure, fetchSearchRequest, fetchSearchSuccess } from '../app/AppActions';
 import Auth from '../app/auth/Auth';
 import {
-    finishLoginSuccessAction, loginErrorAction, startLoginSuccessAction,
+    finishLoginSuccessAction, loginErrorAction, startLoginSuccessAction
 } from '../app/auth/login/LoginActions';
 import {
     fetchCtorParamsFailure, fetchCtorParamsRequest, fetchCtorParamsSuccess, fetchCtorsFailure,
-    fetchCtorsRequest, fetchCtorsSuccess,
+    fetchCtorsRequest, fetchCtorsSuccess
 } from '../app/common/ctor-card/CtorsActions';
 import {
-    fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess, requestAdd, transactionAdd,
+    fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess, requestAdd, transactionAdd
 } from '../app/dapps/DappActions';
 import {
-    constructError, constructRequest, constructSuccess, setFormData,
+    constructError, constructRequest, constructSuccess, setFormData
 } from '../app/deploy/DeployActions';
 import {
-    sendErrorReceiveCtorCodeEvent, sendSuccessReceiveCtorCodeEvent,
+    sendErrorReceiveCtorCodeEvent, sendSuccessReceiveCtorCodeEvent
 } from '../helpers/statictics';
 import store from '../store/store';
 import { fetch } from './api';
@@ -338,10 +338,13 @@ export function addContractUiToDash(contractUiId: any, data: any) {
     .then((response) => {
       const { data, status } = response;
 
-      if (status === 200 && 'error' in data) {
-        dispatch(fetchSearchFailure(data.error));
+      if (status === 200) {
+        if ('error' in data) {
+          dispatch(fetchSearchFailure(data.error));
+        } else if ('ok' in data) {
+          getDapps();
+        }
       }
-
     })
     .catch((error) => console.error(error));
 
@@ -352,7 +355,17 @@ export function createDappFromAbi(data: any) {
   const result = fetch(`/dapps/create-from-abi`, data, 'post');
 
   result
-    .then()
+    .then((response) => {
+      const { data, status } = response;
+
+      if (status === 200) {
+        if ('error' in data) {
+          dispatch(fetchSearchFailure(data.error));
+        } else if ('ok' in data) {
+          getDapps();
+        }
+      }
+    })
     .catch((error) => console.error(error));
 
   return result;

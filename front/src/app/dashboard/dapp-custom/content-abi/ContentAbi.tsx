@@ -3,8 +3,6 @@ import * as React from 'react';
 import * as api from '../../../../api/apiRequests';
 import { getFunctionsByType } from '../../../../helpers/common';
 import { Blockchain } from '../../../../helpers/entities/types';
-import store from '../../../../store/store';
-import { fetchSearchFailure } from '../../../AppActions';
 import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
 import DappCard from '../../dapp-card/DappCard';
@@ -85,16 +83,10 @@ export default class ContentAbi extends React.PureComponent
 
     result
       .then((response) => {
-        if (response.status === 200) {
+        const { data, status } = response;
 
-          if ('ok' in response.data &&
-            response.data.ok) {
-            this.setState({ isDone: true });
-          }
-
-          if ('error' in response.data) {
-            store.dispatch(fetchSearchFailure(response.data.error));
-          }
+        if (status === 200 && 'ok' in data && data.ok) {
+          this.setState({ isDone: true });
         }
       });
   }
@@ -135,7 +127,10 @@ export default class ContentAbi extends React.PureComponent
     const { data, address, blockchain } = this.props;
 
     const isEmptyType = data.uis.length === 0;
-    const uis = [...data.uis];
+    const uis = data.uis.map((ui) => ({
+      ...ui,
+      address,
+    }));
 
     // add item 'Use raw ABI'
     uis.push(

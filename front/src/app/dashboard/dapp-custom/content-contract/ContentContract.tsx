@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import * as api from '../../../../api/apiRequests';
 import { Blockchain } from '../../../../helpers/entities/types';
-import store from '../../../../store/store';
-import { fetchSearchFailure } from '../../../AppActions';
 import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
 import DappCard from '../../dapp-card/DappCard';
@@ -31,6 +29,7 @@ interface IContentContractState {
   options: any[];
   isLoading: boolean;
   isDone: boolean;
+  uis: any[];
 }
 
 export default class ContentContract extends React.PureComponent
@@ -43,6 +42,7 @@ export default class ContentContract extends React.PureComponent
       options: null,
       isLoading: null,
       isDone: null,
+      uis: null,
     };
 
     this.changeSelect = this.changeSelect.bind(this);
@@ -64,22 +64,21 @@ export default class ContentContract extends React.PureComponent
       address,
     })
       .then((response) => {
-        if (response.status === 200) {
+        const { data, status } = response;
 
-          if ('ok' in response.data &&
-            response.data.ok) {
-            this.setState({ isDone: true });
-          }
-
-          if ('error' in response.data) {
-            store.dispatch(fetchSearchFailure(response.data.error));
-          }
+        if (status === 200 && 'ok' in data && data.ok) {
+          this.setState({ isDone: true });
         }
       });
   }
 
   public componentWillMount() {
-    const { data } = this.props;
+    const { data, address } = this.props;
+
+    const uis = data.uis.map((ui) => ({
+      ...ui,
+      address,
+    }));
 
     // set options(select items) and default value before render
     const options = data.uis.map((ui) => {
@@ -90,12 +89,15 @@ export default class ContentContract extends React.PureComponent
       };
     });
 
-    this.setState({ options, selectedValue: options[0] });
+    this.setState({
+      options,
+      selectedValue: options[0],
+      uis,
+    });
   }
 
   public render() {
-    const { data } = this.props;
-    const { selectedValue, options, isDone, isLoading } = this.state;
+    const { selectedValue, options, isDone, isLoading, uis } = this.state;
 
     if (isDone) {
       return <DoneAdd />;
@@ -124,7 +126,7 @@ export default class ContentContract extends React.PureComponent
         </TitleContentWrapper>
 
         <PreviewContainer>
-          <DappCard contractUi={data.uis.find((ui) => ui.id === selectedValue.value)} />
+          <DappCard contractUi={uis.find((ui) => ui.id === selectedValue.value)} />
         </PreviewContainer>
         <BtnPanel onClickBtn={this.submitData} />
       </div>
