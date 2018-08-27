@@ -45,7 +45,10 @@ export default class CtorCard extends React.Component<ICtorCardProps, {}> {
                 ctor.user_id === userId && (
                   <div
                     className="btn ctor-card__price"
-                    onClick={(e) => { history.replace(`/constructors/${ctor.id}/update`); e.preventDefault(); }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      history.replace(`/constructors/${ctor.id}/update`);
+                    }}
                   >
                     Update
                   </div>

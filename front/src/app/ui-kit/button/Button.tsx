@@ -37,7 +37,7 @@ export default class Button extends React.PureComponent<IButtonProps, {}> {
             'component-button-large': type === 'large',
             'component-button-disabled': isDisabled,
           })}
-        type="button"
+        type="submit"
       >
         {content}
         {children}
