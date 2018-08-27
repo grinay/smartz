@@ -1,8 +1,10 @@
 import * as React from 'react';
 
 import * as api from '../../../../api/apiRequests';
+import store from '../../../../store/store';
+import { fetchSearchFailure } from '../../../AppActions';
 import DappCard from '../../dapp-card/DappCard';
-import BtnPanel from '../common/BtnPanel/BtnPanel';
+import BtnPanel from '../common/btn-panel/BtnPanel';
 import DoneAdd from '../common/done-add/DoneAdd';
 import OverlayLoader from '../common/overlay-loader/OverlayLoader';
 import PreviewContainer from '../common/preview-container/PreviewContainer';
@@ -44,10 +46,16 @@ export default class ContentDapp extends React.PureComponent
 
     api.addDappToDash(data.dapp)
       .then((response) => {
-        if (response.status === 200 &&
-          'ok' in response.data &&
-          response.data.ok) {
-          this.setState({ isDone: true });
+        if (response.status === 200) {
+
+          if ('ok' in response.data &&
+            response.data.ok) {
+            this.setState({ isDone: true });
+          }
+
+          if ('error' in response.data) {
+            store.dispatch(fetchSearchFailure(response.data.error));
+          }
         }
       });
   }

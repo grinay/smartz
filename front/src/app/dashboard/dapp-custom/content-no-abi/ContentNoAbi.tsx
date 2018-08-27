@@ -1,13 +1,12 @@
 import * as React from 'react';
-import Select from 'react-select';
 
 import * as api from '../../../../api/apiRequests';
 import { Blockchain } from '../../../../helpers/entities/types';
-import ImageDefault from '../../../common/image-default/ImageDefault';
 import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
-import BtnPanel from '../common/BtnPanel/BtnPanel';
+import BtnPanel from '../common/btn-panel/BtnPanel';
 import OverlayLoader from '../common/overlay-loader/OverlayLoader';
+import SelectType from '../common/select-type/SelectType';
 
 import './ContentNoAbi.less';
 
@@ -126,16 +125,7 @@ export default class ContentNoAbi extends React.PureComponent
           </TitleContentWrapper>
         </div>
         <TitleContentWrapper className="dapp-custom-type" title="Type">
-          <Select
-            components={{
-              Option: ({ innerProps, innerRef, data }) =>
-                <div ref={innerRef} {...innerProps} className="item-select flex-v">
-                  <div className="item-select-img">
-                    <ImageDefault src={data.image} name={data.label} fontSize={15} />
-                  </div>
-                  <p className="item-select-text">{data.label}</p>
-                </div>,
-            }}
+          <SelectType
             value={selectedValue}
             onChange={this.changeSelect}
             options={options}

@@ -1,17 +1,18 @@
 import * as React from 'react';
-import Select from 'react-select';
 
 import * as api from '../../../../api/apiRequests';
 import { getFunctionsByType } from '../../../../helpers/common';
 import { Blockchain } from '../../../../helpers/entities/types';
-import ImageDefault from '../../../common/image-default/ImageDefault';
+import store from '../../../../store/store';
+import { fetchSearchFailure } from '../../../AppActions';
 import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
 import DappCard from '../../dapp-card/DappCard';
-import BtnPanel from '../common/BtnPanel/BtnPanel';
+import BtnPanel from '../common/btn-panel/BtnPanel';
 import DoneAdd from '../common/done-add/DoneAdd';
 import OverlayLoader from '../common/overlay-loader/OverlayLoader';
 import PreviewContainer from '../common/preview-container/PreviewContainer';
+import SelectType from '../common/select-type/SelectType';
 
 import './ContentAbi.less';
 
@@ -84,10 +85,16 @@ export default class ContentAbi extends React.PureComponent
 
     result
       .then((response) => {
-        if (response.status === 200 &&
-          'ok' in response.data &&
-          response.data.ok) {
-          this.setState({ isDone: true });
+        if (response.status === 200) {
+
+          if ('ok' in response.data &&
+            response.data.ok) {
+            this.setState({ isDone: true });
+          }
+
+          if ('error' in response.data) {
+            store.dispatch(fetchSearchFailure(response.data.error));
+          }
         }
       });
   }
@@ -164,8 +171,6 @@ export default class ContentAbi extends React.PureComponent
       return <DoneAdd />;
     }
 
-    //TODO: select item (style as item menu)
-
     return (
       <div className="content-contract-abi">
 
@@ -184,18 +189,7 @@ export default class ContentAbi extends React.PureComponent
 
         {!isEmptyType &&
           <TitleContentWrapper className="dapp-custom-type" title="Type">
-            <Select
-              components={{
-                Option: ({ innerProps, innerRef, data }) =>
-                  <div ref={innerRef} {...innerProps} className="item-select flex-v">
-                    <div className="item-select-img">
-                      <ImageDefault src={data.image} name={data.label} fontSize={15} />
-                    </div>
-                    <p className="item-select-text">{
-                      data.value !== 'rawId' ? data.label : 'Use raw ABI'
-                    }</p>
-                  </div>,
-              }}
+            <SelectType
               value={selectedValue}
               onChange={this.changeSelect}
               options={options}
