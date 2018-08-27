@@ -100,6 +100,14 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
   public componentDidMount() {
     window.Intercom('update');
+
+    const { dapp } = this.props;
+
+    store.dispatch(setHeaderTitle({
+      title: dapp.title,
+      id: dapp.id,
+      type: 'dapp',
+    }));
   }
 
   public componentWillReceiveProps(nextProps: any) {
@@ -129,6 +137,15 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       this.setState({
         selectedTab: Tab.Transactions,
       });
+    }
+
+    // update name of dapp after change
+    if (dappNext.title !== dappLast.title) {
+      store.dispatch(setHeaderTitle({
+        title: dappNext.title,
+        id: dappNext.id,
+        type: 'dapp',
+      }));
     }
   }
 
