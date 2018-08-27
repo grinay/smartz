@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import * as api from '../../api/apiRequests';
-import { fetchCtorParamsSuccess } from '../../app/common/ctor-card/CtorsActions';
+import { ctorParamsReset, fetchCtorParamsSuccess } from '../common/ctor-card/CtorsActions';
 import { clickTypes } from '../../constants/constants';
 import { sendClickEvent } from '../../helpers/statictics';
 import store from '../../store/store';
@@ -40,6 +40,7 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
   }
 
   public componentWillMount() {
+    store.dispatch(ctorParamsReset());
     if (this.id) {
       api.getConstructorParams(this.id, null);
     }
