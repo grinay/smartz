@@ -280,56 +280,55 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
 
   public render() {
     const { func, onClose } = this.props;
-    let content: any;
-    if (func) {
-      console.log(func);
-      // add field for ethCount in schema
-      if (func.payable) {
 
-        if (func.inputs.items === undefined) func.inputs.items = [];
+    // add field for ethCount in schema
+    if (func.payable) {
 
-        const payableTitle =
-          func.payable_details && func.payable_details.title
-            ? func.payable_details.title
-            : 'Ether amount';
+      if (func.inputs.items === undefined) func.inputs.items = [];
 
-        const payableDescription =
-          func.payable_details && func.payable_details.description
-            ? func.payable_details.description
-            : func.name === '' // if 'default function'
-              ? 'This ether amount will be sent to the contract'
-              : 'This ether amount will be sent with the function call';
+      const payableTitle =
+        func.payable_details && func.payable_details.title
+          ? func.payable_details.title
+          : 'Ether amount';
 
-        const existValue = find(func.inputs.items, { title: payableTitle });
+      const payableDescription =
+        func.payable_details && func.payable_details.description
+          ? func.payable_details.description
+          : func.name === '' // if 'default function'
+            ? 'This ether amount will be sent to the contract'
+            : 'This ether amount will be sent with the function call';
 
-        if (!existValue) {
-          func.inputs.minItems += 1;
-          func.inputs.maxItems += 1;
+      const existValue = find(func.inputs.items, { title: payableTitle });
 
-          func.inputs.items.push({
-            type: 'number',
-            minLength: 1,
-            maxLength: 78,
-            pattern: '^[0-9]+$',
-            title: payableTitle,
-            description: payableDescription,
-            'ui:widget': 'ethCount',
-          });
-        }
+      if (!existValue) {
+        func.inputs.minItems += 1;
+        func.inputs.maxItems += 1;
+
+        func.inputs.items.push({
+          type: 'number',
+          minLength: 1,
+          maxLength: 78,
+          pattern: '^[0-9]+$',
+          title: payableTitle,
+          description: payableDescription,
+          'ui:widget': 'ethCount',
+        });
       }
+    }
 
-      //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
-      if (!func.constant && func.inputs.minItems === 0) {
-        func.inputs = {
-          $schema: 'http://json-schema.org/draft-06/schema#',
-          type: 'object',
-          properties: {},
-        };
-      }
+    //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
+    if (!func.constant && func.inputs.minItems === 0) {
+      func.inputs = {
+        $schema: 'http://json-schema.org/draft-06/schema#',
+        type: 'object',
+        properties: {},
+      };
+    }
 
-      const uiSchema = getUiSchemaFromFunc(func);
+    const uiSchema = getUiSchemaFromFunc(func);
 
-      content = (
+    return (
+      <div className="modal-func">
         <div>
           <button
             className="close"
@@ -365,21 +364,6 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
             </div>
           </Form>
         </div>
-      );
-    }
-
-    return (
-      <div className="modal-func">
-        {/* <Modal
-          isOpen={func != null ? true : false}
-          isCloser={false}
-          onClose={onClose}
-          windowClassName="modal-window"
-          closerClassName="modal-closer flex"
-        >
-          {content}
-        </Modal> */}
-        {content}
       </div>
     );
   }

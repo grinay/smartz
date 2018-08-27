@@ -1,16 +1,12 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import { blockchains } from '../../../../constants/constants';
 import { getViewFunctionConstants } from '../../../../helpers/common';
 import { IContractUi } from '../../../../helpers/entities/contract-ui';
-import { IDapp } from '../../../../helpers/entities/dapp';
-import store from '../../../../store/store';
 import ImageDefault from '../../../common/image-default/ImageDefault';
 import Loader from '../../../common/loader/Loader';
 import TypeDisplay from '../../../common/type-display/TypeDisplay';
-import { viewFuncResult } from '../../../dapps/DappActions';
 import Title from '../../../ui-kit/title/Title';
 
 import './ContractUi.less';
