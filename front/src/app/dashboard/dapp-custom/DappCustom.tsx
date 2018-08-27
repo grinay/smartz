@@ -47,22 +47,26 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, ID
   private onSubmit(value: string): void {
     const { networkId } = this.state;
 
-    const blockchain = getBlockchainByAddress(value);
+    const val = value.trim();
 
-    const request = {
-      query: value,
-    };
+    if (isBlockchainAddress(val.trim())) {
+      const blockchain = getBlockchainByAddress(val);
 
-    if (blockchain === 'ethereum') {
-      request['ethereum_network_id'] = networkId; //TODO: get id
+      const request = {
+        query: val,
+      };
+
+      if (blockchain === 'ethereum') {
+        request['ethereum_network_id'] = networkId;
+      }
+
+      this.setState({
+        address: val,
+        blockchain,
+      });
+
+      api.getSearchData(request);
     }
-
-    this.setState({
-      address: value,
-      blockchain,
-    });
-
-    api.getSearchData(request);
   }
 
   public componentWillUnmount() {
@@ -137,10 +141,9 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, ID
           <Text type="caption">- Ethereum: 0x40ae4acd08e65714b093bf2495fd7941aedfa231</Text>
           <Text type="caption">- EOS: EOS82LzjXdnBPTwgJCxiUiRcVsxdiawn8MiAgVTfFZV41a4X7aMuI</Text>
           <Input
-            onValidate={isBlockchainAddress}
             className="dapp-custom-input"
-            onSubmit={this.onSubmit}
             autofocus={true}
+            onChange={this.onSubmit}
           />
         </div>
         {content}

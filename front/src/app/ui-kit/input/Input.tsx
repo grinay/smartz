@@ -9,9 +9,10 @@ import './Input.less';
 
 interface IInputProps {
   className?: string;
-  onSubmit: (value: string) => void;
+  onSubmit?: (value: string) => void;
   onValidate?: (value: string) => boolean;
   autofocus?: boolean;
+  onChange?: (str: string) => void;
 }
 
 interface IInputState {
@@ -58,6 +59,7 @@ export default class Input extends React.PureComponent<IInputProps, IInputState>
 
   private onChange(event) {
     const { stateInput } = this.state;
+    const { onChange = null } = this.props;
 
     const newState = {
       value: event.target.value,
@@ -65,6 +67,10 @@ export default class Input extends React.PureComponent<IInputProps, IInputState>
 
     if (stateInput === 'error' || stateInput === 'ok') {
       newState['stateInput'] = 'normal';
+    }
+
+    if (onChange != null) {
+      onChange(event.target.value);
     }
 
     this.setState(newState);
