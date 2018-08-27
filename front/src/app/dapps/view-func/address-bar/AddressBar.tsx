@@ -121,6 +121,22 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
         <ModalContainer
           isOpen={isOpenModal}
           classNameWindow="verify-modal"
+          animationWindow={{
+            duration: 300,
+            styleStart: {
+              opacity: 0,
+              transform: 'scale(.9,.9)',
+            },
+            styleEnd: {
+              opacity: 1,
+              transform: 'scale(1,1)',
+            },
+          }}
+          animationBackdrop={{
+            duration: 300,
+            styleStart: { opacity: 0 },
+            styleEnd: { opacity: 1 },
+          }}
           onClose={this.toggleModal}
         >
           <PopupVerify dapp={dapp} />

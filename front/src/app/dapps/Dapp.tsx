@@ -40,6 +40,8 @@ interface IDappState {
   selectedRecord: any;
   selectedFunc: any;
   selectedTab: Tab;
+  isModalOpen: boolean;
+  isPopupOpen: boolean;
 }
 
 class Dapp extends React.Component<IDappProps, IDappState> {
@@ -52,6 +54,8 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       selectedRecord: null,
       selectedFunc: null,
       selectedTab: Tab.Request,
+      isModalOpen: false,
+      isPopupOpen: false,
     };
 
     this.onSelectRecord = this.onSelectRecord.bind(this);
@@ -65,19 +69,27 @@ class Dapp extends React.Component<IDappProps, IDappState> {
   }
 
   private onSelectRecord(selectedRecord: any) {
-    return () => this.setState({ selectedRecord });
+    return () => {
+      this.setState({
+        selectedRecord,
+        isPopupOpen: true,
+      });
+    };
   }
 
   private selectFunc(func: any): any {
-    return () => this.setState({ selectedFunc: func });
+    return () => this.setState({
+      selectedFunc: func,
+      isModalOpen: true,
+    });
   }
 
   private onClose(type: 'popup' | 'modal') {
     return () => {
       if (type === 'popup') {
-        this.setState({ selectedRecord: null });
+        this.setState({ isPopupOpen: false });
       } else {
-        this.setState({ selectedFunc: null });
+        this.setState({ isModalOpen: false });
       }
     };
   }
@@ -118,20 +130,11 @@ class Dapp extends React.Component<IDappProps, IDappState> {
         selectedTab: Tab.Transactions,
       });
     }
-
-    // update name of dapp after change
-    // if (dappNext.title !== dappLast.title) {
-    // store.dispatch(setHeaderTitle({
-    //   title: dappNext.title,
-    //   id: dappNext.id,
-    //   type: 'dapp',
-    // }));
-    // }
   }
 
   public render() {
     const { metamaskStatus, dapp, profile, dappStatus, dappError } = this.props;
-    const { selectedRecord, selectedFunc, selectedTab } = this.state;
+    const { selectedRecord, selectedFunc, selectedTab, isModalOpen, isPopupOpen } = this.state;
 
     if (dappStatus === 'error' && dappError !== null) {
       return (
@@ -169,7 +172,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
             </div>
             <MinimalFooter dapp={dapp} />
             <PopupTransaction
-              isOpen={selectedFunc === null && selectedRecord != null ? true : false}
+              isOpen={isPopupOpen}
               onClose={this.onClose('popup')}
               record={selectedRecord}
             />
@@ -181,24 +184,8 @@ class Dapp extends React.Component<IDappProps, IDappState> {
           dapp={dapp}
         />
 
-
-        {/* <ModalContainer
-          isOpen={selectedFunc != null ? true : false}
-          // isCloser={false}
-          className="func-modal"
-          onClose={this.onClose('modal')}
-        >
-          <ModalFunc
-            func={selectedFunc}
-            dapp={dapp}
-            profile={profile}
-            onClose={this.onClose('modal')}
-          />
-          <p>d</p>
-        </ModalContainer> */}
-
         <ModalContainer
-          isOpen={selectedFunc != null}
+          isOpen={isModalOpen}
           classNameWindow="func-modal"
           onClose={this.onClose('modal')}
           animationWindow={{
