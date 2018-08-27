@@ -21,12 +21,14 @@ export interface IDapp {
   blockchain: string;
   compiler_optimization: boolean;
   compiler_version: string;
-  constructor: {
+  constructor?: {
     name: string;
     description: string;
     image: string;
   };
-  constructor_id: string;
+  contract_ui?: any;
+  constructor_id?: string;
+  contract_ui_id?: string;
   contract_name: string;
   ctor?: {
     image: any;
@@ -42,7 +44,7 @@ export interface IDapp {
   source: string;
   title: string;
   transactions: any;
-  owned_by_current_user: boolean
+  owned_by_current_user: boolean;
 }
 
 export enum Tab {

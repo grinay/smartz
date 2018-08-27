@@ -20,19 +20,23 @@ export default class MinimalFooter extends React.PureComponent<IMinimalFooterPro
       <footer className="minimal-footer">
         <section className="contract-data">
           <p className="contract-data-top">
-            <span className="contract-name">{`${dapp.constructor.name} contract`}</span>
-            <Link to={`/deploy/${dapp.constructor_id}`} className="contract-link">
-              <button
-                className="contract-add"
-                type="button"
-              >
-                <InlineSVG
-                  className="plus-icon"
-                  src={require('../../../assets/img/common/footer/plus.svg')}
-                />
-                Deploy another
+            {dapp.constructor != null &&
+              <div>
+                <span className="contract-name">{`${dapp.constructor.name} contract`}</span>
+                <Link to={`/deploy/${dapp.constructor_id}`} className="contract-link">
+                  <button
+                    className="contract-add"
+                    type="button"
+                  >
+                    <InlineSVG
+                      className="plus-icon"
+                      src={require('../../../assets/img/common/footer/plus.svg')}
+                    />
+                    Deploy another
                 </button>
-            </Link>
+                </Link>
+              </div>
+            }
           </p>
           {/* <p className="contract-data-version">
             Version: <span className="contract-version">1.02 beta</span>

@@ -66,12 +66,15 @@ export default class DappUi extends React.PureComponent<IDappUiProps, {}> {
         <article className="">
           <div className="dapp-card__wrapper">
             <div className="dapp-card__logo">
-              <ImageDefault src={dapp.constructor.image} name={dapp.title} />
+              <ImageDefault
+                src={dapp.constructor != null ? dapp.constructor.image : ''}
+                name={dapp.title}
+              />
             </div>
             <div className="dapp-card__info">
               <Title type="small">{dapp.title}</Title>
               <span className="dapp-card__description">
-                {dapp.constructor.name}
+                {dapp.constructor != null ? dapp.constructor.name : '-'}
               </span>
             </div>
           </div>
