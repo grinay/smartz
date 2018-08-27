@@ -147,7 +147,7 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
           classNameWindow="dashboard-modal"
           onClose={this.onToggleModal(false)}
           animationWindow={{
-            duration: 3000,
+            duration: 300,
             styleStart: {
               opacity: 0,
               transform: 'scale(.9,.9)',
@@ -158,7 +158,7 @@ export default class Dashboard extends React.Component<IDashboardProps, IDashboa
             },
           }}
           animationBackdrop={{
-            duration: 3000,
+            duration: 300,
             styleStart: { opacity: 0 },
             styleEnd: { opacity: 1 },
           }}
