@@ -3,6 +3,8 @@ import * as React from 'react';
 import * as api from '../../../../api/apiRequests';
 import DappCard from '../../dapp-card/DappCard';
 import BtnPanel from '../common/BtnPanel/BtnPanel';
+import DoneAdd from '../common/done-add/DoneAdd';
+import OverlayLoader from '../common/overlay-loader/OverlayLoader';
 import PreviewContainer from '../common/preview-container/PreviewContainer';
 import PrivateDapp from './private-dapp/PrivateDapp';
 
@@ -17,13 +19,20 @@ interface IContentDappProps {
   };
 }
 
-export default class ContentDapp extends React.PureComponent<IContentDappProps, {}> {
-  private isPrivate: boolean;
+interface IContentDappState {
+  isLoading: boolean;
+  isDone: boolean;
+}
 
+export default class ContentDapp extends React.PureComponent
+  <IContentDappProps, IContentDappState> {
   constructor(props) {
     super(props);
 
-    this.isPrivate = this.props.data.dapp === null;
+    this.state = {
+      isLoading: null,
+      isDone: null,
+    };
 
     this.submitData = this.submitData.bind(this);
   }
@@ -31,20 +40,37 @@ export default class ContentDapp extends React.PureComponent<IContentDappProps, 
   private submitData() {
     const { data } = this.props;
 
-    api.addDappToDash(data.dapp);
+    this.setState({ isLoading: true });
+
+    api.addDappToDash(data.dapp)
+      .then((response) => {
+        if (response.status === 200 &&
+          'ok' in response.data &&
+          response.data.ok) {
+          this.setState({ isDone: true });
+        }
+      });
   }
 
   public render() {
     const { dapps, data } = this.props;
+    const { isLoading, isDone } = this.state;
+
+    const isPrivate = data.dapp === null;
+
+    if (isDone) {
+      return <DoneAdd />;
+    }
 
     return (
       <div className="content-dapp">
+        {isLoading && <OverlayLoader />}
         <PreviewContainer>
-          {this.isPrivate
+          {isPrivate
             ? <PrivateDapp />
             : <DappCard dapp={dapps.get(data.dapp)} className="dapp-card-custom" />}
         </PreviewContainer>
-        {!this.isPrivate &&
+        {!isPrivate &&
           <BtnPanel onClickBtn={this.submitData} />}
       </div>
     );

@@ -11,6 +11,7 @@ import ImageDefault from '../../../common/image-default/ImageDefault';
 import Loader from '../../../common/loader/Loader';
 import TypeDisplay from '../../../common/type-display/TypeDisplay';
 import { viewFuncResult } from '../../../dapps/DappActions';
+import Title from '../../../ui-kit/title/Title';
 
 import './ContractUi.less';
 
@@ -101,12 +102,12 @@ export default class ContractUi extends React.PureComponent<IContractUiProps, IC
             <div className="dapp-card__logo">
               <ImageDefault src={contract.image} name={contract.name} />
             </div>
-            <p className="dapp-card__info">
-              <span className="dapp-card__name">{contract.name}</span>
+            <div className="dapp-card__info">
+              <Title type="small">{contract.name}</Title>
               <span className="dapp-card__description">
                 {contract.description}
               </span>
-            </p>
+            </div>
           </div>
           {viewFuncContent}
         </article>

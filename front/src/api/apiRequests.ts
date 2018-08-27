@@ -335,7 +335,14 @@ export function addContractUiToDash(contractUiId: any, data: any) {
   const result = fetch(`/contracts_uis/${contractUiId}/add-to-dashboard`, data, 'post');
 
   result
-    .then()
+    .then((response) => {
+      const { data, status } = response;
+
+      if (status === 200 && 'error' in data) {
+        dispatch(fetchSearchFailure(data.error));
+      }
+
+    })
     .catch((error) => console.error(error));
 
   return result;

@@ -3,7 +3,7 @@ import { addToDashboard, currentDapp, getRequests } from './mock/currentDapp';
 import { dappList } from './mock/dapps';
 import {
     searchAbi, searchAbiNoType, searchContractUi, searchDapp, searchDappPrivate, searchNoAbi,
-    searchResponseOk,
+    searchResponseError, searchResponseOk,
 } from './mock/search';
 
 
@@ -17,8 +17,8 @@ export default function subscribeMockRequests(mockApi) {
         // .onAny('/dapps').reply(200, dappList)
         .onAny('/dapps/add-to-dashboard').reply(addToDashboard)
         .onAny('/search').reply(searchNoAbi)
-        .onAny(/\/contracts_uis\/.{1}\/add-to-dashboard/).reply(searchResponseOk)
-        .onAny('/dapps/create-from-abi').reply(searchResponseOk)
+        .onAny(/\/contracts_uis\/.{1}\/add-to-dashboard/).reply(searchResponseError)
+        .onAny('/dapps/create-from-abi').reply(searchResponseError)
 
         // .onAny('/dapps')
         // .reply(200, dapps.dappList)

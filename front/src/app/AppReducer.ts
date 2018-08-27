@@ -6,7 +6,7 @@ const initState = {
   },
   trustBanner: false,
   search: {
-    status: null,
+    isLoading: null,
     data: null,
     error: null,
   },
@@ -29,19 +29,35 @@ const app = (state = initState, action) => {
       return nextState;
 
     case 'FETCH_SEARCH_REQUEST':
-      nextState.search.status = 'loading';
-      nextState.search.error = null;
+      nextState.search = {
+        isLoading: true,
+        error: null,
+        data: null,
+      };
       return nextState;
 
     case 'FETCH_SEARCH_FAILURE':
-      nextState.search.status = 'error';
-      nextState.search.error = action.error;
+      nextState.search = {
+        isLoading: false,
+        error: action.error,
+        data: null,
+      };
       return nextState;
 
     case 'FETCH_SEARCH_SUCCESS':
-      nextState.search.error = null;
-      nextState.search.status = null;
-      nextState.search.data = action.data;
+      nextState.search = {
+        isLoading: false,
+        error: null,
+        data: action.data,
+      };
+      return nextState;
+
+    case 'CLEAR_SEARCH_DATA':
+      nextState.search = {
+        isLoading: null,
+        error: null,
+        data: null,
+      };
       return nextState;
 
     default:

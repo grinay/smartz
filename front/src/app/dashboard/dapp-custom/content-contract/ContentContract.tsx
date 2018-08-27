@@ -9,6 +9,8 @@ import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
 import DappCard from '../../dapp-card/DappCard';
 import BtnPanel from '../common/BtnPanel/BtnPanel';
+import DoneAdd from '../common/done-add/DoneAdd';
+import OverlayLoader from '../common/overlay-loader/OverlayLoader';
 import PreviewContainer from '../common/preview-container/PreviewContainer';
 
 import './ContentContract.less';
@@ -27,6 +29,8 @@ interface IContentContractProps {
 interface IContentContractState {
   selectedValue: any;
   options: any[];
+  isLoading: boolean;
+  isDone: boolean;
 }
 
 export default class ContentContract extends React.PureComponent
@@ -37,6 +41,8 @@ export default class ContentContract extends React.PureComponent
     this.state = {
       selectedValue: null,
       options: null,
+      isLoading: null,
+      isDone: null,
     };
 
     this.changeSelect = this.changeSelect.bind(this);
@@ -51,10 +57,19 @@ export default class ContentContract extends React.PureComponent
     const { address, networkId } = this.props;
     const { selectedValue } = this.state;
 
+    this.setState({ isLoading: true });
+
     api.addContractUiToDash(selectedValue.value, {
       network_id: networkId,
       address,
-    });
+    })
+      .then((response) => {
+        if (response.status === 200 &&
+          'ok' in response.data &&
+          response.data.ok) {
+          this.setState({ isDone: true });
+        }
+      });
   }
 
   public componentWillMount() {
@@ -74,12 +89,18 @@ export default class ContentContract extends React.PureComponent
 
   public render() {
     const { data } = this.props;
-    const { selectedValue, options } = this.state;
+    const { selectedValue, options, isDone, isLoading } = this.state;
+
+    if (isDone) {
+      return <DoneAdd />;
+    }
 
     //TODO: select item (style as item menu)
 
     return (
       <div className="content-contract-abi">
+
+        {isLoading && <OverlayLoader />}
 
         <div className="dapp-custom-warning">
           <div className="divider" />

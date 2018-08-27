@@ -10,6 +10,7 @@ import ImageDefault from '../../../common/image-default/ImageDefault';
 import Loader from '../../../common/loader/Loader';
 import TypeDisplay from '../../../common/type-display/TypeDisplay';
 import { viewFuncResult } from '../../../dapps/DappActions';
+import Title from '../../../ui-kit/title/Title';
 
 import './DappUi.less';
 
@@ -67,12 +68,12 @@ export default class DappUi extends React.PureComponent<IDappUiProps, {}> {
             <div className="dapp-card__logo">
               <ImageDefault src={dapp.constructor.image} name={dapp.title} />
             </div>
-            <p className="dapp-card__info">
-              <span className="dapp-card__name">{dapp.title}</span>
+            <div className="dapp-card__info">
+              <Title type="small">{dapp.title}</Title>
               <span className="dapp-card__description">
                 {dapp.constructor.name}
               </span>
-            </p>
+            </div>
           </div>
           {viewFuncContent}
         </article>

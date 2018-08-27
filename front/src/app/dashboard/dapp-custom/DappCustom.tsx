@@ -5,10 +5,13 @@ import { getBlockchainByAddress, isBlockchainAddress } from '../../../helpers/bl
 import { Blockchain } from '../../../helpers/entities/types';
 import { EosClass } from '../../../helpers/eos';
 import { getNetworkIdSync, isAddress } from '../../../helpers/eth';
+import store from '../../../store/store';
+import { clearSearchData } from '../../AppActions';
 import Loader from '../../common/loader/Loader';
 import Input from '../../ui-kit/input/Input';
 import Text from '../../ui-kit/text/Text';
 import Title from '../../ui-kit/title/Title';
+import ErrorAdd from './common/error-add/ErrorAdd';
 import ContentAbi from './content-abi/ContentAbi';
 import ContentContract from './content-contract/ContentContract';
 import ContentDapp from './content-dapp/ContentDapp';
@@ -59,26 +62,25 @@ export default class DappCustom extends React.PureComponent<IDappCustomProps, ID
       blockchain,
     });
 
-    api.getSearchData(request)
-      .then(() => {
-        this.forceUpdate();
-      });
+    api.getSearchData(request);
   }
+
+  public componentWillUnmount() {
+    // clear search data after close window
+    store.dispatch(clearSearchData());
+  }
+
 
   public render() {
     const { search, dapps } = this.props;
     const { address, networkId, blockchain } = this.state;
 
-    if (!search || !dapps) {
-      return null;
-    }
-
     let content;
-    if ('status' in search && search.status === 'loading') {
-      content = <Loader />;
-    } else if ('error' in search && search.error != null) {
-      content = <p>Error: {search.error}</p>;
-    } else if ('data' in search && search.data != null) {
+    if (search.isLoading) {
+      content = <Loader className="dapp-custom-loader" />;
+    } else if (search.error != null) {
+      content = <ErrorAdd errorMsg={search.error} />;
+    } else if (search.data != null) {
       switch (search.data.type) {
         case 'dapp':
           content = <ContentDapp dapps={dapps} data={search.data} />;

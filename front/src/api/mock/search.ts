@@ -14589,7 +14589,7 @@ export function searchResponseOk() {
   return [200, response];
 }
 
-export function searchResponse() {
+export function searchResponseError() {
   const response = { 'error': 'Some problem from backend!' };
 
   return [200, response];

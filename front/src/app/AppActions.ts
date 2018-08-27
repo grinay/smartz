@@ -25,3 +25,7 @@ export const fetchSearchSuccess = (data) => ({
   type: 'FETCH_SEARCH_SUCCESS',
   data,
 });
+
+export const clearSearchData = () => ({
+  type: 'CLEAR_SEARCH_DATA',
+});

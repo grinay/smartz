@@ -8,7 +8,9 @@ import { blockchains, ethConstants } from '../../../constants/constants';
 import { getFuncType } from '../../../helpers/common';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import Eos from '../../../helpers/eos';
-import { decodeEventOfContract, getAccountAddress, processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
+import {
+    decodeEventOfContract, getAccountAddress, processControlForm, web3 as w3, web3,
+} from '../../../helpers/eth';
 import { getUiSchemaFromFunc } from '../../../helpers/schema';
 import { tryParce } from '../../../helpers/utils';
 import store from '../../../store/store';
@@ -278,9 +280,9 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
 
   public render() {
     const { func, onClose } = this.props;
-
     let content: any;
     if (func) {
+      console.log(func);
       // add field for ethCount in schema
       if (func.payable) {
 
@@ -377,6 +379,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
         >
           {content}
         </Modal> */}
+        {content}
       </div>
     );
   }

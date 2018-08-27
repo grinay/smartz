@@ -197,6 +197,35 @@ class Dapp extends React.Component<IDappProps, IDappState> {
           <p>d</p>
         </ModalContainer> */}
 
+        <ModalContainer
+          isOpen={selectedFunc != null}
+          classNameWindow="func-modal"
+          onClose={this.onClose('modal')}
+          animationWindow={{
+            duration: 300,
+            styleStart: {
+              opacity: 0,
+              transform: 'scale(.9,.9)',
+            },
+            styleEnd: {
+              opacity: 1,
+              transform: 'scale(1,1)',
+            },
+          }}
+          animationBackdrop={{
+            duration: 300,
+            styleStart: { opacity: 0 },
+            styleEnd: { opacity: 1 },
+          }}
+        >
+          <ModalFunc
+            func={selectedFunc}
+            dapp={dapp}
+            profile={profile}
+            onClose={this.onClose('modal')}
+          />
+        </ModalContainer>
+
       </main>
     );
   }

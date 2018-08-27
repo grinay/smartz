@@ -7,6 +7,7 @@ import ImageDefault from '../../../common/image-default/ImageDefault';
 import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
 import BtnPanel from '../common/BtnPanel/BtnPanel';
+import OverlayLoader from '../common/overlay-loader/OverlayLoader';
 
 import './ContentNoAbi.less';
 
@@ -22,6 +23,7 @@ interface IContentNoAbiState {
   selectedValue: any;
   options: any[];
   abi: string;
+  isLoading: boolean;
 }
 
 export default class ContentNoAbi extends React.PureComponent
@@ -35,6 +37,7 @@ export default class ContentNoAbi extends React.PureComponent
       selectedValue: null,
       options: null,
       abi: null,
+      isLoading: null,
     };
 
     this.changeSelect = this.changeSelect.bind(this);
@@ -63,6 +66,8 @@ export default class ContentNoAbi extends React.PureComponent
   private submitData() {
     const { data, blockchain, networkId, address } = this.props;
     const { selectedValue, abi } = this.state;
+
+    this.setState({ isLoading: true });
 
     const dataSearch = {
       query: address,
@@ -103,12 +108,15 @@ export default class ContentNoAbi extends React.PureComponent
 
   public render() {
     const { data } = this.props;
-    const { selectedValue } = this.state;
+    const { selectedValue, isLoading } = this.state;
 
     const options = data.uis.map((ui) => ({ value: ui.id, label: ui.name, image: ui.image }));
 
     return (
       <div className="content-no-abi">
+
+        {isLoading && <OverlayLoader />}
+
         <div className="dapp-custom-warning">
           <div className="divider" />
           <TitleContentWrapper title="Warning">

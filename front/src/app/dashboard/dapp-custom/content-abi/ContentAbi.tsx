@@ -9,6 +9,8 @@ import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
 import DappCard from '../../dapp-card/DappCard';
 import BtnPanel from '../common/BtnPanel/BtnPanel';
+import DoneAdd from '../common/done-add/DoneAdd';
+import OverlayLoader from '../common/overlay-loader/OverlayLoader';
 import PreviewContainer from '../common/preview-container/PreviewContainer';
 
 import './ContentAbi.less';
@@ -31,6 +33,8 @@ interface IContentAbiState {
   options: any[];
   isEmptyType: boolean;
   uis: any[];
+  isLoading: boolean;
+  isDone: boolean;
 }
 
 export default class ContentAbi extends React.PureComponent
@@ -43,6 +47,8 @@ export default class ContentAbi extends React.PureComponent
       options: null,
       isEmptyType: null,
       uis: null,
+      isLoading: null,
+      isDone: null,
     };
 
     this.changeSelect = this.changeSelect.bind(this);
@@ -58,20 +64,32 @@ export default class ContentAbi extends React.PureComponent
     const { data, address, blockchain, networkId } = this.props;
     const { selectedValue } = this.state;
 
+    this.setState({ isLoading: true });
+
+    let result;
     if (selectedValue.value === 'rawId') {
-      api.createDappFromAbi({
+      result = api.createDappFromAbi({
         network_id: networkId,
         address,
         abi: data.abi,
         blockchain,
       });
     } else {
-      api.addContractUiToDash(selectedValue.value, {
+      result = api.addContractUiToDash(selectedValue.value, {
         network_id: networkId,
         address,
         abi: data.abi,
       });
     }
+
+    result
+      .then((response) => {
+        if (response.status === 200 &&
+          'ok' in response.data &&
+          response.data.ok) {
+          this.setState({ isDone: true });
+        }
+      });
   }
 
   private genContractUi(
@@ -140,12 +158,18 @@ export default class ContentAbi extends React.PureComponent
   }
 
   public render() {
-    const { selectedValue, isEmptyType, options, uis } = this.state;
+    const { selectedValue, isEmptyType, options, uis, isDone, isLoading } = this.state;
+
+    if (isDone) {
+      return <DoneAdd />;
+    }
 
     //TODO: select item (style as item menu)
 
     return (
       <div className="content-contract-abi">
+
+        {isLoading && <OverlayLoader />}
 
         <div className="dapp-custom-warning">
           <div className="divider" />
