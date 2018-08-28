@@ -97,7 +97,7 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
 
     if (functions.length > 0) {
       funcSectionElement = (
-        <section>
+        <section className="func-section">
           <h2 className="dapp-header">{title}</h2>
           <ul className="dapp-list">
             {functions.map((func, i) => {
