@@ -52,21 +52,26 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
 
     if ('is_success' in record) {
       if (record.is_success) {
-        result = isTransaction
-          ? <p className="result-status">Success</p>
-          : (
-            <div>
-              {record.result.map((result, i) =>
-                <p
-                  key={i}
-                  className="result-status"
-                >
-                  <span>{result.title}</span>
-                  <span>{result.value}</span>
-                </p>,
-              )}
-            </div>
+        if (isTransaction) {
+          result = <p className="result-status">Success</p>;
+        } else {
+          let formatResult = record.result.length > 1
+            ? record.result.map((result, i) =>
+              (
+                <li key={i} className="event-item">
+                  <p className="event-id">{result.title !== '' ? result.title : '-'}</p>
+                  <p className="event-value color">{result.value}</p>
+                </li>
+              ),
+            )
+            : <p className="result-status">{record.result[0].value}</p>;
+
+          result = (
+            <ul className="event-list">
+              {formatResult}
+            </ul>
           );
+        }
       } else {
         result = <p className="result-status error">{record.error}</p>;
       }
