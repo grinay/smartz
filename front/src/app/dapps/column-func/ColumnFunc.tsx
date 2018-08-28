@@ -1,7 +1,6 @@
 import * as React from 'react';
-import InlineSVG from 'svg-inline-react';
 
-import {getFunctionsByType, getFuncType} from '../../../helpers/common';
+import { getFunctionsByType, sortFuncs } from '../../../helpers/common';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 
 import './ColumnFunc.less';
@@ -68,7 +67,7 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     if (Array.isArray(functions) && functions.length > 0) {
       functions.forEach((func) => {
         if (func.name === '') {
-          if ( !func.payable) {
+          if (!func.payable) {
             return;
           }
 
@@ -94,6 +93,7 @@ export default class ColumnFunc extends React.PureComponent<IColumnFuncProps, IC
     let funcSectionElement: JSX.Element = null;
     let functions: IFunction[] = getFunctionsByType(dapp.functions, funcType);
     functions = this.prepareFunctions(functions);
+    functions = sortFuncs(functions);
 
     if (functions.length > 0) {
       funcSectionElement = (

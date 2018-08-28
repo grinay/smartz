@@ -4,8 +4,8 @@ import * as ReactTooltip from 'react-tooltip';
 import InlineSVG from 'svg-inline-react';
 
 import { blockchains } from '../../../constants/constants';
-import { getFunctionsByType, getViewFunctionConstants } from '../../../helpers/common';
-import { IDapp } from '../../../helpers/entities/dapp';
+import { getFunctionsByType, getViewFunctionConstants, sortFuncs } from '../../../helpers/common';
+import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import store from '../../../store/store';
 import Loader from '../../common/loader/Loader';
 import TypeDisplay from '../../common/type-display/TypeDisplay';
@@ -36,7 +36,8 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
 
     let viewFuncElement: JSX.Element;
     if (dapp.blockchain === blockchains.ethereum) {
-      const viewFunctions: any[] = getFunctionsByType(dapp.functions, 'view');
+      let viewFunctions: IFunction[] = getFunctionsByType(dapp.functions, 'view');
+      viewFunctions = sortFuncs(viewFunctions);
 
       let viewFuncStandart: any[] = [];
       let viewFuncPresentable: any[] = [];

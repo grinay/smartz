@@ -96,3 +96,28 @@ export const getResult = (funcResult, defaultValue) => {
 
   return funcResult.toString();
 };
+
+export const sortFuncs = (arr: IFunction[]): IFunction[] => {
+  if (!Array.isArray(arr) || arr.length === 0) {
+    return [];
+  }
+
+  const mapped = arr.map((el, i) => ({
+    index: i,
+    value: el.title.toLowerCase(),
+  }));
+
+  mapped.sort((a, b) => {
+    if (a.value > b.value) {
+      return 1;
+    }
+
+    if (a.value < b.value) {
+      return -1;
+    }
+
+    return 0;
+  });
+
+  return mapped.map((el) => arr[el.index]);
+};

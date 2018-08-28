@@ -19,9 +19,9 @@ export default class MinimalFooter extends React.PureComponent<IMinimalFooterPro
     return (
       <footer className="minimal-footer">
         <section className="contract-data">
-          <p className="contract-data-top">
+          <div className="contract-data-top">
             {dapp.constructor != null &&
-              <div>
+              <div className="flex">
                 <span className="contract-name">{`${dapp.constructor.name} contract`}</span>
                 <Link to={`/deploy/${dapp.constructor_id}`} className="contract-link">
                   <button
@@ -37,7 +37,7 @@ export default class MinimalFooter extends React.PureComponent<IMinimalFooterPro
                 </Link>
               </div>
             }
-          </p>
+          </div>
           {/* <p className="contract-data-version">
             Version: <span className="contract-version">1.02 beta</span>
           </p> */}
