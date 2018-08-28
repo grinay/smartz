@@ -125,6 +125,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       // set last executed func
       this.setState({
         selectedRecord: dappNext.requests[0],
+        isPopupOpen: true,
         selectedTab: Tab.Request,
       });
     }
