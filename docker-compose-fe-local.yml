@@ -1,0 +1,52 @@
+version: '3.2'
+services:
+
+  postgres:
+    image: postgres:10.3-alpine
+    restart: "no"
+    env_file:
+      - smartzplatform.env
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+
+  frontend:
+    build:
+      dockerfile: docker/frontend/Dockerfile
+      context: .
+    env_file:
+      - smartzplatform.env
+    restart: "no"
+    depends_on:
+      - backend
+    volumes:
+      - "backendsocket:/app/sock"
+      - "django_static:/app/staticfiles:ro"
+      - "./docker/frontend/conf-ext/nginx.conf.local-dev:/app/conf/nginx.conf-dev"
+    ports:
+      - "80:80"
+    network_mode: host
+
+  backend:
+    build:
+      dockerfile: docker/backend/Dockerfile
+      context: .
+    env_file:
+      - smartzplatform.env
+    restart: "no"
+    depends_on:
+      - postgres
+    volumes:
+      - "backendsocket:/app/sock"
+      - "backenddata:/app/data"
+      - "django_static:/app/staticfiles"
+    container_name: smartz_backend
+
+volumes:
+  backenddata:
+  pgdata:
+  django_static:
+  backendsocket:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
