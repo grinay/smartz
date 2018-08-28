@@ -57,17 +57,19 @@ export default class TransactionRow extends React.PureComponent<ITransactionRowP
           </div>
         </div>
         <p className="transaction-buttons">
-          <button
-            onClick={() => copyTextToClipboard(transaction.tx_id)}
-            className="round-btn copy-btn flex"
-            type="button"
-            aria-label="Copy"
-          >
-            <InlineSVG
-              className="copy-icon"
-              src={require('../../../../assets/img/common/components/copy.svg')}
-            />
-          </button>
+          {'tx_id' in transaction && transaction.tx_id &&
+            <button
+              onClick={() => copyTextToClipboard(transaction.tx_id)}
+              className="round-btn copy-btn flex"
+              type="button"
+              aria-label="Copy"
+            >
+              <InlineSVG
+                className="copy-icon"
+                src={require('../../../../assets/img/common/components/copy.svg')}
+              />
+            </button>
+          }
           {/* <a
             className="round-btn link flex"
             href={`${getNetworkEtherscanAddress(dapp.network_id)}/tx/${transaction.tx_id}`}
