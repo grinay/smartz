@@ -106,7 +106,9 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
             error: 'is_success' in record && !record.is_success,
           })}>
             {record.function_title}
-            <sup className="event-extra">{record.function_name}</sup>
+            {record.function_title !== record.function_name &&
+              <sup className="event-extra">{record.function_name}</sup>
+            }
           </p>
           <p className="event-description">{record.function_description}</p>
         </div>
