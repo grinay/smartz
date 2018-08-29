@@ -9,7 +9,7 @@ import { getFuncType } from '../../../helpers/common';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import Eos from '../../../helpers/eos';
 import {
-    decodeEventOfContract, getAccountAddress, processControlForm, web3 as w3, web3,
+    decodeEventOfContract, getAccountAddress, processControlForm, toStringValue, web3 as w3, web3,
 } from '../../../helpers/eth';
 import { getUiSchemaFromFunc } from '../../../helpers/schema';
 import { tryParce } from '../../../helpers/utils';
@@ -71,10 +71,19 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
           const arg = result[i];
           const data = func.outputs.items[i];
 
+          // convert value to string type
+          const type = 'type' in data
+            ? data.type
+            : '$ref' in data
+              ? data.$ref
+              : null;
+
+          const value = toStringValue(type, arg);
+
           arrOfArgs.push({
             title: data.title,
             description: 'description' in data ? data.description : '',
-            value: arg.toString(),
+            value,
           });
         }
       }
@@ -145,7 +154,6 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
 
         processControlForm(dapp.abi, func, formData, dapp.address)
           .then((result: any) => {
-            console.log(result);
             const funcType = getFuncType(func);
 
             if (funcType === 'ask') {

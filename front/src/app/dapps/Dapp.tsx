@@ -103,11 +103,13 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
     const { dapp } = this.props;
 
-    store.dispatch(setHeaderTitle({
-      title: dapp.title,
-      id: dapp.id,
-      type: 'dapp',
-    }));
+    if (dapp) {
+      store.dispatch(setHeaderTitle({
+        title: dapp.title,
+        id: dapp.id,
+        type: 'dapp',
+      }));
+    }
   }
 
   public componentWillReceiveProps(nextProps: any) {

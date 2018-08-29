@@ -269,6 +269,17 @@ export const getAccountAddress = () => {
   return web3.eth.defaultAccount;
 };
 
+export const toStringValue = (type: string, value: any): string => {
+  switch (type) {
+    case '#/definitions/uint128':
+    case '#/definitions/uint256':
+      return value.toString(10);
+
+    default:
+      return value.toString();
+  }
+};
+
 /**
  * Return decoded event
  *
