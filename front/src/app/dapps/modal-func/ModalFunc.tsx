@@ -60,15 +60,23 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
     const arrOfArgs: any[] = [];
 
     if (Array.isArray(result)) {
-      for (let i = 0; i < result.length; i++) {
-        const arg = result[i];
-        const data = func.outputs.items[i];
-
+      if (result.length === 0) {
         arrOfArgs.push({
-          title: data.title,
-          description: 'description' in data ? data.description : '',
-          value: arg.toString(),
+          title: '',
+          description: '',
+          value: 'empty',
         });
+      } else {
+        for (let i = 0; i < result.length; i++) {
+          const arg = result[i];
+          const data = func.outputs.items[i];
+
+          arrOfArgs.push({
+            title: data.title,
+            description: 'description' in data ? data.description : '',
+            value: arg.toString(),
+          });
+        }
       }
     } else {
       const data = func.outputs.items[0];
@@ -136,7 +144,8 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
         dataFetch['initiator_address'] = getAccountAddress();
 
         processControlForm(dapp.abi, func, formData, dapp.address)
-          .then((result: string) => {
+          .then((result: any) => {
+            console.log(result);
             const funcType = getFuncType(func);
 
             if (funcType === 'ask') {
