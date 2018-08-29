@@ -365,7 +365,7 @@
                 "sha256:eda82b564990e1d58e6c0d6646581aaf5b50567b05130efe71f3c6be0e11bf38",
                 "sha256:edfee1d19a7865add83463e92c6a7810e824ae9a10c9abb95b1763263f7e247c"
             ],
-            "version": "==3.6.4"
+            "version": "==3.6.6"
         },
         "pyethash": {
             "hashes": [
