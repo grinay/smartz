@@ -48,7 +48,7 @@ class DetailsView(View):
                 pass
 
         return JsonResponse(
-            dapp_pub_info(dapp, user not in dapp.users.all(), cust_title)
+            dapp_pub_info(dapp, user in dapp.users.all(), cust_title)
         )
 
 
@@ -154,13 +154,18 @@ class CreateFromAbi(View, WithContractProcessorManager):
         if 'blockchain' not in request.data or request.data['blockchain'] not in dict(BLOCKCHAINS):
             return error_response('Invalid blockchain')
 
+        if 'name' not in request.data or type(request.data['name']) is not str or not request.data['name']:
+            title = 'Dapp'
+        else:
+            title = request.data['name']
+
         dapp = Dapp.create()
 
         dapp.blockchain = request.data['blockchain']
         dapp.address = request.data['address']
         dapp.network_id = request.data['network_id']
 
-        dapp.title = 'Dapp'
+        dapp.title = title
         dapp.abi = json.dumps(request.data['abi'])
         dapp.source = ''
         dapp.binary = ''

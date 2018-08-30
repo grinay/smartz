@@ -43,7 +43,7 @@ class AddToDashboard(View, WithContractProcessorManager):
             return user  # error
 
         try:
-            contract_ui = ContractUI.objects.get(slug=id)
+            contract_ui = ContractUI.objects.get(id=id)
         except ContractUI.DoesNotExist:
             return error_response("Ui not found")
 
