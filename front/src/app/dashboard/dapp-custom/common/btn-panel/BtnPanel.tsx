@@ -20,7 +20,7 @@ export default class BtnPanel extends React.PureComponent<IBtnPanelProps, {}> {
     return (
       <div className="btn-panel">
         <Button
-          type="large"
+          kind="large"
           onClick={onClickBtn}
           content={content}
           isDisabled={isDisabled}

@@ -239,7 +239,7 @@ export default class DeployStep2 extends React.PureComponent<IDeployStep2Props, 
                   </div>
                 </fieldset>
               </fieldset>
-              <Button type="large" onClick={this.deploy} >
+              <Button kind="large" onClick={this.deploy} >
                 {ctor.price ? (
                   <span>Deploy now for {ctor.price} ETH</span>
                 ) : (

@@ -161,7 +161,7 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
             onSubmit={this.submit}
             showErrorList={false}>
             <div className="block__wrapper">
-              <Button type="large">
+              <Button kind="large" type="submit">
                 {this.id ? 'Update' : 'Submit'} the contract
               </Button>
             </div>

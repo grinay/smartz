@@ -9,8 +9,9 @@ interface IButtonProps {
   children?: any;
   className?: string;
   isDisabled?: boolean;
-  type?: 'green' | 'white' | 'lightgreen' | 'gray' | 'small' | 'large';
+  kind?: 'green' | 'white' | 'lightgreen' | 'gray' | 'small' | 'large';
   onClick?: () => void;
+  type?: 'button' | 'submit';
 }
 
 export default class Button extends React.PureComponent<IButtonProps, {}> {
@@ -19,25 +20,26 @@ export default class Button extends React.PureComponent<IButtonProps, {}> {
       content = null,
       className = null,
       onClick = null,
-      type = 'green',
+      kind = 'green',
       children = null,
       isDisabled = false,
+      type = 'button',
     } = this.props;
 
     return (
       <button
         onClick={onClick}
+        type={type}
         className={
           classNames('component-button', className, {
-            'component-button-green': type === 'green',
-            'component-button-white': type === 'white',
-            'component-button-lightgreen': type === 'lightgreen',
-            'component-button-gray': type === 'gray',
-            'component-button-small': type === 'small',
-            'component-button-large': type === 'large',
+            'component-button-green': kind === 'green',
+            'component-button-white': kind === 'white',
+            'component-button-lightgreen': kind === 'lightgreen',
+            'component-button-gray': kind === 'gray',
+            'component-button-small': kind === 'small',
+            'component-button-large': kind === 'large',
             'component-button-disabled': isDisabled,
           })}
-        type="submit"
       >
         {content}
         {children}
