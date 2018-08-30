@@ -1,20 +1,20 @@
 import { fetchSearchFailure, fetchSearchRequest, fetchSearchSuccess } from '../app/AppActions';
 import Auth from '../app/auth/Auth';
 import {
-    finishLoginSuccessAction, loginErrorAction, startLoginSuccessAction
+    finishLoginSuccessAction, loginErrorAction, startLoginSuccessAction,
 } from '../app/auth/login/LoginActions';
 import {
     fetchCtorParamsFailure, fetchCtorParamsRequest, fetchCtorParamsSuccess, fetchCtorsFailure,
-    fetchCtorsRequest, fetchCtorsSuccess
+    fetchCtorsRequest, fetchCtorsSuccess,
 } from '../app/common/ctor-card/CtorsActions';
 import {
-    fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess, requestAdd, transactionAdd
+    fetchDappsFailure, fetchDappsRequest, fetchDappsSuccess, requestAdd, transactionAdd,
 } from '../app/dapps/DappActions';
 import {
-    constructError, constructRequest, constructSuccess, setFormData
+    constructError, constructRequest, constructSuccess, setFormData,
 } from '../app/deploy/DeployActions';
 import {
-    sendErrorReceiveCtorCodeEvent, sendSuccessReceiveCtorCodeEvent
+    sendErrorReceiveCtorCodeEvent, sendSuccessReceiveCtorCodeEvent,
 } from '../helpers/statictics';
 import store from '../store/store';
 import { fetch } from './api';
@@ -223,7 +223,7 @@ export function sendFormDataDeployStep1(ctorId, deployId, data, formData) {
       }
 
       if (status >= 500) {
-        sendErrorReceiveCtorCodeEvent(ctorId);
+        sendErrorReceiveCtorCodeEvent('Something wrong!');
       }
     })
     .catch((error) => {
