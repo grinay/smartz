@@ -6,12 +6,10 @@ import Dashboard from './Dashboard';
 
 
 const mapStateToProps = (state) => ({
-  ctors: state.ctors.ctors,
-  ctorsError: state.ctors.error,
-  ctorsFetchStatus: state.ctors.fetchStatus,
   dapps: state.dapps.dappList,
   dappsError: state.dapps.error,
   dappsFetchStatus: state.dapps.fetchStatus,
+  isOpenModalAddContact: state.dashboard.isOpenModalAddContract,
 });
 
 const mapDispatchToProps = { viewFuncResult };

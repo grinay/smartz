@@ -177,7 +177,7 @@ export default class ContentAbi extends React.PureComponent
             <Message type={isEmptyType ? 'gray' : 'green'}>
               {!isEmptyType
                 ? 'This third-party contract isn’t from Smartz, but we seem to have guessed his type. You can try to use it, but without any guarantee.'
-                : 'Unknown type of contract. You can manage it, but the names will be ”programmer-like”'}
+                : 'Unknown type of contract. You can manage it, but only with ”programmer-like” names of statuses and functions, which we got from public ABI.'}
             </Message>
           </TitleContentWrapper>
         </div>

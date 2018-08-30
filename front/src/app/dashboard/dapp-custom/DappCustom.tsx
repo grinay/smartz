@@ -23,6 +23,7 @@ import './DappCustom.less';
 interface IDappCustomProps {
   search: any;
   dapps: any;
+  onCloseModal: () => void;
 }
 
 interface IDappCustomState {

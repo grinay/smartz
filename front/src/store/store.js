@@ -6,6 +6,7 @@ import ctors from '../app/common/ctor-card/CtorsReducer';
 import deploy from '../app/deploy/DeployReducer';
 import dapps from '../app/dapps/DappReducer';
 import login from '../app/auth/login/LoginReducer';
+import dashboard from '../app/dashboard/DashboardReducer';
 import ctoredit from '../app/common/ctor-card/CtorEditReducer';
 
 const reducers = combineReducers({
@@ -14,7 +15,8 @@ const reducers = combineReducers({
   ctoredit,
   deploy,
   dapps,
-  login
+  login,
+  dashboard
 });
 
 const store = createStore(
