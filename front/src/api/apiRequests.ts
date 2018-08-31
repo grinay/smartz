@@ -186,7 +186,7 @@ export function getDappRequests(dappId: any) {
 }
 
 export function addDappToDash(dappId) {
-  const result = fetch(`/dapps/${dappId}/add-to-dashbord`, undefined, 'post');
+  const result = fetch(`/dapps/${dappId}/add-to-dashboard`, undefined, 'post');
 
   result
     .then(() => getDapp(dappId))

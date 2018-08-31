@@ -208,6 +208,8 @@ class Common(Configuration):
     SMARTZ_COMMISSION = 0.2
     SMARTZ_COMMISSION_ADDRESS = '0x0FCB1E60D071A61d73a9197CeA882bF2003faE17'
 
+    SMARTZ_COMPILER_VERSION = '0.4.24'
+
 
 class Development(Common):
     """

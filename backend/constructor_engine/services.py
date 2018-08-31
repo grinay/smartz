@@ -48,7 +48,7 @@ class EthereumCompilerService(BaseCompilerService):
             with open('{}.abi'.format(out_file)) as f:
                 abi = f.read()
 
-            return bin, abi, '0.4.20', True  # todo
+            return bin, abi, settings.SMARTZ_COMPILER_VERSION, True
 
 
 class EosCompilerService(BaseCompilerService, WithLogger):
