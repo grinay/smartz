@@ -56,7 +56,7 @@ class AddTest(WebTest):
         ui.save()
 
         resp = self.app.post_json(
-            '/api/contracts_uis/erc202/add-to-dashboard',
+            '/api/contracts_uis/1/add-to-dashboard',
             params={
                 'network_id': '4',
                 'address': '0x000000000000000000000000000000000007'
