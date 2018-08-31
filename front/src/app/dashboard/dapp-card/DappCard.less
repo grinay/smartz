@@ -1,0 +1,103 @@
+@import '../../../styles/variables.less';
+
+.dapp-card {
+    display: block;
+    overflow: hidden;
+
+    height: 250px;
+    padding: 20px;
+
+    text-decoration: none;
+
+    color: #000000;
+    border-radius: 4px;
+    background-color: rgba(255,255,255,1);
+
+    .dapp-card__wrapper {
+        display: flex;
+        flex-direction: row;
+
+        margin-top: 7px;
+        margin-bottom: 7px;
+
+        .dapp-card__logo {
+            overflow: hidden;
+
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+
+            border-radius: 8px;
+        }
+
+        .dapp-card__info {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            justify-content: center;
+
+            margin: 0;
+
+            .dapp-card__name {
+                margin-bottom: 3px;
+
+                opacity: .9;
+
+                font-family: 'Cera Pro 700', Arial, sans-serif;
+                font-size: 17px;
+                font-size: 15px;
+                line-height: 20px;
+            }
+
+            .dapp-card__description {
+                margin-top: 0;
+
+                opacity: .7;
+
+                font-family: 'Cera Pro 400', Arial, sans-serif;
+                font-size: 12px;
+                line-height: 16px;
+            }
+        }
+    }
+
+    .dapp-card__function-list {
+        margin-top: 8px;
+        padding: 0;
+
+        list-style-type: none;
+
+        .dapp-card__function-item {
+            display: flex;
+            align-items: center;
+
+            height: 40px;
+
+            box-shadow: inset 0 -1px rgba(229,233,241,1);
+
+            &:last-child {
+                box-shadow: none;
+            }
+
+            p {
+                display: inline-block;
+
+                margin: 0;
+
+                &:first-child {
+                    width: 50%;
+                }
+
+                &:last-child {
+                    flex: 1;
+
+                    margin-left: 5px;
+
+                    font-family: @f-cera-pro-500;
+                    font-size: 16px;
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+}

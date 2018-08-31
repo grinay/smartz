@@ -193,7 +193,7 @@ export default class ContentAbi extends React.PureComponent
         }
 
         <PreviewContainer>
-          <DappCard contractUi={uis.find((ui) => ui.id === selectedValue.value)} />
+          <DappCard dataCard={uis.find((ui) => ui.id === selectedValue.value)} type="contractUi" />
         </PreviewContainer>
 
         <BtnPanel onClickBtn={this.submitData} />

@@ -76,7 +76,7 @@ export default class ContentDapp extends React.PureComponent
         <PreviewContainer>
           {isPrivate
             ? <PrivateDapp />
-            : <DappCard dapp={dapps.get(data.dapp)} className="dapp-card-custom" />}
+            : <DappCard dataCard={dapps.get(data.dapp)} className="dapp-card-custom" type="dapp" />}
         </PreviewContainer>
         {!isPrivate &&
           <BtnPanel onClickBtn={this.submitData} />}

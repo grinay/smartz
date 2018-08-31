@@ -92,7 +92,7 @@ export default class Dashboard extends React.Component<IDashboardProps, any> {
             {filteredDapps.map((dapp, i) =>
               (
                 <li key={i}>
-                  <DappCard dapp={dapp} />
+                  <DappCard dataCard={dapp} type="dapp" />
                 </li>
               ))}
           </ul>

@@ -126,7 +126,7 @@ export default class ContentContract extends React.PureComponent
         </TitleContentWrapper>
 
         <PreviewContainer>
-          <DappCard contractUi={uis.find((ui) => ui.id === selectedValue.value)} />
+          <DappCard dataCard={uis.find((ui) => ui.id === selectedValue.value)} type="contractUi" />
         </PreviewContainer>
         <BtnPanel onClickBtn={this.submitData} />
       </div>
