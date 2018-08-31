@@ -147,7 +147,7 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
         }
 
         const content = (
-            <article className="">
+            <div>
                 <div className="dapp-card__wrapper">
                     <div className="dapp-card__logo">
                         <ImageDefault src={data.image} name={data.name} />
@@ -160,7 +160,7 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
                     </div>
                 </div>
                 {viewFuncContent}
-            </article>
+            </div>
         );
 
         if (type === 'dapp') {
@@ -170,7 +170,11 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
                 </Link>
             );
         } else {
-            return { content };
+            return (
+                <article className={classNames('dapp-card', className)}>
+                    {content}
+                </article>
+            );
         }
     }
 }

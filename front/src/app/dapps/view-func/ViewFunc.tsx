@@ -60,13 +60,13 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
               return (
                 <div key={i} className="card-intro">
                   <p className="card-label">{viewFunc.title}</p>
-                  <p className="card-title">{'funcResults' in dapp
+                  <div className="card-title">{'funcResults' in dapp
                     ? <TypeDisplay
                       fnDescription={dapp.functions.find(
                         (func) => func.name === viewFunc.name)}
                       fnResult={dapp.funcResults[viewFunc.name]}
                     />
-                    : <Loader size={20} />}</p>
+                    : <Loader size={20} />}</div>
                 </div>
               );
             })}
@@ -85,7 +85,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
                       src={require('../../../assets/img/common/question-icon.svg')}
                     />
                   </p>
-                  <p className="card-data">
+                  <div className="card-data">
                     {'funcResults' in dapp
                       ? <TypeDisplay
                         fnDescription={dapp.functions.find(
@@ -93,7 +93,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
                         fnResult={dapp.funcResults[viewFunc.name]}
                       />
                       : <Loader size={20} />}
-                  </p>
+                  </div>
                 </li>
               );
             })}
