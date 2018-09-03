@@ -94,7 +94,7 @@ export const getResult = (funcResult, defaultValue) => {
     return defaultValue ? defaultValue : '';
   }
 
-  return funcResult.toString();
+  return funcResult;
 };
 
 export const sortFuncs = (arr: IFunction[]): IFunction[] => {

@@ -133,7 +133,7 @@ export default class ContentAbi extends React.PureComponent
     }));
 
     // add item 'Use raw ABI'
-    uis.push(
+    uis.unshift(
       this.genContractUi(
         'rawId',
         data.raw_abi_function_specs,

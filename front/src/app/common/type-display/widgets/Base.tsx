@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { getResult } from '../../../../helpers/common';
 import { getNetworkEtherscanAddress, getNetworkName, isAddress } from '../../../../helpers/eth';
+import AddressString from '../../address-string/AddressString';
 
 
 export const makeEtherscanLink = (hash, netId, showNetworkName = false) => {
@@ -45,9 +46,13 @@ export default class Base extends React.PureComponent<IBaseProps, {}> {
       '$ref' in fnDescription.outputs.items[0] &&
       fnDescription.outputs.items[0]['$ref'] === '#/definitions/address'
     ) {
-      return makeEtherscanLink(result, '4');
+      return <AddressString str={result} endCharNumber={4} />;
     }
 
-    return result;
+    if (typeof result === 'object' && result.type === 'error') {
+      return <p>{result.msg}</p>;
+    }
+
+    return <p>{result.toString()}</p>;
   }
 }

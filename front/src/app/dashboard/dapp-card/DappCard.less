@@ -79,24 +79,20 @@
                 box-shadow: none;
             }
 
-            p {
+            .dapp-card__function-title {
                 display: inline-block;
 
+                width: 50%;
                 margin: 0;
+            }
 
-                &:first-child {
-                    width: 50%;
-                }
+            .dapp-card__function-value {
+                width: 50%;
+                padding-left: 5px;
 
-                &:last-child {
-                    flex: 1;
-
-                    margin-left: 5px;
-
-                    font-family: @f-cera-pro-500;
-                    font-size: 16px;
-                    line-height: 20px;
-                }
+                font-family: @f-cera-pro-500;
+                font-size: 16px;
+                line-height: 20px;
             }
         }
     }

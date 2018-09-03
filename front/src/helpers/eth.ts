@@ -130,7 +130,12 @@ export const processControlForm = (
     try {
       сtorDapp[function_spec.name](...args_converted2abi, (error, result) => {
         if (error) {
-          reject(error);
+          console.error(error);
+          resolve({
+            type: 'error',
+            msg: 'Error! Failed to get value',
+            error,
+          });
         } else {
           resolve(result);
         }
@@ -139,13 +144,6 @@ export const processControlForm = (
       reject(error);
     }
   });
-
-  /*
-  if (function_abi.constant) {
-      // show in UI
-      result.forEach(v => {l(v)});
-  }
-  */
 };
 
 // ALSO: for each function_spec
