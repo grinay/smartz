@@ -5,6 +5,7 @@ import { getFunctionsByType } from '../../../../helpers/common';
 import { Blockchain } from '../../../../helpers/entities/types';
 import Message from '../../../common/message/Message';
 import TitleContentWrapper from '../../../common/title-content-wrapper/TitleContentWrapper';
+import Input from '../../../ui-kit/input/Input';
 import DappCard from '../../dapp-card/DappCard';
 import BtnPanel from '../common/btn-panel/BtnPanel';
 import DoneAdd from '../common/done-add/DoneAdd';
@@ -34,6 +35,7 @@ interface IContentAbiState {
   uis: any[];
   isLoading: boolean;
   isDone: boolean;
+  dappName: string;
 }
 
 export default class ContentAbi extends React.PureComponent
@@ -48,20 +50,26 @@ export default class ContentAbi extends React.PureComponent
       uis: null,
       isLoading: null,
       isDone: null,
+      dappName: null,
     };
 
     this.changeSelect = this.changeSelect.bind(this);
     this.submitData = this.submitData.bind(this);
     this.genContractUi = this.genContractUi.bind(this);
+    this.setDappName = this.setDappName.bind(this);
   }
 
   private changeSelect(selectedValue: any) {
     this.setState({ selectedValue });
   }
 
+  private setDappName(dappName: string) {
+    this.setState({ dappName });
+  }
+
   private submitData() {
     const { data, address, blockchain, networkId } = this.props;
-    const { selectedValue } = this.state;
+    const { selectedValue, dappName } = this.state;
 
     this.setState({ isLoading: true });
 
@@ -72,6 +80,7 @@ export default class ContentAbi extends React.PureComponent
         address,
         abi: data.abi,
         blockchain,
+        name: dappName ? dappName : 'Some name',
       });
     } else {
       result = api.addContractUiToDash(selectedValue.value, {
@@ -182,15 +191,26 @@ export default class ContentAbi extends React.PureComponent
           </TitleContentWrapper>
         </div>
 
-        {!isEmptyType &&
-          <TitleContentWrapper className="dapp-custom-type" title="Type">
-            <SelectType
-              value={selectedValue}
-              onChange={this.changeSelect}
-              options={options}
-            />
-          </TitleContentWrapper>
-        }
+        {isEmptyType
+          ? (
+            <TitleContentWrapper className="dapp-custom-type" title="Dapp name">
+              <Input
+                className="dapp-custom-input"
+                autofocus={false}
+                onChange={this.setDappName}
+                placeholder="Some name"
+              />
+            </TitleContentWrapper>
+          )
+          : (
+            <TitleContentWrapper className="dapp-custom-type" title="Type">
+              <SelectType
+                value={selectedValue}
+                onChange={this.changeSelect}
+                options={options}
+              />
+            </TitleContentWrapper>
+          )}
 
         <PreviewContainer>
           <DappCard dataCard={uis.find((ui) => ui.id === selectedValue.value)} type="contractUi" />

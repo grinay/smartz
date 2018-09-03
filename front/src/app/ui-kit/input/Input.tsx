@@ -13,6 +13,7 @@ interface IInputProps {
   onValidate?: (value: string) => boolean;
   autofocus?: boolean;
   onChange?: (str: string) => void;
+  placeholder?: string;
 }
 
 interface IInputState {
@@ -78,7 +79,7 @@ export default class Input extends React.PureComponent<IInputProps, IInputState>
 
   public render() {
     const { value, stateInput } = this.state;
-    const { className = null, autofocus = false } = this.props;
+    const { className = null, autofocus = false, placeholder = '' } = this.props;
 
     return (
       <div className="component-input-container">
@@ -91,6 +92,7 @@ export default class Input extends React.PureComponent<IInputProps, IInputState>
           })}
           ref={(r) => this.ref = r}
           autoFocus={autofocus}
+          placeholder={placeholder}
         />
         <InlineSVG
           className={classNames('component-input-icon', {

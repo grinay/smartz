@@ -88,8 +88,7 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
                   <div className="card-data">
                     {'funcResults' in dapp
                       ? <TypeDisplay
-                        fnDescription={dapp.functions.find(
-                          (func) => func.name === viewFunc.name)}
+                        fnDescription={dapp.functions.find((func) => func.name === viewFunc.name)}
                         fnResult={dapp.funcResults[viewFunc.name]}
                       />
                       : <Loader size={20} />}
