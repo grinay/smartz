@@ -7,13 +7,12 @@ import { goToDocsRoute } from '../helpers/utils';
 import Auth from './auth/Auth';
 import Callback from './auth/callback/Callback';
 import Login from './auth/login/LoginContainer';
-import InstallExtension from './common/install-extension/InstallExtension';
+import RouteWrapper from './common/route-wrapper/RouteWrapper';
 import CtorAdd from './ctor-add/CtorAddContainer';
+import DappStore from './dapp-store/DappStore';
 import Dapp from './dapps/DappContainer';
 import Dashboard from './dashboard/DashboardContainer';
 import Deploy from './deploy/DeployContainer';
-import Footer from './footer/Footer';
-import Header from './header/HeaderContainer';
 import MyConstructors from './my-constructors/MyConstructorsContainer';
 import Page404 from './page-404/Page404';
 import Profile from './profile/Profile';
@@ -96,85 +95,86 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     return (
-      <main className="app" id="js-app">
-        {/* Install extension */}
-        {metamaskStatus === 'noMetamask' && (
-          <InstallExtension />
-        )}
+      <Switch>
+        <Route
+          path="/dapp-store"
+          render={(props) => <DappStore {...props} />}
+        />
+        <RouteWrapper
+          exact={true}
+          path="/"
+          component={(props) => <Store metamaskStatus={metamaskStatus} {...props} />}
+        />
 
-        <Route render={(props) => <Header profile={profile} {...props} />} />
+        <RouteWrapper
+          path="/login"
+          component={(props) => <Login metamaskStatus={metamaskStatus} {...props} />}
+        />
 
-        <Switch>
-          <Route
-            exact={true}
-            path="/"
-            render={(props) => <Store metamaskStatus={metamaskStatus} {...props} />}
-          />
-          <Route
-            path="/login"
-            render={(props) => <Login metamaskStatus={metamaskStatus} {...props} />}
-          />
+        <RouteWrapper
+          path="/docs/:docUri?"
+          component={(props) => {
+            window.location.href = `https://wiki.smartz.io/${goToDocsRoute(props.match.params.docUri)}`;
+          }}
+        />
 
-          <Route
-            path="/docs/:docUri?"
-            component={(props) => {
-              window.location.href = `https://wiki.smartz.io/${goToDocsRoute(props.match.params.docUri)}`;
-            }
-            }
-          />
+        <RouteWrapper
+          isPrivate={true}
+          path="/profile"
+          component={(props) => <Profile profile={profile} {...props} />}
+        />
 
-          <PrivateRoute
-            path="/profile"
-            component={(props) => <Profile profile={profile} {...props} />}
-          />
+        <RouteWrapper
+          isPrivate={true}
+          exact={true}
+          path="/deploy/:ctorId"
+          component={(props) => (
+            <Redirect to={`/deploy/${props.match.params.ctorId}/${this.props.nextDeploy}`} />
+          )}
+        />
 
-          <PrivateRoute
-            exact={true}
-            path="/deploy/:ctorId"
-            component={(props) => (
-              <Redirect to={`/deploy/${props.match.params.ctorId}/${this.props.nextDeploy}`} />
-            )}
-          />
+        <RouteWrapper
+          isPrivate={true}
+          path="/deploy/:ctorId/:deployId"
+          component={(props) => <Deploy metamaskStatus={metamaskStatus} {...props} />}
+        />
 
-          <PrivateRoute
-            path="/deploy/:ctorId/:deployId"
-            component={(props) => <Deploy metamaskStatus={metamaskStatus} {...props} />}
-          />
+        <RouteWrapper
+          isPrivate={true}
+          path="/dashboard"
+          component={(props) => <Dashboard metamaskStatus={metamaskStatus} {...props} />}
+        />
+        <RouteWrapper
+          path="/dapp/:id"
+          component={(props) => <Dapp metamaskStatus={metamaskStatus} {...props} />}
+        />
 
-          <PrivateRoute
-            path="/dashboard"
-            component={(props) => <Dashboard metamaskStatus={metamaskStatus} {...props} />}
-          />
-          <Route
-            path="/dapp/:id"
-            component={(props) => <Dapp metamaskStatus={metamaskStatus} {...props} />}
-          />
+        <RouteWrapper
+          exact={true}
+          path="/instance/:id"
+          component={(props) => <Redirect to={`/dapp/${props.match.params.id}`} />}
+        />
 
-          <Route
-            exact={true}
-            path="/instance/:id"
-            component={(props) =>
-              <Redirect to={`/dapp/${props.match.params.id}`} />
-            }
-          />
+        <RouteWrapper
+          isPrivate={true}
+          path="/ctor-add"
+          component={(props) => <CtorAdd {...props} />}
+        />
 
-          <PrivateRoute path="/ctor-add" component={(props) => <CtorAdd {...props} />} />
+        <RouteWrapper
+          isPrivate={true}
+          path="/constructors/:id/update"
+          component={(props) => <CtorAdd {...props} />}
+        />
 
-          <PrivateRoute
-            path="/constructors/:id/update"
-            component={(props) => <CtorAdd {...props} />}
-          />
+        <RouteWrapper
+          isPrivate={true}
+          path="/my-constructors"
+          component={(props) => <MyConstructors metamaskStatus={metamaskStatus} {...props} />}
+        />
 
-          <PrivateRoute
-            path="/my-constructors"
-            component={(props) => <MyConstructors metamaskStatus={metamaskStatus} {...props} />}
-          />
-
-          <Route component={(props) => <Page404 {...props} />} />
-        </Switch>
-
-        <Route render={(props) => <Footer {...props} />} />
-      </main>
+        <RouteWrapper component={(props) => <Page404 {...props} />} />
+      </Switch>
     );
   }
 }
