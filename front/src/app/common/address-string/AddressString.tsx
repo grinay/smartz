@@ -13,6 +13,14 @@ export default class AddressString extends React.PureComponent<IAddressStringPro
   public render() {
     const { className = '', str, endCharNumber = 6 } = this.props;
 
+    if (endCharNumber === 0) {
+      return (
+        <div className={`address-string flex-v ${className}`}>
+          <p className="text text-ellipsis">{str}</p>
+        </div>
+      );
+    }
+
     if (str.length > endCharNumber) {
       const lastChars = str.slice(-endCharNumber);
       const otherChars = str.slice(0, -endCharNumber);

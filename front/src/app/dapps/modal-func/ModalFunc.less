@@ -4,36 +4,31 @@
 @padding-bottom: 45px;
 
 .modal-func {
-    color: white;
+    width: 635px;
+    padding: 30px @padding-left-right @padding-bottom;
 
-    .modal-window {
-        width: 635px;
-        padding: 30px @padding-left-right @padding-bottom;
+    color: #0E1418;
+    border-radius: 24px;
 
-        color: #0E1418;
-        border-radius: 24px;
-        background-color: white;
+    .title {
+        margin: 0;
 
-        .title {
-            margin: 0;
+        font-family: @f-cera-pro-700;
+        font-size: 34px;
+        line-height: 43px;
+    }
 
-            font-family: @f-cera-pro-700;
-            font-size: 34px;
-            line-height: 43px;
-        }
+    .description {
+        display: inline-block;
 
-        .description {
-            display: inline-block;
+        width: 70%;
+        margin: 0;
 
-            width: 70%;
-            margin: 0;
+        opacity: .5;
 
-            opacity: .5;
-
-            font-family: @f-cera-pro-500;
-            font-size: 12px;
-            line-height: 17px;
-        }
+        font-family: @f-cera-pro-500;
+        font-size: 12px;
+        line-height: 17px;
     }
 
     .close {

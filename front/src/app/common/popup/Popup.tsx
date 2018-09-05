@@ -17,11 +17,17 @@ interface IPopupProps {
   blur?: {
     size: number;
     block: string;
+    duration: number;
   };
   animationWindow?: {
     duration: number;
-    classStart: string;
-    classEnd: string;
+    styleStart: object;
+    styleEnd: object;
+  };
+  animationBackdrop?: {
+    duration: number;
+    styleStart: object;
+    styleEnd: object;
   };
 }
 
@@ -32,14 +38,32 @@ export default class Popup extends React.PureComponent<IPopupProps, {}> {
     super(props);
 
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.getStyle = this.getStyle.bind(this);
   }
 
-  public onKeyDown(event) {
+  private onKeyDown(event) {
     const { onClose, isCloseEsc = true } = this.props;
 
     if (event.keyCode === Key.ESC && isCloseEsc) {
       onClose();
       return;
+    }
+  }
+
+  private getStyle(settings: object, state: string): object {
+    if (settings != null) {
+      const transitionStyles = {
+        entering: settings['styleStart'],
+        entered: settings['styleEnd'],
+        exiting: settings['styleStart'],
+      };
+
+      return {
+        transition: `all ${settings['duration']}ms ease-out`,
+        ...transitionStyles[state],
+      };
+    } else {
+      return null;
     }
   }
 
@@ -77,28 +101,27 @@ export default class Popup extends React.PureComponent<IPopupProps, {}> {
       isCloser = true,
       isBackdrop = true,
       state,
-      animationWindow = null,
       blur = null,
+      animationWindow = null,
+      animationBackdrop = null,
     } = this.props;
 
-    console.log(state);
-
+    // set blur effect on div block
     if (blur != null) {
       const elem = document.getElementById(blur.block);
 
       if (elem !== undefined) {
+        elem.style.transition = `filter ${blur.duration}ms ease-out`;
+
         switch (state) {
           case 'entered':
-            elem.style.filter = `blur(5px)`;
-            break;
-
           case 'entering':
-            elem.style.transition = `filter .5s ease-out 0s`;
+            elem.style.filter = `blur(${blur.size}px)`;
             break;
 
+          case 'exiting':
           case 'exited':
             elem.style.filter = `blur(0px)`;
-            // elem.style.transition = ``;
             break;
 
           default:
@@ -107,28 +130,18 @@ export default class Popup extends React.PureComponent<IPopupProps, {}> {
       }
     }
 
-    let defaultStyle;
-    let className;
-    if (animationWindow != null) {
-      defaultStyle = {
-        transition: `all ${animationWindow.duration}ms ease-out`,
-        // bottom: `-360px`,
-      };
-
-      className = classNames('component-popup', {
-        [animationWindow.classStart]: true,
-        // [animationWindow.classStart]: state === 'entering',
-        [animationWindow.classEnd]: state === 'entered',
-      });
-    }
-
     const content = (
       <div
-        className={className}
-        style={{ ...defaultStyle }}>
+        className="component-popup"
+        style={this.getStyle(animationWindow, state)}>
 
         {/* backDrop */}
-        {isBackdrop && <div className="component-popup-backdrop" />}
+        {isBackdrop &&
+          <div
+            className="component-popup-backdrop"
+            style={this.getStyle(animationBackdrop, state)}
+          />
+        }
 
         {/* closer */}
         {isCloser &&
@@ -153,3 +166,4 @@ export default class Popup extends React.PureComponent<IPopupProps, {}> {
     return ReactDOM.createPortal(content, this.node);
   }
 }
+

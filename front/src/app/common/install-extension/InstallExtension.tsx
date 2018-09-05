@@ -1,13 +1,21 @@
 import * as React from 'react';
 import InlineSVG from 'svg-inline-react';
 
+import { mobileApps, trust } from '../../../constants/constants';
 import { IS_ANDROID, IS_MOBILE_OS } from '../../../helpers/detect-device';
 
 import './InstallExtension.less';
 
 
-export default class InstallExtension extends React.PureComponent {
+interface IInstallExtensionProps {
+    trustBanner: boolean;
+}
+
+
+export default class InstallExtension extends React.PureComponent<IInstallExtensionProps, {}> {
     public render() {
+        const { trustBanner } = this.props;
+
         let className = '';
         let img = {
             src: '',
@@ -22,7 +30,7 @@ export default class InstallExtension extends React.PureComponent {
         const metamaskImg = require('../../../assets/img/common/metamask.png');
         const trustImg = require('../../../assets/img/common/trust-icon.png');
 
-        if (IS_MOBILE_OS) {
+        if (IS_MOBILE_OS && trustBanner) {
             if (IS_ANDROID) {
                 className = 'install-trust';
                 img = {
@@ -31,7 +39,7 @@ export default class InstallExtension extends React.PureComponent {
                 };
                 text = 'To use Smartz on mobile please use Trust wallet browser';
                 link = {
-                    href: 'https://play.google.com/store/apps/details?id=com.wallet.crypto.trustapp',
+                    href: `${trust.link}${window.location.origin}`,
                     content: (
                         <InlineSVG
                             className="badge-img"
@@ -47,7 +55,7 @@ export default class InstallExtension extends React.PureComponent {
                 };
                 text = 'To use Smartz on mobile please use Trust wallet browser';
                 link = {
-                    href: 'https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409?mt=8',
+                    href: `${trust.link}${window.location.origin}`,
                     content: (
                         <InlineSVG
                             className="badge-img"
@@ -57,6 +65,10 @@ export default class InstallExtension extends React.PureComponent {
                 };
             }
         } else {
+            return null;
+        }
+
+        if (!IS_MOBILE_OS) {
             className = 'install-metamask';
             img = {
                 src: metamaskImg,

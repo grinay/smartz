@@ -26,6 +26,7 @@ interface IAppProps {
   profile: any;
   setUserProfile: any;
   nextDeploy: any;
+  trustBanner: any;
 }
 
 interface IAppState {
@@ -80,7 +81,7 @@ class App extends React.Component<IAppProps, IAppState> {
   public render() {
     const { metamaskStatus } = this.state;
     const isAuthenticated = Auth.isAuthenticated();
-    const { profile, setUserProfile } = this.props;
+    const { profile, setUserProfile, trustBanner } = this.props;
 
     if (!isAuthenticated && profile) {
       setUserProfile(null);
@@ -100,6 +101,7 @@ class App extends React.Component<IAppProps, IAppState> {
           path="/dapp-store"
           render={(props) => <DappStore {...props} />}
         />
+
         <RouteWrapper
           exact={true}
           path="/"

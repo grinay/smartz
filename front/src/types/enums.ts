@@ -1,5 +1,6 @@
 export enum Key {
   ESC = 27,
+  ENTER = 13,
 }
 
 export namespace Eth {

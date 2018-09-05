@@ -1,3 +1,4 @@
+import { fetchSearchFailure, fetchSearchRequest, fetchSearchSuccess } from '../app/AppActions';
 import Auth from '../app/auth/Auth';
 import {
     finishLoginSuccessAction, loginErrorAction, startLoginSuccessAction,
@@ -186,7 +187,7 @@ export function getDappRequests(dappId: any) {
 }
 
 export function addDappToDash(dappId) {
-  const result = fetch(`/dapps/${dappId}/add-to-dashbord`, undefined, 'post');
+  const result = fetch(`/dapps/${dappId}/add-to-dashboard`, undefined, 'post');
 
   result
     .then(() => getDapp(dappId))
@@ -222,7 +223,7 @@ export function sendFormDataDeployStep1(ctorId, deployId, data, formData) {
       }
 
       if (status >= 500) {
-        sendErrorReceiveCtorCodeEvent(ctorId);
+        sendErrorReceiveCtorCodeEvent('Something wrong!');
       }
     })
     .catch((error) => {
@@ -283,6 +284,89 @@ export function finishLogin(blockchain, identity, randData, signedData) {
     .catch((error) => {
       dispatch(loginErrorAction('Login error'));
     });
+
+  return result;
+}
+
+// =============================================================================
+// Search
+// =============================================================================
+
+export function getSearchData(data: object) {
+  const result = fetch(`/search`, data, 'post');
+
+  dispatch(fetchSearchRequest());
+
+  result
+    .then((response) => {
+      const { data: { address }, status } = response;
+
+      if (status === 200) {
+
+        switch (address.type) {
+          case 'dapp':
+            if (address.dapp != null) {
+              dispatch(fetchDappsSuccess(address.dapp));
+              dispatch(fetchSearchSuccess({
+                type: address.type,
+                dapp: address.dapp.id,
+              }));
+            } else {
+              dispatch(fetchSearchSuccess(address));
+            }
+            break;
+
+          default:
+            dispatch(fetchSearchSuccess(address));
+            break;
+        }
+      } else {
+        dispatch(fetchSearchFailure('Something wrong!'));
+      }
+    })
+    .catch((error) => {
+      dispatch(fetchSearchFailure('Something wrong!'));
+    });
+
+  return result;
+}
+
+export function addContractUiToDash(contractUiId: any, data: any) {
+  const result = fetch(`/contracts_uis/${contractUiId}/add-to-dashboard`, data, 'post');
+
+  result
+    .then((response) => {
+      const { data, status } = response;
+
+      if (status === 200) {
+        if ('error' in data) {
+          dispatch(fetchSearchFailure(data.error));
+        } else if ('ok' in data) {
+          getDapps();
+        }
+      }
+    })
+    .catch((error) => console.error(error));
+
+  return result;
+}
+
+export function createDappFromAbi(data: any) {
+  const result = fetch(`/dapps/create-from-abi`, data, 'post');
+
+  result
+    .then((response) => {
+      const { data, status } = response;
+
+      if (status === 200) {
+        if ('error' in data) {
+          dispatch(fetchSearchFailure(data.error));
+        } else if ('ok' in data) {
+          getDapps();
+        }
+      }
+    })
+    .catch((error) => console.error(error));
 
   return result;
 }

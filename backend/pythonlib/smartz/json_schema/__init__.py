@@ -36,6 +36,7 @@ def assert_conforms2schema(data, full_schema):
     except ValidationError as exc:
         assert False, str(exc)
 
+
 def is_conforms2schema(data, full_schema):
     try:
         validate(data, full_schema)

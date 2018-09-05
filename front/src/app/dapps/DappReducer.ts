@@ -1,6 +1,5 @@
-import { cloneDeep, find, findIndex } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 
-import { dappList } from '../../api/mock/dapps';
 import { generateId } from '../../helpers/utils';
 
 
@@ -62,19 +61,19 @@ const dapps = (state = initState, action) => {
 
 
     case 'VIEW_FUNC_RESULT':
-      const { dappId, funcName, result } = action;
+      const { dappId, result } = action;
 
       if (nextState.dappList.has(dappId)) {
         let dapp = nextState.dappList.get(dappId);
 
-        if (dapp.funcResults && dapp.funcResults[funcName] === result) {
-          return state;
-        } else {
-          if (!dapp.funcResults) {
-            dapp.funcResults = {};
+        if ('funcResults' in dapp) {
+          if (isEqual(result, dapp.funcResults)) {
+            return state;
+          } else {
+            dapp.funcResults = result;
           }
-
-          dapp.funcResults[funcName] = result;
+        } else {
+          dapp.funcResults = result;
         }
       }
 

@@ -85,6 +85,8 @@
         padding-top: 10px;
         padding-bottom: 10px;
 
+        word-break: break-word;
+
         color: #FFFFFF;
     }
 
@@ -98,11 +100,17 @@
     }
 
     .event-value {
+        flex: 1;
+
         margin: 0;
 
         font-family: @f-cera-pro-500;
         font-size: 16px;
         line-height: 20px;
+
+        &.color {
+            color: #E4FF33;
+        }
     }
 
     .event-result {
