@@ -1,16 +1,13 @@
 import * as React from 'react';
 
+import Text from '../../../ui-kit/text/Text';
+import Title from '../../../ui-kit/title/Title';
+
 import './ListItem.less';
 
 
 interface IListItemProps {
   dapp: any;
-  // dappName: string;
-  // transCount: number | string;
-  // ethVolume: number | string;
-  // userNumber: number | string;
-  // hour24Number: number | string;
-  // weekNumber: number | string;
 }
 
 export default class ListItem extends React.PureComponent<IListItemProps, any> {
@@ -21,23 +18,22 @@ export default class ListItem extends React.PureComponent<IListItemProps, any> {
       description,
       transCount,
       ethVolume,
-      userNumber,
       hour24Number,
       weekNumber,
     } } = this.props;
 
     return (
-      <div className="list-item flex">
-        <section className="id">{id}</section>
-        <section className="info">
-          <section className="dapp-name">{dappName}</section>
-          <section className="description">{description}</section>
+      <div className="list-item">
+        <Title type="small" className="id list-dapp-id">{id}</Title>
+        <section className="image list-dapp-image">{}</section>
+        <section className="list-dapp-info">
+          <Title type="small" className="dapp-name">{dappName}</Title>
+          <Text className="description">{description}</Text>
         </section>
-        <section className="transaction-count">{transCount}</section>
-        <section className="eth-volume">{ethVolume}</section>
-        <section className="user-number">{userNumber}</section>
-        <section className="hour24">{hour24Number}</section>
-        <section className="week">{weekNumber}</section>
+        <Title type="small" className="list-dapp-transaction-count">{transCount}</Title>
+        <Title type="small" className="list-dapp-eth-volume">{ethVolume} ETH</Title>
+        <Title type="small" className="list-dapp-hour24">{hour24Number}</Title>
+        <Title type="small" className="list-dapp-week">{weekNumber}</Title>
       </div>
     );
   }

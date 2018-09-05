@@ -1,0 +1,21 @@
+.sort-direction {
+    cursor: pointer;
+
+    .sort-direction-text {
+        margin-right: 3px;
+    }
+
+    .sort-direction-icon {
+        width: 11px;
+
+        transition: transform .2s 0s ease;
+
+        &.up {
+            transform: rotateZ(-180deg);
+        }
+
+        svg > polygon {
+            fill: black;
+        }
+    }
+}

@@ -16,7 +16,7 @@ export default class Text extends React.PureComponent<ITextProps, {}> {
     return (
       <p className={classNames('component-text', className, {
         'component-text-big': type === 'big',
-        'component-text-medium': type === 'normal',
+        'component-text-normal': type === 'normal',
         'component-text-caption': type === 'caption',
       })}>
         {children}

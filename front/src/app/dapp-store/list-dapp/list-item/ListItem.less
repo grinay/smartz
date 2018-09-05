@@ -1,36 +1,24 @@
 .list-item {
-    .id {
-        width: 80px;
+    display: flex;
+
+    padding: 15px 0;
+
+    cursor: pointer;
+
+    border-bottom: 1px solid #E5E9F1;
+
+    &:last-child {
+        border: none;
     }
 
-    .info {
-        width: 380px;
-        // .dapp-name {
-        // }
+    .image {
+        width: 45px;
+        height: 45px;
 
-        // .description {
-
-        // }
+        border: 1px solid lightgrey;
     }
 
-
-    .transaction-count {
-        width: 40px;
-    }
-
-    .eth-volume {
-        width: 90px;
-    }
-
-    .user-number {
-        width: 50px;
-    }
-
-    .hour24 {
-        width: 80px;
-    }
-
-    .week {
-        width: 80px;
+    &:hover {
+        background-color: darken(white, 2);
     }
 }

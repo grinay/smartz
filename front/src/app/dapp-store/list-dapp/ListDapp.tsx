@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import ListItem from './list-item/ListItem';
+import SortBar from './sort-bar/SortBar';
 
 import './ListDapp.less';
 
@@ -41,6 +42,7 @@ export default class ListDapp extends React.PureComponent<{}, {}> {
   public render() {
     return (
       <div className="list-dapp">
+        <SortBar />
         {list.map((dapp, i) => <ListItem key={i} dapp={dapp} />)}
       </div>
     );
