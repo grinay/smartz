@@ -18,3 +18,14 @@ export const getBlockchainByAddress = (address: string): Blockchain => {
 export const isBlockchainAddress = (str: string): boolean => {
   return isAddress(str) || EosClass.isAddress(str);
 };
+
+export const formatBlockchainToString = (blockchain: Blockchain): string | null => {
+  switch (blockchain) {
+    case 'ethereum':
+      return 'Ethereum';
+    case 'eos':
+      return 'EOS';
+    default:
+      return null;
+  }
+};

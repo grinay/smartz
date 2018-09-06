@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 import Text from '../../../ui-kit/text/Text';
 import Title from '../../../ui-kit/title/Title';
@@ -23,7 +24,7 @@ export default class ListItem extends React.PureComponent<IListItemProps, any> {
     } } = this.props;
 
     return (
-      <div className="list-item">
+      <Link to={`/dapp-store/${id}`} className="list-item">
         <Title type="small" className="id list-dapp-id">{id}</Title>
         <section className="image list-dapp-image">{}</section>
         <section className="list-dapp-info">
@@ -34,7 +35,7 @@ export default class ListItem extends React.PureComponent<IListItemProps, any> {
         <Title type="small" className="list-dapp-eth-volume">{ethVolume} ETH</Title>
         <Title type="small" className="list-dapp-hour24">{hour24Number}</Title>
         <Title type="small" className="list-dapp-week">{weekNumber}</Title>
-      </div>
+      </Link>
     );
   }
 }

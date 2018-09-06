@@ -54,6 +54,8 @@
     "binaryen": "48.0.0",
     "classnames": "^2.2.5",
     "dateformat": "^3.0.3",
+    "echarts": "^4.1.0",
+    "echarts-for-react": "^2.0.14",
     "eosjs": "^14.1.0",
     "ethereumjs-util": "^5.2.0",
     "ethjs": "^0.3.1",

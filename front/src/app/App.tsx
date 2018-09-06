@@ -7,6 +7,7 @@ import { goToDocsRoute } from '../helpers/utils';
 import Auth from './auth/Auth';
 import Callback from './auth/callback/Callback';
 import Login from './auth/login/LoginContainer';
+import CnDappPage from './cn-dapp-page/CnDappPage';
 import RouteWrapper from './common/route-wrapper/RouteWrapper';
 import CtorAdd from './ctor-add/CtorAddContainer';
 import DappStore from './dapp-store/DappStore';
@@ -98,8 +99,14 @@ class App extends React.Component<IAppProps, IAppState> {
     return (
       <Switch>
         <Route
+          exact={true}
           path="/dapp-store"
           render={(props) => <DappStore {...props} />}
+        />
+
+        <Route
+          path="/dapp-store/:id"
+          render={(props) => <CnDappPage {...props} />}
         />
 
         <RouteWrapper

@@ -12,7 +12,6 @@ const list = [{
   description: 'A fact-checking news platform run by the community',
   transCount: 15,
   ethVolume: 889,
-  userNumber: 6,
   hour24Number: 34,
   weekNumber: 567,
 },
@@ -22,7 +21,6 @@ const list = [{
   description: 'Brings Ethereum to your browser.',
   transCount: 15,
   ethVolume: 889,
-  userNumber: 6,
   hour24Number: 34,
   weekNumber: 567,
 },
@@ -32,7 +30,6 @@ const list = [{
   description: 'Collect and breed digital cats',
   transCount: 15,
   ethVolume: 889,
-  userNumber: 6,
   hour24Number: 34,
   weekNumber: 567,
 }];
