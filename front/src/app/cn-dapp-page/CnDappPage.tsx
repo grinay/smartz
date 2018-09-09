@@ -38,22 +38,27 @@ export default class CnDappPage extends React.PureComponent<{}, {}> {
         </div>
 
         <div className="content flex">
-          <div className="content-container">
-            <p className="full-description">{rrr.fullDescription}</p>
+          <div className="content-container flex-h">
+            <section className="main">
+              <p className="full-description">{rrr.fullDescription}</p>
 
-            <div className="divider" />
+              <div className="divider" />
 
-            <div className="widget-container">
-              <CnInfoWidget className="widget" title="Rank">
-                {rrr.id}
-              </CnInfoWidget>
-              <CnInfoWidget className="widget" title="Blockchain">
-                {formatBlockchainToString(rrr.blockchain as Blockchain)}
-              </CnInfoWidget>
-            </div>
+              <div className="widget-container">
+                <CnInfoWidget className="widget" title="Rank">
+                  {rrr.id}
+                </CnInfoWidget>
+                <CnInfoWidget className="widget" title="Blockchain">
+                  {formatBlockchainToString(rrr.blockchain as Blockchain)}
+                </CnInfoWidget>
+              </div>
 
-            <CnDappChart />
+              <CnDappChart />
+            </section>
 
+            <aside className="aside">
+              <p>sfds </p>
+            </aside>
           </div>
         </div>
       </div>

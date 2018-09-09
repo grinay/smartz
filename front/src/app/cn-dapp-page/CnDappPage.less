@@ -1,4 +1,6 @@
 .cn-dapp-page {
+    background-color: #FFFFFF;
+
     .header {
         height: 168px;
 
@@ -31,21 +33,35 @@
             width: 980px;
             padding: 0 35px;
 
-            .divider {
-                margin: 30px 0;
+            .main {
+                width: calc(980px - 234px);
 
-                opacity: .3;
-                border-bottom: 1px solid #ABABAB;
+                border: 1px solid black;
+
+
+                .divider {
+                    margin: 30px 0;
+
+                    opacity: .3;
+                    border-bottom: 1px solid #ABABAB;
+                }
+
+                .widget-container {
+                    display: flex;
+
+                    margin-bottom: 30px;
+
+                    .widget {
+                        margin-right: 25px;
+                    }
+                }
             }
 
-            .widget-container {
-                display: flex;
+            .aside {
+                width: 234px;
+                padding-left: 34px;
 
-                margin-bottom: 30px;
-
-                .widget {
-                    margin-right: 25px;
-                }
+                border: 1px solid black;
             }
         }
     }
