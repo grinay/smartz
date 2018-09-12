@@ -4,21 +4,54 @@ import * as React from 'react';
 import './CnDappChart.less';
 
 
-export default class CnDappChart extends React.PureComponent<{}, {}> {
+interface ICnDappChartProps {
+  chartData: {
+    x: number[];
+    y: string[];
+  };
+}
+
+interface ICnDappChartState { }
+
+export default class CnDappChart extends React.PureComponent
+  <ICnDappChartProps, ICnDappChartState> {
   public render() {
+    const { chartData } = this.props;
+
+    const option = {
+      color: ['#3398DB'],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: chartData.y,
+          axisTick: {
+            alignWithLabel: false,
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+        },
+      ],
+      series: [
+        {
+          type: 'bar',
+          barWidth: '80%',
+          data: chartData.x,
+        },
+      ],
+    };
+
     return (
       <div className="cn-dapp-chart" >
-        <ReactEcharts option={{
-          xAxis: {
-            data: ['shirt', 'cardign', 'chiffon shirt', 'pants', 'heels', 'socks'],
-          },
-          yAxis: {},
-          series: [{
-            name: 'Sales',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20],
-          }],
-        }} />
+        <ReactEcharts option={option} />
       </div>
     );
   }

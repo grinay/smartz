@@ -56,10 +56,7 @@
       true,
       "array"
     ],
-    "max-line-length": [
-      true,
-      180
-    ],
+    "max-line-length": false,
     "new-parens": true,
     "no-arg": true,
     "no-conditional-assignment": false,

@@ -7,11 +7,12 @@ import './CopyButton.less';
 interface ICopyButtonProps {
   className?: string;
   onClick: () => void;
+  isShowText?: boolean;
 }
 
 export default class CopyButton extends React.PureComponent<ICopyButtonProps, {}> {
   public render() {
-    const { className, onClick } = this.props;
+    const { className, onClick, isShowText = true } = this.props;
 
     return (
       <div className={`copy-button ${className}`} onClick={onClick}>
@@ -19,7 +20,7 @@ export default class CopyButton extends React.PureComponent<ICopyButtonProps, {}
           className="img-copy-button"
           src={require('../../../assets/img/common/components/copy.svg')}
         />
-        <span>Copy</span>
+        {isShowText && <span>Copy</span>}
       </div>
     );
   }

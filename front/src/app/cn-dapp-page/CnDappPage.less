@@ -10,13 +10,13 @@
             display: flex;
 
             width: 980px;
-            padding: 40px 35px;
+            padding: 40px 0;
 
             .img {
                 width: 60px;
                 height: 60px;
 
-                border: 1px solid black;
+                border: 1px solid gray;
                 border-radius: 12px;
             }
 
@@ -31,16 +31,12 @@
     .content {
         .content-container {
             width: 980px;
-            padding: 0 35px;
 
             .main {
-                width: calc(980px - 234px);
-
-                border: 1px solid black;
-
+                flex: 1;
 
                 .divider {
-                    margin: 30px 0;
+                    margin: 30px 0 10px;
 
                     opacity: .3;
                     border-bottom: 1px solid #ABABAB;
@@ -48,20 +44,33 @@
 
                 .widget-container {
                     display: flex;
+                    align-items: stretch;
 
                     margin-bottom: 30px;
 
                     .widget {
-                        margin-right: 25px;
+                        margin-right: 30px;
+
+                        .widget-blchn {
+                            width: 30px;
+                        }
                     }
                 }
             }
 
             .aside {
-                width: 234px;
-                padding-left: 34px;
+                width: 268px;
+                margin-left: 34px;
 
-                border: 1px solid black;
+                .aside-info {
+                    flex-wrap: wrap;
+                    justify-content: flex-start;
+
+                    .widget {
+                        width: 50%;
+                        margin: 12px 0;
+                    }
+                }
             }
         }
     }
