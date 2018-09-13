@@ -8,7 +8,9 @@ import { blockchains, ethConstants } from '../../../constants/constants';
 import { getFuncType } from '../../../helpers/common';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import Eos from '../../../helpers/eos';
-import { decodeEventOfContract, getAccountAddress, processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
+import {
+    decodeEventOfContract, getAccountAddress, processControlForm, web3Local,
+} from '../../../helpers/eth';
 import { getUiSchemaFromFunc } from '../../../helpers/schema';
 import { tryParce } from '../../../helpers/utils';
 import store from '../../../store/store';
@@ -220,7 +222,7 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
   private getReceipt(tx: string, dataFetch: any) {
     const { dapp } = this.props;
 
-    w3.eth.getTransactionReceipt(tx, (err, receipt) => {
+    web3Local.eth.getTransactionReceipt(tx, (err, receipt) => {
       if (err) {
         console.error('err :', err);
       }

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { blockchains, contractProcessStatus, ethConstants } from '../../../constants/constants';
 import Eos from '../../../helpers/eos';
-import { getNetworkId, getTxReceipt, web3 as w3 } from '../../../helpers/eth';
+import { getNetworkId, getTxReceipt, web3Local } from '../../../helpers/eth';
 import { getCtorUrl, sendStatusDappEvent } from '../../../helpers/statictics';
 import Loader from '../../common/loader/Loader';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
@@ -59,10 +59,10 @@ export default class DeployStep2 extends React.PureComponent<IDeployStep2Props, 
 
     switch (blockchain) {
       case blockchains.ethereum:
-        w3.eth.sendTransaction(
+        web3Local.eth.sendTransaction(
           {
             data: `0x${bin}`,
-            value: w3.toWei(price, 'ether'),
+            value: web3Local.toWei(price, 'ether'),
             gas: ethConstants.gas,
             gasPrice: ethConstants.gasPrice,
           },

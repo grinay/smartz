@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 
-import { web3 } from "../../../../helpers/eth";
+import { web3Local } from "../../../../helpers/eth";
 
 export default class FileHashWidget extends PureComponent {
   constructor(props) {
@@ -39,7 +39,7 @@ export default class FileHashWidget extends PureComponent {
     } else {
       this.hashFile(file)
         .then(fileAsBinaryString => {
-          const hash = web3.sha3(this.buf2hex(fileAsBinaryString), { encoding: 'hex' });
+          const hash = web3Local.sha3(this.buf2hex(fileAsBinaryString), { encoding: 'hex' });
 
           this.setState({ msg: hash }, onChange(hash));
         })

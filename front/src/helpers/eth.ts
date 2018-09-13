@@ -6,20 +6,32 @@ import { decodeEvent } from 'ethjs-abi';
 declare global {
   // tslint:disable-next-line:interface-name
   interface Window {
-    web3: any;
-    Web3: any;
+    web3?: any;
+    Web3?: any;
+    ethereum?: any;
   }
 }
 
-export let web3 = window.Web3 ? new window.Web3(window.web3.currentProvider) : undefined;
+export let web3Local;
+window.addEventListener('load', () => {
+  if (typeof window.web3 === 'undefined') {
+    // Listen for provider injection
+    window.addEventListener('message', ({ data }) => {
+      if (data && 'type' in data && data.type === 'ETHEREUM_PROVIDER_SUCCESS') {
+        web3Local = new window.Web3(window.ethereum);
+      }
+    });
+    // Request provider
+    window.postMessage({ type: 'ETHEREUM_PROVIDER_REQUEST' }, '*');
+  } else {
+    web3Local = new window.Web3(window.web3.currentProvider);
+  }
+});
 
-export const processControlForm = (
-  contract_abi /* abi array */,
-  function_spec /* ETHFunctionSpec */,
-  form_data /* data from react-jsonschema-form */,
-  contract_address,
-  callback,
-) => {
+
+// export let web3 = window.Web3 ? new window.Web3(window.web3.currentProvider) : undefined;
+
+export const processControlForm = (abi, functionSpec, formData, address, callback) => {
   // preparing args
 
   const transactionParameters = {
@@ -29,56 +41,56 @@ export const processControlForm = (
   };
 
   // converts user input to web3-compatible value
-  function input2ethereum(input, abi_type) {
-    if (abi_type === 'bool') return input ? 1 : 0;
+  function input2ethereum(input, abiType) {
+    if (abiType === 'bool') return input ? 1 : 0;
 
-    if (abi_type === 'uint256' || abi_type === 'uint' || abi_type === 'uint128')
-      return new web3.BigNumber(input);
+    if (abiType === 'uint256' || abiType === 'uint' || abiType === 'uint128')
+      return new web3Local.BigNumber(input);
 
     if (
-      abi_type === 'uint8' ||
-      abi_type === 'uint16' ||
-      abi_type === 'uint32' ||
-      abi_type === 'uint64'
+      abiType === 'uint8' ||
+      abiType === 'uint16' ||
+      abiType === 'uint32' ||
+      abiType === 'uint64'
     )
       return input * 1;
 
     if (
-      abi_type === 'address' ||
-      abi_type === 'bytes32' ||
-      abi_type === 'bytes' ||
-      abi_type === 'string'
+      abiType === 'address' ||
+      abiType === 'bytes32' ||
+      abiType === 'bytes' ||
+      abiType === 'string'
     )
       return input; // 0x...
 
-    if (abi_type.endsWith('[]')) {
+    if (abiType.endsWith('[]')) {
       if (!(input instanceof Array)) throw new Error('input is not an array');
 
-      const item_type = abi_type.substr(0, abi_type.length - 2);
+      const item_type = abiType.substr(0, abiType.length - 2);
       return input.map((v) => input2ethereum(v, item_type));
     }
 
-    throw new Error('type not supported: ' + abi_type);
+    throw new Error('type not supported: ' + abiType);
   }
 
-  if (!(form_data instanceof Array)) throw new Error('form_data is not an array');
+  if (!(formData instanceof Array)) throw new Error('formData is not an array');
 
-  if (function_spec.type !== undefined && function_spec.type === 'fallback') {
+  if (functionSpec.type !== undefined && functionSpec.type === 'fallback') {
     let value;
     let result;
 
-    if (form_data.length === 1) {
-      value = form_data[0];
+    if (formData.length === 1) {
+      value = formData[0];
     } else {
       throw new Error('Incorrect form-data');
     }
 
     try {
-      result = web3.eth.sendTransaction(
+      result = web3Local.eth.sendTransaction(
         {
           ...transactionParameters,
           value,
-          to: contract_address,
+          to: address,
         },
         callback,
       );
@@ -89,58 +101,58 @@ export const processControlForm = (
     return result;
   }
 
-  let function_abi;
-  contract_abi.forEach((info) => {
-    if (info.type === 'function' && info.name === function_spec.name) function_abi = info;
+  let functionAbi;
+  abi.forEach((info) => {
+    if (info.type === 'function' && info.name === functionSpec.name) functionAbi = info;
   });
-  if (!function_abi) throw new Error('not found abi of function ' + function_spec.name);
+  if (!functionAbi) throw new Error('not found abi of function ' + functionSpec.name);
 
-  // get then delete 'Ether amount'(ethCount) prop from form_data
-  let form_data_arr = [];
+  // get then delete 'Ether amount'(ethCount) prop from formData
+  let formDataArr = [];
   let value = '';
-  if (form_data.length > 0 && function_spec.payable) {
+  if (formData.length > 0 && functionSpec.payable) {
     // always last element in arr
-    value = form_data[form_data.length - 1];
+    value = formData[formData.length - 1];
     // delete last element
-    form_data_arr = form_data.slice(0, form_data.length - 1);
+    formDataArr = formData.slice(0, formData.length - 1);
   } else {
-    form_data_arr = form_data;
+    formDataArr = formData;
   }
 
-  const args_converted2abi = form_data_arr.map((input, index) => {
-    return input2ethereum(input, function_abi.inputs[index].type);
+  const argsConverted2abi = formDataArr.map((input, index) => {
+    return input2ethereum(input, functionAbi.inputs[index].type);
   });
 
   // calling/transacting
 
-  const CtorDapp = web3.eth.contract(contract_abi).at(contract_address);
+  const CtorDapp = web3Local.eth.contract(abi).at(address);
 
   // non-constant - there will be a transaction instead of a local call
-  if (!function_abi.constant) {
+  if (!functionAbi.constant) {
     if (value !== '') transactionParameters['value'] = value;
 
-    args_converted2abi.push(transactionParameters);
+    argsConverted2abi.push(transactionParameters);
   }
 
   let result;
   try {
-    result = CtorDapp[function_spec.name](...args_converted2abi, callback);
+    result = CtorDapp[functionSpec.name](...argsConverted2abi, callback);
   } catch (e) {
     console.warn(e);
   }
 
   return result;
   /*
-  if (function_abi.constant) {
+  if (functionAbi.constant) {
       // show in UI
       result.forEach(v => {l(v)});
   }
   */
 };
 
-// ALSO: for each function_spec
-//      if (function_spec.constant && !function_spec.payable && 0 === function_spec.inputs.length)
-//          processControlForm(contract_abi, function_spec, [], contract_address); // right away!
+// ALSO: for each functionSpec
+//      if (functionSpec.constant && !functionSpec.payable && 0 === functionSpec.inputs.length)
+//          processControlForm(abi, functionSpec, [], address); // right away!
 
 // ALSO: render box with processControlForm() for each dashboard function
 
@@ -175,7 +187,7 @@ export const processResult = (res?, outputs?) => {
 };
 
 export const getNetworkId = (cb) => {
-  web3.version.getNetwork((err, netId) => {
+  web3Local.version.getNetwork((err, netId) => {
     // tslint:disable-next-line:no-unused-expression
     err && console.error(err);
     // tslint:disable-next-line:no-unused-expression
@@ -214,11 +226,11 @@ export const getNetworkEtherscanAddress = (netId) => {
 };
 
 export const getMetamaskStatus = () => {
-  if (!window.Web3) {
+  if (!web3Local) {
     return 'noMetamask';
   }
 
-  if (!web3.eth.accounts[0]) {
+  if (!web3Local.eth.accounts[0]) {
     return 'unlockMetamask';
   }
 
@@ -226,7 +238,7 @@ export const getMetamaskStatus = () => {
 };
 
 export const getTxReceipt = (txHash, cb) => {
-  web3.eth.getTransactionReceipt(txHash, (err, receipt) => {
+  web3Local.eth.getTransactionReceipt(txHash, (err, receipt) => {
     if (null == receipt) window.setTimeout(() => getTxReceipt(txHash, cb), 500);
     else {
       cb(receipt);
@@ -251,7 +263,7 @@ export const isTx = (hash) => {
 };
 
 export const getAccountAddress = () => {
-  return web3.eth.defaultAccount;
+  return web3Local.eth.defaultAccount;
 };
 
 /**
@@ -275,7 +287,7 @@ export const decodeEventOfContract = (abi, log) => {
         })
         .join(',') +
       ')';
-    let hash = web3.sha3(signature);
+    let hash = web3Local.sha3(signature);
     if (hash === log.topics[0]) {
       eventAbi = item;
       break;

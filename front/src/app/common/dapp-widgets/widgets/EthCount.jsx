@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import BaseWidget from './BaseWidget';
-import { web3 } from '../../../../helpers/eth';
+import { web3Local } from '../../../../helpers/eth';
 import { moneyAbbr2Symbol } from '../../../../helpers/localization';
 
 export default class EthCount extends BaseWidget {
@@ -47,8 +47,8 @@ export default class EthCount extends BaseWidget {
 
   render() {
     const { currency, symbol } = this.state;
-    let res = web3.toBigNumber(this.getResult(0));
-    res = res.div(web3.toWei(1, 'ether'));
+    let res = web3Local.toBigNumber(this.getResult(0));
+    res = res.div(web3Local.toWei(1, 'ether'));
 
     return currency === null
       ? res.valueOf()

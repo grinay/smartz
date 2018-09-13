@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 
-import { web3 } from "../../../helpers/eth";
+import { web3Local } from "../../../helpers/eth";
 
 export default class EthCount extends PureComponent {
 
@@ -10,7 +10,7 @@ export default class EthCount extends PureComponent {
 
     if (!isNaN(stringValue)) {
       // "+" is operator for strict type conversion to type "number"
-      onChange(web3.toWei(stringValue, 'ether'));
+      onChange(web3Local.toWei(stringValue, 'ether'));
     } else {
       onChange('');
     }

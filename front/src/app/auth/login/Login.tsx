@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import * as api from '../../../api/apiRequests';
 import { blockchains } from '../../../constants/constants';
 import Eos from '../../../helpers/eos';
-import { getMetamaskStatus, web3 } from '../../../helpers/eth';
+import { getMetamaskStatus, web3Local } from '../../../helpers/eth';
 import { sendLoginEvent } from '../../../helpers/statictics';
 import store from '../../../store/store';
 import Alert from '../../common/Alert';
@@ -45,7 +45,7 @@ class Login extends React.Component<ILoginProps, {}> {
         alert('Install metamask first');
         break;
       case 'okMetamask':
-        api.startLogin(blockchains.ethereum, web3.eth.accounts[0]);
+        api.startLogin(blockchains.ethereum, web3Local.eth.accounts[0]);
         this.stage = 1;
       default:
         break;
@@ -75,7 +75,7 @@ class Login extends React.Component<ILoginProps, {}> {
 
       switch (blockchain) {
         case blockchains.ethereum:
-          web3.personal.sign(web3.toHex(signMsg), identity, (error, signedMsg) => {
+          web3Local.personal.sign(web3Local.toHex(signMsg), identity, (error, signedMsg) => {
             if (error) {
               console.warn(error);
               dispatch(loginErrorAction('Sign canceled'));
