@@ -1,15 +1,18 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import { blockchains } from '../../../constants/constants';
 import { getFunctionsByType, getViewFunctionConstants } from '../../../helpers/common';
 import { IContractUi } from '../../../helpers/entities/contract-ui';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import { Blockchain } from '../../../helpers/entities/types';
+import history from '../../../helpers/history';
 import ImageDefault from '../../common/image-default/ImageDefault';
 import Loader from '../../common/loader/Loader';
 import TypeDisplay from '../../common/type-display/TypeDisplay';
+import DropdownBox from '../../ui-kit/dropdown-box/DropdownBox';
+import SwitchBox from '../../ui-kit/switch-box/SwitchBox';
+import Text from '../../ui-kit/text/Text';
 import Title from '../../ui-kit/title/Title';
 
 import './DappCard.less';
@@ -34,6 +37,7 @@ interface IDappCardState {
     title: string;
     description: string;
   };
+  isOpenControls: boolean;
 }
 
 export default class DappCard extends React.PureComponent<IDappCardProps, IDappCardState> {
@@ -42,11 +46,26 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
 
     this.state = {
       data: null,
+      isOpenControls: false,
     };
 
     this.updateConstants = this.updateConstants.bind(this);
     this.prepareData = this.prepareData.bind(this);
     this.fillDashFuncs = this.fillDashFuncs.bind(this);
+    this.goTo = this.goTo.bind(this);
+    this.clickControls = this.clickControls.bind(this);
+  }
+
+  private clickControls(e) {
+    e.stopPropagation();
+
+    this.setState((prevState) => ({
+      isOpenControls: !prevState.isOpenControls,
+    }));
+  }
+
+  private goTo(path: string) {
+    history.push(path);
   }
 
   private updateConstants(data: IDappCardState['data'], type: IDappCardProps['type']) {
@@ -154,7 +173,7 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
 
   public render() {
     const { className = null, type } = this.props;
-    const { data } = this.state;
+    const { data, isOpenControls } = this.state;
 
     let viewFuncContent;
     if (data.blockchain === blockchains.ethereum) {
@@ -187,7 +206,24 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
     }
 
     const content = (
-      <div>
+      <div className="dapp-card__container">
+        <SwitchBox
+          isPush={isOpenControls}
+          className="dapp-card__controls flex"
+          pushedClassName="dapp-card__controls-pushed"
+          onClick={this.clickControls}
+        >
+          <i className="mdi mdi-dots-vertical mdi-icon flex-v" />
+          <DropdownBox
+            className="dapp-card__dropdown"
+            isOpen={isOpenControls}
+          >
+            <div className="dropdown-item">
+              <i className="mdi mdi-plus mdi-icon flex-v" />
+              <Text>Create another Multisignature Wallet</Text>
+            </div>
+          </DropdownBox>
+        </SwitchBox>
         <div className="dapp-card__wrapper">
           <div className="dapp-card__logo">
             <ImageDefault src={data.image} name={data.title} />
@@ -203,18 +239,17 @@ export default class DappCard extends React.PureComponent<IDappCardProps, IDappC
       </div>
     );
 
-    if (type === 'dapp') {
-      return (
-        <Link to={`/dapp/${data.id}`} className={classNames('dapp-card', className)}>
-          {content}
-        </Link>
-      );
-    } else {
-      return (
-        <article className={classNames('dapp-card', className)}>
-          {content}
-        </article>
-      );
-    }
+    return (
+      <article
+        className={classNames('dapp-card', className)}
+        onClick={() => {
+          if (type === 'dapp') {
+            this.goTo(`/dapp/${data.id}`);
+          }
+        }}
+      >
+        {content}
+      </article>
+    );
   }
 }

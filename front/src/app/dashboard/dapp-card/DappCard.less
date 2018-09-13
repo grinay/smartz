@@ -4,96 +4,144 @@
     display: block;
     overflow: hidden;
 
-    height: 250px;
-    padding: 20px;
-
+    cursor: pointer;
     text-decoration: none;
 
     color: #000000;
     border-radius: 4px;
     background-color: rgba(255,255,255,1);
 
-    .dapp-card__wrapper {
-        display: flex;
-        flex-direction: row;
+    .dapp-card__container {
+        position: relative;
 
-        margin-top: 7px;
-        margin-bottom: 7px;
+        height: 250px;
+        padding: 20px;
 
-        .dapp-card__logo {
-            overflow: hidden;
+        .dapp-card__controls {
+            position: absolute;
+            top: 8px;
+            right: 2px;
 
-            width: 50px;
-            height: 50px;
-            margin-right: 15px;
+            width: 34px;
+            height: 34px;
 
-            border-radius: 8px;
-        }
+            border-radius: 4px;
 
-        .dapp-card__info {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            justify-content: center;
+            .mdi-icon {
+                color: lightgray;
 
-            margin: 0;
-
-            .dapp-card__name {
-                margin-bottom: 3px;
-
-                opacity: .9;
-
-                font-family: 'Cera Pro 700', Arial, sans-serif;
-                font-size: 17px;
-                font-size: 15px;
-                line-height: 20px;
+                font-size: 23px;
+                line-height: 23px;
             }
 
-            .dapp-card__description {
-                margin-top: 0;
+            &:hover {
+                background-color: #171718;
 
-                opacity: .7;
-
-                font-family: 'Cera Pro 400', Arial, sans-serif;
-                font-size: 12px;
-                line-height: 16px;
+                .mdi-icon {
+                    color: white;
+                }
             }
         }
-    }
 
-    .dapp-card__function-list {
-        margin-top: 8px;
-        padding: 0;
+        .dapp-card__controls-pushed {
+            background-color: #171718;
 
-        list-style-type: none;
+            .mdi-icon {
+                color: white;
+            }
+        }
 
-        .dapp-card__function-item {
+        .dapp-card__dropdown {
+            position: absolute;
+            top: 40px;
+            right: 0;
+
+            width: 233px;
+        }
+
+        .dapp-card__wrapper {
             display: flex;
-            align-items: center;
+            flex-direction: row;
 
-            height: 40px;
+            margin-top: 7px;
+            margin-bottom: 7px;
 
-            box-shadow: inset 0 -1px rgba(229,233,241,1);
+            .dapp-card__logo {
+                overflow: hidden;
 
-            &:last-child {
-                box-shadow: none;
+                width: 50px;
+                height: 50px;
+                margin-right: 15px;
+
+                border-radius: 8px;
             }
 
-            .dapp-card__function-title {
-                display: inline-block;
+            .dapp-card__info {
+                display: flex;
+                flex: 1;
+                flex-direction: column;
+                justify-content: center;
 
-                width: 50%;
                 margin: 0;
+
+                .dapp-card__name {
+                    margin-bottom: 3px;
+
+                    opacity: .9;
+
+                    font-family: 'Cera Pro 700', Arial, sans-serif;
+                    font-size: 17px;
+                    font-size: 15px;
+                    line-height: 20px;
+                }
+
+                .dapp-card__description {
+                    margin-top: 0;
+
+                    opacity: .7;
+
+                    font-family: 'Cera Pro 400', Arial, sans-serif;
+                    font-size: 12px;
+                    line-height: 16px;
+                }
             }
+        }
 
-            .dapp-card__function-value {
-                width: 50%;
-                padding-left: 5px;
+        .dapp-card__function-list {
+            margin-top: 8px;
+            padding: 0;
 
-                font-family: @f-cera-pro-500;
-                font-size: 16px;
-                line-height: 20px;
+            list-style-type: none;
+
+            .dapp-card__function-item {
+                display: flex;
+                align-items: center;
+
+                height: 40px;
+
+                box-shadow: inset 0 -1px rgba(229,233,241,1);
+
+                &:last-child {
+                    box-shadow: none;
+                }
+
+                .dapp-card__function-title {
+                    display: inline-block;
+
+                    width: 50%;
+                    margin: 0;
+                }
+
+                .dapp-card__function-value {
+                    width: 50%;
+                    padding-left: 5px;
+
+                    font-family: @f-cera-pro-500;
+                    font-size: 16px;
+                    line-height: 20px;
+                }
             }
         }
     }
 }
+
