@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import * as api from '../../../api/apiRequests';
 import { blockchains } from '../../../constants/constants';
 import Eos from '../../../helpers/eos';
-import { getMetamaskStatus, web3Local } from '../../../helpers/eth';
+import { getMetamaskStatus, getWeb3Instance, web3Local } from '../../../helpers/eth';
 import { sendLoginEvent } from '../../../helpers/statictics';
 import store from '../../../store/store';
 import Alert from '../../common/Alert';
@@ -40,6 +40,9 @@ class Login extends React.Component<ILoginProps, {}> {
     switch (getMetamaskStatus()) {
       case 'unlockMetamask':
         alert('Unlock metamask first');
+        break;
+      case 'notAvailable':
+        getWeb3Instance();
         break;
       case 'noMetamask':
         alert('Install metamask first');

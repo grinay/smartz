@@ -137,7 +137,9 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     const { dapp, metamaskStatus } = this.props;
 
     if (dapp && dapp.blockchain === blockchains.ethereum && !this.state.updateCycleActive) {
-      if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
+      if (metamaskStatus === 'noMetamask' ||
+        metamaskStatus === 'unlockMetamask' ||
+        metamaskStatus === 'notAvailable') {
         return null;
       }
       this.getConstants();

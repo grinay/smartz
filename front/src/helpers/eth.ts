@@ -13,23 +13,20 @@ declare global {
 }
 
 export let web3Local;
-window.addEventListener('load', () => {
-  if (typeof window.web3 === 'undefined') {
-    // Listen for provider injection
-    window.addEventListener('message', ({ data }) => {
-      if (data && 'type' in data && data.type === 'ETHEREUM_PROVIDER_SUCCESS') {
-        web3Local = new window.Web3(window.ethereum);
-      }
-    });
-    // Request provider
-    window.postMessage({ type: 'ETHEREUM_PROVIDER_REQUEST' }, '*');
-  } else {
+window.addEventListener('load', () => getWeb3Instance());
+
+export const getWeb3Instance = () => {
+  if (window.ethereum) {
+    // Request account access if needed
+    window.ethereum.enable()
+      .then(() => web3Local = new window.Web3(window.ethereum))
+      .catch((error) => web3Local = 'not-available');
+  } else if (window.web3) {
     web3Local = new window.Web3(window.web3.currentProvider);
+  } else {
+    web3Local = null;
   }
-});
-
-
-// export let web3 = window.Web3 ? new window.Web3(window.web3.currentProvider) : undefined;
+};
 
 export const processControlForm = (abi, functionSpec, formData, address, callback) => {
   // preparing args
@@ -228,6 +225,10 @@ export const getNetworkEtherscanAddress = (netId) => {
 export const getMetamaskStatus = () => {
   if (!web3Local) {
     return 'noMetamask';
+  }
+
+  if (web3Local === 'not-available') {
+    return 'notAvailable';
   }
 
   if (!web3Local.eth.accounts[0]) {

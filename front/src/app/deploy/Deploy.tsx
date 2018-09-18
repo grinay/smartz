@@ -136,6 +136,18 @@ class Deploy extends React.PureComponent<IDeployProps, IDeployState> {
         </p>
       );
 
+    if (metamaskStatus === 'notAvailable')
+      return (
+        <p
+          style={{
+            textAlign: 'center',
+            margin: '100px',
+            fontSize: '20px',
+          }}>
+          Fellow, you need approve this dapp!
+        </p>
+      );
+
     let errorList = null;
     if (errors !== null && errors !== undefined) {
       if (typeof errors === 'string') {

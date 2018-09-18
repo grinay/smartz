@@ -43,7 +43,7 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
 
     const { metamaskStatus } = this.props;
 
-    if (metamaskStatus !== 'noMetamask') {
+    if (metamaskStatus !== 'noMetamask' && metamaskStatus !== 'notAvailable') {
       getNetworkId((networkId) => {
         this.setState({ networkId });
       });
@@ -62,7 +62,7 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
       dapps.forEach((dapp) => {
         switch (dapp.blockchain) {
           case blockchains.ethereum:
-            if (metamaskStatus !== 'noMetamask') {
+            if (metamaskStatus !== 'noMetamask' && metamaskStatus !== 'notAvailable') {
               if (dapp.network_id.toString() === this.state.networkId) {
                 filteredDapps.push(dapp);
               }
@@ -88,7 +88,8 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
       filteredDapps.length &&
       ctors.length &&
       !updateCycleActive &&
-      metamaskStatus !== 'noMetamask') {
+      metamaskStatus !== 'noMetamask' &&
+      metamaskStatus !== 'notAvailable') {
       this.updateCycle();
     }
   }
@@ -134,7 +135,7 @@ class Dashboard extends React.Component<IDashboardProps, IDashboardState> {
         </Alert>
       );
     } else if (find(filteredDapps, { blockchain: blockchains.ethereum }) &&
-      metamaskStatus === 'noMetamask') {
+      metamaskStatus === 'noMetamask' && metamaskStatus !== 'notAvailable') {
       content = (
         <p style={{ textAlign: 'center', margin: '100px', fontSize: '20px' }}>
           Fellow, you need a Metamask plugin!
