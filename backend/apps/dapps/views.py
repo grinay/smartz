@@ -174,7 +174,7 @@ class CreateFromAbi(View, WithContractProcessorManager):
             .process_functions_specs(request.data['abi'], {})
         )
         dapp.dashboard_functions = json.dumps([])
-        dapp.has_public_access = False
+        dapp.has_public_access = True
 
         dapp.save()
         UserDapp.objects.create(user=user, dapp=dapp, title=dapp.title)

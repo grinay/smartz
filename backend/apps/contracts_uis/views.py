@@ -66,7 +66,7 @@ class AddToDashboard(View, WithContractProcessorManager):
         )
         dapp.dashboard_functions = json.dumps(contract_ui.dashboard_functions)
         dapp.contract_ui = contract_ui
-        dapp.has_public_access = False
+        dapp.has_public_access = True
 
         dapp.save()
 
