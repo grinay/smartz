@@ -6,6 +6,7 @@ import { getNetworkId, getTxReceipt, web3 as w3 } from '../../../helpers/eth';
 import { getCtorUrl, sendStatusDappEvent } from '../../../helpers/statictics';
 import Loader from '../../common/loader/Loader';
 import UnlockMetamaskPopover from '../../common/unlock-metamask-popover/UnlockMetamaskPopover';
+import Button from '../../ui-kit/button/Button';
 
 
 interface IDeployStep2Props {
@@ -35,9 +36,7 @@ export default class DeployStep2 extends React.PureComponent<IDeployStep2Props, 
     window.scrollTo(0, 0);
   }
 
-  public deploy(e) {
-    e.preventDefault();
-
+  public deploy() {
     const {
       deployId,
       deployTxSent,
@@ -240,13 +239,13 @@ export default class DeployStep2 extends React.PureComponent<IDeployStep2Props, 
                   </div>
                 </fieldset>
               </fieldset>
-              <button className="button block__button" onClick={this.deploy}>
+              <Button kind="large" onClick={this.deploy} >
                 {ctor.price ? (
                   <span>Deploy now for {ctor.price} ETH</span>
                 ) : (
                     <span>Deploy now for free</span>
                   )}
-              </button>
+              </Button>
             </div>
           </form>
         )}

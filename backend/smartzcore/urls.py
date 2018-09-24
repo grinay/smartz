@@ -12,7 +12,7 @@ schema_view = get_schema_view(
       default_version='v1',
    ),
    public=True,
-   permission_classes=(permissions.IsAdminUser,),
+   permission_classes=[] if settings.SMARTZ_SHOW_SWAGGER_SCHEMA else (permissions.IsAdminUser,),
 )
 
 urlpatterns = [
@@ -22,6 +22,8 @@ urlpatterns = [
             path('constructors', include('apps.constructors.urls')),
             path('users', include('apps.users.urls')),
             path('dapps', include('apps.dapps.urls')),
+            path('contracts_uis', include('apps.contracts_uis.urls')),
+            path('search', include('apps.search.urls')),
 
             path('swagger.yaml', schema_view.without_ui(cache_timeout=None), name='schema-yaml'),
             path('swagger', schema_view.with_ui('swagger', cache_timeout=None), name='schema-swagger-ui'),

@@ -46,6 +46,8 @@ class Common(Configuration):
         'apps.users',
         'apps.tools',
         'apps.common',
+        'apps.contracts_uis',
+        'apps.search'
     ]
 
     MIDDLEWARE = [
@@ -202,6 +204,8 @@ class Common(Configuration):
         os.path.join(SMARTZ_JSON_SCHEMA_ROOT_PATH, 'internal/api-internal.yml')
     )# all api methods will use this prefix
 
+    SMARTZ_SHOW_SWAGGER_SCHEMA = False
+
     SMARTZ_API_PREFIX = 'api/'
 
     # business logic
@@ -240,6 +244,8 @@ class Development(Common):
         )
     }
 
+    SMARTZ_SHOW_SWAGGER_SCHEMA = True
+
 
 class DevelopmentLocal(Development):
     """
@@ -248,7 +254,6 @@ class DevelopmentLocal(Development):
 
     # local machine paths
     SMARTZ_SOLC_PATH = 'solc'
-
 
 
 class Staging(Common):
@@ -271,6 +276,8 @@ class Staging(Common):
         ('HTTP_X_FORWARDED_PROTO', 'https')
     )
 
+    SMARTZ_SHOW_SWAGGER_SCHEMA = True
+
 
 class Production(Staging):
     """
@@ -279,7 +286,7 @@ class Production(Staging):
 
     ALLOWED_HOSTS = ['smartz.io', 'preprod.smartz.io']
 
-    pass
+    SMARTZ_SHOW_SWAGGER_SCHEMA = False
 
 
 class Testing(DevelopmentLocal):

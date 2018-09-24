@@ -8,7 +8,9 @@ import { blockchains, ethConstants } from '../../../constants/constants';
 import { getFuncType } from '../../../helpers/common';
 import { IDapp, IFunction } from '../../../helpers/entities/dapp';
 import Eos from '../../../helpers/eos';
-import { decodeEventOfContract, getAccountAddress, processControlForm, web3 as w3, web3 } from '../../../helpers/eth';
+import {
+    decodeEventOfContract, getAccountAddress, processControlForm, toStringValue, web3 as w3, web3,
+} from '../../../helpers/eth';
 import { getUiSchemaFromFunc } from '../../../helpers/schema';
 import { tryParce } from '../../../helpers/utils';
 import store from '../../../store/store';
@@ -58,15 +60,32 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
     const arrOfArgs: any[] = [];
 
     if (Array.isArray(result)) {
-      for (let i = 0; i < result.length; i++) {
-        const arg = result[i];
-        const data = func.outputs.items[i];
-
+      if (result.length === 0) {
         arrOfArgs.push({
-          title: data.title,
-          description: 'description' in data ? data.description : '',
-          value: arg.toString(),
+          title: '',
+          description: '',
+          value: 'empty',
         });
+      } else {
+        for (let i = 0; i < result.length; i++) {
+          const arg = result[i];
+          const data = func.outputs.items[i];
+
+          // convert value to string type
+          const type = 'type' in data
+            ? data.type
+            : '$ref' in data
+              ? data.$ref
+              : null;
+
+          const value = toStringValue(type, arg);
+
+          arrOfArgs.push({
+            title: data.title,
+            description: 'description' in data ? data.description : '',
+            value,
+          });
+        }
       }
     } else {
       const data = func.outputs.items[0];
@@ -133,38 +152,35 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
       case blockchains.ethereum:
         dataFetch['initiator_address'] = getAccountAddress();
 
-        processControlForm(dapp.abi, func, formData, dapp.address,
-          (error, response) => {
+        processControlForm(dapp.abi, func, formData, dapp.address)
+          .then((result: any) => {
             const funcType = getFuncType(func);
 
-            if (error !== null) {
-              dataFetch['is_success'] = false;
-              dataFetch['error'] = error.toString();
+            if (funcType === 'ask') {
+              dataFetch['is_success'] = true;
+              dataFetch['result'] = this.formatResultEth(func, result);
 
-              console.error('Error: ', error);
+              api.sendDappRequest(dapp.id, dataFetch);
+
+            } else if (funcType === 'write') {
+              dataFetch['tx_id'] = result;
 
               store.dispatch(transactionNew(dapp.id, dataFetch));
-            } else {
-              if (funcType === 'ask') {
-                dataFetch['is_success'] = true;
-                dataFetch['result'] = this.formatResultEth(func, response);
-
-                api.sendDappRequest(dapp.id, dataFetch);
-
-              } else if (funcType === 'write') {
-                dataFetch['tx_id'] = response;
-
-                store.dispatch(transactionNew(dapp.id, dataFetch));
-                this.getReceipt(response, dataFetch);
-              }
+              this.getReceipt(result, dataFetch);
             }
+          })
+          .catch((error) => {
+            dataFetch['is_success'] = false;
+            dataFetch['error'] = error.toString();
 
-            // close modal window after execute function
-            onClose();
+            console.error('Error: ', error);
+
+            store.dispatch(transactionNew(dapp.id, dataFetch));
+
           });
         break;
-      case blockchains.eos:
 
+      case blockchains.eos:
         Eos.executeFunc(dapp.abi, func, dapp.address, formData)
           .then((response: any) => {
             dataFetch['initiator_address'] = Eos.accountName;
@@ -207,14 +223,14 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
               api.sendDappRequest(dapp.id, dataFetch);
             }
           });
-
-        // close modal window after execute function
-        onClose();
         break;
 
       default:
         break;
     }
+
+    // close modal window after execute function
+    onClose();
   }
 
   private getReceipt(tx: string, dataFetch: any) {
@@ -282,55 +298,54 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
   public render() {
     const { func, onClose } = this.props;
 
-    let content: any;
-    if (func) {
-      // add field for ethCount in schema
-      if (func.payable) {
+    // add field for ethCount in schema
+    if (func.payable) {
 
-        if (func.inputs.items === undefined) func.inputs.items = [];
+      if (func.inputs.items === undefined) func.inputs.items = [];
 
-        const payableTitle =
-          func.payable_details && func.payable_details.title
-            ? func.payable_details.title
-            : 'Ether amount';
+      const payableTitle =
+        func.payable_details && func.payable_details.title
+          ? func.payable_details.title
+          : 'Ether amount';
 
-        const payableDescription =
-          func.payable_details && func.payable_details.description
-            ? func.payable_details.description
-            : func.name === '' // if 'default function'
-              ? 'This ether amount will be sent to the contract'
-              : 'This ether amount will be sent with the function call';
+      const payableDescription =
+        func.payable_details && func.payable_details.description
+          ? func.payable_details.description
+          : func.name === '' // if 'default function'
+            ? 'This ether amount will be sent to the contract'
+            : 'This ether amount will be sent with the function call';
 
-        const existValue = find(func.inputs.items, { title: payableTitle });
+      const existValue = find(func.inputs.items, { title: payableTitle });
 
-        if (!existValue) {
-          func.inputs.minItems += 1;
-          func.inputs.maxItems += 1;
+      if (!existValue) {
+        func.inputs.minItems += 1;
+        func.inputs.maxItems += 1;
 
-          func.inputs.items.push({
-            type: 'number',
-            minLength: 1,
-            maxLength: 78,
-            pattern: '^[0-9]+$',
-            title: payableTitle,
-            description: payableDescription,
-            'ui:widget': 'ethCount',
-          });
-        }
+        func.inputs.items.push({
+          type: 'number',
+          minLength: 1,
+          maxLength: 78,
+          pattern: '^[0-9]+$',
+          title: payableTitle,
+          description: payableDescription,
+          'ui:widget': 'ethCount',
+        });
       }
+    }
 
-      //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
-      if (!func.constant && func.inputs.minItems === 0) {
-        func.inputs = {
-          $schema: 'http://json-schema.org/draft-06/schema#',
-          type: 'object',
-          properties: {},
-        };
-      }
+    //todo workaround, compatible with draft 6 since https://github.com/mozilla-services/react-jsonschema-form/issues/783
+    if (!func.constant && func.inputs.minItems === 0) {
+      func.inputs = {
+        $schema: 'http://json-schema.org/draft-06/schema#',
+        type: 'object',
+        properties: {},
+      };
+    }
 
-      const uiSchema = getUiSchemaFromFunc(func);
+    const uiSchema = getUiSchemaFromFunc(func);
 
-      content = (
+    return (
+      <div className="modal-func">
         <div>
           <button
             className="close"
@@ -366,20 +381,6 @@ export default class ModalFunc extends React.PureComponent<IModalFuncProps, {}> 
             </div>
           </Form>
         </div>
-      );
-    }
-
-    return (
-      <div className="modal-func">
-        <Modal
-          isOpen={func != null ? true : false}
-          isCloser={false}
-          onClose={onClose}
-          windowClassName="modal-window"
-          closerClassName="modal-closer flex"
-        >
-          {content}
-        </Modal>
       </div>
     );
   }

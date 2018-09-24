@@ -52,28 +52,33 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
 
     if ('is_success' in record) {
       if (record.is_success) {
-        result = isTransaction
-          ? <p className="result-status">Success</p>
-          : (
-            <div>
-              {record.result.map((result, i) =>
-                <p
-                  key={i}
-                  className="result-status"
-                >
-                  <span>{result.title}</span>
-                  <span>{result.value}</span>
-                </p>,
-              )}
-            </div>
+        if (isTransaction) {
+          result = <p className="result-status">Success</p>;
+        } else {
+          let formatResult = record.result.length > 1
+            ? record.result.map((result, i) =>
+              (
+                <li key={i} className="event-item">
+                  <p className="event-id">{result.title !== '' ? result.title : '-'}</p>
+                  <p className="event-value color">{result.value}</p>
+                </li>
+              ),
+            )
+            : <p className="result-status">{record.result[0].value}</p>;
+
+          result = (
+            <ul className="event-list">
+              {formatResult}
+            </ul>
           );
+        }
       } else {
         result = <p className="result-status error">{record.error}</p>;
       }
     } else {
       result = (
         <div className="flex-v">
-          <Loader className="loader-result" width={'17px'} />
+          <Loader className="loader-result" size={17} />
           <p className="result-status" > Waiting for miners...</p >
         </div>
       );
@@ -101,7 +106,9 @@ export default class PopupTransaction extends React.PureComponent<IPopupTransact
             error: 'is_success' in record && !record.is_success,
           })}>
             {record.function_title}
-            <sup className="event-extra">{record.function_name}</sup>
+            {record.function_title !== record.function_name &&
+              <sup className="event-extra">{record.function_name}</sup>
+            }
           </p>
           <p className="event-description">{record.function_description}</p>
         </div>

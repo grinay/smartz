@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import * as api from '../../api/apiRequests';
 import { blockchains } from '../../constants/constants';
-import { getFuncType } from '../../helpers/common';
 import { IDapp, IFunction, Tab } from '../../helpers/entities/dapp';
-import { processControlForm, processResult } from '../../helpers/eth';
 import store from '../../store/store';
 import { setHeaderTitle } from '../AppActions';
 import Alert from '../common/Alert';
+import ModalContainer from '../common/modal/ModalContainer';
 import ColumnFunc from './column-func/ColumnFunc';
 import MinimalFooter from './minimal-footer/MinimalFooter';
 import ModalFunc from './modal-func/ModalFunc';
@@ -37,11 +35,13 @@ interface IDappProps {
 }
 
 interface IDappState {
-  updateCycleActive: any;
+  isUpdateCycle: boolean;
   funcActive: IFunction;
   selectedRecord: any;
   selectedFunc: any;
   selectedTab: Tab;
+  isModalOpen: boolean;
+  isPopupOpen: boolean;
 }
 
 class Dapp extends React.Component<IDappProps, IDappState> {
@@ -49,14 +49,15 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     super(props);
 
     this.state = {
-      updateCycleActive: false,
+      isUpdateCycle: true,
       funcActive: null,
       selectedRecord: null,
       selectedFunc: null,
       selectedTab: Tab.Request,
+      isModalOpen: false,
+      isPopupOpen: false,
     };
 
-    this.getConstants = this.getConstants.bind(this);
     this.onSelectRecord = this.onSelectRecord.bind(this);
     this.selectFunc = this.selectFunc.bind(this);
     this.onClose = this.onClose.bind(this);
@@ -68,19 +69,27 @@ class Dapp extends React.Component<IDappProps, IDappState> {
   }
 
   private onSelectRecord(selectedRecord: any) {
-    return () => this.setState({ selectedRecord });
+    return () => {
+      this.setState({
+        selectedRecord,
+        isPopupOpen: true,
+      });
+    };
   }
 
   private selectFunc(func: any): any {
-    return () => this.setState({ selectedFunc: func });
+    return () => this.setState({
+      selectedFunc: func,
+      isModalOpen: true,
+    });
   }
 
   private onClose(type: 'popup' | 'modal') {
     return () => {
       if (type === 'popup') {
-        this.setState({ selectedRecord: null });
+        this.setState({ isPopupOpen: false });
       } else {
-        this.setState({ selectedFunc: null });
+        this.setState({ isModalOpen: false });
       }
     };
   }
@@ -91,6 +100,16 @@ class Dapp extends React.Component<IDappProps, IDappState> {
 
   public componentDidMount() {
     window.Intercom('update');
+
+    const { dapp } = this.props;
+
+    if (dapp) {
+      store.dispatch(setHeaderTitle({
+        title: dapp.title,
+        id: dapp.id,
+        type: 'dapp',
+      }));
+    }
   }
 
   public componentWillReceiveProps(nextProps: any) {
@@ -108,6 +127,7 @@ class Dapp extends React.Component<IDappProps, IDappState> {
       // set last executed func
       this.setState({
         selectedRecord: dappNext.requests[0],
+        isPopupOpen: true,
         selectedTab: Tab.Request,
       });
     }
@@ -123,49 +143,18 @@ class Dapp extends React.Component<IDappProps, IDappState> {
     }
 
     // update name of dapp after change
-    // if (dappNext.title !== dappLast.title) {
-    store.dispatch(setHeaderTitle({
-      title: dappNext.title,
-      id: dappNext.id,
-      type: 'dapp',
-    }));
-    // }
-  }
-
-  public componentDidUpdate() {
-    // TODO: refactor this shit
-    const { dapp, metamaskStatus } = this.props;
-
-    if (dapp && dapp.blockchain === blockchains.ethereum && !this.state.updateCycleActive) {
-      if (metamaskStatus === 'noMetamask' || metamaskStatus === 'unlockMetamask') {
-        return null;
-      }
-      this.getConstants();
+    if (dappNext.title !== dappLast.title) {
+      store.dispatch(setHeaderTitle({
+        title: dappNext.title,
+        id: dappNext.id,
+        type: 'dapp',
+      }));
     }
-  }
-
-  public getConstants() {
-    const { dapp, viewFuncResult } = this.props;
-    if (!dapp) {
-      return;
-    }
-
-    dapp.functions.forEach((func) => {
-      if (func.constant && func.inputs.minItems === 0) {
-        processControlForm(dapp.abi, func, [], dapp.address, (error, result) => {
-          if (error) {
-            console.error(error);
-          } else {
-            viewFuncResult(dapp.id, func.name, processResult(result));
-          }
-        });
-      }
-    });
   }
 
   public render() {
     const { metamaskStatus, dapp, profile, dappStatus, dappError } = this.props;
-    const { selectedRecord, selectedFunc, selectedTab } = this.state;
+    const { selectedRecord, selectedFunc, selectedTab, isModalOpen, isPopupOpen } = this.state;
 
     if (dappStatus === 'error' && dappError !== null) {
       return (
@@ -201,9 +190,9 @@ class Dapp extends React.Component<IDappProps, IDappState> {
                 onSelectRecord={this.onSelectRecord}
               />
             </div>
-            <MinimalFooter ctorId={dapp.constructor_id} />
+            <MinimalFooter dapp={dapp} />
             <PopupTransaction
-              isOpen={selectedFunc === null && selectedRecord != null ? true : false}
+              isOpen={isPopupOpen}
               onClose={this.onClose('popup')}
               record={selectedRecord}
             />
@@ -215,12 +204,34 @@ class Dapp extends React.Component<IDappProps, IDappState> {
           dapp={dapp}
         />
 
-        <ModalFunc
-          func={selectedFunc}
-          dapp={dapp}
-          profile={profile}
+        <ModalContainer
+          isOpen={isModalOpen}
+          classNameWindow="func-modal"
           onClose={this.onClose('modal')}
-        />
+          animationWindow={{
+            duration: 300,
+            styleStart: {
+              opacity: 0,
+              transform: 'scale(.9,.9)',
+            },
+            styleEnd: {
+              opacity: 1,
+              transform: 'scale(1,1)',
+            },
+          }}
+          animationBackdrop={{
+            duration: 300,
+            styleStart: { opacity: 0 },
+            styleEnd: { opacity: 1 },
+          }}
+        >
+          <ModalFunc
+            func={selectedFunc}
+            dapp={dapp}
+            profile={profile}
+            onClose={this.onClose('modal')}
+          />
+        </ModalContainer>
 
       </main>
     );

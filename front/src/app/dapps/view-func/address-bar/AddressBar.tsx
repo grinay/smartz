@@ -7,7 +7,7 @@ import { IDapp } from '../../../../helpers/entities/dapp';
 import { getNetworkEtherscanAddress } from '../../../../helpers/eth';
 import { copyTextToClipboard } from '../../../../helpers/utils';
 import AddressString from '../../../common/address-string/AddressString';
-import Modal from '../../../common/modal/Modal';
+import ModalContainer from '../../../common/modal/ModalContainer';
 import PopupVerify from '../../popup-verify/PopupVerify';
 
 import './AddressBar.less';
@@ -59,8 +59,8 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
     // check who owner this dapp
     let btn: JSX.Element;
     if (profile) {
-      if (profile.user_id === dapp.user_id) {
-        if (dapp.blockchain === blockchains.ethereum) {
+      if (dapp.owned_by_current_user) {
+        if (dapp.blockchain === blockchains.ethereum && dapp.source) {
           btn = (
             <button
               className="round-btn flex verify-btn"
@@ -118,9 +118,29 @@ export default class AddressBar extends React.PureComponent<IAddressBarProps, IA
             {btn}
           </div>
         </div>
-        <Modal isOpen={isOpenModal} onClose={this.toggleModal}>
+        <ModalContainer
+          isOpen={isOpenModal}
+          classNameWindow="verify-modal"
+          animationWindow={{
+            duration: 300,
+            styleStart: {
+              opacity: 0,
+              transform: 'scale(.9,.9)',
+            },
+            styleEnd: {
+              opacity: 1,
+              transform: 'scale(1,1)',
+            },
+          }}
+          animationBackdrop={{
+            duration: 300,
+            styleStart: { opacity: 0 },
+            styleEnd: { opacity: 1 },
+          }}
+          onClose={this.toggleModal}
+        >
           <PopupVerify dapp={dapp} />
-        </Modal>
+        </ModalContainer>
       </div>
     );
   }

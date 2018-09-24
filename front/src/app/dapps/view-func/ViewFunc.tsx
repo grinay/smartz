@@ -4,27 +4,40 @@ import * as ReactTooltip from 'react-tooltip';
 import InlineSVG from 'svg-inline-react';
 
 import { blockchains } from '../../../constants/constants';
-import { getFunctionsByType } from '../../../helpers/common';
-import renderDappWidget from '../../common/dapp-widgets/DappWidgets';
+import { getFunctionsByType, getViewFunctionConstants, sortFuncs } from '../../../helpers/common';
+import { IDapp, IFunction } from '../../../helpers/entities/dapp';
+import store from '../../../store/store';
+import Loader from '../../common/loader/Loader';
+import TypeDisplay from '../../common/type-display/TypeDisplay';
+import { viewFuncResult } from '../DappActions';
 import AddressBar from './address-bar/AddressBar';
 
 import './ViewFunc.less';
 
 
 interface IViewFuncProps {
-  dapp: any;
+  dapp: IDapp;
   profile: any;
 }
 
 interface IViewFuncState { }
 
 export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewFuncState> {
+  public componentDidMount() {
+    const { dapp } = this.props;
+
+    getViewFunctionConstants(dapp.abi, dapp.address, dapp.functions)
+      .then((result) => store.dispatch(viewFuncResult(dapp.id, result)))
+      .catch((error) => console.error(error));
+  }
+
   public render() {
     const { dapp, profile } = this.props;
 
     let viewFuncElement: JSX.Element;
     if (dapp.blockchain === blockchains.ethereum) {
-      const viewFunctions: any[] = getFunctionsByType(dapp.functions, 'view');
+      let viewFunctions: IFunction[] = getFunctionsByType(dapp.functions, 'view');
+      viewFunctions = sortFuncs(viewFunctions);
 
       let viewFuncStandart: any[] = [];
       let viewFuncPresentable: any[] = [];
@@ -43,11 +56,17 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
         <div className={classNames('card-body', { 'bg-bottom': viewFuncStandart.length === 0 })}>
           <div className="card-header">
 
-            {viewFuncPresentable.map((func, i) => {
+            {viewFuncPresentable.map((viewFunc, i) => {
               return (
                 <div key={i} className="card-intro">
-                  <p className="card-label">{func.title}</p>
-                  <p className="card-title">{renderDappWidget(func, dapp)}</p>
+                  <p className="card-label">{viewFunc.title}</p>
+                  <div className="card-title">{'funcResults' in dapp
+                    ? <TypeDisplay
+                      fnDescription={dapp.functions.find(
+                        (func) => func.name === viewFunc.name)}
+                      fnResult={dapp.funcResults[viewFunc.name]}
+                    />
+                    : <Loader size={20} />}</div>
                 </div>
               );
             })}
@@ -55,18 +74,25 @@ export default class ViewFunc extends React.PureComponent<IViewFuncProps, IViewF
           </div>
           <ul className="card-table">
 
-            {viewFuncStandart.map((func, i) => {
+            {viewFuncStandart.map((viewFunc, i) => {
               return (
                 <li key={i} className="card-row">
                   <p className="card-label standart">
-                    <span className="card-text">{func.title}</span>
+                    <span className="card-text">{viewFunc.title}</span>
                     <InlineSVG
-                      data-tip={func.description}
+                      data-tip={viewFunc.description}
                       className="question-icon"
                       src={require('../../../assets/img/common/question-icon.svg')}
                     />
                   </p>
-                  <p className="card-data">{renderDappWidget(func, dapp)}</p>
+                  <div className="card-data">
+                    {'funcResults' in dapp
+                      ? <TypeDisplay
+                        fnDescription={dapp.functions.find((func) => func.name === viewFunc.name)}
+                        fnResult={dapp.funcResults[viewFunc.name]}
+                      />
+                      : <Loader size={20} />}
+                  </div>
                 </li>
               );
             })}

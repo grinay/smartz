@@ -1,5 +1,5 @@
 import json
-from typing import Dict
+from typing import Dict, Optional
 
 from rest_framework import serializers
 
@@ -7,29 +7,36 @@ from apps.dapps.models import Dapp, Transaction, Log, Request
 
 
 # todo how to do better?
-def dapp_pub_info(dapp: Dapp) -> Dict:
+def dapp_pub_info(dapp: Dapp, owned_by_current_user: bool=False, custom_title: Optional[str]=None) -> Dict:
     return {
         'id': dapp.slug,
-        "title": dapp.title,
+        "title": custom_title if custom_title else dapp.title,
         "network_id": str(dapp.network_id),
-        "constructor_id": dapp.constructor.slug,
+        "constructor_id": dapp.constructor.slug if dapp.constructor else None,
+        "contract_ui_id": dapp.contract_ui.slug if dapp.contract_ui else None,
         "address": dapp.address,
         'bin': dapp.binary,
         'source': dapp.source,
         'abi': json.loads(dapp.abi),
-        'blockchain': dapp.constructor.blockchain,
+        'blockchain': dapp.blockchain,
         "functions": json.loads(dapp.function_specs),
         "dashboard_functions": json.loads(dapp.dashboard_functions),
         'price': float(format(dapp.deploy_price, 'f').rstrip('0').rstrip('.')),
         "compiler_version": dapp.compiler_version,
         "compiler_optimization": dapp.compiler_optimization,
         "contract_name": dapp.contract_name,
-        "user_id": dapp.user_id,
+        "owned_by_current_user": owned_by_current_user,
         "constructor": {
             "name": dapp.constructor.name,
             "description": dapp.constructor.description,
             "image": dapp.constructor.image
-        }
+        } if dapp.constructor else None,
+        "contract_ui": {
+            "name": dapp.contract_ui.name,
+            "description": dapp.contract_ui.description,
+            "image": dapp.contract_ui.image
+        } if dapp.contract_ui else None,
+
     }
 
 

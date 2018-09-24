@@ -4,7 +4,6 @@
     display: flex;
     align-items: center;
 
-    height: 29px;
     padding: 0 20px;
 
     cursor: pointer;
@@ -35,17 +34,24 @@
 
     .request-time {
         width: 80px;
-        margin: 0 10px 0 0;
+        margin: 6px 10px 6px 0;
     }
 
     .request-description {
         box-sizing: border-box;
-        margin: 0 10px 0 0;
+        width: 175px;
+        margin: 6px 10px 6px 0;
         padding-left: 20px;
 
         &.error {
             color: @color-error;
         }
+    }
+
+    .request-info {
+        flex: 1;
+
+        margin: 6px 10px 6px 0;
     }
 
     .request-buttons {

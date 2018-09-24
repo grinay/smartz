@@ -18,7 +18,6 @@ export const processControlForm = (
   function_spec /* ETHFunctionSpec */,
   form_data /* data from react-jsonschema-form */,
   contract_address,
-  callback,
 ) => {
   // preparing args
 
@@ -73,20 +72,24 @@ export const processControlForm = (
       throw new Error('Incorrect form-data');
     }
 
-    try {
-      result = web3.eth.sendTransaction(
-        {
+
+    return new Promise((resolve, reject) => {
+      try {
+        web3.eth.sendTransaction({
           ...transactionParameters,
           value,
           to: contract_address,
-        },
-        callback,
-      );
-    } catch (e) {
-      console.error(e);
-    }
-
-    return result;
+        }, (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   let function_abi;
@@ -113,7 +116,7 @@ export const processControlForm = (
 
   // calling/transacting
 
-  const CtorDapp = web3.eth.contract(contract_abi).at(contract_address);
+  const сtorDapp = web3.eth.contract(contract_abi).at(contract_address);
 
   // non-constant - there will be a transaction instead of a local call
   if (!function_abi.constant) {
@@ -122,20 +125,25 @@ export const processControlForm = (
     args_converted2abi.push(transactionParameters);
   }
 
-  let result;
-  try {
-    result = CtorDapp[function_spec.name](...args_converted2abi, callback);
-  } catch (e) {
-    console.warn(e);
-  }
 
-  return result;
-  /*
-  if (function_abi.constant) {
-      // show in UI
-      result.forEach(v => {l(v)});
-  }
-  */
+  return new Promise((resolve, reject) => {
+    try {
+      сtorDapp[function_spec.name](...args_converted2abi, (error, result) => {
+        if (error) {
+          console.error(error);
+          resolve({
+            type: 'error',
+            msg: 'Error! Failed to get value',
+            error,
+          });
+        } else {
+          resolve(result);
+        }
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 // ALSO: for each function_spec
@@ -176,11 +184,16 @@ export const processResult = (res?, outputs?) => {
 
 export const getNetworkId = (cb) => {
   web3.version.getNetwork((err, netId) => {
-    // tslint:disable-next-line:no-unused-expression
-    err && console.error(err);
-    // tslint:disable-next-line:no-unused-expression
-    netId && cb(netId);
+    if (err) {
+      console.error(err);
+    } else if (netId) {
+      cb(netId);
+    }
   });
+};
+
+export const getNetworkIdSync = (): string => {
+  return web3.version.network;
 };
 
 export const getNetworkName = (netId) => {
@@ -252,6 +265,17 @@ export const isTx = (hash) => {
 
 export const getAccountAddress = () => {
   return web3.eth.defaultAccount;
+};
+
+export const toStringValue = (type: string, value: any): string => {
+  switch (type) {
+    case '#/definitions/uint128':
+    case '#/definitions/uint256':
+      return value.toString(10);
+
+    default:
+      return value.toString();
+  }
 };
 
 /**

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
 import Form from 'react-jsonschema-form';
 
 import * as api from '../../api/apiRequests';
@@ -9,6 +8,10 @@ import { sendClickEvent } from '../../helpers/statictics';
 import store from '../../store/store';
 import Alert from '../common/Alert';
 import Loader from '../common/loader/Loader';
+import Button from '../ui-kit/button/Button';
+import Title from '../ui-kit/title/Title';
+
+import './CtorAdd.less';
 
 
 interface ICtorAddProps {
@@ -87,7 +90,7 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
 
     if (this.id) {
       if (fetchStatus === 'request') {
-        return <Loader text="Loading constructor data" width="100" />;
+        return <Loader text="Loading constructor data" size={100} />;
       }
 
       if (fetchStatus === 'error') {
@@ -146,9 +149,11 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
     };
 
     return (
-      <main className="page-main page-main--contracts">
+      <main className="page-main page-main--contracts ctor-add">
         <section className="block">
-          <h2 className="block__header">{this.id ? 'Update the' : 'Add a'} smart contract</h2>
+          <Title type="big" className="ctor-add-title">
+            {this.id ? 'Update the' : 'Add a'} smart contract
+            </Title>
 
           <Form
             schema={formSchema}
@@ -156,8 +161,8 @@ class CtorAdd extends React.Component<ICtorAddProps, ICtorAddState> {
             uiSchema={uiSchema}
             onSubmit={this.submit}
             showErrorList={false}>
-            <div className="block__wrapper" style={{ marginBottom: '40px' }}>
-              <Button bsStyle="primary" className="button block__button" type="submit">
+            <div className="block__wrapper">
+              <Button kind="large" type="submit">
                 {this.id ? 'Update' : 'Submit'} the contract
               </Button>
             </div>

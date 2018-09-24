@@ -1,6 +1,7 @@
 import json
 from typing import Dict
 
+from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -9,42 +10,46 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from apps.dapps.models import Dapp, Transaction, Request
+from apps.common.constants import BLOCKCHAINS
+from apps.dapps.models import Dapp, Transaction, Request, UserDapp
 from apps.dapps.serializers import dapp_pub_info, TransactionSerializer, RequestSerializer
-from smartz.json_schema import load_schema, assert_conforms2schema_part
+from apps.users.models import User
+from constructor_engine.services import WithContractProcessorManager
 from smartzcore.http import error_response
 from smartzcore.service_instances import WithLogger
 from utils.common import auth
-
-
-def _prepare_instance_details(dapp: Dapp) -> Dict:
-    output = dapp_pub_info(dapp)
-    assert_conforms2schema_part(output, load_schema('internal/front-back.json'),
-                                'rpc_calls/get_instance_details/output')
-
-    return output
 
 
 class DetailsView(View):
 
     def get(self, request, id):
         try:
-            dapp = Dapp.objects.prefetch_related('constructor').get(slug=id)
+            dapp = Dapp.objects.prefetch_related('constructor', 'users').get(slug=id)
         except Dapp.DoesNotExist:
             return error_response("Dapp not found")
 
+        user = auth(request)
         if not dapp.has_public_access:
-            user = auth(request)
             if isinstance(user, HttpResponse):
                 return user  # error
 
-            if dapp.user_id != user.pk:
+            if user not in dapp.users.all():
                 return error_response('Dapp not found')
 
         if not dapp.address:
             return error_response('Dapp is not yet deployed')
 
-        return JsonResponse(_prepare_instance_details(dapp))
+        cust_title = None
+        if isinstance(user, User):
+            try:
+                user_dapp = UserDapp.objects.get(user=user, dapp=dapp)
+                cust_title = user_dapp.title
+            except UserDapp.DoesNotExist:
+                pass
+
+        return JsonResponse(
+            dapp_pub_info(dapp, user in dapp.users.all(), cust_title)
+        )
 
 
 class ListView(View):
@@ -54,10 +59,12 @@ class ListView(View):
         if isinstance(user, HttpResponse):
             return user  # error
 
-        dapps = Dapp.objects.filter(user=user).exclude(address='').order_by('-created_at').prefetch_related('constructor')
+        dapps = Dapp.objects.filter(users=user).exclude(address='').order_by('-created_at').prefetch_related('constructor', 'users')
+
+        users_dapps = dict([(user_dapp.dapp_id, user_dapp) for user_dapp in UserDapp.objects.filter(user=user, dapp__in=dapps)])
 
         return JsonResponse(
-            [_prepare_instance_details(i) for i in dapps],
+            [dapp_pub_info(dapp, True, users_dapps[dapp.id].title) for dapp in dapps],
             safe=False
         )
 
@@ -71,7 +78,7 @@ class UpdateView(View):
             return user  # error
 
         try:
-            dapp = Dapp.objects.get(slug=id, user=user)
+            dapp = Dapp.objects.get(slug=id, users=user)
         except Dapp.DoesNotExist:
             return error_response("Dapp not found")
 
@@ -98,7 +105,9 @@ class UpdateView(View):
 
         title = request.data.get('title')
         if title is not None:
-            dapp.title = title
+            for user_dapp in UserDapp.objects.filter(dapp=dapp, user=user):
+                user_dapp.title = title
+                user_dapp.save()
 
         dapp.save()
 
@@ -106,8 +115,9 @@ class UpdateView(View):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class AddToDashboardView(View):
+class AddToDashboard(View):
 
+    @transaction.atomic
     def post(self, request, id):
         user = auth(request)
         if isinstance(user, HttpResponse):
@@ -118,10 +128,56 @@ class AddToDashboardView(View):
         except Dapp.DoesNotExist:
             return error_response("Dapp not found")
 
-        dapp.slug = Dapp.create().slug
-        dapp.pk = None
-        dapp.user = user
+        if not UserDapp.objects.filter(dapp=dapp, user=user):
+            UserDapp.objects.create(dapp=dapp, user=user, title=dapp.title)
+
+        return JsonResponse({'ok': True})  # todo
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CreateFromAbi(View, WithContractProcessorManager):
+
+    def post(self, request):
+        user = auth(request)
+        if isinstance(user, HttpResponse):
+            return user  # error
+
+        if 'address' not in request.data or type(request.data['address']) is not str or not request.data['address']:
+            return error_response("Address is missing")
+
+        if 'network_id' not in request.data or type(request.data['network_id']) is not str or not request.data['network_id']:
+            return error_response("Network id is missing")
+
+        if 'abi' not in request.data:
+            return error_response('Abi not specified')
+
+        if 'blockchain' not in request.data or request.data['blockchain'] not in dict(BLOCKCHAINS):
+            return error_response('Invalid blockchain')
+
+        if 'name' not in request.data or type(request.data['name']) is not str or not request.data['name']:
+            title = 'Dapp'
+        else:
+            title = request.data['name']
+
+        dapp = Dapp.create()
+
+        dapp.blockchain = request.data['blockchain']
+        dapp.address = request.data['address']
+        dapp.network_id = request.data['network_id']
+
+        dapp.title = title
+        dapp.abi = json.dumps(request.data['abi'])
+        dapp.source = ''
+        dapp.binary = ''
+        dapp.function_specs = json.dumps(
+            self.contracts_processors_manager.require_contract_processor(dapp.blockchain)\
+            .process_functions_specs(request.data['abi'], {})
+        )
+        dapp.dashboard_functions = json.dumps([])
+        dapp.has_public_access = True
+
         dapp.save()
+        UserDapp.objects.create(user=user, dapp=dapp, title=dapp.title)
 
         return JsonResponse({'ok': True})  # todo
 
