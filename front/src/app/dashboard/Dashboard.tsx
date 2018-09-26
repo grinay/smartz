@@ -105,7 +105,7 @@ export default class Dashboard extends React.Component<IDashboardProps, any> {
         <Button
           className="dashboard-add-btn"
           kind="white"
-          content="Add an exiting contract"
+          content="Add an existing contract"
           onClick={this.onToggleModal(true)}
         />
         {content}
