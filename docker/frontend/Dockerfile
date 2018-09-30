@@ -1,8 +1,8 @@
-FROM node:8.10.0-alpine AS node_stage
+FROM beevelop/nodejs-python AS node_stage
 WORKDIR /static
 COPY front .
-RUN npm i
 ENV NODE_PATH=src
+RUN npm i
 RUN npm run build
 COPY json-schema/public/ build/json-schema/public/
 
